@@ -1,0 +1,12 @@
+/3th
+/build
+/docs
+/test
+/web
+/bin
+/patch
+/.settings
+/.codepro
+.tomcatplugin
+/.DS_Store
+/._.DS_Store

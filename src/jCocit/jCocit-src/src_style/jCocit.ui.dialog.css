@@ -1,0 +1,41 @@
+/* Dialog Tool Bar */
+.DlTB {
+	padding: 5px;
+	/* border-bottom: 1px solid #dddddd; */
+	background: #F4F4F4;
+}
+
+/* Dialog Tool Bar Button Separator */
+.DlTBS {
+	float: left;
+	height: 19px;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #fff;
+	margin: 2px 1px;
+}
+
+/* Dialog Buttons */
+.DlBS {
+	padding: 3px 8px 5px 5px;
+	text-align: right;
+	/* border-top: 1px solid #dddddd; */
+	background: #F4F4F4;
+	text-align: right;
+}
+
+/* Dialog Buttons - Link Button */
+.DlBS .LkB {
+	padding: 0;
+	margin: 1px 0px 1px 6px;
+	width: 80px;
+	height: 23px;
+	font-family: helvetica, tahoma, verdana, sans-serif;
+	font-size: 12px;
+	cursor: pointer;
+}
+
+/* tree dialog -> panel body content. */
+.treedialog .PnBC {
+	padding: 0px;
+	overflow: hidden;
+}

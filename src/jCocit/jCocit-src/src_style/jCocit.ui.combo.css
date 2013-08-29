@@ -1,0 +1,65 @@
+.Cb {
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+	background-color: #ffffff;
+	border-bottom: 1px solid #96afe5;
+	/*overflow: hidden;*/ /*overflow is hidden and position existed, the drop-down list will NOT be shown*/
+}
+
+.CbB {
+	margin: 0;
+	padding: 0;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border: 1px solid #96afe5;
+	border-bottom: 0;
+	position: relative;
+	/*overflow: hidden;*/ /*overflow is hidden, the drop-down arrow will be incorrect*/
+}
+
+.CbT {
+	border: 0px;
+}
+
+textarea.CbT {
+	overflow: auto;
+}
+
+.CbA {
+	width: 21px;
+	height: 21px;
+	overflow: hidden;
+	display: inline-block;
+	vertical-align: top;
+	cursor: pointer;
+	right: -1px;
+	top: -1px;
+	position: absolute;
+	border-width: 0px;
+	background: url('images/combo/combo_arrow.gif') no-repeat right bottom;
+	/*background-color: #E0ECFF;*/
+}
+
+.CbAD {
+	opacity: 0.2;
+	filter: alpha(opacity = 20);
+}
+
+.CbAH {
+	background: url('images/combo/combo_arrow_hover.gif') no-repeat right bottom;
+	/*background-color: #eaf2ff;*/
+}
+
+/**
+ * Combo Drop-down Panel body
+ */
+.CbPn .CbPnB {
+	padding: 0px;
+}
+
+/* combo panel body content */
+.CbPn .CbPnBC {
+	padding: 1px;
+	border: 1px solid #000000;
+}
