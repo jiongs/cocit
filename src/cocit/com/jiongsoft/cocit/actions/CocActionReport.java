@@ -16,7 +16,7 @@ import com.jiongsoft.cocit.cui.CuiModelView;
 @Ok(CuiModelView.VIEW_TYPE)
 @Fail(CuiModelView.VIEW_TYPE)
 @At("/coc/report")
-public class CocReportAction {
+public class CocActionReport {
 
 	/**
 	 * 获取模块主界面UI模型

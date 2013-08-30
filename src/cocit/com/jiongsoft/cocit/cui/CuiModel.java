@@ -8,7 +8,7 @@ import java.io.Writer;
  * <LI>可以是不含数据的窗体模型；
  * <LI>可以是包含数据的窗体模型；
  * <LI>可以是没有窗体的数据模型；
- * <LI>UI模型由{@link CuiModelFactory}创建；
+ * <LI>UI模型由{@link CuiModuleMnR}创建；
  * <LI>UI模型通过Action方法返回；
  * <LI>UI模型被{@link CuiRender}输出到浏览器；
  * </UL>

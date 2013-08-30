@@ -4,14 +4,14 @@ import com.jiongsoft.cocit.coft.impl.BaseCoftConfig;
 import com.kmetop.demsy.config.SoftConfigManager;
 
 public class DemsyCoftConfig extends BaseCoftConfig {
-	private SoftConfigManager manager;
+	private SoftConfigManager demsyConfigManager;
 
 	DemsyCoftConfig() {
-		manager = SoftConfigManager.me();
+		demsyConfigManager = SoftConfigManager.me();
 	}
 
 	protected String getStr(String key) {
-		return manager.get(key, "");
+		return demsyConfigManager.get(key, "");
 	}
 
 }

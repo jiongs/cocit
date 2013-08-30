@@ -1,11 +1,13 @@
 package com.jiongsoft.cocit.coft;
 
+import java.util.List;
+
 /**
- * Codule：组件化自定义模块
+ * CoftModule：组件化自定义模块
  * <UL>
  * <LI>“Componentization of custom module[it]”，“it = module”。
- * <LI>Codule是在Cocit平台上定制出来的软件模块；
- * <LI>全称“组件化自定义软件模块”；简称“Codule”、“Cocit软件模块”、“软件功能模块”、“软件模块”、“模块”等；
+ * <LI>Module是在Cocit平台上定制出来的软件模块；
+ * <LI>全称“组件化自定义软件模块”；简称“CoftModule”、“CoC模块”、“软件功能模块”、“软件模块”、“模块”等；
  * <LI>软件模块：可以在功能菜单树上显示的节点；
  * <LI>自定义软件模块包括：数据模块；工作流模块；报表模块等；
  * </UL>
@@ -15,7 +17,7 @@ package com.jiongsoft.cocit.coft;
  * @author yongshan.ji
  * 
  */
-public interface Codule {
+public interface CoftModule {
 	public static final byte TYPE_FOLDER = 90;
 
 	public static final byte TYPE_STATIC = 1;
@@ -41,12 +43,22 @@ public interface Codule {
 	 * 
 	 * @return
 	 */
-	byte getModuleType();
+	byte getType();
 
 	/**
 	 * 获取模块ID
 	 * 
 	 * @return
 	 */
-	Long getModuleID();
+	Long getID();
+
+	/**
+	 * 获取模块名称
+	 * 
+	 * @return
+	 */
+	String getName();
+
+	List<CoftModule> getChildren();
+
 }

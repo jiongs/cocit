@@ -11,10 +11,12 @@ import java.io.Writer;
 public interface CuiRender<T extends CuiModel> {
 
 	/**
+	 * 输出窗体界面
 	 * 
 	 * @param out
 	 * @param model
 	 * @throws Throwable
 	 */
 	void render(Writer out, T model) throws Throwable;
+
 }

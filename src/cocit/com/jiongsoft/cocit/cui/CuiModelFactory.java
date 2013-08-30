@@ -1,6 +1,12 @@
 package com.jiongsoft.cocit.cui;
 
-import com.jiongsoft.cocit.coft.Codule;
+import com.jiongsoft.cocit.coft.CoftModule;
+import com.jiongsoft.cocit.cui.model.CuiGridModel;
+import com.jiongsoft.cocit.cui.model.CuiMenuModel;
+import com.jiongsoft.cocit.cui.model.CuiModuleMainDetailModel;
+import com.jiongsoft.cocit.cui.model.CuiModuleModel;
+import com.jiongsoft.cocit.cui.model.CuiSearchBoxModel;
+import com.jiongsoft.cocit.cui.model.CuiTreeModel;
 
 /**
  * UI模型工厂：负责创建或管理{@link CuiModel}
@@ -16,5 +22,16 @@ public interface CuiModelFactory {
 	 * @param module
 	 * @return
 	 */
-	CuiModel getMainModel(Codule module);
+	CuiModuleModel getModuleModel(CoftModule module);
+
+	CuiGridModel getGridModel(CoftModule module);
+
+	CuiSearchBoxModel getSearchBoxModel(CoftModule module);
+
+	CuiMenuModel getMenuModel(CoftModule module);
+
+	CuiTreeModel getTreeModel(CoftModule module);
+
+	CuiModuleMainDetailModel getModuleMainDetailsModel(CoftModule module);
+
 }

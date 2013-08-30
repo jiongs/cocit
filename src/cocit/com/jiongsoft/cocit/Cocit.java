@@ -4,20 +4,21 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.jiongsoft.cocit.coft.CoftConfig;
-import com.jiongsoft.cocit.coft.CoduleFactory;
+import com.jiongsoft.cocit.coft.CoftModuleFactory;
 import com.jiongsoft.cocit.coft.Coft;
+import com.jiongsoft.cocit.coft.CoftConfig;
 import com.jiongsoft.cocit.cui.CuiModelFactory;
+import com.jiongsoft.cocit.cui.CuiRenderFactory;
 import com.jiongsoft.cocit.sms.SmsClient;
 
 /**
- * Cocit：组件化自定义平台。
+ * Cocit：组件化自定义平台，也称“CoC平台”。
  * <P>
  * <b>Cocit含义：</b>
  * <UL>
  * <LI>组件化自定义信息技术：Componentization of custom information technology；
  * <LI>组件化自定义它：Componentization of custom it，“it”包括“软件、系统、报表、流程、操作、展现视图、网站、权限 ......”；
- * <LI>全称“组件化自定义平台”，简称“自定义平台”、“CoC平台”、“Cocit平台”、“Cocit”、“CoC”等；
+ * <LI>全称“组件化自定义平台”，简称“自定义平台”、“CoC平台”、“CoC”等；
  * </UL>
  * <p>
  * <b>功能说明：</b>
@@ -27,10 +28,9 @@ import com.jiongsoft.cocit.sms.SmsClient;
  * </UL>
  * <b>名词解释：</b>
  * <UL>
- * <LI>Cocit: 组件化自定义平台（Componentization of custom IT）；
- * <LI>Coft: 组件化自定义软件（Componentization of custom software）；
- * <LI>Codule: 组件化自定义模块（Componentization of custom module）；
- * <LI>Cui: 组件化自定义界面（Componentization of custom UI）;
+ * <LI>Cocit: 组件化自定义平台（Componentization of custom IT），也称“CoC平台”；
+ * <LI>Coft: 组件化自定义软件（Componentization of custom software），也称“CoC软件”；
+ * <LI>Cui: 组件化自定义界面（Componentization of custom UI），也称“CoC界面”;
  * </UL>
  * 
  * @author jiongs753
@@ -44,6 +44,11 @@ public abstract class Cocit {
 
 	private static CocitBeanFactory beanFactory;
 
+	/**
+	 * 初始化CoC平台
+	 * 
+	 * @param context
+	 */
 	public static void init(ServletContext context) {
 		// init contextPath
 		contextPath = context.getContextPath().trim();
@@ -61,6 +66,11 @@ public abstract class Cocit {
 		beanFactory = CocitBeanFactory.make(context);
 	}
 
+	/**
+	 * 释放CoC平台
+	 * 
+	 * @param context
+	 */
 	public static void destroy(ServletContext context) {
 		beanFactory.clear();
 
@@ -69,10 +79,22 @@ public abstract class Cocit {
 		httpContext = null;
 	}
 
+	/**
+	 * 获取Servlet环境路径，如果路径长度大于1则以/开头，否则路径为空串。
+	 * 
+	 * @return
+	 */
 	public static String getContextPath() {
 		return contextPath;
 	}
 
+	/**
+	 * 初始化HTTP环境，即初始化当前请求的运行环境。
+	 * 
+	 * @param req
+	 * @param res
+	 * @return
+	 */
 	public static CocitHttpContext initHttpContext(HttpServletRequest req, HttpServletResponse res) {
 		CocitHttpContext ret = beanFactory.makeHttpContext(req, res);
 
@@ -85,6 +107,11 @@ public abstract class Cocit {
 		return ret;
 	}
 
+	/**
+	 * 获取当前请求的HTTP环境。该方法只有在调用过{@link #initHttpContext(HttpServletRequest, HttpServletResponse)}之后才会有返回值，否则返回null。
+	 * 
+	 * @return
+	 */
 	public static CocitHttpContext getHttpContext() {
 		if (httpContext == null)
 			return null;
@@ -92,32 +119,82 @@ public abstract class Cocit {
 		return httpContext.get();
 	}
 
+	/**
+	 * 获取配置中的Bean对象
+	 * 
+	 * @param name
+	 *            Bean名称
+	 * @return
+	 */
 	public static <T> T getBean(String name) {
 		return beanFactory.getBean(name);
 	}
 
+	/**
+	 * 获取平台配置中的Bean对象
+	 * 
+	 * @param type
+	 *            Bean类
+	 * @return
+	 */
 	public static <T> T getBean(Class<T> type) {
 		return beanFactory.getBean(type);
 	}
 
+	/**
+	 * 根据指定的类型创建一个短信客户端接口对象，该方法被通常被{@link Coft}调用，且每个{@link Coft}对象只会调用该方法一次来创建短信第三方接口对象，之后将缓存在{@link Coft}对象中。
+	 * 
+	 * @param type
+	 * @return 返回一个新建的短信客户端接口。
+	 */
 	public static SmsClient makeSmsClient(String type) {
 		return beanFactory.makeSmsClient(type);
 	}
 
+	/**
+	 * 根据CoC软件ID获取CoC软件对象，每个软件ID将对应一个唯一的{@link Coft}缓存对象。
+	 * 
+	 * @param softID
+	 * @return 返回一个已被缓存的CoC软件{@link Coft}实例。
+	 */
 	public static Coft getCoft(Long softID) {
 		return beanFactory.getCoft(softID);
 	}
 
+	/**
+	 * 创建CoC软件配置助手
+	 * 
+	 * @return 返回一个全新的CoC软件配置助手实例对象
+	 */
 	public static CoftConfig makeCoftConfig() {
 		return beanFactory.makeCoftConfig();
 	}
 
-	public static CoduleFactory getCoduleFactory() {
-		return beanFactory.getBean(CoduleFactory.class);
+	/**
+	 * 获取CoC模块工厂
+	 * 
+	 * @return 返回已被缓存的CoC模型工厂{@link CoftModuleFactory}的单例对象。
+	 */
+	public static CoftModuleFactory getModuleFactory() {
+		return beanFactory.getBean(CoftModuleFactory.class);
 	}
 
+	/**
+	 * 获取CoC UI模型工厂
+	 * 
+	 * @return 返回已被缓存的CoC模型工厂{@link CuiModelFactory}的单例对象。
+	 */
 	public static CuiModelFactory getCuiModelFactory() {
 		return beanFactory.getBean(CuiModelFactory.class);
+	}
+
+	/**
+	 * 获取CoC UIRender 工厂
+	 * 
+	 * @return 返回已被缓存的CoC Render工厂{@link CuiRenderFactory}的单例对象。
+	 */
+	public static CuiRenderFactory getCuiRenderFactory() {
+		return beanFactory.getBean(CuiRenderFactory.class);
 	}
 
 }

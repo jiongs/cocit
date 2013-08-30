@@ -6,7 +6,7 @@ package com.jiongsoft.cocit.coft;
  * @author yongshan.ji
  * 
  */
-public interface CoduleFactory {
+public interface CoftModuleFactory {
 
 	/**
 	 * 获取软件模块
@@ -15,6 +15,6 @@ public interface CoduleFactory {
 	 *            模块ID
 	 * @return Cocit软件模块
 	 */
-	Codule getModule(Long moduleID);
+	CoftModule getModule(Long moduleID);
 
 }
