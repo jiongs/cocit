@@ -35,6 +35,7 @@ import org.nutz.mvc.impl.ActionInvoker;
 import org.nutz.trans.Trans;
 
 import com.handsome.ip.IPSeeker;
+import com.jiongsoft.cocit.Cocit;
 import com.kmetop.demsy.actions.BizActions;
 import com.kmetop.demsy.actions.ConfigActions;
 import com.kmetop.demsy.actions.AppActions;
@@ -103,8 +104,7 @@ import com.kmetop.demsy.security.SecurityException;
  * <b>可以从【DEMSY平台上下文环境】中：</b>
  * <UL>
  * <LI>初始化【DEMSY平台上下文环境】 {@link #init(ServletContext)}
- * <LI>初始化【DEMSY请求上下文环境】
- * {@link #initMe(HttpServletRequest, HttpServletResponse)}
+ * <LI>初始化【DEMSY请求上下文环境】 {@link #initMe(HttpServletRequest, HttpServletResponse)}
  * <LI>获取环境相对路径 {@link #contextPath()}
  * <LI>获取环境真实路径 {@link #contextDir()}
  * <LI>根据bean名称获取IOC中的对象 {@link #bean(String)}
@@ -397,6 +397,8 @@ public abstract class Demsy implements Const, MvcConst {
 
 		me.set(context);
 
+		Cocit.initHttpContext(req, resp);
+
 		return context;
 	}
 
@@ -640,8 +642,7 @@ public abstract class Demsy implements Const, MvcConst {
 	 * <UL>
 	 * <LI>已登录：
 	 * <UL>
-	 * <LI>登录信息中的用户实体未过期：则获取登录信息中的用户实体
-	 * {@link com.kmetop.demsy.security.ILogin#getUser()}；
+	 * <LI>登录信息中的用户实体未过期：则获取登录信息中的用户实体 {@link com.kmetop.demsy.security.ILogin#getUser()}；
 	 * <li>登录信息中的用户实体已过期：返回空值；
 	 * </UL>
 	 * <li>未登录：返回空值；

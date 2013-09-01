@@ -1,6 +1,7 @@
 package com.jiongsoft.cocit.utils;
 
 import java.io.Writer;
+import java.util.List;
 
 import com.jiongsoft.cocit.utils.json.JsonImpl;
 
@@ -19,5 +20,13 @@ public abstract class Json {
 
 	public static void toJson(Writer writer, Object obj) {
 		json.toJson(writer, obj);
+	}
+
+	public static List fromJson(String str) {
+		return json.fromJson(str);
+	}
+
+	public static <T> T fromJson(Class<T> type, String str) {
+		return json.fromJson(type, str);
 	}
 }

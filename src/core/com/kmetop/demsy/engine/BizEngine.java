@@ -51,6 +51,7 @@ import org.nutz.trans.Trans;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.IBizEngine;
 import com.kmetop.demsy.comlib.LibConst;
+import com.kmetop.demsy.comlib.biz.IBizAction;
 import com.kmetop.demsy.comlib.biz.IBizField;
 import com.kmetop.demsy.comlib.biz.IBizFieldGroup;
 import com.kmetop.demsy.comlib.biz.IBizFieldType;
@@ -675,7 +676,7 @@ public abstract class BizEngine implements IBizEngine {
 		return field.isGridField();
 	}
 
-	private String parseMode(String actionMode, String mode) {
+	public String parseMode(String actionMode, String mode) {
 		if (actionMode == null || actionMode.trim().length() == 0) {
 			actionMode = "v";
 		}
@@ -922,6 +923,13 @@ public abstract class BizEngine implements IBizEngine {
 		return biz(system.getId()).fields();
 	}
 
+	public List<? extends IBizAction> getActions(IBizSystem system) {
+		if (system == null)
+			return new LinkedList();
+
+		return biz(system.getId()).actions();
+	}
+
 	@Override
 	public List<? extends IBizField> getFields(IBizFieldGroup group) {
 		List<? extends IBizField> list = biz(group.getSystem().getId()).fields();
@@ -990,8 +998,7 @@ public abstract class BizEngine implements IBizEngine {
 	}
 
 	/**
-	 * 包名 com.kmetop.demsy.comlib.impl.sft 将会被自动映射到 com.sft.entity
-	 * 以确保实体映射表与遗留系统兼容
+	 * 包名 com.kmetop.demsy.comlib.impl.sft 将会被自动映射到 com.sft.entity 以确保实体映射表与遗留系统兼容
 	 * 
 	 * @param system
 	 * @return

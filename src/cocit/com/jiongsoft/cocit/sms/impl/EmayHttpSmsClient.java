@@ -14,7 +14,7 @@ import java.util.List;
 
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitHttpContext;
-import com.jiongsoft.cocit.coft.Coft;
+import com.jiongsoft.cocit.cocobj.CobSoft;
 import com.jiongsoft.cocit.sms.SmsClient;
 import com.jiongsoft.cocit.utils.Log;
 
@@ -63,7 +63,7 @@ public class EmayHttpSmsClient implements SmsClient {
 		CocitHttpContext ctx = Cocit.getHttpContext();
 
 		if (ctx != null) {
-			Coft soft = ctx.getCoft();
+			CobSoft soft = ctx.getSoft();
 
 			this.proxyHost = soft.getConfig(CFG_PROXY_HOST, "");
 			this.proxyPort = soft.getConfig(CFG_PROXY_PORT, 80);

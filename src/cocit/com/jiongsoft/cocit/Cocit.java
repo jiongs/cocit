@@ -4,11 +4,11 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.jiongsoft.cocit.coft.CoftModuleFactory;
-import com.jiongsoft.cocit.coft.Coft;
-import com.jiongsoft.cocit.coft.CoftConfig;
-import com.jiongsoft.cocit.cui.CuiModelFactory;
-import com.jiongsoft.cocit.cui.CuiRenderFactory;
+import com.jiongsoft.cocit.cocobj.CobSoft;
+import com.jiongsoft.cocit.cocobj.CocSoftFactory;
+import com.jiongsoft.cocit.cocui.CuiModelFactory;
+import com.jiongsoft.cocit.cocui.CuiRenderFactory;
+import com.jiongsoft.cocit.corm.CormFactory;
 import com.jiongsoft.cocit.sms.SmsClient;
 
 /**
@@ -29,8 +29,8 @@ import com.jiongsoft.cocit.sms.SmsClient;
  * <b>名词解释：</b>
  * <UL>
  * <LI>Cocit: 组件化自定义平台（Componentization of custom IT），也称“CoC平台”；
- * <LI>Coft: 组件化自定义软件（Componentization of custom software），也称“CoC软件”；
- * <LI>Cui: 组件化自定义界面（Componentization of custom UI），也称“CoC界面”;
+ * <LI>cocob(Cob): 组件化自定义对象（Componentization of custom object）；
+ * <LI>cocui(Cui): 组件化自定义界面（Componentization of custom UI），也称“CoC界面”;
  * </UL>
  * 
  * @author jiongs753
@@ -142,7 +142,7 @@ public abstract class Cocit {
 	}
 
 	/**
-	 * 根据指定的类型创建一个短信客户端接口对象，该方法被通常被{@link Coft}调用，且每个{@link Coft}对象只会调用该方法一次来创建短信第三方接口对象，之后将缓存在{@link Coft}对象中。
+	 * 根据指定的类型创建一个短信客户端接口对象，该方法被通常被{@link CobSoft}调用，且每个{@link CobSoft}对象只会调用该方法一次来创建短信第三方接口对象，之后将缓存在{@link CobSoft}对象中。
 	 * 
 	 * @param type
 	 * @return 返回一个新建的短信客户端接口。
@@ -151,32 +151,31 @@ public abstract class Cocit {
 		return beanFactory.makeSmsClient(type);
 	}
 
-	/**
-	 * 根据CoC软件ID获取CoC软件对象，每个软件ID将对应一个唯一的{@link Coft}缓存对象。
-	 * 
-	 * @param softID
-	 * @return 返回一个已被缓存的CoC软件{@link Coft}实例。
-	 */
-	public static Coft getCoft(Long softID) {
-		return beanFactory.getCoft(softID);
-	}
+	// /**
+	// * 创建一个软件对象
+	// * <p>
+	// * 通常供CocitHttpContext构造函数调用，用来构造一个软件对象。
+	// */
+	// public static CobSoft makeSoft() {
+	// return beanFactory.makeSoft();
+	// }
+	//
+	// /**
+	// * 创建CoC软件配置助手
+	// *
+	// * @return 返回一个全新的CoC软件配置助手实例对象
+	// */
+	// public static CobSoftConfig makeSoftConfig() {
+	// return beanFactory.makeSoftConfig();
+	// }
 
 	/**
-	 * 创建CoC软件配置助手
+	 * 获取自定义对象工厂
 	 * 
-	 * @return 返回一个全新的CoC软件配置助手实例对象
+	 * @return 返回已被缓存的CoC模型工厂{@link CocSoftFactory}的单例对象。
 	 */
-	public static CoftConfig makeCoftConfig() {
-		return beanFactory.makeCoftConfig();
-	}
-
-	/**
-	 * 获取CoC模块工厂
-	 * 
-	 * @return 返回已被缓存的CoC模型工厂{@link CoftModuleFactory}的单例对象。
-	 */
-	public static CoftModuleFactory getModuleFactory() {
-		return beanFactory.getBean(CoftModuleFactory.class);
+	public static CocSoftFactory getCocSoftFactory() {
+		return beanFactory.getBean(CocSoftFactory.class);
 	}
 
 	/**
@@ -195,6 +194,10 @@ public abstract class Cocit {
 	 */
 	public static CuiRenderFactory getCuiRenderFactory() {
 		return beanFactory.getBean(CuiRenderFactory.class);
+	}
+
+	public static CormFactory getCormFactory() {
+		return beanFactory.getBean(CormFactory.class);
 	}
 
 }

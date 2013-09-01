@@ -20,11 +20,8 @@ import org.testng.annotations.Test;
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitBeanFactory;
 import com.jiongsoft.cocit.CocitHttpContext;
-import com.jiongsoft.cocit.coft.Coft;
-import com.jiongsoft.cocit.impl.demsy.DemsyCocitHttpContext;
 import com.jiongsoft.cocit.sms.SmsClient;
 import com.jiongsoft.cocit.sms.impl.ZrSmsClient;
-import com.jiongsoft.cocit.sms.impl.ZucpSmsClient;
 import com.jiongsoft.cocit.utils.Json;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.entity.IDemsySoft;
@@ -105,12 +102,6 @@ public class CocitTest {
 		beanFactory = Cocit.getBean("cocitBeanAssist");
 		assertNotNull(beanFactory);
 
-		Coft soft = Cocit.getCoft(1L);
-		assertNull(soft);
-
-		assertEquals(beanFactory.getCocitHttpContext(), DemsyCocitHttpContext.class.getName());
-		assertEquals(beanFactory.getSmsClient_zr(), ZrSmsClient.class.getName());
-		assertEquals(beanFactory.getSmsClient_zucp(), ZucpSmsClient.class.getName());
 	}
 
 	@Test
@@ -157,10 +148,10 @@ public class CocitTest {
 		ctx = Cocit.getHttpContext();
 		assertNotNull(ctx);
 
-		assertNotNull(ctx.getCoft());
+		assertNotNull(ctx.getSoft());
 
-		assertNotNull(ctx.getCoft().getSmsClient());
+		assertNotNull(ctx.getSoft().getSmsClient());
 
-		assertNotNull(ctx.getCoft().getSmsClient() instanceof ZrSmsClient);
+		assertNotNull(ctx.getSoft().getSmsClient() instanceof ZrSmsClient);
 	}
 }

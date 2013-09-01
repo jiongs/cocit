@@ -1,5 +1,6 @@
 package com.jiongsoft.cocit;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -18,9 +19,10 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletContext;
 
-import com.jiongsoft.cocit.CocitBeanFactory;
-import com.jiongsoft.cocit.CocitHttpContext;
+import com.jiongsoft.cocit.impl.demsy.DemsyCocitHttpContext;
 import com.jiongsoft.cocit.sms.SmsClient;
+import com.jiongsoft.cocit.sms.impl.ZrSmsClient;
+import com.jiongsoft.cocit.sms.impl.ZucpSmsClient;
 import com.jiongsoft.cocit.utils.ClassUtil;
 import com.jiongsoft.cocit.utils.Json;
 import com.jiongsoft.cocit.utils.json.JsonImpl;
@@ -77,6 +79,10 @@ public class CocitBeanFactoryTest {
 
 		factory = beanFactory.getBean("cocitBeanFactory");
 		assertNotNull(factory);
+
+		assertEquals(factory.getCocitHttpContext(), DemsyCocitHttpContext.class.getName());
+		assertEquals(factory.getSmsClient_zr(), ZrSmsClient.class.getName());
+		assertEquals(factory.getSmsClient_zucp(), ZucpSmsClient.class.getName());
 	}
 
 	// @Test

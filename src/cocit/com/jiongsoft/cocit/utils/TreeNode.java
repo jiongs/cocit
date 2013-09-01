@@ -8,13 +8,20 @@ import java.util.Map;
 public class TreeNode {
 
 	private String id;
-	private TreeNode parent;
+	private String title;
+
 	private List<TreeNode> children;
 	private Map<String, Object> props;
 
 	public TreeNode() {
+		this(null, null);
+	}
+
+	public TreeNode(String id, String title) {
 		children = new ArrayList<TreeNode>();
 		props = new Hashtable();
+		this.id = id;
+		this.title = title;
 	}
 
 	public void addChild(TreeNode child) {
@@ -37,20 +44,20 @@ public class TreeNode {
 		this.id = id;
 	}
 
-	public TreeNode getParent() {
-		return parent;
-	}
-
-	public void setParent(TreeNode parent) {
-		this.parent = parent;
-	}
-
 	public List<TreeNode> getChildren() {
 		return children;
 	}
 
 	public void setChildren(List<TreeNode> children) {
 		this.children = children;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 }

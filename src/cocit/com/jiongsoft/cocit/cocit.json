@@ -5,8 +5,6 @@
 			cocitHttpContext: "com.jiongsoft.cocit.impl.demsy.DemsyCocitHttpContext",
 			smsClient_zucp: "com.jiongsoft.cocit.sms.impl.ZucpSmsClient",
 			smsClient_zr: "com.jiongsoft.cocit.sms.impl.ZrSmsClient",
-			coft: "com.jiongsoft.cocit.coft.impl.CoftImpl",
-			coftConfig: "com.jiongsoft.cocit.coft.impl.demsy.DemsyCoftConfig"
 		}
 	}
 }

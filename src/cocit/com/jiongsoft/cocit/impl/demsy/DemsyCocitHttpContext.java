@@ -4,17 +4,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jiongsoft.cocit.impl.BaseCocitHttpContext;
-import com.kmetop.demsy.Demsy;
 
 public class DemsyCocitHttpContext extends BaseCocitHttpContext {
+	// private Demsy demsyContext;
 
 	public DemsyCocitHttpContext(HttpServletRequest req, HttpServletResponse res) {
 		super(req, res);
-	}
 
-	@Override
-	protected Long getCoftID() {
-		return Demsy.me().getSoft().getId();
+		//
+		// demsyContext = Demsy.me();
 	}
 
 }

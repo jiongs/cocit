@@ -2,6 +2,7 @@ package com.jiongsoft.cocit.utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -38,12 +39,7 @@ public abstract class StringUtil {
 		if (token == null)
 			token = ";, ";
 
-		List<String> list = new ArrayList();
-
-		StringTokenizer st = new StringTokenizer(str, token);
-		while (st.hasMoreElements()) {
-			list.add((String) st.nextElement());
-		}
+		List<String> list = toList(str, token);
 
 		String[] array = new String[list.size()];
 
@@ -52,6 +48,22 @@ public abstract class StringUtil {
 		}
 
 		return array;
+	}
+
+	public static List<String> toList(String str, String token) {
+		if (str == null)
+			return null;
+		if (token == null)
+			token = ";, ";
+
+		List<String> list = new ArrayList();
+
+		StringTokenizer st = new StringTokenizer(str, token);
+		while (st.hasMoreElements()) {
+			list.add((String) st.nextElement());
+		}
+
+		return list;
 	}
 
 	/**
@@ -86,5 +98,32 @@ public abstract class StringUtil {
 
 		// return new String(BinaryCodec.toAsciiBytes(str.getBytes()));
 		return new String(Hex.encodeHex(str.getBytes()));
+	}
+
+	public static <T> T cast(String value, Class<T> valueType) throws Throwable {
+
+		if (valueType.equals(String.class))
+			return (T) value;
+		if (Long.class.isAssignableFrom(valueType))
+			return (T) Long.valueOf(value);
+		if (Integer.class.isAssignableFrom(valueType))
+			return (T) Integer.valueOf(value);
+		if (Short.class.isAssignableFrom(valueType))
+			return (T) Short.valueOf(value);
+		if (Byte.class.isAssignableFrom(valueType))
+			return (T) Byte.valueOf(value);
+		if (Double.class.isAssignableFrom(valueType))
+			return (T) Double.valueOf(value);
+		if (Float.class.isAssignableFrom(valueType))
+			return (T) Float.valueOf(value);
+		if (Boolean.class.isAssignableFrom(valueType))
+			return (T) Boolean.valueOf(value);
+		if (Date.class.isAssignableFrom(valueType))
+			return (T) DateUtil.parse(value);
+		if (Class.class.isAssignableFrom(valueType))
+			return (T) ClassUtil.forName(value);
+
+		return (T) ClassUtil.newInstance(valueType, value);
+
 	}
 }

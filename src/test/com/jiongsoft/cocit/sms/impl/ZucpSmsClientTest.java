@@ -15,7 +15,7 @@ import org.junit.Test;
 
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitHttpContext;
-import com.jiongsoft.cocit.coft.Coft;
+import com.jiongsoft.cocit.cocobj.CobSoft;
 import com.jiongsoft.cocit.sms.SmsClient;
 import com.jiongsoft.cocit.utils.DateUtil;
 
@@ -29,11 +29,11 @@ public class ZucpSmsClientTest {
 			@Mocked
 			CocitHttpContext softContext;
 			@Mocked
-			Coft soft;
+			CobSoft soft;
 			{
 				Cocit.getHttpContext();
 				result = softContext;
-				softContext.getCoft();
+				softContext.getSoft();
 				result = soft;
 
 				soft.getConfig(SmsClient.CFG_PROXY_HOST, "");

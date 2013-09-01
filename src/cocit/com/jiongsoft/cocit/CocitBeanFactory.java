@@ -1,8 +1,5 @@
 package com.jiongsoft.cocit;
 
-import java.util.Hashtable;
-import java.util.Map;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,8 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.nutz.ioc.impl.NutIoc;
 import org.nutz.ioc.loader.json.JsonLoader;
 
-import com.jiongsoft.cocit.coft.CoftConfig;
-import com.jiongsoft.cocit.coft.Coft;
 import com.jiongsoft.cocit.sms.SmsClient;
 import com.jiongsoft.cocit.utils.ClassUtil;
 import com.jiongsoft.cocit.utils.Log;
@@ -39,8 +34,8 @@ public class CocitBeanFactory {
 		return beans.get(CocitBeanFactory.class);
 	}
 
-	// <softID, JSoft>
-	private Map<Long, Coft> coftCache;
+	// // <softID, CobSoft>
+	// private Map<Long, CobSoft> softCache;
 
 	/*
 	 * 接口实现类全名
@@ -48,15 +43,17 @@ public class CocitBeanFactory {
 	private String cocitHttpContext;
 	private String smsClient_zucp;
 	private String smsClient_zr;
-	private String coft;
-	private String coftConfig;
+
+	// private String soft;
+	// private String softConfig;
+	// private String loginUser;
 
 	public CocitBeanFactory() {
-		this.coftCache = new Hashtable();
+		// this.softCache = new Hashtable();
 	}
 
 	void clear() {
-		this.coftCache.clear();
+		// this.softCache.clear();
 	}
 
 	<T> T getBean(String name) {
@@ -89,25 +86,25 @@ public class CocitBeanFactory {
 		return null;
 	}
 
-	private Coft makeCoft(Long softID) {
-		try {
-			return ClassUtil.newInstance(coft, softID);
-		} catch (Throwable e) {
-			Log.error("CocitBeanFactory.makeCoft: 失败! {coft:%s}", coft, e);
-		}
-
-		return null;
-	}
-
-	CoftConfig makeCoftConfig() {
-		try {
-			return ClassUtil.newInstance(coftConfig);
-		} catch (Throwable e) {
-			Log.error("CocitBeanFactory.makeCoftConfig: 失败! {coftConfig:%s}", coftConfig, e);
-		}
-
-		return null;
-	}
+	// CobSoft makeSoft() {
+	// try {
+	// return ClassUtil.newInstance(soft);
+	// } catch (Throwable e) {
+	// Log.error("CocitBeanFactory.makeSoft: 失败! {soft:%s}", soft, e);
+	// }
+	//
+	// return null;
+	// }
+	//
+	// CobSoftConfig makeSoftConfig() {
+	// try {
+	// return ClassUtil.newInstance(softConfig);
+	// } catch (Throwable e) {
+	// Log.error("CocitBeanFactory.makeSoftConfig: 失败! {softConfig:%s}", softConfig, e);
+	// }
+	//
+	// return null;
+	// }
 
 	SmsClient makeSmsClient(String type) {
 
@@ -132,32 +129,33 @@ public class CocitBeanFactory {
 		return null;
 	}
 
-	Coft getCoft(Long softID) {
-		Coft soft = coftCache.get(softID);
-		if (soft == null) {
-			soft = this.makeCoft(softID);
-		}
+	// CocLoginUser makeLoginUser() {
+	// try {
+	// return ClassUtil.newInstance(loginUser);
+	// } catch (Throwable e) {
+	// Log.error("CocitBeanFactory.makeLoginUser: 失败! {loginUser:%s}", loginUser, e);
+	// }
+	//
+	// return null;
+	// }
 
-		return soft;
-	}
-
-	public String getCocitHttpContext() {
+	String getCocitHttpContext() {
 		return cocitHttpContext;
 	}
 
-	public String getSmsClient_zucp() {
+	String getSmsClient_zucp() {
 		return smsClient_zucp;
 	}
 
-	public String getSmsClient_zr() {
+	String getSmsClient_zr() {
 		return smsClient_zr;
 	}
 
-	public String getCoft() {
-		return coft;
-	}
-
-	public String getCoftConfig() {
-		return coftConfig;
-	}
+	// String getSoft() {
+	// return soft;
+	// }
+	//
+	// String getSoftConfig() {
+	// return softConfig;
+	// }
 }

@@ -4,7 +4,7 @@ import org.nutz.ioc.Ioc;
 import org.nutz.mvc.View;
 import org.nutz.mvc.ViewMaker;
 
-import com.jiongsoft.cocit.cui.CuiModelView;
+import com.jiongsoft.cocit.cocui.CuiModelView;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.mvc.MvcConst;
 

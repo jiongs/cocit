@@ -317,7 +317,7 @@ public class SFTModuleEngine extends ModuleEngine {
 		}
 	}
 
-	// private int clearModule(IOrm orm, DemsySoft soft) {
+	// private int clearModule(IOrm orm, DemsyCobSoft soft) {
 	// int ret = 0;
 	//
 	// List<Module> modules = orm.query(Module.class, Expr.eq(F_SOFT_ID, soft));
@@ -608,7 +608,7 @@ public class SFTModuleEngine extends ModuleEngine {
 	}
 
 	//
-	// private int setupStaticModules(IOrm orm, DemsySoft soft) {
+	// private int setupStaticModules(IOrm orm, DemsyCobSoft soft) {
 	// int ret = 0;
 	//
 	// BizSystemAnn sysann = (BizSystemAnn)
