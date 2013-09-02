@@ -120,10 +120,12 @@
 
 /* Panel Button - Collapse */
 .PnHBL {
+	background: url('images/ui_panel.png') no-repeat -32px 0;
 }
 
 /* Panel Button - Expand */
 .PnHBE {
+	background: url('images/ui_panel.png') no-repeat -32px -16px;
 }
 
 /**

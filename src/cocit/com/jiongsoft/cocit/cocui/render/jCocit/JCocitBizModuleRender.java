@@ -1,12 +1,12 @@
-package com.jiongsoft.cocit.cocui.impl.render.jCocit;
+package com.jiongsoft.cocit.cocui.render.jCocit;
 
 import java.io.Writer;
 import java.util.List;
 
 import com.jiongsoft.cocit.Cocit;
-import com.jiongsoft.cocit.cocui.impl.render.BaseCuiRender;
 import com.jiongsoft.cocit.cocui.model.CuiBizModuleModel;
 import com.jiongsoft.cocit.cocui.model.CuiBizTableModel;
+import com.jiongsoft.cocit.cocui.render.BaseCuiRender;
 import com.jiongsoft.cocit.utils.Lang;
 
 class JCocitBizModuleRender extends BaseCuiRender<CuiBizModuleModel> {
@@ -24,7 +24,7 @@ class JCocitBizModuleRender extends BaseCuiRender<CuiBizModuleModel> {
 		print(out, "<link href=\"%s/jCocit/css/jCocit.min.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 		print(out, "<script src=\"%s/jCocit/jquery.min.js\" type=\"text/javascript\"></script>", contextPath);
 		print(out, "<script src=\"%s/jCocit/js/jCocit.src.js\" type=\"text/javascript\"></script>", contextPath);
-		print(out, "<script src=\"%s/jCocit/js/jCocit.nls.zh.js\" type=\"text/javascript\"></script>");
+		print(out, "<script src=\"%s/jCocit/js/jCocit.nls.zh.js\" type=\"text/javascript\"></script>", contextPath);
 		print(out, "</head>");
 		print(out, "<body>");
 
@@ -40,7 +40,7 @@ class JCocitBizModuleRender extends BaseCuiRender<CuiBizModuleModel> {
 		List<CuiBizTableModel> children = model.getChildrenBizTableModels();
 		if (Lang.hasContent(children)) {
 			// print tabs of children biz table models
-			
+
 		}
 
 		// print model end

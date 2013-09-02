@@ -21,5 +21,10 @@
 			<type>2</type>
 			<location>E:/Opensource</location>
 		</link>
+		<link>
+			<name>classes</name>
+			<type>2</type>
+			<location>F:/Projects/demsy_ynby_portlet/webapp/WEB-INF/classes</location>
+		</link>
 	</linkedResources>
 </projectDescription>

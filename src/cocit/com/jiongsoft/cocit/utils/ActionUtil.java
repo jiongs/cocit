@@ -1,6 +1,4 @@
-package com.jiongsoft.cocit.actions;
-
-import com.jiongsoft.cocit.utils.StringUtil;
+package com.jiongsoft.cocit.utils;
 
 public abstract class ActionUtil {
 
@@ -19,7 +17,9 @@ public abstract class ActionUtil {
 			sb.append(str + ":");
 		}
 
-		return StringUtil.encodeHex(sb.toString());
+		return sb.toString();
+
+		// return StringUtil.encodeHex(sb.toString());
 	}
 
 	/**
@@ -29,7 +29,9 @@ public abstract class ActionUtil {
 	 * @return
 	 */
 	public static String[] decodeArgs(String args) {
-		String str = StringUtil.decodeHex(args);
+		String str = args;
+
+		// String str = StringUtil.decodeHex(args);
 
 		return StringUtil.toArray(str, ":");
 	}

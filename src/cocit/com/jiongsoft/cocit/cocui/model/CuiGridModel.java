@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-
 /**
  * 数据表Grid界面模型：由多个Grid列和数据组成，如果数据不存在则表示将异步获取Grid数据。
  * 
@@ -19,6 +18,10 @@ import java.util.Properties;
  * 
  */
 public class CuiGridModel extends BaseCuiModel {
+
+	private String id;
+	private String name;
+	private int pageSize = 20;
 
 	// Grid数据，如果该值为Null，则将通过AJAX方式加载Grid数据。
 	private List data;
@@ -92,8 +95,10 @@ public class CuiGridModel extends BaseCuiModel {
 	public static class GridColumn {
 		private String field;
 		private String title;
-		private String assign;
+		private String align;
 		private int width;
+		private String pattern;
+
 		private Properties props;
 
 		/**
@@ -103,7 +108,7 @@ public class CuiGridModel extends BaseCuiModel {
 		 *            字段：用于标识该列数据来自哪个字段？
 		 * @param title
 		 *            标题：用于显示表头标题
-		 * @param assign
+		 * @param align
 		 *            数据对齐方式：可选值“right/center/left”
 		 * @param width
 		 *            列宽度：单位px，-1 表示自动宽度。
@@ -139,12 +144,12 @@ public class CuiGridModel extends BaseCuiModel {
 			this.title = title;
 		}
 
-		public String getAssign() {
-			return assign;
+		public String getAlign() {
+			return align;
 		}
 
-		public void setAssign(String assign) {
-			this.assign = assign;
+		public void setAlign(String assign) {
+			this.align = assign;
 		}
 
 		public int getWidth() {
@@ -162,6 +167,38 @@ public class CuiGridModel extends BaseCuiModel {
 		public void setProps(Properties props) {
 			this.props = props;
 		}
+
+		public String getPattern() {
+			return pattern;
+		}
+
+		public void setPattern(String pattern) {
+			this.pattern = pattern;
+		}
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
 	}
 
 }

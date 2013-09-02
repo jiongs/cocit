@@ -1,21 +1,14 @@
-package com.jiongsoft.cocit.cocui.impl;
+package com.jiongsoft.cocit.cocui.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.jiongsoft.cocit.actions.ActionUtil;
 import com.jiongsoft.cocit.cocsoft.CocBizField;
 import com.jiongsoft.cocit.cocsoft.CocBizModule;
 import com.jiongsoft.cocit.cocsoft.CocBizOperation;
 import com.jiongsoft.cocit.cocsoft.CocBizTable;
-import com.jiongsoft.cocit.cocui.model.CuiBizModuleModel;
-import com.jiongsoft.cocit.cocui.model.CuiBizTableModel;
-import com.jiongsoft.cocit.cocui.model.CuiGridModel;
-import com.jiongsoft.cocit.cocui.model.CuiModelFactory;
 import com.jiongsoft.cocit.cocui.model.CuiGridModel.GridColumn;
-import com.jiongsoft.cocit.cocui.model.CuiMenuModel;
-import com.jiongsoft.cocit.cocui.model.CuiSearchBoxModel;
-import com.jiongsoft.cocit.cocui.model.CuiTreeModel;
+import com.jiongsoft.cocit.utils.ActionUtil;
 import com.jiongsoft.cocit.utils.TreeNode;
 
 public class CuiModelFactoryImpl implements CuiModelFactory {
@@ -62,21 +55,29 @@ public class CuiModelFactoryImpl implements CuiModelFactory {
 	public CuiGridModel getGridModel(CocBizModule module, CocBizTable dataTable) {
 		CuiGridModel model = new CuiGridModel();
 
+		model.setId("" + dataTable.getID());
+		model.setName(dataTable.getName());
 		model.setDataLoadUrl(ActionUtil.GET_BIZ_TABLE_GRID_DATA.replace("*", ActionUtil.encodeArgs(module.getID(), dataTable.getID())));
 
 		// 创建Grid字段列
 		List<CocBizField> fields = dataTable.getBizFieldsForGrid();
+		int count = 0;
 		for (CocBizField fld : fields) {
 			GridColumn col = new GridColumn(fld.getPropName(), fld.getName());
 
 			// 设置Grid列属性
 			if (fld.getType() == CocBizField.TYPE_NUMBER)
-				col.setAssign("right");
+				col.setAlign("right");
 			else
-				col.setAssign("left");
+				col.setAlign("left");
 			col.setWidth(fld.getGridWidth());
+			col.setPattern(fld.getPattern());
 
 			model.addColumn(col);
+
+			count++;
+			if (count == 8)
+				break;
 		}
 
 		return model;

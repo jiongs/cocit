@@ -11,6 +11,7 @@ import com.jiongsoft.cocit.cocui.CuiRenderFactory;
 import com.jiongsoft.cocit.cocui.model.CuiModelFactory;
 import com.jiongsoft.cocit.corm.CormFactory;
 import com.jiongsoft.cocit.sms.SmsClient;
+import com.jiongsoft.cocit.utils.Log;
 
 /**
  * Cocit：组件化自定义平台，也称“CoC平台”。
@@ -52,6 +53,8 @@ public abstract class Cocit {
 	 * @param context
 	 */
 	public static void init(ServletContext context) {
+		Log.info("Cocit.init......");
+
 		// init contextPath
 		contextPath = context.getContextPath().trim();
 		if (contextPath.endsWith("/")) {
@@ -66,6 +69,8 @@ public abstract class Cocit {
 
 		// init beanAssist
 		beanFactory = CocitBeanFactory.make(context);
+
+		Log.info("Cocit.init: end! {contextPath: %s, beanFactory: %s}", contextPath, beanFactory);
 	}
 
 	/**
@@ -105,6 +110,8 @@ public abstract class Cocit {
 
 		httpContext.remove();
 		httpContext.set(ret);
+
+		Log.debug("Cocit.initHttpContext: ret = %s", ret);
 
 		return ret;
 	}

@@ -53,7 +53,10 @@ public class CuiModelView implements View {
 				}
 			}
 		} else {
-			Log.error("UIModelRenderView.render: 不支持的输出类型！{type:%s}", obj == null ? "<NULL>" : obj.getClass().getName());
+			if (obj instanceof Throwable) {
+				Log.error("UIModelRenderView.render: Error!", obj);
+			} else
+				Log.error("UIModelRenderView.render: 不支持的输出类型！{type:%s}", obj == null ? "<NULL>" : obj.getClass().getName());
 		}
 	}
 

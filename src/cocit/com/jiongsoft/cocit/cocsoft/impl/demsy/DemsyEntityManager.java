@@ -5,7 +5,6 @@ import java.util.List;
 import com.jiongsoft.cocit.cocsoft.CocBizModule;
 import com.jiongsoft.cocit.cocsoft.EntityManager;
 import com.jiongsoft.cocit.corm.expr.CndExpr;
-import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.IBizManager;
 
@@ -33,8 +32,13 @@ public class DemsyEntityManager implements EntityManager {
 	}
 
 	@Override
-	public List query(Expr expr, String opCode) {
-		return bizManager.query(opCode, (CndExpr) expr);
+	public List query(CndExpr expr, String opCode) {
+		return bizManager.query(opCode, expr);
+	}
+
+	@Override
+	public int count(CndExpr expr, String opCode) {
+		return bizManager.count(opCode, expr);
 	}
 
 }

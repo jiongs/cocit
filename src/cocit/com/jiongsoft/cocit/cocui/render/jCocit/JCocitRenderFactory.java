@@ -1,4 +1,4 @@
-package com.jiongsoft.cocit.cocui.impl.render.jCocit;
+package com.jiongsoft.cocit.cocui.render.jCocit;
 
 import java.util.Hashtable;
 import java.util.Map;

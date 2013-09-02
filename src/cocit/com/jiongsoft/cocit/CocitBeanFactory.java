@@ -68,7 +68,9 @@ public class CocitBeanFactory {
 
 	<T> T getBean(Class<T> type) {
 		try {
-			return beans.get(type);
+			String name = type.getSimpleName();
+			name = name.substring(0, 1).toLowerCase() + name.substring(1);
+			return beans.get(null, name);
 		} catch (Exception e) {
 			Log.warn("CocitBeanFactory.get: 失败! {type:%s}", type, e);
 		}

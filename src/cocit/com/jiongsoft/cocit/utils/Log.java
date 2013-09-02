@@ -7,8 +7,8 @@ public abstract class Log {
 	private static ILog log = Logs.getLog(Log.class);
 	private static boolean traceDebug = false;
 	private static boolean traceInfo = false;
-	private static boolean traceWarn = false;
-	private static boolean traceError = false;
+	private static boolean traceWarn = true;
+	private static boolean traceError = true;
 
 	/**
 	 * 

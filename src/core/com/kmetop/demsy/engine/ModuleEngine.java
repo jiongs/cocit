@@ -126,7 +126,7 @@ public abstract class ModuleEngine implements IModuleEngine {
 
 	@Override
 	public IDemsySoft getSoft(String domainOrCode) {
-		if (Str.isEmpty(domainOrCode)) {
+		if (Str.isEmpty(domainOrCode) || domainOrCode.equals("localhost") || domainOrCode.equals("127.0.0.1")) {
 			domainOrCode = appconfig.getDefaultSoftCode();
 		}
 		return soft(domainOrCode).get();

@@ -36,6 +36,7 @@ import org.nutz.trans.Trans;
 
 import com.handsome.ip.IPSeeker;
 import com.jiongsoft.cocit.Cocit;
+import com.jiongsoft.cocit.actions.CocitBizAction;
 import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.actions.BizActions;
 import com.kmetop.demsy.actions.ConfigActions;
@@ -160,6 +161,8 @@ import com.kmetop.demsy.security.SecurityException;
 		, UiActions.class//
 		, OrderActions.class//
 		, AppActions.class //
+		// Cocit
+		, CocitBizAction.class //
 })
 @UrlMappingBy("com.kmetop.demsy.mvc.nutz.DemsyUrlMappingImpl")
 @ChainBy(args = { "com/kmetop/demsy/mvc/nutz/demsy-chains.js" })
@@ -268,6 +271,8 @@ public abstract class Demsy implements Const, MvcConst {
 
 			log.infof("初始化DEMSY平台: 配置信息:\n%s%s", appconfig, initParamLog);
 		}
+
+		Cocit.init(servletContext);
 
 		log.info("初始化DEMSY平台: 结束.");
 	}

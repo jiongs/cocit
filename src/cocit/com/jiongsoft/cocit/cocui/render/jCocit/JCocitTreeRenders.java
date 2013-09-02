@@ -1,10 +1,10 @@
-package com.jiongsoft.cocit.cocui.impl.render.jCocit;
+package com.jiongsoft.cocit.cocui.render.jCocit;
 
 import java.io.Writer;
 
-import com.jiongsoft.cocit.cocui.impl.render.BaseCuiRender;
 import com.jiongsoft.cocit.cocui.model.CuiTreeModel;
 import com.jiongsoft.cocit.cocui.model.CuiTreeModelData;
+import com.jiongsoft.cocit.cocui.render.BaseCuiRender;
 
 abstract class JCocitTreeRenders {
 

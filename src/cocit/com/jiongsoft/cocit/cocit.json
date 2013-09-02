@@ -6,5 +6,17 @@
 			smsClient_zucp: "com.jiongsoft.cocit.sms.impl.ZucpSmsClient",
 			smsClient_zr: "com.jiongsoft.cocit.sms.impl.ZrSmsClient",
 		}
+	},
+	comFactory: {
+		type: "com.jiongsoft.cocit.cocsoft.impl.demsy.DemsyComFactory"
+	},
+	cuiModelFactory: {
+		type:"com.jiongsoft.cocit.cocui.model.CuiModelFactoryImpl"
+	},
+	cuiRenderFactory: {
+		type:"com.jiongsoft.cocit.cocui.render.jCocit.JCocitRenderFactory"
+	},
+	entityManagerFactory: {
+		type:"com.jiongsoft.cocit.cocsoft.impl.demsy.DemsyEntityManagerFactory"
 	}
 }

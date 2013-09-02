@@ -26,6 +26,8 @@ import com.jiongsoft.cocit.utils.Json;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.entity.IDemsySoft;
 import com.kmetop.demsy.config.SoftConfigManager;
+import com.kmetop.demsy.engine.BizEngine;
+import com.kmetop.demsy.engine.ModuleEngine;
 
 public class CocitTest {
 	MockServletContext context;
@@ -51,12 +53,7 @@ public class CocitTest {
 			assertTrue(true);
 		}
 
-		try {
-			Cocit.getHttpContext();
-			assertTrue(false);
-		} catch (NullPointerException e) {
-			assertTrue(true);
-		}
+		assertNull(Cocit.getHttpContext());
 	}
 
 	@Test
@@ -99,8 +96,14 @@ public class CocitTest {
 		CocitBeanFactory beanFactory = Cocit.getBean(CocitBeanFactory.class);
 		assertNotNull(beanFactory);
 
-		beanFactory = Cocit.getBean("cocitBeanAssist");
+		beanFactory = Cocit.getBean("cocitBeanFactory");
 		assertNotNull(beanFactory);
+
+		assertNotNull(Cocit.getComFactory());
+		assertNotNull(Cocit.getCuiModelFactory());
+		assertNotNull(Cocit.getCuiRenderFactory());
+		assertNotNull(Cocit.getEntityManagerFactory());
+		assertNull(Cocit.getCormFactory());
 
 	}
 
@@ -115,16 +118,16 @@ public class CocitTest {
 			@Mocked
 			IDemsySoft mockDemsySoft;
 			@Mocked
+			BizEngine bizEngine;
+			@Mocked
+			ModuleEngine moduleEngine;
+			@Mocked
 			SoftConfigManager mockDemsyConfig;
 			{
-				Demsy.me();
-				result = null;
-				Demsy.initMe(req, res);
-				result = mockDemsy;
-				mockDemsy.getSoft();
+				Demsy.bizEngine = bizEngine;
+				Demsy.moduleEngine = moduleEngine;
+				moduleEngine.getSoft(anyString);
 				result = mockDemsySoft;
-				mockDemsySoft.getId();
-				result = softID;
 				SoftConfigManager.me();
 				result = mockDemsyConfig;
 				mockDemsyConfig.get("sms.type", "");
