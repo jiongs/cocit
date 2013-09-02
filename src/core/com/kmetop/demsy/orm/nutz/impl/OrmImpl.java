@@ -9,6 +9,8 @@ import javax.sql.DataSource;
 
 import org.nutz.dao.Condition;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.corm.expr.NullCndExpr;
 import com.kmetop.demsy.config.IDataSource;
 import com.kmetop.demsy.lang.Cls;
 import com.kmetop.demsy.lang.ConfigException;
@@ -21,8 +23,6 @@ import com.kmetop.demsy.orm.IMetaDao;
 import com.kmetop.demsy.orm.IOrm;
 import com.kmetop.demsy.orm.NoTransConnCallback;
 import com.kmetop.demsy.orm.dialect.Dialect;
-import com.kmetop.demsy.orm.expr.CndExpr;
-import com.kmetop.demsy.orm.expr.NullCndExpr;
 import com.kmetop.demsy.orm.generator.INamingStrategy;
 import com.kmetop.demsy.orm.listener.EntityListeners;
 import com.kmetop.demsy.orm.mapping.EnMapping;

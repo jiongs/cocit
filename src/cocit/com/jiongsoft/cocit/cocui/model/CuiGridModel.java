@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+
 /**
  * 数据表Grid界面模型：由多个Grid列和数据组成，如果数据不存在则表示将异步获取Grid数据。
  * 

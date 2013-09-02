@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.biz.BizEvent;
 import com.kmetop.demsy.comlib.impl.sft.activity.ActivityCatalog;
 import com.kmetop.demsy.comlib.impl.sft.activity.StockActivity;
@@ -11,7 +12,6 @@ import com.kmetop.demsy.comlib.web.IActivity;
 import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.Obj;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.orm.expr.Expr;
 import com.kmetop.demsy.plugins.BizPlugin;
 import com.kmetop.demsy.util.sort.SortUtils;
 

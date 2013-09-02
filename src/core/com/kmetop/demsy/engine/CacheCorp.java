@@ -4,9 +4,9 @@ import static com.kmetop.demsy.Demsy.bizEngine;
 import static com.kmetop.demsy.comlib.LibConst.BIZSYS_DEMSY_CORP;
 import static com.kmetop.demsy.comlib.LibConst.F_CODE;
 
+import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.entity.IDemsyCorp;
-import com.kmetop.demsy.orm.expr.Expr;
 
 class CacheCorp {
 

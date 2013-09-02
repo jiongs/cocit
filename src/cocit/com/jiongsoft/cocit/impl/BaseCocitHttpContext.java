@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitHttpContext;
-import com.jiongsoft.cocit.cocobj.CobSoft;
+import com.jiongsoft.cocit.cocsoft.CocSoft;
 import com.jiongsoft.cocit.utils.Log;
 import com.jiongsoft.cocit.utils.StringUtil;
 
@@ -13,7 +13,7 @@ public abstract class BaseCocitHttpContext implements CocitHttpContext {
 
 	protected HttpServletRequest request;
 	protected HttpServletResponse response;
-	protected CobSoft soft;
+	protected CocSoft soft;
 
 	protected BaseCocitHttpContext(HttpServletRequest req, HttpServletResponse res) {
 		this.request = req;
@@ -21,7 +21,7 @@ public abstract class BaseCocitHttpContext implements CocitHttpContext {
 
 		String domain = request.getServerName();
 
-		this.soft = Cocit.getCocSoftFactory().getSoft(domain);
+		this.soft = Cocit.getComFactory().getSoft(domain);
 	}
 
 	/**
@@ -47,7 +47,7 @@ public abstract class BaseCocitHttpContext implements CocitHttpContext {
 	 * 
 	 * @return 正在通过HTTP请求访问的软件
 	 */
-	public CobSoft getSoft() {
+	public CocSoft getSoft() {
 		return soft;
 	}
 
@@ -61,7 +61,12 @@ public abstract class BaseCocitHttpContext implements CocitHttpContext {
 	}
 
 	@Override
-	public <T> T getRequestParam(String key, T defaultReturn) {
+	public String[] getParameterValues(String key) {
+		return request.getParameterValues(key);
+	}
+
+	@Override
+	public <T> T getParameterValue(String key, T defaultReturn) {
 		String value = request.getParameter(key);
 
 		if (value == null)
@@ -74,31 +79,31 @@ public abstract class BaseCocitHttpContext implements CocitHttpContext {
 		try {
 			return (T) StringUtil.cast(value, valueType);
 		} catch (Throwable e) {
-			Log.error("StringUtil.getRequestParam: 出错！ {key:%s, defaultReturn:%s, valueType:%s}", key, defaultReturn, valueType.getName());
+			Log.error("StringUtil.getParameterValue: 出错！ {key:%s, defaultReturn:%s, valueType:%s}", key, defaultReturn, valueType.getName());
 		}
 
 		return defaultReturn;
 	}
 
 	@Override
-	public <T> T getRequestProp(String key) {
+	public <T> T getAttributeFromRequest(String key) {
 		return (T) request.getAttribute(key);
 	}
 
 	@Override
-	public <T> T setRequestProp(String key, T value) {
+	public <T> T setAttributeToRequest(String key, T value) {
 		request.setAttribute(key, value);
 
 		return value;
 	}
 
 	@Override
-	public <T> T getSessionProp(String key) {
+	public <T> T getAttributeFromSession(String key) {
 		return (T) request.getSession().getAttribute(key);
 	}
 
 	@Override
-	public <T> T setSessionProp(String key, T value) {
+	public <T> T setAttributeToSession(String key, T value) {
 		request.getSession().setAttribute(key, value);
 
 		return value;

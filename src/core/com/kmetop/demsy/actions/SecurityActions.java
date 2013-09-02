@@ -11,6 +11,7 @@ import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.Param;
 
+import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.entity.IDemsySoft;
@@ -22,7 +23,6 @@ import com.kmetop.demsy.lang.Ex;
 import com.kmetop.demsy.log.Log;
 import com.kmetop.demsy.log.Logs;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.orm.expr.Expr;
 import com.kmetop.demsy.security.ILogin;
 import com.kmetop.demsy.security.IRootUserFactory;
 import com.kmetop.demsy.security.SecurityException;

@@ -2,11 +2,11 @@ package com.kmetop.demsy.biz;
 
 import java.util.List;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
 import com.kmetop.demsy.orm.NoTransConnCallback;
 import com.kmetop.demsy.orm.OrmCallback;
 import com.kmetop.demsy.orm.Pager;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.orm.expr.CndExpr;
 
 /**
  * 业务会话: 是ORM的封装。

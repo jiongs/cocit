@@ -19,7 +19,7 @@ import org.junit.Test;
 
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitHttpContext;
-import com.jiongsoft.cocit.cocobj.CobSoft;
+import com.jiongsoft.cocit.cocsoft.CocSoft;
 import com.jiongsoft.cocit.sms.SmsClient;
 import com.jiongsoft.cocit.sms.impl.ZrSmsClient;
 import com.jiongsoft.cocit.utils.DateUtil;
@@ -32,7 +32,7 @@ public class ZrSmsClientTest {
 			@Mocked
 			CocitHttpContext softContext;
 			@Mocked
-			CobSoft soft;
+			CocSoft soft;
 			{
 				Cocit.getHttpContext();
 				result = softContext;

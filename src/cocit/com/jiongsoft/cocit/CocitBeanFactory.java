@@ -34,8 +34,8 @@ public class CocitBeanFactory {
 		return beans.get(CocitBeanFactory.class);
 	}
 
-	// // <softID, CobSoft>
-	// private Map<Long, CobSoft> softCache;
+	// // <softID, CocSoft>
+	// private Map<Long, CocSoft> softCache;
 
 	/*
 	 * 接口实现类全名
@@ -86,7 +86,7 @@ public class CocitBeanFactory {
 		return null;
 	}
 
-	// CobSoft makeSoft() {
+	// CocSoft makeSoft() {
 	// try {
 	// return ClassUtil.newInstance(soft);
 	// } catch (Throwable e) {
@@ -96,7 +96,7 @@ public class CocitBeanFactory {
 	// return null;
 	// }
 	//
-	// CobSoftConfig makeSoftConfig() {
+	// CocSoftConfig makeSoftConfig() {
 	// try {
 	// return ClassUtil.newInstance(softConfig);
 	// } catch (Throwable e) {

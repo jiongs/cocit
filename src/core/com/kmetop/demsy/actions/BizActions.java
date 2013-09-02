@@ -23,6 +23,8 @@ import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.Param;
 import org.nutz.mvc.upload.TempFile;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.BizConst;
 import com.kmetop.demsy.biz.IBizManager;
@@ -57,8 +59,6 @@ import com.kmetop.demsy.mvc.ui.widget.UIBizSystem;
 import com.kmetop.demsy.mvc.ui.widget.menu.UIToolbarMenu;
 import com.kmetop.demsy.orm.IOrm;
 import com.kmetop.demsy.orm.Pager;
-import com.kmetop.demsy.orm.expr.CndExpr;
-import com.kmetop.demsy.orm.expr.Expr;
 
 /**
  * 访问模块业务窗体组件

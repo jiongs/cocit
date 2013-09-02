@@ -1,8 +1,8 @@
 package com.kmetop.demsy.ui.datasource;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.mvc.ui.UIBlockContext;
-import com.kmetop.demsy.orm.expr.CndExpr;
 
 public class MyBbsPostList extends UiDataset {
 

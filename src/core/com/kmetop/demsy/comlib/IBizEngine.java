@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
 import com.kmetop.demsy.comlib.biz.IBizField;
 import com.kmetop.demsy.comlib.biz.IBizFieldGroup;
 import com.kmetop.demsy.comlib.biz.IBizFieldType;
@@ -14,7 +15,6 @@ import com.kmetop.demsy.comlib.security.IAction;
 import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.Nodes;
 import com.kmetop.demsy.lang.Option;
-import com.kmetop.demsy.orm.expr.CndExpr;
 
 /**
  * 业务系统引擎

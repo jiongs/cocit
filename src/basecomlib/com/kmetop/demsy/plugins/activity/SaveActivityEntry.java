@@ -2,6 +2,8 @@ package com.kmetop.demsy.plugins.activity;
 
 import java.util.Date;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.BizEvent;
 import com.kmetop.demsy.comlib.LibConst;
@@ -10,8 +12,6 @@ import com.kmetop.demsy.comlib.web.IActivityEntry;
 import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.orm.expr.CndExpr;
-import com.kmetop.demsy.orm.expr.Expr;
 import com.kmetop.demsy.plugins.BizPlugin;
 
 public class SaveActivityEntry extends BizPlugin {

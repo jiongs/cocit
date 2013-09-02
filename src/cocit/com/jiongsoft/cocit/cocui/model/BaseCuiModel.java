@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.jiongsoft.cocit.cocui.CuiModel;
 
+
 /**
  * 基本界面模型：继承该类的所有模型都将以HTML数据格式输出特定的界面模型。
  * 

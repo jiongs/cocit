@@ -48,6 +48,9 @@ import org.nutz.resource.Scans;
 import org.nutz.trans.Atom;
 import org.nutz.trans.Trans;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.corm.expr.Expr;
+import com.jiongsoft.cocit.corm.expr.ExprRule;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.IBizEngine;
 import com.kmetop.demsy.comlib.LibConst;
@@ -78,9 +81,6 @@ import com.kmetop.demsy.log.Log;
 import com.kmetop.demsy.log.Logs;
 import com.kmetop.demsy.orm.IOrm;
 import com.kmetop.demsy.orm.Pager;
-import com.kmetop.demsy.orm.expr.CndExpr;
-import com.kmetop.demsy.orm.expr.Expr;
-import com.kmetop.demsy.orm.expr.ExprRule;
 import com.kmetop.demsy.security.ILogin;
 import com.kmetop.demsy.util.sort.SortUtils;
 

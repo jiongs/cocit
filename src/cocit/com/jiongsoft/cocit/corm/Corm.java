@@ -3,7 +3,8 @@ package com.jiongsoft.cocit.corm;
 import java.io.Serializable;
 import java.util.List;
 
-import com.kmetop.demsy.orm.expr.CndExpr;
+import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.corm.expr.Expr;
 
 /**
  * 对象关系数据库映射接口：用于管理和查询数据库数据表，包括：增、删、查、改数据库表记录。
@@ -31,7 +32,7 @@ public interface Corm {
 	 *            字段正则表达式(如:“id|name”)
 	 * @return 新增和修改的总记录数
 	 */
-	public int save(Object obj, CormExpr fieldRexpr);
+	public int save(Object obj, Expr fieldRexpr);
 
 	public int save(Object obj);
 
@@ -52,7 +53,7 @@ public interface Corm {
 	 *            字段正则表达式(如“id|name”)
 	 * @return 新增的记录数
 	 */
-	public int insert(Object obj, CormExpr fieldRexpr);
+	public int insert(Object obj, Expr fieldRexpr);
 
 	public int insert(Object obj);
 
@@ -73,7 +74,7 @@ public interface Corm {
 	 *            字段正则表达式(如“id|name”)
 	 * @return 修改的记录数
 	 */
-	public int update(Object obj, CormExpr fieldRexpr);
+	public int update(Object obj, Expr fieldRexpr);
 
 	public int update(Object obj);
 
@@ -141,7 +142,7 @@ public interface Corm {
 	 *            字段正则表达式(如“id|name”)
 	 * @return 实体对象
 	 */
-	public Object load(Class classOfEntity, CormExpr fieldRexpr);
+	public Object load(Class classOfEntity, Expr fieldRexpr);
 
 	public Object load(Class classOfEntity, Serializable id);
 
@@ -160,5 +161,5 @@ public interface Corm {
 	 *            表达式
 	 * @return 分页结果集
 	 */
-	public List query(Class classOfEntity, CormExpr expr);
+	public List query(Class classOfEntity, Expr expr);
 }

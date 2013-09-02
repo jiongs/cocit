@@ -17,6 +17,8 @@ import org.nutz.lang.Strings;
 import org.nutz.trans.Atom;
 import org.nutz.trans.Trans;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.BizConst;
 import com.kmetop.demsy.comlib.biz.IBizCatalog;
@@ -57,8 +59,6 @@ import com.kmetop.demsy.lang.Obj;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.orm.IOrm;
 import com.kmetop.demsy.orm.Pager;
-import com.kmetop.demsy.orm.expr.CndExpr;
-import com.kmetop.demsy.orm.expr.Expr;
 import com.kmetop.demsy.orm.nutz.IExtDao;
 import com.kmetop.demsy.orm.nutz.impl.OrmImpl;
 
@@ -177,10 +177,10 @@ public class SFTModuleEngine extends ModuleEngine {
 	// + "_"))) {
 	// try {
 	// orm.delete(obj);
-	// log.warnf("安装平台时删除数据成功! %s", Langs.toJson(obj));
+	// log.warnf("安装平台时删除数据成功! %s", Lang.toJson(obj));
 	// } catch (Throwable e) {
 	// if (warn)
-	// log.warnf("安装平台时删除数据失败! [%s] %s", Langs.toJson(obj), e);
+	// log.warnf("安装平台时删除数据失败! [%s] %s", Lang.toJson(obj), e);
 	// }
 	// }
 	// }
@@ -317,7 +317,7 @@ public class SFTModuleEngine extends ModuleEngine {
 		}
 	}
 
-	// private int clearModule(IOrm orm, DemsyCobSoft soft) {
+	// private int clearModule(IOrm orm, DemsyCocSoft soft) {
 	// int ret = 0;
 	//
 	// List<Module> modules = orm.query(Module.class, Expr.eq(F_SOFT_ID, soft));
@@ -608,7 +608,7 @@ public class SFTModuleEngine extends ModuleEngine {
 	}
 
 	//
-	// private int setupStaticModules(IOrm orm, DemsyCobSoft soft) {
+	// private int setupStaticModules(IOrm orm, DemsyCocSoft soft) {
 	// int ret = 0;
 	//
 	// BizSystemAnn sysann = (BizSystemAnn)

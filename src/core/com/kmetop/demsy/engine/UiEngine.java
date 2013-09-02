@@ -29,6 +29,7 @@ import java.util.Map;
 
 import org.nutz.lang.Mirror;
 
+import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.IUiEngine;
 import com.kmetop.demsy.comlib.LibConst;
@@ -100,7 +101,6 @@ import com.kmetop.demsy.mvc.ui.widget.field.UITextFld;
 import com.kmetop.demsy.mvc.ui.widget.field.UIUploadFld;
 import com.kmetop.demsy.mvc.ui.widget.menu.UIToolbarMenu;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.orm.expr.Expr;
 import com.kmetop.demsy.util.sort.SortUtils;
 
 public class UiEngine implements IUiEngine, MvcConst {

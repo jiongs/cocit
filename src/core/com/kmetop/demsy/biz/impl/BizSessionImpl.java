@@ -8,6 +8,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import org.nutz.trans.Atom;
 import org.nutz.trans.Trans;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.corm.expr.NullCndExpr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.BizEvent;
 import com.kmetop.demsy.biz.IBizPlugin;
@@ -21,8 +23,6 @@ import com.kmetop.demsy.orm.IOrm;
 import com.kmetop.demsy.orm.NoTransConnCallback;
 import com.kmetop.demsy.orm.OrmCallback;
 import com.kmetop.demsy.orm.Pager;
-import com.kmetop.demsy.orm.expr.CndExpr;
-import com.kmetop.demsy.orm.expr.NullCndExpr;
 
 /**
  * 业务管理器——实体管理器

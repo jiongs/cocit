@@ -2,12 +2,12 @@ package com.kmetop.demsy.biz;
 
 import java.util.List;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.comlib.security.IModule;
 import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.orm.Pager;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.orm.expr.CndExpr;
 
 /**
  * 业务管理器:

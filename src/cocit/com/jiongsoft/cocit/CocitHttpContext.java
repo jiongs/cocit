@@ -3,8 +3,7 @@ package com.jiongsoft.cocit;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.jiongsoft.cocit.cocobj.CobSoft;
-import com.jiongsoft.cocit.security.CocLoginUser;
+import com.jiongsoft.cocit.cocsoft.CocSoft;
 
 /**
  * Cocit HTTP环境：用来管理HTTP请求的一次生命周期。
@@ -33,7 +32,7 @@ public interface CocitHttpContext {
 	 * 
 	 * @return 正在通过HTTP请求访问的软件
 	 */
-	CobSoft getSoft();
+	CocSoft getSoft();
 
 	/**
 	 * 获取软件配置
@@ -49,14 +48,16 @@ public interface CocitHttpContext {
 	// */
 	// CocLoginUser getLoginUser();
 
-	<T> T getRequestParam(String key, T defaultReturn);
+	String[] getParameterValues(String key);
 
-	<T> T getRequestProp(String key);
+	<T> T getParameterValue(String key, T defaultReturn);
 
-	<T> T setRequestProp(String key, T value);
+	<T> T getAttributeFromRequest(String key);
 
-	<T> T getSessionProp(String key);
+	<T> T setAttributeToRequest(String key, T value);
 
-	<T> T setSessionProp(String key, T value);
+	<T> T getAttributeFromSession(String key);
+
+	<T> T setAttributeToSession(String key, T value);
 
 }

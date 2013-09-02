@@ -3,6 +3,7 @@ package com.kmetop.demsy.plugins.eshop;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.BizEvent;
 import com.kmetop.demsy.comlib.LibConst;
@@ -11,7 +12,6 @@ import com.kmetop.demsy.comlib.eshop.IOrderItem;
 import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.Obj;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.orm.expr.Expr;
 import com.kmetop.demsy.plugins.BizPlugin;
 
 /**

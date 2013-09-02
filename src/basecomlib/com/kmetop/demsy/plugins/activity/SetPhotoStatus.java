@@ -2,11 +2,11 @@ package com.kmetop.demsy.plugins.activity;
 
 import java.util.List;
 
+import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.biz.BizEvent;
 import com.kmetop.demsy.comlib.impl.sft.activity.ActivityCatalog;
 import com.kmetop.demsy.comlib.impl.sft.activity.PhotoActivity;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.orm.expr.Expr;
 import com.kmetop.demsy.plugins.BizPlugin;
 
 public class SetPhotoStatus extends BizPlugin {

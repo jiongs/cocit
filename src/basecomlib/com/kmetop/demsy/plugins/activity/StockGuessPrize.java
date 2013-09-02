@@ -3,14 +3,14 @@ package com.kmetop.demsy.plugins.activity;
 import java.util.Date;
 import java.util.List;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.biz.BizEvent;
 import com.kmetop.demsy.comlib.impl.base.ebusiness.order.Order;
 import com.kmetop.demsy.comlib.impl.sft.activity.ActivityCatalog;
 import com.kmetop.demsy.comlib.impl.sft.activity.StockActivity;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.orm.expr.CndExpr;
-import com.kmetop.demsy.orm.expr.Expr;
 import com.kmetop.demsy.plugins.BizPlugin;
 
 /**

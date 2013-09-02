@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.nutz.lang.Mirror;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.IBizManager;
 import com.kmetop.demsy.biz.IBizPlugin;
@@ -22,7 +23,6 @@ import com.kmetop.demsy.log.Log;
 import com.kmetop.demsy.log.Logs;
 import com.kmetop.demsy.orm.IOrm;
 import com.kmetop.demsy.orm.Pager;
-import com.kmetop.demsy.orm.expr.CndExpr;
 
 /**
  * 业务逻辑

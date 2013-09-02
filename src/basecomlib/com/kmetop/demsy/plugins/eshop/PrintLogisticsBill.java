@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.actions.OrderActions;
 import com.kmetop.demsy.biz.BizEvent;
@@ -13,7 +14,6 @@ import com.kmetop.demsy.comlib.impl.base.ebusiness.order.Logistics;
 import com.kmetop.demsy.comlib.impl.base.ebusiness.order.Order;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.orm.expr.Expr;
 import com.kmetop.demsy.plugins.BizPlugin;
 
 /**

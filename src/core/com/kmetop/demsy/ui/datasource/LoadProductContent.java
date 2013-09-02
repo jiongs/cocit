@@ -5,13 +5,13 @@ import static com.kmetop.demsy.Demsy.bizEngine;
 import java.util.List;
 import java.util.Map;
 
+import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.common.IContact;
 import com.kmetop.demsy.config.SoftConfigManager;
 import com.kmetop.demsy.mvc.ui.UIBlockContext;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.orm.expr.Expr;
 
 /**
  * 全文阅读栏目信息

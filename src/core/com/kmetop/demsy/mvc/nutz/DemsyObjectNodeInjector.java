@@ -12,10 +12,10 @@ import org.nutz.mvc.adaptor.ParamExtractor;
 import org.nutz.mvc.adaptor.ParamInjector;
 import org.nutz.mvc.adaptor.Params;
 
+import com.jiongsoft.cocit.corm.expr.ExprRule;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.mvc.MvcConst;
 import com.kmetop.demsy.mvc.ObjcetNaviNode;
-import com.kmetop.demsy.orm.expr.ExprRule;
 
 public class DemsyObjectNodeInjector implements ParamInjector {
 

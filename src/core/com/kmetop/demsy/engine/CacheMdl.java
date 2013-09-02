@@ -3,11 +3,11 @@ package com.kmetop.demsy.engine;
 import static com.kmetop.demsy.Demsy.bizEngine;
 import static com.kmetop.demsy.comlib.LibConst.*;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.security.IModule;
 import com.kmetop.demsy.lang.Str;
-import com.kmetop.demsy.orm.expr.CndExpr;
-import com.kmetop.demsy.orm.expr.Expr;
 
 class CacheMdl {
 

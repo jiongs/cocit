@@ -3,9 +3,9 @@ package com.kmetop.demsy.orm;
 import java.io.Serializable;
 import java.util.List;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.corm.expr.NullCndExpr;
 import com.kmetop.demsy.orm.dialect.Dialect;
-import com.kmetop.demsy.orm.expr.CndExpr;
-import com.kmetop.demsy.orm.expr.NullCndExpr;
 import com.kmetop.demsy.orm.generator.INamingStrategy;
 import com.kmetop.demsy.orm.mapping.EnMapping;
 

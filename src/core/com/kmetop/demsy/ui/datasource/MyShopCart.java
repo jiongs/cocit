@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.actions.OrderActions;
 import com.kmetop.demsy.comlib.eshop.IOrderItem;
@@ -19,7 +20,6 @@ import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.mvc.MvcConst.MvcUtil;
 import com.kmetop.demsy.mvc.ui.UIBlockContext;
 import com.kmetop.demsy.mvc.ui.UIBlockDataModel;
-import com.kmetop.demsy.orm.expr.CndExpr;
 import com.kmetop.demsy.util.sort.SortUtils;
 
 public class MyShopCart extends UiBaseDataSource {

@@ -3,15 +3,15 @@ package com.jiongsoft.cocit.cocui.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.jiongsoft.cocit.cocobj.CobDataField;
-import com.jiongsoft.cocit.cocobj.CobDataModule;
-import com.jiongsoft.cocit.cocobj.CobDataOperation;
-import com.jiongsoft.cocit.cocobj.CobDataTable;
-import com.jiongsoft.cocit.cocui.CuiModelFactory;
-import com.jiongsoft.cocit.cocui.CuiPaths;
-import com.jiongsoft.cocit.cocui.model.CuiDataModuleModel;
-import com.jiongsoft.cocit.cocui.model.CuiDataTableModel;
+import com.jiongsoft.cocit.actions.ActionUtil;
+import com.jiongsoft.cocit.cocsoft.CocBizField;
+import com.jiongsoft.cocit.cocsoft.CocBizModule;
+import com.jiongsoft.cocit.cocsoft.CocBizOperation;
+import com.jiongsoft.cocit.cocsoft.CocBizTable;
+import com.jiongsoft.cocit.cocui.model.CuiBizModuleModel;
+import com.jiongsoft.cocit.cocui.model.CuiBizTableModel;
 import com.jiongsoft.cocit.cocui.model.CuiGridModel;
+import com.jiongsoft.cocit.cocui.model.CuiModelFactory;
 import com.jiongsoft.cocit.cocui.model.CuiGridModel.GridColumn;
 import com.jiongsoft.cocit.cocui.model.CuiMenuModel;
 import com.jiongsoft.cocit.cocui.model.CuiSearchBoxModel;
@@ -21,17 +21,17 @@ import com.jiongsoft.cocit.utils.TreeNode;
 public class CuiModelFactoryImpl implements CuiModelFactory {
 
 	@Override
-	public CuiDataModuleModel getDataModuleModel(CobDataModule module) {
-		CobDataTable mainTable = module.getMainDataTable();
-		CuiDataTableModel mainModel = getDataTableModel(module, mainTable);
+	public CuiBizModuleModel getBizModuleModel(CocBizModule module) {
+		CocBizTable mainTable = module.getMainBizTable();
+		CuiBizTableModel mainModel = getBizTableModel(module, mainTable);
 
-		CuiDataModuleModel ret = new CuiDataModuleModel(mainModel);
+		CuiBizModuleModel ret = new CuiBizModuleModel(mainModel);
 
-		List<CobDataTable> childrenTables = module.getChildrenDataTables();
+		List<CocBizTable> childrenTables = module.getChildrenBizTables();
 		if (childrenTables != null) {
-			List<CuiDataTableModel> childrenModels = new ArrayList();
-			for (CobDataTable table : childrenTables) {
-				childrenModels.add(getDataTableModel(module, table));
+			List<CuiBizTableModel> childrenModels = new ArrayList();
+			for (CocBizTable table : childrenTables) {
+				childrenModels.add(getBizTableModel(module, table));
 			}
 		}
 
@@ -39,8 +39,8 @@ public class CuiModelFactoryImpl implements CuiModelFactory {
 	}
 
 	@Override
-	public CuiDataTableModel getDataTableModel(CobDataModule module, CobDataTable dataTable) {
-		CuiDataTableModel model = new CuiDataTableModel();
+	public CuiBizTableModel getBizTableModel(CocBizModule module, CocBizTable dataTable) {
+		CuiBizTableModel model = new CuiBizTableModel();
 
 		model.setId(dataTable.getID());
 		model.setName(dataTable.getName());
@@ -54,23 +54,23 @@ public class CuiModelFactoryImpl implements CuiModelFactory {
 	}
 
 	@Override
-	public CuiSearchBoxModel getSearchBoxModel(CobDataModule module, CobDataTable dataTable) {
+	public CuiSearchBoxModel getSearchBoxModel(CocBizModule module, CocBizTable dataTable) {
 		return new CuiSearchBoxModel();
 	}
 
 	@Override
-	public CuiGridModel getGridModel(CobDataModule module, CobDataTable dataTable) {
+	public CuiGridModel getGridModel(CocBizModule module, CocBizTable dataTable) {
 		CuiGridModel model = new CuiGridModel();
 
-		model.setDataLoadUrl(CuiPaths.DATA_GRIDDATA.replace("*", CuiPaths.encodeArgs(module.getID() + ":" + dataTable.getID())));
+		model.setDataLoadUrl(ActionUtil.GET_BIZ_TABLE_GRID_DATA.replace("*", ActionUtil.encodeArgs(module.getID(), dataTable.getID())));
 
 		// 创建Grid字段列
-		List<CobDataField> fields = dataTable.getDataFieldsForGrid();
-		for (CobDataField fld : fields) {
+		List<CocBizField> fields = dataTable.getBizFieldsForGrid();
+		for (CocBizField fld : fields) {
 			GridColumn col = new GridColumn(fld.getPropName(), fld.getName());
 
 			// 设置Grid列属性
-			if (fld.getType() == CobDataField.TYPE_NUMBER)
+			if (fld.getType() == CocBizField.TYPE_NUMBER)
 				col.setAssign("right");
 			else
 				col.setAssign("left");
@@ -83,8 +83,8 @@ public class CuiModelFactoryImpl implements CuiModelFactory {
 	}
 
 	@Override
-	public CuiMenuModel getOperationMenuModel(CobDataModule module, CobDataTable dataTable) {
-		List<CobDataOperation> dataOperations = dataTable.getDataOperations();
+	public CuiMenuModel getOperationMenuModel(CocBizModule module, CocBizTable dataTable) {
+		List<CocBizOperation> dataOperations = dataTable.getBizOperations();
 
 		CuiMenuModel model = new CuiMenuModel();
 
@@ -96,29 +96,29 @@ public class CuiModelFactoryImpl implements CuiModelFactory {
 		return model;
 	}
 
-	private void addChildrenTo(TreeNode node, List<CobDataOperation> operations) {
+	private void addChildrenTo(TreeNode node, List<CocBizOperation> operations) {
 		if (operations == null)
 			return;
 
-		for (CobDataOperation op : operations) {
+		for (CocBizOperation op : operations) {
 			TreeNode child = new TreeNode("" + op.getID(), op.getName());
 
-			addChildrenTo(child, op.getChildrenDataOperations());
+			addChildrenTo(child, op.getChildrenBizOperations());
 
 			node.addChild(child);
 		}
 	}
 
 	@Override
-	public CuiTreeModel getNaviTreeModel(CobDataModule module, CobDataTable dataTable) {
-		List<CobDataField> dataFields = dataTable.getDataFieldsForNaviTree();
+	public CuiTreeModel getNaviTreeModel(CocBizModule module, CocBizTable dataTable) {
+		List<CocBizField> dataFields = dataTable.getBizFieldsForNaviTree();
 		if (dataFields == null || dataFields.size() == 0) {
 			return null;
 		}
 
 		CuiTreeModel model = new CuiTreeModel();
 
-		model.setDataLoadUrl(CuiPaths.DATA_NAVITREEDATA.replace("*", CuiPaths.encodeArgs(module.getID() + ":" + dataTable.getID())));
+		model.setDataLoadUrl(ActionUtil.GET_BIZ_TABLE_NAVI_TREE_DATA.replace("*", ActionUtil.encodeArgs(module.getID(), dataTable.getID())));
 
 		return model;
 	}

@@ -1,7 +1,6 @@
 package com.jiongsoft.cocit.utils.json;
 
 import java.io.Writer;
-import java.util.List;
 
 import org.nutz.json.Json;
 
@@ -18,8 +17,8 @@ public class NutJson extends JsonImpl {
 	}
 
 	@Override
-	public List fromJson(String json) {
-		return (List) Json.fromJson(json);
+	public <T> T fromJson(String json) {
+		return (T) Json.fromJson(json);
 	}
 
 	@Override

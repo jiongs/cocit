@@ -28,6 +28,8 @@ import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Fail;
 import org.nutz.mvc.annotation.Ok;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.BizConst;
 import com.kmetop.demsy.comlib.LibConst;
@@ -54,8 +56,6 @@ import com.kmetop.demsy.mvc.MvcConst;
 import com.kmetop.demsy.mvc.nutz.DemsyAdaptor;
 import com.kmetop.demsy.orm.IOrm;
 import com.kmetop.demsy.orm.OrmCallback;
-import com.kmetop.demsy.orm.expr.CndExpr;
-import com.kmetop.demsy.orm.expr.Expr;
 import com.kmetop.demsy.security.ILogin;
 
 @Ok("json")

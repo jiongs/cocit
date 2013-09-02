@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.corm.expr.Expr;
+import com.jiongsoft.cocit.corm.expr.ExprRule;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.biz.IBizField;
 import com.kmetop.demsy.comlib.biz.IBizFieldType;
@@ -38,9 +41,6 @@ import com.kmetop.demsy.mvc.MvcConst.MvcUtil;
 import com.kmetop.demsy.mvc.ui.widget.UIPageView;
 import com.kmetop.demsy.orm.IOrm;
 import com.kmetop.demsy.orm.Pager;
-import com.kmetop.demsy.orm.expr.CndExpr;
-import com.kmetop.demsy.orm.expr.Expr;
-import com.kmetop.demsy.orm.expr.ExprRule;
 
 /**
  * 页面板块运行时上下文环境：封装了运行时的页面板块信息，解析自定义的页面板块。

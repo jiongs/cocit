@@ -15,6 +15,8 @@ import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Fail;
 import org.nutz.mvc.annotation.Ok;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.corm.expr.Expr;
 import com.jiongsoft.cocit.utils.HttpUtil;
 import com.jiongsoft.cocit.utils.Json;
 import com.kmetop.demsy.Demsy;
@@ -35,8 +37,6 @@ import com.kmetop.demsy.mvc.MvcConst;
 import com.kmetop.demsy.mvc.nutz.DemsyAdaptor;
 import com.kmetop.demsy.orm.IOrm;
 import com.kmetop.demsy.orm.Pager;
-import com.kmetop.demsy.orm.expr.CndExpr;
-import com.kmetop.demsy.orm.expr.Expr;
 
 /**
  * 智能终端设备（APP）请求处理器：

@@ -20,7 +20,7 @@ public abstract class CormResult<T> {
 	protected int pageSize;
 
 	/**
-	 * 也索引
+	 * 页索引
 	 */
 	protected int pageIndex;
 

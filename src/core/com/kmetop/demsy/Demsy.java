@@ -36,6 +36,7 @@ import org.nutz.trans.Trans;
 
 import com.handsome.ip.IPSeeker;
 import com.jiongsoft.cocit.Cocit;
+import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.actions.BizActions;
 import com.kmetop.demsy.actions.ConfigActions;
 import com.kmetop.demsy.actions.AppActions;
@@ -81,7 +82,6 @@ import com.kmetop.demsy.mvc.template.ITemplateEngine;
 import com.kmetop.demsy.mvc.template.SmartyTemplate;
 import com.kmetop.demsy.mvc.view.DemsyViewMaker;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.orm.expr.Expr;
 import com.kmetop.demsy.orm.generator.INamingStrategy;
 import com.kmetop.demsy.orm.generator.impl.EncodeNamingStrategy;
 import com.kmetop.demsy.orm.listener.EntityListeners;

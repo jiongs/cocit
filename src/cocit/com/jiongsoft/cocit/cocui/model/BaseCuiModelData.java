@@ -6,6 +6,7 @@ import java.io.Writer;
 
 import com.jiongsoft.cocit.cocui.CuiModel;
 
+
 /**
  * 数据模型：用于表示通过AJAX访问的数据模型。由两部分组成：1.模型，2.数据
  * <p>

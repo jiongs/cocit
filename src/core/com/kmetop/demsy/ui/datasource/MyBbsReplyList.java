@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.impl.sft.lybbs.LybbsPostreply;
 import com.kmetop.demsy.comlib.security.IModule;
@@ -17,7 +18,6 @@ import com.kmetop.demsy.comlib.web.IBbsTopic;
 import com.kmetop.demsy.mvc.MvcConst.MvcUtil;
 import com.kmetop.demsy.mvc.ui.UIBlockContext;
 import com.kmetop.demsy.mvc.ui.UIBlockDataModel;
-import com.kmetop.demsy.orm.expr.CndExpr;
 
 public class MyBbsReplyList extends UiDataset {
 

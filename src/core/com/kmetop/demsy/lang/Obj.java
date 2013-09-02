@@ -30,11 +30,11 @@ import java.util.Map;
 
 import org.nutz.lang.Mirror;
 
+import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.entity.IBizEntity;
 import com.kmetop.demsy.comlib.entity.IDynamic;
-import com.kmetop.demsy.orm.expr.Expr;
 import com.kmetop.demsy.orm.mapping.EnMapping;
 
 public abstract class Obj {
@@ -706,12 +706,12 @@ public abstract class Obj {
 
 	public static boolean checkGuid(Object obj, String guid) {
 		if (Str.isEmpty(guid)) {
-			// throw new DemsyException("GUID不能为空! %s", Langs.toJson(obj));
+			// throw new DemsyException("GUID不能为空! %s", Lang.toJson(obj));
 			return false;
 		}
 		Object old = Demsy.orm().load(obj.getClass(), Expr.eq(F_GUID, guid));
 		if (old != null && !old.equals(obj)) {
-			// throw new DemsyException("GUID已经存在! %s", Langs.toJson(obj));
+			// throw new DemsyException("GUID已经存在! %s", Lang.toJson(obj));
 			return false;
 		}
 

@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.biz.field.Upload;
@@ -25,8 +27,6 @@ import com.kmetop.demsy.mvc.ui.UIBlockContext;
 import com.kmetop.demsy.mvc.ui.UIBlockDataModel;
 import com.kmetop.demsy.orm.IOrm;
 import com.kmetop.demsy.orm.Pager;
-import com.kmetop.demsy.orm.expr.CndExpr;
-import com.kmetop.demsy.orm.expr.Expr;
 
 public class ImageLib extends UiRecord {
 	public Map process(UIBlockContext maker) {

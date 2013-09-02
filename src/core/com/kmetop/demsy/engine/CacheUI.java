@@ -8,10 +8,10 @@ import static com.kmetop.demsy.comlib.LibConst.*;
 
 import java.util.List;
 
+import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.ui.IPage;
 import com.kmetop.demsy.comlib.ui.IPageBlock;
-import com.kmetop.demsy.orm.expr.Expr;
 
 class CacheUI {
 

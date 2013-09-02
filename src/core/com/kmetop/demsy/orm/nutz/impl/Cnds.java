@@ -14,23 +14,23 @@ import org.nutz.dao.entity.Link;
 import org.nutz.dao.pager.Pager;
 import org.nutz.lang.Strings;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.corm.expr.CndType;
+import com.jiongsoft.cocit.corm.expr.CombCndExpr;
+import com.jiongsoft.cocit.corm.expr.CombType;
+import com.jiongsoft.cocit.corm.expr.FieldRexpr;
+import com.jiongsoft.cocit.corm.expr.GroupByExpr;
+import com.jiongsoft.cocit.corm.expr.NullCndExpr;
+import com.jiongsoft.cocit.corm.expr.OrderExpr;
+import com.jiongsoft.cocit.corm.expr.OrderType;
+import com.jiongsoft.cocit.corm.expr.PagerExpr;
+import com.jiongsoft.cocit.corm.expr.SimpleCndExpr;
 import com.kmetop.demsy.lang.Cls;
 import com.kmetop.demsy.lang.Dates;
 import com.kmetop.demsy.lang.Obj;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.log.Log;
 import com.kmetop.demsy.log.Logs;
-import com.kmetop.demsy.orm.expr.CndExpr;
-import com.kmetop.demsy.orm.expr.CndType;
-import com.kmetop.demsy.orm.expr.CombCndExpr;
-import com.kmetop.demsy.orm.expr.CombType;
-import com.kmetop.demsy.orm.expr.FieldRexpr;
-import com.kmetop.demsy.orm.expr.GroupByExpr;
-import com.kmetop.demsy.orm.expr.NullCndExpr;
-import com.kmetop.demsy.orm.expr.OrderExpr;
-import com.kmetop.demsy.orm.expr.OrderType;
-import com.kmetop.demsy.orm.expr.PagerExpr;
-import com.kmetop.demsy.orm.expr.SimpleCndExpr;
 import com.kmetop.demsy.orm.nutz.EnColumnMappingImpl;
 
 abstract class Cnds {

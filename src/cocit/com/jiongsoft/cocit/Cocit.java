@@ -4,10 +4,11 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.jiongsoft.cocit.cocobj.CobSoft;
-import com.jiongsoft.cocit.cocobj.CocSoftFactory;
-import com.jiongsoft.cocit.cocui.CuiModelFactory;
+import com.jiongsoft.cocit.cocsoft.CocSoft;
+import com.jiongsoft.cocit.cocsoft.ComFactory;
+import com.jiongsoft.cocit.cocsoft.EntityManagerFactory;
 import com.jiongsoft.cocit.cocui.CuiRenderFactory;
+import com.jiongsoft.cocit.cocui.model.CuiModelFactory;
 import com.jiongsoft.cocit.corm.CormFactory;
 import com.jiongsoft.cocit.sms.SmsClient;
 
@@ -29,7 +30,8 @@ import com.jiongsoft.cocit.sms.SmsClient;
  * <b>名词解释：</b>
  * <UL>
  * <LI>Cocit: 组件化自定义平台（Componentization of custom IT），也称“CoC平台”；
- * <LI>cocob(Cob): 组件化自定义对象（Componentization of custom object）；
+ * <LI>Coc: 组件化自定义
+ * <LI>cocsoft: 组件化自定义软件（Componentization of custom software）；
  * <LI>cocui(Cui): 组件化自定义界面（Componentization of custom UI），也称“CoC界面”;
  * </UL>
  * 
@@ -142,7 +144,7 @@ public abstract class Cocit {
 	}
 
 	/**
-	 * 根据指定的类型创建一个短信客户端接口对象，该方法被通常被{@link CobSoft}调用，且每个{@link CobSoft}对象只会调用该方法一次来创建短信第三方接口对象，之后将缓存在{@link CobSoft}对象中。
+	 * 根据指定的类型创建一个短信客户端接口对象，该方法被通常被{@link CocSoft}调用，且每个{@link CocSoft}对象只会调用该方法一次来创建短信第三方接口对象，之后将缓存在{@link CocSoft}对象中。
 	 * 
 	 * @param type
 	 * @return 返回一个新建的短信客户端接口。
@@ -156,7 +158,7 @@ public abstract class Cocit {
 	// * <p>
 	// * 通常供CocitHttpContext构造函数调用，用来构造一个软件对象。
 	// */
-	// public static CobSoft makeSoft() {
+	// public static CocSoft makeSoft() {
 	// return beanFactory.makeSoft();
 	// }
 	//
@@ -165,23 +167,23 @@ public abstract class Cocit {
 	// *
 	// * @return 返回一个全新的CoC软件配置助手实例对象
 	// */
-	// public static CobSoftConfig makeSoftConfig() {
+	// public static CocSoftConfig makeSoftConfig() {
 	// return beanFactory.makeSoftConfig();
 	// }
 
 	/**
-	 * 获取自定义对象工厂
+	 * 获取CoC组工厂。
 	 * 
-	 * @return 返回已被缓存的CoC模型工厂{@link CocSoftFactory}的单例对象。
+	 * @return 返回已被缓存的CoC组件库{@link ComFactory}的单例对象。
 	 */
-	public static CocSoftFactory getCocSoftFactory() {
-		return beanFactory.getBean(CocSoftFactory.class);
+	public static ComFactory getComFactory() {
+		return beanFactory.getBean(ComFactory.class);
 	}
 
 	/**
 	 * 获取CoC UI模型工厂
 	 * 
-	 * @return 返回已被缓存的CoC模型工厂{@link CuiModelFactory}的单例对象。
+	 * @return 返回已被缓存的CoC UI模型工厂{@link CuiModelFactory}的单例对象。
 	 */
 	public static CuiModelFactory getCuiModelFactory() {
 		return beanFactory.getBean(CuiModelFactory.class);
@@ -190,7 +192,7 @@ public abstract class Cocit {
 	/**
 	 * 获取CoC UIRender 工厂
 	 * 
-	 * @return 返回已被缓存的CoC Render工厂{@link CuiRenderFactory}的单例对象。
+	 * @return 返回已被缓存的CoC UI Render工厂{@link CuiRenderFactory}的单例对象。
 	 */
 	public static CuiRenderFactory getCuiRenderFactory() {
 		return beanFactory.getBean(CuiRenderFactory.class);
@@ -198,6 +200,10 @@ public abstract class Cocit {
 
 	public static CormFactory getCormFactory() {
 		return beanFactory.getBean(CormFactory.class);
+	}
+
+	public static EntityManagerFactory getEntityManagerFactory() {
+		return beanFactory.getBean(EntityManagerFactory.class);
 	}
 
 }

@@ -11,6 +11,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.IBizSession;
 import com.kmetop.demsy.comlib.IBizEngine;
@@ -18,7 +19,6 @@ import com.kmetop.demsy.comlib.biz.IBizField;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.comlib.entity.IBizEntity;
 import com.kmetop.demsy.comlib.security.IAction;
-import com.kmetop.demsy.orm.expr.Expr;
 
 /**
  * 子系统Excel导入导出工具库:

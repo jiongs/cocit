@@ -5,14 +5,14 @@ import static com.kmetop.demsy.Demsy.bizEngine;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.corm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.entity.IDemsySoft;
 import com.kmetop.demsy.comlib.eshop.IOrder;
 import com.kmetop.demsy.mvc.ui.UIBlockContext;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.orm.expr.CndExpr;
-import com.kmetop.demsy.orm.expr.Expr;
 
 public class MyOrderPayment extends UiBaseDataSource {
 

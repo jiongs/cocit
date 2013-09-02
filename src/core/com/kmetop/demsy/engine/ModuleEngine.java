@@ -23,6 +23,7 @@ import java.util.Map;
 
 import org.nutz.dao.Sqls;
 
+import com.jiongsoft.cocit.corm.expr.CndExpr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.IModuleEngine;
 import com.kmetop.demsy.comlib.LibConst;
@@ -53,7 +54,6 @@ import com.kmetop.demsy.log.Logs;
 import com.kmetop.demsy.mvc.MvcConst;
 import com.kmetop.demsy.mvc.MvcConst.MvcUtil;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.orm.expr.CndExpr;
 import com.kmetop.demsy.orm.nutz.EnMappingImpl;
 import com.kmetop.demsy.orm.nutz.impl.OrmImpl;
 import com.kmetop.demsy.util.sort.SortUtils;
