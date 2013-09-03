@@ -7,11 +7,15 @@ package com.jiongsoft.cocit.utils;
  * 
  * @param <T>
  */
-public class KeyValue<T> {
+public class KeyValue {
 	private String key;
-	private T value;
+	private Object value;
 
-	public KeyValue(String key, T value) {
+	public static KeyValue make(String key, Object value) {
+		return new KeyValue(key, value);
+	}
+
+	private KeyValue(String key, Object value) {
 		this.key = key;
 		this.value = value;
 	}
@@ -24,11 +28,11 @@ public class KeyValue<T> {
 		this.key = key;
 	}
 
-	public T getValue() {
+	public Object getValue() {
 		return value;
 	}
 
-	public void setValue(T value) {
+	public void setValue(Object value) {
 		this.value = value;
 	}
 

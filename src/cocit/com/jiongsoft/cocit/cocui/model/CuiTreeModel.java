@@ -1,9 +1,14 @@
 package com.jiongsoft.cocit.cocui.model;
 
-import com.jiongsoft.cocit.utils.TreeNode;
+import com.jiongsoft.cocit.utils.Tree;
 
 /**
  * 树界面模型：可以包含树所需要的数据，如果数据不存在则表示将异步获取JSON格式的树型数据。
+ * 
+ * <B>属性设置：</B>
+ * <UL>
+ * <LI>checkbox: bool值，true——支持checkbox多选框；falst——不支持checkbox多选框
+ * </UL>
  * 
  * @author jiongsoft
  * 
@@ -11,7 +16,7 @@ import com.jiongsoft.cocit.utils.TreeNode;
 public class CuiTreeModel extends BaseCuiModel {
 
 	// Tree数据，如果该值为Null，则将通过AJAX方式加载树数据。
-	private TreeNode data;
+	private Tree data;
 
 	// Grid数据“增、删、查、改”操作的URL地址
 	private String dataLoadUrl;
@@ -51,11 +56,11 @@ public class CuiTreeModel extends BaseCuiModel {
 		this.dataAddUrl = dataUpdateUrl;
 	}
 
-	public TreeNode getData() {
+	public Tree getData() {
 		return data;
 	}
 
-	public void setData(TreeNode data) {
+	public void setData(Tree data) {
 		this.data = data;
 	}
 

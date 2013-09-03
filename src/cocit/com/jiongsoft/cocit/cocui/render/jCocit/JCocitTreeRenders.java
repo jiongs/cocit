@@ -1,10 +1,16 @@
 package com.jiongsoft.cocit.cocui.render.jCocit;
 
+import java.io.IOException;
 import java.io.Writer;
+import java.util.List;
 
 import com.jiongsoft.cocit.cocui.model.CuiTreeModel;
 import com.jiongsoft.cocit.cocui.model.CuiTreeModelData;
 import com.jiongsoft.cocit.cocui.render.BaseCuiRender;
+import com.jiongsoft.cocit.utils.Json;
+import com.jiongsoft.cocit.utils.Lang;
+import com.jiongsoft.cocit.utils.Tree;
+import com.jiongsoft.cocit.utils.Tree.Node;
 
 abstract class JCocitTreeRenders {
 
@@ -13,6 +19,15 @@ abstract class JCocitTreeRenders {
 		@Override
 		public void render(Writer out, CuiTreeModel model) throws Throwable {
 
+			print(out, "<div style=\"border: 1px solid #8a8a8a; height: 500px; width:300px; padding: 1px;position: relative;overflow: hidden;\">");
+			print(out, "<ul id=\"tree_%s\" class=\"jCocit-ui jCocit-tree\" data-options=\"", model.getId());
+			print(out, "url: '%s'", model.getDataLoadUrl());
+			// print(out, ",lines: %s",model.is("lines"));
+			// print(out, ",styleName: 'tree-lines'");
+			print(out, ",checkbox: %s", model.is("checkbox"));
+			print(out, "\">");
+			print(out, "</ul>");
+			print(out, "</div>");
 		}
 	}
 
@@ -21,6 +36,40 @@ abstract class JCocitTreeRenders {
 		@Override
 		public void render(Writer out, CuiTreeModelData model) throws Throwable {
 
+			Tree tree = model.getData();
+			List<Node> nodes = tree.getChildren();
+			if (!Lang.isNil(nodes))
+				outNodes(out, nodes);
+
+		}
+
+		private void outNodes(Writer out, List<Node> nodes) throws IOException {
+
+			print(out, "[");
+
+			boolean noFirst = false;
+			for (Node node : nodes) {
+				if (noFirst) {
+					print(out, ",");
+				} else {
+					noFirst = true;
+				}
+
+				print(out, "{\"id\" : %s", Json.toJson(node.getId()));
+				print(out, ",\"text\" : %s", Json.toJson(node.getName()));
+				print(out, ",\"checked\" : %s", node.is("checked") ? 1 : 0);
+				print(out, ",\"open\" : %s", node.is("open") ? 1 : 0);
+				List<Node> children = node.getChildren();
+				if (!Lang.isNil(children)) {
+					print(out, ",\"children\" :");
+
+					outNodes(out, children);
+				}
+
+				print(out, "}");
+			}
+
+			print(out, "]");
 		}
 	}
 }

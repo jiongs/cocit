@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.jiongsoft.cocit.utils.ActionUtil;
+
 /**
  * 数据表Grid界面模型：由多个Grid列和数据组成，如果数据不存在则表示将异步获取Grid数据。
  * 
@@ -19,9 +21,8 @@ import java.util.Properties;
  */
 public class CuiGridModel extends BaseCuiModel {
 
-	private String id;
 	private String name;
-	private int pageSize = 20;
+	private int pageSize = ActionUtil.PAGE_SIZE;
 
 	// Grid数据，如果该值为Null，则将通过AJAX方式加载Grid数据。
 	private List data;
@@ -175,14 +176,6 @@ public class CuiGridModel extends BaseCuiModel {
 		public void setPattern(String pattern) {
 			this.pattern = pattern;
 		}
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public String getName() {

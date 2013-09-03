@@ -9,22 +9,24 @@ import com.jiongsoft.cocit.cocsoft.CocBizOperation;
 import com.jiongsoft.cocit.cocsoft.CocBizTable;
 import com.jiongsoft.cocit.cocui.model.CuiGridModel.GridColumn;
 import com.jiongsoft.cocit.utils.ActionUtil;
-import com.jiongsoft.cocit.utils.TreeNode;
+import com.jiongsoft.cocit.utils.Lang;
+import com.jiongsoft.cocit.utils.Tree;
+import com.jiongsoft.cocit.utils.Tree.Node;
 
 public class CuiModelFactoryImpl implements CuiModelFactory {
 
 	@Override
-	public CuiBizModuleModel getBizModuleModel(CocBizModule module) {
-		CocBizTable mainTable = module.getMainBizTable();
-		CuiBizTableModel mainModel = getBizTableModel(module, mainTable);
+	public CuiBizModuleModel getBizModuleModel(CocBizModule bizModule) {
+		CocBizTable mainTable = bizModule.getMainBizTable();
+		CuiBizTableModel mainModel = getBizTableModel(bizModule, mainTable);
 
 		CuiBizModuleModel ret = new CuiBizModuleModel(mainModel);
 
-		List<CocBizTable> childrenTables = module.getChildrenBizTables();
+		List<CocBizTable> childrenTables = bizModule.getChildrenBizTables();
 		if (childrenTables != null) {
 			List<CuiBizTableModel> childrenModels = new ArrayList();
 			for (CocBizTable table : childrenTables) {
-				childrenModels.add(getBizTableModel(module, table));
+				childrenModels.add(getBizTableModel(bizModule, table));
 			}
 		}
 
@@ -32,35 +34,35 @@ public class CuiModelFactoryImpl implements CuiModelFactory {
 	}
 
 	@Override
-	public CuiBizTableModel getBizTableModel(CocBizModule module, CocBizTable dataTable) {
+	public CuiBizTableModel getBizTableModel(CocBizModule bizModule, CocBizTable bizTable) {
 		CuiBizTableModel model = new CuiBizTableModel();
 
-		model.setId(dataTable.getID());
-		model.setName(dataTable.getName());
+		model.setId("" + bizTable.getID());
+		model.setName(bizTable.getName());
 
-		model.setTreeModel(this.getNaviTreeModel(module, dataTable));
-		model.setMenuModel(this.getOperationMenuModel(module, dataTable));
-		model.setGridModel(this.getGridModel(module, dataTable));
-		model.setSearchBoxModel(this.getSearchBoxModel(module, dataTable));
+		model.setNaviTreeModel(this.getNaviTreeModel(bizModule, bizTable));
+		model.setOperationMenuModel(this.getOperationMenuModel(bizModule, bizTable));
+		model.setGridModel(this.getGridModel(bizModule, bizTable));
+		model.setSearchBoxModel(this.getSearchBoxModel(bizModule, bizTable));
 
 		return model;
 	}
 
 	@Override
-	public CuiSearchBoxModel getSearchBoxModel(CocBizModule module, CocBizTable dataTable) {
+	public CuiSearchBoxModel getSearchBoxModel(CocBizModule bizModule, CocBizTable bizTable) {
 		return new CuiSearchBoxModel();
 	}
 
 	@Override
-	public CuiGridModel getGridModel(CocBizModule module, CocBizTable dataTable) {
+	public CuiGridModel getGridModel(CocBizModule bizModule, CocBizTable bizTable) {
 		CuiGridModel model = new CuiGridModel();
 
-		model.setId("" + dataTable.getID());
-		model.setName(dataTable.getName());
-		model.setDataLoadUrl(ActionUtil.GET_BIZ_TABLE_GRID_DATA.replace("*", ActionUtil.encodeArgs(module.getID(), dataTable.getID())));
+		model.setId("" + bizTable.getID());
+		model.setName(bizTable.getName());
+		model.setDataLoadUrl(ActionUtil.GET_BIZ_TABLE_GRID_DATA.replace("*", ActionUtil.encodeArgs(bizModule.getID(), bizTable.getID())));
 
 		// 创建Grid字段列
-		List<CocBizField> fields = dataTable.getBizFieldsForGrid();
+		List<CocBizField> fields = bizTable.getBizFieldsForGrid();
 		int count = 0;
 		for (CocBizField fld : fields) {
 			GridColumn col = new GridColumn(fld.getPropName(), fld.getName());
@@ -84,44 +86,70 @@ public class CuiModelFactoryImpl implements CuiModelFactory {
 	}
 
 	@Override
-	public CuiMenuModel getOperationMenuModel(CocBizModule module, CocBizTable dataTable) {
-		List<CocBizOperation> dataOperations = dataTable.getBizOperations();
+	public CuiMenuModel getOperationMenuModel(CocBizModule bizModule, CocBizTable bizTable) {
+		List<CocBizOperation> dataOperations = bizTable.getBizOperations();
 
 		CuiMenuModel model = new CuiMenuModel();
+		model.setId("" + bizTable.getID());
 
-		TreeNode data = new TreeNode();
-		addChildrenTo(data, dataOperations);
+		Tree tree = Tree.make();
+		addOperationsToMenuTree(tree, null, dataOperations);
 
-		model.setData(data);
+		model.setData(tree);
 
 		return model;
 	}
 
-	private void addChildrenTo(TreeNode node, List<CocBizOperation> operations) {
+	private void addOperationsToMenuTree(Tree tree, String parentNodeID, List<CocBizOperation> operations) {
 		if (operations == null)
 			return;
 
 		for (CocBizOperation op : operations) {
-			TreeNode child = new TreeNode("" + op.getID(), op.getName());
+			String nodeID = "BO_" + op.getID();
+			Node child = tree.addNode(parentNodeID, nodeID);
+			child.setName(op.getName());
+			child.setSequence(op.getSequence());
 
-			addChildrenTo(child, op.getChildrenBizOperations());
-
-			node.addChild(child);
+			addOperationsToMenuTree(tree, nodeID, op.getChildrenBizOperations());
 		}
 	}
 
 	@Override
-	public CuiTreeModel getNaviTreeModel(CocBizModule module, CocBizTable dataTable) {
-		List<CocBizField> dataFields = dataTable.getBizFieldsForNaviTree();
-		if (dataFields == null || dataFields.size() == 0) {
+	public CuiTreeModel getNaviTreeModel(CocBizModule bizModule, CocBizTable bizTable) {
+		if (Lang.isNil(bizTable.getBizFieldsForNaviTree()))
 			return null;
-		}
 
+		// 创建树模型
 		CuiTreeModel model = new CuiTreeModel();
+		model.setId("" + bizTable.getID());
+		model.set("checkbox", true);
 
-		model.setDataLoadUrl(ActionUtil.GET_BIZ_TABLE_NAVI_TREE_DATA.replace("*", ActionUtil.encodeArgs(module.getID(), dataTable.getID())));
+		// 设置树模型属性
+		model.setDataLoadUrl(ActionUtil.GET_BIZ_TABLE_NAVI_TREE_DATA.replace("*", ActionUtil.encodeArgs(bizModule.getID(), bizTable.getID())));
 
+		// 返回
 		return model;
+	}
+
+	@Override
+	public CuiTreeModelData getNaviTreeModelData(CocBizModule bizModule, CocBizTable bizTable) {
+		if (Lang.isNil(bizTable.getBizFieldsForNaviTree()))
+			return null;
+
+		// 创建模型
+		CuiTreeModelData ret = new CuiTreeModelData();
+		CuiTreeModel model = new CuiTreeModel();
+		model.setId("" + bizTable.getID());
+
+		// 查询数据
+		Tree data = bizTable.getNaviTree();
+
+		// 设置模型属性
+		ret.setModel(model);
+		ret.setData(data);
+
+		// 返回
+		return ret;
 	}
 
 }

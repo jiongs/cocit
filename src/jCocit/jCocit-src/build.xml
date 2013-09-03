@@ -250,5 +250,7 @@
 			<arg value="${JS_DIST_DIR}/jCocit.min.js" />
 			<arg value="${JS_DIST_DIR}/jCocit.pack.js" />
 		</java>
+		
+		<delete dir="${JS_DIST_DIR}/src" />
 	</target>
 </project>

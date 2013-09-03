@@ -25,7 +25,7 @@ import com.jiongsoft.cocit.corm.expr.CndExpr;
 import com.jiongsoft.cocit.corm.expr.Expr;
 import com.jiongsoft.cocit.utils.ActionUtil;
 import com.jiongsoft.cocit.utils.Log;
-import com.jiongsoft.cocit.utils.TreeNode;
+import com.jiongsoft.cocit.utils.Tree;
 
 /**
  * 数据模块Action：负责处理业务数据的“增加、删除、查询、修改、导入、导出”等业务操作。
@@ -163,14 +163,16 @@ public class CocitBizAction {
 		dataModel.setData(data);
 		dataModel.setTotal(total);
 
-		// 返回
+		/*
+		 * 返回
+		 */
 		return dataModel;
 	}
 
 	private CndExpr makeExpr() {
 		CocitHttpContext ctx = Cocit.getHttpContext();
 		int pageIndex = ctx.getParameterValue("pageIndex", 1);
-		int pageSize = ctx.getParameterValue("pageSize", 20);
+		int pageSize = ctx.getParameterValue("pageSize", ActionUtil.PAGE_SIZE);
 		CndExpr expr = Expr.page(pageIndex, pageSize);
 
 		// TODO:设置查询条件
@@ -187,7 +189,9 @@ public class CocitBizAction {
 	 */
 	@At(ActionUtil.GET_BIZ_TABLE_NAVI_TREE_DATA)
 	public CuiTreeModelData getBizTableNaviTreeData(String args) {
-		// 转换参数
+		/*
+		 * 转换参数
+		 */
 		String[] argArr = ActionUtil.decodeArgs(args);
 
 		String moduleID = argArr.length > 0 ? argArr[0] : null;
@@ -195,7 +199,9 @@ public class CocitBizAction {
 
 		Log.debug("CocitBizAction.getBizTableNaviTreeData... {args:%s, moduleID:%s, tableID}", args, moduleID, tableID);
 
-		// 获取数据模块和数据表对象
+		/*
+		 * 获取数据模块和数据表对象
+		 */
 		ComFactory softFactory = Cocit.getComFactory();
 		Long mID = Long.parseLong(moduleID);
 		CocBizModule module = softFactory.getBizModule(mID);
@@ -203,23 +209,17 @@ public class CocitBizAction {
 
 		Log.debug("CocitBizAction.getBizTableNaviTreeData: module=%s, table = %s", module, table);
 
-		// 获取Tree界面模型
+		/*
+		 * 获取Tree界面模型
+		 */
 		CuiModelFactory modelFactory = Cocit.getCuiModelFactory();
-		CuiTreeModel treeModel = modelFactory.getNaviTreeModel(module, table);
+		CuiTreeModelData treeModel = modelFactory.getNaviTreeModelData(module, table);
 
 		Log.debug("CocitBizAction.getBizTableNaviTreeData: treeModel = %s", treeModel);
 
-		// TOTO: 查询NaviTree数据
-		TreeNode data = new TreeNode();
-
-		Log.debug("CocitBizAction.getBizTableNaviTreeData: treeModel = %s, data = %s", treeModel, data);
-
-		// 构造Tree数据模型
-		CuiTreeModelData dataModel = new CuiTreeModelData();
-		dataModel.setModel(treeModel);
-		dataModel.setData(data);
-
-		// 返回
-		return dataModel;
+		/*
+		 * 返回
+		 */
+		return treeModel;
 	}
 }

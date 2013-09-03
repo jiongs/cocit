@@ -53,5 +53,5 @@
 	<classpathentry kind="lib" path="3th/lib/jmockit/jmockit-1.4/jmockit.jar"/>
 	<classpathentry kind="lib" path="3th/lib/jtester/jtester-0.8.2.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="output" path="classes"/>
 </classpath>

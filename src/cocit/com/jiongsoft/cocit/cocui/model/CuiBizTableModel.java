@@ -1,6 +1,5 @@
 package com.jiongsoft.cocit.cocui.model;
 
-
 /**
  * “业务表”界面模型：由“左边导航树、右边顶部操作菜单、右边顶部查询栏、右边下部Grid”组成。
  * 
@@ -9,14 +8,13 @@ package com.jiongsoft.cocit.cocui.model;
  */
 public class CuiBizTableModel extends BaseCuiModel {
 
-	private Long id;
 	private String name;
 
 	// 导航树
-	private CuiTreeModel treeModel;
+	private CuiTreeModel naviTreeModel;
 
 	// 操作菜单
-	private CuiMenuModel menuModel;
+	private CuiMenuModel operationMenuModel;
 
 	// 检索框
 	private CuiSearchBoxModel searchBoxModel;
@@ -28,14 +26,6 @@ public class CuiBizTableModel extends BaseCuiModel {
 		this.gridModel = grid;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -44,20 +34,20 @@ public class CuiBizTableModel extends BaseCuiModel {
 		this.name = name;
 	}
 
-	public CuiTreeModel getTreeModel() {
-		return treeModel;
+	public CuiTreeModel getNaviTreeModel() {
+		return naviTreeModel;
 	}
 
-	public void setTreeModel(CuiTreeModel naviTreeModel) {
-		this.treeModel = naviTreeModel;
+	public void setNaviTreeModel(CuiTreeModel naviTreeModel) {
+		this.naviTreeModel = naviTreeModel;
 	}
 
-	public CuiMenuModel getMenuModel() {
-		return menuModel;
+	public CuiMenuModel getOperationMenuModel() {
+		return operationMenuModel;
 	}
 
-	public void setMenuModel(CuiMenuModel operationMenuModel) {
-		this.menuModel = operationMenuModel;
+	public void setOperationMenuModel(CuiMenuModel operationMenuModel) {
+		this.operationMenuModel = operationMenuModel;
 	}
 
 	public CuiSearchBoxModel getSearchBoxModel() {

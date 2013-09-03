@@ -19,8 +19,26 @@ class DemsyCocBizOperation implements CocBizOperation {
 	}
 
 	@Override
+	public boolean is(String propName) {
+		Object obj = entity.get(propName);
+		if (obj == null)
+			return false;
+
+		try {
+			return Boolean.valueOf(obj.toString());
+		} catch (Throwable e) {
+			return false;
+		}
+	}
+
+	@Override
 	public Long getID() {
 		return entity.getId();
+	}
+
+	@Override
+	public int getSequence() {
+		return entity.getOrderby();
 	}
 
 	@Override
@@ -64,7 +82,7 @@ class DemsyCocBizOperation implements CocBizOperation {
 	}
 
 	@Override
-	public <T> T getExtProp(String propName) {
+	public <T> T get(String propName) {
 		return (T) entity.get(propName);
 	}
 

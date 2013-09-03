@@ -1383,7 +1383,7 @@ public abstract class BizEngine implements IBizEngine {
 		}
 	}
 
-	private CndExpr toExpr(List<String> rules) {
+	public CndExpr toExpr(List<String> rules) {
 		if (rules == null || rules.size() == 0) {
 			return null;
 		}
@@ -1587,7 +1587,7 @@ public abstract class BizEngine implements IBizEngine {
 	}
 
 	// 解析自身树节点
-	private Node mountToSelf(Nodes maker, Object obj, String rootID, String group, String selfTree, String groupTree, String groupParam, String paramPrefix, String prefix, boolean selectable,
+	public Node mountToSelf(Nodes maker, Object obj, String rootID, String group, String selfTree, String groupTree, String groupParam, String paramPrefix, String prefix, boolean selectable,
 			String idField, List selfList) {
 		boolean isSelfTree = !Str.isEmpty(selfTree);
 

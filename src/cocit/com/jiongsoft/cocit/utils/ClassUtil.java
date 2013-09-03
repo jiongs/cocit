@@ -4,6 +4,8 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.util.Date;
 
+import org.nutz.lang.Mirror;
+
 public abstract class ClassUtil {
 
 	/**
@@ -227,5 +229,13 @@ public abstract class ClassUtil {
 		}
 
 		return cl;
+	}
+
+	public static boolean hasField(Class klass, String propName) {
+		try {
+			return Mirror.me(klass).getField(propName) != null;
+		} catch (Throwable e) {
+			return false;
+		}
 	}
 }

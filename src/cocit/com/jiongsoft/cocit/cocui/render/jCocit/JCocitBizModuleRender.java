@@ -38,7 +38,7 @@ class JCocitBizModuleRender extends BaseCuiRender<CuiBizModuleModel> {
 		}
 
 		List<CuiBizTableModel> children = model.getChildrenBizTableModels();
-		if (Lang.hasContent(children)) {
+		if (!Lang.isNil(children)) {
 			// print tabs of children biz table models
 
 		}

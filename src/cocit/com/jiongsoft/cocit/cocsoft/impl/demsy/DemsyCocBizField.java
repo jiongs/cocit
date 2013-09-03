@@ -29,6 +29,19 @@ class DemsyCocBizField implements CocBizField {
 	}
 
 	@Override
+	public boolean is(String propName) {
+		Object obj = entity.get(propName);
+		if (obj == null)
+			return false;
+
+		try {
+			return Boolean.valueOf(obj.toString());
+		} catch (Throwable e) {
+			return false;
+		}
+	}
+
+	@Override
 	public Long getID() {
 		return entity.getId();
 	}
@@ -69,7 +82,7 @@ class DemsyCocBizField implements CocBizField {
 	}
 
 	@Override
-	public <T> T getExtProp(String propName) {
+	public <T> T get(String propName) {
 		return (T) entity.get(propName);
 	}
 
@@ -173,7 +186,7 @@ class DemsyCocBizField implements CocBizField {
 		} else if (getType() == TYPE_BOOL) {
 
 			// 转换Bool值为 KeyValue[]。
-			return new KeyValue[] { new KeyValue("是", "1"), new KeyValue("否", "0") };
+			return new KeyValue[] { KeyValue.make("是", "1"), KeyValue.make("否", "0") };
 
 		} else if (entity.getType().isV1Dic()) {
 
@@ -185,7 +198,7 @@ class DemsyCocBizField implements CocBizField {
 				List<Dic> list = dicc.getDics();
 				for (Dic dic : list) {
 					if (!dic.isDisabled() && !dic.isDisabled())
-						oplist.add(new KeyValue(dic.getName(), "" + dic.getId()));
+						oplist.add(KeyValue.make(dic.getName(), dic.getId()));
 				}
 			}
 
@@ -224,9 +237,9 @@ class DemsyCocBizField implements CocBizField {
 					idx = item.indexOf("：");
 				}
 				if (idx > -1) {
-					options[i++] = new KeyValue(item.substring(idx + 1).trim(), item.substring(0, idx).trim());
+					options[i++] = KeyValue.make(item.substring(idx + 1).trim(), item.substring(0, idx).trim());
 				} else {
-					options[i++] = new KeyValue(item, item);
+					options[i++] = KeyValue.make(item, item);
 				}
 			}
 			return options;
@@ -284,6 +297,11 @@ class DemsyCocBizField implements CocBizField {
 	public String[] getUploadType() {
 		String types = entity.getUploadType();
 		return StringUtil.toArray(types, "|,; ");
+	}
+
+	@Override
+	public int getSequence() {
+		return entity.getOrderby();
 	}
 
 }

@@ -37,6 +37,12 @@ public abstract class ActionUtil {
 	}
 
 	/*
+	 * 参数默认值
+	 */
+
+	public static final int PAGE_SIZE = 20;
+
+	/*
 	 * 以下是数据管理模块相关功能的访问路径。
 	 */
 

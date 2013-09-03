@@ -1,6 +1,6 @@
 package com.jiongsoft.cocit.cocui.model;
 
-import com.jiongsoft.cocit.utils.TreeNode;
+import com.jiongsoft.cocit.utils.Tree;
 
 /**
  * 树数据模型：
@@ -8,6 +8,6 @@ import com.jiongsoft.cocit.utils.TreeNode;
  * @author jiongsoft
  * 
  */
-public class CuiTreeModelData extends BaseCuiModelData<CuiTreeModel, TreeNode> {
+public class CuiTreeModelData extends BaseCuiModelData<CuiTreeModel, Tree> {
 
 }

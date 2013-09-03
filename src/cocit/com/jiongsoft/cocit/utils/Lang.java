@@ -11,11 +11,14 @@ import org.nutz.lang.Mirror;
 
 public abstract class Lang {
 
-	public static boolean hasContent(Collection coll) {
-		if (coll == null)
-			return false;
-
-		return coll.size() > 0;
+	/**
+	 * 判断指定的集合是否为空。参数为 null 或 size() 为0都将范围 true。
+	 * 
+	 * @param coll
+	 * @return
+	 */
+	public static boolean isNil(Collection coll) {
+		return coll == null || coll.size() == 0;
 	}
 
 	public static String format(Object value, String pattern) {

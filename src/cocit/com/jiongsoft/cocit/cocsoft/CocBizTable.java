@@ -2,6 +2,8 @@ package com.jiongsoft.cocit.cocsoft;
 
 import java.util.List;
 
+import com.jiongsoft.cocit.utils.Tree;
+
 /**
  * 组件化自定义软件数据表，也称“组件化自定义数据表”、“自定义数据表”、“数据表”等。
  * <UL>
@@ -60,4 +62,6 @@ public interface CocBizTable extends CocObject {
 	 * @return
 	 */
 	List<CocBizField> getBizFieldsForGrid();
+	
+	Tree getNaviTree();
 }

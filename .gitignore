@@ -3,6 +3,7 @@
 /docs
 /test
 /web
+/classes
 /bin
 /patch
 /.settings
@@ -13,3 +14,5 @@
 /Opensource
 /.classpath
 /.project
+.classpath
+.project
