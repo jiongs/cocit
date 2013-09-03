@@ -7,8 +7,8 @@ public abstract class Log {
 	private static ILog log = Logs.getLog(Log.class);
 	private static boolean traceDebug = false;
 	private static boolean traceInfo = false;
-	private static boolean traceWarn = true;
-	private static boolean traceError = true;
+	private static boolean traceWarn = false;
+	private static boolean traceError = false;
 
 	/**
 	 * 
@@ -27,11 +27,14 @@ public abstract class Log {
 					log.debug(String.format(message, args), (Throwable) args[args.length - 1]);
 				}
 			} else {
+				Throwable ex;
 				if (args.length == 1) {
-					log.debug(message + " " + (Throwable) args[0]);
+					ex = (Throwable) args[0];
 				} else {
-					log.debug(String.format(message, args) + " " + (Throwable) args[args.length - 1]);
+					ex = (Throwable) args[args.length - 1];
 				}
+				Throwable cause = ex.getCause();
+				log.debug(message + "\n\t" + ex.toString() + "\n\t" + cause);
 			}
 		} else {
 			log.debugf(message, args);
@@ -55,11 +58,14 @@ public abstract class Log {
 					log.info(String.format(message, args), (Throwable) args[args.length - 1]);
 				}
 			} else {
+				Throwable ex;
 				if (args.length == 1) {
-					log.info(message + " " + (Throwable) args[0]);
+					ex = (Throwable) args[0];
 				} else {
-					log.info(String.format(message, args) + " " + (Throwable) args[args.length - 1]);
+					ex = (Throwable) args[args.length - 1];
 				}
+				Throwable cause = ex.getCause();
+				log.info(message + "\n\t" + ex.toString() + "\n\t" + cause);
 			}
 		} else {
 			log.infof(message, args);
@@ -83,11 +89,14 @@ public abstract class Log {
 					log.warn(String.format(message, args), (Throwable) args[args.length - 1]);
 				}
 			} else {
+				Throwable ex;
 				if (args.length == 1) {
-					log.warn(message + " " + (Throwable) args[0]);
+					ex = (Throwable) args[0];
 				} else {
-					log.warn(String.format(message, args) + " " + (Throwable) args[args.length - 1]);
+					ex = (Throwable) args[args.length - 1];
 				}
+				Throwable cause = ex.getCause();
+				log.warn(message + "\n\t" + ex.toString() + "\n\t" + cause);
 			}
 		} else {
 			log.warnf(message, args);
@@ -111,11 +120,14 @@ public abstract class Log {
 					log.error(String.format(message, args), (Throwable) args[args.length - 1]);
 				}
 			} else {
+				Throwable ex;
 				if (args.length == 1) {
-					log.error(message + " " + (Throwable) args[0]);
+					ex = (Throwable) args[0];
 				} else {
-					log.error(String.format(message, args) + " " + (Throwable) args[args.length - 1]);
+					ex = (Throwable) args[args.length - 1];
 				}
+				Throwable cause = ex.getCause();
+				log.error(message + "\n\t" + ex.toString() + "\n\t" + cause);
 			}
 		} else {
 			log.errorf(message, args);

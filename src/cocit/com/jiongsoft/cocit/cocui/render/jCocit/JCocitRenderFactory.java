@@ -34,8 +34,10 @@ public class JCocitRenderFactory implements CuiRenderFactory {
 		CuiRender ret = renders.get(modelType);
 		if (ret == null) {
 			ret = makeRender(modelType);
-			if (ret != null)
-				renders.put(modelType, ret);
+
+			// TODO: Develop mode dont cache it.
+			// if (ret != null)
+			// renders.put(modelType, ret);
 		}
 
 		return ret;

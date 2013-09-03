@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.jiongsoft.cocit.cocsoft.CocBizField;
 import com.jiongsoft.cocit.cocsoft.CocBizGroup;
+import com.jiongsoft.cocit.utils.StringUtil;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.impl.sft.system.AbstractSystemData;
 import com.kmetop.demsy.comlib.impl.sft.system.SystemDataGroup;
@@ -17,19 +18,6 @@ class DemsyCocBizGroup implements CocBizGroup {
 
 	DemsyCocBizGroup(SystemDataGroup e) {
 		this.entity = e;
-	}
-
-	@Override
-	public boolean is(String propName) {
-		Object obj = entity.get(propName);
-		if (obj == null)
-			return false;
-
-		try {
-			return Boolean.valueOf(obj.toString());
-		} catch (Throwable e) {
-			return false;
-		}
 	}
 
 	@Override
@@ -73,8 +61,22 @@ class DemsyCocBizGroup implements CocBizGroup {
 	}
 
 	@Override
-	public <T> T get(String propName) {
-		return (T) entity.get(propName);
+	public <T> T get(String propName, T defaultReturn) {
+		String value = entity.get(propName);
+
+		if (value == null)
+			return defaultReturn;
+		if (defaultReturn == null)
+			return (T) value;
+
+		Class valueType = defaultReturn.getClass();
+
+		try {
+			return (T) StringUtil.cast(value, valueType);
+		} catch (Throwable e) {
+		}
+
+		return defaultReturn;
 	}
 
 	@Override

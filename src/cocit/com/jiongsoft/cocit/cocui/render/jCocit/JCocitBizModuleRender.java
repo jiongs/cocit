@@ -13,6 +13,10 @@ class JCocitBizModuleRender extends BaseCuiRender<CuiBizModuleModel> {
 
 	@Override
 	public void render(Writer out, CuiBizModuleModel model) throws Throwable {
+		int width = model.get("width", 1000);
+		int height = model.get("height", 800);
+		int tabsHeight = height / 2;
+
 		String contextPath = Cocit.getContextPath();
 		print(out, "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">");
 		print(out, "<html xmlns=\"http://www.w3.org/1999/xhtml\">");
@@ -28,26 +32,49 @@ class JCocitBizModuleRender extends BaseCuiRender<CuiBizModuleModel> {
 		print(out, "</head>");
 		print(out, "<body>");
 
-		// print model
-		print(out, "<div>");
+		// biz module model
+		// print(out, "<table><tr><td>");
+
 		CuiBizTableModel mainModel = model.getMainBizTableModel();
 		if (mainModel != null) {
-			print(out, "<div>");
+			// print(out, "<div>");
+
+			mainModel.set("width", "" + (width));
+			mainModel.set("height", "" + tabsHeight);
+
+			// tabs
+			print(out, "<div class=\"jCocit-ui jCocit-tabs\" data-options=\"\" style=\"width:%spx;height:%spx;\">", width, tabsHeight);
+
+			print(out, "<div title=\"%s\" data-options=\"closable:false\" style=\"padding:5px\">", mainModel.getName());
 			mainModel.render(out);
 			print(out, "</div>");
+
+			// tabs end
+			print(out, "</div>");
+
+			// print(out, "</div>");
 		}
 
 		List<CuiBizTableModel> children = model.getChildrenBizTableModels();
 		if (!Lang.isNil(children)) {
+			// print(out, "</td></tr><tr><td>");
 			// print tabs of children biz table models
+
+			print(out, "<div class=\"jCocit-ui jCocit-tabs\" data-options=\"\" style=\"width:%spx;height:%spx;\">", width, tabsHeight);
+
+			for (CuiBizTableModel child : children) {
+				print(out, "<div title=\"%s\" data-options=\"url:'%s',closable:false, cache: true\" style=\"padding:5px\">", child.getName(), child.getLoadUrl());
+				print(out, "</div>");
+			}
+
+			print(out, "</div>");
 
 		}
 
-		// print model end
-		print(out, "</div>");
+		// biz module model
+		// print(out, "</td></tr></table>");
 
 		print(out, "</body>");
 		print(out, "</html>");
 	}
-
 }

@@ -26,12 +26,12 @@ a.m-btn-active span.l-btn-left {
 
 a.m-btn-plain-active {
 	background: transparent;
-	padding: 0 5px 0 0;
+	padding: 0 2px 0 0;
 	border-width: 1px;
 	border-style: solid;
-	-moz-border-radius: 5px 5px 5px 5px;
-	-webkit-border-radius: 5px 5px 5px 5px;
-	border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 2px 2px 2px 2px;
+	-webkit-border-radius: 2px 2px 2px 2px;
+	border-radius: 2px 2px 2px 2px;
 }
 
 .m-btn-downarrow {
@@ -40,7 +40,7 @@ a.m-btn-plain-active {
 }
 
 a.m-btn-plain-active {
-	border-color: #b7d2ff;
-	background-color: #eaf2ff;
+	border-color: #000000;
+	background-color: #000000;
 	color: #000000;
 }

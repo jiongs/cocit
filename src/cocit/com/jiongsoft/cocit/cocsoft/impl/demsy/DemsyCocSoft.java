@@ -4,14 +4,15 @@ import java.util.Date;
 
 import com.jiongsoft.cocit.cocsoft.CocSoftConfig;
 import com.jiongsoft.cocit.cocsoft.impl.BaseCocSoft;
-import com.kmetop.demsy.comlib.entity.IDemsySoft;
+import com.jiongsoft.cocit.utils.StringUtil;
+import com.kmetop.demsy.comlib.impl.base.lib.DemsySoft;
 import com.kmetop.demsy.config.SoftConfigManager;
 
 class DemsyCocSoft extends BaseCocSoft {
-	private IDemsySoft entity;
+	private DemsySoft entity;
 	private DemsyCocSoftConfig config;
 
-	DemsyCocSoft(IDemsySoft demsySoft) {
+	DemsyCocSoft(DemsySoft demsySoft) {
 		this.entity = demsySoft;
 
 		config = new DemsyCocSoftConfig(SoftConfigManager.me());
@@ -20,19 +21,6 @@ class DemsyCocSoft extends BaseCocSoft {
 	@Override
 	protected CocSoftConfig getSoftConfig() {
 		return config;
-	}
-
-	@Override
-	public boolean is(String propName) {
-		Object obj = entity.get(propName);
-		if (obj == null)
-			return false;
-
-		try {
-			return Boolean.valueOf(obj.toString());
-		} catch (Throwable e) {
-			return false;
-		}
 	}
 
 	@Override
@@ -81,8 +69,22 @@ class DemsyCocSoft extends BaseCocSoft {
 	}
 
 	@Override
-	public <T> T get(String propName) {
-		return (T) entity.get(propName);
+	public <T> T get(String propName, T defaultReturn) {
+		String value = entity.get(propName);
+
+		if (value == null)
+			return defaultReturn;
+		if (defaultReturn == null)
+			return (T) value;
+
+		Class valueType = defaultReturn.getClass();
+
+		try {
+			return (T) StringUtil.cast(value, valueType);
+		} catch (Throwable e) {
+		}
+
+		return defaultReturn;
 	}
 
 }

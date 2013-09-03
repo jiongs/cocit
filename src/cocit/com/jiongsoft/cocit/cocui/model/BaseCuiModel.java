@@ -3,10 +3,11 @@ package com.jiongsoft.cocit.cocui.model;
 import static com.jiongsoft.cocit.Cocit.getCuiRenderFactory;
 
 import java.io.Writer;
-import java.util.Hashtable;
-import java.util.Map;
+import java.util.Properties;
 
 import com.jiongsoft.cocit.cocui.CuiModel;
+import com.jiongsoft.cocit.utils.Log;
+import com.jiongsoft.cocit.utils.StringUtil;
 
 /**
  * 基本界面模型：继承该类的所有模型都将以HTML数据格式输出特定的界面模型。
@@ -21,10 +22,10 @@ public abstract class BaseCuiModel implements CuiModel {
 	private String themeName;
 
 	// Grid属性设置
-	private Map<String, Object> extProps;
+	private Properties extProps;
 
 	public BaseCuiModel() {
-		extProps = new Hashtable();
+		extProps = new Properties();
 	}
 
 	@Override
@@ -43,7 +44,7 @@ public abstract class BaseCuiModel implements CuiModel {
 	 * @param propName
 	 * @param propValue
 	 */
-	public void set(String propName, Object propValue) {
+	public void set(String propName, String propValue) {
 		extProps.put(propName, propValue);
 	}
 
@@ -53,26 +54,23 @@ public abstract class BaseCuiModel implements CuiModel {
 	 * @param propName
 	 * @return
 	 */
-	public <T> T get(String propName) {
-		return (T) extProps.get(propName);
-	}
+	public <T> T get(String propName, T defaultReturn) {
+		String value = extProps.getProperty(propName);
 
-	/**
-	 * 获取扩展属性的BOOL值
-	 * 
-	 * @param propName
-	 * @return
-	 */
-	public boolean is(String propName) {
-		Object obj = extProps.get(propName);
-		if (obj == null)
-			return false;
+		if (value == null)
+			return defaultReturn;
+		if (defaultReturn == null)
+			return (T) value;
+
+		Class valueType = defaultReturn.getClass();
 
 		try {
-			return Boolean.valueOf(obj.toString());
+			return (T) StringUtil.cast(value, valueType);
 		} catch (Throwable e) {
-			return false;
+			Log.error("BaseCuiModel.get: 出错！ {propName:%s, defaultReturn:%s, valueType:%s}", propName, defaultReturn, valueType.getName());
 		}
+
+		return defaultReturn;
 	}
 
 	/**
@@ -91,14 +89,6 @@ public abstract class BaseCuiModel implements CuiModel {
 		} catch (Throwable e) {
 			return false;
 		}
-	}
-
-	public Map<String, Object> getExtProps() {
-		return extProps;
-	}
-
-	public void setExtProps(Map<String, Object> props) {
-		this.extProps = props;
 	}
 
 	public String getThemeName() {

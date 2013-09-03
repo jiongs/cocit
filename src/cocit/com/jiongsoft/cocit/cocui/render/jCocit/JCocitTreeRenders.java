@@ -19,12 +19,12 @@ abstract class JCocitTreeRenders {
 		@Override
 		public void render(Writer out, CuiTreeModel model) throws Throwable {
 
-			print(out, "<div style=\"border: 1px solid #8a8a8a; height: 500px; width:300px; padding: 1px;position: relative;overflow: hidden;\">");
+			print(out, "<div style=\"width:%spx; height:%spx; position: relative; border:1px solid #95B8E7; padding: 2px; overflow: hidden;background-color: #F4F4F4\">", model.get("width", 240), model.get("height", 300));
 			print(out, "<ul id=\"tree_%s\" class=\"jCocit-ui jCocit-tree\" data-options=\"", model.getId());
 			print(out, "url: '%s'", model.getDataLoadUrl());
 			// print(out, ",lines: %s",model.is("lines"));
 			// print(out, ",styleName: 'tree-lines'");
-			print(out, ",checkbox: %s", model.is("checkbox"));
+			print(out, ",checkbox: %s", (boolean) model.get("checkbox", true));
 			print(out, "\">");
 			print(out, "</ul>");
 			print(out, "</div>");

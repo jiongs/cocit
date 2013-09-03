@@ -13,7 +13,7 @@ import com.jiongsoft.cocit.utils.Lang;
 import com.jiongsoft.cocit.utils.Tree;
 import com.jiongsoft.cocit.utils.Tree.Node;
 
-public class CuiModelFactoryImpl implements CuiModelFactory {
+public class SimpleCuiModelFactory implements CuiModelFactory {
 
 	@Override
 	public CuiBizModuleModel getBizModuleModel(CocBizModule bizModule) {
@@ -26,8 +26,16 @@ public class CuiModelFactoryImpl implements CuiModelFactory {
 		if (childrenTables != null) {
 			List<CuiBizTableModel> childrenModels = new ArrayList();
 			for (CocBizTable table : childrenTables) {
-				childrenModels.add(getBizTableModel(bizModule, table));
+				CuiBizTableModel model = new CuiBizTableModel();
+
+				model.setId("" + table.getID());
+				model.setName(table.getName());
+
+				model.setLoadUrl(ActionUtil.GET_BIZ_TABLE_MODEL.replace("*", ActionUtil.encodeArgs(bizModule.getID(), table.getID())));
+
+				childrenModels.add(model);
 			}
+			ret.setChildrenBizTableModels(childrenModels);
 		}
 
 		return ret;
@@ -105,9 +113,10 @@ public class CuiModelFactoryImpl implements CuiModelFactory {
 			return;
 
 		for (CocBizOperation op : operations) {
-			String nodeID = "BO_" + op.getID();
+			String nodeID = "op_" + op.getID();
 			Node child = tree.addNode(parentNodeID, nodeID);
 			child.setName(op.getName());
+			child.set("logo", op.getLogo());
 			child.setSequence(op.getSequence());
 
 			addOperationsToMenuTree(tree, nodeID, op.getChildrenBizOperations());
@@ -122,7 +131,6 @@ public class CuiModelFactoryImpl implements CuiModelFactory {
 		// 创建树模型
 		CuiTreeModel model = new CuiTreeModel();
 		model.setId("" + bizTable.getID());
-		model.set("checkbox", true);
 
 		// 设置树模型属性
 		model.setDataLoadUrl(ActionUtil.GET_BIZ_TABLE_NAVI_TREE_DATA.replace("*", ActionUtil.encodeArgs(bizModule.getID(), bizTable.getID())));

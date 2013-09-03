@@ -9,7 +9,7 @@ a.l-btn {
 	text-decoration: none;
 	display: inline-block;
 	zoom: 1;
-	height: 24px;
+	height: 20px;
 	padding-right: 18px;
 	cursor: pointer;
 	outline: none;
@@ -32,7 +32,7 @@ a.l-btn-disabled {
 a.l-btn span.l-btn-left {
 	display: inline-block;
 	background-position: 0 -48px;
-	padding: 4px 0px 4px 18px;
+	padding: 2px 0px 2px 18px;
 	line-height: 16px;
 	height: 16px;
 }

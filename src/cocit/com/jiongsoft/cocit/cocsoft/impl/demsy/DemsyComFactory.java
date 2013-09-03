@@ -10,8 +10,8 @@ import com.jiongsoft.cocit.cocsoft.CocBizTable;
 import com.jiongsoft.cocit.cocsoft.CocSoft;
 import com.jiongsoft.cocit.cocsoft.ComFactory;
 import com.kmetop.demsy.Demsy;
-import com.kmetop.demsy.comlib.entity.IDemsySoft;
 import com.kmetop.demsy.comlib.impl.base.biz.BizAction;
+import com.kmetop.demsy.comlib.impl.base.lib.DemsySoft;
 import com.kmetop.demsy.comlib.impl.base.security.Module;
 import com.kmetop.demsy.comlib.impl.sft.system.AbstractSystemData;
 import com.kmetop.demsy.comlib.impl.sft.system.SFTSystem;
@@ -41,7 +41,7 @@ public class DemsyComFactory implements ComFactory {
 		synchronized (cacheSoft) {
 			CocSoft ret = cacheSoft.get(domain);
 			if (ret == null) {
-				IDemsySoft ds = moduleEngine.getSoft(domain);
+				DemsySoft ds = (DemsySoft) moduleEngine.getSoft(domain);
 				if (ds != null) {
 					ret = new DemsyCocSoft(ds);
 					cacheSoft.put(domain, ret);

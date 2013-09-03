@@ -11,7 +11,7 @@
 		type: "com.jiongsoft.cocit.cocsoft.impl.demsy.DemsyComFactory"
 	},
 	cuiModelFactory: {
-		type:"com.jiongsoft.cocit.cocui.model.CuiModelFactoryImpl"
+		type:"com.jiongsoft.cocit.cocui.model.SimpleCuiModelFactory"
 	},
 	cuiRenderFactory: {
 		type:"com.jiongsoft.cocit.cocui.render.jCocit.JCocitRenderFactory"

@@ -79,13 +79,5 @@ public interface CocObject {
 	 * @param propName
 	 * @return
 	 */
-	public <T> T get(String propName);
-
-	/**
-	 * 获取自定义对象的扩展属性的BOOL值，即未在API中定的的其他属性。
-	 * 
-	 * @param propName
-	 * @return
-	 */
-	public boolean is(String propName);
+	public <T> T get(String propName, T defaultReturn);
 }

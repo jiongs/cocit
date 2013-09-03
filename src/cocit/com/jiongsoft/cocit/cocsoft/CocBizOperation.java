@@ -15,6 +15,8 @@ import java.util.List;
  * 
  */
 public interface CocBizOperation extends CocObject {
+	
+	String getLogo();
 
 	/**
 	 * 获取该操作的操作码，操作码用于计算字段编辑模式。

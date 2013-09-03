@@ -17,7 +17,8 @@ abstract class JCocitGridRenders {
 		@Override
 		public void render(Writer out, CuiGridModel model) throws Throwable {
 
-			print(out, "<table class=\"jCocit-ui jCocit-datagrid\" title=\"%s\" style=\"width: 700px; height: 250px\" data-options=\"", model.getName());
+			print(out, "<table class=\"jCocit-ui jCocit-datagrid\" title=\"%s\" style=\"width: %spx; height: %spx;\" data-options=\"", "", model.get("width", 700),
+					model.get("height", 300));
 			print(out, "url: '%s'", model.getDataLoadUrl());
 			print(out, ",singleSelect: false");
 			print(out, ",collapsible: true");
@@ -25,6 +26,10 @@ abstract class JCocitGridRenders {
 			print(out, ",autoRowHeight: false");
 			print(out, ",pagination: true");
 			print(out, ",pageSize: %s", model.getPageSize());
+
+			// 工具栏ID与MenuRender中输出的菜单ID相同，都是BizTable ID。
+			print(out, ",toolbar: '#toolbar%s'", model.getId());
+
 			print(out, "\">");
 			print(out, "<thead>");
 			print(out, "<tr>");

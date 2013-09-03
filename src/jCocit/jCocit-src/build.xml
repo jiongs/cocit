@@ -207,12 +207,14 @@
 		</for>
 
 		<!-- 拷贝CSS样式图片 -->
+		<!-- 
 		<echo message="拷贝CSS样式图片 ..." />
 		<copy toDir="${STYLE_DIST_DIR}">
 			<fileset dir="${STYLE_SRC_DIR}">
 				<include name="images/**/*.*" />
 			</fileset>
 		</copy>
+		 -->
 
 		<delete file="${JS_DIST_DIR}/jCocit.all.js" />
 	</target>

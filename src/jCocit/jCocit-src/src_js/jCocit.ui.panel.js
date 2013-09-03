@@ -410,7 +410,7 @@
 
 		var $panelContent = $f(">.PnB>.PnBC", state.panel);
 
-		// refresh panel body with "href" specified by options
+		// refresh panel body with "url" specified by options
 		if (opts.url) {
 			if (!state.isLoaded || !opts.cache) {
 				state.isLoaded = false;
@@ -423,9 +423,9 @@
 					cache : false,
 					dataType : "html",
 					success : function(responseHTML) {
+						state.isLoaded = true;
 						_setContent(opts.extractor.call(selfHTML, responseHTML));
 						opts.onLoad.apply(selfHTML, arguments);
-						state.isLoaded = true;
 					}
 				});
 			}

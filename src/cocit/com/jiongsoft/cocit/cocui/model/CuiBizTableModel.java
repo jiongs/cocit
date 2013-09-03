@@ -10,6 +10,8 @@ public class CuiBizTableModel extends BaseCuiModel {
 
 	private String name;
 
+	private String loadUrl;
+
 	// 导航树
 	private CuiTreeModel naviTreeModel;
 
@@ -64,6 +66,14 @@ public class CuiBizTableModel extends BaseCuiModel {
 
 	public void setGridModel(CuiGridModel gridModel) {
 		this.gridModel = gridModel;
+	}
+
+	public String getLoadUrl() {
+		return loadUrl;
+	}
+
+	public void setLoadUrl(String dataLoadUrl) {
+		this.loadUrl = dataLoadUrl;
 	}
 
 }
