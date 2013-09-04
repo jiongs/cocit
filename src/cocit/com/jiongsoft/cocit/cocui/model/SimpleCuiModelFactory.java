@@ -21,6 +21,7 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 		CuiBizTableModel mainModel = getBizTableModel(bizModule, mainTable);
 
 		CuiBizModuleModel ret = new CuiBizModuleModel(mainModel);
+		ret.setId("" + bizModule.getID());
 
 		List<CocBizTable> childrenTables = bizModule.getChildrenBizTables();
 		if (childrenTables != null) {
@@ -101,26 +102,29 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 		model.setId("" + bizTable.getID());
 
 		Tree tree = Tree.make();
-		addOperationsToMenuTree(tree, null, dataOperations);
+		if (!Lang.isNil(dataOperations)) {
+			for (CocBizOperation op : dataOperations) {
+				String parentNodeID = null;
+				if (op.getParentID() != null) {
+					parentNodeID = "" + op.getParentID();
+				}
+				String nodeID = "" + op.getID();
+				Node child = tree.addNode(parentNodeID, nodeID);
+
+				child.setName(op.getName());
+				child.set("moduleID", "" + bizModule.getID());
+				child.set("tableID", "" + bizTable.getID());
+				child.set("operationCode", op.getOperationCode());
+				child.set("operationMode", op.getOperationMode());
+				child.setSequence(op.getSequence());
+
+				// addOperationsToMenuTree(tree, nodeID, op.getChildrenBizOperations());
+			}
+		}
 
 		model.setData(tree);
 
 		return model;
-	}
-
-	private void addOperationsToMenuTree(Tree tree, String parentNodeID, List<CocBizOperation> operations) {
-		if (operations == null)
-			return;
-
-		for (CocBizOperation op : operations) {
-			String nodeID = "op_" + op.getID();
-			Node child = tree.addNode(parentNodeID, nodeID);
-			child.setName(op.getName());
-			child.set("logo", op.getLogo());
-			child.setSequence(op.getSequence());
-
-			addOperationsToMenuTree(tree, nodeID, op.getChildrenBizOperations());
-		}
 	}
 
 	@Override

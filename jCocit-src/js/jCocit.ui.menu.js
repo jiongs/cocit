@@ -313,15 +313,22 @@
 
 	function getItem(target, itemDIV) {
 		var $item = $(itemDIV);
-		var item = {
-			target : itemDIV,
+		var item = $.extend({}, jCocit.parseOptions(itemDIV, [ "name", "iconCls", "href" ]), {
 			id : $item.attr("id"),
 			text : $.trim($c("div.menu-text", $item).html()),
 			disabled : $hc("menu-item-disabled", $item),
 			href : $item.attr("href"),
-			name : $item.attr("name"),
-			onclick : itemDIV.onclick
-		};
+			name : $item.attr("name")
+		});
+		// var item = {
+		// target : itemDIV,
+		// id : $item.attr("id"),
+		// text : $.trim($c("div.menu-text", $item).html()),
+		// disabled : $hc("menu-item-disabled", $item),
+		// href : $item.attr("href"),
+		// name : $item.attr("name"),
+		// onclick : itemDIV.onclick
+		// };
 		var $itemIcon = $c("div.menu-icon", $item);
 		if ($itemIcon.length) {
 			var iconClassNames = [];
@@ -451,9 +458,11 @@
 	}
 
 	/**
-	 * 1. Create menu UI object or set menu properties if "options" is JSON object.
+	 * 1. Create menu UI object or set menu properties if "options" is JSON
+	 * object.
 	 * <P>
-	 * 2. Invoke menu method with arguments specified by "args" if "options" is method name.
+	 * 2. Invoke menu method with arguments specified by "args" if "options" is
+	 * method name.
 	 */
 	$.fn.menu = function(options, args) {
 		if (typeof options == "string") {

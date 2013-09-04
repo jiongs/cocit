@@ -38,6 +38,16 @@
 			}
 		}).bind("blur.button", function() {
 			$rc("l-btn-focus", $f("span.l-btn-text", $(this)));
+		}).bind("click.button", function(e) {
+			if ($hc("l-btn-disabled", $(this))) {
+				return;
+			}
+
+			if (opts.onClick)
+				opts.onClick.call(buttonHTML, opts);
+
+			e.stopPropagation();
+
 		});
 
 		disable(buttonHTML, opts.disabled);

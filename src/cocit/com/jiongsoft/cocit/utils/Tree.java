@@ -2,23 +2,23 @@ package com.jiongsoft.cocit.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 public class Tree {
 
 	private Map<String, Node> nodeMap;
 
-	private Map<String, Object> extProps;
+	private Properties extProps;
 
 	private List<Node> children;
 
 	private Tree() {
 		nodeMap = new HashMap();
 		children = new ArrayList();
-		extProps = new Hashtable();
+		extProps = new Properties();
 	}
 
 	public void optimizeStatus() {
@@ -33,7 +33,7 @@ public class Tree {
 			}
 		}
 		for (Node child : children) {
-			child.set("open", true);
+			child.set("open", "true");
 		}
 	}
 
@@ -94,11 +94,25 @@ public class Tree {
 	// }
 	// }
 
-	public <T> T getExtProp(String propName) {
-		return (T) extProps.get(propName);
+	public <T> T get(String propName, T defaultReturn) {
+		String value = extProps.getProperty(propName);
+
+		if (value == null)
+			return defaultReturn;
+		if (defaultReturn == null)
+			return (T) value;
+
+		Class valueType = defaultReturn.getClass();
+
+		try {
+			return (T) StringUtil.cast(value, valueType);
+		} catch (Throwable e) {
+		}
+
+		return defaultReturn;
 	}
 
-	public Tree setExtProp(String propName, Object value) {
+	public Tree set(String propName, String value) {
 		extProps.put(propName, value);
 
 		return this;
@@ -201,11 +215,11 @@ public class Tree {
 
 		private Integer sequence;// 节点顺序
 
-		private Map<String, Object> extProps;
+		private Properties extProps;
 
 		private Node(String id) {
 			this.id = id;
-			this.extProps = new HashMap();
+			this.extProps = new Properties();
 		}
 
 		/**
@@ -214,26 +228,22 @@ public class Tree {
 		 * @param propName
 		 * @return
 		 */
-		public <T> T get(String propName) {
-			return (T) extProps.get(propName);
-		}
+		public <T> T get(String propName, T defaultReturn) {
+			String value = extProps.getProperty(propName);
 
-		/**
-		 * 获取扩展属性的BOOL值
-		 * 
-		 * @param propName
-		 * @return
-		 */
-		public boolean is(String propName) {
-			Object obj = extProps.get(propName);
-			if (obj == null)
-				return false;
+			if (value == null)
+				return defaultReturn;
+			if (defaultReturn == null)
+				return (T) value;
+
+			Class valueType = defaultReturn.getClass();
 
 			try {
-				return Boolean.valueOf(obj.toString());
+				return (T) StringUtil.cast(value, valueType);
 			} catch (Throwable e) {
-				return false;
 			}
+
+			return defaultReturn;
 		}
 
 		/**
@@ -243,7 +253,7 @@ public class Tree {
 		 * @param value
 		 * @return
 		 */
-		public Node set(String propName, Object value) {
+		public Node set(String propName, String value) {
 			extProps.put(propName, value);
 
 			return this;
@@ -357,4 +367,13 @@ public class Tree {
 		}
 	}
 
+	public void removeNode(Node node) {
+		this.children.remove(node);
+		this.nodeMap.remove(node.getId());
+		Node parent = node.getParent();
+		if (parent != null && parent.getChildren() != null) {
+			parent.children.remove(node);
+		}
+
+	}
 }

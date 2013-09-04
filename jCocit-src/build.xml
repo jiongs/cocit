@@ -17,16 +17,16 @@
 	<property name="YUI_JAR" value="${BUILD_DIR}/yuicompressor-2.4.2.jar" />
 
 	<!-- 设置JS源代码和目标代码目录 -->
-	<property name="JS_SRC_DIR" value="src_js" />
-	<property name="JS_DIST_DIR" value="../js" />
+	<property name="JS_SRC_DIR" value="js" />
+	<property name="JS_DIST_DIR" value="../jCocit/js" />
 
 	<!-- 设置STYLE源代码和目标代码目录 -->
-	<property name="STYLE_SRC_DIR" value="src_style" />
-	<property name="STYLE_DIST_DIR" value="../css" />
+	<property name="STYLE_SRC_DIR" value="css" />
+	<property name="STYLE_DIST_DIR" value="../jCocit/css" />
 
 	<!-- 设置UI模块 -->
-	<property name="JS.MODULES" value="utils,core,nls,cookie,parse,alerts,ui.draggable,ui.droppable,ui.resizable,ui.panel,ui.window,ui.dialog,ui.tree,ui.combo,ui.combotree,ui.treedialog,plugin.login" />
-	<property name="CSS.MODULES" value="alerts,ui.panel,ui.window,ui.dialog,ui.tree,ui.combo,plugin.login" />
+	<property name="JS.MODULES" value="utils,core,nls,cookie,parse,alerts,ui.draggable,ui.droppable,ui.resizable,ui.panel,ui.window,ui.dialog,ui.tree,ui.combo,ui.combotree,ui.treedialog,plugin.login,plugin.bizmodule" />
+	<property name="CSS.MODULES" value="alerts,ui.panel,ui.window,ui.dialog,ui.tree,ui.combo,plugin.login,plugin.bizmodule" />
 	<property name="JS.MODULES-ext" value="button,menu,validatebox,numberbox,spinner,spinnernumber,spinnertime,accordion,pagination,calendar,datagrid,datagrid.crud,combobox,combodate,combodatetime,combogrid,menubar,searchbox,slider,tabs,treegrid,propertygrid,tree.crud" />
 	<property name="CSS.MODULES-ext" value="button,menu,validatebox,spinner,accordion,pagination,calendar,datagrid,combobox,combodate,menubar,searchbox,slider,tabs,propertygrid" />
 
@@ -207,22 +207,21 @@
 		</for>
 
 		<!-- 拷贝CSS样式图片 -->
-		<!-- 
 		<echo message="拷贝CSS样式图片 ..." />
 		<copy toDir="${STYLE_DIST_DIR}">
 			<fileset dir="${STYLE_SRC_DIR}">
 				<include name="images/**/*.*" />
 			</fileset>
 		</copy>
-		 -->
 
 		<delete file="${JS_DIST_DIR}/jCocit.all.js" />
 	</target>
 
 	<!-- 加密JS文件 -->
 	<target name="pack" depends="min">
-		<mkdir dir="${JS_DIST_DIR}/pack" />
-
+		<!--
+	    <mkdir dir="${JS_DIST_DIR}/pack" />
+	    
 		<echo message="加密jCocit JS模块文件 ..." />
 		<for list="${JS.MODULES}" param="module">
 			<sequential>
@@ -234,6 +233,7 @@
 				</java>
 			</sequential>
 		</for>
+		
 		<echo message="加密JS模块文件 ..." />
 		<for list="${JS.MODULES-ext}" param="module">
 			<sequential>
@@ -245,6 +245,7 @@
 				</java>
 			</sequential>
 		</for>
+		 -->
 
 		<echo message="加密jCocit.min.js文件生成jCocit.pack.js ..." />
 		<java jar="${JS_JAR}" fork="true">
@@ -252,7 +253,11 @@
 			<arg value="${JS_DIST_DIR}/jCocit.min.js" />
 			<arg value="${JS_DIST_DIR}/jCocit.pack.js" />
 		</java>
-		
+
+		<!-- 删除模块文件目录 -->
 		<delete dir="${JS_DIST_DIR}/src" />
+		<delete dir="${JS_DIST_DIR}/min" />
+		<delete dir="${JS_DIST_DIR}/pack" />
+		<delete dir="${STYLE_DIST_DIR}/min" />
 	</target>
 </project>

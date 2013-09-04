@@ -110,7 +110,7 @@
 }
 
 /* Window Content */
-.WdB .PnBC {
+.WdB > .PnBC {
 	border: 1px solid #bcbcbc;
 	margin: 8px 8px 6px 8px;
 	padding: 4px;

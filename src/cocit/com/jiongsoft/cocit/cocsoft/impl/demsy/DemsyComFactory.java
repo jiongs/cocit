@@ -53,13 +53,25 @@ public class DemsyComFactory implements ComFactory {
 
 	}
 
-	private CocBizTable makeDataTable(SFTSystem system) {
+	private CocBizTable makeDataTable(Module module, SFTSystem system) {
 		DemsyCocBizTable ret = new DemsyCocBizTable(system);
+
+		SFTSystem moduleRefSystem = module.getRefSystem();
 
 		List<AbstractSystemData> dataFields = (List<AbstractSystemData>) bizEngine.getFields(system);
 		List<SystemDataGroup> dataGroups = (List<SystemDataGroup>) bizEngine.getFieldGroups(system);
 		List<BizAction> dataOperations = (List<BizAction>) bizEngine.getActions(system);
-		List<AbstractSystemData> dataFieldsForNaviTree = (List<AbstractSystemData>) bizEngine.getFieldsOfNavi(system);
+		List<AbstractSystemData> dataFieldsForNaviTree = new ArrayList();
+		List<AbstractSystemData> oldDataFieldsForNaviTree = (List<AbstractSystemData>) bizEngine.getFieldsOfNavi(system);
+		for (AbstractSystemData d : oldDataFieldsForNaviTree) {
+			SFTSystem fkSystem = d.getRefrenceSystem();
+			if (fkSystem != null && fkSystem.getId() == moduleRefSystem.getId()) {
+				continue;
+			}
+
+			dataFieldsForNaviTree.add(d);
+		}
+
 		List<AbstractSystemData> dataFieldsForGrid = (List<AbstractSystemData>) bizEngine.getFieldsOfGrid(system, null);
 		ret.setDataFields(dataFields);
 		ret.setDataFieldsForGrid(dataFieldsForGrid);
@@ -76,7 +88,7 @@ public class DemsyComFactory implements ComFactory {
 		SFTSystem mainSystem = (SFTSystem) moduleEngine.getSystem(module);
 
 		//
-		CocBizTable mainDataTable = this.makeDataTable(mainSystem);
+		CocBizTable mainDataTable = this.makeDataTable(module, mainSystem);
 		DemsyCocBizModule ret = new DemsyCocBizModule(module, mainDataTable);
 
 		//
@@ -85,7 +97,7 @@ public class DemsyComFactory implements ComFactory {
 		for (SFTSystem sys : childrenSystems) {
 
 			// TODO:应通过模块表达式来解析数据表对象，目前暂时不支持模块对数据表的引用表达式。
-			childrenDataTables.add(this.makeDataTable(sys));
+			childrenDataTables.add(this.makeDataTable(module, sys));
 
 		}
 
@@ -96,11 +108,12 @@ public class DemsyComFactory implements ComFactory {
 
 	@Override
 	public CocBizTable getBizTable(Long moduleID, Long tableID) {
+		Module module = (Module) moduleEngine.getModule(moduleID);
 		SFTSystem system = (SFTSystem) bizEngine.getSystem(tableID);
 
 		// TODO:应通过模块表达式来解析数据表对象，目前暂时不支持模块对数据表的引用表达式。
 
-		return this.makeDataTable(system);
+		return this.makeDataTable(module, system);
 	}
 
 }

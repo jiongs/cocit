@@ -188,25 +188,28 @@ class DemsyCocBizTable implements CocBizTable {
 	@Override
 	public Tree getNaviTree() {
 
-		Tree root = Tree.make();
+		Tree tree = Tree.make();
 
 		for (AbstractSystemData fld : this.dataFieldsForNaviTree) {
 
-			Node node = root.addNode(null, fld.getPropName()).setName("按 " + fld.getName());
+			Node node = tree.addNode(null, fld.getPropName()).setName("按 " + fld.getName());
 			node.set("open", "true");
 
-			this.makeNodes(root, node, fld);
+			boolean success = this.makeNodes(tree, node, fld);
+			if (!success) {
+				tree.removeNode(node);
+			}
 		}
 
 		// 如果导航树节点总数没有超过边框则全部展开
 		// root.optimizeStatus();
 
-		root.sort();
+		tree.sort();
 
-		return root;
+		return tree;
 	}
 
-	private void makeNodes(Tree tree, Node node, AbstractSystemData field) {
+	private boolean makeNodes(Tree tree, Node node, AbstractSystemData field) {
 		BizEngine bizEngine = (BizEngine) Demsy.bizEngine;
 
 		DemsyCocBizField cocField = new DemsyCocBizField(field);
@@ -222,9 +225,9 @@ class DemsyCocBizTable implements CocBizTable {
 			// 查询外键数据
 			IOrm orm = Demsy.orm();
 			Class fkSystemType = bizEngine.getType(fkSystem);
-			if (orm.count(fkSystemType) > 200) {
-				return;
-			}
+			// if (orm.count(fkSystemType) > 50) {
+			// return false;
+			// }
 			List fkSystemRecords = orm.query(fkSystemType);
 
 			// 数据自身树
@@ -266,12 +269,14 @@ class DemsyCocBizTable implements CocBizTable {
 		} else {
 			KeyValue[] options = cocField.getOptions();
 			if (options == null || options.length == 0 || options.length > 200) {
-				return;
+				return false;
 			}
 
 			for (KeyValue option : options) {
 				tree.addNode(parentNodeID, propName + ":" + option.getValue()).setName(option.getKey());
 			}
 		}
+
+		return true;
 	}
 }

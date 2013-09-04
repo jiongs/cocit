@@ -73,7 +73,7 @@ import com.kmetop.demsy.orm.ann.Prop;
 				,
 				@BzFld(name = "人工顺序", property = "orderby", gridOrder = 6) //
 				,
-				@BzFld(name = "所属系统", property = "system", refrenceSystem = BIZSYS_BZUDF_SYSTEM, masterMapping = true, mode = "*:S bu:N c:M e:M") //
+				@BzFld(name = "所属系统", property = "system", refrenceSystem = BIZSYS_BZUDF_SYSTEM, disabledNavi = true, masterMapping = true, mode = "*:S bu:N c:M e:M") //
 				,
 				@BzFld(name = "所属分组", property = "dataGroup", refrenceSystem = BIZSYS_BZUDF_FIELD_GROUP, disabledNavi = true, cascadeMode = "system:*:system", mode = "bu:N c:M e:M *:S", gridOrder = 3) //
 				,

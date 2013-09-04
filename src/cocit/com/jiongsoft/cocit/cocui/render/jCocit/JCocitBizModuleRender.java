@@ -25,19 +25,28 @@ class JCocitBizModuleRender extends BaseCuiRender<CuiBizModuleModel> {
 		print(out, "<link rel=\"icon\" href=\"\" type=\"image/x-icon\" />");
 		print(out, "<link rel=\"shortcut icon\" href=\"\" type=\"image/x-icon\" />");
 		print(out, "<title></title>");
+
 		print(out, "<link href=\"%s/jCocit/css/jCocit.min.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
+		print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.window.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
+
 		print(out, "<script src=\"%s/jCocit/jquery.min.js\" type=\"text/javascript\"></script>", contextPath);
 		print(out, "<script src=\"%s/jCocit/js/jCocit.src.js\" type=\"text/javascript\"></script>", contextPath);
-		print(out, "<script src=\"%s/jCocit/js/jCocit.nls.zh.js\" type=\"text/javascript\"></script>", contextPath);
+		print(out, "<script src=\"%s/jCocit-src/js/jCocit.plugin.bizmodule.js\" type=\"text/javascript\"></script>", contextPath);
+		// print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.button.js\" type=\"text/javascript\"></script>", contextPath);
+		// print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.menu.js\" type=\"text/javascript\"></script>", contextPath);
+		// print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.tabs.js\" type=\"text/javascript\"></script>", contextPath);
+		print(out, "<script src=\"%s/jCocit-src/js/jCocit.nls.zh.js\" type=\"text/javascript\"></script>", contextPath);
+
 		print(out, "</head>");
 		print(out, "<body>");
 
+		print(out, "<div id=\"module_%s\" class=\"jCocit-ui jCocit-bizmodule\">", model.getId());
+
 		// biz module model
-		// print(out, "<table><tr><td>");
+		print(out, "<table><tr><td>");
 
 		CuiBizTableModel mainModel = model.getMainBizTableModel();
 		if (mainModel != null) {
-			// print(out, "<div>");
 
 			mainModel.set("width", "" + (width));
 			mainModel.set("height", "" + tabsHeight);
@@ -45,26 +54,24 @@ class JCocitBizModuleRender extends BaseCuiRender<CuiBizModuleModel> {
 			// tabs
 			print(out, "<div class=\"jCocit-ui jCocit-tabs\" data-options=\"\" style=\"width:%spx;height:%spx;\">", width, tabsHeight);
 
-			print(out, "<div title=\"%s\" data-options=\"closable:false\" style=\"padding:5px\">", mainModel.getName());
+			print(out, "<div title=\"%s\" data-options=\"bizTableID: %s\" style=\"padding:5px\">", mainModel.getName(), mainModel.getId());
 			mainModel.render(out);
 			print(out, "</div>");
 
 			// tabs end
 			print(out, "</div>");
 
-			// print(out, "</div>");
 		}
 
 		List<CuiBizTableModel> children = model.getChildrenBizTableModels();
 		if (!Lang.isNil(children)) {
-			// print(out, "</td></tr><tr><td>");
+			print(out, "</td></tr><tr><td>");
 			// print tabs of children biz table models
 
-			print(out, "<div class=\"jCocit-ui jCocit-tabs\" data-options=\"\" style=\"width:%spx;height:%spx;\">", width, tabsHeight);
+			print(out, "<div class=\"jCocit-ui jCocit-tabs\" data-options=\"\" style=\"width:%spx; height:%spx; \">", width, tabsHeight);
 
 			for (CuiBizTableModel child : children) {
-				print(out, "<div title=\"%s\" data-options=\"url:'%s',closable:false, cache: true\" style=\"padding:5px\">", child.getName(), child.getLoadUrl());
-				print(out, "</div>");
+				print(out, "<div title=\"%s\" data-options=\"bizTableID: %s, url: '%s',closable: false, cache: true\" style=\"padding:5px\"></div>", child.getName(), child.getId(), child.getLoadUrl());
 			}
 
 			print(out, "</div>");
@@ -72,7 +79,9 @@ class JCocitBizModuleRender extends BaseCuiRender<CuiBizModuleModel> {
 		}
 
 		// biz module model
-		// print(out, "</td></tr></table>");
+		print(out, "</td></tr></table>");
+
+		print(out, "</div>");
 
 		print(out, "</body>");
 		print(out, "</html>");

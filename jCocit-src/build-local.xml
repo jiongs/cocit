@@ -1,0 +1,40 @@
+<project name="jCocit" default="copy" basedir=".">
+
+	<!-- 设置JS源代码和目标代码目录 -->
+	<property name="JS_SRC_DIR" value="js" />
+	<property name="JS_DIST_DIR" value="../jCocit/js" />
+
+	<!-- 设置STYLE源代码和目标代码目录 -->
+	<property name="STYLE_SRC_DIR" value="css" />
+	<property name="STYLE_DIST_DIR" value="../jCocit/css" />
+
+	<target name="copy">
+		<delete dir="F:/Projects/demsy_ynby_portlet/webapp/jCocit-src" />
+
+		<!-- 拷贝CSS到项目目录 -->
+		<copy toDir="F:/Projects/demsy_ynby_portlet/webapp/jCocit-src/css">
+			<fileset dir="${STYLE_SRC_DIR}">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+		<!-- 拷贝JS到项目目录 -->
+		<copy toDir="F:/Projects/demsy_ynby_portlet/webapp/jCocit-src/js">
+			<fileset dir="${JS_SRC_DIR}">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+
+		<!-- 拷贝CSS到项目目录 -->
+		<copy toDir="F:/Projects/demsy_ynby_portlet/webapp/jCocit/css">
+			<fileset dir="${STYLE_DIST_DIR}">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+		<!-- 拷贝JS到项目目录 -->
+		<copy toDir="F:/Projects/demsy_ynby_portlet/webapp/jCocit/js">
+			<fileset dir="${JS_DIST_DIR}">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+	</target>
+</project>

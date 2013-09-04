@@ -1,0 +1,32 @@
+/* 格式：icon-操作码 */
+/* 添加 */
+.icon-101 {
+	background: url('images/bizmodule/add.gif') no-repeat left center;
+}
+/* 修改 */
+.icon-102 {
+	background: url('images/bizmodule/edit.gif') no-repeat left center;
+}
+/* 批量修改 */
+.icon-103 {
+	background: url('images/bizmodule/edit.gif') no-repeat left center;
+}
+/* 删除 */
+.icon-299 {
+	background: url('images/bizmodule/delete.gif') no-repeat left center;
+}
+/* 详情 */
+.icon-199 {
+}
+/* 上移 */
+.icon-251 {
+}
+/* 下移 */
+.icon-252 {
+}
+/* 倒排序 */
+.icon-253 {
+}
+/* 取消排序 */
+.icon-256 {
+}

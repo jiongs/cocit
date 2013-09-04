@@ -1,22 +1,17 @@
 package com.jiongsoft.cocit.cocsoft.impl.demsy;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import com.jiongsoft.cocit.cocsoft.CocBizOperation;
 import com.jiongsoft.cocit.utils.StringUtil;
-import com.kmetop.demsy.Demsy;
-import com.kmetop.demsy.comlib.biz.field.Upload;
 import com.kmetop.demsy.comlib.impl.base.biz.BizAction;
-import com.kmetop.demsy.lang.Str;
 
 class DemsyCocBizOperation implements CocBizOperation {
 
 	private BizAction entity;
 
 	// lazy load
-	private List<BizAction> childrenBizActions;
+	// private List<BizAction> childrenBizActions;
 
 	DemsyCocBizOperation(BizAction e) {
 		this.entity = e;
@@ -49,7 +44,7 @@ class DemsyCocBizOperation implements CocBizOperation {
 
 	@Override
 	public String getOperationCode() {
-		return entity.getCode();
+		return "" + entity.getTypeCode();
 	}
 
 	@Override
@@ -91,34 +86,45 @@ class DemsyCocBizOperation implements CocBizOperation {
 		return defaultReturn;
 	}
 
+	// @Override
+	// public List<CocBizOperation> getChildrenBizOperations() {
+	// if (childrenBizActions == null)
+	// return null;
+	//
+	// List<CocBizOperation> ret = new ArrayList();
+	//
+	// for (BizAction action : childrenBizActions) {
+	// ret.add(new DemsyCocBizOperation(action));
+	// }
+	//
+	// return ret;
+	// }
+	//
+	// public void setChildrenBizActions(List<BizAction> children) {
+	// this.childrenBizActions = children;
+	// }
+
+	// @Override
+	// public String getLogo() {
+	// String logoPath = null;
+	// Upload logo = entity.getLogo();
+	// if (logo == null || Str.isEmpty(logo.toString()))
+	// logoPath = Demsy.appconfig.get("imagepath.actionlib") + "/" + entity.getMode() + ".gif";
+	// else
+	// logoPath = logo.toString();
+	//
+	// return logoPath;
+	// }
+
 	@Override
-	public List<CocBizOperation> getChildrenBizOperations() {
-		if (childrenBizActions == null)
-			return null;
-
-		List<CocBizOperation> ret = new ArrayList();
-
-		for (BizAction action : childrenBizActions) {
-			ret.add(new DemsyCocBizOperation(action));
-		}
-
-		return ret;
+	public Long getParentID() {
+		BizAction parent = entity.getParentAction();
+		return parent == null ? null : parent.getId();
 	}
 
-	public void setChildrenBizActions(List<BizAction> children) {
-		this.childrenBizActions = children;
-	}
-
 	@Override
-	public String getLogo() {
-		String logoPath = null;
-		Upload logo = entity.getLogo();
-		if (logo == null || Str.isEmpty(logo.toString()))
-			logoPath = Demsy.appconfig.get("imagepath.actionlib") + "/" + entity.getMode() + ".gif";
-		else
-			logoPath = logo.toString();
-
-		return logoPath;
+	public String getOperationMode() {
+		return entity.getMode();
 	}
 
 }

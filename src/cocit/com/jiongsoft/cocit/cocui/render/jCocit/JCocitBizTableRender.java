@@ -17,8 +17,17 @@ class JCocitBizTableRender extends BaseCuiRender<CuiBizTableModel> {
 		int widthTree = 240;
 		int widthGrid = width - widthTree - 28;
 
+		String token = Long.toHexString(System.currentTimeMillis());
+
 		//
 		print(out, "<table><tr><td valign=\"top\">");
+
+		// 打印Menu
+		CuiMenuModel menu = model.getOperationMenuModel();
+		if (menu != null) {
+			menu.set("token", token);
+			menu.render(out);
+		}
 
 		// 打印Tree
 		CuiTreeModel tree = model.getNaviTreeModel();
@@ -26,8 +35,12 @@ class JCocitBizTableRender extends BaseCuiRender<CuiBizTableModel> {
 			tree.set("width", "" + widthTree);
 			tree.set("height", "" + (height - 52));
 
+			tree.set("token", token);
 			tree.render(out);
+
 			print(out, "</td><td valign=\"top\">");
+		} else {
+			widthGrid = widthGrid + widthTree + 10;
 		}
 
 		// 打印Grid
@@ -36,13 +49,8 @@ class JCocitBizTableRender extends BaseCuiRender<CuiBizTableModel> {
 			grid.set("width", "" + (widthGrid));
 			grid.set("height", "" + (height - 47));
 
+			grid.set("token", token);
 			grid.render(out);
-		}
-
-		// 打印Menu
-		CuiMenuModel menu = model.getOperationMenuModel();
-		if (menu != null) {
-			menu.render(out);
 		}
 
 		//

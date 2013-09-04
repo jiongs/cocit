@@ -14,11 +14,14 @@
  * <B>Codes Specification:</B>
  * <UL>
  * <LI>Variable starts with "$" means that this is jQuery object.
- * <LI>Variable ends with upper case HTML tag name means that this is a HTML element.
+ * <LI>Variable ends with upper case HTML tag name means that this is a HTML
+ * element.
  * <LI>Variable ends with "Array" means that this is a Array.
- * <LI>Function starts with "_" means that this is an inner function and cannot be invoked by outer JS codes.
+ * <LI>Function starts with "_" means that this is an inner function and cannot
+ * be invoked by outer JS codes.
  * <LI>Variable equals "selfHTML" means that this is source HTML element.
- * <LI>Variable equals "$self" means that this is jQuery object of source HTML element.
+ * <LI>Variable equals "$self" means that this is jQuery object of source HTML
+ * element.
  * </UL>
  */
 (function($) {
@@ -48,10 +51,10 @@
 	}
 
 	// test url
-	//var loginUrl = "login/loginForm.html";
-	//if (contextPath.startsWith("/")) {
+	// var loginUrl = "login/loginForm.html";
+	// if (contextPath.startsWith("/")) {
 	var loginUrl = contextPath + "utils/jsonValidateLogin.jsp";
-	//}
+	// }
 
 	/**
 	 * Define jCocit JS object
@@ -70,12 +73,16 @@
 			title : "JReport Server"
 		},
 		/**
-		 * This constants used to describe that the return status code after the server side process business logic.
+		 * This constants used to describe that the return status code after the
+		 * server side process business logic.
 		 * <P>
 		 * <UL>
-		 * <LI>SUCCESS: means that the server side process business logic is successful.
-		 * <LI>ERROR: means that the server side process business logic is failed.
-		 * <LI>ERROR_NO_ACCESS: means that the current user has not privilege to process business logic.
+		 * <LI>SUCCESS: means that the server side process business logic is
+		 * successful.
+		 * <LI>ERROR: means that the server side process business logic is
+		 * failed.
+		 * <LI>ERROR_NO_ACCESS: means that the current user has not privilege
+		 * to process business logic.
 		 * </UL>
 		 */
 		status : {
@@ -108,20 +115,28 @@
 		},
 
 		/**
-		 * Check whether is the current user login? Login dialog will NOT be pop-up if the current user don't login.
+		 * Check whether is the current user login? Login dialog will NOT be
+		 * pop-up if the current user don't login.
 		 * <p>
 		 * <b>Parameters:</b>
 		 * <UL>
-		 * <LI>callback: this is a call-back function, it will be invoked if login success.
+		 * <LI>callback: this is a call-back function, it will be invoked if
+		 * login success.
 		 * </UL>
 		 * <p>
-		 * <b>Server Return Value:</b> server side return JSON object to describe whether is the current user login? For example: {"statusCode":300, "message": "error message"}.
+		 * <b>Server Return Value:</b> server side return JSON object to
+		 * describe whether is the current user login? For example:
+		 * {"statusCode":300, "message": "error message"}.
 		 * <UL>
 		 * <LI>invalid JSON object: means that the current user don't login.
-		 * <LI>valid JSON object: "statusCode" property existed in server return value JSON object.
+		 * <LI>valid JSON object: "statusCode" property existed in server
+		 * return value JSON object.
 		 * <UL>
-		 * <LI>statusCode equals SUCCESS(200): means that the current user already login success.
-		 * <LI>statusCode not equals SUCCESS(200): means that the current user don't login, the error message specified by "message" property of server return value JSON object will NOT be pop-up.
+		 * <LI>statusCode equals SUCCESS(200): means that the current user
+		 * already login success.
+		 * <LI>statusCode not equals SUCCESS(200): means that the current user
+		 * don't login, the error message specified by "message" property of
+		 * server return value JSON object will NOT be pop-up.
 		 * </UL>
 		 * </UL>
 		 * <p>
@@ -133,7 +148,8 @@
 		 * <p>
 		 * <b>Exception:</b>
 		 * <UL>
-		 * <LI>AJAX request error: invoke jCocit.doError method to process error.
+		 * <LI>AJAX request error: invoke jCocit.doError method to process
+		 * error.
 		 * <LI>execute JS code error: pop-up alert error box.
 		 * </UL>
 		 */
@@ -149,7 +165,7 @@
 						var responseText = jqXHR.responseText;
 						var serverJson = jCocit.toJson(responseText);
 
-						if ($.type(serverJson.statusCode) == "undefined") {
+						if (serverJson == null || $.type(serverJson.statusCode) == "undefined") {
 							success = false;
 						} else if (serverJson.statusCode == jCocit.status.SUCCESS) {
 							if ($.isFunction(callback)) {
@@ -170,22 +186,32 @@
 		},
 
 		/**
-		 * Check whether is the current user login? Login dialog will be pop-up if the current user don't login.
+		 * Check whether is the current user login? Login dialog will be pop-up
+		 * if the current user don't login.
 		 * <p>
 		 * <b>Parameters:</b>
 		 * <UL>
 		 * <LI>title: the login dialog title.
 		 * <LI>callback: the callback function will be invoke if login success.
-		 * <LI>"title" will be regarded as callback function if the type of "title" is function.
+		 * <LI>"title" will be regarded as callback function if the type of
+		 * "title" is function.
 		 * </UL>
 		 * <p>
-		 * <b>Server Return Value:</b> Server side return value can be JSON object or HTML content. For example: {"statusCode":300, "message": "error message"}.
+		 * <b>Server Return Value:</b> Server side return value can be JSON
+		 * object or HTML content. For example: {"statusCode":300, "message":
+		 * "error message"}.
 		 * <UL>
-		 * <LI>invalid JSON object: the current user don't login means that the server side return HTML content of login form and pop-up login dialog.
-		 * <LI>valid JSON object: "statusCode" property existed in server return value JSON object.
+		 * <LI>invalid JSON object: the current user don't login means that the
+		 * server side return HTML content of login form and pop-up login
+		 * dialog.
+		 * <LI>valid JSON object: "statusCode" property existed in server
+		 * return value JSON object.
 		 * <UL>
-		 * <LI>statusCode equals SUCCESS(200): means that the current user already login success.
-		 * <LI>statusCode not equals SUCCESS(200): means that the current user don't login, the error message specified by "message" property of server return value JSON object will be pop-up.
+		 * <LI>statusCode equals SUCCESS(200): means that the current user
+		 * already login success.
+		 * <LI>statusCode not equals SUCCESS(200): means that the current user
+		 * don't login, the error message specified by "message" property of
+		 * server return value JSON object will be pop-up.
 		 * </UL>
 		 * </UL>
 		 * <p>
@@ -197,7 +223,8 @@
 		 * <p>
 		 * <b>Exception:</b>
 		 * <UL>
-		 * <LI>AJAX request error: invoke jCocit.doError method to process error.
+		 * <LI>AJAX request error: invoke jCocit.doError method to process
+		 * error.
 		 * <LI>execute JS code error: pop-up alert error box.
 		 * </UL>
 		 */
@@ -218,7 +245,7 @@
 						var serverJson = jCocit.toJson(responseText);
 
 						// return value is invalid JSON object
-						if ($.type(serverJson.statusCode) == "undefined") {
+						if (serverJson == null || $.type(serverJson.statusCode) == "undefined") {
 							if ($.type(self.dialog) == "undefined") {
 								return;
 							}
@@ -274,7 +301,8 @@
 		 * <b>Return:</b>
 		 * <UL>
 		 * <LI>JSON object will be return if "str" is a valid JSON string.
-		 * <LI>Empty JSON object will be return if "str" is a invalid JSON string.
+		 * <LI>Empty JSON object will be return if "str" is a invalid JSON
+		 * string.
 		 * <LI>"str" self will be return if "str" is not a string.
 		 * </UL>
 		 * <p>
@@ -311,12 +339,14 @@
 		 * <P>
 		 * <b>Parameters:</b>
 		 * <UL>
-		 * <LI>responseData: this is response data, it is a JSON object if "dataType" is "json" in options.
+		 * <LI>responseData: this is response data, it is a JSON object if
+		 * "dataType" is "json" in options.
 		 * <LI>statusText:
 		 * <LI>jqXHR:
 		 * </UL>
 		 * <p>
-		 * <b>Return:</b> true means process business success, otherwise failed.
+		 * <b>Return:</b> true means process business success, otherwise
+		 * failed.
 		 */
 		doSuccess : function(responseData, statusText, jqXHR) {
 			Jsuccess('<table>' + //
@@ -343,7 +373,7 @@
 					var responseText = jqXHR.responseText;
 					var serverJson = jCocit.toJson(responseText);
 
-					if ($.type(serverJson.statusCode) == "undefined") {
+					if (serverJson == null || $.type(serverJson.statusCode) == "undefined") {
 						// invalid json object
 						//
 						// jCocit.login(null, function() {
@@ -387,24 +417,37 @@
 	$.fn.extend({
 
 		/**
-		 * Load HTML content specified by options.url or options.data and set into the current HTML element.
+		 * Load HTML content specified by options.url or options.data and set
+		 * into the current HTML element.
 		 * <p>
-		 * <B>Parameters:</B> the parameter "options" contains the following properties.
+		 * <B>Parameters:</B> the parameter "options" contains the following
+		 * properties.
 		 * <UL>
 		 * <LI>type: AJAX request type, for example: GET, POST etc.
 		 * <LI>url: AJAX request URL.
 		 * <LI>data: AJAX request data.
-		 * <LI>success: this is callback function, the function will be invoked if server side process business logic success.
+		 * <LI>success: this is callback function, the function will be invoked
+		 * if server side process business logic success.
 		 * </UL>
 		 * <P>
-		 * <b>Server Return Value:</b> Server side return value can be JSON object or HTML content.
+		 * <b>Server Return Value:</b> Server side return value can be JSON
+		 * object or HTML content.
 		 * <UL>
-		 * <LI>invalid JSON object: server return value is HTML content. means that the server side process business logic success and the server return value is regard as content of the current HTML element.
+		 * <LI>invalid JSON object: server return value is HTML content. means
+		 * that the server side process business logic success and the server
+		 * return value is regard as content of the current HTML element.
 		 * <LI>valid JSON object: server return value is a JSON object.
 		 * <UL>
-		 * <LI>statusCode equals ERROR_NO_ACCESS(301): means that the current user don't have enough permissions and the login dialog will be pop-up, "message" property of server side JSON object will be regard as login dialog caption.
-		 * <LI>statusCode equals ERROR(300): means that server side process business logic occurs error. the error message specified by "message" property of server return value JSON object will be pop-up.
-		 * <LI>statusCode equals others or undefined: means that server side process business logic success and the success callback function will be invoked with the server return value JSON object.
+		 * <LI>statusCode equals ERROR_NO_ACCESS(301): means that the current
+		 * user don't have enough permissions and the login dialog will be
+		 * pop-up, "message" property of server side JSON object will be regard
+		 * as login dialog caption.
+		 * <LI>statusCode equals ERROR(300): means that server side process
+		 * business logic occurs error. the error message specified by "message"
+		 * property of server return value JSON object will be pop-up.
+		 * <LI>statusCode equals others or undefined: means that server side
+		 * process business logic success and the success callback function will
+		 * be invoked with the server return value JSON object.
 		 * </UL>
 		 * </UL>
 		 * <p>
@@ -412,7 +455,8 @@
 		 * <p>
 		 * <b>Exception:</b>
 		 * <UL>
-		 * <LI>AJAX request error: invoke jCocit.doError method to process error.
+		 * <LI>AJAX request error: invoke jCocit.doError method to process
+		 * error.
 		 * </UL>
 		 */
 		doLoad : function(options) {
@@ -423,7 +467,7 @@
 					var responseText = jqXHR.responseText;
 					var serverJson = jCocit.toJson(responseText);
 
-					if ($.type(serverJson.statusCode) == "undefined") {
+					if (serverJson == null || $.type(serverJson.statusCode) == "undefined") {
 						// invalid json object
 
 						$this.html(jqXHR.responseText);
@@ -468,13 +512,15 @@
 		},
 
 		/**
-		 * Get HTML content specified by url and data and set into the current HTML element.
+		 * Get HTML content specified by url and data and set into the current
+		 * HTML element.
 		 * <p>
 		 * <B>Parameters:</B>
 		 * <UL>
 		 * <LI>url: AJAX request URL.
 		 * <LI>data: AJAX request data.
-		 * <LI>doSuccess: this is callback function, the function will be invoked if server side process business logic success.
+		 * <LI>doSuccess: this is callback function, the function will be
+		 * invoked if server side process business logic success.
 		 * </UL>
 		 * <p>
 		 * More documents refrence doLoad function.
@@ -488,13 +534,15 @@
 		},
 
 		/**
-		 * Get HTML content specified by url and data and set into the current HTML element.
+		 * Get HTML content specified by url and data and set into the current
+		 * HTML element.
 		 * <p>
 		 * <B>Parameters:</B>
 		 * <UL>
 		 * <LI>url: AJAX request URL.
 		 * <LI>data: AJAX request data.
-		 * <LI>doSuccess: this is callback function, the function will be invoked if server side process business logic success.
+		 * <LI>doSuccess: this is callback function, the function will be
+		 * invoked if server side process business logic success.
 		 * </UL>
 		 * <p>
 		 * More documents refrence doLoad function.
@@ -524,7 +572,8 @@
 		/**
 		 * Set or Get element outer width
 		 * <p>
-		 * width is undefined means that get outer width, otherwize set outer width.
+		 * width is undefined means that get outer width, otherwize set outer
+		 * width.
 		 */
 		ow : function(width, options) {
 			if (width == undefined || $.type(width) == "boolean") {
@@ -553,7 +602,8 @@
 		/**
 		 * Set or Get element outer height
 		 * <p>
-		 * height is undefined means that get outer height, otherwize set outer height.
+		 * height is undefined means that get outer height, otherwize set outer
+		 * height.
 		 */
 		oh : function(height, options) {
 			if (height == undefined || $.type(height) == "boolean") {
@@ -622,7 +672,8 @@
 			};
 		},
 		/**
-		 * setClass: used to replace addClass and removeClass in order to enhance performance.
+		 * setClass: used to replace addClass and removeClass in order to
+		 * enhance performance.
 		 */
 		setClass : function(value) {
 			for ( var i = this.length - 1; i >= 0; i--)
