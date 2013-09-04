@@ -24,7 +24,7 @@ import com.jiongsoft.cocit.sms.SmsClient;
 import com.jiongsoft.cocit.sms.impl.ZrSmsClient;
 import com.jiongsoft.cocit.utils.Json;
 import com.kmetop.demsy.Demsy;
-import com.kmetop.demsy.comlib.entity.IDemsySoft;
+import com.kmetop.demsy.comlib.impl.base.lib.DemsySoft;
 import com.kmetop.demsy.config.SoftConfigManager;
 import com.kmetop.demsy.engine.BizEngine;
 import com.kmetop.demsy.engine.ModuleEngine;
@@ -109,14 +109,11 @@ public class CocitTest {
 
 	@Test
 	public void makeAndGetHttpContext() {
-		final Long softID = 1L;
 		final HttpServletRequest req = new MockHttpServletRequest();
 		final HttpServletResponse res = new MockHttpServletResponse();
 		new Expectations(Demsy.class, SoftConfigManager.class) {
 			@Mocked
-			Demsy mockDemsy;
-			@Mocked
-			IDemsySoft mockDemsySoft;
+			DemsySoft mockDemsySoft;
 			@Mocked
 			BizEngine bizEngine;
 			@Mocked
