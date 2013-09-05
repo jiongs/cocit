@@ -43,14 +43,14 @@
 
 	if ($.fn.datagrid)
 		$e($.fn.datagrid.defaults, {
-			loadMsg : '正在处理，请稍待...'
+			loadMsg : '正在加载数据，请稍待...'
 		});
 
 	if ($.fn.pagination)
 		$e($.fn.pagination.defaults, {
-			beforePageText : '第',
-			afterPageText : '共{pages}页',
-			displayMsg : '显示{from}到{to},共{total}记录'
+			beforePageText : '第',//第?页
+			afterPageText : '页 共{pages}页',//共?页
+			displayMsg : '显示{from}-{to}条 共{total}条'
 		});
 
 })(jQuery, jCocit);

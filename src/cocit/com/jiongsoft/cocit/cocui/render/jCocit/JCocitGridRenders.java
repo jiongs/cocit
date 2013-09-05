@@ -16,14 +16,12 @@ abstract class JCocitGridRenders {
 
 		@Override
 		public void render(Writer out, CuiGridModel model) throws Throwable {
-
-			print(out, "<table id=\"datagrid_%s\" tableID=\"%s\" class=\"jCocit-ui jCocit-datagrid\" title=\"%s\" style=\"width: %spx; height: %spx;\" data-options=\"",//
-					model.get("token", ""), model.getId(), "", model.get("width", 700), model.get("height", 300));
+			String title = "";// model.getName()
+			print(out, "<table id=\"datagrid_%s\" tableID=\"%s\" class=\"jCocit-ui jCocit-datagrid\" title=\"%s\" style=\"height: %spx;\" data-options=\"",//
+					model.get("token", ""), model.getId(), title, model.get("height", 353));
 			print(out, "url: '%s'", model.getDataLoadUrl());
-			print(out, ",singleSelect: false");
-			print(out, ",collapsible: true");
 			print(out, ",rownumbers: true");
-			print(out, ",autoRowHeight: false");
+			print(out, ",sortField: 'id'");
 			print(out, ",pagination: true");
 			print(out, ",pageSize: %s", model.getPageSize());
 
@@ -33,7 +31,7 @@ abstract class JCocitGridRenders {
 			// 使用HTML菜单
 			print(out, ",toolbar: '#toolbar_%s'", model.get("token", ""));
 			// 使用JS菜单
-			// print(out, ",toolbar: toolbar%s", model.getId());
+			// print(out, ",toolbar: toolbar_%s", model.get("token", ""));
 
 			print(out, "\">");
 			print(out, "<thead>");
@@ -43,7 +41,8 @@ abstract class JCocitGridRenders {
 
 			print(out, "<th data-options=\"field: 'id', checkbox:true\"></th>");
 			for (GridColumn col : columns) {
-				print(out, "<th data-options=\"field: '%s', width: %s ,align: '%s'\">%s</th>", col.getField(), col.getWidth(), col.getAlign(), col.getTitle());
+				int w = col.getWidth();
+				print(out, "<th data-options=\"field: '%s', width: %s, align: '%s'\">%s</th>", col.getField(), w, col.getAlign(), col.getTitle());
 			}
 			print(out, "</tr>");
 			print(out, "</thead>");

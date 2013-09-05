@@ -5,6 +5,7 @@ import java.io.Writer;
 import com.jiongsoft.cocit.cocui.model.CuiBizTableModel;
 import com.jiongsoft.cocit.cocui.model.CuiGridModel;
 import com.jiongsoft.cocit.cocui.model.CuiMenuModel;
+import com.jiongsoft.cocit.cocui.model.CuiSearchBoxModel;
 import com.jiongsoft.cocit.cocui.model.CuiTreeModel;
 import com.jiongsoft.cocit.cocui.render.BaseCuiRender;
 
@@ -13,14 +14,11 @@ class JCocitBizTableRender extends BaseCuiRender<CuiBizTableModel> {
 	@Override
 	public void render(Writer out, CuiBizTableModel model) throws Throwable {
 		int width = model.get("width", 1000);
-		int height = model.get("height", 400);
+		int height = model.get("height", 655);
 		int widthTree = 240;
-		int widthGrid = width - widthTree - 28;
+		int widthGrid = width - widthTree - 20;
 
 		String token = Long.toHexString(System.currentTimeMillis());
-
-		//
-		print(out, "<table><tr><td valign=\"top\">");
 
 		// 打印Menu
 		CuiMenuModel menu = model.getOperationMenuModel();
@@ -29,16 +27,27 @@ class JCocitBizTableRender extends BaseCuiRender<CuiBizTableModel> {
 			menu.render(out);
 		}
 
+		//
+		print(out, "<table><tr>");
+
 		// 打印Tree
 		CuiTreeModel tree = model.getNaviTreeModel();
 		if (tree != null) {
-			tree.set("width", "" + widthTree);
-			tree.set("height", "" + (height - 52));
+
+			tree.set("height", "" + (height - 80));
 
 			tree.set("token", token);
-			tree.render(out);
 
-			print(out, "</td><td valign=\"top\">");
+			print(out, "<td valign=\"top\" width=\"%s\">", widthTree);
+
+			CuiSearchBoxModel searchModel = model.getSearchBoxModel();
+			if (searchModel != null) {
+				searchModel.set("width", "" + widthTree);
+				searchModel.render(out);
+				print(out, "<div style=\"height: 1px;\"></div>");
+			}
+			tree.render(out);
+			print(out, "</td>");
 		} else {
 			widthGrid = widthGrid + widthTree + 10;
 		}
@@ -46,14 +55,16 @@ class JCocitBizTableRender extends BaseCuiRender<CuiBizTableModel> {
 		// 打印Grid
 		CuiGridModel grid = model.getGridModel();
 		if (grid != null) {
-			grid.set("width", "" + (widthGrid));
 			grid.set("height", "" + (height - 47));
 
 			grid.set("token", token);
+
+			print(out, "<td valign=\"top\" width=\"%s\">", widthGrid);
 			grid.render(out);
+			print(out, "</td>");
 		}
 
 		//
-		print(out, "</td></tr></table>");
+		print(out, "</tr></table>");
 	}
 }

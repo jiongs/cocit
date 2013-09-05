@@ -11,6 +11,7 @@
 
 .datagrid-view1 {
 	left: 0;
+	background: #efefef;
 }
 
 .datagrid-view2 {
@@ -46,7 +47,7 @@
 
 .datagrid-toolbar {
 	height: auto;
-	padding: 2px;
+	padding: 1px;
 	border-width: 0 0 1px 0;
 	border-style: solid;
 }
@@ -246,7 +247,7 @@
 }
 
 .datagrid-toolbar,.datagrid-pager {
-	background: #F4F4F4;
+	background:#E0ECFF; /*#F4F4F4;dfeffc*/
 }
 
 .datagrid-header,.datagrid-toolbar,.datagrid-pager,.datagrid-footer-inner

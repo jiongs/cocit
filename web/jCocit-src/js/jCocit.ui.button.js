@@ -5,6 +5,7 @@
 	function _init(buttonHTML) {
 		var $button = $(buttonHTML);
 		var opts = $d(buttonHTML, "button").options;
+		
 		$button.empty();
 		$ac("l-btn", $button);
 

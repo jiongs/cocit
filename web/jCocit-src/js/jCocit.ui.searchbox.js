@@ -73,12 +73,12 @@
 
 		function _doClickMenu(itemData) {
 			$f("a.searchbox-menu", state.searchbox).remove();
-			var mb = $('<a class="searchbox-menu" href="javascript:void(0)"></a>').html(itemData.text);
+			var mb = $('<a class="searchbox-menu" href="javascript:void(0)"></a>').html(itemData.text.substring(0,8));
 			mb.prependTo(state.searchbox).menubar({
 				menu : state.menu,
 				iconCls : itemData.iconCls
 			});
-			$f("input.searchbox-text", state.searchbox).attr("name", $(itemData.target).attr("name") || itemData.text);
+			$f("input.searchbox-text", state.searchbox).attr("name", $(itemData.target).attr("name") || itemData.name);
 			resize(targetInput);
 		}
 
@@ -109,7 +109,7 @@
 				e.preventDefault();
 				var name = $.fn.prop ? $searchText.prop("name") : $searchText.attr("name");
 				opts.value = $(this).val();
-				opts.onSearch.call(targetInput, opts.value, menuMame);
+				opts.onSearch.call(targetInput, opts.value, name);
 				return false;
 			}
 		});

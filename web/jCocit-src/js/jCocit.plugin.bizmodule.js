@@ -5,15 +5,35 @@
 
 	jCocit.bizmodule = {
 		doAction : function(opts) {
-			alert("doAction: moduleID=" + opts.moduleID + ", tableID=" + opts.tableID + ", opID=" + opts.opID + ", opCode=" + opts.opCode + ", opMode=" + opts.opMode);
+			// alert("doAction: moduleID=" + opts.moduleID + ", tableID=" + opts.tableID + ", opID=" + opts.opID + ", opCode=" + opts.opCode + ", opMode=" + opts.opMode);
 
-			jCocit.dialog.open("/coc/getBizTableModel/7:65:", "dialog_" + new Date().getTime(), {
-				title : "jCocit Dialog",
-				width : 800,
-				height : 600
+			jCocit.dialog.open("/coc/getBizTableModel/7:64", "dialog_" + new Date().getTime(), {
+				title : opts.name,
+				width : 1000,
+				height : 704,
+				modal : true,
+				buttons : [ {
+					text : '确定',
+					iconCls : 'icon-ok',
+					onClick : function(data) {
+						$(this).dialog('close');
+					}
+				}, {
+					text : '应用',
+					iconCls : 'icon-ok',
+					onClick : function(data) {
+					}
+				}, {
+					text : '取消',
+					onClick : function(data) {
+						$(this).dialog('close');
+					}
+				} ],
 			});
+		},
+		doSearch : function(value, name) {
+			alert("value: " + value + ", name: " + name);
 		}
-
 	};
 	$.fn.bizmodule = function(options, args) {
 		if (typeof options == "string") {

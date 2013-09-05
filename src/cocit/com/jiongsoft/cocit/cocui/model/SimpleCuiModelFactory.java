@@ -9,6 +9,7 @@ import com.jiongsoft.cocit.cocsoft.CocBizOperation;
 import com.jiongsoft.cocit.cocsoft.CocBizTable;
 import com.jiongsoft.cocit.cocui.model.CuiGridModel.GridColumn;
 import com.jiongsoft.cocit.utils.ActionUtil;
+import com.jiongsoft.cocit.utils.KeyValue;
 import com.jiongsoft.cocit.utils.Lang;
 import com.jiongsoft.cocit.utils.Tree;
 import com.jiongsoft.cocit.utils.Tree.Node;
@@ -22,6 +23,7 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 
 		CuiBizModuleModel ret = new CuiBizModuleModel(mainModel);
 		ret.setId("" + bizModule.getID());
+		ret.setName(bizModule.getName());
 
 		List<CocBizTable> childrenTables = bizModule.getChildrenBizTables();
 		if (childrenTables != null) {
@@ -52,6 +54,7 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 		model.setNaviTreeModel(this.getNaviTreeModel(bizModule, bizTable));
 		model.setOperationMenuModel(this.getOperationMenuModel(bizModule, bizTable));
 		model.setGridModel(this.getGridModel(bizModule, bizTable));
+
 		model.setSearchBoxModel(this.getSearchBoxModel(bizModule, bizTable));
 
 		return model;
@@ -59,7 +62,18 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 
 	@Override
 	public CuiSearchBoxModel getSearchBoxModel(CocBizModule bizModule, CocBizTable bizTable) {
-		return new CuiSearchBoxModel();
+
+		CuiSearchBoxModel ret = new CuiSearchBoxModel();
+		ret.setId("" + bizTable.getID());
+
+		List<KeyValue> list = new ArrayList();
+		for (CocBizField f : bizTable.getBizFields()) {
+			list.add(KeyValue.make(f.getName(), f.getPropName()));
+		}
+
+		ret.setData(list);
+
+		return ret;
 	}
 
 	@Override
@@ -77,11 +91,30 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 			GridColumn col = new GridColumn(fld.getPropName(), fld.getName());
 
 			// 设置Grid列属性
-			if (fld.getType() == CocBizField.TYPE_NUMBER)
+			col.setAlign("left");
+			byte type = fld.getType();
+			switch (type) {
+			case CocBizField.TYPE_NUMBER:
 				col.setAlign("right");
-			else
-				col.setAlign("left");
-			col.setWidth(fld.getGridWidth());
+				col.setWidth(60);
+				break;
+			case CocBizField.TYPE_BOOL:
+				col.setWidth(60);
+				break;
+			case CocBizField.TYPE_DATE:
+				col.setWidth(120);
+				break;
+			case CocBizField.TYPE_UPLOAD:
+				col.setWidth(120);
+				break;
+			case CocBizField.TYPE_TEXT:
+			case CocBizField.TYPE_RICH_TEXT:
+				col.setWidth(200);
+				break;
+			case CocBizField.TYPE_FK:
+			default:
+				col.setWidth(150);
+			}
 			col.setPattern(fld.getPattern());
 
 			model.addColumn(col);
@@ -124,6 +157,8 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 
 		model.setData(tree);
 
+		// model.setSearchBoxModel(this.getSearchBoxModel(bizModule, bizTable));
+
 		return model;
 	}
 
@@ -136,8 +171,12 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 		CuiTreeModel model = new CuiTreeModel();
 		model.setId("" + bizTable.getID());
 
-		// 设置树模型属性
+		// 设置异步加载数据的 URL 地址
 		model.setDataLoadUrl(ActionUtil.GET_BIZ_TABLE_NAVI_TREE_DATA.replace("*", ActionUtil.encodeArgs(bizModule.getID(), bizTable.getID())));
+
+		// 获取树数据
+		Tree data = bizTable.getNaviTree();
+		model.setData(data);
 
 		// 返回
 		return model;

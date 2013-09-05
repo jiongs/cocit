@@ -57,8 +57,8 @@
 	-moz-border-radius: 0;
 	-webkit-border-radius: 0;
 	border-radius: 0;
-	opacity: 0.6;
-	filter: alpha(opacity =   60);
+	opacity: 1;/* 0.6;*/
+	filter: alpha(opacity = 100);/*alpha(opacity =   60);*/
 }
 
 .searchbox a.l-btn .l-btn-left {
@@ -91,5 +91,5 @@
 }
 
 .searchbox a.l-btn-plain {
-	background: #E0ECFF;
+	background: #E0ECFF;/* #E0ECFF;dfeffc*/
 }

@@ -37,6 +37,7 @@ public class CuiModelView implements View {
 			resp.setHeader("Pragma", "no-cache");
 			resp.setHeader("Cache-Control", "no-cache");
 			resp.setDateHeader("Expires", -1);
+
 			resp.setContentType(model.getContentType());
 
 			Writer out = null;

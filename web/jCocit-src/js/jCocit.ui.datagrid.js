@@ -405,8 +405,10 @@
 		}
 
 		var $panelContent = $(
-				'<div class="datagrid-wrap">' + '<div class="datagrid-view">' + '<div class="datagrid-view1">' + '<div class="datagrid-header"><div class="datagrid-header-inner"></div></div>' + '<div class="datagrid-body"><div class="datagrid-body-inner"></div></div>' + '<div class="datagrid-footer"><div class="datagrid-footer-inner"></div></div>' + '</div>' + '<div class="datagrid-view2">' + '<div class="datagrid-header"><div class="datagrid-header-inner"></div></div>'
-						+ '<div class="datagrid-body"></div>' + '<div class="datagrid-footer"><div class="datagrid-footer-inner"></div></div>' + '</div>' + '</div>' + '</div>').insertAfter(gridTable);
+				'<div class="datagrid-wrap">' + '<div class="datagrid-view">' + '<div class="datagrid-view1">' + '<div class="datagrid-header"><div class="datagrid-header-inner"></div></div>'
+						+ '<div class="datagrid-body"><div class="datagrid-body-inner"></div></div>' + '<div class="datagrid-footer"><div class="datagrid-footer-inner"></div></div>' + '</div>'
+						+ '<div class="datagrid-view2">' + '<div class="datagrid-header"><div class="datagrid-header-inner"></div></div>' + '<div class="datagrid-body"></div>'
+						+ '<div class="datagrid-footer"><div class="datagrid-footer-inner"></div></div>' + '</div>' + '</div>' + '</div>').insertAfter(gridTable);
 
 		// init grid panel
 		$panelContent.panel({
@@ -524,8 +526,8 @@
 					} else {
 						var td = $("<td></td>").appendTo(tr);
 						var $btn = $('<a href="javascript:void(0)"></a>').appendTo(td);
-						$btn[0].onclick = $fn(btn.handler || function() {
-						});
+						// $btn[0].onclick = $fn(btn.handler || function() {
+						// });
 						$btn.button($.extend({}, btn, {
 							plain : true
 						}));
@@ -1622,9 +1624,10 @@
 
 	$.fn.datagrid.methods = {
 		options : function(jq) {
-			var opts = $d(jq[0], "datagrid").options;
-			var panelOpts = $d(jq[0], "datagrid").panel.panel("options");
-			var opts = $.extend(opts, {
+			var state = $d(jq[0], "datagrid");
+			var opts = state.options;
+			var panelOpts = state.panel.panel("options");
+			opts = $.extend(opts, {
 				width : panelOpts.width,
 				height : panelOpts.height,
 				closed : panelOpts.closed,

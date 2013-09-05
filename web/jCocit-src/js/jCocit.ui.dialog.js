@@ -189,11 +189,11 @@
 				$this.window("window").css("display", "block");
 				$this.window("resize");
 			}
-			if (opts.closed == true || opts.minimized == true) {
-				$this.window("window").hide();
-			} else {
-				$this.window("open");
-			}
+			//if (opts.closed == true || opts.minimized == true) {
+				//$this.window("window").hide();
+			//} else {
+				//$this.window("open");
+			//}
 		});
 	};
 

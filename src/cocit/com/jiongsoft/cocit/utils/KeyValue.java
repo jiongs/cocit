@@ -1,5 +1,7 @@
 package com.jiongsoft.cocit.utils;
 
+import java.util.Properties;
+
 /**
  * Key Value 配对值，如下拉框选择项中，key即为Label。
  * 
@@ -10,6 +12,7 @@ package com.jiongsoft.cocit.utils;
 public class KeyValue {
 	private String key;
 	private Object value;
+	private Properties extProps;
 
 	public static KeyValue make(String key, Object value) {
 		return new KeyValue(key, value);
@@ -36,4 +39,27 @@ public class KeyValue {
 		this.value = value;
 	}
 
+	public <T> T get(String propName, T defaultReturn) {
+		String value = extProps.getProperty(propName);
+
+		if (value == null)
+			return defaultReturn;
+		if (defaultReturn == null)
+			return (T) value;
+
+		Class valueType = defaultReturn.getClass();
+
+		try {
+			return (T) StringUtil.cast(value, valueType);
+		} catch (Throwable e) {
+		}
+
+		return defaultReturn;
+	}
+
+	public KeyValue set(String propName, String value) {
+		extProps.put(propName, value);
+
+		return this;
+	}
 }

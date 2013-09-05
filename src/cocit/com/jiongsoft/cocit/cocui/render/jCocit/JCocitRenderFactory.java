@@ -11,6 +11,7 @@ import com.jiongsoft.cocit.cocui.model.CuiBizTableModel;
 import com.jiongsoft.cocit.cocui.model.CuiGridModel;
 import com.jiongsoft.cocit.cocui.model.CuiGridModelData;
 import com.jiongsoft.cocit.cocui.model.CuiMenuModel;
+import com.jiongsoft.cocit.cocui.model.CuiSearchBoxModel;
 import com.jiongsoft.cocit.cocui.model.CuiTreeModel;
 import com.jiongsoft.cocit.cocui.model.CuiTreeModelData;
 import com.jiongsoft.cocit.utils.Log;
@@ -48,30 +49,25 @@ public class JCocitRenderFactory implements CuiRenderFactory {
 		/*
 		 * 创建模型Render
 		 */
-		if (modelType.equals(CuiBizTableModel.class))
-			return new JCocitBizTableRender();
-
-		if (modelType.equals(CuiGridModel.class))
-			return new JCocitGridRenders.ModelRender();
-
-		if (modelType.equals(CuiMenuModel.class))
-			return new JCocitMenuRender();
-
 		if (modelType.equals(CuiBizModuleModel.class))
 			return new JCocitBizModuleRender();
 
 		if (modelType.equals(CuiBizTableModel.class))
 			return new JCocitBizTableRender();
 
-		if (modelType.equals(CuiTreeModel.class))
-			return new JCocitTreeRenders.ModelRender();
-
-		/*
-		 * 创建数据模型 Render
-		 */
+		if (modelType.equals(CuiGridModel.class))
+			return new JCocitGridRenders.ModelRender();
 		if (modelType.equals(CuiGridModelData.class))
 			return new JCocitGridRenders.DataRender();
 
+		if (modelType.equals(CuiMenuModel.class))
+			return new JCocitMenuRender();
+
+		if (modelType.equals(CuiSearchBoxModel.class))
+			return new JCocitSearchBoxRender();
+
+		if (modelType.equals(CuiTreeModel.class))
+			return new JCocitTreeRenders.ModelRender();
 		if (modelType.equals(CuiTreeModelData.class))
 			return new JCocitTreeRenders.DataRender();
 

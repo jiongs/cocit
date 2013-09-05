@@ -877,23 +877,22 @@
 
 	$.fn.panel.parseOptions = function(selfHTML) {
 		var $self = $(selfHTML);
-		return $.extend({}, jCocit.parseOptions(selfHTML, [ "id", "width", "height", "left", "top", "title", "logoCls", "styleName",
-				"headerCls", "bodyCls", "footerCls", "tools", "url", {
-					cache : "b",
-					fit : "b",
-					border : "b",
-					noheader : "b"
-				}, {
-					collapsible : "b",
-					minimizable : "b",
-					maximizable : "b"
-				}, {
-					closable : "b",
-					collapsed : "b",
-					minimized : "b",
-					maximized : "b",
-					closed : "b"
-				} ]), {
+		return $.extend({}, jCocit.parseOptions(selfHTML, [ "id", "width", "height", "left", "top", "title", "logoCls", "styleName", "headerCls", "bodyCls", "footerCls", "tools", "url", {
+			cache : "b",
+			fit : "b",
+			border : "b",
+			noheader : "b"
+		}, {
+			collapsible : "b",
+			minimizable : "b",
+			maximizable : "b"
+		}, {
+			closable : "b",
+			collapsed : "b",
+			minimized : "b",
+			maximized : "b",
+			closed : "b"
+		} ]), {
 			loading : ($self.attr("loading") != undefined ? $self.attr("loading") : undefined)
 		});
 	};
@@ -911,7 +910,7 @@
 		bodyCls : null,
 		footerCls : null,
 		style : {},
-		//href : null,
+		// href : null,
 		cache : true,
 		fit : false,// true means that this panel with/height will be auto fit to parent.
 		border : true,

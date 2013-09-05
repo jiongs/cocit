@@ -85,11 +85,7 @@
 
 			},
 			onClose : function() {
-				if (state.shadow)
-					state.shadow.hide();
-
-				if (state.mask)
-					state.mask.hide();
+				$(selfHTML).panel("destroy");
 
 				opts.onClose.call(selfHTML);
 			},

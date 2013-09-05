@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class CuiBizModuleModel extends BaseCuiModel {
 	private Long moduleID;
+	private String name;
 
 	// 一个主表界面
 	private CuiBizTableModel mainBizTableModel;
@@ -44,5 +45,13 @@ public class CuiBizModuleModel extends BaseCuiModel {
 
 	public void setChildrenBizTableModels(List<CuiBizTableModel> childrenModels) {
 		this.childrenBizTableModels = childrenModels;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

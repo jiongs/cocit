@@ -18,16 +18,25 @@ abstract class JCocitTreeRenders {
 
 		@Override
 		public void render(Writer out, CuiTreeModel model) throws Throwable {
+			if (model.getData() != null) {
+				print(out, "<script type=\"text/javascript\">var treedata_%s=", model.get("token", ""));
+				new DataRender().outNodes(out, model.getData().getChildren());
+				print(out, "</script>");
+			}
 
-			print(out, "<div style=\"width:%spx; height:%spx; position: relative; border:1px solid #95B8E7; padding: 2px; overflow: hidden;background-color: #F4F4F4\">", model.get("width", 240),
-					model.get("height", 300));
+			print(out, "<div style=\"height:%spx; position: relative; border:1px solid #95B8E7; padding: 2px; overflow: hidden;\">", model.get("height", 300));
 			print(out, "<ul id=\"tree_%s\" tableID=\"%s\" class=\"jCocit-ui jCocit-tree\" data-options=\"", //
 					model.get("token", ""), model.getId());
+			print(out, "checkbox: %s", (boolean) model.get("checkbox", true));
 
-			print(out, "url: '%s'", model.getDataLoadUrl());
+			if (model.getData() == null) {
+				print(out, ",url: '%s'", model.getDataLoadUrl());
+			} else {
+				print(out, ",data: treedata_%s", model.get("token", ""));
+			}
+
 			// print(out, ",lines: %s",model.is("lines"));
 			// print(out, ",styleName: 'tree-lines'");
-			print(out, ",checkbox: %s", (boolean) model.get("checkbox", true));
 
 			print(out, "\">");
 			print(out, "</ul>");

@@ -10,6 +10,8 @@ import com.jiongsoft.cocit.utils.Tree;
  */
 public class CuiMenuModel extends BaseCuiModel {
 
+	private CuiSearchBoxModel searchBoxModel;
+	
 	private Tree data;
 
 	public Tree getData() {
@@ -18,6 +20,14 @@ public class CuiMenuModel extends BaseCuiModel {
 
 	public void setData(Tree menu) {
 		this.data = menu;
+	}
+
+	public CuiSearchBoxModel getSearchBoxModel() {
+		return searchBoxModel;
+	}
+
+	public void setSearchBoxModel(CuiSearchBoxModel searchBoxModel) {
+		this.searchBoxModel = searchBoxModel;
 	}
 
 }

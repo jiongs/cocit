@@ -2,7 +2,6 @@ package com.jiongsoft.cocit.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -191,8 +190,23 @@ public class Tree {
 		return children;
 	}
 
-	public Iterator<Node> getAll() {
-		return this.nodeMap.values().iterator();
+	public List<Node> getAll() {
+		List<Node> ret = new ArrayList();
+
+		this.addTo(ret, children);
+
+		return ret;
+	}
+
+	private void addTo(List<Node> ret, List<Node> nodes) {
+		for (Node node : nodes) {
+			if (!ret.contains(node))
+				ret.add(node);
+
+			if (node.size() > 0) {
+				addTo(ret, node.getChildren());
+			}
+		}
 	}
 
 	/**

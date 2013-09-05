@@ -2,7 +2,6 @@
 /build
 /docs
 /test
-/web
 /classes
 /bin
 /patch
@@ -11,10 +10,5 @@
 .tomcatplugin
 /.DS_Store
 /._.DS_Store
-/Opensource
-/.classpath
-/.project
-.classpath
-.project
 /jCocit
 /test-output

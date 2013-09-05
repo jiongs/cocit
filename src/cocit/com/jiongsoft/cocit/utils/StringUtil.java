@@ -34,11 +34,6 @@ public abstract class StringUtil {
 	}
 
 	public static String[] toArray(String str, String token) {
-		if (str == null)
-			return null;
-		if (token == null)
-			token = ";, ";
-
 		List<String> list = toList(str, token);
 
 		String[] array = new String[list.size()];
@@ -51,16 +46,16 @@ public abstract class StringUtil {
 	}
 
 	public static List<String> toList(String str, String token) {
-		if (str == null)
-			return null;
-		if (token == null)
-			token = ";, ";
-
 		List<String> list = new ArrayList();
 
-		StringTokenizer st = new StringTokenizer(str, token);
-		while (st.hasMoreElements()) {
-			list.add((String) st.nextElement());
+		if (!isNil(str)) {
+			if (isNil(token))
+				token = ";, ";
+
+			StringTokenizer st = new StringTokenizer(str, token);
+			while (st.hasMoreElements()) {
+				list.add((String) st.nextElement());
+			}
 		}
 
 		return list;
