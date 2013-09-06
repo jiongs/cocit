@@ -2,37 +2,56 @@
 	function _init(mdlDIV) {
 
 	}
+	function doEdit(opts, dataID) {
+		var pathArgs = opts.pathArgs;
+		var url = "/coc/getBizFormModel/" + pathArgs + "/" + dataID + "?_windowWidth=890&_windowHeight=600";
+		jCocit.dialog.open(url, "dialog_" + new Date().getTime(), {
+			title : opts.text,
+			width : 900,
+			height : 640,
+			modal : true,
+			buttons : [ {
+				text : '确定',
+				iconCls : 'icon-ok',
+				onClick : function(data) {
+					$(this).dialog('close');
+				}
+			}, {
+				text : '应用',
+				iconCls : 'icon-ok',
+				onClick : function(data) {
+				}
+			}, {
+				text : '取消',
+				onClick : function(data) {
+					$(this).dialog('close');
+				}
+			} ],
+		});
+	}
 
 	jCocit.bizmodule = {
 		doAction : function(opts) {
-			// alert("doAction: moduleID=" + opts.moduleID + ", tableID=" + opts.tableID + ", opID=" + opts.opID + ", opCode=" + opts.opCode + ", opMode=" + opts.opMode);
+			switch (opts.opCode) {
+			case 101:
+				doEdit(opts, "");
 
-			jCocit.dialog.open("/coc/getBizTableModel/7:64", "dialog_" + new Date().getTime(), {
-				title : opts.name,
-				width : 1000,
-				height : 704,
-				modal : true,
-				buttons : [ {
-					text : '确定',
-					iconCls : 'icon-ok',
-					onClick : function(data) {
-						$(this).dialog('close');
-					}
-				}, {
-					text : '应用',
-					iconCls : 'icon-ok',
-					onClick : function(data) {
-					}
-				}, {
-					text : '取消',
-					onClick : function(data) {
-						$(this).dialog('close');
-					}
-				} ],
-			});
+				break;
+			case 102:
+				var gridID = "#datagrid_" + opts.bizToken;
+				var selectedRow = $(gridID).datagrid("getSelected");
+				doEdit(opts, selectedRow.id);
+
+				break;
+			default:
+				Jalert("不支持的操作！{bizToken: '" + opts.bizToken + "', pathArgs: '" + opts.pathArgs + "', opCode:" + opts.opCode + "}");
+			}
 		},
 		doSearch : function(value, name) {
-			alert("value: " + value + ", name: " + name);
+			Jalert("value: " + value + ", name: " + name);
+		},
+		doSetting : function(opts) {
+			Jalert("Setting: title: " + opts.title);
 		}
 	};
 	$.fn.bizmodule = function(options, args) {

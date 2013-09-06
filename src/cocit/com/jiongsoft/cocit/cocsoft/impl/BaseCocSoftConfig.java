@@ -19,7 +19,7 @@ public abstract class BaseCocSoftConfig implements CocSoftConfig {
 		Class valueType = defaultReturn.getClass();
 
 		try {
-			return (T) StringUtil.cast(value, valueType);
+			return (T) StringUtil.castTo(value, valueType);
 		} catch (Throwable e) {
 			Log.error("CoudSoftConfigImpl.get: 出错！ {key:%s, defaultReturn:%s, valueType:%s}", configKey, defaultReturn, valueType.getName());
 		}

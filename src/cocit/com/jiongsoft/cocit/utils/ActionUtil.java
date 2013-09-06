@@ -71,6 +71,11 @@ public abstract class ActionUtil {
 	 */
 	public static final String GET_BIZ_TABLE_NAVI_TREE_DATA = ROOT_PATH + "/getBizTableNaviTreeData/*";
 
+	/**
+	 * “业务模块”之业务表单的访问路径
+	 */
+	public static final String GET_BIZ_FORM_MODEL = ROOT_PATH + "/getBizFormModel/*";
+
 	/*
 	 * 以下是报表管理模块相关功能的访问路径
 	 */

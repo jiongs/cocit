@@ -16,7 +16,11 @@
 	background: url('images/bizmodule/delete.gif') no-repeat left center;
 }
 /* 详情 */
-.icon-199 {
+.icon-199,.icon-250,.icon-251,.icon-252,.icon-253,.icon-256{
+	background: url('images/bizmodule/layout.gif') no-repeat left center;
+}
+/* 排序 */
+.icon-250 {
 }
 /* 上移 */
 .icon-251 {
@@ -29,4 +33,7 @@
 }
 /* 取消排序 */
 .icon-256 {
+}
+.icon-setting{
+	background: url('images/bizmodule/setting.png') no-repeat left center;
 }

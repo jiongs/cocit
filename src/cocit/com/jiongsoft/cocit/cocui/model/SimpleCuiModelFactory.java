@@ -7,6 +7,7 @@ import com.jiongsoft.cocit.cocsoft.CocBizField;
 import com.jiongsoft.cocit.cocsoft.CocBizModule;
 import com.jiongsoft.cocit.cocsoft.CocBizOperation;
 import com.jiongsoft.cocit.cocsoft.CocBizTable;
+import com.jiongsoft.cocit.cocui.model.CuiFormModel.FormField;
 import com.jiongsoft.cocit.cocui.model.CuiGridModel.GridColumn;
 import com.jiongsoft.cocit.utils.ActionUtil;
 import com.jiongsoft.cocit.utils.KeyValue;
@@ -55,7 +56,8 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 		model.setOperationMenuModel(this.getOperationMenuModel(bizModule, bizTable));
 		model.setGridModel(this.getGridModel(bizModule, bizTable));
 
-		model.setSearchBoxModel(this.getSearchBoxModel(bizModule, bizTable));
+		// 将搜索框放在左边导航树顶部
+		// model.setSearchBoxModel(this.getSearchBoxModel(bizModule, bizTable));
 
 		return model;
 	}
@@ -67,7 +69,11 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 		ret.setId("" + bizTable.getID());
 
 		List<KeyValue> list = new ArrayList();
-		for (CocBizField f : bizTable.getBizFields()) {
+		for (CocBizField f : bizTable.getBizFieldsForGrid()) {
+			int type = f.getType();
+			if (type == CocBizField.TYPE_FK || type == CocBizField.TYPE_BOOL || type == CocBizField.TYPE_UPLOAD) {
+				continue;
+			}
 			list.add(KeyValue.make(f.getName(), f.getPropName()));
 		}
 
@@ -145,10 +151,11 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 				Node child = tree.addNode(parentNodeID, nodeID);
 
 				child.setName(op.getName());
-				child.set("moduleID", "" + bizModule.getID());
-				child.set("tableID", "" + bizTable.getID());
+				String pathArgs = ActionUtil.encodeArgs(bizModule.getID(), bizTable.getID(), op.getID());
+
+				// pathArgs = moduleID:tableID:operationID
+				child.set("pathArgs", pathArgs);
 				child.set("operationCode", op.getOperationCode());
-				child.set("operationMode", op.getOperationMode());
 				child.setSequence(op.getSequence());
 
 				// addOperationsToMenuTree(tree, nodeID, op.getChildrenBizOperations());
@@ -157,7 +164,8 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 
 		model.setData(tree);
 
-		// model.setSearchBoxModel(this.getSearchBoxModel(bizModule, bizTable));
+		// 将搜索框放在菜单栏右边
+		model.setSearchBoxModel(this.getSearchBoxModel(bizModule, bizTable));
 
 		return model;
 	}
@@ -203,4 +211,26 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 		return ret;
 	}
 
+	@Override
+	public CuiFormModel getBizFormModel(CocBizModule bizModule, CocBizTable bizTable, CocBizOperation bizOp, Object bizEntity) {
+		CuiFormModel ret = new CuiFormModel();
+
+		List<FormField> fields = new ArrayList();
+		ret.setFields(fields);
+
+		List<CocBizField> bizfields = bizTable.getBizFields();
+		for (CocBizField bizfield : bizfields) {
+			FormField field = new FormField(bizfield.getPropName(), bizfield.getName());
+			field.setMode(bizfield.getEditMode(bizOp.getOperationMode()));
+			field.setType(bizfield.getType());
+			field.setPattern(bizfield.getPattern());
+			field.setProps(bizfield.getExtProps());
+
+			field.setBizField(bizfield);
+
+			fields.add(field);
+		}
+
+		return ret;
+	}
 }

@@ -3,6 +3,7 @@ package com.jiongsoft.cocit.cocsoft.impl.demsy;
 import java.util.List;
 
 import com.jiongsoft.cocit.cocsoft.CocBizModule;
+import com.jiongsoft.cocit.cocsoft.CocBizTable;
 import com.jiongsoft.cocit.cocsoft.EntityManager;
 import com.jiongsoft.cocit.corm.expr.CndExpr;
 import com.kmetop.demsy.Demsy;
@@ -11,9 +12,11 @@ import com.kmetop.demsy.biz.IBizManager;
 public class DemsyEntityManager implements EntityManager {
 	private IBizManager bizManager;
 
-	DemsyEntityManager(CocBizModule m) {
+	DemsyEntityManager(CocBizModule m, CocBizTable t) {
 		DemsyCocBizModule module = (DemsyCocBizModule) m;
-		bizManager = Demsy.bizManagerFactory.getManager(module.getEntity());
+		DemsyCocBizTable table = (DemsyCocBizTable) t;
+
+		bizManager = Demsy.bizManagerFactory.getManager(module.getEntity(), table.getEntity());
 	}
 
 	@Override
@@ -39,6 +42,11 @@ public class DemsyEntityManager implements EntityManager {
 	@Override
 	public int count(CndExpr expr, String opCode) {
 		return bizManager.count(opCode, expr);
+	}
+
+	@Override
+	public Class getType() {
+		return bizManager.getType();
 	}
 
 }

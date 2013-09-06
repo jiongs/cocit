@@ -1,6 +1,7 @@
 package com.jiongsoft.cocit.cocui.model;
 
 import com.jiongsoft.cocit.cocsoft.CocBizModule;
+import com.jiongsoft.cocit.cocsoft.CocBizOperation;
 import com.jiongsoft.cocit.cocsoft.CocBizTable;
 import com.jiongsoft.cocit.cocui.CuiModel;
 
@@ -61,5 +62,7 @@ public interface CuiModelFactory {
 	CuiTreeModel getNaviTreeModel(CocBizModule bizModule, CocBizTable bizTable);
 
 	CuiTreeModelData getNaviTreeModelData(CocBizModule bizModule, CocBizTable bizTable);
+
+	CuiFormModel getBizFormModel(CocBizModule bizModule, CocBizTable bizTable, CocBizOperation bizOp, Object bizEntity);
 
 }

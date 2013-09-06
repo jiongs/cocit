@@ -33,6 +33,10 @@ public abstract class StringUtil {
 		return str.trim();
 	}
 
+	public static String[] toArray(String str) {
+		return toArray(str, null);
+	}
+
 	public static String[] toArray(String str, String token) {
 		List<String> list = toList(str, token);
 
@@ -43,6 +47,10 @@ public abstract class StringUtil {
 		}
 
 		return array;
+	}
+
+	public static List<String> toList(String str) {
+		return toList(str, null);
 	}
 
 	public static List<String> toList(String str, String token) {
@@ -95,7 +103,25 @@ public abstract class StringUtil {
 		return new String(Hex.encodeHex(str.getBytes()));
 	}
 
-	public static <T> T cast(String value, Class<T> valueType) throws Throwable {
+	public static <T> T castTo(String value, T defaultReturn) {
+
+		if (value == null)
+			return defaultReturn;
+		if (defaultReturn == null)
+			return (T) value;
+
+		Class valueType = defaultReturn.getClass();
+
+		try {
+			return (T) castTo(value, valueType);
+		} catch (Throwable e) {
+		}
+
+		return defaultReturn;
+
+	}
+
+	public static <T> T castTo(String value, Class<T> valueType) throws Throwable {
 
 		if (valueType.equals(String.class))
 			return (T) value;

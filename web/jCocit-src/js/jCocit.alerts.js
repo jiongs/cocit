@@ -58,7 +58,7 @@
 	'<tr>' + //
 	'<td id="AlHL"></td>' + //
 	'<td id="AlHT"></td>' + //
-	'<td id="AlHC">X</td>' + //
+	'<td id="AlHC"><div></div></td>' + //
 	'<td id="AlHR"></td>' + //
 	'</tr>' + //
 	'<tr>' + //

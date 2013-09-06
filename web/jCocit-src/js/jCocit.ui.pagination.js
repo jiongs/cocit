@@ -63,7 +63,7 @@
 					$('<td><div class="pagination-btn-separator"></div></td>').appendTo(tr);
 				} else {
 					var td = $("<td></td>").appendTo(tr);
-					$('<a href="javascript:void(0)"></a>').appendTo(td).button($.extend(btnOption, {
+					$('<a href="javascript:void(0)" title=\"' + btnOption.title + '\"></a>').appendTo(td).button($.extend(btnOption, {
 						plain : true
 					})).bind("click", $fn(btnOption.handler || function() {
 					}));

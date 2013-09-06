@@ -1,4 +1,4 @@
-package com.jiongsoft.cocit.servlet;
+package com.jiongsoft.cocit.mvc;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

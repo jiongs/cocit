@@ -77,7 +77,7 @@ public abstract class BaseCocitHttpContext implements CocitHttpContext {
 		Class valueType = defaultReturn.getClass();
 
 		try {
-			return (T) StringUtil.cast(value, valueType);
+			return (T) StringUtil.castTo(value, valueType);
 		} catch (Throwable e) {
 			Log.error("StringUtil.getParameterValue: 出错！ {key:%s, defaultReturn:%s, valueType:%s}", key, defaultReturn, valueType.getName());
 		}

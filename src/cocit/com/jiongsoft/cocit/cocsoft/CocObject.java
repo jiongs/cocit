@@ -1,6 +1,7 @@
 package com.jiongsoft.cocit.cocsoft;
 
 import java.util.Date;
+import java.util.Properties;
 
 /**
  * 组件化自定义对象：简称“自定义组件”、“CocObject”、“Com”等
@@ -80,4 +81,6 @@ public interface CocObject {
 	 * @return
 	 */
 	public <T> T get(String propName, T defaultReturn);
+	
+	public Properties getExtProps();
 }

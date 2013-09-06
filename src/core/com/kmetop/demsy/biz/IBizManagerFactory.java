@@ -1,5 +1,6 @@
 package com.kmetop.demsy.biz;
 
+import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.comlib.security.IModule;
 import com.kmetop.demsy.lang.DemsyException;
 
@@ -42,5 +43,7 @@ public interface IBizManagerFactory {
 	 * @throws DemsyException
 	 */
 	public <X> IBizManager<X> getManager(IModule module) throws DemsyException;
+
+	public <X> IBizManager<X> getManager(IModule module, IBizSystem system) throws DemsyException;
 
 }

@@ -15,16 +15,14 @@
  * </pre>
  * 
  * <UL>
- * <LI>tabs: this is root DIV element. is tabs container, has 2 children, one
- * is tabs header, other is tabs panels.
+ * <LI>tabs: this is root DIV element. is tabs container, has 2 children, one is tabs header, other is tabs panels.
  * <LI>tabs header: this is tabs header.
  * <LI>tab header: this is tab item header.
  * <LI>tabs list: this is UL element, they are collection of all tabs.
  * <LI>tab item: this is LI element, single tab item.
  * <LI>tabs tool: this is tabs tool bar, contains all tabs tool buttons.
  * <LI>tab tool: this is tab item tool bar, contains all tab item tool buttons.
- * <LI>tabs panels: this is DIV element, panels container. it's children are
- * all tab item panel.
+ * <LI>tabs panels: this is DIV element, panels container. it's children are all tab item panel.
  * <LI>tab panel: this is DIV element, tab item panel, tab item content.
  * </UL>
  */
@@ -110,8 +108,8 @@
 				var $tabsTool = $('<div class="tabs-tool"></div>').appendTo($tabsHeader);
 				for ( var i = 0; i < opts.tools.length; i++) {
 					var $tabsToolBtn = $('<a href="javascript:void(0);"></a>').appendTo($tabsTool);
-					$tabsToolBtn[0].onclick = $fn(opts.tools[i].handler || function() {
-					});
+					// $tabsToolBtn[0].onclick = $fn(opts.tools[i].handler || function() {
+					// });
 					$tabsToolBtn.button($.extend({}, opts.tools[i], {
 						plain : true
 					}));

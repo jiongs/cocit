@@ -43,7 +43,13 @@
 		var src = scripts[i].src;
 		if (!src)
 			continue;
-		var m = src.match(/jCocit\/jCocit\.min\.js(\W|$)/i);
+		var m = src.match(/jCocit\/js\/jCocit\.min\.js(\W|$)/i);
+		if (!m) {
+			m = src.match(/jCocit\/js\/jCocit\.src\.js(\W|$)/i);
+		}
+		if (!m) {
+			m = src.match(/jCocit\/js\/jCocit\.pack\.js(\W|$)/i);
+		}
 		if (m) {
 			contextPath = src.substring(0, m.index);
 			contextPath += "../"
@@ -70,7 +76,7 @@
 		defaults : {
 			debug : false,
 			loading : "Loading...",
-			title : "JReport Server"
+			title : ""
 		},
 		/**
 		 * This constants used to describe that the return status code after the

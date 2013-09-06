@@ -1,7 +1,8 @@
 package com.kmetop.demsy.biz.impl;
 
-import static com.kmetop.demsy.Demsy.*;
+import static com.kmetop.demsy.Demsy.bizSession;
 import static com.kmetop.demsy.Demsy.moduleEngine;
+import static com.kmetop.demsy.Demsy.security;
 
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.IBizManager;
@@ -47,6 +48,24 @@ public class BizManagerFactory implements IBizManagerFactory {
 			throw new DemsyException("业务模块不存在! [module=%s]", module);
 
 		IBizSystem system = moduleEngine.getSystem(module);
+
+		if (!security.visit(module, false)) {
+			throw new DemsyException("无权执行该操作!");
+		}
+
+		IDataSource ds = module.getDataSource();
+		if (ds != null && !module.isBuildin()) {
+			return new BizManagerImpl(bizSession.me(Demsy.orm(ds)), module, system);
+		} else {
+			return new BizManagerImpl(bizSession, module, system);
+		}
+	}
+
+	@Override
+	public <X> IBizManager<X> getManager(IModule module, IBizSystem system) throws DemsyException {
+		if (system == null) {
+			return null;
+		}
 
 		if (!security.visit(module, false)) {
 			throw new DemsyException("无权执行该操作!");

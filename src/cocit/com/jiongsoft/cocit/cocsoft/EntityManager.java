@@ -22,4 +22,6 @@ public interface EntityManager<T> {
 	public List<T> query(CndExpr expr, String opCode);
 
 	public int count(CndExpr expr, String opCode);
+
+	public Class getType();
 }

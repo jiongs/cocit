@@ -17,8 +17,10 @@ abstract class JCocitGridRenders {
 		@Override
 		public void render(Writer out, CuiGridModel model) throws Throwable {
 			String title = "";// model.getName()
-			print(out, "<table id=\"datagrid_%s\" tableID=\"%s\" class=\"jCocit-ui jCocit-datagrid\" title=\"%s\" style=\"height: %spx;\" data-options=\"",//
-					model.get("token", ""), model.getId(), title, model.get("height", 353));
+
+			// Grid: id = "datagrid_" + token
+			print(out, "<table id=\"datagrid_%s\" class=\"jCocit-ui jCocit-datagrid\" title=\"%s\" style=\"height: %spx;\" data-options=\"",//
+					model.get("token", ""), title, model.get("height", 353));
 			print(out, "url: '%s'", model.getDataLoadUrl());
 			print(out, ",rownumbers: true");
 			print(out, ",sortField: 'id'");
@@ -26,12 +28,16 @@ abstract class JCocitGridRenders {
 			print(out, ",pageSize: %s", model.getPageSize());
 
 			/*
-			 * 工具栏ID与MenuRender中输出的菜单ID相同，都是BizTable ID。
+			 * 引用工具栏菜单ID
 			 */
 			// 使用HTML菜单
 			print(out, ",toolbar: '#toolbar_%s'", model.get("token", ""));
 			// 使用JS菜单
 			// print(out, ",toolbar: toolbar_%s", model.get("token", ""));
+
+			print(out, ",pageButtons:[");
+			print(out, "{title: '系统设置', iconCls: 'icon-setting', onClick:jCocit.bizmodule.doSetting}");
+			print(out, "]");
 
 			print(out, "\">");
 			print(out, "<thead>");

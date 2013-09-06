@@ -104,7 +104,7 @@ public class Tree {
 		Class valueType = defaultReturn.getClass();
 
 		try {
-			return (T) StringUtil.cast(value, valueType);
+			return (T) StringUtil.castTo(value, valueType);
 		} catch (Throwable e) {
 		}
 
@@ -253,7 +253,7 @@ public class Tree {
 			Class valueType = defaultReturn.getClass();
 
 			try {
-				return (T) StringUtil.cast(value, valueType);
+				return (T) StringUtil.castTo(value, valueType);
 			} catch (Throwable e) {
 			}
 

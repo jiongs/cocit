@@ -86,10 +86,10 @@
 }
 
 .searchbox {
-	border-color: #95B8E7;
+	border-color: #95B8E7;/*#95B8E7;ccc*/
 	background-color: #fff;
 }
 
 .searchbox a.l-btn-plain {
-	background: #E0ECFF;/* #E0ECFF;dfeffc*/
+	background: #F4F4F4;/* #E0ECFF;dfeffc;F4F4F4*/
 }

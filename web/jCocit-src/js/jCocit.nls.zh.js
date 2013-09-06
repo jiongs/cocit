@@ -1,7 +1,7 @@
 (function($, jCocit) {
 	$e(jCocit.defaults, {
 		loading : "正在加载...",
-		title : "AJAX框架 - jCocit"
+		title : ""
 	});
 
 	if ($.alerts)

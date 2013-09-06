@@ -101,7 +101,7 @@ public interface CocBizField extends CocObject {
 	 * <li>D: Disable 禁用</li>
 	 * </ul>
 	 */
-	String getEditMode(String opCode);
+	String getEditMode(String opMode);
 
 	/**
 	 * 获取字段掩码：

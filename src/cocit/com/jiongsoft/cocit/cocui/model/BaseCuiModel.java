@@ -65,7 +65,7 @@ public abstract class BaseCuiModel implements CuiModel {
 		Class valueType = defaultReturn.getClass();
 
 		try {
-			return (T) StringUtil.cast(value, valueType);
+			return (T) StringUtil.castTo(value, valueType);
 		} catch (Throwable e) {
 			Log.error("BaseCuiModel.get: 出错！ {propName:%s, defaultReturn:%s, valueType:%s}", propName, defaultReturn, valueType.getName());
 		}

@@ -5,6 +5,7 @@ import static com.kmetop.demsy.Demsy.moduleEngine;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import org.nutz.json.Json;
 
@@ -80,7 +81,7 @@ class DemsyCocBizField implements CocBizField {
 		Class valueType = defaultReturn.getClass();
 
 		try {
-			return (T) StringUtil.cast(value, valueType);
+			return (T) StringUtil.castTo(value, valueType);
 		} catch (Throwable e) {
 		}
 
@@ -303,6 +304,11 @@ class DemsyCocBizField implements CocBizField {
 	@Override
 	public int getSequence() {
 		return entity.getOrderby();
+	}
+
+	@Override
+	public Properties getExtProps() {
+		return entity.getDynaProp();
 	}
 
 }

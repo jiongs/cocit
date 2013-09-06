@@ -2,13 +2,17 @@ package com.jiongsoft.cocit.actions;
 
 import java.util.List;
 
+import org.nutz.lang.Mirror;
+import org.nutz.mvc.annotation.AdaptBy;
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Fail;
 import org.nutz.mvc.annotation.Ok;
+import org.nutz.mvc.annotation.Param;
 
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitHttpContext;
 import com.jiongsoft.cocit.cocsoft.CocBizModule;
+import com.jiongsoft.cocit.cocsoft.CocBizOperation;
 import com.jiongsoft.cocit.cocsoft.CocBizTable;
 import com.jiongsoft.cocit.cocsoft.ComFactory;
 import com.jiongsoft.cocit.cocsoft.EntityManager;
@@ -16,14 +20,18 @@ import com.jiongsoft.cocit.cocsoft.EntityManagerFactory;
 import com.jiongsoft.cocit.cocui.CuiModelView;
 import com.jiongsoft.cocit.cocui.model.CuiBizModuleModel;
 import com.jiongsoft.cocit.cocui.model.CuiBizTableModel;
+import com.jiongsoft.cocit.cocui.model.CuiFormModel;
 import com.jiongsoft.cocit.cocui.model.CuiGridModel;
 import com.jiongsoft.cocit.cocui.model.CuiGridModelData;
 import com.jiongsoft.cocit.cocui.model.CuiModelFactory;
 import com.jiongsoft.cocit.cocui.model.CuiTreeModelData;
 import com.jiongsoft.cocit.corm.expr.CndExpr;
 import com.jiongsoft.cocit.corm.expr.Expr;
+import com.jiongsoft.cocit.mvc.CocitBizDataAdaptor;
+import com.jiongsoft.cocit.mvc.CocitBizDataNode;
 import com.jiongsoft.cocit.utils.ActionUtil;
 import com.jiongsoft.cocit.utils.Log;
+import com.jiongsoft.cocit.utils.StringUtil;
 
 /**
  * 数据模块Action：负责处理业务数据的“增加、删除、查询、修改、导入、导出”等业务操作。
@@ -33,6 +41,7 @@ import com.jiongsoft.cocit.utils.Log;
  */
 @Ok(CuiModelView.VIEW_TYPE)
 @Fail(CuiModelView.VIEW_TYPE)
+@AdaptBy(type = CocitBizDataAdaptor.class)
 public class CocitBizAction {
 
 	/**
@@ -82,7 +91,7 @@ public class CocitBizAction {
 		String moduleID = argArr.length > 0 ? argArr[0] : null;
 		String tableID = argArr.length > 1 ? argArr[1] : null;
 
-		Log.debug("CocitBizAction.getBizTableModel... {args:%s, moduleID:%s, tableID}", args, moduleID, tableID);
+		Log.debug("CocitBizAction.getBizTableModel... {args:%s, moduleID:%s, tableID:%s}", args, moduleID, tableID);
 
 		// 获取数据模块和数据表对象
 		ComFactory softFactory = Cocit.getComFactory();
@@ -119,7 +128,7 @@ public class CocitBizAction {
 		String moduleID = argArr.length > 0 ? argArr[0] : null;
 		String tableID = argArr.length > 1 ? argArr[1] : null;
 
-		Log.debug("CocitBizAction.getBizTableGridData... {args:%s, moduleID:%s, tableID}", args, moduleID, tableID);
+		Log.debug("CocitBizAction.getBizTableGridData... {args:%s, moduleID:%s, tableID:%s}", args, moduleID, tableID);
 
 		/*
 		 * 获取数据模块和数据表对象
@@ -143,7 +152,7 @@ public class CocitBizAction {
 		 * 查询GRID数据
 		 */
 		EntityManagerFactory entityManagerFactory = Cocit.getEntityManagerFactory();
-		EntityManager entityManger = entityManagerFactory.getEntityManager(module);
+		EntityManager entityManger = entityManagerFactory.getEntityManager(module, table);
 
 		// 构造查询条件
 		CndExpr expr = this.makeExpr();
@@ -195,7 +204,7 @@ public class CocitBizAction {
 		String moduleID = argArr.length > 0 ? argArr[0] : null;
 		String tableID = argArr.length > 1 ? argArr[1] : null;
 
-		Log.debug("CocitBizAction.getBizTableNaviTreeData... {args:%s, moduleID:%s, tableID}", args, moduleID, tableID);
+		Log.debug("CocitBizAction.getBizTableNaviTreeData... {args:%s, moduleID:%s, tableID:%s}", args, moduleID, tableID);
 
 		/*
 		 * 获取数据模块和数据表对象
@@ -205,7 +214,7 @@ public class CocitBizAction {
 		CocBizModule module = softFactory.getBizModule(mID);
 		CocBizTable table = softFactory.getBizTable(mID, Long.parseLong(tableID));
 
-		Log.debug("CocitBizAction.getBizTableNaviTreeData: module=%s, table = %s", module, table);
+		Log.debug("CocitBizAction.getBizTableNaviTreeData: module = %s, table = %s", module, table);
 
 		/*
 		 * 获取Tree界面模型
@@ -219,5 +228,78 @@ public class CocitBizAction {
 		 * 返回
 		 */
 		return treeModel;
+	}
+
+	/**
+	 * 
+	 * 获取业务数据表单模型
+	 * 
+	 * @param args
+	 *            调用参数，参数组成“bizModuleID:bizTableID:bizOperationID:dataID”
+	 * @param args
+	 * @param dataNode
+	 * @return
+	 */
+	@At(ActionUtil.GET_BIZ_FORM_MODEL)
+	public CuiFormModel getBizFormModel(String args, String argDataID, @Param("::data.") CocitBizDataNode dataNode) throws Throwable {
+		/*
+		 * 转换参数
+		 */
+		String[] argArr = ActionUtil.decodeArgs(args);
+
+		String argModuleID = argArr.length > 0 ? argArr[0] : null;
+		String argTableID = argArr.length > 1 ? argArr[1] : null;
+		String argOperationID = argArr.length > 2 ? argArr[2] : null;
+
+		Log.debug("CocitBizAction.getBizFormModel... {args:%s, moduleID:%s, tableID:%s, operationID:%s, dataID:%s}", args, argModuleID, argTableID, argOperationID, argDataID);
+
+		/*
+		 * 获取数据模块和数据表对象
+		 */
+		ComFactory softFactory = Cocit.getComFactory();
+		Long moduleID = StringUtil.castTo(argModuleID, 0l);
+		Long tableID = StringUtil.castTo(argTableID, 0l);
+		Long operationID = StringUtil.castTo(argOperationID, 0l);
+		CocBizModule module = softFactory.getBizModule(moduleID);
+		CocBizTable table = softFactory.getBizTable(moduleID, tableID);
+		CocBizOperation operation = softFactory.getBizOperation(moduleID, tableID, operationID);
+
+		Log.debug("CocitBizAction.getBizFormModel: module = %s, table = %s", module, table);
+
+		/*
+		 * 创建表单数据
+		 */
+		EntityManagerFactory entityManagerFactory = Cocit.getEntityManagerFactory();
+		EntityManager entityManager = entityManagerFactory.getEntityManager(module, table);
+		// 加载数据
+		Object data = null;
+		String[] arrDataID = StringUtil.toArray(argDataID);
+		if (arrDataID != null && arrDataID.length == 1) {
+			Long dataID = StringUtil.castTo(arrDataID[0], 0l);
+			data = entityManager.load(dataID, operation.getOperationCode());
+		}
+		// 注入HTTP参数到实体对象中
+		if (dataNode != null) {
+			Class type = entityManager.getType();
+			data = dataNode.inject(Mirror.me(type), data, null);
+		}
+
+		/*
+		 * 获取Form界面模型
+		 */
+		CuiModelFactory modelFactory = Cocit.getCuiModelFactory();
+		CuiFormModel formModel = modelFactory.getBizFormModel(module, table, operation, data);
+
+		Log.debug("CocitBizAction.getBizFormModel: formModel = %s", formModel);
+
+		/*
+		 * 设置表单数据
+		 */
+		formModel.setData(data);
+
+		/**
+		 * 返回
+		 */
+		return formModel;
 	}
 }

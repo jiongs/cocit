@@ -24,9 +24,13 @@ abstract class JCocitTreeRenders {
 				print(out, "</script>");
 			}
 
+			// Tree容器：DIV
 			print(out, "<div style=\"height:%spx; position: relative; border:1px solid #95B8E7; padding: 2px; overflow: hidden;\">", model.get("height", 300));
-			print(out, "<ul id=\"tree_%s\" tableID=\"%s\" class=\"jCocit-ui jCocit-tree\" data-options=\"", //
+
+			// Tree：id = "tree_" + token
+			print(out, "<ul id=\"tree_%s\" class=\"jCocit-ui jCocit-tree\" data-options=\"", //
 					model.get("token", ""), model.getId());
+
 			print(out, "checkbox: %s", (boolean) model.get("checkbox", true));
 
 			if (model.getData() == null) {
@@ -39,6 +43,7 @@ abstract class JCocitTreeRenders {
 			// print(out, ",styleName: 'tree-lines'");
 
 			print(out, "\">");
+
 			print(out, "</ul>");
 			print(out, "</div>");
 		}

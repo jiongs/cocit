@@ -560,6 +560,7 @@
 				pageIndex : opts.pageIndex,
 				pageSize : opts.pageSize,
 				pageOptions : opts.pageOptions,
+				buttons : opts.pageButtons,
 				onSelectPage : function(pageIndex, pageSize) {
 					opts.pageIndex = pageIndex;
 					opts.pageSize = pageSize;

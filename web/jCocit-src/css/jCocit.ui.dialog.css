@@ -2,7 +2,7 @@
 .DlTB {
 	padding: 5px;
 	/* border-bottom: 1px solid #dddddd; */
-	background: #F4F4F4;
+	background: #E0ECFF;
 }
 
 /* Dialog Tool Bar Button Separator */
@@ -19,7 +19,7 @@
 	padding: 3px 8px 5px 5px;
 	text-align: right;
 	/* border-top: 1px solid #dddddd; */
-	background: #F4F4F4;
+	background: #E0ECFF;
 	text-align: right;
 }
 

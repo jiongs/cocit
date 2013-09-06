@@ -5,7 +5,9 @@ import java.io.Writer;
 import java.util.List;
 
 import com.jiongsoft.cocit.cocui.model.CuiMenuModel;
+import com.jiongsoft.cocit.cocui.model.CuiSearchBoxModel;
 import com.jiongsoft.cocit.cocui.render.BaseCuiRender;
+import com.jiongsoft.cocit.utils.ActionUtil;
 import com.jiongsoft.cocit.utils.Lang;
 import com.jiongsoft.cocit.utils.StringUtil;
 import com.jiongsoft.cocit.utils.Tree;
@@ -24,11 +26,17 @@ class JCocitMenuRender extends BaseCuiRender<CuiMenuModel> {
 	private void printHtmlMenu(Writer out, CuiMenuModel model) throws Throwable {
 		Tree tree = model.getData();
 
-		// 菜单ID与GridRender中输出的工具栏ID相同，都是BizTable ID。
-		print(out, "<div id=\"toolbar_%s\" tableID=\"%s\" style=\"padding:1px; height: auto;\">", //
-				model.get("token", ""), model.getId());
+		// 工具栏容器：DIV
+		print(out, "<div id=\"toolbar_%s\" style=\"padding:2px; height: auto;\">", model.get("token", ""));
+
+		/*
+		 * 用一个Table将工具栏容器分成两部分：1.左边为工具栏菜单，2.右边为搜索框。
+		 */
 		print(out, "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%%\"><tr>");
 
+		/*
+		 * 1.左边为工具栏菜单
+		 */
 		List<Node> nodes = tree.getChildren();
 		if (!Lang.isNil(nodes)) {
 
@@ -36,25 +44,23 @@ class JCocitMenuRender extends BaseCuiRender<CuiMenuModel> {
 			print(out, "<td><div style=\"margin: 1px 0 1px 0\">");
 
 			for (Node node : nodes) {
-				print(out, "<a href=\"javascript:void(0)\" class=\"jCocit-ui jCocit-menubar\" data-options=\"");
-				print(out, "opID: '%s', name:'%s'", node.getId(), node.getName());
+				print(out, "<a href=\"javascript:void(0)\" class=\"jCocit-ui jCocit-toolbar\" data-options=\"");
+				print(out, "name:'%s'", node.getName());
 
-				String value = node.get("moduleID", "");
-				if (!StringUtil.isNil(value))
-					print(out, ", moduleID: %s", value);
+				// bizToken: 用来关联到导航树（tree_????）和DataGrid（datagrid_???）。???表示bizToken。
+				String str = model.get("token", "");
+				if (!StringUtil.isNil(str))
+					print(out, ", bizToken: '%s'", str);
 
-				value = node.get("tableID", "");
-				if (!StringUtil.isNil(value))
-					print(out, ", tableID: %s", value);
+				// pathArgs = moduleID:tableID:operationID
+				str = node.get("pathArgs", "");
+				if (!StringUtil.isNil(str))
+					print(out, ", pathArgs: '%s'", str);
 
-				value = node.get("operationMode", "");
-				if (!StringUtil.isNil(value))
-					print(out, ", opMode: '%s'", value);
-
-				value = node.get("operationCode", "");
-				if (!StringUtil.isNil(value)) {
-					print(out, ", opCode: %s", value);
-					print(out, ", iconCls: 'icon-%s'", value);// iconCls 由菜单操作码决定
+				str = node.get("operationCode", "");
+				if (!StringUtil.isNil(str)) {
+					print(out, ", opCode: %s", str);
+					print(out, ", iconCls: 'icon-%s'", str);// iconCls 由菜单操作码决定
 				}
 
 				// 子菜单
@@ -77,8 +83,13 @@ class JCocitMenuRender extends BaseCuiRender<CuiMenuModel> {
 			print(out, "</td>");
 		}
 
+		/*
+		 * 2.右边为搜索框
+		 */
 		if (model.getSearchBoxModel() != null) {
 			print(out, "<td align=\"right\">");
+			CuiSearchBoxModel searchMode = model.getSearchBoxModel();
+			searchMode.set("token", model.get("token", ""));
 			model.getSearchBoxModel().render(out);
 			print(out, "</td>");
 		}
@@ -93,24 +104,22 @@ class JCocitMenuRender extends BaseCuiRender<CuiMenuModel> {
 				model.get("token", ""), node.getId());
 
 		for (Node child : node.getChildren()) {
-			print(out, "<div data-options=\"opID: '%s'", child.getId());
+			print(out, "<div data-options=\"", child.getId());
+			print(out, "name:'%s'", node.getName());
 
-			String value = node.get("moduleID", "");
-			if (!StringUtil.isNil(value))
-				print(out, ", moduleID: %s", value);
+			// pathArgs = moduleID:tableID:operationID
+			String str = node.get("pathArgs", "");
+			if (!StringUtil.isNil(str))
+				print(out, ", pathArgs: '%s'", str);
 
-			value = node.get("tableID", "");
-			if (!StringUtil.isNil(value))
-				print(out, ", tableID: %s", value);
+			str = model.get("token", "");
+			if (!StringUtil.isNil(str))
+				print(out, ", bizToken: '%s'", str);
 
-			value = child.get("operationMode", "");
-			if (!StringUtil.isNil(value))
-				print(out, ", opMode: '%s'", value);
-
-			value = child.get("operationCode", "");
-			if (!StringUtil.isNil(value)) {
-				print(out, ", iconCls: 'icon-%s'", value);
-				print(out, ", opCode: %s", value);
+			str = child.get("operationCode", "");
+			if (!StringUtil.isNil(str)) {
+				print(out, ", iconCls: 'icon-%s'", str);
+				print(out, ", opCode: %s", str);
 			}
 
 			print(out, "\"><span>%s</span>", child.getName());

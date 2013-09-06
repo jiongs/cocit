@@ -36,4 +36,6 @@ public interface ComFactory {
 	 */
 	CocBizTable getBizTable(Long moduleID, Long tableID);
 
+	CocBizOperation getBizOperation(Long moduleID, Long tableID, Long operationID);
+
 }

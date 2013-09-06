@@ -1,6 +1,7 @@
 package com.jiongsoft.cocit.cocsoft.impl.demsy;
 
 import java.util.Date;
+import java.util.Properties;
 
 import com.jiongsoft.cocit.cocsoft.CocBizOperation;
 import com.jiongsoft.cocit.utils.StringUtil;
@@ -15,6 +16,11 @@ class DemsyCocBizOperation implements CocBizOperation {
 
 	DemsyCocBizOperation(BizAction e) {
 		this.entity = e;
+	}
+
+	@Override
+	public Properties getExtProps() {
+		return entity.getDynaProp();
 	}
 
 	@Override
@@ -79,7 +85,7 @@ class DemsyCocBizOperation implements CocBizOperation {
 		Class valueType = defaultReturn.getClass();
 
 		try {
-			return (T) StringUtil.cast(value, valueType);
+			return (T) StringUtil.castTo(value, valueType);
 		} catch (Throwable e) {
 		}
 

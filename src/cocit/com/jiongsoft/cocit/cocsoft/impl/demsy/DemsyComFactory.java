@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.jiongsoft.cocit.cocsoft.CocBizModule;
+import com.jiongsoft.cocit.cocsoft.CocBizOperation;
 import com.jiongsoft.cocit.cocsoft.CocBizTable;
 import com.jiongsoft.cocit.cocsoft.CocSoft;
 import com.jiongsoft.cocit.cocsoft.ComFactory;
@@ -114,6 +115,14 @@ public class DemsyComFactory implements ComFactory {
 		// TODO:应通过模块表达式来解析数据表对象，目前暂时不支持模块对数据表的引用表达式。
 
 		return this.makeDataTable(module, system);
+	}
+
+	@Override
+	public CocBizOperation getBizOperation(Long moduleID, Long tableID, Long operationID) {
+		Module module = (Module) moduleEngine.getModule(moduleID);
+		BizAction action = (BizAction) moduleEngine.getAction(module, operationID);
+
+		return new DemsyCocBizOperation(action);
 	}
 
 }

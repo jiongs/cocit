@@ -10,10 +10,11 @@
 	border: 0;
 	margin: 0;
 	padding: 0;
-	/* Radius Border */
-	-moz-border-radius: 5px 5px 5px 5px;
-	-webkit-border-radius: 5px 5px 5px 5px;
-	border-radius: 5px 5px 5px 5px;
+	
+	/* 圆角 */
+	-moz-border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	border-radius: 3px 3px 3px 3px;
 }
 
 /**
@@ -27,7 +28,7 @@
 }
 
 .WdH {
-	height: 27px;
+	height: 23px;
 }
 
 .WdH .PnHR,.WdH .PnHC,.WdH .PnHT {
@@ -35,56 +36,64 @@
 }
 
 /* Window Header */
-.WdH { /**
+.WdH { 
+	/**
 	 * 1. Using image set header radius border and gradient background 
 	 */
+	 /*
 	background: url(./images/dialog/dialog_top_left.gif) no-repeat;
 	padding-left: 5px;
 	border-bottom: 0px solid #8a8a8a;
+	*/
 
 	/**
 	 * 2. Using CSS set header radius border and gradient background
 	 */
 	/* Radius Border */
-	/*
-	border: 1px solid #5c5c5c;
-	-moz-border-radius: 5px 5px 0px 0px;
-	-webkit-border-radius: 5px 5px 0px 0px;
-	border-radius: 5px 5px 0px 0px;
-	*/
+	border: 1px solid #95B8E7;
+	border-bottom: 0px;
+	-moz-border-radius: 3px 3px 0px 0px;
+	-webkit-border-radius: 3px 3px 0px 0px;
+	border-radius: 3px 3px 0px 0px;
+	
 	/* Header Gradient Background Color */
 	/*
-	background: -webkit-linear-gradient(top, #969696 0, #808080 20%);
-	background: -moz-linear-gradient(top, #969696 0, #808080 20%);
-	background: -o-linear-gradient(top, #969696 0, #808080 20%);
-	background: linear-gradient(to bottom, #969696 0, #808080 20%);
+	background: -webkit-linear-gradient(top, #EFF5FF 0, #E0ECFF 100%);
+	background: -moz-linear-gradient(top, #EFF5FF 0, #E0ECFF 100%);
+	background: -o-linear-gradient(top, #EFF5FF 0, #E0ECFF 100%);
+	background: linear-gradient(to bottom, #EFF5FF 0, #E0ECFF 100%);
 	background-repeat: repeat-x;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#969696,endColorstr=#808080,GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#EFF5FF,endColorstr=#E0ECFF,GradientType=0);
 	*/
 }
 
 /* Window Header > Panel Header Right */
-.WdH .PnHR { /*  Using image set header radius border and gradient background */
+.WdH .PnHR { 
+	/*  Using image set header radius border and gradient background */
+	/*
 	background: url(./images/dialog/dialog_top_right.gif) no-repeat 100% 0;
+	*/
 	padding-right: 5px;
 }
 
 /* Window Header > Panel Header Center */
-.WdH .PnHC { /*  Using image set header radius border and gradient background */
+.WdH .PnHC { 
+	/*  Using image set header radius border and gradient background */
+	/*
 	background: url(./images/dialog/dialog_top_mid.gif) repeat-x;
+	*/
 }
 
 /**
  * Window Header Title With Logo
  */
 .WdH .PnHT-WL {
-	padding-left: 20px;
+	padding-left: 25px;
 }
 
 /* Window Header > Panel Header Title*/
 .WdH .PnHT {
-	color: #ffffff;
-	padding-top: 5px;
+	padding: 5px 0 0 8px;
 }
 
 /* Window Header > Panel Header Button */
@@ -97,11 +106,11 @@
  */
 .WdB {
 	overflow: hidden;
-	border-color: #5c5c5c;
+	border-color: #95B8E7;
 	border-style: solid;
 	padding: 0 1px 0 1px;
 	border-width: 0 1px 0 1px;
-	background-color: #f0f0f0;
+	background-color: #E0ECFF;
 }
 
 /* Window Header Body No Header*/
@@ -111,8 +120,8 @@
 
 /* Window Content */
 .WdB > .PnBC {
-	border: 1px solid #bcbcbc;
-	margin: 8px 8px 6px 8px;
+	border: 1px solid #95B8E7;
+	margin: 5px;
 	padding: 4px;
 	background-color: #ffffff;
 }
@@ -129,21 +138,36 @@
 }
 
 /* Window Footer */
-.WdF { /*  Using image set footer radius border */
+.WdF { 
+	/*  Using image set footer radius border */
+	/*
 	background: url(./images/dialog/dialog_bottom_left.gif) no-repeat 0 -8px;
 	padding-left: 5px;
-	height: 5px;
+	*/
+	height: 2px;
+	background-color: #E0ECFF;
+	border: 1px solid #95B8E7;
+	border-top: 0px;
+	-moz-border-radius: 0px 0px 3px 3px;
+	-webkit-border-radius: 0px 0px 3px 3px;
+	border-radius: 0px 0px 3px 3px;
 }
 
 /* Window Footer > Panel Footer Right */
-.WdF .PnFR { /*  Using image set footer radius border */
+.WdF .PnFR { 
+	/* Using image set footer radius border */
+	/*
 	background: url(./images/dialog/dialog_bottom_right.gif) no-repeat 100% -8px;
 	padding-right: 5px;
+	*/
 }
 
 /* Window Footer > Panel Footer Center */
-.WdF .PnFC { /*Dialog bottom-middle background image*/
+.WdF .PnFC { 
+	/*Dialog bottom-middle background image*/
+	/*
 	background: url(./images/dialog/dialog_bottom_mid.gif) repeat-x 0 -8px;
+	*/
 }
 
 /**
@@ -197,7 +221,7 @@
 /* Simple Window: Content Without Border */
 .window-simple .WdB .PnBC {
 	border: 0px solid #bcbcbc;
-	margin: 8px 8px 6px 8px;
+	margin: 8px;
 	background-color: transparent;
 }
 
