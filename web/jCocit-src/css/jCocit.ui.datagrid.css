@@ -23,9 +23,9 @@
 	left: 0;
 	top: 0;
 	width: 100%;
-	height: 100%;
-	opacity: 0.3;
-	filter: alpha(opacity = 30);
+	height: 100%
+	opacity: 0.1;
+	filter: alpha(opacity = 10);
 	display: none;
 }
 
@@ -161,6 +161,7 @@
 	padding: 0;
 	width: 15px;
 	height: 18px;
+	cursor: pointer;
 }
 
 .datagrid-resize-proxy {
@@ -247,7 +248,7 @@
 }
 
 .datagrid-toolbar,.datagrid-pager {
-	background:#F4F4F4; /*#F4F4F4;dfeffc*/
+	background:#fafafa; /*#F4F4F4;dfeffc*/
 }
 
 .datagrid-header,.datagrid-toolbar,.datagrid-pager,.datagrid-footer-inner
@@ -264,17 +265,17 @@
 }
 
 .datagrid-row-alt {
-	background: #fafafa;
+	background: #eaf2ff;
 }
 
 .datagrid-row-over,.datagrid-header td.datagrid-header-over {
-	background: #eaf2ff;
+	background: #ffe6a3;
 	color: #000000;
-	cursor: default;
+	cursor: pointer;
 }
 
 .datagrid-row-selected {
-	background: #FBEC88;
+	background: #ffbe6a;
 	color: #000000;
 }
 

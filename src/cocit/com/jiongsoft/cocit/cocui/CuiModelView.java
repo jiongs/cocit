@@ -1,6 +1,7 @@
 package com.jiongsoft.cocit.cocui;
 
-import java.io.Writer;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,33 +32,53 @@ public class CuiModelView implements View {
 
 	@Override
 	public void render(HttpServletRequest req, HttpServletResponse resp, Object obj) throws Throwable {
-		if (obj instanceof CuiModel) {
-			CuiModel model = (CuiModel) obj;
 
-			resp.setHeader("Pragma", "no-cache");
-			resp.setHeader("Cache-Control", "no-cache");
-			resp.setDateHeader("Expires", -1);
+		resp.setHeader("Pragma", "no-cache");
+		resp.setHeader("Cache-Control", "no-cache");
+		resp.setDateHeader("Expires", -1);
 
-			resp.setContentType(model.getContentType());
+		PrintWriter out = null;
 
-			Writer out = null;
-			try {
-				out = resp.getWriter();
+		try {
+			out = resp.getWriter();
 
-				model.render(out);
-			} finally {
-				resp.flushBuffer();
+			if (obj instanceof CuiModel) {
+				CuiModel model = (CuiModel) obj;
+
+				resp.setContentType(model.getContentType());
+
+				StringWriter str = new StringWriter();
+
 				try {
-					if (out != null)
-						out.close();
-				} catch (Throwable iglore) {
+					model.render(str);
+
+					out.write(str.toString());
+				} catch (Throwable ex) {
+					Log.error("", ex);
+					
+					ex.printStackTrace(out);
 				}
+
+			} else {
+				if (obj instanceof Throwable) {
+					Throwable ex = (Throwable) obj;
+
+					resp.setContentType("text/html; charset=UTF-8");
+
+					Log.error("", ex);
+					
+					ex.printStackTrace(out);
+
+				} else
+					Log.error("UIModelRenderView.render: 不支持的输出类型！{type:%s}", obj == null ? "<NULL>" : obj.getClass().getName());
 			}
-		} else {
-			if (obj instanceof Throwable) {
-				Log.error("UIModelRenderView.render: Error!", obj);
-			} else
-				Log.error("UIModelRenderView.render: 不支持的输出类型！{type:%s}", obj == null ? "<NULL>" : obj.getClass().getName());
+		} finally {
+			resp.flushBuffer();
+			try {
+				if (out != null)
+					out.close();
+			} catch (Throwable iglore) {
+			}
 		}
 	}
 

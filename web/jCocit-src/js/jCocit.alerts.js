@@ -50,6 +50,12 @@
 		cancel : "Cancel",
 		yes : "Yes",
 		no : "No",
+		warn : "Warn",
+		error : "Error",
+		info : "Info",
+		success : "Success",
+		confirm : "Confim",
+		prompt : "Prompt",
 		title : jCocit.defaults.title
 	}
 
@@ -158,9 +164,7 @@
 
 		switch (type) {
 		case 'confirm':
-			$buttonPanel
-					.append('<input id="AlBt_ok" type="button" value="{0}" class="AlBt" /><input id="AlBt_cancel" type="button" value="{1}" class="AlBt" />'
-							.format(options.yes, options.no));
+			$buttonPanel.append('<input id="AlBt_ok" type="button" value="{0}" class="AlBt" /><input id="AlBt_cancel" type="button" value="{1}" class="AlBt" />'.format(options.yes, options.no));
 			var $ok = $("#AlBt_ok", $container);
 			var $cancel = $("#AlBt_cancel", $container);
 			$ok.click(function() {
@@ -187,9 +191,7 @@
 			break;
 		case 'prompt':
 			$c("span", $bodyMessage).append('<br/><input type="text" id="AlP" />')
-			$buttonPanel
-					.append('<input id="AlBt_ok" type="button" value="{0}" class="AlBt" /><input id="AlBt_cancel" type="button" value="{1}" class="AlBt" />'
-							.format(options.ok, options.cancel));
+			$buttonPanel.append('<input id="AlBt_ok" type="button" value="{0}" class="AlBt" /><input id="AlBt_cancel" type="button" value="{1}" class="AlBt" />'.format(options.ok, options.cancel));
 			var $prompt = $("#AlP", $container);
 			var $ok = $("#AlBt_ok", $container);
 			var $cancel = $("#AlBt_cancel", $container);
@@ -387,22 +389,34 @@
 	 * Common Functions
 	 */
 	Jerror = function(message, title, callback) {
+		if (!title || title.trim() == 0)
+			title = $.alerts.defaults.error;
 		show(message, title, null, "error", callback);
 	};
 	Jwarn = function(message, title, callback) {
+		if (!title || title.trim() == 0)
+			title = $.alerts.defaults.warn;
 		show(message, title, null, "warn", callback);
 	};
 	Jinfo = function(message, title, callback) {
+		if (!title || title.trim() == 0)
+			title = $.alerts.defaults.info;
 		show(message, title, null, "info", callback);
 	};
-	Jalert = Jwarn;
+	Jalert = Jinfo;
 	Jsuccess = function(message, title, callback) {
+		if (!title || title.trim() == 0)
+			title = $.alerts.defaults.success;
 		show(message, title, null, "success", callback);
 	};
 	Jconfirm = function(message, title, callback) {
+		if (!title || title.trim() == 0)
+			title = $.alerts.defaults.confirm;
 		show(message, title, null, 'confirm', callback);
 	};
 	Jprompt = function(message, value, title, callback) {
+		if (!title || title.trim() == 0)
+			title = $.alerts.defaults.prompt;
 		show(message, title, value, 'prompt', callback);
 	};
 

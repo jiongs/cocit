@@ -1,5 +1,7 @@
 package com.jiongsoft.cocit.cocsoft;
 
+import java.util.Map;
+
 import com.jiongsoft.cocit.utils.KeyValue;
 
 /**
@@ -101,7 +103,7 @@ public interface CocBizField extends CocObject {
 	 * <li>D: Disable 禁用</li>
 	 * </ul>
 	 */
-	String getEditMode(String opMode);
+	String getMode(String opMode);
 
 	/**
 	 * 获取字段掩码：
@@ -140,7 +142,9 @@ public interface CocBizField extends CocObject {
 	 * 
 	 * @return
 	 */
-	KeyValue[] getOptions();
+	KeyValue[] getDicOptions();
+
+	Map<Object, KeyValue> getDicOptionsMap();
 
 	/**
 	 * 判断该字段是否显示在Grid中？
@@ -168,7 +172,7 @@ public interface CocBizField extends CocObject {
 	 * 
 	 * @return
 	 */
-	CocBizTable getFkDataTable();
+	CocBizTable getFkBizTable();
 
 	/**
 	 * 判断该外键字段{@link #TYPE_FK}的“主数据表”是否作为“外键数据表”的从属表？
@@ -182,7 +186,7 @@ public interface CocBizField extends CocObject {
 	 *         <LI>false: 反之则不显示；
 	 *         </UL>
 	 */
-	boolean isFkDataTableChild();
+	boolean isFkBizTableChild();
 
 	/**
 	 * 判断该外键字段{@link #TYPE_FK}是否是多对多的关联？
@@ -226,6 +230,7 @@ public interface CocBizField extends CocObject {
 	 * @return
 	 */
 	String[] getUploadType();
+
 	//
 	// /**
 	// * 获取该数据字段所属的数据分组。
@@ -240,4 +245,28 @@ public interface CocBizField extends CocObject {
 	// * @return
 	// */
 	// CocBizTable getBizTable();
+
+	/**
+	 * 格式化字段值的显示文本。
+	 * <UL>
+	 * <LI>字典字段：返回字典字段的Text；
+	 * <LI>数值字段：使用pattern进行格式化；
+	 * <LI>日期字段：同上
+	 * </UL>
+	 * 
+	 * @param fieldValue
+	 *            字段值
+	 * @return
+	 */
+	String format(Object fieldValue);
+
+	/**
+	 * 根据给定的字段值，获取对应的字典项。
+	 * <p>
+	 * 如果不是字典字段，将返回null。
+	 * 
+	 * @param fieldValue
+	 * @return
+	 */
+	KeyValue getDicOption(Object fieldValue);
 }

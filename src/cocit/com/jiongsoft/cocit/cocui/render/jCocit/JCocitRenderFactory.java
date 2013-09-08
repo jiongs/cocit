@@ -9,6 +9,7 @@ import com.jiongsoft.cocit.cocui.CuiRenderFactory;
 import com.jiongsoft.cocit.cocui.model.CuiBizModuleModel;
 import com.jiongsoft.cocit.cocui.model.CuiBizTableModel;
 import com.jiongsoft.cocit.cocui.model.CuiFormModel;
+import com.jiongsoft.cocit.cocui.model.CuiFormModelData;
 import com.jiongsoft.cocit.cocui.model.CuiGridModel;
 import com.jiongsoft.cocit.cocui.model.CuiGridModelData;
 import com.jiongsoft.cocit.cocui.model.CuiMenuModel;
@@ -58,6 +59,8 @@ public class JCocitRenderFactory implements CuiRenderFactory {
 
 		if (modelType.equals(CuiFormModel.class))
 			return new JCocitFormRender();
+		if (modelType.equals(CuiFormModelData.class))
+			return new JCocitFormDataRender();
 
 		if (modelType.equals(CuiGridModel.class))
 			return new JCocitGridRenders.ModelRender();

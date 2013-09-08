@@ -11,12 +11,11 @@ import com.jiongsoft.cocit.cocsoft.CocBizTable;
 import com.jiongsoft.cocit.cocsoft.CocSoft;
 import com.jiongsoft.cocit.cocsoft.ComFactory;
 import com.kmetop.demsy.Demsy;
+import com.kmetop.demsy.comlib.biz.IBizField;
 import com.kmetop.demsy.comlib.impl.base.biz.BizAction;
 import com.kmetop.demsy.comlib.impl.base.lib.DemsySoft;
 import com.kmetop.demsy.comlib.impl.base.security.Module;
-import com.kmetop.demsy.comlib.impl.sft.system.AbstractSystemData;
 import com.kmetop.demsy.comlib.impl.sft.system.SFTSystem;
-import com.kmetop.demsy.comlib.impl.sft.system.SystemDataGroup;
 import com.kmetop.demsy.engine.BizEngine;
 import com.kmetop.demsy.engine.ModuleEngine;
 
@@ -54,31 +53,8 @@ public class DemsyComFactory implements ComFactory {
 
 	}
 
-	private CocBizTable makeDataTable(Module module, SFTSystem system) {
+	private DemsyCocBizTable makeBizTable(Module module, SFTSystem system) {
 		DemsyCocBizTable ret = new DemsyCocBizTable(system);
-
-		SFTSystem moduleRefSystem = module.getRefSystem();
-
-		List<AbstractSystemData> dataFields = (List<AbstractSystemData>) bizEngine.getFields(system);
-		List<SystemDataGroup> dataGroups = (List<SystemDataGroup>) bizEngine.getFieldGroups(system);
-		List<BizAction> dataOperations = (List<BizAction>) bizEngine.getActions(system);
-		List<AbstractSystemData> dataFieldsForNaviTree = new ArrayList();
-		List<AbstractSystemData> oldDataFieldsForNaviTree = (List<AbstractSystemData>) bizEngine.getFieldsOfNavi(system);
-		for (AbstractSystemData d : oldDataFieldsForNaviTree) {
-			SFTSystem fkSystem = d.getRefrenceSystem();
-			if (fkSystem != null && fkSystem.getId() == moduleRefSystem.getId()) {
-				continue;
-			}
-
-			dataFieldsForNaviTree.add(d);
-		}
-
-		List<AbstractSystemData> dataFieldsForGrid = (List<AbstractSystemData>) bizEngine.getFieldsOfGrid(system, null);
-		ret.setDataFields(dataFields);
-		ret.setDataFieldsForGrid(dataFieldsForGrid);
-		ret.setDataFieldsForNaviTree(dataFieldsForNaviTree);
-		ret.setDataGroups(dataGroups);
-		ret.setDataOperations(dataOperations);
 
 		return ret;
 	}
@@ -86,19 +62,28 @@ public class DemsyComFactory implements ComFactory {
 	@Override
 	public CocBizModule getBizModule(Long moduleID) {
 		Module module = (Module) moduleEngine.getModule(moduleID);
+		if (module == null)
+			return null;
+
 		SFTSystem mainSystem = (SFTSystem) moduleEngine.getSystem(module);
 
 		//
-		CocBizTable mainDataTable = this.makeDataTable(module, mainSystem);
+		CocBizTable mainDataTable = this.makeBizTable(module, mainSystem);
 		DemsyCocBizModule ret = new DemsyCocBizModule(module, mainDataTable);
 
 		//
-		List<SFTSystem> childrenSystems = (List<SFTSystem>) bizEngine.getSystemsOfSlave(mainSystem);
 		List<CocBizTable> childrenDataTables = new ArrayList();
-		for (SFTSystem sys : childrenSystems) {
+		List<IBizField> fkFields = bizEngine.getFieldsOfSlave(mainSystem);
+		for (IBizField fkField : fkFields) {
+			SFTSystem fkSystem = (SFTSystem) fkField.getSystem();
+
+			DemsyCocBizTable bizTable = this.makeBizTable(module, fkSystem);
+			childrenDataTables.add(bizTable);
+
+			// 设置该子表通过哪个字段引用了主表？
+			bizTable.set("fkfield", fkField.getPropName());
 
 			// TODO:应通过模块表达式来解析数据表对象，目前暂时不支持模块对数据表的引用表达式。
-			childrenDataTables.add(this.makeDataTable(module, sys));
 
 		}
 
@@ -114,13 +99,17 @@ public class DemsyComFactory implements ComFactory {
 
 		// TODO:应通过模块表达式来解析数据表对象，目前暂时不支持模块对数据表的引用表达式。
 
-		return this.makeDataTable(module, system);
+		return this.makeBizTable(module, system);
 	}
 
 	@Override
 	public CocBizOperation getBizOperation(Long moduleID, Long tableID, Long operationID) {
-		Module module = (Module) moduleEngine.getModule(moduleID);
-		BizAction action = (BizAction) moduleEngine.getAction(module, operationID);
+		if (operationID == null)
+			return null;
+
+		BizAction action = (BizAction) bizEngine.getAction(tableID, operationID);
+		if (action == null)
+			return null;
 
 		return new DemsyCocBizOperation(action);
 	}

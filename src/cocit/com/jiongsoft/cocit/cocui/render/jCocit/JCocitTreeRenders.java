@@ -28,16 +28,19 @@ abstract class JCocitTreeRenders {
 			print(out, "<div style=\"height:%spx; position: relative; border:1px solid #95B8E7; padding: 2px; overflow: hidden;\">", model.get("height", 300));
 
 			// Tree：id = "tree_" + token
-			print(out, "<ul id=\"tree_%s\" class=\"jCocit-ui jCocit-tree\" data-options=\"", //
-					model.get("token", ""), model.getId());
+			String token = model.get("token", "");
+			print(out, "<ul id=\"tree_%s\" class=\"jCocit-ui jCocit-tree\" data-options=\"", token);
 
-			print(out, "checkbox: %s", (boolean) model.get("checkbox", true));
+			print(out, "bizToken: '%s'", token);// 导航树Tree通过该令牌查找DataGrid对象
+			print(out, ",checkbox: %s", (boolean) model.get("checkbox", true));
 
 			if (model.getData() == null) {
 				print(out, ",url: '%s'", model.getDataLoadUrl());
 			} else {
 				print(out, ",data: treedata_%s", model.get("token", ""));
 			}
+			print(out, ",onSelect: jCocit.bizmodule.doTreeSelect");
+			print(out, ",onCheck: jCocit.bizmodule.doTreeSelect");
 
 			// print(out, ",lines: %s",model.is("lines"));
 			// print(out, ",styleName: 'tree-lines'");

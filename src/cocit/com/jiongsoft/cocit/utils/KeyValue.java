@@ -11,16 +11,18 @@ import java.util.Properties;
  */
 public class KeyValue {
 	private String key;
-	private Object value;
+	private String value;
 	private Properties extProps;
 
-	public static KeyValue make(String key, Object value) {
+	public static KeyValue make(String key, String value) {
 		return new KeyValue(key, value);
 	}
 
-	private KeyValue(String key, Object value) {
+	private KeyValue(String key, String value) {
 		this.key = key;
 		this.value = value;
+
+		extProps = new Properties();
 	}
 
 	public String getKey() {
@@ -31,11 +33,11 @@ public class KeyValue {
 		this.key = key;
 	}
 
-	public Object getValue() {
+	public String getValue() {
 		return value;
 	}
 
-	public void setValue(Object value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 

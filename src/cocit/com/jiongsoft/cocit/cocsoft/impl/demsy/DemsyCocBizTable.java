@@ -2,7 +2,11 @@ package com.jiongsoft.cocit.cocsoft.impl.demsy;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import com.jiongsoft.cocit.cocsoft.CocBizField;
@@ -10,8 +14,10 @@ import com.jiongsoft.cocit.cocsoft.CocBizGroup;
 import com.jiongsoft.cocit.cocsoft.CocBizOperation;
 import com.jiongsoft.cocit.cocsoft.CocBizTable;
 import com.jiongsoft.cocit.utils.ClassUtil;
+import com.jiongsoft.cocit.utils.CocException;
 import com.jiongsoft.cocit.utils.KeyValue;
 import com.jiongsoft.cocit.utils.Lang;
+import com.jiongsoft.cocit.utils.SortUtil;
 import com.jiongsoft.cocit.utils.StringUtil;
 import com.jiongsoft.cocit.utils.Tree;
 import com.jiongsoft.cocit.utils.Tree.Node;
@@ -23,18 +29,32 @@ import com.kmetop.demsy.comlib.impl.sft.system.AbstractSystemData;
 import com.kmetop.demsy.comlib.impl.sft.system.SFTSystem;
 import com.kmetop.demsy.comlib.impl.sft.system.SystemDataGroup;
 import com.kmetop.demsy.engine.BizEngine;
+import com.kmetop.demsy.lang.Obj;
 import com.kmetop.demsy.orm.IOrm;
 
 class DemsyCocBizTable implements CocBizTable {
+	private BizEngine bizEngine;
 	private SFTSystem entity;
-	private List<SystemDataGroup> dataGroups;
-	private List<AbstractSystemData> dataFields;
-	private List<AbstractSystemData> dataFieldsForNaviTree;
-	private List<AbstractSystemData> dataFieldsForGrid;
-	private List<BizAction> dataOperations;
+	private List<CocBizGroup> bizGroups;
+	private List<CocBizField> bizFields;
+	private List<CocBizOperation> bizOperations;
+
+	private Properties extProps;
 
 	DemsyCocBizTable(SFTSystem e) {
-		this.entity = e;
+		bizEngine = (BizEngine) Demsy.bizEngine;
+
+		entity = e;
+		bizGroups = new ArrayList();
+		bizFields = new ArrayList();
+		bizOperations = new ArrayList();
+		extProps = new Properties();
+
+		List<AbstractSystemData> dataFields = (List<AbstractSystemData>) bizEngine.getFields(entity);
+		List<BizAction> dataOperations = (List<BizAction>) bizEngine.getActions(entity);
+
+		initDataFields(dataFields);
+		initDataOperations(dataOperations);
 	}
 
 	@Override
@@ -89,7 +109,9 @@ class DemsyCocBizTable implements CocBizTable {
 
 	@Override
 	public <T> T get(String propName, T defaultReturn) {
-		String value = entity.get(propName);
+		String value = this.extProps.getProperty(propName);
+		if (value == null)
+			value = entity.get(propName);
 
 		if (value == null)
 			return defaultReturn;
@@ -108,51 +130,35 @@ class DemsyCocBizTable implements CocBizTable {
 
 	@Override
 	public List<CocBizGroup> getBizGroups() {
-		if (this.dataGroups == null)
-			return null;
-
-		List<CocBizGroup> ret = new ArrayList();
-		for (SystemDataGroup s : this.dataGroups) {
-			ret.add(new DemsyCocBizGroup(s));
-		}
-
-		return ret;
+		return bizGroups;
 	}
 
 	@Override
 	public List<CocBizField> getBizFields() {
-		if (this.dataFields == null)
-			return null;
 
-		List<CocBizField> ret = new ArrayList();
-		for (AbstractSystemData s : this.dataFields) {
-			ret.add(new DemsyCocBizField(s));
-		}
-
-		return ret;
+		return bizFields;
 	}
 
 	@Override
 	public List<CocBizOperation> getBizOperations() {
-		if (this.dataOperations == null)
-			return null;
-
-		List<CocBizOperation> ret = new ArrayList();
-		for (BizAction s : this.dataOperations) {
-			ret.add(new DemsyCocBizOperation(s));
-		}
-
-		return ret;
+		return bizOperations;
 	}
 
 	@Override
 	public List<CocBizField> getBizFieldsForNaviTree() {
-		if (this.dataFieldsForNaviTree == null)
-			return null;
-
 		List<CocBizField> ret = new ArrayList();
-		for (AbstractSystemData s : this.dataFieldsForNaviTree) {
-			ret.add(new DemsyCocBizField(s));
+
+		for (CocBizField f : this.bizFields) {
+			DemsyCocBizField field = (DemsyCocBizField) f;
+			AbstractSystemData data = field.getEntity();
+
+			if (data.isDisabledNavi() || data.isDisabled()) {
+				continue;
+			}
+
+			if ((field.isFK() && !data.isMappingToMaster()) || field.isV1Dic() || field.isBoolean() || !StringUtil.isNil(data.getOptions()))
+				ret.add(field);
+
 		}
 
 		return ret;
@@ -160,35 +166,66 @@ class DemsyCocBizTable implements CocBizTable {
 
 	@Override
 	public List<CocBizField> getBizFieldsForGrid() {
-		if (this.dataFieldsForGrid == null)
-			return null;
+		List ret = new ArrayList();
 
-		List<CocBizField> ret = new ArrayList();
-		for (AbstractSystemData s : this.dataFieldsForGrid) {
-			ret.add(new DemsyCocBizField(s));
+		for (CocBizField f : this.bizFields) {
+			DemsyCocBizField field = (DemsyCocBizField) f;
+			AbstractSystemData data = field.getEntity();
+
+			if (data.isDisabledNavi() && data.isDisabled())
+				continue;
+
+			if (data.getRefrenceSystem() != null && data.getRefrenceField() != null)
+				continue;
+
+			if (data.isGridField() && data.getGridOrder() > 0)
+				ret.add(field);
+
 		}
+
+		SortUtil.sort(ret, "gridOrder", true);
 
 		return ret;
 	}
 
-	public void setDataGroups(List<SystemDataGroup> dataGroups) {
-		this.dataGroups = dataGroups;
+	private void initDataFields(List<AbstractSystemData> dataFields) {
+		if (dataFields == null)
+			return;
+		Map<Long, DemsyCocBizGroup> bizGroupsMap = new HashMap();
+
+		for (AbstractSystemData systemData : dataFields) {
+			SystemDataGroup dataGroup = systemData.getDataGroup();
+			Long groupID = dataGroup.getId();
+
+			DemsyCocBizGroup bizGroup = (DemsyCocBizGroup) bizGroupsMap.get(groupID);
+			if (bizGroup == null) {
+				bizGroup = new DemsyCocBizGroup(dataGroup);
+				bizGroupsMap.put(groupID, bizGroup);
+				bizGroups.add(bizGroup);
+			}
+
+			CocBizField bizField = new DemsyCocBizField(systemData);
+			this.bizFields.add(bizField);
+			bizGroup.addField(bizField);
+		}
 	}
 
-	public void setDataFields(List<AbstractSystemData> dataFields) {
-		this.dataFields = dataFields;
+	public Map<String, CocBizField> getBizFieldsMapByPropName() {
+		Map<String, CocBizField> map = new HashMap();
+		for (CocBizField f : this.bizFields) {
+			map.put(f.getPropName(), f);
+		}
+
+		return map;
 	}
 
-	public void setDataFieldsForNaviTree(List<AbstractSystemData> dataFieldsForNaviTree) {
-		this.dataFieldsForNaviTree = dataFieldsForNaviTree;
-	}
+	private void initDataOperations(List<BizAction> dataOperations) {
+		if (dataOperations == null)
+			return;
 
-	public void setDataOperations(List<BizAction> dataOperations) {
-		this.dataOperations = dataOperations;
-	}
-
-	public void setDataFieldsForGrid(List<AbstractSystemData> dataFieldsForGrid) {
-		this.dataFieldsForGrid = dataFieldsForGrid;
+		for (BizAction g : dataOperations) {
+			this.bizOperations.add(new DemsyCocBizOperation(g));
+		}
 	}
 
 	@Override
@@ -196,12 +233,12 @@ class DemsyCocBizTable implements CocBizTable {
 
 		Tree tree = Tree.make();
 
-		for (AbstractSystemData fld : this.dataFieldsForNaviTree) {
-
-			Node node = tree.addNode(null, fld.getPropName()).setName("按 " + fld.getName());
+		for (CocBizField fld : this.getBizFieldsForNaviTree()) {
+			DemsyCocBizField demsyFld = (DemsyCocBizField) fld;
+			Node node = tree.addNode(null, fld.getPropName()).setName(fld.getName());
 			node.set("open", "true");
 
-			boolean success = this.makeNodes(tree, node, fld);
+			boolean success = this.makeNodes(tree, node, demsyFld.getEntity());
 			if (!success) {
 				tree.removeNode(node);
 			}
@@ -263,7 +300,7 @@ class DemsyCocBizTable implements CocBizTable {
 				String nodeName = record.toString();
 
 				// 添加节点
-				Node childNode = tree.addNode(parentNodeID, propName + ":" + nodeID).setName(nodeName);
+				Node childNode = tree.addNode(parentNodeID, propName + ".id:" + nodeID).setName(nodeName);
 
 				// 计算节点顺序
 				if (ClassUtil.hasField(fkSystemType, "orderby")) {
@@ -273,7 +310,7 @@ class DemsyCocBizTable implements CocBizTable {
 				}
 			}
 		} else {
-			KeyValue[] options = cocField.getOptions();
+			KeyValue[] options = cocField.getDicOptions();
 			if (options == null || options.length == 0 || options.length > 200) {
 				return false;
 			}
@@ -288,5 +325,60 @@ class DemsyCocBizTable implements CocBizTable {
 
 	public SFTSystem getEntity() {
 		return entity;
+	}
+
+	private Map<String, String> getFieldsModeMap(String opMode, Object data) {
+		List<CocBizField> fields = getBizFields();
+		Map<String, String> fieldMode = new HashMap();
+		for (CocBizField f : fields) {
+			DemsyCocBizField field = (DemsyCocBizField) f;
+
+			String mode = field.getMode(opMode);
+
+			// String cascadeMode = this.getCascadeMode(field, data)[1];
+			// if (getModeValue(mode) < getModeValue(cascadeMode)) {
+			// mode = cascadeMode;
+			// }
+
+			fieldMode.put(field.getPropName(), mode);
+		}
+
+		return fieldMode;
+	}
+
+	public void validate(String opMode, Object data) throws CocException {
+		Map<String, String> fieldsMode = this.getFieldsModeMap(opMode, data);
+
+		Iterator<String> keys = fieldsMode.keySet().iterator();
+		List<String> requiredFields = new LinkedList();
+		while (keys.hasNext()) {
+			String field = keys.next();
+			String mode = fieldsMode.get(field);
+			if (mode != null && mode.indexOf("M") > -1) {
+				Object v = Lang.getValue(data, field);
+				if (v == null) {
+					requiredFields.add(field);
+				} else if (v instanceof String) {
+					if (StringUtil.isNil((String) v))
+						requiredFields.add(field);
+				} else if (Obj.isEntity(v)) {
+					if (Obj.isEmpty(null, v))
+						requiredFields.add(field);
+				}
+			}
+		}
+
+		if (requiredFields.size() > 0) {
+			Map<String, CocBizField> fields = getBizFieldsMapByPropName();
+			StringBuffer sb = new StringBuffer();
+			for (String prop : requiredFields) {
+				sb.append(",").append(fields.get(prop).getName());
+			}
+			throw new CocException("必填字段：[%s]", sb.toString().substring(1));
+		}
+	}
+
+	public void set(String key, String value) {
+		this.extProps.put(key, value);
 	}
 }

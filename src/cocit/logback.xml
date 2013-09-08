@@ -9,6 +9,7 @@
 	</appender>
 
 	<logger name="com.kmetop.demsy" level="INFO"></logger>
+	<logger name="org.nutz.dao" level="ALL"></logger>
 	<logger name="com.jiongsoft" level="ALL"></logger>
 
 	<root level="ERROR">

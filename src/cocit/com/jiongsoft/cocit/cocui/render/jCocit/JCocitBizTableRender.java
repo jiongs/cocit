@@ -24,7 +24,7 @@ class JCocitBizTableRender extends BaseCuiRender<CuiBizTableModel> {
 		int treeHeight = height - 53;
 		int gridHeight = height - 47;
 
-		String token = Long.toHexString(System.currentTimeMillis());
+		String token = model.get("token", Long.toHexString(System.currentTimeMillis()));
 
 		/*
 		 * 工具栏菜单：工具栏菜单ID将被DataGrid引用
@@ -42,7 +42,7 @@ class JCocitBizTableRender extends BaseCuiRender<CuiBizTableModel> {
 		 * <LI>bizTableID: 自定义业务表ID号；
 		 * </UL>
 		 */
-		print(out, "<table bizToken=\"%s\" bizTableID=\"%s\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr>", token, model.getId());
+		print(out, "<table bizToken=\"%s\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr>", token);
 
 		/*
 		 * 1.左边为导航树
@@ -73,6 +73,7 @@ class JCocitBizTableRender extends BaseCuiRender<CuiBizTableModel> {
 		 */
 		CuiGridModel grid = model.getGridModel();
 		if (grid != null) {
+			grid.set("width", "" + gridWidth);
 			grid.set("height", "" + gridHeight);
 			grid.set("token", token);
 

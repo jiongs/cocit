@@ -30,20 +30,21 @@ public class DemsyCocitHttpContext extends BaseCocitHttpContext {
 
 	@Override
 	public int getAdminTopHeight() {
-		int ret = 0;
-		int browserWidth = getBrowserHeight();
-		String w = this.getSoftConfig("admin.ui.topHeight", "");
+		// int ret = 0;
+		// int browserWidth = getBrowserHeight();
+		// String w = this.getSoftConfig("admin.ui.topHeight", "");
+		//
+		// try {
+		// if (w.endsWith("%"))
+		// ret = browserWidth * Integer.parseInt(w.substring(0, w.length() - 1)) / 100;
+		// else
+		// ret = Integer.parseInt(w);
+		// } catch (Throwable e) {
+		// ret = 95;
+		// }
 
-		try {
-			if (w.endsWith("%"))
-				ret = browserWidth * Integer.parseInt(w.substring(0, w.length() - 1)) / 100;
-			else
-				ret = Integer.parseInt(w);
-		} catch (Throwable e) {
-			ret = 95;
-		}
-
-		return ret + 45;
+		// return ret + 45;
+		return 30;
 	}
 
 	@Override

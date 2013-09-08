@@ -202,6 +202,9 @@ public abstract class ModuleEngine implements IModuleEngine {
 
 	@Override
 	public IAction getAction(IModule mdl, Serializable opID) {
+		if (mdl == null)
+			return null;
+
 		if (mdl.getType() == IModule.TYPE_BIZ) {
 			if (opID instanceof String)
 				return ((BizEngine) bizEngine).biz(getSystem(mdl).getId()).action((String) opID);

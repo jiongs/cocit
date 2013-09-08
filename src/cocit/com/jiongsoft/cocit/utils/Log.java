@@ -8,12 +8,12 @@ public abstract class Log {
 	private static boolean traceDebug = false;
 	private static boolean traceInfo = false;
 	private static boolean traceWarn = false;
-	private static boolean traceError = false;
+	private static boolean traceError = true;
 
 	/**
 	 * 
 	 * @param message
-	 * @param args
+	 * @param operationArgs
 	 *            可变参数，最后一个参数可以是Throwable
 	 */
 	public static void debug(String message, Object... args) {
@@ -44,7 +44,7 @@ public abstract class Log {
 	/**
 	 * 
 	 * @param message
-	 * @param args
+	 * @param operationArgs
 	 *            可变参数，最后一个参数可以是Throwable
 	 */
 	public static void info(String message, Object... args) {
@@ -75,7 +75,7 @@ public abstract class Log {
 	/**
 	 * 
 	 * @param message
-	 * @param args
+	 * @param operationArgs
 	 *            可变参数，最后一个参数可以是Throwable
 	 */
 	public static void warn(String message, Object... args) {
@@ -101,12 +101,14 @@ public abstract class Log {
 		} else {
 			log.warnf(message, args);
 		}
+		// if (traceWarn)
+		// new Exception().printStackTrace();
 	}
 
 	/**
 	 * 
 	 * @param fmt
-	 * @param args
+	 * @param operationArgs
 	 *            可变参数，最后一个参数可以是Throwable
 	 */
 	public static void error(String message, Object... args) {
@@ -132,6 +134,8 @@ public abstract class Log {
 		} else {
 			log.errorf(message, args);
 		}
+		// if (traceError)
+		// new Exception().printStackTrace();
 	}
 
 }

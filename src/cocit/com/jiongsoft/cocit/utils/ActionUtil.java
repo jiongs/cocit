@@ -5,7 +5,7 @@ public abstract class ActionUtil {
 	/**
 	 * 编码路径参数
 	 * 
-	 * @param args
+	 * @param operationArgs
 	 * @return
 	 */
 	public static String encodeArgs(Object... args) {
@@ -25,13 +25,13 @@ public abstract class ActionUtil {
 	/**
 	 * 解码路径参数
 	 * 
-	 * @param args
+	 * @param operationArgs
 	 * @return
 	 */
 	public static String[] decodeArgs(String args) {
 		String str = args;
 
-		// String str = StringUtil.decodeHex(args);
+		// String str = StringUtil.decodeHex(operationArgs);
 
 		return StringUtil.toArray(str, ":");
 	}
@@ -40,7 +40,7 @@ public abstract class ActionUtil {
 	 * 参数默认值
 	 */
 
-	public static final int PAGE_SIZE = 20;
+	public static final int DEFAULT_PAGE_SIZE = 20;
 
 	/*
 	 * 以下是数据管理模块相关功能的访问路径。
@@ -52,29 +52,39 @@ public abstract class ActionUtil {
 	static final String ROOT_PATH = "/coc";
 
 	/**
-	 * “业务模块”之模块界面的访问路径，模块界面可以包括一个主表界面和多个从表界面组成的Tabs界面。
+	 * “业务模块”访问路径之模块界面，模块界面可以包括一个主表界面和多个从表界面组成的Tabs界面。
 	 */
-	public static final String GET_BIZ_MODULE_MODEL = ROOT_PATH + "/getBizModuleModel/*";
+	public static final String GET_BIZ_MODULE_UI = ROOT_PATH + "/getBizModuleUI/*";
 
 	/**
-	 * “业务模块”之数据表管理界面的访问路径，数据表管理界面包括左边导航树、顶部操作菜单、GRID；不包括子表。
+	 * “业务模块”访问路径之数据表管理界面，数据表管理界面包括左边导航树、顶部操作菜单、GRID；不包括子表。
 	 */
-	public static final String GET_BIZ_TABLE_MODEL = ROOT_PATH + "/getBizTableModel/*";
+	public static final String GET_BIZ_TABLE_UI = ROOT_PATH + "/getBizTableUI/*";
 
 	/**
-	 * “业务模块”之Grid数据的访问路径，数据格式通常为JSON或XML格式。
+	 * “业务模块”访问路径之Grid数据，数据格式通常为JSON或XML格式。
 	 */
-	public static final String GET_BIZ_TABLE_GRID_DATA = ROOT_PATH + "/getBizTableGridData/*";
+	public static final String GET_BIZ_GRID_DATA = ROOT_PATH + "/getBizGridData/*";
 
 	/**
-	 * “业务模块”之导航树数据的访问路径，数据格式通常为JSON或XML格式。
+	 * “业务模块”访问路径之导航树数据，数据格式通常为JSON或XML格式。
 	 */
-	public static final String GET_BIZ_TABLE_NAVI_TREE_DATA = ROOT_PATH + "/getBizTableNaviTreeData/*";
+	public static final String GET_BIZ_NAVI_DATA = ROOT_PATH + "/getBizNaviData/*";
 
 	/**
-	 * “业务模块”之业务表单的访问路径
+	 * “业务模块”访问路径之加载业务表单
 	 */
-	public static final String GET_BIZ_FORM_MODEL = ROOT_PATH + "/getBizFormModel/*";
+	public static final String GET_BIZ_FORM_UI = ROOT_PATH + "/getBizFormUI/*";
+
+	/**
+	 * “业务模块”访问路径之保存业务表单
+	 */
+	public static final String SAVE_BIZ_FORM_DATA = ROOT_PATH + "/saveBizFormData/*";
+
+	/**
+	 * “业务模块”访问路径之删除业务数据
+	 */
+	public static final String DELETE_BIZ_DATA = ROOT_PATH + "/deleteBizData/*";
 
 	/*
 	 * 以下是报表管理模块相关功能的访问路径

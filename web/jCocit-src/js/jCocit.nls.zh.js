@@ -9,7 +9,13 @@
 			ok : "确定",
 			cancel : "取消",
 			yes : "是",
-			no : "否"
+			no : "否",
+			warn : "警告",
+			error : "错误",
+			info : "信息",
+			success : "成功",
+			confirm : "确认",
+			prompt : "提示"
 		});
 
 	if ($.fn.loginform)
@@ -26,6 +32,10 @@
 				return year + "年" + opts.months[month - 1];
 			}
 		});
+
+	$e($.fn.combo.defaults, {
+		width : 200
+	});
 
 	if ($.fn.combodate)
 		$e($.fn.combodate.defaults, {
@@ -48,8 +58,8 @@
 
 	if ($.fn.pagination)
 		$e($.fn.pagination.defaults, {
-			beforePageText : '第',//第?页
-			afterPageText : '页 共{pages}页',//共?页
+			beforePageText : '第',// 第?页
+			afterPageText : '页 共{pages}页',// 共?页
 			displayMsg : '显示{from}-{to}条 共{total}条'
 		});
 

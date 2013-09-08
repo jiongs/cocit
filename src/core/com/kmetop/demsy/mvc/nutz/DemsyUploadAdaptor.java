@@ -149,7 +149,7 @@ public class DemsyUploadAdaptor extends AbstractAdaptor {
 		} finally {
 			Uploads.removeInfo(request);
 		}
-		// Try to make the args
+		// Try to make the operationArgs
 		Object[] args = new Object[injs.length];
 
 		// Inject another params
@@ -161,7 +161,7 @@ public class DemsyUploadAdaptor extends AbstractAdaptor {
 			}
 			args[i] = inj.get(sc, request, response, map);
 		}
-		// Loop path args
+		// Loop path operationArgs
 		if (null != pathArgs) {
 			int len = Math.min(args.length - i, pathArgs.length);
 			for (int j = 0; j < len; j++, i++)

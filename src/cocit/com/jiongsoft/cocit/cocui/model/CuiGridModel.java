@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.jiongsoft.cocit.cocsoft.CocBizField;
 import com.jiongsoft.cocit.utils.ActionUtil;
 
 /**
@@ -22,10 +23,10 @@ import com.jiongsoft.cocit.utils.ActionUtil;
 public class CuiGridModel extends BaseCuiModel {
 
 	private String name;
-	private int pageSize = ActionUtil.PAGE_SIZE;
 
 	// Grid数据，如果该值为Null，则将通过AJAX方式加载Grid数据。
 	private List data;
+	private int pageSize = ActionUtil.DEFAULT_PAGE_SIZE;
 
 	// Grid数据“增、删、查、改”操作的URL地址
 	private String dataLoadUrl;
@@ -35,6 +36,7 @@ public class CuiGridModel extends BaseCuiModel {
 
 	// Grid列
 	private List<GridColumn> columns;
+	private int columnsTotalWidth;
 
 	public CuiGridModel() {
 		super();
@@ -99,6 +101,8 @@ public class CuiGridModel extends BaseCuiModel {
 		private String align;
 		private int width;
 		private String pattern;
+
+		private CocBizField bizField;
 
 		private Properties props;
 
@@ -176,6 +180,14 @@ public class CuiGridModel extends BaseCuiModel {
 		public void setPattern(String pattern) {
 			this.pattern = pattern;
 		}
+
+		public CocBizField getBizField() {
+			return bizField;
+		}
+
+		public void setBizField(CocBizField bizField) {
+			this.bizField = bizField;
+		}
 	}
 
 	public String getName() {
@@ -192,6 +204,14 @@ public class CuiGridModel extends BaseCuiModel {
 
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
+	}
+
+	public int getColumnsTotalWidth() {
+		return columnsTotalWidth;
+	}
+
+	public void setColumnsTotalWidth(int columnsTotalWidth) {
+		this.columnsTotalWidth = columnsTotalWidth;
 	}
 
 }

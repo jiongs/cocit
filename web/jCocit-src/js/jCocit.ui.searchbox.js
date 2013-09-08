@@ -73,13 +73,21 @@
 
 		function _doClickMenu(itemData) {
 			$f("a.searchbox-menu", state.searchbox).remove();
-			var mb = $('<a class="searchbox-menu" href="javascript:void(0)"></a>').html(itemData.text.substring(0,8));
+			var mb = $('<a class="searchbox-menu" href="javascript:void(0)"></a>').html(itemData.text);
 			mb.prependTo(state.searchbox).menubar({
 				menu : state.menu,
 				iconCls : itemData.iconCls
 			});
-			$f("input.searchbox-text", state.searchbox).attr("name", $(itemData.target).attr("name") || itemData.name);
+			var $box = $f("input.searchbox-text", state.searchbox).attr("name", $(itemData.target).attr("name") || itemData.name);
+			// $box.val("");
+			// if(!itemData.name||itemData.name.trim().length==0){
+			// $box.attr("disabled",true);
+			// }else{
+			// $box.attr("disabled",false);
+			// }
 			resize(targetInput);
+			state.menu.menu("hide");
+			$box[0].focus();
 		}
 
 	}

@@ -1,0 +1,59 @@
+.icon-logo {
+	background: url('images/icon/setting.png') no-repeat left center;
+}
+.icon-check{
+	background: url('images/icon/check.gif') no-repeat center center;
+}
+.icon-uncheck{
+	background: url('images/icon/uncheck.gif') no-repeat center center;
+}
+.icon-setting {
+	background: url('images/icon/setting.png') no-repeat left center;
+}
+/* 格式：icon-操作码 */
+/* 添加 */
+.icon-101 {
+	background: url('images/icon/add.png') no-repeat left center;
+}
+/* 修改 */
+.icon-102 {
+	background: url('images/icon/edit.png') no-repeat left center;
+}
+/* 批量修改 */
+.icon-103 {
+	background: url('images/icon/edit.png') no-repeat left center;
+}
+/* 删除 */
+.icon-299 {
+	background: url('images/icon/delete.png') no-repeat left center;
+}
+/* 详情 */
+.icon-199,.icon-250,.icon-251,.icon-252,.icon-253,.icon-256 {
+	background: url('images/icon/layout.gif') no-repeat left center;
+}
+/* 排序 */
+.icon-250 {
+	
+}
+/* 上移 */
+.icon-251 {
+	
+}
+/* 下移 */
+.icon-252 {
+	
+}
+/* 倒排序 */
+.icon-253 {
+	
+}
+/* 取消排序 */
+.icon-256 {
+	
+}
+
+.icon-mode-M {
+	background: url('images/icon/required.gif') no-repeat center center;
+	width: 16px;
+	height: 16px;
+}

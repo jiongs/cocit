@@ -5,7 +5,7 @@ import static com.jiongsoft.cocit.Cocit.getCuiRenderFactory;
 import java.io.Writer;
 
 import com.jiongsoft.cocit.cocui.CuiModel;
-
+import com.jiongsoft.cocit.utils.CocException;
 
 /**
  * 数据模型：用于表示通过AJAX访问的数据模型。由两部分组成：1.模型，2.数据
@@ -28,6 +28,8 @@ public abstract class BaseCuiModelData<TModel extends BaseCuiModel, TData> imple
 	 * 业务数据：待输出的业务数据对象
 	 */
 	protected TData data;
+
+	protected CocException exception;
 
 	@Override
 	public void render(Writer out) throws Throwable {
@@ -53,6 +55,14 @@ public abstract class BaseCuiModelData<TModel extends BaseCuiModel, TData> imple
 
 	public void setData(TData data) {
 		this.data = data;
+	}
+
+	public CocException getException() {
+		return exception;
+	}
+
+	public void setException(CocException exception) {
+		this.exception = exception;
 	}
 
 }

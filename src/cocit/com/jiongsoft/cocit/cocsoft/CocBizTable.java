@@ -2,6 +2,7 @@ package com.jiongsoft.cocit.cocsoft;
 
 import java.util.List;
 
+import com.jiongsoft.cocit.utils.CocException;
 import com.jiongsoft.cocit.utils.Tree;
 
 /**
@@ -62,6 +63,15 @@ public interface CocBizTable extends CocObject {
 	 * @return
 	 */
 	List<CocBizField> getBizFieldsForGrid();
-	
+
 	Tree getNaviTree();
+
+	/**
+	 * 验证指定的数据是否合法
+	 * 
+	 * @param opMode
+	 * @param data
+	 * @throws CocException
+	 */
+	void validate(String opMode, Object data) throws CocException;
 }

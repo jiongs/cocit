@@ -2,7 +2,8 @@
  * Window, Window Shadow
  */
 .Wd {
-	overflow: hidden;
+	/*不能hidden,否则Combobox下拉框等将不能显示*/
+	/*overflow: hidden;*/
 }
 
 .Wd,.WdS {
@@ -84,6 +85,11 @@
 	*/
 }
 
+/* Window Header > Panel Header Title*/
+.WdH .PnHT {
+	padding: 5px 0 0 8px;
+}
+
 /**
  * Window Header Title With Logo
  */
@@ -91,10 +97,6 @@
 	padding-left: 25px;
 }
 
-/* Window Header > Panel Header Title*/
-.WdH .PnHT {
-	padding: 5px 0 0 8px;
-}
 
 /* Window Header > Panel Header Button */
 .WdH .PnHB {
@@ -121,8 +123,8 @@
 /* Window Content */
 .WdB > .PnBC {
 	border: 1px solid #95B8E7;
-	margin: 5px;
-	padding: 4px;
+	margin: 8px;
+	padding: 6px;
 	background-color: #ffffff;
 }
 
@@ -219,7 +221,7 @@
 }
 
 /* Simple Window: Content Without Border */
-.window-simple .WdB .PnBC {
+.window-simple .WdB > .PnBC {
 	border: 0px solid #bcbcbc;
 	margin: 8px;
 	background-color: transparent;

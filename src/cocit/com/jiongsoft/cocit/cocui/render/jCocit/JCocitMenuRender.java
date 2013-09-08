@@ -32,7 +32,7 @@ class JCocitMenuRender extends BaseCuiRender<CuiMenuModel> {
 		/*
 		 * 用一个Table将工具栏容器分成两部分：1.左边为工具栏菜单，2.右边为搜索框。
 		 */
-		print(out, "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%%\"><tr>");
+		print(out, "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%%\"><tr><td width=\"5\" nowrap>");
 
 		/*
 		 * 1.左边为工具栏菜单
@@ -41,7 +41,7 @@ class JCocitMenuRender extends BaseCuiRender<CuiMenuModel> {
 		if (!Lang.isNil(nodes)) {
 
 			// toolbar
-			print(out, "<td><div style=\"margin: 1px 0 1px 0\">");
+			print(out, "<div style=\"margin: 1px 0 1px 0\">");
 
 			for (Node node : nodes) {
 				print(out, "<a href=\"javascript:void(0)\" class=\"jCocit-ui jCocit-toolbar\" data-options=\"");
@@ -50,7 +50,7 @@ class JCocitMenuRender extends BaseCuiRender<CuiMenuModel> {
 				// bizToken: 用来关联到导航树（tree_????）和DataGrid（datagrid_???）。???表示bizToken。
 				String str = model.get("token", "");
 				if (!StringUtil.isNil(str))
-					print(out, ", bizToken: '%s'", str);
+					print(out, ", bizToken: '%s'", str);// 菜单通过该令牌获取DataGrid对象
 
 				// pathArgs = moduleID:tableID:operationID
 				str = node.get("pathArgs", "");
@@ -80,21 +80,21 @@ class JCocitMenuRender extends BaseCuiRender<CuiMenuModel> {
 					printHtmlSubMenu(out, model, node);
 			}
 
-			print(out, "</td>");
 		}
 
 		/*
 		 * 2.右边为搜索框
 		 */
-		if (model.getSearchBoxModel() != null) {
-			print(out, "<td align=\"right\">");
-			CuiSearchBoxModel searchMode = model.getSearchBoxModel();
+		CuiSearchBoxModel searchMode = model.getSearchBoxModel();
+		if (searchMode != null) {
+			print(out, "</td><td align=\"left\" style=\"padding-left: 5px;\">");
+
 			searchMode.set("token", model.get("token", ""));
-			model.getSearchBoxModel().render(out);
-			print(out, "</td>");
+			searchMode.render(out);
+
 		}
 
-		print(out, "</tr></table>");
+		print(out, "</td></tr></table>");
 
 		print(out, "</div>");
 	}

@@ -6,6 +6,7 @@ import java.io.Writer;
 import java.util.Properties;
 
 import com.jiongsoft.cocit.cocui.CuiModel;
+import com.jiongsoft.cocit.utils.CocException;
 import com.jiongsoft.cocit.utils.Log;
 import com.jiongsoft.cocit.utils.StringUtil;
 
@@ -23,6 +24,8 @@ public abstract class BaseCuiModel implements CuiModel {
 
 	// Grid属性设置
 	private Properties extProps;
+
+	protected CocException exception;
 
 	public BaseCuiModel() {
 		extProps = new Properties();
@@ -73,24 +76,6 @@ public abstract class BaseCuiModel implements CuiModel {
 		return defaultReturn;
 	}
 
-	/**
-	 * 获取扩展属性的bool值
-	 * 
-	 * @param propName
-	 * @return
-	 */
-	public boolean isExtProp(String propName) {
-		Object obj = extProps.get(propName);
-		if (obj == null)
-			return false;
-
-		try {
-			return Boolean.valueOf(obj.toString());
-		} catch (Throwable e) {
-			return false;
-		}
-	}
-
 	public String getThemeName() {
 		return themeName;
 	}
@@ -105,6 +90,14 @@ public abstract class BaseCuiModel implements CuiModel {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public CocException getException() {
+		return exception;
+	}
+
+	public void setException(CocException exception) {
+		this.exception = exception;
 	}
 
 }

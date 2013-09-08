@@ -130,7 +130,7 @@
 				maxWidth = $itemText.ow();
 			}
 		});
-		maxWidth += 65;
+		maxWidth += 15;
 		$menu.ow(Math.max(itemWidth, maxWidth, opts.minWidth));
 		$menu.css("display", display);
 	}
@@ -156,6 +156,7 @@
 	}
 
 	function _bindItemEvents(target, $item) {
+		var state = $d(target, "menu");
 		$item.unbind(".menu");
 		$item.bind("click.menu", function(e) {
 			if ($hc("menu-item-disabled", $(this))) {
@@ -163,7 +164,8 @@
 			}
 
 			if (!this.submenu) {
-				hideMenu(target);
+				if (state.options.hideOnMouseClick)
+					hideMenu(target);
 				var href = $(this).attr("href");
 				if (href) {
 					location.href = href;
@@ -314,6 +316,7 @@
 	function getItem(target, itemDIV) {
 		var $item = $(itemDIV);
 		var item = $.extend({}, jCocit.parseOptions(itemDIV, [ "name", "iconCls", "href" ]), {
+			target : itemDIV,
 			id : $item.attr("id"),
 			text : $.trim($c("div.menu-text", $item).html()),
 			disabled : $hc("menu-item-disabled", $item),
@@ -458,11 +461,9 @@
 	}
 
 	/**
-	 * 1. Create menu UI object or set menu properties if "options" is JSON
-	 * object.
+	 * 1. Create menu UI object or set menu properties if "options" is JSON object.
 	 * <P>
-	 * 2. Invoke menu method with arguments specified by "args" if "options" is
-	 * method name.
+	 * 2. Invoke menu method with arguments specified by "args" if "options" is method name.
 	 */
 	$.fn.menu = function(options, args) {
 		if (typeof options == "string") {
@@ -502,13 +503,13 @@
 				$c("div.menu-text", $(itemData.target)).html(item.text);
 			});
 		},
-		setIcon : function(jq, itemData) {
+		setIcon : function(jq, itemConfig) {
 			return jq.each(function() {
-				var item = getItem(this, itemData.target);
+				var item = $(this).menu("getItem", itemConfig.target);
 				if (item.iconCls) {
-					$ac(itemData.iconCls, $rc(item.iconCls, $c("div.menu-icon", $(item.target))));
+					$(item.target).children("div.menu-icon").removeClass(item.iconCls).addClass(itemConfig.iconCls);
 				} else {
-					$ac(itemData.iconCls, $('<div class="menu-icon"></div>')).appendTo(itemData.target);
+					$("<div class=\"menu-icon\"></div>").addClass(itemConfig.iconCls).appendTo(itemConfig.target);
 				}
 			});
 		},
@@ -534,6 +535,7 @@
 		minWidth : 120,
 		styleName : null,
 		hideOnMouseLeave : false,
+		hideOnMouseClick : true,
 		onShow : $n,
 		onHide : $n,
 		/**

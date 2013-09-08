@@ -2,7 +2,6 @@
  * They are extend functions from jCocit object to support auto parse plugins of HTML UI element.
  */
 (function($, jCocit) {
-
 	$.extend(jCocit, {
 		/**
 		 * Parse HTML element to plugin. This function will be auto invoked after HTML document loaded.

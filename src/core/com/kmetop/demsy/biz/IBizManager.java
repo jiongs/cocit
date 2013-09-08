@@ -41,11 +41,11 @@ public interface IBizManager<T> {
 	 * 
 	 * @param obj
 	 *            实体对象
-	 * @param actionID
+	 * @param opMode
 	 *            操作码
 	 * @return 保存了多少条记录
 	 */
-	public int save(T obj, String actionID) throws DemsyException;
+	public int save(T obj, String opMode) throws DemsyException;
 
 	/**
 	 * 批量修改： 修改满足条件的数据记录。
@@ -56,13 +56,13 @@ public interface IBizManager<T> {
 	 * 
 	 * @param obj
 	 *            实体对象: 存放最新字段值
-	 * @param actionID
+	 * @param opMode
 	 *            操作码
 	 * @param expr
 	 *            表达式: 用于描述满足条件的记录、要修改的字段等
 	 * @return 修改了多少条数据
 	 */
-	public int updateMore(T obj, String actionID, CndExpr expr) throws DemsyException;
+	public int updateMore(T obj, String opMode, CndExpr expr) throws DemsyException;
 
 	/**
 	 * 删除实体对象： 可以删除单个数据实体、实体集合、数组、Map等。
@@ -73,11 +73,11 @@ public interface IBizManager<T> {
 	 * 
 	 * @param obj
 	 *            实体对象
-	 * @param actionID
+	 * @param opMode
 	 *            操作码
 	 * @return 删除了多少条记录
 	 */
-	public int delete(T obj, String actionID) throws DemsyException;
+	public int delete(T obj, String opMode) throws DemsyException;
 
 	/**
 	 * 删除实体对象： 删除实体ID与指定ID相同的对象
@@ -88,14 +88,14 @@ public interface IBizManager<T> {
 	 * 
 	 * @param klass
 	 *            实体类
-	 * @param actionID
+	 * @param opMode
 	 *            操作码
 	 * @param expr
 	 *            表达式
 	 * @return 删除了多少条记录
 	 * @throws DemsyException
 	 */
-	public int delete(Long id, String actionID) throws DemsyException;
+	public int delete(Long id, String opMode) throws DemsyException;
 
 	/**
 	 * 批量删除： 删除满足条件的实体数据记录
@@ -106,13 +106,13 @@ public interface IBizManager<T> {
 	 * 
 	 * @param klass
 	 *            实体类
-	 * @param actionID
+	 * @param opMode
 	 *            操作码
 	 * @param expr
 	 *            表达式
 	 * @return 删除了多少条记录
 	 */
-	public int deleteMore(String actionID, CndExpr expr) throws DemsyException;
+	public int deleteMore(String opMode, CndExpr expr) throws DemsyException;
 
 	/**
 	 * 加载实体对象
@@ -121,17 +121,17 @@ public interface IBizManager<T> {
 	 * 
 	 * @param klass
 	 *            实体类
-	 * @param actionID
+	 * @param opMode
 	 *            操作码
 	 * @param id
 	 *            实体ID
 	 * @return 实体对象
 	 */
-	public T load(Long id, String actionID) throws DemsyException;
+	public T load(Long id, String opMode) throws DemsyException;
 
-	public int count(String actionID, CndExpr expr) throws DemsyException;
+	public int count(String opMode, CndExpr expr) throws DemsyException;
 
-	public List<T> query(String actionID, CndExpr expr) throws DemsyException;
+	public List<T> query(String opMode, CndExpr expr) throws DemsyException;
 
 	/**
 	 * 查询分页数据集
@@ -142,20 +142,20 @@ public interface IBizManager<T> {
 	 * 
 	 * @param pager
 	 *            查询分页器
-	 * @param actionID
+	 * @param opMode
 	 *            操作码
 	 * @return 查询到的结果集
 	 */
-	public List<T> query(Pager<T> pager, String actionID) throws DemsyException;
+	public List<T> query(Pager<T> pager, String opMode) throws DemsyException;
 
 	/**
 	 * 执行业务逻辑，最后一个业务插件设置到业务事件中的返回值就是执行的结果。
 	 * 
-	 * @param actionID
+	 * @param opMode
 	 *            操作码
 	 * @return 执行结果
 	 */
-	public Object run(Object obj, String actionID) throws DemsyException;
+	public Object run(Object obj, String opMode) throws DemsyException;
 
 	/**
 	 * 异步保存实体对象： 可以保存单个实体、实体集合、数组、Map等。
@@ -166,10 +166,10 @@ public interface IBizManager<T> {
 	 * 
 	 * @param obj
 	 *            实体对象
-	 * @param actionID
+	 * @param opMode
 	 *            操作码
 	 */
-	public void asynSave(Object obj, String actionID) throws DemsyException;
+	public void asynSave(Object obj, String opMode) throws DemsyException;
 
 	/**
 	 * 异步批量修改： 修改满足条件的数据记录。
@@ -180,14 +180,14 @@ public interface IBizManager<T> {
 	 * 
 	 * @param obj
 	 *            单个实体对象
-	 * @param actionID
+	 * @param opMode
 	 *            操作码
 	 * @param igloreNull
 	 *            是否忽略空值
 	 * @param expr
 	 *            条件表达式
 	 */
-	public void asynUpdateMore(T obj, String actionID, CndExpr expr) throws DemsyException;
+	public void asynUpdateMore(T obj, String opMode, CndExpr expr) throws DemsyException;
 
 	/**
 	 * 异步删除实体对象： 可以删除单个数据实体、实体集合、数组、Map等。
@@ -198,11 +198,11 @@ public interface IBizManager<T> {
 	 * 
 	 * @param obj
 	 *            实体对象
-	 * @param actionID
+	 * @param opMode
 	 *            操作码
 	 * @return 删除了多少条记录
 	 */
-	public void asynDelete(Object obj, String actionID) throws DemsyException;
+	public void asynDelete(Object obj, String opMode) throws DemsyException;
 
 	/**
 	 * 异步批量删除： 删除满足条件的实体数据记录
@@ -213,12 +213,12 @@ public interface IBizManager<T> {
 	 * 
 	 * @param klass
 	 *            实体类
-	 * @param actionID
+	 * @param opMode
 	 *            操作码
 	 * @param expr
 	 *            表达式
 	 */
-	public void asynDeleteMore(String actionID, CndExpr expr) throws DemsyException;
+	public void asynDeleteMore(String opMode, CndExpr expr) throws DemsyException;
 
 	/**
 	 * 异步查询分页数据集
@@ -229,16 +229,16 @@ public interface IBizManager<T> {
 	 * 
 	 * @param pager
 	 *            查询分页器
-	 * @param actionID
+	 * @param opMode
 	 *            操作码
 	 */
-	public void asynQuery(Pager<T> pager, String actionID) throws DemsyException;
+	public void asynQuery(Pager<T> pager, String opMode) throws DemsyException;
 
 	/**
 	 * 异步执行业务逻辑，最后一个业务插件设置到业务事件中的返回值就是执行的结果。
 	 * 
-	 * @param actionID
+	 * @param opMode
 	 *            操作码
 	 */
-	public void asynRun(Object obj, String actionID) throws DemsyException;
+	public void asynRun(Object obj, String opMode) throws DemsyException;
 }

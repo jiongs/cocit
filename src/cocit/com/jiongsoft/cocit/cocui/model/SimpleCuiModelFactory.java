@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jiongsoft.cocit.cocsoft.CocBizField;
+import com.jiongsoft.cocit.cocsoft.CocBizGroup;
 import com.jiongsoft.cocit.cocsoft.CocBizModule;
 import com.jiongsoft.cocit.cocsoft.CocBizOperation;
 import com.jiongsoft.cocit.cocsoft.CocBizTable;
@@ -12,6 +13,7 @@ import com.jiongsoft.cocit.cocui.model.CuiGridModel.GridColumn;
 import com.jiongsoft.cocit.utils.ActionUtil;
 import com.jiongsoft.cocit.utils.KeyValue;
 import com.jiongsoft.cocit.utils.Lang;
+import com.jiongsoft.cocit.utils.StringUtil;
 import com.jiongsoft.cocit.utils.Tree;
 import com.jiongsoft.cocit.utils.Tree.Node;
 
@@ -34,8 +36,9 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 
 				model.setId("" + table.getID());
 				model.setName(table.getName());
+				model.set("fkfield", table.get("fkfield", ""));
 
-				model.setLoadUrl(ActionUtil.GET_BIZ_TABLE_MODEL.replace("*", ActionUtil.encodeArgs(bizModule.getID(), table.getID())));
+				model.setLoadUrl(ActionUtil.GET_BIZ_TABLE_UI.replace("*", ActionUtil.encodeArgs(bizModule.getID(), table.getID())));
 
 				childrenModels.add(model);
 			}
@@ -71,10 +74,18 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 		List<KeyValue> list = new ArrayList();
 		for (CocBizField f : bizTable.getBizFieldsForGrid()) {
 			int type = f.getType();
-			if (type == CocBizField.TYPE_FK || type == CocBizField.TYPE_BOOL || type == CocBizField.TYPE_UPLOAD) {
+
+			if (f.getDicOptions().length > 0//
+					|| type == CocBizField.TYPE_FK//
+					|| type == CocBizField.TYPE_BOOL//
+					|| type == CocBizField.TYPE_UPLOAD//
+			) {
 				continue;
 			}
-			list.add(KeyValue.make(f.getName(), f.getPropName()));
+
+			KeyValue kv = KeyValue.make(f.getName(), f.getPropName());
+			kv.set("type", "" + type);
+			list.add(kv);
 		}
 
 		ret.setData(list);
@@ -88,13 +99,18 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 
 		model.setId("" + bizTable.getID());
 		model.setName(bizTable.getName());
-		model.setDataLoadUrl(ActionUtil.GET_BIZ_TABLE_GRID_DATA.replace("*", ActionUtil.encodeArgs(bizModule.getID(), bizTable.getID())));
+		Long moduleID = 0l;
+		if (bizModule != null)
+			moduleID = bizModule.getID();
+		model.setDataLoadUrl(ActionUtil.GET_BIZ_GRID_DATA.replace("*", ActionUtil.encodeArgs(moduleID, bizTable.getID())));
 
 		// 创建Grid字段列
 		List<CocBizField> fields = bizTable.getBizFieldsForGrid();
 		int count = 0;
+		int columnsTotalWidth = 0;
 		for (CocBizField fld : fields) {
 			GridColumn col = new GridColumn(fld.getPropName(), fld.getName());
+			col.setBizField(fld);
 
 			// 设置Grid列属性
 			col.setAlign("left");
@@ -123,12 +139,16 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 			}
 			col.setPattern(fld.getPattern());
 
+			columnsTotalWidth += col.getWidth();
+
 			model.addColumn(col);
 
 			count++;
 			if (count == 8)
 				break;
 		}
+
+		model.setColumnsTotalWidth(columnsTotalWidth);
 
 		return model;
 	}
@@ -180,11 +200,11 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 		model.setId("" + bizTable.getID());
 
 		// 设置异步加载数据的 URL 地址
-		model.setDataLoadUrl(ActionUtil.GET_BIZ_TABLE_NAVI_TREE_DATA.replace("*", ActionUtil.encodeArgs(bizModule.getID(), bizTable.getID())));
+		model.setDataLoadUrl(ActionUtil.GET_BIZ_NAVI_DATA.replace("*", ActionUtil.encodeArgs(bizModule.getID(), bizTable.getID())));
 
 		// 获取树数据
-		Tree data = bizTable.getNaviTree();
-		model.setData(data);
+		// Tree data = bizTable.getNaviTree();
+		// model.setData(data);
 
 		// 返回
 		return model;
@@ -215,20 +235,46 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 	public CuiFormModel getBizFormModel(CocBizModule bizModule, CocBizTable bizTable, CocBizOperation bizOp, Object bizEntity) {
 		CuiFormModel ret = new CuiFormModel();
 
-		List<FormField> fields = new ArrayList();
-		ret.setFields(fields);
+		List<CocBizGroup> groups = bizTable.getBizGroups();
+		for (CocBizGroup group : groups) {
+			FormField groupField = new FormField(group.getName());
 
-		List<CocBizField> bizfields = bizTable.getBizFields();
-		for (CocBizField bizfield : bizfields) {
-			FormField field = new FormField(bizfield.getPropName(), bizfield.getName());
-			field.setMode(bizfield.getEditMode(bizOp.getOperationMode()));
-			field.setType(bizfield.getType());
-			field.setPattern(bizfield.getPattern());
-			field.setProps(bizfield.getExtProps());
+			List<CocBizField> bizfields = group.getBizFields();
+			if (bizfields != null) {
+				for (CocBizField bizfield : bizfields) {
+					if (bizfield.isDisabled())
+						continue;
 
-			field.setBizField(bizfield);
+					FormField field = new FormField(bizfield.getName());
 
-			fields.add(field);
+					String propName = bizfield.getPropName();
+					String opMode = bizOp.getOperationMode();
+					String mode = bizfield.getMode(opMode);
+
+					// 计算字段展现模式
+					if (StringUtil.isNil(mode)) {
+						if (opMode.equals("e") || opMode.equals("c")) {
+							if (propName == "created" || propName == "createdBy" || propName == "updated" || propName == "updatedBy")
+								mode = "N";
+							else
+								mode = "E";
+						} else if (opMode.equals("v")) {
+							mode = "S";
+						}
+					}
+
+					field.setField(propName);
+					field.setMode(mode);
+					field.setType(bizfield.getType());
+					field.setPattern(bizfield.getPattern());
+					field.setProps(bizfield.getExtProps());
+					field.setBizField(bizfield);
+
+					groupField.addChild(field);
+				}
+
+				ret.addGroupField(groupField);
+			}
 		}
 
 		return ret;

@@ -1326,7 +1326,6 @@
 		if (opts.idField) {
 			_addRow(selectedRows, opts.idField, row);
 		}
-		opts.onSelect.call(gridTable, rowIndex, row);
 		var tr = $ac("datagrid-row-selected", opts.finder.getTr(gridTable, rowIndex));
 
 		// scroll to selected row
@@ -1346,6 +1345,8 @@
 				}
 			}
 		}
+
+		opts.onSelect.call(gridTable, rowIndex, row);
 	}
 
 	function unselectRow(gridTable, rowIndex, ignoreCheck) {
@@ -1989,7 +1990,7 @@
 		/**
 		 * striped is true means that the data row style will be shown alternately.
 		 */
-		striped : false,
+		striped : true,
 		method : "post",
 		nowrap : true,
 		/**

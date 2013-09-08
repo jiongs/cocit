@@ -67,6 +67,10 @@ public class BizManagerFactory implements IBizManagerFactory {
 			return null;
 		}
 
+		if (module == null) {
+			return new BizManagerImpl(bizSession, module, system);
+		}
+
 		if (!security.visit(module, false)) {
 			throw new DemsyException("无权执行该操作!");
 		}

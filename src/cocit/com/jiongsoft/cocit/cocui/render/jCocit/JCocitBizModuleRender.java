@@ -28,11 +28,14 @@ class JCocitBizModuleRender extends BaseCuiRender<CuiBizModuleModel> {
 		// CSS
 		print(out, "<link href=\"%s/jCocit/css/jCocit.min.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 
-		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.button.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
-		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.datagrid.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
-		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.searchbox.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
-		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.panel.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
-		print(out, "<link href=\"%s/jCocit-src/css/jCocit.alerts.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
+		print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.icon.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
+
+		print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.searchbox.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
+		print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.panel.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
+		print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.window.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
+		print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.dialog.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
+		print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.datagrid.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
+		print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.calendar.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 
 		print(out, "<link href=\"%s/jCocit-src/css/jCocit.plugin.bizmodule.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 
@@ -40,8 +43,9 @@ class JCocitBizModuleRender extends BaseCuiRender<CuiBizModuleModel> {
 		print(out, "<script src=\"%s/jCocit/jquery.min.js\" type=\"text/javascript\"></script>", contextPath);
 		print(out, "<script src=\"%s/jCocit/js/jCocit.src.js\" type=\"text/javascript\"></script>", contextPath);
 
-		// print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.searchbox.js\" type=\"text/javascript\"></script>", contextPath);
-		// print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.window.js\" type=\"text/javascript\"></script>", contextPath);
+		print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.menu.js\" type=\"text/javascript\"></script>", contextPath);
+		print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.searchbox.js\" type=\"text/javascript\"></script>", contextPath);
+		print(out, "<script src=\"%s/jCocit-src/js/jCocit.utils.js\" type=\"text/javascript\"></script>", contextPath);
 		// print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.dialog.js\" type=\"text/javascript\"></script>", contextPath);
 		// print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.tree.js\" type=\"text/javascript\"></script>", contextPath);
 		print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.datagrid.js\" type=\"text/javascript\"></script>", contextPath);
@@ -55,6 +59,7 @@ class JCocitBizModuleRender extends BaseCuiRender<CuiBizModuleModel> {
 
 		CocitHttpContext ctx = Cocit.getHttpContext();
 
+		String token = model.get("token", Long.toHexString(System.currentTimeMillis()));
 		int width = model.get("width", ctx.getClientWindowWidth());
 		int height = model.get("height", ctx.getClientWindowHeight());
 		int mainTabsHeight = height / 2;
@@ -66,7 +71,7 @@ class JCocitBizModuleRender extends BaseCuiRender<CuiBizModuleModel> {
 			mainTabsHeight = height;
 		}
 
-		print(out, "<div id=\"module_%s\" class=\"jCocit-ui jCocit-bizmodule\">", model.getId());
+		print(out, "<div>");
 
 		// biz module model
 		// print(out, "<table><tr><td>");
@@ -78,8 +83,9 @@ class JCocitBizModuleRender extends BaseCuiRender<CuiBizModuleModel> {
 
 			// tabs
 			print(out, "<div class=\"jCocit-ui jCocit-tabs\" data-options=\"\" style=\"width:%spx;height:%spx;\">", width, mainTabsHeight);
-			print(out, "<div title=\"%s\" data-options=\"bizTableID: %s\" style=\"padding:5px; overflow:hidden;\">", model.getName(), mainModel.getId());
+			print(out, "<div title=\"%s\" class=\"jCocit-gridtab\" data-options=\"\" style=\"padding:5px;\">", model.getName());
 
+			mainModel.set("token", token);
 			mainModel.render(out);
 
 			// tabs end
@@ -96,11 +102,18 @@ class JCocitBizModuleRender extends BaseCuiRender<CuiBizModuleModel> {
 			 */
 			// print tabs of children biz table models
 			print(out, "<div style=\"height: 5px;\"></div>");
-			print(out, "<div class=\"jCocit-ui jCocit-tabs\" data-options=\"\" style=\"width:%spx; height:%spx; \">", width, childrenTabsHeight);
 
+			// 选中主表Grid记录时，通过令牌查找该Tabs的ID
+			print(out, "<div id=\"childrentabs_%s\" class=\"jCocit-ui jCocit-tabs\" data-options=\"onSelect: jCocit.bizmodule.doTabsSelect\" style=\"width:%spx; height:%spx; \">", token, width,
+					childrenTabsHeight);
+
+			String fkfield;
 			for (CuiBizTableModel child : children) {
-				print(out, "<div title=\"%s\" data-options=\"bizTableID: %s, url: '%s?_windowHeight=%s&_windowWidth=%s',closable: false, cache: true\" style=\"padding:5px\"></div>", child.getName(),
-						child.getId(), child.getLoadUrl(), childrenTabsHeight, width);
+				// fkfield: 表示该子表通过哪个外键字段关联到主表？bizToken: 表示该Tab下的数据应该与哪个主表Grid关联。
+				fkfield = child.get("fkfield", "");
+				print(out,
+						"<div title=\"%s\" class=\"jCocit-gridtab\" data-options=\"bizToken:'%s', fkfield: '%s', url: '%s?_windowHeight=%s&_windowWidth=%s',closable: false, cache: true\" style=\"padding:5px\"></div>",
+						child.getName(), token, fkfield, child.getLoadUrl(), childrenTabsHeight, width);
 			}
 
 			print(out, "</div>");

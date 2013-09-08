@@ -3,7 +3,6 @@
 	padding: 0;
 	display: inline-block;
 	background-color: #ffffff;
-	border-bottom: 1px solid #96afe5;
 	/*overflow: hidden;*/ /*overflow is hidden and position existed, the drop-down list will NOT be shown*/
 }
 
@@ -13,7 +12,6 @@
 	white-space: nowrap;
 	vertical-align: baseline;
 	border: 1px solid #96afe5;
-	border-bottom: 0;
 	position: relative;
 	/*overflow: hidden;*/ /*overflow is hidden, the drop-down arrow will be incorrect*/
 }
@@ -27,18 +25,17 @@ textarea.CbT {
 }
 
 .CbA {
-	width: 21px;
-	height: 21px;
+	width: 20px;
+	height: 20px;
 	overflow: hidden;
 	display: inline-block;
 	vertical-align: top;
 	cursor: pointer;
-	right: -1px;
-	top: -1px;
 	position: absolute;
 	border-width: 0px;
-	background: url('images/combo/combo_arrow.gif') no-repeat right bottom;
-	/*background-color: #E0ECFF;*/
+	background: url('images/combo_arrow.png') no-repeat center center;
+	opacity: 0.6;
+	filter: alpha(opacity = 60);
 }
 
 .CbAD {
@@ -47,8 +44,8 @@ textarea.CbT {
 }
 
 .CbAH {
-	background: url('images/combo/combo_arrow_hover.gif') no-repeat right bottom;
-	/*background-color: #eaf2ff;*/
+	opacity: 1.0;
+	filter: alpha(opacity = 100);
 }
 
 /**

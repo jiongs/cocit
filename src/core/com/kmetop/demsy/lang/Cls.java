@@ -467,7 +467,7 @@ public abstract class Cls {
 	 *            the static method name
 	 * @param clazz
 	 *            the class which defines the method
-	 * @param args
+	 * @param operationArgs
 	 *            the parameter types to the method
 	 * @return the static method, or <code>null</code> if no static method was
 	 *         found

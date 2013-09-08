@@ -21,6 +21,40 @@ public abstract class Lang {
 		return coll == null || coll.size() == 0;
 	}
 
+	/**
+	 * 获取对象的id字段值，或者直接获取对象的toString值。
+	 * 
+	 * @param obj
+	 * @return
+	 */
+	public static String idOrtoString(Object obj) {
+		if (obj == null)
+			return "";
+
+		String ret = "";
+		Mirror me = Mirror.me(obj.getClass());
+		try {
+			if (me.getField("id") != null) {
+				Object id = getValue(obj, "id");
+				if (id != null)
+					ret = id.toString();
+			} else {
+				ret = obj.toString();
+			}
+		} catch (NoSuchFieldException e) {
+			ret = obj.toString();
+		}
+
+		return ret;
+	}
+
+	public static String toString(Object obj) {
+		if (obj == null)
+			return "";
+
+		return obj.toString();
+	}
+
 	public static String format(Object value, String pattern) {
 		if (pattern != null && pattern.startsWith("*")) {
 			pattern = pattern.substring(1);

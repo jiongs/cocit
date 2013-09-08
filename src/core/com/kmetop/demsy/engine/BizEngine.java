@@ -1165,6 +1165,10 @@ public abstract class BizEngine implements IBizEngine {
 		return biz(systemID).get();
 	}
 
+	public IAction getAction(Long systemID, Long actionID) {
+		return biz(systemID).action(actionID);
+	}
+
 	// @Override
 	// public IBizSystem getSystem(IDemsySoft soft, String systemID) {
 	// List<IBizSystem> systems =

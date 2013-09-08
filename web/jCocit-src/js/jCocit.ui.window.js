@@ -385,13 +385,13 @@
 		if (opts.inline) {
 			var $parent = $p(state.window);
 			opts.left = ($w($parent) - width) / 2 + $parent.scrollLeft();
-			if (opts.left < 0) {
-				opts.left = 0;
+			if (opts.left < 5) {
+				opts.left = 5;
 			}
 		} else {
 			opts.left = ($(window).ow() - width) / 2 + $(document).scrollLeft();
-			if (opts.left < 0) {
-				opts.left = 0;
+			if (opts.left < 5) {
+				opts.left = 5;
 			}
 		}
 
@@ -415,13 +415,13 @@
 		if (opts.inline) {
 			var $parent = $p(state.window);
 			opts.top = ($h($parent) - height) / 2 + $parent.scrollTop();
-			if (opts.top < 0) {
-				opts.top = 0;
+			if (opts.top < 5) {
+				opts.top = 5;
 			}
 		} else {
 			opts.top = ($(window).oh() - height) / 2 + $(document).scrollTop();
-			if (opts.top < 0) {
-				opts.top = 0;
+			if (opts.top < 5) {
+				opts.top = 5;
 			}
 		}
 

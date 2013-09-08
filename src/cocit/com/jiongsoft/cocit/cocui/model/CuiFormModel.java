@@ -1,5 +1,6 @@
 package com.jiongsoft.cocit.cocui.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -14,7 +15,11 @@ import com.jiongsoft.cocit.cocsoft.CocBizField;
 public class CuiFormModel extends BaseCuiModel {
 	private Object data;
 
-	private List<FormField> fields;
+	private List<FormField> groupFields;
+
+	public CuiFormModel() {
+		this.groupFields = new ArrayList();
+	}
 
 	public Object getData() {
 		return data;
@@ -24,12 +29,12 @@ public class CuiFormModel extends BaseCuiModel {
 		this.data = data;
 	}
 
-	public List<FormField> getFields() {
-		return fields;
+	public List<FormField> getGroupFields() {
+		return groupFields;
 	}
 
-	public void setFields(List<FormField> fields) {
-		this.fields = fields;
+	public void setGroupFields(List<FormField> fields) {
+		this.groupFields = fields;
 	}
 
 	public static class FormField {
@@ -45,6 +50,9 @@ public class CuiFormModel extends BaseCuiModel {
 
 		private Properties props;
 
+		private List<FormField> children;
+		private List<FormField> visibleChildren;
+
 		/**
 		 * 创建一个GridColumn对象
 		 * 
@@ -57,10 +65,11 @@ public class CuiFormModel extends BaseCuiModel {
 		 * @param width
 		 *            列宽度：单位px，-1 表示自动宽度。
 		 */
-		public FormField(String field, String title) {
+		public FormField(String title) {
 			this.props = new Properties();
 
-			this.field = field;
+			this.children = new ArrayList();
+			visibleChildren = new ArrayList();
 			this.title = title;
 		}
 
@@ -127,5 +136,29 @@ public class CuiFormModel extends BaseCuiModel {
 		public void setBizField(CocBizField bizField) {
 			this.bizField = bizField;
 		}
+
+		public List<FormField> getChildren() {
+			return children;
+		}
+
+		public void setChildren(List<FormField> children) {
+			this.children = children;
+		}
+
+		public void addChild(FormField field) {
+			this.children.add(field);
+		}
+
+		public void addVisibleChild(FormField field) {
+			this.visibleChildren.add(field);
+		}
+
+		public List<FormField> getVisibleChildren() {
+			return visibleChildren;
+		}
+	}
+
+	public void addGroupField(FormField groupField) {
+		this.groupFields.add(groupField);
 	}
 }

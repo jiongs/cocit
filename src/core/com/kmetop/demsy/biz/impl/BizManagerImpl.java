@@ -105,7 +105,7 @@ public class BizManagerImpl implements IBizManager {
 	public int delete(Long id, String actionID) throws DemsyException {
 		this.checkPermission(actionID);
 
-		return bizSession.delete(id, loadPlugins(actionID));
+		return bizSession.delete(this.getType(), id, loadPlugins(actionID));
 	}
 
 	@Override

@@ -9,16 +9,20 @@ import com.jiongsoft.cocit.cocsoft.CocBizField;
 import com.jiongsoft.cocit.cocsoft.CocBizGroup;
 import com.jiongsoft.cocit.utils.StringUtil;
 import com.kmetop.demsy.Demsy;
-import com.kmetop.demsy.comlib.impl.sft.system.AbstractSystemData;
 import com.kmetop.demsy.comlib.impl.sft.system.SystemDataGroup;
 import com.kmetop.demsy.engine.BizEngine;
 
 class DemsyCocBizGroup implements CocBizGroup {
 	private SystemDataGroup entity;
-	private List<AbstractSystemData> dataFields;
+	private List<CocBizField> dataFields;
 
 	DemsyCocBizGroup(SystemDataGroup e) {
 		this.entity = e;
+		dataFields = new ArrayList();
+	}
+
+	void addField(CocBizField f) {
+		this.dataFields.add(f);
 	}
 
 	@Override
@@ -103,26 +107,15 @@ class DemsyCocBizGroup implements CocBizGroup {
 
 	@Override
 	public List<CocBizField> getBizFields() {
-
-		if (dataFields == null)
-			return null;
-
-		List<CocBizField> ret = new ArrayList();
-
-		for (AbstractSystemData f : dataFields) {
-			CocBizField cdf = new DemsyCocBizField((AbstractSystemData) f);
-			ret.add(cdf);
-		}
-
-		return ret;
-	}
-
-	public void setDataFields(List<AbstractSystemData> fields) {
-		this.dataFields = fields;
+		return this.dataFields;
 	}
 
 	@Override
 	public int getSequence() {
 		return entity.getOrderby();
+	}
+
+	public SystemDataGroup getEntity() {
+		return entity;
 	}
 }

@@ -545,7 +545,7 @@ public abstract class Zips {
 		}
 
 		/*
-		 * public static void main(String[] args) throws IOException {
+		 * public static void main(String[] operationArgs) throws IOException {
 		 * ZipArchive zf = new ZipArchive();
 		 * 
 		 * zf.open("c:\\test.jar", MODE_WRITE); zf.compress("c:\\temp", "/",

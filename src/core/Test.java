@@ -6,7 +6,7 @@ import com.kmetop.demsy.lang.Img;
 public class Test {
 
 	/**
-	 * @param args
+	 * @param operationArgs
 	 */
 	public static void main(String[] args) {
 		// IPSeeker ip = new IPSeeker("QQWry.Dat",
