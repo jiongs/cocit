@@ -24,6 +24,7 @@ import java.util.Map;
 import org.nutz.dao.Sqls;
 
 import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.utils.ActionUtil;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.IModuleEngine;
 import com.kmetop.demsy.comlib.LibConst;
@@ -284,11 +285,18 @@ public abstract class ModuleEngine implements IModuleEngine {
 		node.set("module", module);
 
 		node.setName(module.getName());
+
+		String actionPathPrefix = module.getActionPathPrefix();
+
 		switch (module.getType()) {
 		case IModule.TYPE_FOLDER:
 			break;
 		case IModule.TYPE_BIZ:
-			node.setParams(MvcUtil.contextPath(MvcConst.URL_BZMAIN, module.getId()));
+			if (ActionUtil.ACTION_PATH_PREFIX.equals(actionPathPrefix)) {
+				node.setParams(MvcUtil.contextPath(ActionUtil.GET_BIZ_MODULE_UI, ActionUtil.encodeArgs(module.getId())));
+			} else {
+				node.setParams(MvcUtil.contextPath(MvcConst.URL_BZMAIN, module.getId()));
+			}
 			break;
 		case IModule.TYPE_STATIC:
 			node.setParams(MvcUtil.contextPath(module.getPath(), module.getId()));

@@ -93,6 +93,9 @@ public abstract class BizEngine implements IBizEngine {
 
 	protected BizCompiler compiler;
 
+	/**
+	 * 通过配置文件 /WEB-INF/config/ioc.js 注入
+	 */
 	private String[] pkgs;
 
 	protected Map<Long, CacheBiz> bizCache;

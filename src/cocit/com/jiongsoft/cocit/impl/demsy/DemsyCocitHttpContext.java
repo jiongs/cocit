@@ -16,38 +16,34 @@ public class DemsyCocitHttpContext extends BaseCocitHttpContext {
 		demsyContext = Demsy.me();
 	}
 
-	@Override
 	public int getBrowserWidth() {
 		Double d = demsyContext.login().getClientWidth();
 		return d.intValue();
 	}
 
-	@Override
 	public int getBrowserHeight() {
 		Double d = demsyContext.login().getClientHeight();
 		return d.intValue();
 	}
 
-	@Override
 	public int getAdminTopHeight() {
-		// int ret = 0;
-		// int browserWidth = getBrowserHeight();
-		// String w = this.getSoftConfig("admin.ui.topHeight", "");
-		//
-		// try {
-		// if (w.endsWith("%"))
-		// ret = browserWidth * Integer.parseInt(w.substring(0, w.length() - 1)) / 100;
-		// else
-		// ret = Integer.parseInt(w);
-		// } catch (Throwable e) {
-		// ret = 95;
-		// }
+		int ret = 0;
+		int browserWidth = getBrowserHeight();
+		String w = this.getSoftConfig("admin.ui.topHeight", "");
 
-		// return ret + 45;
-		return 30;
+		try {
+			if (w.endsWith("%"))
+				ret = browserWidth * Integer.parseInt(w.substring(0, w.length() - 1)) / 100;
+			else
+				ret = Integer.parseInt(w);
+		} catch (Throwable e) {
+			ret = 95;
+		}
+
+		return ret + 45;
+		// return 30;
 	}
 
-	@Override
 	public int getAdminLeftWidth() {
 		int ret = 0;
 		int browserWidth = getBrowserWidth();
@@ -65,8 +61,8 @@ public class DemsyCocitHttpContext extends BaseCocitHttpContext {
 	}
 
 	@Override
-	public int getClientWindowHeight() {
-		int ret = this.getParameterValue("_windowHeight", 0);
+	public int getClientUIHeight() {
+		int ret = this.getParameterValue("_uiHeight", 0);
 		if (ret == 0)
 			ret = this.getBrowserHeight() - this.getAdminTopHeight();
 
@@ -74,8 +70,8 @@ public class DemsyCocitHttpContext extends BaseCocitHttpContext {
 	}
 
 	@Override
-	public int getClientWindowWidth() {
-		int ret = this.getParameterValue("_windowWidth", 0);
+	public int getClientUIWidth() {
+		int ret = this.getParameterValue("_uiWidth", 0);
 		if (ret == 0)
 			ret = this.getBrowserWidth() - this.getAdminLeftWidth();
 

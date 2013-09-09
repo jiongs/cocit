@@ -16,8 +16,8 @@ class JCocitBizTableRender extends BaseCuiRender<CuiBizTableModel> {
 	@Override
 	public void render(Writer out, CuiBizTableModel model) throws Throwable {
 		CocitHttpContext ctx = Cocit.getHttpContext();
-		int width = model.get("width", ctx.getClientWindowWidth());
-		int height = model.get("height", ctx.getClientWindowHeight());
+		int width = model.get("width", ctx.getClientUIWidth());
+		int height = model.get("height", ctx.getClientUIHeight());
 
 		int treeWidth = 200;
 		int gridWidth = width - treeWidth - 30;

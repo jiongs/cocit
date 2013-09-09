@@ -30,6 +30,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 , groups = { @BzGrp(name = "基本信息", code = "basic"//
 , fields = { @BzFld(name = "系统名称", property = "name", mode = "c:M e:M")//
 		, @BzFld(name = "系统编号", property = "code") //
+		, @BzFld(name = "路径前缀", property = "actionPathPrefix", gridField = true) //
 		, @BzFld(name = "人工顺序", property = "orderby") //
 		, @BzFld(name = "系统分类", property = "catalog", groupBy = true, refrenceSystem = BIZSYS_BZUDF_CATALOG) //
 }), @BzGrp(name = "扩展信息", code = "ext"//
@@ -144,6 +145,15 @@ public class SFTSystem extends SFTBizComponent implements IBizSystem {
 
 	public void setLayout(byte layout) {
 		this.layout = layout;
+	}
+
+	@Column(length = 10)
+	public String getActionPathPrefix() {
+		return get("actionPathPrefix");
+	}
+
+	public void setActionPathPrefix(String actionPathPrefix) {
+		this.set("actionPathPrefix", actionPathPrefix);
 	}
 
 }

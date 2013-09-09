@@ -60,46 +60,54 @@ public interface CocitHttpContext {
 
 	<T> T setAttributeToSession(String key, T value);
 
-	/**
-	 * 获取客户端浏览器窗口可用宽度：登录成功后自带的参数值(clientWidth)。
-	 * 
-	 * @return
-	 */
-	int getBrowserWidth();
+	// /**
+	// * 获取客户端浏览器窗口可用宽度：登录成功后自带的参数值(clientWidth)。
+	// *
+	// * @return
+	// */
+	// int getBrowserWidth();
+	//
+	// /**
+	// * 获取客户端浏览器窗口可用高度：登录成功后自带的参数值(clientHeight)。
+	// *
+	// * @return
+	// */
+	// int getBrowserHeight();
+
+	// /**
+	// * 获取后台主界面top高度：通过配置项计算(admin.ui.topHeight)。
+	// *
+	// * @return
+	// */
+	// int getAdminTopHeight();
+	//
+	// /**
+	// * 获取后台主界面左边功能树宽度：通过配置项计算(admin.ui.leftWidth)。
+	// *
+	// * @return
+	// */
+	// int getAdminLeftWidth();
 
 	/**
-	 * 获取客户端浏览器窗口可用高度：登录成功后自带的参数值(clientHeight)。
+	 * 获取客户端窗口高度。
+	 * <UL>
+	 * <LI>优先获取HTTP参数(_uiHeight)；
+	 * <LI>如果未指定HTTP参数(_uiHeight)：客户端窗口高度 = 浏览器窗口可用高度 - 后台管理主页顶部高度；
+	 * </UL>
 	 * 
 	 * @return
 	 */
-	int getBrowserHeight();
+	int getClientUIHeight();
 
 	/**
-	 * 获取后台主界面top高度：通过配置项计算(admin.ui.topHeight)。
+	 * 获取客户端窗口宽度：
+	 * <UL>
+	 * <LI>优先获取HTTP参数(_uiWidth)；
+	 * <LI>如果未指定HTTP参数(_uiWidth)：客户端窗口宽度 = 浏览器窗口可用宽度 - 后台管理主页左边功能树宽度；
+	 * </UL>
 	 * 
 	 * @return
 	 */
-	int getAdminTopHeight();
-
-	/**
-	 * 获取后台主界面左边功能树宽度：通过配置项计算(admin.ui.leftWidth)。
-	 * 
-	 * @return
-	 */
-	int getAdminLeftWidth();
-
-	/**
-	 * 获取客户端窗口高度：优先获取客户端参数(_windowHeight)，如果未指定参数则返回{@link #getBrowserHeight()}减{@link #getAdminLeftHeight()}的结果。
-	 * 
-	 * @return
-	 */
-	int getClientWindowHeight();
-
-	/**
-	 * 获取客户端窗口宽度：优先获取客户端参数(_windowWidth)，，如果未指定参数则返回{@link #getBrowserWidth()}减{@link #getAdminLeftWidth()}的结果。
-	 * 
-	 * @return
-	 */
-	int getClientWindowWidth();
+	int getClientUIWidth();
 
 }

@@ -123,7 +123,7 @@ public class SFTModuleEngine extends ModuleEngine {
 				DemsySoft soft = setupDefaultSoft(orm);
 				log.info("安装平台默认应用软件: 结束.");
 
-				log.info("安装组件库......");
+				log.info("安装组件库到软件中......");
 				bizEngine.setupFromPackage(soft);
 				bizEngine.setupFromPackage(soft);
 				log.infof("安装组件库 结束.");
@@ -389,6 +389,7 @@ public class SFTModuleEngine extends ModuleEngine {
 		module.setEntityGuid(resource.getEntityGuid());
 		module.setType(type);
 		module.setRefSystem(system);
+		module.setActionPathPrefix(system.getActionPathPrefix());
 		module.setUpgradeFrom(resource.getId());
 		Menu menu = (Menu) orm.load(Menu.class, CndExpr.eq(F_RESOURCE, resource));
 		module.setOrderby(menu != null ? menu.getOrderby() : resource.getOrderby());
@@ -598,6 +599,7 @@ public class SFTModuleEngine extends ModuleEngine {
 			module.setType(IModule.TYPE_BIZ);
 			module.setParent((Module) this.makeModule(orm, soft, system.getCatalog()));
 			module.setRefSystem(system);
+			module.setActionPathPrefix(system.getActionPathPrefix());
 			module.setHidden(bizEngine.isSlave(system));
 			module.setSoftID(soft.getId());
 
@@ -628,8 +630,7 @@ public class SFTModuleEngine extends ModuleEngine {
 		int ret = 0;
 
 		String moduleFolder = MODULE_OTHER;
-		Module otherModule = (Module) orm.load(Module.class,
-				CndExpr.eq(F_CODE, moduleFolder).and(CndExpr.eq(F_SOFT_ID, soft)));
+		Module otherModule = (Module) orm.load(Module.class, CndExpr.eq(F_CODE, moduleFolder).and(CndExpr.eq(F_SOFT_ID, soft)));
 
 		List<IBizSystem> systems;
 		try {
@@ -649,6 +650,7 @@ public class SFTModuleEngine extends ModuleEngine {
 			module.setCode(code);
 			module.setType(IModule.TYPE_BIZ);
 			module.setRefSystem(sys);
+			module.setActionPathPrefix(sys.getActionPathPrefix());
 			module.setHidden(bizEngine.isSlave(sys));
 			module.setBuildin(sys.isBuildin());
 			module.setSoftID(soft.getId());
@@ -704,12 +706,8 @@ public class SFTModuleEngine extends ModuleEngine {
 				// 信息推荐
 				String[] ids = Str.toArray(ele.getPublishToStr(), ",;");
 				for (String id : ids) {
-					WebContentCategory catalog = (WebContentCategory) orm.load(WebContentCategory.class,
-							Long.parseLong(id));
-					List<WebContent> infos = orm.query(
-							WebContent.class,
-							Expr.eq(F_CATALOG, catalog).and(Expr.eq(F_TYPE_CODE, IWebContent.TYPE_REFER))
-									.and(Expr.eq("refrence", ele)));
+					WebContentCategory catalog = (WebContentCategory) orm.load(WebContentCategory.class, Long.parseLong(id));
+					List<WebContent> infos = orm.query(WebContent.class, Expr.eq(F_CATALOG, catalog).and(Expr.eq(F_TYPE_CODE, IWebContent.TYPE_REFER)).and(Expr.eq("refrence", ele)));
 					if (infos.size() == 0) {
 						WebContent info = new WebContent();
 						info.setCatalog(catalog);
@@ -853,8 +851,7 @@ public class SFTModuleEngine extends ModuleEngine {
 						}
 						newUser.setSoftID(soft.getId());
 
-						orm.save(newUser, Expr.fieldRexpr(
-								"code$|name$|password$|pwdEncoder$|pwdAnswer$|pwdQuestion$|logo$|image$|softID$", true));
+						orm.save(newUser, Expr.fieldRexpr("code$|name$|password$|pwdEncoder$|pwdAnswer$|pwdQuestion$|logo$|image$|softID$", true));
 					}
 				} catch (Throwable e) {
 					log.errorf("升级会员信息出错! [%s] %s", username, e);

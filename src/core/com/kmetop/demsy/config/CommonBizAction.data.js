@@ -12,7 +12,7 @@
 	mode : 'v'
 }, {
 	typeCode : 250,
-	name : '人工排序',
+	name : '排序',
 	mode : 'odr',
 	children : [ {
 		typeCode : 251,

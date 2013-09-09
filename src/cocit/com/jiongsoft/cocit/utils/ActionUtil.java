@@ -47,44 +47,44 @@ public abstract class ActionUtil {
 	 */
 
 	/**
-	 * “业务模块”之相关管理功能的根路径
+	 * “业务模块”访问路径之路径前缀。
 	 */
-	static final String ROOT_PATH = "/coc";
+	public static final String ACTION_PATH_PREFIX = "/coc";
 
 	/**
 	 * “业务模块”访问路径之模块界面，模块界面可以包括一个主表界面和多个从表界面组成的Tabs界面。
 	 */
-	public static final String GET_BIZ_MODULE_UI = ROOT_PATH + "/getBizModuleUI/*";
+	public static final String GET_BIZ_MODULE_UI = ACTION_PATH_PREFIX + "/getBizModuleUI/*";
 
 	/**
 	 * “业务模块”访问路径之数据表管理界面，数据表管理界面包括左边导航树、顶部操作菜单、GRID；不包括子表。
 	 */
-	public static final String GET_BIZ_TABLE_UI = ROOT_PATH + "/getBizTableUI/*";
+	public static final String GET_BIZ_TABLE_UI = ACTION_PATH_PREFIX + "/getBizTableUI/*";
 
 	/**
 	 * “业务模块”访问路径之Grid数据，数据格式通常为JSON或XML格式。
 	 */
-	public static final String GET_BIZ_GRID_DATA = ROOT_PATH + "/getBizGridData/*";
+	public static final String GET_BIZ_GRID_DATA = ACTION_PATH_PREFIX + "/getBizGridData/*";
 
 	/**
 	 * “业务模块”访问路径之导航树数据，数据格式通常为JSON或XML格式。
 	 */
-	public static final String GET_BIZ_NAVI_DATA = ROOT_PATH + "/getBizNaviData/*";
+	public static final String GET_BIZ_NAVI_DATA = ACTION_PATH_PREFIX + "/getBizNaviData/*";
 
 	/**
 	 * “业务模块”访问路径之加载业务表单
 	 */
-	public static final String GET_BIZ_FORM_UI = ROOT_PATH + "/getBizFormUI/*";
+	public static final String GET_BIZ_FORM_UI = ACTION_PATH_PREFIX + "/getBizFormUI/*";
 
 	/**
 	 * “业务模块”访问路径之保存业务表单
 	 */
-	public static final String SAVE_BIZ_FORM_DATA = ROOT_PATH + "/saveBizFormData/*";
+	public static final String SAVE_BIZ_FORM_DATA = ACTION_PATH_PREFIX + "/saveBizFormData/*";
 
 	/**
 	 * “业务模块”访问路径之删除业务数据
 	 */
-	public static final String DELETE_BIZ_DATA = ROOT_PATH + "/deleteBizData/*";
+	public static final String DELETE_BIZ_DATA = ACTION_PATH_PREFIX + "/deleteBizData/*";
 
 	/*
 	 * 以下是报表管理模块相关功能的访问路径

@@ -101,4 +101,11 @@ public interface IModule<T> extends IBizComponent, ITreeEntity<T> {
 	Long getSoftID();
 
 	boolean isHidden();
+
+	/**
+	 * 模块访问路径前缀：如Cocit版本平台访问路径前缀/coc；Demsy版本平台访问路径/bz
+	 * 
+	 * @return
+	 */
+	public String getActionPathPrefix();
 }

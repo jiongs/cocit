@@ -113,7 +113,7 @@ public abstract class Lang {
 				if (obj instanceof Map) {
 					subObj = ((Map) obj).get(path.substring(0, dot));
 				} else {
-					subObj = Mirror.me(obj).getValue(obj, path.substring(0, dot));
+					subObj = Mirror.me(obj.getClass()).getValue(obj, path.substring(0, dot));
 				}
 			} catch (Throwable e) {
 			}
@@ -124,7 +124,7 @@ public abstract class Lang {
 			return (T) getValue(subObj, path.substring(dot + 1));
 		} else {
 			try {
-				return (T) Mirror.me(obj).getValue(obj, path);
+				return (T) Mirror.me(obj.getClass()).getValue(obj, path);
 			} catch (Throwable e) {
 				return null;
 			}

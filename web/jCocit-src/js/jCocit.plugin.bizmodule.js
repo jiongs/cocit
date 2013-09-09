@@ -306,6 +306,10 @@
 					var val = nodeID.substring(idx + 1);
 					if (fld.length > 0 && val.length > 0)
 						formData["data." + fld] = val;
+					idx = fld.indexOf(".id");
+					if (idx > 0)
+						fld = fld.substring(0, idx);
+					formData["data." + fld + ".name"] = node.text;
 
 				}
 			}
@@ -340,7 +344,7 @@
 	function doEdit(opts, dataID) {
 		var data = {};
 		prepareBizFormUIParams(opts.bizToken, data);
-		var loadFormUrl = "/coc/getBizFormUI/" + opts.pathArgs + "/" + dataID + "?_windowWidth=890&_windowHeight=600&" + $.param(data);
+		var loadFormUrl = "/coc/getBizFormUI/" + opts.pathArgs + "/" + dataID + "?_uiWidth=890&_uiHeight=600&" + $.param(data);
 		jCocit.dialog.open(loadFormUrl, "dialog_" + opts.bizToken + "_" + opts.opCode, {
 			title : opts.text,
 			width : 900,

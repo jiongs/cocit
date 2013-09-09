@@ -345,6 +345,9 @@ class DemsyCocBizField implements CocBizField {
 		if (item != null) {
 			return item.getKey();
 		}
+		if (this.getType() == TYPE_FK) {
+			value = value.toString();
+		}
 
 		return Lang.format(value, getPattern());
 	}

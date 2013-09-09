@@ -62,27 +62,21 @@ import com.kmetop.demsy.orm.ann.Prop;
 		, @BzAct(jsonData = "CommonBizAction.data.js") //
 }//
 , groups = { //
-		@BzGrp(name = "基本信息", code = "basic"//
-		, fields = {
-				//
-				@BzFld(name = "字段名称", property = "name", mode = "c:M e:M", gridOrder = 1, desc = "字段业务名称")//
-				,
-				@BzFld(name = "字段编号", property = "code", mode = "c:M e:M", gridOrder = 2, desc = "由数字、字母、下划线组成，且只能有数字、字母开头") //
-				,
-				@BzFld(name = "字段属性", property = "propName") //
-				,
-				@BzFld(name = "人工顺序", property = "orderby", gridOrder = 6) //
-				,
-				@BzFld(name = "所属系统", property = "system", refrenceSystem = BIZSYS_BZUDF_SYSTEM, disabledNavi = true, masterMapping = true, mode = "*:S bu:N c:M e:M") //
-				,
-				@BzFld(name = "所属分组", property = "dataGroup", refrenceSystem = BIZSYS_BZUDF_FIELD_GROUP, disabledNavi = true, cascadeMode = "system:*:system", mode = "bu:N c:M e:M *:S", gridOrder = 3) //
-				,
-				@BzFld(name = "字段类型", property = "type", refrenceSystem = BIZSYS_DEMSY_LIB_FIELD, masterMapping = false, disabledNavi = true, mode = "*:S bu:N c:M e:M", options = "['version eq 2']", gridOrder = 4) //
-				, @BzFld(name = "字段模式", property = "mode", gridOrder = 5) //
-				, @BzFld(name = "级联模式", property = "cascadeMode") //
-				, @BzFld(name = "GRID表头", property = "gridField", disabledNavi = true, mode = "bu:E", options = "1:显示,0:不显示") //
-				, @BzFld(property = "privacy", name = "隐私字段", options = "1:隐私,0:公开", mode = "*:S") //
-		})// end group
+@BzGrp(name = "基本信息", code = "basic"//
+, fields = {
+//
+		@BzFld(name = "字段名称", property = "name", mode = "c:M e:M", gridOrder = 1, desc = "字段业务名称")//
+		, @BzFld(name = "字段编号", property = "code", mode = "c:M e:M", gridOrder = 2, desc = "由数字、字母、下划线组成，且只能有数字、字母开头") //
+		, @BzFld(name = "字段属性", property = "propName") //
+		, @BzFld(name = "人工顺序", property = "orderby", gridOrder = 6) //
+		, @BzFld(name = "所属系统", property = "system", refrenceSystem = BIZSYS_BZUDF_SYSTEM, disabledNavi = true, masterMapping = true, mode = "*:S bu:N c:M e:M") //
+		, @BzFld(name = "所属分组", property = "dataGroup", refrenceSystem = BIZSYS_BZUDF_FIELD_GROUP, disabledNavi = true, cascadeMode = "system:*:system", mode = "bu:N c:M e:M *:S", gridOrder = 3) //
+		, @BzFld(name = "字段类型", property = "type", refrenceSystem = BIZSYS_DEMSY_LIB_FIELD, masterMapping = false, disabledNavi = true, mode = "*:S bu:N c:M e:M", options = "['version eq 2']", gridOrder = 4) //
+		, @BzFld(name = "字段模式", property = "mode", gridOrder = 5) //
+		, @BzFld(name = "级联模式", property = "cascadeMode") //
+		, @BzFld(name = "GRID表头", property = "gridField", disabledNavi = true, mode = "bu:E", options = "1:显示,0:不显示") //
+		, @BzFld(property = "privacy", name = "隐私字段", options = "1:隐私,0:公开", mode = "*:S") //
+})// end group
 		, @BzGrp(name = "字段属性设置", code = "properties"//
 		, fields = {
 				// GRID

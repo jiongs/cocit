@@ -73,7 +73,8 @@
 
 		function _doClickMenu(itemData) {
 			$f("a.searchbox-menu", state.searchbox).remove();
-			var mb = $('<a class="searchbox-menu" href="javascript:void(0)"></a>').html(itemData.text);
+			var len = itemData.text.length;
+			var mb = $('<a class="searchbox-menu" href="javascript:void(0)" ></a>').html(itemData.text.substring(0, (len < 5 ? len : 5))).attr("title", itemData.text);
 			mb.prependTo(state.searchbox).menubar({
 				menu : state.menu,
 				iconCls : itemData.iconCls
