@@ -4,7 +4,6 @@
 	<classpathentry kind="src" path="src/test"/>
 	<classpathentry kind="src" path="src/basecomlib"/>
 	<classpathentry kind="src" path="src/sftcomlib"/>
-	<classpathentry kind="src" path="src/resources"/>
 	<classpathentry kind="src" path="src/core"/>
 	<classpathentry kind="src" path="src/ynby"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
