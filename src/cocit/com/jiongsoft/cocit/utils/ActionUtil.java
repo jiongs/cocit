@@ -53,26 +53,36 @@ public abstract class ActionUtil {
 
 	/**
 	 * “业务模块”访问路径之模块界面，模块界面可以包括一个主表界面和多个从表界面组成的Tabs界面。
+	 * <p>
+	 * 参数：moduleID
 	 */
 	public static final String GET_BIZ_MODULE_UI = ACTION_PATH_PREFIX + "/getBizModuleUI/*";
 
 	/**
 	 * “业务模块”访问路径之数据表管理界面，数据表管理界面包括左边导航树、顶部操作菜单、GRID；不包括子表。
+	 * <p>
+	 * 参数：moduleID:tableID
 	 */
 	public static final String GET_BIZ_TABLE_UI = ACTION_PATH_PREFIX + "/getBizTableUI/*";
 
 	/**
 	 * “业务模块”访问路径之Grid数据，数据格式通常为JSON或XML格式。
+	 * <p>
+	 * 参数：moduleID:tableID
 	 */
 	public static final String GET_BIZ_GRID_DATA = ACTION_PATH_PREFIX + "/getBizGridData/*";
 
 	/**
 	 * “业务模块”访问路径之导航树数据，数据格式通常为JSON或XML格式。
+	 * <p>
+	 * 参数：moduleID:tableID
 	 */
 	public static final String GET_BIZ_NAVI_DATA = ACTION_PATH_PREFIX + "/getBizNaviData/*";
 
 	/**
 	 * “业务模块”访问路径之加载业务表单
+	 * <p>
+	 * 参数：moduleID:tableID:operationID
 	 */
 	public static final String GET_BIZ_FORM_UI = ACTION_PATH_PREFIX + "/getBizFormUI/*";
 
@@ -83,8 +93,24 @@ public abstract class ActionUtil {
 
 	/**
 	 * “业务模块”访问路径之删除业务数据
+	 * <p>
+	 * 参数：moduleID:tableID:operationID
 	 */
 	public static final String DELETE_BIZ_DATA = ACTION_PATH_PREFIX + "/deleteBizData/*";
+
+	/**
+	 * 获取手机验证码
+	 */
+	public static final String GET_IMAGE_VERIFICATION_CODE = ACTION_PATH_PREFIX + "/getImageVerificationCode";
+
+	/**
+	 * 获取短信验证码
+	 * <p>
+	 * 参数：手机号码
+	 */
+	public static final String GET_SMS_VERIFICATION_CODE = ACTION_PATH_PREFIX + "/getSmsVerificationCode/*";
+
+	public static final String CHECK_VERIFICATION_CODE = ACTION_PATH_PREFIX + "/checkVerificationCode/*";
 
 	/*
 	 * 以下是报表管理模块相关功能的访问路径

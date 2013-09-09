@@ -1,11 +1,11 @@
 package com.kmetop.demsy.biz;
 
-public interface IBizPlugin {
-	public void before(BizEvent event);
+public interface IBizPlugin<T> {
+	public void before(BizEvent<T> event);
 
-	public void after(BizEvent event);
+	public void after(BizEvent<T> event);
 
-	public void load(BizEvent event);
+	public void load(BizEvent<T> event);
 
-	public void loaded(BizEvent event);
+	public void loaded(BizEvent<T> event);
 }

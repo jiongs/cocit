@@ -3,30 +3,22 @@ package com.kmetop.demsy.plugins;
 import com.kmetop.demsy.biz.BizEvent;
 import com.kmetop.demsy.biz.IBizPlugin;
 
-public class BizPlugin implements IBizPlugin {
+public class BizPlugin<T> implements IBizPlugin<T> {
 
 	@Override
-	public void before(BizEvent event) {
-		// TODO Auto-generated method stub
-
+	public void before(BizEvent<T> event) {
 	}
 
 	@Override
-	public void after(BizEvent event) {
-		// TODO Auto-generated method stub
-
+	public void after(BizEvent<T> event) {
 	}
 
 	@Override
-	public void load(BizEvent event) {
-		// TODO Auto-generated method stub
-
+	public void load(BizEvent<T> event) {
 	}
 
 	@Override
-	public void loaded(BizEvent event) {
-		// TODO Auto-generated method stub
-
+	public void loaded(BizEvent<T> event) {
 	}
 
 }

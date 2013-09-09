@@ -216,7 +216,7 @@ public class MD5 {
 		byte[] bits = new byte[8];
 		int index, padLen;
 
-		// /* Save number of bits */
+		// /* SavePlan number of bits */
 		Encode(bits, count, 8);
 
 		// /* Pad out to 56 mod 64.

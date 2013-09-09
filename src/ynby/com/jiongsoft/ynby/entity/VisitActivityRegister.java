@@ -35,7 +35,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 		, @BzFld(name = "邮箱地址", mode = "*:N v:S c:E e:E", property = "email") //
 		, @BzFld(name = "登录帐号", mode = "*:N v:S", property = "createdBy") //
 		, @BzFld(name = "IP地址", mode = "*:N v:S", property = "personNumber") //
-		, @BzFld(name = "手机验证码", mode = "*:N v:S c:M e:R", property = "telValidCode") //
+		, @BzFld(name = "手机验证码", mode = "*:N v:S c:M e:R", property = "verificationCode") //
 }// end: fields
 ) // end: BzGrp
 }// end: groups
@@ -51,7 +51,7 @@ public class VisitActivityRegister extends SFTBizComponent {
 	String tel;
 
 	@Column(length = 32)
-	String telValidCode;
+	String verificationCode;
 
 	@Column(length = 32)
 	String qq;
@@ -94,12 +94,12 @@ public class VisitActivityRegister extends SFTBizComponent {
 		this.tel = tel;
 	}
 
-	public String getTelValidCode() {
-		return telValidCode;
+	public String getVerificationCode() {
+		return verificationCode;
 	}
 
-	public void setTelValidCode(String telValidCode) {
-		this.telValidCode = telValidCode;
+	public void setVerificationCode(String telValidCode) {
+		this.verificationCode = telValidCode;
 	}
 
 	public String getQq() {

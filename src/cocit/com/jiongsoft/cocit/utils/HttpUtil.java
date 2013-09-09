@@ -35,7 +35,7 @@ public abstract class HttpUtil {
 				try {
 					writer.close();
 				} catch (Throwable ex) {
-					// Log.warn("", ex);
+					Log.error("HttpUtil.write: error!", ex);
 				}
 			}
 		}
@@ -63,14 +63,14 @@ public abstract class HttpUtil {
 				try {
 					inStream.close();
 				} catch (Throwable ex) {
-					// Log.warn("", ex);
+					Log.error("HttpUtil.write: error!", ex);
 				}
 			}
 			if (outStream != null) {
 				try {
 					outStream.close();
 				} catch (Throwable ex) {
-					// Log.warn("", ex);
+					Log.error("HttpUtil.write: error!", ex);
 				}
 			}
 		}

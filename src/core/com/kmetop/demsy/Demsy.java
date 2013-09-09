@@ -37,10 +37,11 @@ import org.nutz.trans.Trans;
 import com.handsome.ip.IPSeeker;
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.actions.CocitBizAction;
+import com.jiongsoft.cocit.actions.UtilsAction;
 import com.jiongsoft.cocit.corm.expr.Expr;
+import com.kmetop.demsy.actions.AppActions;
 import com.kmetop.demsy.actions.BizActions;
 import com.kmetop.demsy.actions.ConfigActions;
-import com.kmetop.demsy.actions.AppActions;
 import com.kmetop.demsy.actions.IndexActions;
 import com.kmetop.demsy.actions.OrderActions;
 import com.kmetop.demsy.actions.SecurityActions;
@@ -163,6 +164,7 @@ import com.kmetop.demsy.security.SecurityException;
 		, AppActions.class //
 		// Cocit
 		, CocitBizAction.class //
+		, UtilsAction.class //
 })
 @UrlMappingBy("com.kmetop.demsy.mvc.nutz.DemsyUrlMappingImpl")
 @ChainBy(args = { "com/kmetop/demsy/mvc/nutz/demsy-chains.js" })

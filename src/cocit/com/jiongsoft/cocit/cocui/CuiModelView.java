@@ -32,6 +32,8 @@ public class CuiModelView implements View {
 
 	@Override
 	public void render(HttpServletRequest req, HttpServletResponse resp, Object obj) throws Throwable {
+		if (obj == null)
+			return;
 
 		resp.setHeader("Pragma", "no-cache");
 		resp.setHeader("Cache-Control", "no-cache");
@@ -55,7 +57,7 @@ public class CuiModelView implements View {
 					out.write(str.toString());
 				} catch (Throwable ex) {
 					Log.error("", ex);
-					
+
 					ex.printStackTrace(out);
 				}
 
@@ -66,7 +68,7 @@ public class CuiModelView implements View {
 					resp.setContentType("text/html; charset=UTF-8");
 
 					Log.error("", ex);
-					
+
 					ex.printStackTrace(out);
 
 				} else

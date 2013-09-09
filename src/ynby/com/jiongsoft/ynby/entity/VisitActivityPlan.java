@@ -16,8 +16,8 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 @Entity
 @BzSys(name = "参观计划设置", code = "VisitActivityPlan", catalog = "_ynby_visit", actionPathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 2//
 // 操作按钮
-, actions = { @BzAct(name = "添加", typeCode = 101, mode = "c")//
-		, @BzAct(name = "修改", typeCode = 102, mode = "e") //
+, actions = { @BzAct(name = "添加", typeCode = 101, mode = "c", plugin = "com.jiongsoft.ynby.plugins.VisitActivityPlugins.SavePlan")//
+		, @BzAct(name = "修改", typeCode = 102, mode = "e", plugin = "com.jiongsoft.ynby.plugins.VisitActivityPlugins.SavePlan") //
 		, @BzAct(name = "删除", typeCode = 299, mode = "d") //
 		, @BzAct(name = "查看", typeCode = 102, mode = "v") //
 }// end: actions
