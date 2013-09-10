@@ -3,10 +3,7 @@ package com.kmetop.demsy.biz.impl;
 import static com.kmetop.demsy.Demsy.bizEngine;
 import static com.kmetop.demsy.Demsy.security;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import org.nutz.lang.Mirror;
 
 import com.jiongsoft.cocit.corm.expr.CndExpr;
 import com.kmetop.demsy.Demsy;
@@ -18,7 +15,6 @@ import com.kmetop.demsy.comlib.security.IAction;
 import com.kmetop.demsy.comlib.security.IModule;
 import com.kmetop.demsy.lang.Cls;
 import com.kmetop.demsy.lang.DemsyException;
-import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.log.Log;
 import com.kmetop.demsy.log.Logs;
 import com.kmetop.demsy.orm.IOrm;
@@ -261,19 +257,7 @@ public class BizManagerImpl implements IBizManager {
 		if (action == null)
 			return null;
 
-		String[] pluginArray = Str.toArray(action.getPlugin(), ",");
-		List<IBizPlugin> plugins = new ArrayList(pluginArray.length);
-		for (String pstr : pluginArray) {
-			try {
-				IBizPlugin plugin = (IBizPlugin) Mirror.me(Cls.forName(pstr)).born();
-				plugins.add(plugin);
-			} catch (Throwable e) {
-				log.errorf("加载业务插件出错! [module=%s, action=%s] %s", bizModule, actionID, e);
-			}
-		}
-		IBizPlugin[] ret = new IBizPlugin[plugins.size()];
-
-		return (IBizPlugin[]) plugins.toArray(ret);
+		return Demsy.moduleEngine.getPlugins(action);
 	}
 
 	public Class getType() {

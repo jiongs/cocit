@@ -13,11 +13,17 @@ import com.kmetop.demsy.comlib.biz.ann.BzGrp;
 import com.kmetop.demsy.comlib.biz.ann.BzSys;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 
+/**
+ * “走进云南白药”参观活动
+ * 
+ * @author yongshan.ji
+ * 
+ */
 @Entity
-@BzSys(name = "参观计划设置", code = "VisitActivityPlan", catalog = "_ynby_visit", actionPathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 2//
+@BzSys(name = "活动设置", code = "VisitActivity", catalog = "_ynby_visit", actionPathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 2//
 // 操作按钮
-, actions = { @BzAct(name = "添加", typeCode = 101, mode = "c", plugin = "com.jiongsoft.ynby.plugins.VisitActivityPlugins.SavePlan")//
-		, @BzAct(name = "修改", typeCode = 102, mode = "e", plugin = "com.jiongsoft.ynby.plugins.VisitActivityPlugins.SavePlan") //
+, actions = { @BzAct(name = "添加", typeCode = 101, mode = "c", plugin = "com.jiongsoft.ynby.plugins.VisitActivityPlugins$SaveActivity")//
+		, @BzAct(name = "修改", typeCode = 102, mode = "e", plugin = "com.jiongsoft.ynby.plugins.VisitActivityPlugins$SaveActivity") //
 		, @BzAct(name = "删除", typeCode = 299, mode = "d") //
 		, @BzAct(name = "查看", typeCode = 102, mode = "v") //
 }// end: actions
@@ -25,29 +31,29 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 , groups = { //
 @BzGrp(name = "基本信息", code = "basic"//
 // 业务字段
-, fields = { // @BzFld(name = "活动名称", mode = "*:N v:S c:M e:M", property = "name") //
-@BzFld(name = "计划参观日期", mode = "*:N v:S c:M e:M", property = "planDate", pattern = "yyyy-MM-dd")//
-		, @BzFld(name = "计划参观人数", mode = "*:N v:S c:M e:M", property = "planPersonNumber")//
-		, @BzFld(name = "计划参观地点", mode = "*:N v:S c:M e:M", property = "address")//
-		// , @BzFld(name = "报名起始日期", mode = "*:N v:S c:E e:E", property = "expiredFrom", pattern = "yyyy-MM-dd HH:mm:ss")//
-		// , @BzFld(name = "报名截止日期", mode = "*:N v:S c:E e:E", property = "expiredTo", pattern = "yyyy-MM-dd HH:mm:ss")//
+, fields = { @BzFld(name = "活动标题", mode = "*:N v:S", property = "name") //
+		, @BzFld(name = "计划日期", mode = "*:N v:S c:M e:M", property = "planDate", pattern = "yyyy-MM-dd")//
+		, @BzFld(name = "计划人数", mode = "*:N v:S c:M e:M", property = "planPersonNumber")//
+		, @BzFld(name = "计划地点", mode = "*:N v:S c:M e:M", property = "address")//
+		, @BzFld(name = "报名起始时间", mode = "*:N v:S c:E e:E", property = "expiredFrom", pattern = "yyyy-MM-dd HH:mm:ss")//
+		, @BzFld(name = "报名结束时间", mode = "*:N v:S c:M e:M", property = "expiredTo", pattern = "yyyy-MM-dd HH:mm:ss")//
 		, @BzFld(name = "联系人姓名", mode = "*:N v:S c:E e:E", property = "contactPerson") //
 		, @BzFld(name = "联系人电话", mode = "*:N v:S c:E e:E", property = "contactTel") //
 		, @BzFld(name = "报名人数", mode = "*:N v:S", property = "registerPersonNumber")//
-		, @BzFld(name = "参观人数", mode = "*:N v:S c:N e:E", property = "realPersonNumber")//
+		, @BzFld(name = "参加人数", mode = "*:N v:S c:N e:E", property = "attendPersonNumber")//
 		, @BzFld(name = "活动描述", mode = "*:N v:S c:E e:E", property = "desc") //
 }// end: fields
 ) // end: BzGrp
 }// end: groups
 )
-public class VisitActivityPlan extends SFTBizComponent {
+public class VisitActivity extends SFTBizComponent {
 
 	@ManyToOne
 	VisitActivityAddress address;
 
-	// Date expiredFrom;
-	//
-	// Date expiredTo;
+	Date expiredFrom;
+
+	Date expiredTo;
 
 	Date planDate;
 
@@ -61,23 +67,38 @@ public class VisitActivityPlan extends SFTBizComponent {
 
 	Integer registerPersonNumber;
 
-	Integer realPersonNumber;
+	Integer attendPersonNumber;
 
-	// public Date getExpiredFrom() {
-	// return expiredFrom;
-	// }
-	//
-	// public void setExpiredFrom(Date expiredFrom) {
-	// this.expiredFrom = expiredFrom;
-	// }
-	//
-	// public Date getExpiredTo() {
-	// return expiredTo;
-	// }
-	//
-	// public void setExpiredTo(Date expiredTo) {
-	// this.expiredTo = expiredTo;
-	// }
+	public boolean isExpired() {
+		Date now = new Date();
+		if (expiredTo != null && expiredFrom != null) {
+			return expiredTo.getTime() > now.getTime() && expiredFrom.getTime() < now.getTime();
+		}
+
+		if (expiredTo != null)
+			return expiredTo.getTime() > now.getTime();
+
+		if (expiredFrom != null)
+			return expiredFrom.getTime() < now.getTime();
+
+		return false;
+	}
+
+	public Date getExpiredFrom() {
+		return expiredFrom;
+	}
+
+	public void setExpiredFrom(Date expiredFrom) {
+		this.expiredFrom = expiredFrom;
+	}
+
+	public Date getExpiredTo() {
+		return expiredTo;
+	}
+
+	public void setExpiredTo(Date expiredTo) {
+		this.expiredTo = expiredTo;
+	}
 
 	public Date getPlanDate() {
 		return planDate;
@@ -119,12 +140,12 @@ public class VisitActivityPlan extends SFTBizComponent {
 		this.registerPersonNumber = registerPersonNumber;
 	}
 
-	public Integer getRealPersonNumber() {
-		return realPersonNumber;
+	public Integer getAttendPersonNumber() {
+		return attendPersonNumber;
 	}
 
-	public void setRealPersonNumber(Integer realPersonNumber) {
-		this.realPersonNumber = realPersonNumber;
+	public void setAttendPersonNumber(Integer realPersonNumber) {
+		this.attendPersonNumber = realPersonNumber;
 	}
 
 	public VisitActivityAddress getAddress() {

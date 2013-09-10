@@ -6,6 +6,7 @@
 	<classpathentry kind="src" path="src/sftcomlib"/>
 	<classpathentry kind="src" path="src/core"/>
 	<classpathentry kind="src" path="src/ynby"/>
+	<classpathentry kind="src" path="src/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="build/lib/asm-3.0.jar"/>
 	<classpathentry kind="lib" path="build/lib/c3p0-0.9.1.2.jar"/>
@@ -50,8 +51,8 @@
 	<classpathentry kind="con" path="org.testng.TESTNG_CONTAINER"/>
 	<classpathentry kind="lib" path="3th/lib/jmockit/jmockit-1.4/lib/hamcrest-core-1.2.jar"/>
 	<classpathentry kind="lib" path="3th/lib/jmockit/jmockit-1.4/lib/testng-6.8.jar"/>
-	<classpathentry kind="lib" path="3th/lib/jmockit/jmockit-1.4/jmockit.jar"/>
 	<classpathentry kind="lib" path="3th/lib/jtester/jtester-0.8.2.jar"/>
+	<classpathentry kind="lib" path="3th/lib/jmockit/jmockit-1.4/jmockit.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

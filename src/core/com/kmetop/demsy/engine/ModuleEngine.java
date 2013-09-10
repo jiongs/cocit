@@ -15,6 +15,7 @@ import static com.kmetop.demsy.comlib.LibConst.F_ORDER_BY;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -22,10 +23,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.nutz.dao.Sqls;
+import org.nutz.lang.Mirror;
 
 import com.jiongsoft.cocit.corm.expr.CndExpr;
 import com.jiongsoft.cocit.utils.ActionUtil;
 import com.kmetop.demsy.Demsy;
+import com.kmetop.demsy.biz.IBizPlugin;
 import com.kmetop.demsy.comlib.IModuleEngine;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.biz.IBizAction;
@@ -72,11 +75,37 @@ public abstract class ModuleEngine implements IModuleEngine {
 
 	protected Map<Long, IDataSource> dataSourceCache;
 
+	protected Map<Long, IBizPlugin[]> actionPlugins;
+
 	public ModuleEngine() {
 		corpCache = new HashMap();
 		softCache = new HashMap();
 		softIdCache = new HashMap();
 		actionLibCache = new HashMap();
+		actionPlugins = new HashMap();
+	}
+
+	@Override
+	public IBizPlugin[] getPlugins(IAction action) {
+		IBizPlugin[] ret = actionPlugins.get(action.getId());
+		if (ret != null)
+			return ret;
+
+		String[] pluginArray = Str.toArray(action.getPlugin(), ",");
+		List<IBizPlugin> plugins = new ArrayList(pluginArray.length);
+		for (String pstr : pluginArray) {
+			try {
+				IBizPlugin plugin = (IBizPlugin) Mirror.me(Cls.forName(pstr)).born();
+				plugins.add(plugin);
+			} catch (Throwable e) {
+				log.errorf("加载业务插件出错! [action=%s] %s", action, e);
+			}
+		}
+
+		ret = new IBizPlugin[plugins.size()];
+		plugins.toArray(ret);
+
+		return ret;
 	}
 
 	public void clearCache() {

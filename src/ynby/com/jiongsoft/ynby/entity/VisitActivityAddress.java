@@ -9,8 +9,15 @@ import com.kmetop.demsy.comlib.biz.ann.BzGrp;
 import com.kmetop.demsy.comlib.biz.ann.BzSys;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 
+/**
+ * 
+ * “走进云南白药”参观活动之“活动地点”
+ * 
+ * @author yongshan.ji
+ * 
+ */
 @Entity
-@BzSys(name = "参观地点设置", code = "VisitActivityAddress", catalog = "_ynby_visit", actionPathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 1//
+@BzSys(name = "活动地点设置", code = "VisitActivityAddress", catalog = "_ynby_visit", actionPathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 1//
 // 操作按钮
 , actions = { @BzAct(name = "添加", typeCode = 101, mode = "c")//
 		, @BzAct(name = "修改", typeCode = 102, mode = "e") //

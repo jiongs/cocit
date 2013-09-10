@@ -11,10 +11,16 @@ import com.kmetop.demsy.comlib.biz.ann.BzGrp;
 import com.kmetop.demsy.comlib.biz.ann.BzSys;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 
+/**
+ * “走进云南白药”参观活动之“活动报名”
+ * 
+ * @author yongshan.ji
+ * 
+ */
 @Entity
-@BzSys(name = "参观报名管理", code = "VisitActivityRegister", catalog = "_ynby_visit", actionPathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 3//
+@BzSys(name = "活动报名管理", code = "VisitActivityRegister", catalog = "_ynby_visit", actionPathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 3//
 // 操作按钮
-, actions = { @BzAct(name = "添加", typeCode = 101, mode = "c")//
+, actions = { @BzAct(name = "添加", typeCode = 101, mode = "c", plugin = "com.jiongsoft.ynby.plugins.VisitActivityPlugins$SaveRegister")//
 		, @BzAct(name = "删除", typeCode = 299, mode = "d") //
 		, @BzAct(name = "查看", typeCode = 102, mode = "v") //
 }// end: actions
@@ -22,20 +28,20 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 , groups = { //
 @BzGrp(name = "基本信息", code = "basic"//
 // 业务字段
-, fields = { @BzFld(name = "真实姓名", mode = "*:N v:S c:M e:M", property = "name") //
-		, @BzFld(name = "手机号码", mode = "*:N v:S c:M e:M", property = "tel") //
-		, @BzFld(name = "身份证号码", mode = "*:N v:S c:M e:M", property = "code") //
-		, @BzFld(name = "性别", mode = "*:N v:S c:E e:E", property = "sex", options = "0:男,1:女") //
-		, @BzFld(name = "工作单位", mode = "*:N v:S c:E e:E", property = "unit") //
-		, @BzFld(name = "自驾车牌号", mode = "*:N v:S c:E e:E", property = "carCode") //
-		, @BzFld(name = "参观时间", mode = "*:N v:S c:M e:M", property = "plan")//
-		, @BzFld(name = "参观人数", mode = "*:N v:S c:E e:E", property = "personNumber") //
-		, @BzFld(name = "报名时间", mode = "*:N v:S", property = "created", pattern = "yyyy-MM-dd HH:mm:ss") //
-		, @BzFld(name = "QQ号码", mode = "*:N v:S c:E e:E", property = "qq") //
-		, @BzFld(name = "邮箱地址", mode = "*:N v:S c:E e:E", property = "email") //
-		, @BzFld(name = "登录帐号", mode = "*:N v:S", property = "createdBy") //
-		, @BzFld(name = "IP地址", mode = "*:N v:S", property = "personNumber") //
+, fields = { @BzFld(name = "真实姓名", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 1) //
+		, @BzFld(name = "性别", mode = "*:N v:S c:E e:E", property = "sex", options = "0:男,1:女", gridOrder = 2) //
+		, @BzFld(name = "手机号码", mode = "*:N v:S c:M e:M", property = "tel", gridOrder = 3) //
 		, @BzFld(name = "手机验证码", mode = "*:N v:S c:M e:R", property = "verificationCode") //
+		, @BzFld(name = "身份证号码", mode = "*:N v:S c:M e:M", property = "code", gridOrder = 4) //
+		, @BzFld(name = "工作单位", mode = "*:N v:S c:E e:E", property = "unit", gridOrder = 5) //
+		, @BzFld(name = "参观时间", mode = "*:N v:S c:M e:M", property = "activity", gridOrder = 6)//
+		, @BzFld(name = "参观人数", mode = "*:N v:S c:E e:E", property = "personNumber", gridOrder = 7) //
+		, @BzFld(name = "自驾车牌号", mode = "*:N v:S c:E e:E", property = "carCode", gridOrder = 8) //
+		, @BzFld(name = "QQ号码", mode = "*:N v:S c:E e:E", property = "qq", gridOrder = 9) //
+		, @BzFld(name = "邮箱地址", mode = "*:N v:S c:E e:E", property = "email", gridOrder = 10) //
+		, @BzFld(name = "登录帐号", mode = "*:N v:S", property = "createdBy", gridOrder = 11) //
+		, @BzFld(name = "报名时间", mode = "*:N v:S", property = "created", pattern = "yyyy-MM-dd HH:mm:ss", gridOrder = 12) //
+		, @BzFld(name = "IP地址", mode = "*:N v:S", property = "personNumber", gridOrder = 13) //
 }// end: fields
 ) // end: BzGrp
 }// end: groups
@@ -43,7 +49,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 public class VisitActivityRegister extends SFTBizComponent {
 
 	@ManyToOne
-	VisitActivityPlan plan;
+	VisitActivity activity;
 
 	byte sex = 0;
 
@@ -70,12 +76,12 @@ public class VisitActivityRegister extends SFTBizComponent {
 	@Column(length = 32)
 	String createdIP;
 
-	public VisitActivityPlan getPlan() {
-		return plan;
+	public VisitActivity getActivity() {
+		return activity;
 	}
 
-	public void setPlan(VisitActivityPlan plan) {
-		this.plan = plan;
+	public void setActivity(VisitActivity plan) {
+		this.activity = plan;
 	}
 
 	public byte getSex() {
