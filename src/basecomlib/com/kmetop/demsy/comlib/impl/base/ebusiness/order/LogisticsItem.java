@@ -6,53 +6,53 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.eshop.ILogistics;
 import com.kmetop.demsy.comlib.eshop.ILogisticsItem;
 import com.kmetop.demsy.comlib.impl.BizComponent;
 
 @Entity
-@BzSys(name = "发货清单", code = ILogisticsItem.SYS_CODE, orderby = 4,//
-actions = { @BzAct(name = "详情", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
+@CocTable(name = "发货清单", code = ILogisticsItem.SYS_CODE, orderby = 4,//
+actions = { @CocOperation(name = "详情", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
 // , @BzAct(name = "永久删除", typeCode = TYPE_BZ_DEL, mode = "d") //
 },//
 groups = { //
-@BzGrp(name = "基本信息", code = "basic",//
-fields = { @BzFld(property = "logistics", gridOrder = 1) //
-		, @BzFld(name = "商品名称", property = "name", mode = "*:N v:S", gridOrder = 2)//
-		, @BzFld(name = "商品编码", property = "code", mode = "*:N v:S", gridOrder = 3)//
-		, @BzFld(property = "price") //
-		, @BzFld(property = "amount") //
-		, @BzFld(property = "subtotal") //
-		, @BzFld(property = "orderID") //
-		, @BzFld(property = "orderItemID") //
-		, @BzFld(property = "productID") //
+@CocGroup(name = "基本信息", code = "basic",//
+fields = { @CocField(property = "logistics", gridOrder = 1) //
+		, @CocField(name = "商品名称", property = "name", mode = "*:N v:S", gridOrder = 2)//
+		, @CocField(name = "商品编码", property = "code", mode = "*:N v:S", gridOrder = 3)//
+		, @CocField(property = "price") //
+		, @CocField(property = "amount") //
+		, @CocField(property = "subtotal") //
+		, @CocField(property = "orderID") //
+		, @CocField(property = "orderItemID") //
+		, @CocField(property = "productID") //
 }) })
 public class LogisticsItem extends BizComponent implements ILogisticsItem {
 	@ManyToOne
-	@BzFld(name = "物流单", mode = "*:N v:S", disabledNavi = true, masterMapping = true)
+	@CocField(name = "物流单", mode = "*:N v:S", disabledNavi = true, isChildTable = true)
 	protected Logistics logistics;
 
-	@BzFld(name = "单价(元)", mode = "*:N v:S", pattern = "#,##0.00")
+	@CocField(name = "单价(元)", mode = "*:N v:S", pattern = "#,##0.00")
 	protected Double price;
 
-	@BzFld(name = "数量", mode = "*:N v:S")
+	@CocField(name = "数量", mode = "*:N v:S")
 	protected int amount;
 
-	@BzFld(name = "小计(元)", mode = "*:N v:S", pattern = "#,##0.00")
+	@CocField(name = "小计(元)", mode = "*:N v:S", pattern = "#,##0.00")
 	protected Double subtotal;
 
 	@Column(length = 32)
-	@BzFld(name = "订单号", mode = "*:N v:S")
+	@CocField(name = "订单号", mode = "*:N v:S")
 	protected String orderID;
 
-	@BzFld(name = "订单条目ID", mode = "*:N v:S")
+	@CocField(name = "订单条目ID", mode = "*:N v:S")
 	protected Long orderItemID;
 
-	@BzFld(name = "产品ID", mode = "*:N v:S")
+	@CocField(name = "产品ID", mode = "*:N v:S")
 	protected Long productID;
 
 	public Logistics getLogistics() {

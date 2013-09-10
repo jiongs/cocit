@@ -19,34 +19,34 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Transient;
 
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.field.RichText;
 import com.kmetop.demsy.comlib.web.IBlogPostComment;
 import com.kmetop.demsy.lang.Str;
 
 @Entity
 @Table(name = "lyblog_comment")
-@BzSys(name = "博客文章留言", code = IBlogPostComment.SYS_CODE, catalog = BIZCATA_WEB, orderby = ORDER_WEB_BLOG_COMMENT//
+@CocTable(name = "博客文章留言", code = IBlogPostComment.SYS_CODE, catalog = BIZCATA_WEB, orderby = ORDER_WEB_BLOG_COMMENT//
 , actions = {
 //
-		@BzAct(name = "评论", typeCode = TYPE_BZFORM_NEW, mode = "c",plugin = "com.kmetop.demsy.plugins.bbs.SaveBlogComment")//
-		, @BzAct(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e") //
-		, @BzAct(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d") //
-		, @BzAct(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
-		, @BzAct(name = "屏蔽", typeCode = TYPE_BZFORM_EDIT_N, mode = "hide") //
+		@CocOperation(name = "评论", typeCode = TYPE_BZFORM_NEW, mode = "c",plugin = "com.kmetop.demsy.plugins.bbs.SaveBlogComment")//
+		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e") //
+		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d") //
+		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
+		, @CocOperation(name = "屏蔽", typeCode = TYPE_BZFORM_EDIT_N, mode = "hide") //
 }//
-, groups = { @BzGrp(name = "基本信息", code = "basic"//
+, groups = { @CocGroup(name = "基本信息", code = "basic"//
 , fields = {
 //
-		@BzFld(property = "name", gridOrder = 1)//
-		, @BzFld(property = "post") //
-		, @BzFld(property = "content", gridOrder = 2) //
-		, @BzFld(property = "created", gridOrder = 3) //
-		, @BzFld(property = "createdBy", gridOrder = 4) //
-		, @BzFld(property = "createdIP", gridOrder = 7) //
+		@CocField(property = "name", gridOrder = 1)//
+		, @CocField(property = "post") //
+		, @CocField(property = "content", gridOrder = 2) //
+		, @CocField(property = "created", gridOrder = 3) //
+		, @CocField(property = "createdBy", gridOrder = 4) //
+		, @CocField(property = "createdIP", gridOrder = 7) //
 // , @BzFld(property = "hide", gridOrder = 9) //
 }) }// end groups
 )
@@ -63,7 +63,7 @@ public class LyblogComment implements IBlogPostComment {
 	// protected Integer userid;
 
 	@Column(name = "username", length = 40)
-	@BzFld(name = "用户帐号", mode = "v:S *:N")
+	@CocField(name = "用户帐号", mode = "v:S *:N")
 	protected String createdBy;
 
 	// protected Integer bloguserid;
@@ -72,28 +72,28 @@ public class LyblogComment implements IBlogPostComment {
 
 	@ManyToOne
 	@Column(name = "postid")
-	@BzFld(name = "博客文章", mode = "c:HM e:HM v:S *:N", disabledNavi = true)
+	@CocField(name = "博客文章", mode = "c:HM e:HM v:S *:N", disabledNavi = true)
 	protected LyblogPosts post;
 
 	@Column(length = 4000)
-	@BzFld(name = "评论内容", mode = "c:M e:M v:S *:N")
+	@CocField(name = "评论内容", mode = "c:M e:M v:S *:N")
 	protected RichText content;
 
 	/*
 	 * 自动生成
 	 */
 	@Column(name = "title", length = 200)
-	@BzFld(name = "博文标题", mode = "v:S *:N")
+	@CocField(name = "博文标题", mode = "v:S *:N")
 	protected String name;
 
 	protected long postat;
 
 	@Transient
-	@BzFld(name = "评论时间", mode = "v:S *:N", isTransient = true)
+	@CocField(name = "评论时间", mode = "v:S *:N", isTransient = true)
 	protected Date created;
 
 	@Column(name = "postip", length = 64)
-	@BzFld(name = "IP地址", mode = "v:S *:N")
+	@CocField(name = "IP地址", mode = "v:S *:N")
 	protected String createdIP;
 
 	// @BzFld(name = "是否屏蔽", mode = "hide:E v:S *:N", options = "1:屏蔽,0:显示")

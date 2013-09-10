@@ -10,40 +10,40 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.impl.BizComponent;
 import com.kmetop.demsy.orm.ann.Prop;
 
 @Entity
-@BzSys(name = "主题管理", catalog = BIZCATA_UDF_CONSOLE, orderby = ORDER_UIUDF_CATALOG_THEME//
-, actions = { @BzAct(name = "新增主题", typeCode = TYPE_BZFORM_NEW, mode = "c")//
-		, @BzAct(jsonData = "CommonBizAction.data.js") //
+@CocTable(name = "主题管理", catalog = BIZCATA_UDF_CONSOLE, orderby = ORDER_UIUDF_CATALOG_THEME//
+, actions = { @CocOperation(name = "新增主题", typeCode = TYPE_BZFORM_NEW, mode = "c")//
+		, @CocOperation(jsonData = "CommonBizAction.data.js") //
 }//
-, groups = { @BzGrp(name = "基本信息", code = "basic"//
-, fields = { @BzFld(property = "name", name = "主题名称", mode = "c:M e:M")//
-		, @BzFld(property = "code", name = "主题编号", mode = "c:E e:E")//
-		, @BzFld(property = "catalog") //
-		, @BzFld(property = "parent") //
-		, @BzFld(property = "desc", gridField = false, name = "全局样式文本") //
-		, @BzFld(property = "created", name = "创建时间", mode = "*:P") //
-		, @BzFld(property = "updated", name = "更新时间", mode = "*:P") //
+, groups = { @CocGroup(name = "基本信息", code = "basic"//
+, fields = { @CocField(property = "name", name = "主题名称", mode = "c:M e:M")//
+		, @CocField(property = "code", name = "主题编号", mode = "c:E e:E")//
+		, @CocField(property = "catalog") //
+		, @CocField(property = "parent") //
+		, @CocField(property = "desc", gridField = false, name = "全局样式文本") //
+		, @CocField(property = "created", name = "创建时间", mode = "*:P") //
+		, @CocField(property = "updated", name = "更新时间", mode = "*:P") //
 }) }// end groups
 )
 public class UiCatalogTheme extends BizComponent {
 
 	@ManyToOne
-	@BzFld(name = "界面分类", groupBy = true, mode = "c:M e:M")
+	@CocField(name = "界面分类", groupBy = true, mode = "c:M e:M")
 	@Prop("uiCatalog")
 	protected UiCatalog catalog;
 
 	@ManyToOne
-	@BzFld(name = "上级主题", cascadeMode = "catalog:*:catalog")
+	@CocField(name = "上级主题", cascadeMode = "catalog:*:catalog")
 	protected UiCatalogTheme parent;
 
-	@BzFld(name = "默认风格")
+	@CocField(name = "默认风格")
 	protected boolean defaults;
 
 	@OneToMany(mappedBy = "parent")

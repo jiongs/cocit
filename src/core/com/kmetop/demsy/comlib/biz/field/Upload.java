@@ -1,8 +1,8 @@
 package com.kmetop.demsy.comlib.biz.field;
 
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
+import com.jiongsoft.cocit.entity.annotation.CocField;
 
-@BzFld(precision = 255)
+@CocField(precision = 255)
 public class Upload implements IExtField {
 
 	private String path;

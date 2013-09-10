@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 
+import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.kmetop.demsy.Demsy;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
 import com.kmetop.demsy.comlib.biz.field.CssBox;
 import com.kmetop.demsy.comlib.biz.field.CssLink;
 import com.kmetop.demsy.comlib.biz.field.FakeSubSystem;
@@ -15,81 +15,81 @@ import com.kmetop.demsy.comlib.ui.IStyleItem;
 import com.kmetop.demsy.lang.Str;
 
 public abstract class BaseStyle extends BizComponent implements IStyle {
-	@BzFld(name = "传统编辑器", disabledNavi = true, options = "1:显示,0:隐藏")
+	@CocField(name = "传统编辑器", disabledNavi = true, options = "1:显示,0:隐藏")
 	protected boolean detailState;
 
-	@BzFld(name = "样式用途", disabledNavi = true, options = "1:页面,0:板块")
+	@CocField(name = "样式用途", disabledNavi = true, options = "1:页面,0:板块")
 	protected int usage;
 
 	@Column(columnDefinition = "text")
-	@BzFld(name = "整体样式", gridField = false, cascadeMode = "detailState:1:E")
+	@CocField(name = "整体样式", gridField = false, cascadeMode = "detailState:1:E")
 	protected CssBox box;
 
 	@Column(columnDefinition = "text")
-	@BzFld(name = "顶部", gridField = false, cascadeMode = "detailState:1:E")
+	@CocField(name = "顶部", gridField = false, cascadeMode = "detailState:1:E")
 	protected CssBox top;
 
 	@Column(columnDefinition = "text")
-	@BzFld(name = "顶部-左", gridField = false, cascadeMode = "detailState:1:E")
+	@CocField(name = "顶部-左", gridField = false, cascadeMode = "detailState:1:E")
 	protected CssBox topL;
 
 	@Column(columnDefinition = "text")
-	@BzFld(name = "顶部-标题", gridField = false, cascadeMode = "detailState:1:E")
+	@CocField(name = "顶部-标题", gridField = false, cascadeMode = "detailState:1:E")
 	protected CssBox topT;
 
 	@Column(columnDefinition = "text")
-	@BzFld(name = "顶部-右", gridField = false, cascadeMode = "detailState:1:E")
+	@CocField(name = "顶部-右", gridField = false, cascadeMode = "detailState:1:E")
 	protected CssBox topR;
 
 	@Column(columnDefinition = "text")
-	@BzFld(name = "顶部-链接", gridField = false, cascadeMode = "detailState:1:E")
+	@CocField(name = "顶部-链接", gridField = false, cascadeMode = "detailState:1:E")
 	protected CssLink topLink;
 
 	@Column(columnDefinition = "text")
-	@BzFld(name = "内容", gridField = false, cascadeMode = "detailState:1:E")
+	@CocField(name = "内容", gridField = false, cascadeMode = "detailState:1:E")
 	protected CssBox data;
 
 	@Column(columnDefinition = "text")
-	@BzFld(name = "内容链接", gridField = false, cascadeMode = "detailState:1:E")
+	@CocField(name = "内容链接", gridField = false, cascadeMode = "detailState:1:E")
 	protected CssLink dataLink;
 
 	@Column(columnDefinition = "text")
-	@BzFld(name = "内容条目", gridField = false, cascadeMode = "detailState:1:E")
+	@CocField(name = "内容条目", gridField = false, cascadeMode = "detailState:1:E")
 	protected CssBox item;
 
 	@Column(columnDefinition = "text")
-	@BzFld(name = "内容条目-左(上)", gridField = false, cascadeMode = "detailState:1:E")
+	@CocField(name = "内容条目-左(上)", gridField = false, cascadeMode = "detailState:1:E")
 	protected CssBox itemL;
 
 	@Column(columnDefinition = "text")
-	@BzFld(name = "内容条目-标题", gridField = false, cascadeMode = "detailState:1:E")
+	@CocField(name = "内容条目-标题", gridField = false, cascadeMode = "detailState:1:E")
 	protected CssBox itemT;
 
 	@Column(columnDefinition = "text")
-	@BzFld(name = "内容条目-右(下)", gridField = false, cascadeMode = "detailState:1:E")
+	@CocField(name = "内容条目-右(下)", gridField = false, cascadeMode = "detailState:1:E")
 	protected CssBox itemR;
 
 	@Column(columnDefinition = "text")
-	@BzFld(name = "底部", gridField = false, cascadeMode = "detailState:1:E")
+	@CocField(name = "底部", gridField = false, cascadeMode = "detailState:1:E")
 	protected CssBox bottom;
 
 	@Column(columnDefinition = "text")
-	@BzFld(name = "底部-左", gridField = false, cascadeMode = "detailState:1:E")
+	@CocField(name = "底部-左", gridField = false, cascadeMode = "detailState:1:E")
 	protected CssBox bottomL;
 
 	@Column(columnDefinition = "text")
-	@BzFld(name = "底部-标题", gridField = false, cascadeMode = "detailState:1:E")
+	@CocField(name = "底部-标题", gridField = false, cascadeMode = "detailState:1:E")
 	protected CssBox bottomT;
 
 	@Column(columnDefinition = "text")
-	@BzFld(name = "底部-右", gridField = false, cascadeMode = "detailState:1:E")
+	@CocField(name = "底部-右", gridField = false, cascadeMode = "detailState:1:E")
 	protected CssBox bottomR;
 
 	@Column(columnDefinition = "text")
-	@BzFld(name = "底部-链接", gridField = false, cascadeMode = "detailState:1:E")
+	@CocField(name = "底部-链接", gridField = false, cascadeMode = "detailState:1:E")
 	protected CssLink bottomLink;
 
-	@BzFld(name = "CSS样式", gridField = false, cascadeMode = "detailState:1:N", uiTemplate = "ui.widget.ext.cssDesigner")
+	@CocField(name = "CSS样式", gridField = false, cascadeMode = "detailState:1:N", uiTemplate = "ui.widget.ext.cssDesigner")
 	protected FakeSubSystem<StyleItem> items;
 
 	public abstract IStyle getParent();

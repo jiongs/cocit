@@ -9,6 +9,7 @@ import cn.emay.sdk.client.api.MO;
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitHttpContext;
 import com.jiongsoft.cocit.cocsoft.CocSoft;
+import com.jiongsoft.cocit.cocsoft.CocSoftConfig;
 import com.jiongsoft.cocit.sms.SmsClient;
 import com.jiongsoft.cocit.utils.Log;
 import com.jiongsoft.cocit.utils.StringUtil;
@@ -61,11 +62,11 @@ public class EmaySDKSmsClient implements SmsClient {
 		if (ctx != null) {
 			CocSoft soft = ctx.getSoft();
 
-			this.proxyHost = soft.getConfig(CFG_PROXY_HOST, "");
-			this.proxyPort = soft.getConfig(CFG_PROXY_PORT, 80);
+			this.proxyHost = soft.getConfig(CocSoftConfig.CFG_PROXY_HOST, "");
+			this.proxyPort = soft.getConfig(CocSoftConfig.CFG_PROXY_PORT, 80);
 
-			this.uid = soft.getConfig(CFG_UID, "");
-			this.pwd = soft.getConfig(CFG_PWD, "");
+			this.uid = soft.getConfig(CocSoftConfig.CFG_UID, "");
+			this.pwd = soft.getConfig(CocSoftConfig.CFG_PWD, "");
 			this.key = soft.getConfig("sms.key", "");
 
 			try {

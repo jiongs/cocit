@@ -11,33 +11,33 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 
 @Entity
-@BzSys(name = "系统日志管理", code = "RunningLog", catalog = BIZCATA_DEMSY_ADMIN, orderby = ORDER_DEMSY_LOG//
+@CocTable(name = "系统日志管理", code = "RunningLog", catalog = BIZCATA_DEMSY_ADMIN, orderby = ORDER_DEMSY_LOG//
 , actions = {
 //
-		@BzAct(name = "清空", typeCode = TYPE_BZ_CLEAR, mode = "clr") //
-		, @BzAct(name = "详情", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
+		@CocOperation(name = "清空", typeCode = TYPE_BZ_CLEAR, mode = "clr") //
+		, @CocOperation(name = "详情", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
 }//
-, groups = { @BzGrp(name = "基本信息", code = "basic"//
-, fields = { @BzFld(property = "datetime")//
-		, @BzFld(property = "locationinfo") //
-		, @BzFld(property = "message") //
-		, @BzFld(property = "remoteIp")//
-		, @BzFld(property = "remoteUri")//
-		, @BzFld(property = "eslipse")//
-		, @BzFld(property = "memEslipse")//
-		, @BzFld(property = "level") //
-		, @BzFld(property = "monitor")//
-		, @BzFld(property = "threadname") //
-		, @BzFld(property = "loginuser")//
-		, @BzFld(property = "remoteUrl")//
-		, @BzFld(property = "loggername") //
-		, @BzFld(property = "stacktrace") //
+, groups = { @CocGroup(name = "基本信息", code = "basic"//
+, fields = { @CocField(property = "datetime")//
+		, @CocField(property = "locationinfo") //
+		, @CocField(property = "message") //
+		, @CocField(property = "remoteIp")//
+		, @CocField(property = "remoteUri")//
+		, @CocField(property = "eslipse")//
+		, @CocField(property = "memEslipse")//
+		, @CocField(property = "level") //
+		, @CocField(property = "monitor")//
+		, @CocField(property = "threadname") //
+		, @CocField(property = "loginuser")//
+		, @CocField(property = "remoteUrl")//
+		, @CocField(property = "loggername") //
+		, @CocField(property = "stacktrace") //
 }) }// end groups
 )
 public class RunningLog {
@@ -46,54 +46,54 @@ public class RunningLog {
 	protected Long id;
 
 	@Column(length = 50)
-	@BzFld(name = "登录用户")
+	@CocField(name = "登录用户")
 	protected String loginuser;
 
 	protected String fqnofctgrcls;
 
-	@BzFld(name = "日志名称")
+	@CocField(name = "日志名称")
 	protected String loggername;
 
-	@BzFld(name = "日志时间", pattern = "yyyy-MM-dd HH:mm:ss,SSS")
+	@CocField(name = "日志时间", pattern = "yyyy-MM-dd HH:mm:ss,SSS")
 	protected Date datetime;
 
 	@Column(length = 20)
-	@BzFld(name = "日志级别", options = "TRACE:跟踪,DEBUG:调试,INFO:信息,WARN:警告,ERROR:错误,FATAL:致命")
+	@CocField(name = "日志级别", options = "TRACE:跟踪,DEBUG:调试,INFO:信息,WARN:警告,ERROR:错误,FATAL:致命")
 	protected String level;
 
 	@Column(length = 2000)
-	@BzFld(name = "日志内容")
+	@CocField(name = "日志内容")
 	protected String message;
 
-	@BzFld(name = "线程名称")
+	@CocField(name = "线程名称")
 	protected String threadname;
 
 	@Column(columnDefinition = "text")
-	@BzFld(name = "异常信息")
+	@CocField(name = "异常信息")
 	protected String stacktrace;
 
 	protected String ndc;
 
-	@BzFld(name = "信息来源")
+	@CocField(name = "信息来源")
 	protected String locationinfo;
 
-	@BzFld(name = "远程URL")
+	@CocField(name = "远程URL")
 	protected String remoteUrl;
 
-	@BzFld(name = "远程URI")
+	@CocField(name = "远程URI")
 	protected String remoteUri;
 
 	@Column(length = 64)
-	@BzFld(name = "远程IP")
+	@CocField(name = "远程IP")
 	protected String remoteIp;
 
-	@BzFld(name = "内存消耗")
+	@CocField(name = "内存消耗")
 	protected long memEslipse;
 
-	@BzFld(name = "时间消耗")
+	@CocField(name = "时间消耗")
 	protected long eslipse;
 
-	@BzFld(name = "资源检测")
+	@CocField(name = "资源检测")
 	protected String monitor;
 
 	public String getMessage() {

@@ -9,23 +9,23 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.impl.BizComponent;
 
 @Entity
-@BzSys(name = "界面分类", catalog = BIZCATA_UDF_CONSOLE, orderby = ORDER_UIUDF_CATALOG//
-, actions = { @BzAct(name = "新增分类", typeCode = TYPE_BZFORM_NEW, mode = "c")//
-		, @BzAct(jsonData = "CommonBizAction.data.js") //
+@CocTable(name = "界面分类", catalog = BIZCATA_UDF_CONSOLE, orderby = ORDER_UIUDF_CATALOG//
+, actions = { @CocOperation(name = "新增分类", typeCode = TYPE_BZFORM_NEW, mode = "c")//
+		, @CocOperation(jsonData = "CommonBizAction.data.js") //
 }//
-, groups = { @BzGrp(name = "基本信息", code = "basic"//
-, fields = { @BzFld(property = "name", name = "分类名称", mode = "c:M e:M")//
-		, @BzFld(property = "code", name = "分类编号") //
-		, @BzFld(property = "desc", name = "分类说明") //
-		, @BzFld(property = "created", name = "创建时间", mode = "*:P") //
-		, @BzFld(property = "updated", name = "更新时间", mode = "*:P") //
+, groups = { @CocGroup(name = "基本信息", code = "basic"//
+, fields = { @CocField(property = "name", name = "分类名称", mode = "c:M e:M")//
+		, @CocField(property = "code", name = "分类编号") //
+		, @CocField(property = "desc", name = "分类说明") //
+		, @CocField(property = "created", name = "创建时间", mode = "*:P") //
+		, @CocField(property = "updated", name = "更新时间", mode = "*:P") //
 }) }// end groups
 , jsonData = "UiCatalog.data.js"//
 )

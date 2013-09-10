@@ -19,10 +19,10 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Transient;
 
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.field.RichText;
 import com.kmetop.demsy.comlib.security.IUser;
 import com.kmetop.demsy.comlib.web.IBbsReply;
@@ -30,34 +30,34 @@ import com.kmetop.demsy.lang.Str;
 
 @Entity
 @Table(name = "lybbs_postreply")
-@BzSys(name = "论坛回帖管理", code = IBbsReply.SYS_CODE, catalog = BIZCATA_WEB, orderby = ORDER_WEB_FORUM_REPLY//
+@CocTable(name = "论坛回帖管理", code = IBbsReply.SYS_CODE, catalog = BIZCATA_WEB, orderby = ORDER_WEB_FORUM_REPLY//
 , actions = {
 //
-		@BzAct(name = "回复", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = "com.kmetop.demsy.plugins.bbs.SaveBbsReply", info = "回帖成功!", error = "回帖失败!")//
-		, @BzAct(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e") //
-		, @BzAct(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d") //
-		, @BzAct(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
-		, @BzAct(name = "审核", typeCode = TYPE_BZFORM_EDIT_N, mode = "audit") //
+		@CocOperation(name = "回复", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = "com.kmetop.demsy.plugins.bbs.SaveBbsReply", info = "回帖成功!", error = "回帖失败!")//
+		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e") //
+		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d") //
+		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
+		, @CocOperation(name = "审核", typeCode = TYPE_BZFORM_EDIT_N, mode = "audit") //
 }//
-, groups = { @BzGrp(name = "基本信息", code = "basic"//
+, groups = { @CocGroup(name = "基本信息", code = "basic"//
 , fields = {//
-@BzFld(property = "forum", gridOrder = 1)//
-		, @BzFld(property = "topic")//
-		, @BzFld(property = "name", gridOrder = 2)//
-		, @BzFld(property = "catalog") //
-		, @BzFld(property = "content", gridOrder = 3) //
-		, @BzFld(property = "showsign") //
-		, @BzFld(property = "viewMode", gridOrder = 8) //
-		, @BzFld(property = "viewUsers") //
-		, @BzFld(property = "created", gridOrder = 4) //
-		, @BzFld(property = "createdBy", gridOrder = 5) //
-		, @BzFld(property = "createdIP", gridOrder = 6) //
+@CocField(property = "forum", gridOrder = 1)//
+		, @CocField(property = "topic")//
+		, @CocField(property = "name", gridOrder = 2)//
+		, @CocField(property = "catalog") //
+		, @CocField(property = "content", gridOrder = 3) //
+		, @CocField(property = "showsign") //
+		, @CocField(property = "viewMode", gridOrder = 8) //
+		, @CocField(property = "viewUsers") //
+		, @CocField(property = "created", gridOrder = 4) //
+		, @CocField(property = "createdBy", gridOrder = 5) //
+		, @CocField(property = "createdIP", gridOrder = 6) //
 // , @BzFld(property = "updatedBy") //
 // , @BzFld(property = "updatedIP") //
 // , @BzFld(property = "updated") //
-}), @BzGrp(name = "帖子状态", code = "status"//
+}), @CocGroup(name = "帖子状态", code = "status"//
 , fields = {//
-@BzFld(property = "status", gridOrder = 7) //
+@CocField(property = "status", gridOrder = 7) //
 }) }// end groups
 )
 public class LybbsPostreply implements IBbsReply {
@@ -70,22 +70,22 @@ public class LybbsPostreply implements IBbsReply {
 	 * 基本信息
 	 */
 	@Column(length = 20, name = "titleicon")
-	@BzFld(name = "回复分类", mode = "c:E e:E v:S *:N", options = "em45.gif:不解,em46.gif:靠,em47.gif:大汗,em48.gif:傻了,em49.gif:开心,em50.gif:哭,em51.gif:欠揍,em52.gif:必胜,em53.gif:支持,em54.gif:收到,em55.gif:讨厌,em56.gif:怕怕", disabledNavi = true)
+	@CocField(name = "回复分类", mode = "c:E e:E v:S *:N", options = "em45.gif:不解,em46.gif:靠,em47.gif:大汗,em48.gif:傻了,em49.gif:开心,em50.gif:哭,em51.gif:欠揍,em52.gif:必胜,em53.gif:支持,em54.gif:收到,em55.gif:讨厌,em56.gif:怕怕", disabledNavi = true)
 	protected String catalog;
 
 	@Column(columnDefinition = "text")
-	@BzFld(name = "回复内容", mode = "c:E e:E v:S *:N")
+	@CocField(name = "回复内容", mode = "c:E e:E v:S *:N")
 	protected RichText content;
 
-	@BzFld(name = "显示签名", mode = "c:E v:S *:N", disabledNavi = true, options = "1:显示,0:隐藏")
+	@CocField(name = "显示签名", mode = "c:E v:S *:N", disabledNavi = true, options = "1:显示,0:隐藏")
 	protected boolean showsign = true;
 
 	@Column(name = "viewmode")
-	@BzFld(name = "查看方式", mode = "c:E e:E v:S *:N", options = "0:所有用户,1:登录用户,3:版主查看,4:指定用户")
+	@CocField(name = "查看方式", mode = "c:E e:E v:S *:N", options = "0:所有用户,1:登录用户,3:版主查看,4:指定用户")
 	protected byte viewMode;// 2:回复查看,5:经验查看,6:威望查看,7:购买查看
 
 	@Column(name = "viewusers")
-	@BzFld(name = "指定用户", mode = "c:E e:E v:S *:N")
+	@CocField(name = "指定用户", mode = "c:E e:E v:S *:N")
 	protected String viewUsers;
 
 	/*
@@ -93,47 +93,47 @@ public class LybbsPostreply implements IBbsReply {
 	 */
 	@ManyToOne
 	@Column(name = "forumid")
-	@BzFld(name = "所属论坛", mode = "v:S *:N")
+	@CocField(name = "所属论坛", mode = "v:S *:N")
 	protected LybbsDb forum;
 
 	@ManyToOne
 	@Column(name = "topicid")
-	@BzFld(name = "帖子主题", mode = "c:SM e:SM v:S *:N", disabledNavi = true)
+	@CocField(name = "帖子主题", mode = "c:SM e:SM v:S *:N", disabledNavi = true)
 	protected LybbsPosttopic topic;
 
 	@Column(length = 90, name = "title")
-	@BzFld(name = "回复标题", mode = "v:S *:N")
+	@CocField(name = "回复标题", mode = "v:S *:N")
 	protected String name;
 
 	@Column(length = 40, name = "author")
-	@BzFld(name = "回复作者", mode = "v:S *:N")
+	@CocField(name = "回复作者", mode = "v:S *:N")
 	protected String createdBy;
 
 	@Column(name = "postattime")
-	@BzFld(name = "回复时间", mode = "*:N v:S")
+	@CocField(name = "回复时间", mode = "*:N v:S")
 	protected Date created;
 
 	@Column(length = 64, name = "postip")
-	@BzFld(name = "IP地址", mode = "*:N v:S")
+	@CocField(name = "IP地址", mode = "*:N v:S")
 	protected String createdIP;
 
 	@Column(length = 40, name = "lasteditauthor")
-	@BzFld(name = "最近修改帐号", mode = "*:N v:S")
+	@CocField(name = "最近修改帐号", mode = "*:N v:S")
 	protected String updatedBy;
 
 	@Column(name = "lasteditat")
-	@BzFld(name = "最近修改时间", mode = "*:N v:S")
+	@CocField(name = "最近修改时间", mode = "*:N v:S")
 	protected Integer updated;
 
 	@Column(length = 64, name = "lasteditip")
-	@BzFld(name = "最近修改IP", mode = "*:N v:S")
+	@CocField(name = "最近修改IP", mode = "*:N v:S")
 	protected String updatedIP;
 
 	/*
 	 * 版主设置
 	 */
 	@Column(name = "hide")
-	@BzFld(name = "审核状态", mode = "*:N v:S audit:E", options = "0:未审核,1:屏蔽,2:显示")
+	@CocField(name = "审核状态", mode = "*:N v:S audit:E", options = "0:未审核,1:屏蔽,2:显示")
 	protected byte status;
 
 	@Transient

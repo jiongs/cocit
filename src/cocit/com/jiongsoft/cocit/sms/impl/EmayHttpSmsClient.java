@@ -15,6 +15,7 @@ import java.util.List;
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitHttpContext;
 import com.jiongsoft.cocit.cocsoft.CocSoft;
+import com.jiongsoft.cocit.cocsoft.CocSoftConfig;
 import com.jiongsoft.cocit.sms.SmsClient;
 import com.jiongsoft.cocit.utils.Log;
 
@@ -65,12 +66,12 @@ public class EmayHttpSmsClient implements SmsClient {
 		if (ctx != null) {
 			CocSoft soft = ctx.getSoft();
 
-			this.proxyHost = soft.getConfig(CFG_PROXY_HOST, "");
-			this.proxyPort = soft.getConfig(CFG_PROXY_PORT, 80);
+			this.proxyHost = soft.getConfig(CocSoftConfig.CFG_PROXY_HOST, "");
+			this.proxyPort = soft.getConfig(CocSoftConfig.CFG_PROXY_PORT, 80);
 
-			this.url = soft.getConfig(CFG_URL, "http://sdkhttp.eucp.b2m.cn");
-			this.uid = soft.getConfig(CFG_UID, "");
-			this.pwd = soft.getConfig(CFG_PWD, "");
+			this.url = soft.getConfig(CocSoftConfig.CFG_URL, "http://sdkhttp.eucp.b2m.cn");
+			this.uid = soft.getConfig(CocSoftConfig.CFG_UID, "");
+			this.pwd = soft.getConfig(CocSoftConfig.CFG_PWD, "");
 			this.key = soft.getConfig("sms.key", "");
 
 			this.register();

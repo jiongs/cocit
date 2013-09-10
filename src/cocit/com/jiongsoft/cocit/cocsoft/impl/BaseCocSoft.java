@@ -16,7 +16,7 @@ public abstract class BaseCocSoft implements CocSoft {
 	@Override
 	public SmsClient getSmsClient() {
 		if (smsClient == null) {
-			String type = getConfig(SmsClient.CFG_TYPE, "");
+			String type = getConfig(CocSoftConfig.CFG_TYPE, "");
 			smsClient = Cocit.makeSmsClient(type);
 		}
 

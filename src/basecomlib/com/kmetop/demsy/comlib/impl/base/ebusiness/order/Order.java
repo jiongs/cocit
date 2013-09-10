@@ -9,65 +9,65 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.eshop.IOrder;
 import com.kmetop.demsy.comlib.impl.BizComponent;
 import com.kmetop.demsy.lang.Dates;
 import com.kmetop.demsy.lang.Str;
 
 @Entity
-@BzSys(name = "订单信息管理", code = IOrder.SYS_CODE, orderby = 1,//
-actions = { @BzAct(name = "付款", typeCode = TYPE_BZFORM_EDIT, mode = "e2", plugin = "com.kmetop.demsy.plugins.eshop.OrderBuyerPayed")//
-		, @BzAct(name = "退款", typeCode = TYPE_BZFORM_EDIT, mode = "e3", plugin = "com.kmetop.demsy.plugins.eshop.OrderRefund")//
-		, @BzAct(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d", plugin = "com.kmetop.demsy.plugins.eshop.OrderDelete")//
+@CocTable(name = "订单信息管理", code = IOrder.SYS_CODE, orderby = 1,//
+actions = { @CocOperation(name = "付款", typeCode = TYPE_BZFORM_EDIT, mode = "e2", plugin = "com.kmetop.demsy.plugins.eshop.OrderBuyerPayed")//
+		, @CocOperation(name = "退款", typeCode = TYPE_BZFORM_EDIT, mode = "e3", plugin = "com.kmetop.demsy.plugins.eshop.OrderRefund")//
+		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d", plugin = "com.kmetop.demsy.plugins.eshop.OrderDelete")//
 		// , @BzAct(name = "发货处理", typeCode = TYPE_BZ_EDIT, mode = "e1", plugin
 		// = "com.kmetop.demsy.plugins.eshop.OrderSended")//
 		// , @BzAct(name = "调整费用", typeCode = TYPE_BZ_EDIT_N, mode = "bu",
 		// plugin = "com.kmetop.demsy.plugins.eshop.OrderAdjustCast")//
-		, @BzAct(name = "详情", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
-		, @BzAct(name = "导出到XLS", typeCode = TYPE_BZFORM_EXPORT_XLS, mode = "xls") //
+		, @CocOperation(name = "详情", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
+		, @CocOperation(name = "导出到XLS", typeCode = TYPE_BZFORM_EXPORT_XLS, mode = "xls") //
 // , @BzAct(name = "永久删除", typeCode = TYPE_BZ_DEL, mode = "d") //
 },//
 groups = { //
-@BzGrp(name = "基本信息", code = "basic",//
-fields = { @BzFld(property = "timeID")//
-		, @BzFld(property = "created", name = "下单时间", mode = "*:N v:S", pattern = "yyyy-MM-dd HH:mm") //
-		, @BzFld(property = "name", name = "收件人", mode = "*:N v:S", privacy = true)//
-		, @BzFld(property = "code", name = "联系电话", mode = "*:N v:S", privacy = true)//
-		, @BzFld(property = "postcode")//
-		, @BzFld(property = "address")//
-		, @BzFld(property = "itemsCatalog") //
-		, @BzFld(property = "itemsAmount", gridOrder = 3) //
-		, @BzFld(property = "itemsCost") //
+@CocGroup(name = "基本信息", code = "basic",//
+fields = { @CocField(property = "timeID")//
+		, @CocField(property = "created", name = "下单时间", mode = "*:N v:S", pattern = "yyyy-MM-dd HH:mm") //
+		, @CocField(property = "name", name = "收件人", mode = "*:N v:S", privacy = true)//
+		, @CocField(property = "code", name = "联系电话", mode = "*:N v:S", privacy = true)//
+		, @CocField(property = "postcode")//
+		, @CocField(property = "address")//
+		, @CocField(property = "itemsCatalog") //
+		, @CocField(property = "itemsAmount", gridOrder = 3) //
+		, @CocField(property = "itemsCost") //
 		// , @BzFld(property = "discount") //
-		, @BzFld(property = "logisticsCost") //
-		, @BzFld(property = "totalCost", gridOrder = 4) //
-		, @BzFld(property = "createdBy", name = "登录帐号", mode = "*:N v:S") //
-		, @BzFld(property = "createdIP", privacy = true) //
-		, @BzFld(property = "orderInfo", name = "订单信息", isTransient = true, mode = "*:N v:S e1:S e2:S", gridOrder = 1)//
-		, @BzFld(property = "buyerInfo", name = "买家信息", isTransient = true, mode = "*:N v:S e1:S e2:S", gridOrder = 5, privacy = true)//
-		, @BzFld(property = "payInfo", name = "支付信息", isTransient = true, mode = "*:N v:S e1:S e2:S", gridOrder = 6, privacy = true)//
-		, @BzFld(property = "webUserInfo", name = "会员信息", isTransient = true, mode = "*:N v:S e1:S e2:S", privacy = true) //
-		, @BzFld(property = "desc", mode = "*:N v:S", name = "清单信息") //
-		, @BzFld(property = "note", gridOrder = 8) //
-}), @BzGrp(name = "支付物流", code = "trade",//
-fields = { @BzFld(property = "paytype") //
-		, @BzFld(property = "tradeID") //
-		, @BzFld(property = "payTime") //
-		, @BzFld(property = "logisticsType") //
-		, @BzFld(property = "logisticsName") //
-		, @BzFld(property = "logisticsNum") //
-		, @BzFld(property = "logisticsID") //
-		, @BzFld(property = "logisticsTime") //
-		, @BzFld(property = "logisticsNote", gridOrder = 7) //
-}), @BzGrp(name = "订单状态", code = "other",//
-fields = { @BzFld(property = "type") //
-		, @BzFld(property = "status", gridOrder = 2) //
-		, @BzFld(property = "activityID") //
-		, @BzFld(property = "activityComment") //
+		, @CocField(property = "logisticsCost") //
+		, @CocField(property = "totalCost", gridOrder = 4) //
+		, @CocField(property = "createdBy", name = "登录帐号", mode = "*:N v:S") //
+		, @CocField(property = "createdIP", privacy = true) //
+		, @CocField(property = "orderInfo", name = "订单信息", isTransient = true, mode = "*:N v:S e1:S e2:S", gridOrder = 1)//
+		, @CocField(property = "buyerInfo", name = "买家信息", isTransient = true, mode = "*:N v:S e1:S e2:S", gridOrder = 5, privacy = true)//
+		, @CocField(property = "payInfo", name = "支付信息", isTransient = true, mode = "*:N v:S e1:S e2:S", gridOrder = 6, privacy = true)//
+		, @CocField(property = "webUserInfo", name = "会员信息", isTransient = true, mode = "*:N v:S e1:S e2:S", privacy = true) //
+		, @CocField(property = "desc", mode = "*:N v:S", name = "清单信息") //
+		, @CocField(property = "note", gridOrder = 8) //
+}), @CocGroup(name = "支付物流", code = "trade",//
+fields = { @CocField(property = "paytype") //
+		, @CocField(property = "tradeID") //
+		, @CocField(property = "payTime") //
+		, @CocField(property = "logisticsType") //
+		, @CocField(property = "logisticsName") //
+		, @CocField(property = "logisticsNum") //
+		, @CocField(property = "logisticsID") //
+		, @CocField(property = "logisticsTime") //
+		, @CocField(property = "logisticsNote", gridOrder = 7) //
+}), @CocGroup(name = "订单状态", code = "other",//
+fields = { @CocField(property = "type") //
+		, @CocField(property = "status", gridOrder = 2) //
+		, @CocField(property = "activityID") //
+		, @CocField(property = "activityComment") //
 }) }// end groups
 )
 public class Order extends BizComponent implements IOrder {
@@ -102,50 +102,50 @@ public class Order extends BizComponent implements IOrder {
 	}
 
 	@Column(length = 32)
-	@BzFld(name = "订单号", mode = "*:N v:S e1:S e2:S e3:S")
+	@CocField(name = "订单号", mode = "*:N v:S e1:S e2:S e3:S")
 	protected String timeID;
 
 	@Column(length = 255)
-	@BzFld(name = "收货地址", mode = "*:N v:S e1:S e2:S e3:S", privacy = true)
+	@CocField(name = "收货地址", mode = "*:N v:S e1:S e2:S e3:S", privacy = true)
 	protected String address;
 
 	@Column(length = 15)
-	@BzFld(name = "邮政编码", mode = "*:N v:S e1:S e2:S e3:S")
+	@CocField(name = "邮政编码", mode = "*:N v:S e1:S e2:S e3:S")
 	protected String postcode;
 
 	/*
 	 * 订单支付
 	 */
-	@BzFld(name = "物流费用(元)", mode = "*:N v:S bu:E e3:S", pattern = "#,##0.00")
+	@CocField(name = "物流费用(元)", mode = "*:N v:S bu:E e3:S", pattern = "#,##0.00")
 	protected Double logisticsCost;
 
-	@BzFld(name = "商品费用(元)", mode = "*:N v:S e1:S e2:S e3:S", pattern = "#,##0.00")
+	@CocField(name = "商品费用(元)", mode = "*:N v:S e1:S e2:S e3:S", pattern = "#,##0.00")
 	protected Double itemsCost;
 
-	@BzFld(name = "清单数目", mode = "*:N v:S e1:S e2:S e3:S")
+	@CocField(name = "清单数目", mode = "*:N v:S e1:S e2:S e3:S")
 	protected int itemsCatalog;
 
-	@BzFld(name = "商品数量", mode = "*:N v:S e1:S e2:S e3:S")
+	@CocField(name = "商品数量", mode = "*:N v:S e1:S e2:S e3:S")
 	protected int itemsAmount;
 
 	//
 	// @BzFld(name = "折扣", mode = "*:N v:S bu:E")
 	// protected Double discount;
 
-	@BzFld(name = "合计(元)", mode = "*:N v:S e1:S e2:S e3:S", pattern = "#,##0.00")
+	@CocField(name = "合计(元)", mode = "*:N v:S e1:S e2:S e3:S", pattern = "#,##0.00")
 	protected Double totalCost;
 
 	/*
 	 * 订单状态
 	 */
-	@BzFld(name = "订单状态", mode = "*:N v:S e1:S e2:S e3:S", options = "0:未付款,1:已付款(未发货),2:已发货,3:交易成功,4:申请退款,5:已退款,9:交易结束,19:交易关闭")
+	@CocField(name = "订单状态", mode = "*:N v:S e1:S e2:S e3:S", options = "0:未付款,1:已付款(未发货),2:已发货,3:交易成功,4:申请退款,5:已退款,9:交易结束,19:交易关闭")
 	protected byte status;
 
-	@BzFld(name = "订单类型", mode = "*:N v:S e1:S e2:S e3:S", options = "1:购物车订单,2:立即购买订单,11:团购订单,21:秒杀订单")
+	@CocField(name = "订单类型", mode = "*:N v:S e1:S e2:S e3:S", options = "1:购物车订单,2:立即购买订单,11:团购订单,21:秒杀订单")
 	protected byte type;
 
 	@Column(length = 64)
-	@BzFld(name = "IP地址", mode = "*:N v:S e1:S e2:S e3:S")
+	@CocField(name = "IP地址", mode = "*:N v:S e1:S e2:S e3:S")
 	protected String createdIP;
 
 	/**
@@ -166,40 +166,40 @@ public class Order extends BizComponent implements IOrder {
 	 * ,0:支付宝担保交易,1:支付宝即时到帐
 	 */
 	@Column(length = 16)
-	@BzFld(name = "支付方式", mode = "*:N v:S e2:M e3:S", options = "ICBCB2C:中国工商银行,CMB:招商银行,CCB:中国建设银行,BOCB2C:中国银行,ABC:中国农业银行,COMM:交通银行,SPDB:浦发银行,GDB:广发银行,CITIC:中信银行,CEBBANK:光大银行,CIB:兴业银行,SDB:深圳发展银行,CMBC:民生银行,HZCBB2C:杭州银行,SHBANK:上海银行,NBBANK:宁波银行,SPABANK:平安银行,BJRCB:北京农商银行,ICBCBTB:中国工商银行(企业),CCBBTB:中国建设银行(企业),SPDBB2B:浦发银行(企业),ABCBTB:中国农业银行(企业),fdb101:富滇银行,PSBC-DEBIT:中国邮政储蓄,0:支付宝担保交易,1:支付宝即时到帐", disabledNavi = true)
+	@CocField(name = "支付方式", mode = "*:N v:S e2:M e3:S", options = "ICBCB2C:中国工商银行,CMB:招商银行,CCB:中国建设银行,BOCB2C:中国银行,ABC:中国农业银行,COMM:交通银行,SPDB:浦发银行,GDB:广发银行,CITIC:中信银行,CEBBANK:光大银行,CIB:兴业银行,SDB:深圳发展银行,CMBC:民生银行,HZCBB2C:杭州银行,SHBANK:上海银行,NBBANK:宁波银行,SPABANK:平安银行,BJRCB:北京农商银行,ICBCBTB:中国工商银行(企业),CCBBTB:中国建设银行(企业),SPDBB2B:浦发银行(企业),ABCBTB:中国农业银行(企业),fdb101:富滇银行,PSBC-DEBIT:中国邮政储蓄,0:支付宝担保交易,1:支付宝即时到帐", disabledNavi = true)
 	protected String paytype;
 
-	@BzFld(name = "支付交易号", mode = "*:N v:S e2:M e3:S", precision = 64, privacy = true)
+	@CocField(name = "支付交易号", mode = "*:N v:S e2:M e3:S", precision = 64, privacy = true)
 	protected String tradeID;
 
-	@BzFld(name = "付款时间", mode = "*:N v:S e2:M e3:S", pattern = "yyyy-MM-dd HH:mm")
+	@CocField(name = "付款时间", mode = "*:N v:S e2:M e3:S", pattern = "yyyy-MM-dd HH:mm")
 	protected Date payTime;
 
-	@BzFld(name = "物流方式", precision = 64, mode = "*:N v:S e1:M e3:S", options = "2:快递,1:平邮,8:不需要物流", disabledNavi = true)
+	@CocField(name = "物流方式", precision = 64, mode = "*:N v:S e1:M e3:S", options = "2:快递,1:平邮,8:不需要物流", disabledNavi = true)
 	protected Integer logisticsType = 2;
 
-	@BzFld(name = "物流公司", precision = 256, cascadeMode = "logisticsType:2:M,logisticsType:1,8:N", mode = "*:N v:S e1:M e3:S", disabledNavi = true)
+	@CocField(name = "物流公司", precision = 256, cascadeMode = "logisticsType:2:M,logisticsType:1,8:N", mode = "*:N v:S e1:M e3:S", disabledNavi = true)
 	protected String logisticsName;
 
-	@BzFld(name = "物流单号", precision = 256, mode = "*:N v:S e1:M e3:S", cascadeMode = "logisticsType:1,2:M,logisticsType:8:N")
+	@CocField(name = "物流单号", precision = 256, mode = "*:N v:S e1:M e3:S", cascadeMode = "logisticsType:1,2:M,logisticsType:8:N")
 	protected String logisticsID;
 
-	@BzFld(name = "物流备注", precision = 256, mode = "*:N v:S e1:E e3:S")
+	@CocField(name = "物流备注", precision = 256, mode = "*:N v:S e1:E e3:S")
 	protected String logisticsNote;
 
-	@BzFld(name = "发货时间", mode = "*:N v:S e3:S", pattern = "yyyy-MM-dd HH:mm")
+	@CocField(name = "发货时间", mode = "*:N v:S e3:S", pattern = "yyyy-MM-dd HH:mm")
 	protected Date logisticsTime;
 
-	@BzFld(name = "物流单数", mode = "*:N v:S e3:S")
+	@CocField(name = "物流单数", mode = "*:N v:S e3:S")
 	protected int logisticsNum;
 
-	@BzFld(name = "活动ID", mode = "*:N v:S")
+	@CocField(name = "活动ID", mode = "*:N v:S")
 	protected String activityID;
 
-	@BzFld(name = "活动备注", mode = "*:N v:S")
+	@CocField(name = "活动备注", mode = "*:N v:S")
 	protected String activityComment;
 
-	@BzFld(name = "订单留言", mode = "*:N v:S e1:S e2:S e3:S")
+	@CocField(name = "订单留言", mode = "*:N v:S e1:S e2:S e3:S")
 	protected String note;
 
 	public String getNote() {

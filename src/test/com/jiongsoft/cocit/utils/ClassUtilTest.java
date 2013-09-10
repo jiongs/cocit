@@ -25,23 +25,41 @@ import com.jiongsoft.cocit.utils.StringUtil;
 public class ClassUtilTest {
 
 	boolean boolVal = true;
+
 	Boolean boolObj = new Boolean(true);
+
 	byte byteVal = 9;
+
 	Byte byteObj = Byte.valueOf("9");
+
 	short shortVal = 9;
+
 	Short shortObj = Short.valueOf("9");
+
 	int intVal = 9;
+
 	Integer intObj = new Integer(9);
+
 	long longVal = 9;
+
 	Long longObj = new Long(9);
+
 	float floatVal = 1.0f;
+
 	Float floatObj = new Float(1.0);
+
 	double doubleVal = 1.0;
+
 	Double doubleObj = new Double(1.0);
+
 	Number numObj = new BigDecimal("12.3E+7");
+
 	Class cls = this.getClass();
+
 	Object obj = new Object();
+
 	String str = "str";
+
 	Date date = new Date();
 
 	@Before
@@ -341,14 +359,14 @@ public class ClassUtilTest {
 		try {
 			ClassUtil.newInstance("[Ljava.lang.String");
 			assertTrue(false);
-		} catch (ClassNotFoundException e) {
+		} catch (CocException e) {
 			assertTrue(true);
 		}
 
 		try {
 			ClassUtil.newInstance("java.lang.String;");
 			assertTrue(false);
-		} catch (ClassNotFoundException e) {
+		} catch (CocException e) {
 			assertTrue(true);
 		}
 

@@ -1,24 +1,24 @@
 package com.kmetop.demsy.comlib.biz.field;
 
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
+import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.kmetop.demsy.lang.Str;
 
-@BzFld(name = "字体", uiTemplate = "ui.widget.field.Composite")
+@CocField(name = "字体", uiTemplate = "ui.widget.field.Composite")
 public class CssFont extends JsonField<CssFont> {
 
-	@BzFld(name = "字体大小", order = 1, uiTemplate = "ui.widget.field.Spinner")
+	@CocField(name = "字体大小", order = 1, uiTemplate = "ui.widget.field.Spinner")
 	protected Integer size;
 
-	@BzFld(name = "字体粗细", order = 2, options = ":粗细,normal:正常,bold:粗体,bolder:更粗,lighter:更细,inherit:继承,100:100,200:200,300:300,400:400,500:500,600:600,700:700,800:800,900:900")
+	@CocField(name = "字体粗细", order = 2, options = ":粗细,normal:正常,bold:粗体,bolder:更粗,lighter:更细,inherit:继承,100:100,200:200,300:300,400:400,500:500,600:600,700:700,800:800,900:900")
 	protected String weight;
 
-	@BzFld(name = "字体颜色", order = 3, uiTemplate = "ui.widget.field.CssColor")
+	@CocField(name = "字体颜色", order = 3, uiTemplate = "ui.widget.field.CssColor")
 	protected String color;
 
-	@BzFld(name = "字体风格", order = 4, options = ":风格,normal:正常,italic:斜体,oblique:倾斜,inherit:继承")
+	@CocField(name = "字体风格", order = 4, options = ":风格,normal:正常,italic:斜体,oblique:倾斜,inherit:继承")
 	protected String style;
 
-	@BzFld(name = "文本修饰", order = 5, options = ":修饰,none:默认,underline:下划线,overline:上划线,line-through:穿越线,blink:闪烁,inherit:继承")
+	@CocField(name = "文本修饰", order = 5, options = ":修饰,none:默认,underline:下划线,overline:上划线,line-through:穿越线,blink:闪烁,inherit:继承")
 	protected String decoration;
 
 	// @BzFld(name = "名称")

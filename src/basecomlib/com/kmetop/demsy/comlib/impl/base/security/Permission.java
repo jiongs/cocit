@@ -11,70 +11,70 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSubFld;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocField2;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.field.Dataset;
 import com.kmetop.demsy.comlib.impl.BizComponent;
 import com.kmetop.demsy.comlib.security.IPermission;
 import com.kmetop.demsy.lang.Str;
 
 @Entity
-@BzSys(name = "功能模块授权", code = BIZSYS_ADMIN_PERMISSION, catalog = BIZCATA_ADMIN, orderby = ORDER_SYSADMIN_PERMISSION, buildin = false//
-, actions = { @BzAct(name = "新增权限", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = "com.kmetop.demsy.plugins.security.SavePermission")//
-		, @BzAct(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", plugin = "com.kmetop.demsy.plugins.security.SavePermission") //
-		, @BzAct(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d", plugin = "com.kmetop.demsy.plugins.security.SavePermission") //
-		, @BzAct(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
+@CocTable(name = "功能模块授权", code = BIZSYS_ADMIN_PERMISSION, catalog = BIZCATA_ADMIN, orderby = ORDER_SYSADMIN_PERMISSION, buildin = false//
+, actions = { @CocOperation(name = "新增权限", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = "com.kmetop.demsy.plugins.security.SavePermission")//
+		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", plugin = "com.kmetop.demsy.plugins.security.SavePermission") //
+		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d", plugin = "com.kmetop.demsy.plugins.security.SavePermission") //
+		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
 }//
-, groups = { @BzGrp(name = "基本信息", code = "basic"//
-, fields = { @BzFld(property = "users") //
-		, @BzFld(property = "users.module", name = "用户类型", isTransient = true, gridOrder = 1, mode = "*:N") //
-		, @BzFld(property = "users.rules2", name = "用户规则", isTransient = true, gridOrder = 2, mode = "*:N") //
-		, @BzFld(property = "datas") //
-		, @BzFld(property = "datas.module", name = "功能模块", isTransient = true, gridOrder = 4, mode = "*:N") //
-		, @BzFld(property = "datas.rules2", name = "数据权限", isTransient = true, gridOrder = 5, mode = "*:N") //
-		, @BzFld(property = "actions", gridOrder = 6) //
-}), @BzGrp(name = "其他属性", code = "other"//
-, fields = { @BzFld(property = "expiredFrom", pattern = "yyyy-MM-dd HH:mm:ss") //
-		, @BzFld(property = "expiredTo", pattern = "yyyy-MM-dd HH:mm:ss") //
-		, @BzFld(property = "type", gridOrder = 3) //
-		, @BzFld(name = "停用状态", property = "disabled", options = "1:停用,0:启用", disabledNavi = true) //
-		, @BzFld(name = "权限描述", property = "info", isTransient = true, mode = "*:N v:S") //
-		, @BzFld(name = "授权时间", property = "updated", mode = "*:P", pattern = "yyyy-MM-dd HH:mm:ss") //
-		, @BzFld(name = "授权帐号", property = "updatedBy", mode = "*:P") //
-		, @BzFld(name = "创建时间", property = "created", mode = "*:P", pattern = "yyyy-MM-dd HH:mm:ss") //
-		, @BzFld(name = "创建帐号", property = "createdBy", mode = "*:P") //
+, groups = { @CocGroup(name = "基本信息", code = "basic"//
+, fields = { @CocField(property = "users") //
+		, @CocField(property = "users.module", name = "用户类型", isTransient = true, gridOrder = 1, mode = "*:N") //
+		, @CocField(property = "users.rules2", name = "用户规则", isTransient = true, gridOrder = 2, mode = "*:N") //
+		, @CocField(property = "datas") //
+		, @CocField(property = "datas.module", name = "功能模块", isTransient = true, gridOrder = 4, mode = "*:N") //
+		, @CocField(property = "datas.rules2", name = "数据权限", isTransient = true, gridOrder = 5, mode = "*:N") //
+		, @CocField(property = "actions", gridOrder = 6) //
+}), @CocGroup(name = "其他属性", code = "other"//
+, fields = { @CocField(property = "expiredFrom", pattern = "yyyy-MM-dd HH:mm:ss") //
+		, @CocField(property = "expiredTo", pattern = "yyyy-MM-dd HH:mm:ss") //
+		, @CocField(property = "type", gridOrder = 3) //
+		, @CocField(name = "停用状态", property = "disabled", options = "1:停用,0:启用", disabledNavi = true) //
+		, @CocField(name = "权限描述", property = "info", isTransient = true, mode = "*:N v:S") //
+		, @CocField(name = "授权时间", property = "updated", mode = "*:P", pattern = "yyyy-MM-dd HH:mm:ss") //
+		, @CocField(name = "授权帐号", property = "updatedBy", mode = "*:P") //
+		, @CocField(name = "创建时间", property = "created", mode = "*:P", pattern = "yyyy-MM-dd HH:mm:ss") //
+		, @CocField(name = "创建帐号", property = "createdBy", mode = "*:P") //
 }) }// end groups
 )
 public class Permission extends BizComponent implements IPermission {
-	@BzFld(name = "有效期自")
+	@CocField(name = "有效期自")
 	protected Date expiredFrom;
 
-	@BzFld(name = "有效期至")
+	@CocField(name = "有效期至")
 	protected Date expiredTo;
 
-	@BzFld(name = "权限类型", options = "1:允许操作,0:禁止操作", disabledNavi = true)
+	@CocField(name = "权限类型", options = "1:允许操作,0:禁止操作", disabledNavi = true)
 	protected Boolean type;
 
-	@BzFld(name = "用户"//
+	@CocField(name = "用户"//
 	, children = {
 			//
-			@BzSubFld(property = "moduleGuid", name = "用户类型", options = "['refSystemExtends eq BaseUser']", order = 1)//
-			, @BzSubFld(property = "rules", name = "用户名称", order = 2) //
+			@CocField2(property = "moduleGuid", name = "用户类型", options = "['refSystemExtends eq BaseUser']", order = 1)//
+			, @CocField2(property = "rules", name = "用户名称", order = 2) //
 	})
 	protected Dataset users;
 
-	@BzFld(name = "模块"//
+	@CocField(name = "模块"//
 	, children = {
 			//
-			@BzSubFld(property = "moduleGuid", name = "功能模块", order = 1)//
-			, @BzSubFld(property = "rules", name = "数据权限", order = 2) //
+			@CocField2(property = "moduleGuid", name = "功能模块", order = 1)//
+			, @CocField2(property = "rules", name = "数据权限", order = 2) //
 	})
 	protected Dataset datas;
 
-	@BzFld(name = "模块操作")
+	@CocField(name = "模块操作")
 	protected String actions;
 
 	public String getInfo() {

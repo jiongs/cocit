@@ -1,23 +1,23 @@
 package com.kmetop.demsy.comlib.biz.field;
 
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
+import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.kmetop.demsy.lang.Str;
 
-@BzFld(uiTemplate = "ui.widget.field.Composite")
+@CocField(uiTemplate = "ui.widget.field.Composite")
 public class CssLink extends JsonField<CssLink> {
-	@BzFld(name = "链接", order = 10, uiTemplate = "ui.widget.field.CssFont")
+	@CocField(name = "链接", order = 10, uiTemplate = "ui.widget.field.CssFont")
 	protected CssFont a;
 
-	@BzFld(name = "未访问的链接", order = 11, uiTemplate = "ui.widget.field.CssFont")
+	@CocField(name = "未访问的链接", order = 11, uiTemplate = "ui.widget.field.CssFont")
 	protected CssFont aLink;
 
-	@BzFld(name = "已访问的链接", order = 12, uiTemplate = "ui.widget.field.CssFont")
+	@CocField(name = "已访问的链接", order = 12, uiTemplate = "ui.widget.field.CssFont")
 	protected CssFont aVisited;
 
-	@BzFld(name = "鼠标悬停链接", order = 13, uiTemplate = "ui.widget.field.CssFont")
+	@CocField(name = "鼠标悬停链接", order = 13, uiTemplate = "ui.widget.field.CssFont")
 	protected CssFont aHover;
 
-	@BzFld(name = "被选中的链接", order = 14, uiTemplate = "ui.widget.field.CssFont")
+	@CocField(name = "被选中的链接", order = 14, uiTemplate = "ui.widget.field.CssFont")
 	protected CssFont aActive;
 
 	public CssLink() {

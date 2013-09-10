@@ -1,9 +1,9 @@
 package com.kmetop.demsy.comlib.biz.field;
 
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
+import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.kmetop.demsy.lang.Str;
 
-@BzFld(columnDefinition = "text")
+@CocField(columnDefinition = "text")
 public class RichText implements IExtField {
 	private String text;
 

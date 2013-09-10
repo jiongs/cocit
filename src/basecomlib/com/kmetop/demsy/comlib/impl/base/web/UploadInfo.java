@@ -14,39 +14,39 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
+import com.jiongsoft.cocit.entity.impl.BaseCocEntity;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.biz.IBizField;
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
 import com.kmetop.demsy.comlib.biz.field.Upload;
-import com.kmetop.demsy.comlib.impl.BizEntity;
 import com.kmetop.demsy.comlib.impl.base.security.Module;
 import com.kmetop.demsy.comlib.impl.sft.system.AbstractSystemData;
 import com.kmetop.demsy.comlib.security.IModule;
 import com.kmetop.demsy.comlib.web.IUploadInfo;
 
 @Entity
-@BzSys(name = "上传文件日志", code = BIZSYS_ADMIN_UPLOAD, catalog = BIZCATA_ADMIN, orderby = ORDER_SYSADMIN_UPLOAD, buildin = false//
-, actions = { @BzAct(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d") //
-		, @BzAct(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
+@CocTable(name = "上传文件日志", code = BIZSYS_ADMIN_UPLOAD, catalog = BIZCATA_ADMIN, orderby = ORDER_SYSADMIN_UPLOAD, buildin = false//
+, actions = { @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d") //
+		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
 }//
-, groups = { @BzGrp(name = "基本信息", code = "basic"//
-, fields = { @BzFld(name = "上传名称", property = "localName")//
-		, @BzFld(name = "文件路径", property = "path") //
-		, @BzFld(name = "文件大小", property = "contentLength", pattern = "#,###") //
-		, @BzFld(name = "文件标题", property = "name") //
-		, @BzFld(name = "上传模块", property = "module", refrenceSystem = BIZSYS_ADMIN_MODULE) //
-		, @BzFld(name = "上传字段", property = "bzfield", refrenceSystem = BIZSYS_BZUDF_FIELD) //
-		, @BzFld(name = "上传时间", property = "created", mode = "*:P") //
-		, @BzFld(name = "上传帐号", property = "createdBy", mode = "*:P") //
-		, @BzFld(name = "存储路径", property = "abstractPath") //
-		, @BzFld(name = "内容类型", property = "contentType") //
-		, @BzFld(name = "上传工具", property = "extName") //
+, groups = { @CocGroup(name = "基本信息", code = "basic"//
+, fields = { @CocField(name = "上传名称", property = "localName")//
+		, @CocField(name = "文件路径", property = "path") //
+		, @CocField(name = "文件大小", property = "contentLength", pattern = "#,###") //
+		, @CocField(name = "文件标题", property = "name") //
+		, @CocField(name = "上传模块", property = "module", refrenceTable = BIZSYS_ADMIN_MODULE) //
+		, @CocField(name = "上传字段", property = "bzfield", refrenceTable = BIZSYS_BZUDF_FIELD) //
+		, @CocField(name = "上传时间", property = "created", mode = "*:P") //
+		, @CocField(name = "上传帐号", property = "createdBy", mode = "*:P") //
+		, @CocField(name = "存储路径", property = "abstractPath") //
+		, @CocField(name = "内容类型", property = "contentType") //
+		, @CocField(name = "上传工具", property = "extName") //
 }) }// end groups
 )
-public class UploadInfo extends BizEntity implements IUploadInfo {
+public class UploadInfo extends BaseCocEntity implements IUploadInfo {
 	private String name;
 
 	private Upload path;
@@ -67,6 +67,50 @@ public class UploadInfo extends BizEntity implements IUploadInfo {
 
 	@Column(length = 64)
 	private String contentType;
+
+	@Column(name = "_created", updatable = false)
+	protected Date created;
+
+	@Column(name = "_updated")
+	protected Date updated;
+
+	@Column(name = "_created_by", length = 32, updatable = false)
+	protected String createdBy;
+
+	@Column(name = "_updated_by", length = 32)
+	protected String updatedBy;
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public Date getUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
 
 	public String getAbstractPath() {
 		return Demsy.contextDir + path;

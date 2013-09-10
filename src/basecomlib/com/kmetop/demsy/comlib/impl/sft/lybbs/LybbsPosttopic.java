@@ -19,10 +19,10 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Transient;
 
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.field.RichText;
 import com.kmetop.demsy.comlib.security.IUser;
 import com.kmetop.demsy.comlib.web.IBbsTopic;
@@ -31,44 +31,44 @@ import com.kmetop.demsy.lang.Str;
 
 @Entity
 @Table(name = "lybbs_posttopic")
-@BzSys(name = "论坛发帖管理", code = IBbsTopic.SYS_CODE, catalog = BIZCATA_WEB, orderby = ORDER_WEB_FORUM_TOPIC//
+@CocTable(name = "论坛发帖管理", code = IBbsTopic.SYS_CODE, catalog = BIZCATA_WEB, orderby = ORDER_WEB_FORUM_TOPIC//
 , actions = {
 //
-		@BzAct(name = "发帖", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = "com.kmetop.demsy.plugins.bbs.SaveBbsTopic", info = "发帖成功!", error = "发帖失败!")//
-		, @BzAct(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e") //
-		, @BzAct(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d") //
-		, @BzAct(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
-		, @BzAct(name = "审核", typeCode = TYPE_BZFORM_EDIT_N, mode = "audit")//
-		, @BzAct(name = "移动", typeCode = TYPE_BZFORM_EDIT_N, mode = "move") //
+		@CocOperation(name = "发帖", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = "com.kmetop.demsy.plugins.bbs.SaveBbsTopic", info = "发帖成功!", error = "发帖失败!")//
+		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e") //
+		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d") //
+		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
+		, @CocOperation(name = "审核", typeCode = TYPE_BZFORM_EDIT_N, mode = "audit")//
+		, @CocOperation(name = "移动", typeCode = TYPE_BZFORM_EDIT_N, mode = "move") //
 // , @BzAct(name = "配色", typeCode = TYPE_BZFORM_EDIT_N, mode = "color")//
 // , @BzAct(name = "固定", typeCode = TYPE_BZFORM_EDIT_N, mode = "locktop")//
 // , @BzAct(name = "锁定", typeCode = TYPE_BZFORM_EDIT_N, mode = "lockreply")//
 // , @BzAct(name = "精华", typeCode = TYPE_BZFORM_EDIT_N, mode = "elite") //
 }//
-, groups = { @BzGrp(name = "基本信息", code = "basic"//
+, groups = { @CocGroup(name = "基本信息", code = "basic"//
 , fields = {
 //
-		@BzFld(property = "forum", gridOrder = 1)//
-		, @BzFld(property = "name", gridOrder = 2)//
-		, @BzFld(property = "catalog") //
-		, @BzFld(property = "content", gridOrder = 3) //
-		, @BzFld(property = "showsign") //
-		, @BzFld(property = "viewMode", gridOrder = 8) //
-		, @BzFld(property = "viewUsers") //
-		, @BzFld(property = "created", gridOrder = 4) //
-		, @BzFld(property = "createdBy", gridOrder = 5) //
-		, @BzFld(property = "createdIP") //
+		@CocField(property = "forum", gridOrder = 1)//
+		, @CocField(property = "name", gridOrder = 2)//
+		, @CocField(property = "catalog") //
+		, @CocField(property = "content", gridOrder = 3) //
+		, @CocField(property = "showsign") //
+		, @CocField(property = "viewMode", gridOrder = 8) //
+		, @CocField(property = "viewUsers") //
+		, @CocField(property = "created", gridOrder = 4) //
+		, @CocField(property = "createdBy", gridOrder = 5) //
+		, @CocField(property = "createdIP") //
 		// , @BzFld(property = "lasteditauthor") //
 		// , @BzFld(property = "lasteditip") //
 		// , @BzFld(property = "lasteditat") //
-		, @BzFld(property = "clickNum", gridOrder = 6)//
-		, @BzFld(property = "commentNum", gridOrder = 7) //
-}), @BzGrp(name = "帖子状态", code = "status"//
+		, @CocField(property = "clickNum", gridOrder = 6)//
+		, @CocField(property = "commentNum", gridOrder = 7) //
+}), @CocGroup(name = "帖子状态", code = "status"//
 , fields = {
 //
 // @BzFld(property = "locktop")//
 // , @BzFld(property = "lockreply")//
-@BzFld(property = "status", gridOrder = 8) //
+@CocField(property = "status", gridOrder = 8) //
 // , @BzFld(property = "elite") //
 // , @BzFld(property = "color") //
 // , @BzFld(property = "boldcode") //
@@ -85,30 +85,30 @@ public class LybbsPosttopic implements IBbsTopic, IStatistic {
 	 */
 	@ManyToOne
 	@Column(name = "forumid")
-	@BzFld(name = "所属论坛", mode = "c:M e:M v:S *:N move:E")
+	@CocField(name = "所属论坛", mode = "c:M e:M v:S *:N move:E")
 	protected LybbsDb forum;
 
 	@Column(length = 80, name = "title")
-	@BzFld(name = "帖子标题", mode = "c:M e:M v:S *:N")
+	@CocField(name = "帖子标题", mode = "c:M e:M v:S *:N")
 	protected String name;
 
 	@Column(length = 20, name = "titleicon")
-	@BzFld(name = "帖子分类", mode = "c:E e:E v:S *:N", options = "em01.gif:原创,em02.gif:转帖,em03.gif:讨论,em04.gif:求助,em05.gif:推荐,em06.gif:公告,em07.gif:注意,em08.gif:贴图,em09.gif:建议,em10.gif:下载,em11.gif:灌水,em12.gif:分享", disabledNavi = true)
+	@CocField(name = "帖子分类", mode = "c:E e:E v:S *:N", options = "em01.gif:原创,em02.gif:转帖,em03.gif:讨论,em04.gif:求助,em05.gif:推荐,em06.gif:公告,em07.gif:注意,em08.gif:贴图,em09.gif:建议,em10.gif:下载,em11.gif:灌水,em12.gif:分享", disabledNavi = true)
 	protected String catalog;
 
 	@Column(columnDefinition = "text")
-	@BzFld(name = "帖子内容", mode = "c:M e:M v:S *:N")
+	@CocField(name = "帖子内容", mode = "c:M e:M v:S *:N")
 	protected RichText content;
 
-	@BzFld(name = "显示签名", mode = "v:S *:N", disabledNavi = true, options = "1:显示,0:隐藏")
+	@CocField(name = "显示签名", mode = "v:S *:N", disabledNavi = true, options = "1:显示,0:隐藏")
 	protected boolean showsign = true;
 
 	@Column(name = "viewmode")
-	@BzFld(name = "查看方式", mode = "c:E e:E v:S *:N", options = "0:所有用户,1:登录用户,3:版主查看,4:指定用户")
+	@CocField(name = "查看方式", mode = "c:E e:E v:S *:N", options = "0:所有用户,1:登录用户,3:版主查看,4:指定用户")
 	protected byte viewMode;// 2:回复查看,,5:经验查看,6:威望查看,7:购买查看
 
 	@Column(name = "viewusers")
-	@BzFld(name = "指定用户", mode = "c:E e:E v:S *:N")
+	@CocField(name = "指定用户", mode = "c:E e:E v:S *:N")
 	protected String viewUsers;
 
 	/*
@@ -116,23 +116,23 @@ public class LybbsPosttopic implements IBbsTopic, IStatistic {
 	 */
 
 	@Column(name = "postattime")
-	@BzFld(name = "发帖时间", mode = "*:N v:S")
+	@CocField(name = "发帖时间", mode = "*:N v:S")
 	protected Date created;
 
 	@Column(length = 40, name = "author")
-	@BzFld(name = "帖子作者", mode = "c:H e:H v:S *:N")
+	@CocField(name = "帖子作者", mode = "c:H e:H v:S *:N")
 	protected String createdBy;
 
 	@Column(length = 64, name = "postip")
-	@BzFld(name = "IP地址", mode = "*:N v:S")
+	@CocField(name = "IP地址", mode = "*:N v:S")
 	protected String createdIP;
 
 	@Column(name = "clicktimes")
-	@BzFld(name = "点击次数", mode = "*:N v:S")
+	@CocField(name = "点击次数", mode = "*:N v:S")
 	protected Integer clickNum;
 
 	@Column(name = "replynum")
-	@BzFld(name = "回复次数", mode = "*:N v:S")
+	@CocField(name = "回复次数", mode = "*:N v:S")
 	protected Integer commentNum;
 
 	// @Column(length = 40)
@@ -152,24 +152,24 @@ public class LybbsPosttopic implements IBbsTopic, IStatistic {
 	/*
 	 * 版主设置
 	 */
-	@BzFld(name = "是否固顶", mode = "*:N v:S locktop:E", options = "1:固顶,0:不固顶")
+	@CocField(name = "是否固顶", mode = "*:N v:S locktop:E", options = "1:固顶,0:不固顶")
 	protected byte locktop;
 
-	@BzFld(name = "是否锁定", mode = "*:N v:S lockreply:E", options = "1:锁定,0:不锁定")
+	@CocField(name = "是否锁定", mode = "*:N v:S lockreply:E", options = "1:锁定,0:不锁定")
 	protected byte lockreply;
 
 	@Column(name = "hide")
-	@BzFld(name = "审核状态", mode = "*:N v:S audit:E", options = "0:未审核,1:屏蔽,2:显示")
+	@CocField(name = "审核状态", mode = "*:N v:S audit:E", options = "0:未审核,1:屏蔽,2:显示")
 	protected byte status;
 
-	@BzFld(name = "是否推荐", mode = "*:N v:S elite:E", options = "0:未推荐,1:精华,2:推荐")
+	@CocField(name = "是否推荐", mode = "*:N v:S elite:E", options = "0:未推荐,1:精华,2:推荐")
 	protected byte elite;
 
 	@Column(length = 7)
-	@BzFld(name = "颜色", mode = "*:N v:S color:E")
+	@CocField(name = "颜色", mode = "*:N v:S color:E")
 	protected String color;
 
-	@BzFld(name = "字体", mode = "*:N v:S color:E", disabledNavi = true, options = "0:无,1:加粗,2:斜体,3:加粗+斜体,4:下划线,5:加粗+下划线,6:斜体+下划线,7:加粗+斜体+下划线")
+	@CocField(name = "字体", mode = "*:N v:S color:E", disabledNavi = true, options = "0:无,1:加粗,2:斜体,3:加粗+斜体,4:下划线,5:加粗+下划线,6:斜体+下划线,7:加粗+斜体+下划线")
 	protected byte boldcode;
 
 	@Transient

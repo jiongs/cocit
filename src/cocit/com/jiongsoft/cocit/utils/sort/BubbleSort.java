@@ -1,7 +1,5 @@
 package com.jiongsoft.cocit.utils.sort;
 
-import com.jiongsoft.cocit.utils.Lang;
-
 /**
  * 
  * 利用冒泡排序法对数组排序，数组中元素必须实现了Comparable接口。
@@ -21,7 +19,7 @@ public class BubbleSort extends AbstractSort {
 			for (int j = 0; j < obj.length - i - 1; j++) {
 				// 对邻接的元素进行比较，如果后面的小，就交换
 				try {
-					if (compare(Lang.getValue(obj[j], field), Lang.getValue(obj[j + 1], field), nullGT) > 0) {
+					if (compare(getValue(obj[j], field), getValue(obj[j + 1], field), nullGT) > 0) {
 						tmp = obj[j];
 						obj[j] = obj[j + 1];
 						obj[j + 1] = tmp;

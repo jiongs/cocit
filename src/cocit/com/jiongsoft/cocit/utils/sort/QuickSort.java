@@ -1,7 +1,5 @@
 package com.jiongsoft.cocit.utils.sort;
 
-import com.jiongsoft.cocit.utils.Lang;
-
 /**
  * 快速排序，要求待排序的数组必须实现Comparable接口
  */
@@ -45,7 +43,7 @@ public class QuickSort extends AbstractSort {
 				// 因为数组的第一个和倒数第二个元素分别小于和大于枢纽元，所以不会发生数组越界
 				while (true) {
 					try {
-						if (compare(Lang.getValue(obj[++i], sortField), Lang.getValue(obj[right - 1], sortField), nullGT) < 0) {
+						if (compare(getValue(obj[++i], sortField), getValue(obj[right - 1], sortField), nullGT) < 0) {
 						} else {
 							break;
 						}
@@ -56,7 +54,7 @@ public class QuickSort extends AbstractSort {
 
 				while (true) {
 					try {
-						if (compare(Lang.getValue(obj[--j], sortField), Lang.getValue(obj[right - 1], sortField), nullGT) < 0) {
+						if (compare(getValue(obj[--j], sortField), getValue(obj[right - 1], sortField), nullGT) < 0) {
 						} else {
 							break;
 						}
@@ -98,7 +96,7 @@ public class QuickSort extends AbstractSort {
 		Object tmp = null;
 
 		try {
-			if (compare(Lang.getValue(obj[left], sortField), Lang.getValue(obj[center], sortField), nullGT) > 0) {
+			if (compare(getValue(obj[left], sortField), getValue(obj[center], sortField), nullGT) > 0) {
 				tmp = obj[left];
 				obj[left] = obj[center];
 				obj[center] = tmp;
@@ -106,7 +104,7 @@ public class QuickSort extends AbstractSort {
 		} catch (Throwable ex) {
 		}
 		try {
-			if (compare(Lang.getValue(obj[left], sortField), Lang.getValue(obj[right], sortField), nullGT) > 0) {
+			if (compare(getValue(obj[left], sortField), getValue(obj[right], sortField), nullGT) > 0) {
 				tmp = obj[left];
 				obj[left] = obj[right];
 				obj[right] = tmp;
@@ -114,7 +112,7 @@ public class QuickSort extends AbstractSort {
 		} catch (Throwable ex) {
 		}
 		try {
-			if (compare(Lang.getValue(obj[center], sortField), Lang.getValue(obj[right], sortField), nullGT) > 0) {
+			if (compare(getValue(obj[center], sortField), getValue(obj[right], sortField), nullGT) > 0) {
 				tmp = obj[center];
 				obj[center] = obj[right];
 				obj[center] = tmp;

@@ -13,97 +13,97 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.orm.ann.Prop;
 
 @Entity
-@BzSys(name = "样式管理", code = BIZSYS_UIUDF_STYLE, catalog = BIZCATA_UDF_CONSOLE, orderby = ORDER_UIUDF_CATALOG_STYLE//
+@CocTable(name = "样式管理", code = BIZSYS_UIUDF_STYLE, catalog = BIZCATA_UDF_CONSOLE, orderby = ORDER_UIUDF_CATALOG_STYLE//
 , layout = 1, actions = {
-		@BzAct(name = "新增样式", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = "com.kmetop.demsy.plugins.web.SaveCatalogStyle")//
+		@CocOperation(name = "新增样式", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = "com.kmetop.demsy.plugins.web.SaveCatalogStyle")//
 		// , @BzAct(name = "批量修改", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu")//
 		,
-		@BzAct(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", plugin = "com.kmetop.demsy.plugins.web.SaveCatalogStyle") //
-		, @BzAct(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d") //
-		, @BzAct(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
+		@CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", plugin = "com.kmetop.demsy.plugins.web.SaveCatalogStyle") //
+		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d") //
+		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
 }//
-, groups = { @BzGrp(name = "基本信息", code = "basic"//
-, fields = { @BzFld(property = "catalog") //
-		, @BzFld(property = "parent") //
-		, @BzFld(property = "name", name = "样式名称", mode = "c:M e:M", gridOrder = 1)//
-		, @BzFld(property = "code", name = "样式编号", mode = "c:E e:E")//
-		, @BzFld(property = "created", name = "创建时间", mode = "*:N v:S") //
-		, @BzFld(property = "updated", name = "更新时间", mode = "*:N v:S") //
-		, @BzFld(property = "detailState") //
-		, @BzFld(property = "usage") //
+, groups = { @CocGroup(name = "基本信息", code = "basic"//
+, fields = { @CocField(property = "catalog") //
+		, @CocField(property = "parent") //
+		, @CocField(property = "name", name = "样式名称", mode = "c:M e:M", gridOrder = 1)//
+		, @CocField(property = "code", name = "样式编号", mode = "c:E e:E")//
+		, @CocField(property = "created", name = "创建时间", mode = "*:N v:S") //
+		, @CocField(property = "updated", name = "更新时间", mode = "*:N v:S") //
+		, @CocField(property = "detailState") //
+		, @CocField(property = "usage") //
 }), // end groups
-		@BzGrp(name = "样式编辑器", code = "cssDesigner"//
-		, fields = { @BzFld(property = "items") //
+		@CocGroup(name = "样式编辑器", code = "cssDesigner"//
+		, fields = { @CocField(property = "items") //
 		}), // end groups
-		@BzGrp(name = "整体样式", code = "box"//
-		, fields = { @BzFld(property = "box") //
+		@CocGroup(name = "整体样式", code = "box"//
+		, fields = { @CocField(property = "box") //
 		}), // end groups
-		@BzGrp(name = "顶部", code = "top"//
-		, fields = { @BzFld(property = "top") //
+		@CocGroup(name = "顶部", code = "top"//
+		, fields = { @CocField(property = "top") //
 		}), // end groups
-		@BzGrp(name = "顶部-链接", code = "topLink"//
-		, fields = { @BzFld(property = "topLink") //
+		@CocGroup(name = "顶部-链接", code = "topLink"//
+		, fields = { @CocField(property = "topLink") //
 		}), // end groups
-		@BzGrp(name = "顶部-左", code = "topL"//
-		, fields = { @BzFld(property = "topL") //
+		@CocGroup(name = "顶部-左", code = "topL"//
+		, fields = { @CocField(property = "topL") //
 		}), // end groups
-		@BzGrp(name = "顶部-标题", code = "topT"//
-		, fields = { @BzFld(property = "topT") //
+		@CocGroup(name = "顶部-标题", code = "topT"//
+		, fields = { @CocField(property = "topT") //
 		}), // end groups
-		@BzGrp(name = "顶部-右", code = "topR"//
-		, fields = { @BzFld(property = "topR") //
+		@CocGroup(name = "顶部-右", code = "topR"//
+		, fields = { @CocField(property = "topR") //
 		}), // end groups
-		@BzGrp(name = "内容", code = "data"//
-		, fields = { @BzFld(property = "data") //
+		@CocGroup(name = "内容", code = "data"//
+		, fields = { @CocField(property = "data") //
 		}), // end groups
-		@BzGrp(name = "内容-链接", code = "dataLink"//
-		, fields = { @BzFld(property = "dataLink") //
+		@CocGroup(name = "内容-链接", code = "dataLink"//
+		, fields = { @CocField(property = "dataLink") //
 		}), // end groups
-		@BzGrp(name = "内容-条目", code = "item"//
-		, fields = { @BzFld(property = "item") //
+		@CocGroup(name = "内容-条目", code = "item"//
+		, fields = { @CocField(property = "item") //
 		}), // end groups
-		@BzGrp(name = "条目-左(上)", code = "itemL"//
-		, fields = { @BzFld(property = "itemL") //
+		@CocGroup(name = "条目-左(上)", code = "itemL"//
+		, fields = { @CocField(property = "itemL") //
 		}), // end groups
-		@BzGrp(name = "条目-标题", code = "itemT"//
-		, fields = { @BzFld(property = "itemT") //
+		@CocGroup(name = "条目-标题", code = "itemT"//
+		, fields = { @CocField(property = "itemT") //
 		}), // end groups
-		@BzGrp(name = "条目-右(下)", code = "itemR"//
-		, fields = { @BzFld(property = "itemR") //
+		@CocGroup(name = "条目-右(下)", code = "itemR"//
+		, fields = { @CocField(property = "itemR") //
 		}), // end groups
-		@BzGrp(name = "底部", code = "bottom"//
-		, fields = { @BzFld(property = "bottom") //
+		@CocGroup(name = "底部", code = "bottom"//
+		, fields = { @CocField(property = "bottom") //
 		}), // end groups
-		@BzGrp(name = "底部-链接", code = "bottomLink"//
-		, fields = { @BzFld(property = "bottomLink") //
+		@CocGroup(name = "底部-链接", code = "bottomLink"//
+		, fields = { @CocField(property = "bottomLink") //
 		}), // end groups
-		@BzGrp(name = "底部-左", code = "bottomL"//
-		, fields = { @BzFld(property = "bottomL") //
+		@CocGroup(name = "底部-左", code = "bottomL"//
+		, fields = { @CocField(property = "bottomL") //
 		}), // end groups
-		@BzGrp(name = "底部-标题", code = "bottomT"//
-		, fields = { @BzFld(property = "bottomT") //
+		@CocGroup(name = "底部-标题", code = "bottomT"//
+		, fields = { @CocField(property = "bottomT") //
 		}), // end groups
-		@BzGrp(name = "底部-右", code = "bottomR"//
-		, fields = { @BzFld(property = "bottomR") //
+		@CocGroup(name = "底部-右", code = "bottomR"//
+		, fields = { @CocField(property = "bottomR") //
 		}) // end groups
 //
 })
 public class UiCatalogStyle extends BaseStyle {
 
 	@ManyToOne
-	@BzFld(name = "界面分类", disabledNavi = true, groupBy = true, mode = "c:M e:M")
+	@CocField(name = "界面分类", disabledNavi = true, groupBy = true, mode = "c:M e:M")
 	@Prop("uiCatalog")
 	protected UiCatalog catalog;
 
 	@ManyToOne
-	@BzFld(name = "上级样式", mode = "bu:E")
+	@CocField(name = "上级样式", mode = "bu:E")
 	protected UiCatalogStyle parent;
 
 	@OneToMany(mappedBy = "parent")

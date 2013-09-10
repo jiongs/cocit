@@ -14,44 +14,44 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.Demsy;
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
 import com.kmetop.demsy.comlib.biz.field.Upload;
 import com.kmetop.demsy.comlib.entity.IDemsySoft;
 import com.kmetop.demsy.comlib.impl.BizComponent;
 import com.kmetop.demsy.lang.Str;
 
 @Entity
-@BzSys(name = "企业软件管理", code = BIZSYS_DEMSY_SOFT, catalog = BIZCATA_DEMSY_ADMIN, orderby = ORDER_DEMSY_SOFT, buildin = true//
-, actions = { @BzAct(name = "新增应用", typeCode = TYPE_BZFORM_NEW, mode = "c")//
-		, @BzAct(jsonData = "CommonBizAction.data.js") //
+@CocTable(name = "企业软件管理", code = BIZSYS_DEMSY_SOFT, catalog = BIZCATA_DEMSY_ADMIN, orderby = ORDER_DEMSY_SOFT, buildin = true//
+, actions = { @CocOperation(name = "新增应用", typeCode = TYPE_BZFORM_NEW, mode = "c")//
+		, @CocOperation(jsonData = "CommonBizAction.data.js") //
 }//
-, groups = { @BzGrp(name = "基本信息", code = "basic"//
-, fields = { @BzFld(name = "软件名称", property = "name", mode = "c:M e:M")//
-		, @BzFld(name = "软件用户", property = "corp", groupBy = true, refrenceSystem = BIZSYS_DEMSY_CORP, mode = "c:M e:M") //
-		, @BzFld(name = "软件域名", property = "domain") //
-		, @BzFld(name = "登录帐号", property = "code", mode = "c:M e:M *:S") //
-		, @BzFld(name = "登录密码", property = "rawPassword", password = true, gridField = false, mode = "*:N c:E e:E") //
-		, @BzFld(name = "验证密码", property = "rawPassword2", password = true, gridField = false, mode = "*:N c:E e:E") //
-		, @BzFld(name = "密码问题", property = "pwdQuestion", gridField = false) //
-		, @BzFld(name = "密码答案", property = "pwdAnswer", gridField = false) //
-		, @BzFld(name = "有效期自", property = "expiredFrom") //
-		, @BzFld(name = "有效期至", property = "expiredTo") //
-		, @BzFld(name = "软件徽标", property = "logo", uploadType = "*.jpg;*.gif;*.png") //
-		, @BzFld(name = "软件图片", property = "image", uploadType = "*.jpg;*.gif;*.png") //
-		, @BzFld(name = "软件数据源", property = "dataSource", refrenceSystem = BIZSYS_DEMSY_DATASOURCE) //
-		, @BzFld(name = "软件描述", property = "desc") //
-		, @BzFld(name = "停用状态", property = "disabled", options = "1:停用,0:启用") //
-		, @BzFld(name = "锁定状态", property = "locked", options = "1:锁定,0:未锁定") //
-		, @BzFld(name = "人工顺序", property = "orderby") //
-		, @BzFld(name = "内置状态", property = "buildin", mode = "*:N") //
-		, @BzFld(name = "创建时间", property = "created", mode = "*:P") //
-		, @BzFld(name = "更新时间", property = "updated", mode = "*:P") //
-		, @BzFld(name = "创建帐号", property = "createdBy", mode = "*:P") //
-		, @BzFld(name = "更新帐号", property = "updatedBy", mode = "*:P") //
+, groups = { @CocGroup(name = "基本信息", code = "basic"//
+, fields = { @CocField(name = "软件名称", property = "name", mode = "c:M e:M")//
+		, @CocField(name = "软件用户", property = "corp", groupBy = true, refrenceTable = BIZSYS_DEMSY_CORP, mode = "c:M e:M") //
+		, @CocField(name = "软件域名", property = "domain") //
+		, @CocField(name = "登录帐号", property = "code", mode = "c:M e:M *:S") //
+		, @CocField(name = "登录密码", property = "rawPassword", password = true, gridField = false, mode = "*:N c:E e:E") //
+		, @CocField(name = "验证密码", property = "rawPassword2", password = true, gridField = false, mode = "*:N c:E e:E") //
+		, @CocField(name = "密码问题", property = "pwdQuestion", gridField = false) //
+		, @CocField(name = "密码答案", property = "pwdAnswer", gridField = false) //
+		, @CocField(name = "有效期自", property = "expiredFrom") //
+		, @CocField(name = "有效期至", property = "expiredTo") //
+		, @CocField(name = "软件徽标", property = "logo", uploadType = "*.jpg;*.gif;*.png") //
+		, @CocField(name = "软件图片", property = "image", uploadType = "*.jpg;*.gif;*.png") //
+		, @CocField(name = "软件数据源", property = "dataSource", refrenceTable = BIZSYS_DEMSY_DATASOURCE) //
+		, @CocField(name = "软件描述", property = "desc") //
+		, @CocField(name = "停用状态", property = "disabled", options = "1:停用,0:启用") //
+		, @CocField(name = "锁定状态", property = "locked", options = "1:锁定,0:未锁定") //
+		, @CocField(name = "人工顺序", property = "orderby") //
+		, @CocField(name = "内置状态", property = "buildin", mode = "*:N") //
+		, @CocField(name = "创建时间", property = "created", mode = "*:P") //
+		, @CocField(name = "更新时间", property = "updated", mode = "*:P") //
+		, @CocField(name = "创建帐号", property = "createdBy", mode = "*:P") //
+		, @CocField(name = "更新帐号", property = "updatedBy", mode = "*:P") //
 }) }// end groups
 )
 public class DemsySoft extends BizComponent implements IDemsySoft {

@@ -30,6 +30,8 @@ import java.util.Map;
 import org.nutz.lang.Mirror;
 
 import com.jiongsoft.cocit.corm.expr.Expr;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocField2;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.IUiEngine;
 import com.kmetop.demsy.comlib.LibConst;
@@ -38,8 +40,6 @@ import com.kmetop.demsy.comlib.biz.IBizFieldGroup;
 import com.kmetop.demsy.comlib.biz.IBizFieldType;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.comlib.biz.IRuntimeConfigable;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzSubFld;
 import com.kmetop.demsy.comlib.biz.field.CssPosition;
 import com.kmetop.demsy.comlib.biz.field.Dataset;
 import com.kmetop.demsy.comlib.biz.field.FakeSubSystem;
@@ -701,8 +701,8 @@ public class UiEngine implements IUiEngine, MvcConst {
 				uiSubSysFld.setFake(true);
 			}
 			if (bizEngine.isMultiUpload(bzField)) {
-				BzFld ann = (BzFld) bzFieldType.getAnnotation(BzFld.class);
-				refSystem = bizEngine.getSystem(ann.refrenceSystem());
+				CocField ann = (CocField) bzFieldType.getAnnotation(CocField.class);
+				refSystem = bizEngine.getSystem(ann.refrenceTable());
 				refProps = Str.toArray(ann.refrenceFields());
 			}
 
@@ -786,7 +786,7 @@ public class UiEngine implements IUiEngine, MvcConst {
 		List<IBizField> bzsubflds = new LinkedList();
 
 		// template
-		BzFld fann = (BzFld) proptype.getAnnotation(BzFld.class);
+		CocField fann = (CocField) proptype.getAnnotation(CocField.class);
 		if (fann != null && !Str.isEmpty(fann.uiTemplate())) {
 			uifld.setTemplate(fann.uiTemplate());
 		}
@@ -794,15 +794,15 @@ public class UiEngine implements IUiEngine, MvcConst {
 		long count = 1;
 		Class systype = bizEngine.getType(bzfld.getSystem());
 		Mirror sysme = Mirror.me(systype);
-		BzSubFld[] subanns = null;
+		CocField2[] subanns = null;
 		try {
 			Field propfld = sysme.getField(prop);
-			BzFld propann = propfld.getAnnotation(BzFld.class);
+			CocField propann = propfld.getAnnotation(CocField.class);
 			subanns = propann.children();
 		} catch (NoSuchFieldException e) {
 		}
 		if (subanns != null && subanns.length > 0) {
-			for (BzSubFld ann : subanns) {
+			for (CocField2 ann : subanns) {
 				IBizField fld = ((BizEngine) bizEngine).parseBizField(module.getSoftID(), propme, ann.property(), bzfld.getSystem(), null);
 				fld.setId(count++);
 				fld.setPropName(prop + "." + fld.getPropName());
@@ -816,7 +816,7 @@ public class UiEngine implements IUiEngine, MvcConst {
 				bzsubflds.add(fld);
 			}
 		} else {
-			Field[] fields = propme.getFields(BzFld.class);
+			Field[] fields = propme.getFields(CocField.class);
 			for (Field f : fields) {
 				IBizField fld = ((BizEngine) bizEngine).parseBizField(module.getSoftID(), propme, f.getName(), bzfld.getSystem(), null);
 				fld.setId(count++);

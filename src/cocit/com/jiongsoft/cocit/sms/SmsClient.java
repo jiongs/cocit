@@ -3,45 +3,6 @@ package com.jiongsoft.cocit.sms;
 import java.util.List;
 
 public interface SmsClient {
-	/**
-	 * 软件配置项KEY：短信服务商类型
-	 * <p>
-	 * 可选值：
-	 * <UL>
-	 * <LI>zucp: 漫道短信
-	 * </UL>
-	 */
-	public static String CFG_TYPE = "sms.type";
-
-	/**
-	 * 代理服务器主机IP
-	 */
-	public static String CFG_PROXY_HOST = "sms.proxy.host";
-
-	/**
-	 * 代理服务器主机端口
-	 */
-	public static String CFG_PROXY_PORT = "sms.proxy.port";
-
-	/**
-	 * 软件配置项KEY：uid
-	 */
-	public static String CFG_UID = "sms.uid";
-
-	/**
-	 * 软件配置项KEY：密码
-	 */
-	public static String CFG_PWD = "sms.pwd";
-
-	/**
-	 * 软件配置项KEY：URL
-	 */
-	public static String CFG_URL = "sms.url";
-
-	/**
-	 * 手机短信验证码模版。如：“欢迎走进云南白药，请输入您的验证码 %s”
-	 */
-	public static String CFG_VERIFICATION_CODE_TEMPLATE = "sms.verification_code_tpl";
 
 	// /**
 	// * 充值
@@ -67,7 +28,8 @@ public interface SmsClient {
 	 * @param content
 	 *            短信内容：支持长短信
 	 * @param ext
-	 *            扩展码：扩展码的用法：您发送短信时，有个ext参数，您给它传值并且要保证每次唯一，用于区分给同一个客户发的多条短信。例如： 您给客户A，在10点发了一条短信,使ext=1，在12点又发了一条,使ext=2，15点又发了一条,使ext=3，到了晚上， 客户A给您回复了 。可以把当初给ext这个参数传的值带回来。以此来达到区分给同一个客户发的多条短信的目的。该参数和接收短信的方法配合使用
+	 *            扩展码：扩展码的用法：您发送短信时，有个ext参数，您给它传值并且要保证每次唯一，用于区分给同一个客户发的多条短信。例如： 您给客户A，在10点发了一条短信,使ext=1，在12点又发了一条,使ext=2，15点又发了一条,使ext=3，到了晚上， 客户A给您回复了
+	 *            。可以把当初给ext这个参数传的值带回来。以此来达到区分给同一个客户发的多条短信的目的。该参数和接收短信的方法配合使用
 	 * @param time
 	 *            定时时间：例如：2010-12-29 16:27:03（非定时置空）
 	 * @param rrid

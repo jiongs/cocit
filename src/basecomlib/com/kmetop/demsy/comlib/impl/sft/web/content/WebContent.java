@@ -13,10 +13,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.field.RichText;
 import com.kmetop.demsy.comlib.biz.field.Upload;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
@@ -29,43 +29,43 @@ import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.orm.ann.Prop;
 
 @Entity
-@BzSys(name = "网站信息发布", code = IWebContent.SYS_CODE, catalog = BIZCATA_WEB, orderby = ORDER_WEB_INFO, buildin = true//
-, actions = { @BzAct(name = "录入", typeCode = TYPE_BZFORM_NEW, mode = "c")//
+@CocTable(name = "网站信息发布", code = IWebContent.SYS_CODE, catalog = BIZCATA_WEB, orderby = ORDER_WEB_INFO, buildin = true//
+, actions = { @CocOperation(name = "录入", typeCode = TYPE_BZFORM_NEW, mode = "c")//
 		// , @BzAct(name = "转换为产品信息", typeCode = TYPE_BZFORM_EDIT_N, mode =
 		// "bu1", plugin =
 		// "com.kmetop.demsy.plugins.web.ConvertInfoToProduct")//
-		, @BzAct(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e") //
-		, @BzAct(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d") //
-		, @BzAct(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
-		, @BzAct(name = "审核", typeCode = TYPE_BZFORM_EDIT_N, mode = "status")//
-		, @BzAct(jsonData = "CommonBizAction_orderby.data.js") //
-		, @BzAct(name = "录入专题", typeCode = TYPE_BZFORM_NEW, mode = "c1")//
-		, @BzAct(name = "变更栏目", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu") //
+		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e") //
+		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d") //
+		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
+		, @CocOperation(name = "审核", typeCode = TYPE_BZFORM_EDIT_N, mode = "status")//
+		, @CocOperation(jsonData = "CommonBizAction_orderby.data.js") //
+		, @CocOperation(name = "录入专题", typeCode = TYPE_BZFORM_NEW, mode = "c1")//
+		, @CocOperation(name = "变更栏目", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu") //
 }//
-, groups = { @BzGrp(name = "基本信息", code = "basic"//
-, fields = { @BzFld(property = "catalog", gridOrder = 2), //
-		@BzFld(name = "文章标题", property = "name", mode = "c:M c1:M e:M *:N v:S", cascadeMode = "catalog.type:99:NM", gridOrder = 1),//
-		@BzFld(property = "typeCode"), //
-		@BzFld(property = "author"), //
-		@BzFld(property = "origin"), //
-		@BzFld(property = "status", gridOrder = 5), //
-		@BzFld(property = "linkPath"), //
-		@BzFld(property = "refrence"), //
-		@BzFld(property = "parent"), //
-		@BzFld(property = "image"), //
-		@BzFld(property = "keywords"), //
-		@BzFld(name = "文章摘要", property = "desc", gridField = false, mode = "c:E c1:E e:E *:N v:S", cascadeMode = "typeCode:0,2:E"), //
-		@BzFld(property = "content")
+, groups = { @CocGroup(name = "基本信息", code = "basic"//
+, fields = { @CocField(property = "catalog", gridOrder = 2), //
+		@CocField(name = "文章标题", property = "name", mode = "c:M c1:M e:M *:N v:S", cascadeMode = "catalog.type:99:NM", gridOrder = 1),//
+		@CocField(property = "typeCode"), //
+		@CocField(property = "author"), //
+		@CocField(property = "origin"), //
+		@CocField(property = "status", gridOrder = 5), //
+		@CocField(property = "linkPath"), //
+		@CocField(property = "refrence"), //
+		@CocField(property = "parent"), //
+		@CocField(property = "image"), //
+		@CocField(property = "keywords"), //
+		@CocField(name = "文章摘要", property = "desc", gridField = false, mode = "c:E c1:E e:E *:N v:S", cascadeMode = "typeCode:0,2:E"), //
+		@CocField(property = "content")
 
 })//
-		, @BzGrp(name = "其他设置", code = "properties"//
-		, fields = { @BzFld(name = "评论次数", property = "commentNum", mode = "*:N v:S", gridOrder = 3), //
-				@BzFld(name = "浏览次数", property = "clickNum", mode = "*:N v:S", gridOrder = 4), //
-				@BzFld(name = "录入时间", property = "created", mode = "*:N v:S", gridOrder = 6, pattern = "yyyy-MM-dd HH:mm"), //
-				@BzFld(name = "录入帐号", property = "createdBy", mode = "*:N v:S"), //
-				@BzFld(name = "更新时间", property = "updated", mode = "*:N v:S", gridOrder = 7, pattern = "yyyy-MM-dd HH:mm"), //
-				@BzFld(name = "更新帐号", property = "updatedBy", mode = "*:N v:S"), //
-				@BzFld(name = "人工顺序", property = "orderby", mode = "*:N", gridOrder = 8) //
+		, @CocGroup(name = "其他设置", code = "properties"//
+		, fields = { @CocField(name = "评论次数", property = "commentNum", mode = "*:N v:S", gridOrder = 3), //
+				@CocField(name = "浏览次数", property = "clickNum", mode = "*:N v:S", gridOrder = 4), //
+				@CocField(name = "录入时间", property = "created", mode = "*:N v:S", gridOrder = 6, pattern = "yyyy-MM-dd HH:mm"), //
+				@CocField(name = "录入帐号", property = "createdBy", mode = "*:N v:S"), //
+				@CocField(name = "更新时间", property = "updated", mode = "*:N v:S", gridOrder = 7, pattern = "yyyy-MM-dd HH:mm"), //
+				@CocField(name = "更新帐号", property = "updatedBy", mode = "*:N v:S"), //
+				@CocField(name = "人工顺序", property = "orderby", mode = "*:N", gridOrder = 8) //
 		}) //
 }// end groups
 )
@@ -82,26 +82,26 @@ public class WebContent extends SFTBizComponent implements IWebContent, IStatist
 
 	@ManyToOne
 	@Prop("category")
-	@BzFld(name = "所属栏目", groupBy = true, mode = "c:M c1:M e:M bu:E *:N v:S")
+	@CocField(name = "所属栏目", groupBy = true, mode = "c:M c1:M e:M bu:E *:N v:S")
 	protected WebContentCategory catalog;
 
 	@ManyToOne
-	@BzFld(name = "所属专题", disabledNavi = true, mode = "c1:M *:N v:S")
+	@CocField(name = "所属专题", disabledNavi = true, mode = "c1:M *:N v:S")
 	protected WebContent parent;
 
-	@BzFld(name = "类型", mode = "c:M c1:M e:M *:N v:S", disabledNavi = true, cascadeMode = "catalog.type:0,1:M", defalutValue = "{catalog.infoType}", options = "0:编辑器,2:超链接,99:推荐")
+	@CocField(name = "类型", mode = "c:M c1:M e:M *:N v:S", disabledNavi = true, cascadeMode = "catalog.type:0,1:M", defalutValue = "{catalog.infoType}", options = "0:编辑器,2:超链接,99:推荐")
 	protected Integer typeCode;// 信息类型
 
 	/*
 	 * 内容编辑
 	 */
-	@BzFld(name = "来源", mode = "c:E c1:E e:E *:N v:S", cascadeMode = "typeCode:0:E typeCode:2,99:N catalog.type:99:N", gridField = false)
+	@CocField(name = "来源", mode = "c:E c1:E e:E *:N v:S", cascadeMode = "typeCode:0:E typeCode:2,99:N catalog.type:99:N", gridField = false)
 	protected String origin;
 
-	@BzFld(name = "作者", mode = "c:E c1:E e:E *:N v:S", cascadeMode = "typeCode:0:E typeCode:2,99:N catalog.type:99:N", gridField = false)
+	@CocField(name = "作者", mode = "c:E c1:E e:E *:N v:S", cascadeMode = "typeCode:0:E typeCode:2,99:N catalog.type:99:N", gridField = false)
 	protected String author;
 
-	@BzFld(name = "内容", mode = "c:E c1:E e:E *:N v:S", cascadeMode = "typeCode:0:E typeCode:2,99:N catalog.type:99:N", gridField = false)
+	@CocField(name = "内容", mode = "c:E c1:E e:E *:N v:S", cascadeMode = "typeCode:0:E typeCode:2,99:N catalog.type:99:N", gridField = false)
 	protected RichText content;
 
 	/*
@@ -109,7 +109,7 @@ public class WebContent extends SFTBizComponent implements IWebContent, IStatist
 	 */
 	@Column(length = 128)
 	@Prop("filePath")
-	@BzFld(name = "链接地址", mode = "c:E c1:E e:E *:N v:S", disabledNavi = true, cascadeMode = "typeCode:2:E typeCode:0,99:N", gridField = false)
+	@CocField(name = "链接地址", mode = "c:E c1:E e:E *:N v:S", disabledNavi = true, cascadeMode = "typeCode:2:E typeCode:0,99:N", gridField = false)
 	protected Upload linkPath;
 
 	// @Column(length = 16)
@@ -122,26 +122,26 @@ public class WebContent extends SFTBizComponent implements IWebContent, IStatist
 	 * 信息推荐
 	 */
 	@ManyToOne
-	@BzFld(name = "推荐来源", mode = "c:E c1:E e:E *:N v:S", disabledNavi = true, cascadeMode = "typeCode:99:E", gridField = false)
+	@CocField(name = "推荐来源", mode = "c:E c1:E e:E *:N v:S", disabledNavi = true, cascadeMode = "typeCode:99:E", gridField = false)
 	protected WebContent refrence;
 
 	@Prop("relatedDate")
 	protected Date date;// 日期
 
 	@Prop("workflowStepStatus")
-	@BzFld(name = "审核状态", mode = "status:M *:N v:S", options = "{WebContent.status}")
+	@CocField(name = "审核状态", mode = "status:M *:N v:S", options = "{WebContent.status}")
 	protected int status = 0;// 审核状态
 
 	@Column(length = 256)
-	@BzFld(name = "关键字", mode = "c:E c1:E e:E *:N v:S", gridField = false, cascadeMode = "typeCode:0:E catalog.type:99:N")
+	@CocField(name = "关键字", mode = "c:E c1:E e:E *:N v:S", gridField = false, cascadeMode = "typeCode:0:E catalog.type:99:N")
 	private String keywords; // 关键字——用于搜索引擎进行网页搜索
 
 	@Prop("logo1Image")
-	@BzFld(name = "徽标", mode = "c:E c1:E e:E *:N v:S", uploadType = "*.bmp;*.jpg;*.gif;*.png;*.swf", gridField = false)
+	@CocField(name = "徽标", mode = "c:E c1:E e:E *:N v:S", uploadType = "*.bmp;*.jpg;*.gif;*.png;*.swf", gridField = false)
 	protected Upload logo;
 
 	@Prop("logo2Image")
-	@BzFld(name = "图片", mode = "c:E c1:E e:E *:N v:S", uploadType = "*.bmp;*.jpg;*.gif;*.png;*.swf;*.flv", cascadeMode = "catalog.infoRequiredImage:1:M catalog.infoRequiredImage:0:E typeCode:99:N", gridField = false)
+	@CocField(name = "图片", mode = "c:E c1:E e:E *:N v:S", uploadType = "*.bmp;*.jpg;*.gif;*.png;*.swf;*.flv", cascadeMode = "catalog.infoRequiredImage:1:M catalog.infoRequiredImage:0:E typeCode:99:N", gridField = false)
 	protected Upload image;
 
 	// 统计信息

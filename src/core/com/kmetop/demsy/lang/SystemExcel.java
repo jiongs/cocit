@@ -12,12 +12,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jiongsoft.cocit.corm.expr.Expr;
+import com.jiongsoft.cocit.entity.CocEntity;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.IBizSession;
 import com.kmetop.demsy.comlib.IBizEngine;
 import com.kmetop.demsy.comlib.biz.IBizField;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
-import com.kmetop.demsy.comlib.entity.IBizEntity;
 import com.kmetop.demsy.comlib.security.IAction;
 
 /**
@@ -121,14 +121,14 @@ public class SystemExcel extends Excel {
 		Long softID = Demsy.me().getSoft().getId();
 
 		IBizField pkfld = fields.get(excelHeads[0]);
-		final List<IBizEntity> list = new ArrayList();
+		final List<CocEntity> list = new ArrayList();
 		int rowIndex = 1;
 		int colIndex = 0;
 		for (String[] row : excelRows) {
 			rowIndex++;
-			IBizEntity data = (IBizEntity) session.load(systemClass, Expr.eq(bizEngine.getPropName(pkfld), row[0]));
+			CocEntity data = (CocEntity) session.load(systemClass, Expr.eq(bizEngine.getPropName(pkfld), row[0]));
 			if (data == null) {
-				data = (IBizEntity) systemClass.newInstance();
+				data = (CocEntity) systemClass.newInstance();
 			}
 			for (int i = 0; i < row.length; i++) {
 				colIndex = i + 1;

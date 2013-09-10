@@ -4,39 +4,39 @@ import java.io.IOException;
 
 import javax.persistence.Column;
 
+import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.kmetop.demsy.Demsy;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
 import com.kmetop.demsy.lang.Img;
 import com.kmetop.demsy.lang.Str;
 
-@BzFld(uiTemplate = "ui.widget.field.Composite")
+@CocField(uiTemplate = "ui.widget.field.Composite")
 public class CssBox extends JsonField<CssBox> {
-	@BzFld(name = "边框宽度", order = 1, uiTemplate = "ui.widget.field.Spinner")
+	@CocField(name = "边框宽度", order = 1, uiTemplate = "ui.widget.field.Spinner")
 	protected Integer width;
 
-	@BzFld(name = "边框高度", order = 2, uiTemplate = "ui.widget.field.Spinner")
+	@CocField(name = "边框高度", order = 2, uiTemplate = "ui.widget.field.Spinner")
 	protected Integer height;
 
 	@Column(length = 2000)
-	@BzFld(name = "样式编辑", order = 4)
+	@CocField(name = "样式编辑", order = 4)
 	protected String style;
 
-	@BzFld(name = "背景", order = 10, uiTemplate = "ui.widget.field.CssBackground")
+	@CocField(name = "背景", order = 10, uiTemplate = "ui.widget.field.CssBackground")
 	protected CssBackground background;
 
-	@BzFld(name = "边框", order = 11, uiTemplate = "ui.widget.field.CssBorder")
+	@CocField(name = "边框", order = 11, uiTemplate = "ui.widget.field.CssBorder")
 	protected CssBorder border;
 
-	@BzFld(name = "顶边框", order = 12, uiTemplate = "ui.widget.field.CssBorder")
+	@CocField(name = "顶边框", order = 12, uiTemplate = "ui.widget.field.CssBorder")
 	protected CssBorder borderTop;
 
-	@BzFld(name = "底边框", order = 13, uiTemplate = "ui.widget.field.CssBorder")
+	@CocField(name = "底边框", order = 13, uiTemplate = "ui.widget.field.CssBorder")
 	protected CssBorder borderBottom;
 
-	@BzFld(name = "左边框", order = 14, uiTemplate = "ui.widget.field.CssBorder")
+	@CocField(name = "左边框", order = 14, uiTemplate = "ui.widget.field.CssBorder")
 	protected CssBorder borderLeft;
 
-	@BzFld(name = "右边框", order = 15, uiTemplate = "ui.widget.field.CssBorder")
+	@CocField(name = "右边框", order = 15, uiTemplate = "ui.widget.field.CssBorder")
 	protected CssBorder borderRight;
 
 	// @BzFld(name = "字体", order = 9, uiTemplate = "ui.widget.field.CssFont")

@@ -12,33 +12,33 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.IBizFieldType;
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 import com.kmetop.demsy.lang.Str;
 
 @Entity
-@BzSys(name = "字段类型组件库", code = BIZSYS_DEMSY_LIB_FIELD, catalog = BIZCATA_DEMSY_ADMIN, orderby = ORDER_DEMSY_LIB_FIELD, buildin = true//
-, actions = { @BzAct(name = "新增", typeCode = TYPE_BZFORM_NEW, mode = "c")//
-		, @BzAct(jsonData = "CommonBizAction.data.js") //
+@CocTable(name = "字段类型组件库", code = BIZSYS_DEMSY_LIB_FIELD, catalog = BIZCATA_DEMSY_ADMIN, orderby = ORDER_DEMSY_LIB_FIELD, buildin = true//
+, actions = { @CocOperation(name = "新增", typeCode = TYPE_BZFORM_NEW, mode = "c")//
+		, @CocOperation(jsonData = "CommonBizAction.data.js") //
 }//
-, groups = { @BzGrp(name = "基本信息", code = "basic"//
-, fields = { @BzFld(name = "类型名称", property = "name", mode = "c:M e:M")//
-		, @BzFld(name = "类型编号", property = "code", mode = "c:M e:M") //
-		, @BzFld(name = "版本号", property = "version", mode = "c:M e:M", options = "2:DEMSY-V2") //
-		, @BzFld(name = "窗体模版", property = "uiTemplate") //
-		, @BzFld(name = "类型描述", property = "desc", gridField = false) //
-		, @BzFld(name = "停用状态", property = "disabled", options = "1:停用,0:启用", gridField = false) //
-		, @BzFld(name = "字段分类", property = "parent", refrenceSystem = BIZSYS_DEMSY_LIB_FIELD, gridField = false) //
-		, @BzFld(name = "字段类型", property = "className", gridField = false) //
-		, @BzFld(name = "字段排序", property = "orderby", gridField = false) //
-		, @BzFld(name = "创建时间", property = "created", mode = "*:P") //
-		, @BzFld(name = "更新时间", property = "updated", mode = "*:P") //
-		, @BzFld(name = "创建帐号", property = "createdBy", mode = "*:P") //
-		, @BzFld(name = "更新帐号", property = "updatedBy", mode = "*:P") //
+, groups = { @CocGroup(name = "基本信息", code = "basic"//
+, fields = { @CocField(name = "类型名称", property = "name", mode = "c:M e:M")//
+		, @CocField(name = "类型编号", property = "code", mode = "c:M e:M") //
+		, @CocField(name = "版本号", property = "version", mode = "c:M e:M", options = "2:DEMSY-V2") //
+		, @CocField(name = "窗体模版", property = "uiTemplate") //
+		, @CocField(name = "类型描述", property = "desc", gridField = false) //
+		, @CocField(name = "停用状态", property = "disabled", options = "1:停用,0:启用", gridField = false) //
+		, @CocField(name = "字段分类", property = "parent", refrenceTable = BIZSYS_DEMSY_LIB_FIELD, gridField = false) //
+		, @CocField(name = "字段类型", property = "className", gridField = false) //
+		, @CocField(name = "字段排序", property = "orderby", gridField = false) //
+		, @CocField(name = "创建时间", property = "created", mode = "*:P") //
+		, @CocField(name = "更新时间", property = "updated", mode = "*:P") //
+		, @CocField(name = "创建帐号", property = "createdBy", mode = "*:P") //
+		, @CocField(name = "更新帐号", property = "updatedBy", mode = "*:P") //
 }) }// end groups
 , jsonData = "BizFieldLib.data.js")
 public class SystemDataType extends SFTBizComponent implements IBizFieldType {

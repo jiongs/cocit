@@ -1,25 +1,25 @@
 package com.kmetop.demsy.comlib.biz.field;
 
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
+import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.mvc.MvcConst.MvcUtil;
 
-@BzFld(name = "背景", uiTemplate = "ui.widget.field.Composite")
+@CocField(name = "背景", uiTemplate = "ui.widget.field.Composite")
 public class CssBackground extends JsonField<CssBackground> {
 
-	@BzFld(name = "背景颜色", uiTemplate = "ui.widget.field.CssColor", order = 1)
+	@CocField(name = "背景颜色", uiTemplate = "ui.widget.field.CssColor", order = 1)
 	protected String color;
 
-	@BzFld(name = "背景图片", uploadType = "*.jpg;*.gif;*.png", order = 2)
+	@CocField(name = "背景图片", uploadType = "*.jpg;*.gif;*.png", order = 2)
 	protected Upload image;
 
-	@BzFld(name = "图片平铺", options = ":平铺,repeat-x:横向,repeat-y:纵向,no-repeat:不平铺,inherit: 继承", order = 3)
+	@CocField(name = "图片平铺", options = ":平铺,repeat-x:横向,repeat-y:纵向,no-repeat:不平铺,inherit: 继承", order = 3)
 	protected String repeat;
 
-	@BzFld(name = "水平对齐", options = ":水平,left:居左,center:居中,right:居右", order = 4)
+	@CocField(name = "水平对齐", options = ":水平,left:居左,center:居中,right:居右", order = 4)
 	protected String positionX;
 
-	@BzFld(name = "垂直对齐", options = ":垂直,top:居顶,center:居中,bottom:居底", order = 5)
+	@CocField(name = "垂直对齐", options = ":垂直,top:居顶,center:居中,bottom:居底", order = 5)
 	protected String positionY;
 
 	public CssBackground() {

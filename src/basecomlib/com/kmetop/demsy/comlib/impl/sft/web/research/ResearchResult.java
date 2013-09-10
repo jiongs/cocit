@@ -9,10 +9,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 import com.kmetop.demsy.comlib.web.IResearchQuestion;
 import com.kmetop.demsy.comlib.web.IResearchResult;
@@ -20,46 +20,46 @@ import com.kmetop.demsy.comlib.web.IResearchSubject;
 import com.kmetop.demsy.orm.ann.Prop;
 
 @Entity
-@BzSys(name = "调查结果", code = IResearchResult.SYS_CODE, catalog = BIZCATA_WEB, orderby = ORDER_WEB_RESEARCH, buildin = true//
-, actions = { @BzAct(name = "批量添加", typeCode = TYPE_BZFORM_ADD_N, mode = "c_n", disabled = true, plugin = "com.kmetop.demsy.plugins.web.SaveResearchResult", info = "提交调查成功！") //
-		, @BzAct(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
-}, groups = { @BzGrp(name = "基本信息", code = "basic"//
-, fields = { @BzFld(property = "subject") //
-		, @BzFld(property = "question") //
-		, @BzFld(property = "option")//
-		, @BzFld(property = "answerText") //
-		, @BzFld(property = "createdIP") //
-		, @BzFld(property = "created", name = "参与时间", mode = "*:N v:S", pattern = "yyyy-MM-dd HH:mm", gridField = false) //
-		, @BzFld(property = "createdBy", name = "参与帐号", mode = "*:N v:S", gridField = false) //
+@CocTable(name = "调查结果", code = IResearchResult.SYS_CODE, catalog = BIZCATA_WEB, orderby = ORDER_WEB_RESEARCH, buildin = true//
+, actions = { @CocOperation(name = "批量添加", typeCode = TYPE_BZFORM_ADD_N, mode = "c_n", disabled = true, plugin = "com.kmetop.demsy.plugins.web.SaveResearchResult", info = "提交调查成功！") //
+		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
+}, groups = { @CocGroup(name = "基本信息", code = "basic"//
+, fields = { @CocField(property = "subject") //
+		, @CocField(property = "question") //
+		, @CocField(property = "option")//
+		, @CocField(property = "answerText") //
+		, @CocField(property = "createdIP") //
+		, @CocField(property = "created", name = "参与时间", mode = "*:N v:S", pattern = "yyyy-MM-dd HH:mm", gridField = false) //
+		, @CocField(property = "createdBy", name = "参与帐号", mode = "*:N v:S", gridField = false) //
 
 }) //
 }// end groups
 )
 public class ResearchResult extends SFTBizComponent implements IResearchResult {
 	@ManyToOne
-	@BzFld(name = "调查主题", mode = "c_n:E *:N v:S", masterMapping = true)
+	@CocField(name = "调查主题", mode = "c_n:E *:N v:S", isChildTable = true)
 	private ResearchSubject subject;
 
 	@ManyToOne
-	@BzFld(name = "调查问题", mode = "c_n:E *:N v:S", masterMapping = true, disabledNavi = true)
+	@CocField(name = "调查问题", mode = "c_n:E *:N v:S", isChildTable = true, disabledNavi = true)
 	private ResearchQuestion question;
 
 	@Prop("answerOption")
 	@ManyToOne
-	@BzFld(name = "选择项", mode = "c_n:E *:N v:S", masterMapping = true, disabledNavi = true)
+	@CocField(name = "选择项", mode = "c_n:E *:N v:S", isChildTable = true, disabledNavi = true)
 	private ResearchAnswerOption option;
 
 	@Column(length = 255)
-	@BzFld(name = "问卷回答", mode = "c_n:E *:N v:S", masterMapping = true, disabledNavi = true)
+	@CocField(name = "问卷回答", mode = "c_n:E *:N v:S", isChildTable = true, disabledNavi = true)
 	private String answerText;
 
 	@Column(length = 32)
 	@Prop("remoteIp")
-	@BzFld(name = "IP地址", mode = "*:N v:S", masterMapping = true, gridField = false)
+	@CocField(name = "IP地址", mode = "*:N v:S", isChildTable = true, gridField = false)
 	private String createdIP;
 
 	@Prop("value")
-	@BzFld(name = "投票次数", mode = "*:N v:S")
+	@CocField(name = "投票次数", mode = "*:N v:S")
 	private Long result = 1l;
 
 	public ResearchSubject getSubject() {

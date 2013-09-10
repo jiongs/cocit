@@ -1,10 +1,14 @@
 package com.kmetop.demsy.comlib.impl;
 
+import java.util.Date;
+
 import javax.persistence.Column;
+import javax.persistence.Transient;
 
 import org.nutz.lang.Strings;
 
 import com.kmetop.demsy.comlib.entity.IBizComponent;
+import com.kmetop.demsy.lang.Cls;
 
 public abstract class BizComponent extends DynaEntity implements IBizComponent {
 
@@ -20,6 +24,71 @@ public abstract class BizComponent extends DynaEntity implements IBizComponent {
 	protected Boolean disabled;
 
 	protected Boolean buildin;
+
+	protected Integer orderby;
+
+	@Column(name = "_created", updatable = false)
+	protected Date created;
+
+	@Column(name = "_updated")
+	protected Date updated;
+
+	@Column(name = "_created_by", length = 32, updatable = false)
+	protected String createdBy;
+
+	@Column(name = "_updated_by", length = 32)
+	protected String updatedBy;
+
+	@Transient
+	protected byte statusForJsonData;
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public Date getUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Integer getOrderby() {
+		return orderby;
+	}
+
+	public void setOrderby(Integer orderby) {
+		this.orderby = orderby;
+	}
+
+	public byte getStatusForJsonData() {
+		return statusForJsonData;
+	}
+
+	public void setStatusForJsonData(byte statusForAjaxAction) {
+		this.statusForJsonData = statusForAjaxAction;
+	}
 
 	@Override
 	public String getName() {
@@ -70,6 +139,31 @@ public abstract class BizComponent extends DynaEntity implements IBizComponent {
 
 	public void setBuildin(Boolean buildin) {
 		this.buildin = buildin;
+	}
+
+	@Override
+	public int hashCode() {
+		if (id == null) {
+			return super.hashCode();
+		}
+		return 37 * 17 + id.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object that) {
+		if (that == null)
+			return false;
+
+		if (!Cls.getType(getClass()).equals(Cls.getType(that.getClass()))) {
+			return false;
+		}
+
+		BizComponent thatEntity = (BizComponent) that;
+		if (id == null || id == 0 || thatEntity.id == null || thatEntity.id == 0) {
+			return this == that;
+		}
+
+		return thatEntity.id.equals(id);
 	}
 
 	@Override

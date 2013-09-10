@@ -152,7 +152,7 @@ public abstract class ClassUtil {
 		return kls.equals(Long.class);
 	}
 
-	public static <T> T newInstance(String name, Object... args) throws Throwable {
+	public static <T> T newInstance(String name, Object... args) {
 		if (name == null || name.trim().length() == 0)
 			return null;
 
@@ -161,7 +161,7 @@ public abstract class ClassUtil {
 		return newInstance(cls, args);
 	}
 
-	public static <T> T newInstance(Class<T> cls, Object... args) throws Throwable {
+	public static <T> T newInstance(Class<T> cls, Object... args) {
 
 		Object object = null;
 		if (cls.isArray()) {
@@ -188,18 +188,22 @@ public abstract class ClassUtil {
 			}
 			if (constructor != null) {
 				constructor.setAccessible(true);
-				object = constructor.newInstance(args);
+				try {
+					object = constructor.newInstance(args);
+				} catch (Throwable e) {
+					throw new CocException(e);
+				}
 			}
 		}
 
 		return (T) object;
 	}
 
-	public static Class forName(String name) throws Exception {
+	public static Class forName(String name) {
 		return forName(name, getDefaultClassLoader());
 	}
 
-	public static Class forName(String name, ClassLoader classLoader) throws Exception {
+	public static Class forName(String name, ClassLoader classLoader) {
 		name = name.trim();
 
 		// "java.lang.String[]" style arrays
@@ -218,7 +222,11 @@ public abstract class ClassUtil {
 			return Array.newInstance(elementClass, 0).getClass();
 		}
 
-		return classLoader.loadClass(name);
+		try {
+			return classLoader.loadClass(name);
+		} catch (ClassNotFoundException e) {
+			throw new CocException(e);
+		}
 	}
 
 	private static ClassLoader getDefaultClassLoader() {

@@ -1,7 +1,5 @@
 package com.jiongsoft.cocit.utils.sort;
 
-import com.jiongsoft.cocit.utils.Lang;
-
 /**
  * 插入排序，要求待排序的数组必须实现Comparable接口
  */
@@ -41,8 +39,8 @@ public class InsertSort extends AbstractSort {
 				Object value1 = c;
 				Object value2 = obj[i];
 				if (sortField != null && sortField.trim().length() > 0) {
-					value1 = Lang.getValue(value1, sortField);
-					value2 = Lang.getValue(value2, sortField);
+					value1 = getValue(value1, sortField);
+					value2 = getValue(value2, sortField);
 				}
 				if (compare(value1, value2, nullGT) < 0) {
 					// 如果待插入的元素小于当前元素，则把当前元素后面的元素依次后移一位

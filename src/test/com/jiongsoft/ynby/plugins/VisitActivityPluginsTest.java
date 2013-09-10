@@ -5,7 +5,9 @@ import java.util.Date;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.JUnitCore;
 
+import com.jiongsoft.TestAll;
 import com.jiongsoft.cocit.utils.CocException;
 import com.jiongsoft.ynby.entity.VisitActivity;
 import com.jiongsoft.ynby.plugins.VisitActivityPlugins.SaveActivity;
@@ -15,7 +17,7 @@ public class VisitActivityPluginsTest {
 	@Before
 	public void setUp() throws Exception {
 	}
-
+	
 	@After
 	public void tearDown() throws Exception {
 	}
@@ -101,5 +103,9 @@ public class VisitActivityPluginsTest {
 		event.setEntity(entity);
 
 		plugin.before(event);
+	}
+	
+	public static void main(String[] args) {
+		JUnitCore.runClasses(new Class[] { TestAll.class });
 	}
 }

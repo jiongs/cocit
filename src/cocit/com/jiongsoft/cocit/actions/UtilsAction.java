@@ -7,6 +7,7 @@ import org.nutz.mvc.annotation.Ok;
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitHttpContext;
 import com.jiongsoft.cocit.cocsoft.CocSoft;
+import com.jiongsoft.cocit.cocsoft.CocSoftConfig;
 import com.jiongsoft.cocit.cocui.CuiModelView;
 import com.jiongsoft.cocit.cocui.model.AlertsModel;
 import com.jiongsoft.cocit.sms.SmsClient;
@@ -51,7 +52,7 @@ public class UtilsAction {
 
 			CocSoft soft = ctx.getSoft();
 			SmsClient smsClient = soft.getSmsClient();
-			String tpl = soft.getConfig(SmsClient.CFG_VERIFICATION_CODE_TEMPLATE, "请输入您的验证码 %s");
+			String tpl = soft.getConfig(CocSoftConfig.CFG_VERIFICATION_CODE_TEMPLATE, "请输入您的验证码 %s");
 
 			String content = String.format(tpl, code);
 

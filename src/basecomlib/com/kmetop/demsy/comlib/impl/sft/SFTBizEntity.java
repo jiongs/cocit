@@ -12,12 +12,12 @@ import javax.persistence.TableGenerator;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-import com.kmetop.demsy.comlib.entity.IBizEntity;
+import com.jiongsoft.cocit.entity.CocEntity;
 import com.kmetop.demsy.comlib.entity.IDynamic;
 import com.kmetop.demsy.lang.Cls;
 import com.kmetop.demsy.lang.Props;
 
-public abstract class SFTBizEntity implements IDynamic, IBizEntity {
+public abstract class SFTBizEntity implements IDynamic, CocEntity {
 	@Id
 	@Column(name = "_id")
 	@GeneratedValue(generator = "SftIdGen", strategy = GenerationType.TABLE)

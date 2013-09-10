@@ -1,7 +1,5 @@
 package com.jiongsoft.cocit.utils.sort;
 
-import com.jiongsoft.cocit.utils.Lang;
-
 /**
  * 希尔排序，要求待排序的数组必须实现Comparable接口
  */
@@ -29,7 +27,7 @@ public class ShellSort extends AbstractSort {
 				// 如果后面的小于前面的（相隔step），则与前面的交换
 				for (int m = j; m >= step; m = m - step) {
 					try {
-						if (compare(Lang.getValue(obj[m], sortField), Lang.getValue(obj[m - step], sortField), nullGT) < 0) {
+						if (compare(getValue(obj[m], sortField), getValue(obj[m - step], sortField), nullGT) < 0) {
 							tmp = obj[m - step];
 							obj[m - step] = obj[m];
 							obj[m] = tmp;

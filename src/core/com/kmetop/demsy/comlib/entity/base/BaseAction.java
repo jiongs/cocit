@@ -2,18 +2,18 @@ package com.kmetop.demsy.comlib.entity.base;
 
 import javax.persistence.Column;
 
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
+import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.kmetop.demsy.comlib.biz.field.Upload;
 import com.kmetop.demsy.comlib.impl.BizComponent;
 
 public abstract class BaseAction extends BizComponent {
 
 	@Column(length = 255)
-	@BzFld(name = "链接地址")
+	@CocField(name = "链接地址")
 	private String targetUrl;
 
 	@Column(length = 16)
-	@BzFld(name = "业务窗口", disabledNavi = true, options = "_blank:新窗口,_self:自身窗口,_fixed:固定窗口")
+	@CocField(name = "业务窗口", disabledNavi = true, options = "_blank:新窗口,_self:自身窗口,_fixed:固定窗口")
 	protected String targetWindow;
 
 	protected Integer typeCode;

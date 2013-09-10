@@ -8,60 +8,60 @@ import static com.kmetop.demsy.comlib.LibConst.ORDER_WEB_ADVERT;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.field.Upload;
 import com.kmetop.demsy.comlib.impl.BizComponent;
 
 @Entity
-@BzSys(name = "网站广告管理", code = BIZSYS_WEB_ADVERT, catalog = BIZCATA_WEB, orderby = ORDER_WEB_ADVERT//
+@CocTable(name = "网站广告管理", code = BIZSYS_WEB_ADVERT, catalog = BIZCATA_WEB, orderby = ORDER_WEB_ADVERT//
 , actions = {
 //
-		@BzAct(name = "添加", typeCode = TYPE_BZFORM_NEW, mode = "c")//
-		, @BzAct(jsonData = "CommonBizAction.data.js") //
+		@CocOperation(name = "添加", typeCode = TYPE_BZFORM_NEW, mode = "c")//
+		, @CocOperation(jsonData = "CommonBizAction.data.js") //
 }//
-, groups = { @BzGrp(name = "基本信息", code = "basic"//
+, groups = { @CocGroup(name = "基本信息", code = "basic"//
 , fields = {
 //
-		@BzFld(property = "name", name = "广告名称", mode = "c:M e:M")//
-		, @BzFld(property = "priority") //
-		, @BzFld(property = "keywords") //
-		, @BzFld(property = "clickNum") //
-		, @BzFld(property = "linkNum") //
-		, @BzFld(property = "linkPath") //
-		, @BzFld(property = "linkTarget") //
-		, @BzFld(property = "image") //
-		, @BzFld(property = "disabled", name = "状态", disabledNavi = true, options = "1:停用,0:启用")//
-		, @BzFld(property = "created", name = "创建时间", mode = "*:N v:S") //
-		, @BzFld(property = "updated", name = "更新时间", mode = "*:N v:S") //
+		@CocField(property = "name", name = "广告名称", mode = "c:M e:M")//
+		, @CocField(property = "priority") //
+		, @CocField(property = "keywords") //
+		, @CocField(property = "clickNum") //
+		, @CocField(property = "linkNum") //
+		, @CocField(property = "linkPath") //
+		, @CocField(property = "linkTarget") //
+		, @CocField(property = "image") //
+		, @CocField(property = "disabled", name = "状态", disabledNavi = true, options = "1:停用,0:启用")//
+		, @CocField(property = "created", name = "创建时间", mode = "*:N v:S") //
+		, @CocField(property = "updated", name = "更新时间", mode = "*:N v:S") //
 }) }// end groups
 )
 public class UiAdvert extends BizComponent {
 
 	@Column(length = 128)
-	@BzFld(name = "链接地址")
+	@CocField(name = "链接地址")
 	protected String linkPath;
 
 	@Column(length = 16)
-	@BzFld(name = "链接目标", disabledNavi = true, gridField = false, options = "_blank:新窗口,_parent:父窗口")
+	@CocField(name = "链接目标", disabledNavi = true, gridField = false, options = "_blank:新窗口,_parent:父窗口")
 	protected String linkTarget;
 
-	@BzFld(name = "广告文件", uploadType = "*.bmp;*.jpg;*.gif;*.png;*.swf;*.flv", mode = "c:M e:M")
+	@CocField(name = "广告文件", uploadType = "*.bmp;*.jpg;*.gif;*.png;*.swf;*.flv", mode = "c:M e:M")
 	protected Upload image;
 
-	@BzFld(name = "优先级", disabledNavi = true, options = "1,2,3,4,5,6,7,8,9")
+	@CocField(name = "优先级", disabledNavi = true, options = "1,2,3,4,5,6,7,8,9")
 	protected Integer priority;
 
 	@Column(length = 256)
-	@BzFld(name = "关键字")
+	@CocField(name = "关键字")
 	protected String keywords;
 
-	@BzFld(name = "查看次数", mode = "*:N v:S")
+	@CocField(name = "查看次数", mode = "*:N v:S")
 	protected Integer clickNum;
 
-	@BzFld(name = "链接次数", mode = "*:N v:S")
+	@CocField(name = "链接次数", mode = "*:N v:S")
 	protected Integer linkNum;
 
 	public String getLinkPath() {

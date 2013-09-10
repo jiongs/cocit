@@ -4,41 +4,41 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 
 @Entity
-@BzSys(name = "产品促销", code = "ProductSaleActivity", orderby = 4//
-, actions = { @BzAct(jsonData = "CommonBizAction.data.js") //
+@CocTable(name = "产品促销", code = "ProductSaleActivity", orderby = 4//
+, actions = { @CocOperation(jsonData = "CommonBizAction.data.js") //
 }//
-, groups = { @BzGrp(name = "基本信息", code = "basic"//
-, fields = { @BzFld(property = "catalog", gridOrder = 1) //
-		, @BzFld(property = "buyerInfo", gridOrder = 2) //
-		, @BzFld(property = "orderInfo", gridOrder = 3) //
-		, @BzFld(property = "tradeInfo", gridOrder = 4) //
-		, @BzFld(property = "createdIP", gridOrder = 5) //
+, groups = { @CocGroup(name = "基本信息", code = "basic"//
+, fields = { @CocField(property = "catalog", gridOrder = 1) //
+		, @CocField(property = "buyerInfo", gridOrder = 2) //
+		, @CocField(property = "orderInfo", gridOrder = 3) //
+		, @CocField(property = "tradeInfo", gridOrder = 4) //
+		, @CocField(property = "createdIP", gridOrder = 5) //
 }) //
 }// end groups
 )
 public class ProductSaleActivity extends SFTBizComponent {
-	@BzFld(name = "活动分类", mode = "c:HM e:M", options = "['type eq 5']")
+	@CocField(name = "活动分类", mode = "c:HM e:M", options = "['type eq 5']")
 	@ManyToOne
 	protected ActivityCatalog catalog;
 
-	@BzFld(name = "买家信息", mode = "c:M *:S", privacy = true)
+	@CocField(name = "买家信息", mode = "c:M *:S", privacy = true)
 	protected String buyerInfo;
 
-	@BzFld(name = "订单信息", mode = "c:M *:S", privacy = true)
+	@CocField(name = "订单信息", mode = "c:M *:S", privacy = true)
 	protected String orderInfo;
 
-	@BzFld(name = "交易信息", mode = "c:M *:S", privacy = true)
+	@CocField(name = "交易信息", mode = "c:M *:S", privacy = true)
 	protected String tradeInfo;
 
 	@Column(length = 32)
-	@BzFld(name = "IP地址", mode = "*:N v:S", privacy = true)
+	@CocField(name = "IP地址", mode = "*:N v:S", privacy = true)
 	protected String createdIP;
 
 	public ActivityCatalog getCatalog() {

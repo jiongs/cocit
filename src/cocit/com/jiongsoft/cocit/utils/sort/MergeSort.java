@@ -1,7 +1,5 @@
 package com.jiongsoft.cocit.utils.sort;
 
-import com.jiongsoft.cocit.utils.Lang;
-
 public class MergeSort extends AbstractSort {
 	private Object[] bridge;
 
@@ -32,7 +30,7 @@ public class MergeSort extends AbstractSort {
 		int tmp = left;
 		while (left <= center && mid <= right) {
 			try {
-				if (compare(Lang.getValue(obj[left], sortField), Lang.getValue(obj[mid], sortField), nullGT) <= 0) {
+				if (compare(getValue(obj[left], sortField), getValue(obj[mid], sortField), nullGT) <= 0) {
 					bridge[third++] = obj[left++];
 				} else {
 					bridge[third++] = obj[mid++];

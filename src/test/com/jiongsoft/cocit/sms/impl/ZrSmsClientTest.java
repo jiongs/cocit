@@ -20,7 +20,7 @@ import org.junit.Test;
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitHttpContext;
 import com.jiongsoft.cocit.cocsoft.CocSoft;
-import com.jiongsoft.cocit.sms.SmsClient;
+import com.jiongsoft.cocit.cocsoft.CocSoftConfig;
 import com.jiongsoft.cocit.sms.impl.ZrSmsClient;
 import com.jiongsoft.cocit.utils.DateUtil;
 
@@ -39,15 +39,15 @@ public class ZrSmsClientTest {
 				softContext.getSoft();
 				result = soft;
 
-				soft.getConfig(SmsClient.CFG_PROXY_HOST, "");
+				soft.getConfig(CocSoftConfig.CFG_PROXY_HOST, "");
 				result = "192.168.128.3";
-				soft.getConfig(SmsClient.CFG_PROXY_PORT, 80);
+				soft.getConfig(CocSoftConfig.CFG_PROXY_PORT, 80);
 				result = 80;
-				soft.getConfig(SmsClient.CFG_URL, "http://oa.zrsms.com");
+				soft.getConfig(CocSoftConfig.CFG_URL, "http://oa.zrsms.com");
 				result = "http://oa.zrsms.com";
-				soft.getConfig(SmsClient.CFG_UID, "");
+				soft.getConfig(CocSoftConfig.CFG_UID, "");
 				result = "zlsandi";
-				soft.getConfig(SmsClient.CFG_PWD, "");
+				soft.getConfig(CocSoftConfig.CFG_PWD, "");
 				result = "zlsandi";
 			}
 		};

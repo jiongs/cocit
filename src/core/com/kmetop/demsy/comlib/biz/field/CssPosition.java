@@ -1,29 +1,29 @@
 package com.kmetop.demsy.comlib.biz.field;
 
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
+import com.jiongsoft.cocit.entity.annotation.CocField;
 
-@BzFld(precision = 2000, uiTemplate = "ui.widget.field.Composite")
+@CocField(precision = 2000, uiTemplate = "ui.widget.field.Composite")
 public class CssPosition extends JsonField<CssPosition> {
 
-	@BzFld(name = "区域", order = 1, options = "page:内容,top:顶部,bottom:底部")
+	@CocField(name = "区域", order = 1, options = "page:内容,top:顶部,bottom:底部")
 	private String area;
 
-	@BzFld(name = "位置", order = 2, options = "absolute:绝对位置,relative:相对位置")
+	@CocField(name = "位置", order = 2, options = "absolute:绝对位置,relative:相对位置")
 	private String position;
 
-	@BzFld(name = "对齐", order = 3, disabledNavi = true, options = "1:左,2:右,3:顶,4:底")
+	@CocField(name = "对齐", order = 3, disabledNavi = true, options = "1:左,2:右,3:顶,4:底")
 	private Integer align;
 
-	@BzFld(name = "距左", order = 4, uiTemplate = "ui.widget.field.Spinner")
+	@CocField(name = "距左", order = 4, uiTemplate = "ui.widget.field.Spinner")
 	private Integer left;
 
-	@BzFld(name = "距顶", order = 5, uiTemplate = "ui.widget.field.Spinner")
+	@CocField(name = "距顶", order = 5, uiTemplate = "ui.widget.field.Spinner")
 	private Integer top;
 
-	@BzFld(name = "宽度", order = 6, uiTemplate = "ui.widget.field.Spinner")
+	@CocField(name = "宽度", order = 6, uiTemplate = "ui.widget.field.Spinner")
 	private Integer width;
 
-	@BzFld(name = "高度", order = 7, uiTemplate = "ui.widget.field.Spinner")
+	@CocField(name = "高度", order = 7, uiTemplate = "ui.widget.field.Spinner")
 	private Integer height;
 
 	public CssPosition() {

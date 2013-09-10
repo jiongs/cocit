@@ -10,34 +10,34 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.IBizFieldGroup;
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 
 @Entity
-@BzSys(name = "字段分组", code = BIZSYS_BZUDF_FIELD_GROUP, catalog = BIZCATA_UDF_CONSOLE, orderby = ORDER_BZUDF_FIELD_GROUP, buildin = true//
-, actions = { @BzAct(name = "新增分组", typeCode = TYPE_BZFORM_NEW, mode = "c")//
-		, @BzAct(jsonData = "CommonBizAction.data.js") //
+@CocTable(name = "字段分组", code = BIZSYS_BZUDF_FIELD_GROUP, catalog = BIZCATA_UDF_CONSOLE, orderby = ORDER_BZUDF_FIELD_GROUP, buildin = true//
+, actions = { @CocOperation(name = "新增分组", typeCode = TYPE_BZFORM_NEW, mode = "c")//
+		, @CocOperation(jsonData = "CommonBizAction.data.js") //
 }//
-, groups = { @BzGrp(name = "基本信息", code = "basic"//
+, groups = { @CocGroup(name = "基本信息", code = "basic"//
 , fields = {
-		@BzFld(name = "分组名称", property = "name", mode = "c:M e:M")//
+		@CocField(name = "分组名称", property = "name", mode = "c:M e:M")//
 		,
-		@BzFld(name = "分组编号", property = "code") //
+		@CocField(name = "分组编号", property = "code") //
 		,
-		@BzFld(name = "所属系统", property = "system", refrenceSystem = BIZSYS_BZUDF_SYSTEM, masterMapping = true, mode = "c:M *:S") //
-		, @BzFld(name = "人工顺序", property = "orderby") //
-		, @BzFld(name = "字段模式", property = "mode") //
-		, @BzFld(name = "表单列数", property = "columns") //
-		, @BzFld(name = "停止状态", property = "disabled", disabledNavi = true, options = "1:停用,0:启用") //
-		, @BzFld(name = "分组描述", property = "desc") //
-		, @BzFld(name = "创建时间", property = "created", mode = "*:P") //
-		, @BzFld(name = "更新时间", property = "updated", mode = "*:P") //
-		, @BzFld(name = "创建帐号", property = "createdBy", mode = "*:P") //
-		, @BzFld(name = "更新帐号", property = "updatedBy", mode = "*:P") //
+		@CocField(name = "所属系统", property = "system", refrenceTable = BIZSYS_BZUDF_SYSTEM, isChildTable = true, mode = "c:M *:S") //
+		, @CocField(name = "人工顺序", property = "orderby") //
+		, @CocField(name = "字段模式", property = "mode") //
+		, @CocField(name = "表单列数", property = "columns") //
+		, @CocField(name = "停止状态", property = "disabled", disabledNavi = true, options = "1:停用,0:启用") //
+		, @CocField(name = "分组描述", property = "desc") //
+		, @CocField(name = "创建时间", property = "created", mode = "*:P") //
+		, @CocField(name = "更新时间", property = "updated", mode = "*:P") //
+		, @CocField(name = "创建帐号", property = "createdBy", mode = "*:P") //
+		, @CocField(name = "更新帐号", property = "updatedBy", mode = "*:P") //
 }) }// end groups
 )
 public class SystemDataGroup extends SFTBizComponent implements IBizFieldGroup {

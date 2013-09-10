@@ -26,6 +26,7 @@ import org.nutz.dao.Sqls;
 import org.nutz.lang.Mirror;
 
 import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.entity.CocEntity;
 import com.jiongsoft.cocit.utils.ActionUtil;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.IBizPlugin;
@@ -35,7 +36,6 @@ import com.kmetop.demsy.comlib.biz.IBizAction;
 import com.kmetop.demsy.comlib.biz.IBizField;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.comlib.biz.field.Upload;
-import com.kmetop.demsy.comlib.entity.IBizEntity;
 import com.kmetop.demsy.comlib.entity.IBizComponent;
 import com.kmetop.demsy.comlib.entity.IDemsyCorp;
 import com.kmetop.demsy.comlib.entity.IDemsySoft;
@@ -528,8 +528,8 @@ public abstract class ModuleEngine implements IModuleEngine {
 				Class type = bizEngine.getType(refSys);
 
 				if (orm.count(type, null) < 10) {
-					List<? extends IBizEntity> datas = orm.query(type, Cls.hasField(klass, F_ORDER_BY) ? CndExpr.asc(F_ORDER_BY) : null);
-					for (IBizEntity data : datas) {
+					List<? extends CocEntity> datas = orm.query(type, Cls.hasField(klass, F_ORDER_BY) ? CndExpr.asc(F_ORDER_BY) : null);
+					for (CocEntity data : datas) {
 						Node node = root.addNode(item.getId(), item.getId() + "_" + fld.getId() + "_" + data.getId());
 						node.setName(data.toString());
 						node.setType(TYPE_BZ_SAVE);

@@ -10,7 +10,6 @@ import org.nutz.lang.ExitLoop;
 import org.nutz.lang.Lang;
 import org.nutz.lang.Mirror;
 
-import com.kmetop.demsy.comlib.entity.IBizEntity;
 import com.kmetop.demsy.lang.Obj;
 
 public class SaveManyInvoker extends DemsyInsertInvoker {
@@ -34,8 +33,13 @@ public class SaveManyInvoker extends DemsyInsertInvoker {
 				Lang.each(many, new Each<Object>() {
 					public void invoke(int index, Object ta, int size) throws ExitLoop {
 						mta.setValue(ta, link.getTargetField(), mainObj);
-						// AJAX操作状态——删除
-						if (ta instanceof IBizEntity && ((IBizEntity) ta).getStatusForJsonData() == 1) {
+						/**
+						 * 保存一对多数据时：先查看批量操作的数据状态码，如批量添加业务子表数据，包括删除、添加、修改等。
+						 * <p>
+						 * 1 - 删除
+						 */
+						byte statusCode = Obj.getValue(ta, "statusForJsonData");
+						if (statusCode == 1) {
 							if (!Obj.isEmpty(ta))
 								((IExtDao) dao).delete(ta);
 						} else {

@@ -1,4 +1,4 @@
-package com.kmetop.demsy.comlib.biz.ann;
+package com.jiongsoft.cocit.entity.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,14 +6,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 业务表注释。使用该注释将自动在数据库中创建业务表的定义
+ * 业务表注释。使用该注释自动将CoC实体类转换成Coc业务表。
  * 
  * @author yongshan.ji
  * 
  */
 @Target(value = { ElementType.TYPE })
 @Retention(value = RetentionPolicy.RUNTIME)
-public @interface BzSys {
+public @interface CocTable {
 
 	public long id() default 0;
 
@@ -25,9 +25,9 @@ public @interface BzSys {
 
 	public String template() default "";
 
-	BzGrp[] groups() default {};
+	CocGroup[] groups() default {};
 
-	BzAct[] actions() default {};
+	CocOperation[] actions() default {};
 
 	public byte layout() default 0;
 

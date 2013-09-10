@@ -18,8 +18,8 @@ import org.nutz.dao.sql.Sql;
 import org.nutz.trans.Atom;
 import org.nutz.trans.Trans;
 
+import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.kmetop.demsy.Demsy;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
 import com.kmetop.demsy.lang.Cls;
 import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.Str;
@@ -302,7 +302,7 @@ public class MetaDaoImpl implements IMetaDao {
 
 		try {
 			Class cls = Cls.forName(Demsy.appconfig.getCustomFieldPkg() + srcType);
-			BzFld bzfld = (BzFld) cls.getAnnotation(BzFld.class);
+			CocField bzfld = (CocField) cls.getAnnotation(CocField.class);
 
 			type = "String";
 			if (bzfld != null) {

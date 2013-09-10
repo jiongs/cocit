@@ -1,13 +1,19 @@
-package com.kmetop.demsy.comlib.biz.ann;
+package com.jiongsoft.cocit.entity.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * 字段注释：使用该注释自动将CoC实体类中的字段转换成CoC业务表字段。
+ * 
+ * @author jiongsoft
+ * 
+ */
 @Target(value = { ElementType.TYPE, ElementType.FIELD, ElementType.METHOD })
 @Retention(value = RetentionPolicy.RUNTIME)
-public @interface BzFld {
+public @interface CocField {
 
 	public long id() default 0;
 
@@ -29,12 +35,12 @@ public @interface BzFld {
 
 	public boolean gridField() default true;
 
-	public String refrenceSystem() default "";
+	public String refrenceTable() default "";
 
 	// 子系统字段，引用的
 	public String refrenceFields() default "";
 
-	public boolean masterMapping() default false;
+	public boolean isChildTable() default false;
 
 	public boolean password() default false;
 
@@ -74,5 +80,5 @@ public @interface BzFld {
 
 	boolean privacy() default false;
 
-	public BzSubFld[] children() default {};
+	public CocField2[] children() default {};
 }

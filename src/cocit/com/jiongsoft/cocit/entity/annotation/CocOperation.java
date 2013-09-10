@@ -1,12 +1,18 @@
-package com.kmetop.demsy.comlib.biz.ann;
+package com.jiongsoft.cocit.entity.annotation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * 操作注释：使用该注释将自动为CoC实体类对应的业务表生成相关的业务操作。如：添加、删除、修改、查询等。
+ * 
+ * @author jiongsoft
+ * 
+ */
 @Target(value = {})
 @Retention(value = RetentionPolicy.RUNTIME)
-public @interface BzAct {
+public @interface CocOperation {
 
 	public long id() default 0;
 

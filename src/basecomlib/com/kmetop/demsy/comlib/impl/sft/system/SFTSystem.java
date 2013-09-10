@@ -13,40 +13,40 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
 import com.kmetop.demsy.comlib.impl.base.biz.BizCatalog;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 
 @Entity
-@BzSys(name = "系统自定义", code = BIZSYS_BZUDF_SYSTEM, catalog = BIZCATA_UDF_CONSOLE, orderby = ORDER_BZUDF_SYSTEM, buildin = true//
-, actions = { @BzAct(name = "新增系统", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = "com.kmetop.demsy.plugins.biz.CreateBizSystem")//
-		, @BzAct(jsonData = "CommonBizAction.data.js") //
-		, @BzAct(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", plugin = "com.kmetop.demsy.plugins.biz.EditBizSystem") //
+@CocTable(name = "系统自定义", code = BIZSYS_BZUDF_SYSTEM, catalog = BIZCATA_UDF_CONSOLE, orderby = ORDER_BZUDF_SYSTEM, buildin = true//
+, actions = { @CocOperation(name = "新增系统", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = "com.kmetop.demsy.plugins.biz.CreateBizSystem")//
+		, @CocOperation(jsonData = "CommonBizAction.data.js") //
+		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", plugin = "com.kmetop.demsy.plugins.biz.EditBizSystem") //
 }//
-, groups = { @BzGrp(name = "基本信息", code = "basic"//
-, fields = { @BzFld(name = "系统名称", property = "name", mode = "c:M e:M")//
-		, @BzFld(name = "系统编号", property = "code") //
-		, @BzFld(name = "路径前缀", property = "actionPathPrefix", gridField = true) //
-		, @BzFld(name = "人工顺序", property = "orderby") //
-		, @BzFld(name = "系统分类", property = "catalog", groupBy = true, refrenceSystem = BIZSYS_BZUDF_CATALOG) //
-}), @BzGrp(name = "扩展信息", code = "ext"//
-, fields = { @BzFld(name = "窗体模版", property = "template", gridField = false) //
-		, @BzFld(name = "映射实体类", property = "mappingClass", gridField = false, mode = "*:P") //
-		, @BzFld(name = "实体类扩展", property = "extendClass", gridField = false) //
-		, @BzFld(name = "映射数据表", property = "mappingTable", gridField = false, mode = "*:P") //
-		, @BzFld(name = "系统描述", property = "desc") //
-		, @BzFld(property = "layout") //
-		, @BzFld(name = "停用状态", property = "disabled", disabledNavi = true, options = "1:停用,0:启用") //
-		, @BzFld(name = "内置状态", property = "buildin", disabledNavi = true, mode = "*:N") //
-		, @BzFld(name = "父系统", property = "parent", disabledNavi = true, mode = "*:N") //
-		, @BzFld(name = "创建时间", property = "created", mode = "*:N v:P") //
-		, @BzFld(name = "更新时间", property = "updated", mode = "*:N v:P") //
-		, @BzFld(name = "创建帐号", property = "createdBy", mode = "*:N v:P") //
-		, @BzFld(name = "更新帐号", property = "updatedBy", mode = "*:N v:P") //
+, groups = { @CocGroup(name = "基本信息", code = "basic"//
+, fields = { @CocField(name = "系统名称", property = "name", mode = "c:M e:M")//
+		, @CocField(name = "系统编号", property = "code") //
+		, @CocField(name = "路径前缀", property = "actionPathPrefix", gridField = true) //
+		, @CocField(name = "人工顺序", property = "orderby") //
+		, @CocField(name = "系统分类", property = "catalog", groupBy = true, refrenceTable = BIZSYS_BZUDF_CATALOG) //
+}), @CocGroup(name = "扩展信息", code = "ext"//
+, fields = { @CocField(name = "窗体模版", property = "template", gridField = false) //
+		, @CocField(name = "映射实体类", property = "mappingClass", gridField = false, mode = "*:P") //
+		, @CocField(name = "实体类扩展", property = "extendClass", gridField = false) //
+		, @CocField(name = "映射数据表", property = "mappingTable", gridField = false, mode = "*:P") //
+		, @CocField(name = "系统描述", property = "desc") //
+		, @CocField(property = "layout") //
+		, @CocField(name = "停用状态", property = "disabled", disabledNavi = true, options = "1:停用,0:启用") //
+		, @CocField(name = "内置状态", property = "buildin", disabledNavi = true, mode = "*:N") //
+		, @CocField(name = "父系统", property = "parent", disabledNavi = true, mode = "*:N") //
+		, @CocField(name = "创建时间", property = "created", mode = "*:N v:P") //
+		, @CocField(name = "更新时间", property = "updated", mode = "*:N v:P") //
+		, @CocField(name = "创建帐号", property = "createdBy", mode = "*:N v:P") //
+		, @CocField(name = "更新帐号", property = "updatedBy", mode = "*:N v:P") //
 }) }// end groups
 )
 public class SFTSystem extends SFTBizComponent implements IBizSystem {
@@ -57,7 +57,7 @@ public class SFTSystem extends SFTBizComponent implements IBizSystem {
 	@ManyToOne
 	protected SFTSystem parent;
 
-	@BzFld(name = "表单布局", options = "0:列表结构,1:纵向TAB结构")
+	@CocField(name = "表单布局", options = "0:列表结构,1:纵向TAB结构")
 	protected byte layout;
 
 	/*

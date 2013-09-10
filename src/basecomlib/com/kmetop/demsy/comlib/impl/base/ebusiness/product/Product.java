@@ -11,10 +11,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.field.MultiUpload;
 import com.kmetop.demsy.comlib.biz.field.RichText;
 import com.kmetop.demsy.comlib.biz.field.SubSystem;
@@ -24,12 +24,12 @@ import com.kmetop.demsy.comlib.impl.BizComponent;
 import com.kmetop.demsy.lang.Str;
 
 @Entity
-@BzSys(name = "产品信息管理", code = IProduct.SYS_CODE, orderby = 4,//
+@CocTable(name = "产品信息管理", code = IProduct.SYS_CODE, orderby = 4,//
 actions = {
 //
-		@BzAct(name = "添加产品", typeCode = TYPE_BZFORM_NEW, mode = "c"),//
-		@BzAct(name = "调整分类", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu"),//
-		@BzAct(name = "批量推荐", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu2"),//
+		@CocOperation(name = "添加产品", typeCode = TYPE_BZFORM_NEW, mode = "c"),//
+		@CocOperation(name = "调整分类", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu"),//
+		@CocOperation(name = "批量推荐", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu2"),//
 		// @BzAct(name = "调整销售数据", typeCode = TYPE_BZFORM_EDIT, mode = "e1"),//
 		// @BzAct(name = "批量调整运营商", typeCode = TYPE_BZFORM_EDIT_N, mode =
 		// "bu1"),//
@@ -37,110 +37,110 @@ actions = {
 		// "bu3"),//
 		// @BzAct(name = "批量设置网购", typeCode = TYPE_BZFORM_EDIT_N, mode =
 		// "bu4"),//
-		@BzAct(jsonData = "CommonBizAction.data.js") //
+		@CocOperation(jsonData = "CommonBizAction.data.js") //
 },//
-groups = { @BzGrp(name = "基本信息", code = "basic",//
-fields = { @BzFld(property = "catalog", gridOrder = 1)//
-		, @BzFld(name = "产品名称", property = "name", mode = "c:M e:M v:S *:N", gridOrder = 2)//
-		, @BzFld(name = "产品编码", property = "code", mode = "c:E e:E v:S *:N")//
-		, @BzFld(property = "operator")//
-		, @BzFld(property = "storage")//
-		, @BzFld(property = "image")//
-		, @BzFld(property = "spec") //
-		, @BzFld(property = "recommend") //
-		, @BzFld(property = "onlineDate") //
-		, @BzFld(property = "oldPrice", gridOrder = 4)//
-		, @BzFld(property = "price", gridOrder = 5)//
-		, @BzFld(property = "allowBuy", gridOrder = 3)//
-		, @BzFld(property = "saleNum", gridOrder = 6)//
-		, @BzFld(property = "stockNum", gridOrder = 7) //
-		, @BzFld(property = "keywords") //
-		, @BzFld(name = "产品说明", property = "desc", mode = "c:E e:E v:S *:N") //
-		, @BzFld(name = "人工顺序", property = "orderby", uiTemplate = "ui.widget.field.Spinner", mode = "v:S *:N", gridOrder = 8) //
-}), @BzGrp(name = "产品详情", code = "content",//
-fields = { @BzFld(property = "content") //
-}), @BzGrp(name = "产品特征", code = "attributes",//
-fields = { @BzFld(property = "attributes") //
-}), @BzGrp(name = "产品型号", code = "models",//
-fields = { @BzFld(property = "models") //
-}), @BzGrp(name = "产品图库", code = "images",//
-fields = { @BzFld(property = "images") //
-}), @BzGrp(name = "其他属性", code = "other",//
-fields = { @BzFld(property = "clickNum", gridOrder = 8)//
-		, @BzFld(property = "commentNum")//
-		, @BzFld(name = "创建时间", property = "created", mode = "*:N v:S") //
-		, @BzFld(name = "更新时间", property = "updated", mode = "*:N v:S") //
-		, @BzFld(name = "创建帐号", property = "createdBy", mode = "*:N v:S") //
-		, @BzFld(name = "更新帐号", property = "updatedBy", mode = "*:N v:S") //
+groups = { @CocGroup(name = "基本信息", code = "basic",//
+fields = { @CocField(property = "catalog", gridOrder = 1)//
+		, @CocField(name = "产品名称", property = "name", mode = "c:M e:M v:S *:N", gridOrder = 2)//
+		, @CocField(name = "产品编码", property = "code", mode = "c:E e:E v:S *:N")//
+		, @CocField(property = "operator")//
+		, @CocField(property = "storage")//
+		, @CocField(property = "image")//
+		, @CocField(property = "spec") //
+		, @CocField(property = "recommend") //
+		, @CocField(property = "onlineDate") //
+		, @CocField(property = "oldPrice", gridOrder = 4)//
+		, @CocField(property = "price", gridOrder = 5)//
+		, @CocField(property = "allowBuy", gridOrder = 3)//
+		, @CocField(property = "saleNum", gridOrder = 6)//
+		, @CocField(property = "stockNum", gridOrder = 7) //
+		, @CocField(property = "keywords") //
+		, @CocField(name = "产品说明", property = "desc", mode = "c:E e:E v:S *:N") //
+		, @CocField(name = "人工顺序", property = "orderby", uiTemplate = "ui.widget.field.Spinner", mode = "v:S *:N", gridOrder = 8) //
+}), @CocGroup(name = "产品详情", code = "content",//
+fields = { @CocField(property = "content") //
+}), @CocGroup(name = "产品特征", code = "attributes",//
+fields = { @CocField(property = "attributes") //
+}), @CocGroup(name = "产品型号", code = "models",//
+fields = { @CocField(property = "models") //
+}), @CocGroup(name = "产品图库", code = "images",//
+fields = { @CocField(property = "images") //
+}), @CocGroup(name = "其他属性", code = "other",//
+fields = { @CocField(property = "clickNum", gridOrder = 8)//
+		, @CocField(property = "commentNum")//
+		, @CocField(name = "创建时间", property = "created", mode = "*:N v:S") //
+		, @CocField(name = "更新时间", property = "updated", mode = "*:N v:S") //
+		, @CocField(name = "创建帐号", property = "createdBy", mode = "*:N v:S") //
+		, @CocField(name = "更新帐号", property = "updatedBy", mode = "*:N v:S") //
 }) // @BzGrp
 }// end groups
 )
 public class Product extends BizComponent implements IProduct {
 	@ManyToOne
-	@BzFld(name = "产品类别", mode = "c:M e:M bu:E v:S *:N")
+	@CocField(name = "产品类别", mode = "c:M e:M bu:E v:S *:N")
 	protected ProductCatalog catalog;
 
 	@OneToMany(mappedBy = "product")
-	@BzFld(name = "产品特征", uploadType = "*.jpg;*.gif;*.png;*.bmp", isTransient = true, gridField = false, mode = "c:E e:E v:S *:N", refrenceFields = "name,image,desc")
+	@CocField(name = "产品特征", uploadType = "*.jpg;*.gif;*.png;*.bmp", isTransient = true, gridField = false, mode = "c:E e:E v:S *:N", refrenceFields = "name,image,desc")
 	protected SubSystem<ProductAttribute> attributes;
 
 	@OneToMany(mappedBy = "product")
-	@BzFld(name = "产品型号", uploadType = "*.jpg;*.gif;*.png;*.bmp", isTransient = true, gridField = false, mode = "c:E e:E v:S *:N", refrenceFields = "name,image,desc")
+	@CocField(name = "产品型号", uploadType = "*.jpg;*.gif;*.png;*.bmp", isTransient = true, gridField = false, mode = "c:E e:E v:S *:N", refrenceFields = "name,image,desc")
 	protected SubSystem<ProductModel> models;
 
 	@ManyToOne
-	@BzFld(name = "发货地址", mode = "c:E e:E bu3:E v:S *:N", disabledNavi = true)
+	@CocField(name = "发货地址", mode = "c:E e:E bu3:E v:S *:N", disabledNavi = true)
 	protected ProductDeliver storage;
 
 	@ManyToOne
-	@BzFld(name = "运营商", mode = "c:E e:E bu1:E v:S *:N", disabledNavi = true)
+	@CocField(name = "运营商", mode = "c:E e:E bu1:E v:S *:N", disabledNavi = true)
 	protected ProductOperator operator;
 
-	@BzFld(name = "推荐标志", options = "1:推荐,0:取消推荐", mode = "c:E e:E bu2:E v:S *:N")
+	@CocField(name = "推荐标志", options = "1:推荐,0:取消推荐", mode = "c:E e:E bu2:E v:S *:N")
 	protected Boolean recommend;
 
-	@BzFld(name = "产品图片", uploadType = "*.jpg;*.gif;*.png;*.bmp", mode = "c:E e:E v:S *:N")
+	@CocField(name = "产品图片", uploadType = "*.jpg;*.gif;*.png;*.bmp", mode = "c:E e:E v:S *:N")
 	protected Upload image;
 
-	@BzFld(name = "产品图库", uploadType = "*.jpg;*.gif;*.png;*.bmp;*.swf;*.flv;*.zip", mode = "c:E e:E v:S *:N", gridField = false)
+	@CocField(name = "产品图库", uploadType = "*.jpg;*.gif;*.png;*.bmp;*.swf;*.flv;*.zip", mode = "c:E e:E v:S *:N", gridField = false)
 	protected MultiUpload images;
 
-	@BzFld(name = "产品规格", mode = "c:E e:E v:S *:N")
+	@CocField(name = "产品规格", mode = "c:E e:E v:S *:N")
 	protected String spec;
 
-	@BzFld(name = "上架时间", pattern = "yyyy-MM-dd", mode = "c:E e:E v:S *:N")
+	@CocField(name = "上架时间", pattern = "yyyy-MM-dd", mode = "c:E e:E v:S *:N")
 	protected Date onlineDate;
 
-	@BzFld(name = "产品详情", gridField = false, mode = "c:E e:E v:S *:N")
+	@CocField(name = "产品详情", gridField = false, mode = "c:E e:E v:S *:N")
 	protected RichText content;
 
 	@Column(length = 256)
-	@BzFld(name = "关键字", mode = "c:E e:E v:S *:N")
+	@CocField(name = "关键字", mode = "c:E e:E v:S *:N")
 	protected String keywords;
 
 	/*
 	 * 销售数据
 	 */
-	@BzFld(name = "产品原价", mode = "c:E e:E e1:E v:S *:N", pattern = "#,##0.00")
+	@CocField(name = "产品原价", mode = "c:E e:E e1:E v:S *:N", pattern = "#,##0.00")
 	protected Double oldPrice;
 
-	@BzFld(name = "产品现价", mode = "c:E e:E e1:E v:S *:N", pattern = "#,##0.00")
+	@CocField(name = "产品现价", mode = "c:E e:E e1:E v:S *:N", pattern = "#,##0.00")
 	protected Double price;
 
-	@BzFld(name = "产品状态", mode = "c:E e:E e1:E bu4:E v:S *:N", options = "1:允许网购,0:禁止网购,2:已下架")
+	@CocField(name = "产品状态", mode = "c:E e:E e1:E bu4:E v:S *:N", options = "1:允许网购,0:禁止网购,2:已下架")
 	protected byte allowBuy;
 
-	@BzFld(name = "库存数量", mode = "c:E e:E e1:E v:S *:N")
+	@CocField(name = "库存数量", mode = "c:E e:E e1:E v:S *:N")
 	protected Integer stockNum;
 
-	@BzFld(name = "销售数量", mode = "c:E e:E e1:E v:S *:N")
+	@CocField(name = "销售数量", mode = "c:E e:E e1:E v:S *:N")
 	protected Integer saleNum;
 
 	// 统计信息收集=====================
-	@BzFld(name = "点击次数", mode = "*:N v:S")
+	@CocField(name = "点击次数", mode = "*:N v:S")
 	protected Integer clickNum;
 
-	@BzFld(name = "评论次数", mode = "*:N v:S")
+	@CocField(name = "评论次数", mode = "*:N v:S")
 	protected Integer commentNum;
 
 	public String getKeywords() {

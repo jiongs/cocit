@@ -22,15 +22,15 @@ import org.nutz.lang.Mirror;
 
 import com.jiongsoft.cocit.corm.expr.CndExpr;
 import com.jiongsoft.cocit.corm.expr.Expr;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocCatalog;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.IBizField;
 import com.kmetop.demsy.comlib.biz.IBizFieldType;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.comlib.biz.IRuntimeConfigable;
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzCata;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
 import com.kmetop.demsy.comlib.biz.field.SubSystem;
 import com.kmetop.demsy.comlib.biz.field.Upload;
 import com.kmetop.demsy.comlib.entity.IDemsySoft;
@@ -144,7 +144,7 @@ public class SFTBizEngine extends BizEngine {
 		if (klass == null) {
 			return null;
 		}
-		BzSys sysann = (BzSys) klass.getAnnotation(BzSys.class);
+		CocTable sysann = (CocTable) klass.getAnnotation(CocTable.class);
 		Entity entity = (Entity) klass.getAnnotation(Entity.class);
 		if (sysann == null || entity == null) {
 			return null;
@@ -172,11 +172,11 @@ public class SFTBizEngine extends BizEngine {
 
 		// 计算业务操作
 		List<BizAction> newActions = new LinkedList();
-		BzAct[] actanns = sysann.actions();
+		CocOperation[] actanns = sysann.actions();
 		if (actanns != null) {
 			int actionOrder = sysOrder * 100;
 			for (int i = 0; i < actanns.length; i++) {
-				BzAct actann = actanns[i];
+				CocOperation actann = actanns[i];
 
 				if (Str.isEmpty(actann.jsonData())) {
 					BizAction action = this.parseBizAction(orm, soft, system, actann, actionOrder++);
@@ -190,22 +190,22 @@ public class SFTBizEngine extends BizEngine {
 		}
 		List<SystemDataGroup> newGroups = new LinkedList();
 		List<IBizField> newFields = new LinkedList();
-		BzGrp[] grpanns = sysann.groups();
+		CocGroup[] grpanns = sysann.groups();
 		if (grpanns != null) {
 			int groupOrder = sysOrder * 10;
 			int fieldOrder = sysOrder * 100;
 			int gridOrder = 100;
 			for (int i = 0; i < grpanns.length; i++) {
-				BzGrp grpann = grpanns[i];
+				CocGroup grpann = grpanns[i];
 				SystemDataGroup group = this.parseBizGroup(orm, soft, system, grpann, groupOrder++);
 				orm.save(group);
 				newGroups.add(group);
 
 				// 计算业务字段
-				BzFld[] fldanns = grpann.fields();
+				CocField[] fldanns = grpann.fields();
 				if (fldanns != null) {
 					for (int j = 0; j < fldanns.length; j++) {
-						BzFld fldann = fldanns[j];
+						CocField fldann = fldanns[j];
 						AbstractSystemData field = this.parseBizField(orm, soft, me, system, group, fldann, gridOrder++, fieldOrder++, fieldLibs);
 						orm.save(field);
 						newFields.add(field);
@@ -244,7 +244,7 @@ public class SFTBizEngine extends BizEngine {
 		Long soft = system.getSoftID();
 
 		Map<String, IBizFieldType> fieldLibs = this.getFieldTypes();
-		BzSys sysann = (BzSys) klass.getAnnotation(BzSys.class);
+		CocTable sysann = (CocTable) klass.getAnnotation(CocTable.class);
 		if (sysann == null) {
 			return;
 		}
@@ -255,11 +255,11 @@ public class SFTBizEngine extends BizEngine {
 
 		// 计算业务操作
 		List<BizAction> newActions = new LinkedList();
-		BzAct[] actanns = sysann.actions();
+		CocOperation[] actanns = sysann.actions();
 		if (actanns != null) {
 			int actionOrder = sysOrder * 100;
 			for (int i = 0; i < actanns.length; i++) {
-				BzAct actann = actanns[i];
+				CocOperation actann = actanns[i];
 
 				if (Str.isEmpty(actann.jsonData())) {
 					BizAction action = this.parseBizAction(orm, soft, system, actann, actionOrder++);
@@ -273,22 +273,22 @@ public class SFTBizEngine extends BizEngine {
 		}
 		List<SystemDataGroup> newGroups = new LinkedList();
 		List<IBizField> newFields = new LinkedList();
-		BzGrp[] grpanns = sysann.groups();
+		CocGroup[] grpanns = sysann.groups();
 		if (grpanns != null) {
 			int groupOrder = sysOrder * 10;
 			int fieldOrder = sysOrder * 100;
 			int gridOrder = 100;
 			for (int i = 0; i < grpanns.length; i++) {
-				BzGrp grpann = grpanns[i];
+				CocGroup grpann = grpanns[i];
 				SystemDataGroup group = this.parseBizGroup(orm, soft, system, grpann, groupOrder++);
 				orm.save(group);
 				newGroups.add(group);
 
 				// 计算业务字段
-				BzFld[] fldanns = grpann.fields();
+				CocField[] fldanns = grpann.fields();
 				if (fldanns != null) {
 					for (int j = 0; j < fldanns.length; j++) {
-						BzFld fldann = fldanns[j];
+						CocField fldann = fldanns[j];
 						AbstractSystemData field = this.parseBizField(orm, soft, me, system, group, fldann, gridOrder++, fieldOrder++, fieldLibs);
 						orm.save(field);
 						newFields.add(field);
@@ -298,7 +298,7 @@ public class SFTBizEngine extends BizEngine {
 		}
 	}
 
-	private SFTSystem parseSystem(IOrm orm, Long soft, Class klass, SFTSystem system, BzSys sysann, int sysOrder, String code) {
+	private SFTSystem parseSystem(IOrm orm, Long soft, Class klass, SFTSystem system, CocTable sysann, int sysOrder, String code) {
 		if (system == null) {
 			system = new SFTSystem();
 		}
@@ -331,7 +331,7 @@ public class SFTBizEngine extends BizEngine {
 	private BizCatalog parseCatalog(IOrm orm, Long soft, Package pkg) {
 		if (pkg == null)
 			return null;
-		BzCata ann = pkg.getAnnotation(BzCata.class);
+		CocCatalog ann = pkg.getAnnotation(CocCatalog.class);
 		if (ann == null)
 			return null;
 
@@ -362,7 +362,7 @@ public class SFTBizEngine extends BizEngine {
 		return obj;
 	}
 
-	private AbstractSystemData parseBizField(IOrm orm, Long soft, Mirror me, IBizSystem system, SystemDataGroup group, BzFld fldann, int gridOrder, int fieldOrder, Map fieldLibs) {
+	private AbstractSystemData parseBizField(IOrm orm, Long soft, Mirror me, IBizSystem system, SystemDataGroup group, CocField fldann, int gridOrder, int fieldOrder, Map fieldLibs) {
 		String prop = fldann.property();
 
 		AbstractSystemData field = (AbstractSystemData) orm.load(AbstractSystemData.class, CndExpr.eq(F_PROP_NAME, prop).and(CndExpr.eq(F_SYSTEM, system)));
@@ -374,10 +374,10 @@ public class SFTBizEngine extends BizEngine {
 			f = me.getField(prop);
 		} catch (NoSuchFieldException iglore) {
 		}
-		if (f == null || f.getAnnotation(BzFld.class) == null) {
+		if (f == null || f.getAnnotation(CocField.class) == null) {
 			copyProperties(fldann, field);
-			if (!Str.isEmpty(fldann.refrenceSystem())) {
-				field.setRefrenceSystem((SFTSystem) setupSystemFromClass(soft, getStaticType(fldann.refrenceSystem()), false));
+			if (!Str.isEmpty(fldann.refrenceTable())) {
+				field.setRefrenceSystem((SFTSystem) setupSystemFromClass(soft, getStaticType(fldann.refrenceTable()), false));
 				field.setType((SystemDataType) fieldLibs.get("System"));
 			}
 		}
@@ -398,7 +398,7 @@ public class SFTBizEngine extends BizEngine {
 		return field;
 	}
 
-	private SystemDataGroup parseBizGroup(IOrm orm, Long soft, IBizSystem system, BzGrp grpann, int groupOrder) {
+	private SystemDataGroup parseBizGroup(IOrm orm, Long soft, IBizSystem system, CocGroup grpann, int groupOrder) {
 		SystemDataGroup group = (SystemDataGroup) orm.load(SystemDataGroup.class, CndExpr.eq(F_CODE, grpann.code()).and(CndExpr.eq(F_SYSTEM, system)));
 		if (group == null) {
 			group = new SystemDataGroup();
@@ -416,7 +416,7 @@ public class SFTBizEngine extends BizEngine {
 		return group;
 	}
 
-	private BizAction parseBizAction(IOrm orm, Long soft, IBizSystem system, BzAct actann, int actionOrder) {
+	private BizAction parseBizAction(IOrm orm, Long soft, IBizSystem system, CocOperation actann, int actionOrder) {
 		BizAction action = (BizAction) orm.load(BizAction.class, CndExpr.eq(F_TYPE_CODE, actann.typeCode()).and(CndExpr.eq(F_MODE, actann.mode())).and(CndExpr.eq(F_SYSTEM, system.getId())));
 		if (action == null) {
 			action = new BizAction();
@@ -516,7 +516,7 @@ public class SFTBizEngine extends BizEngine {
 
 		try {
 			// 字段注释
-			BzFld annBzFld = null;
+			CocField annBzFld = null;
 			Column annColumn = null;
 			ManyToOne manyToOne = null;
 			try {
@@ -524,7 +524,7 @@ public class SFTBizEngine extends BizEngine {
 				if (f != null) {
 					type = f.getType();
 					annColumn = f.getAnnotation(Column.class);
-					annBzFld = f.getAnnotation(BzFld.class);
+					annBzFld = f.getAnnotation(CocField.class);
 					manyToOne = f.getAnnotation(ManyToOne.class);
 					genericTypes = Mirror.getGenericTypes(f);
 				} else {
@@ -544,7 +544,7 @@ public class SFTBizEngine extends BizEngine {
 				if (m != null) {
 					type = m.getReturnType();
 					annColumn = m.getAnnotation(Column.class);
-					annBzFld = m.getAnnotation(BzFld.class);
+					annBzFld = m.getAnnotation(CocField.class);
 					manyToOne = m.getAnnotation(ManyToOne.class);
 				}
 			}
@@ -566,8 +566,8 @@ public class SFTBizEngine extends BizEngine {
 
 			// 解析字段类型
 			IBizFieldType fieldLib;
-			if (annBzFld != null && !Str.isEmpty(annBzFld.refrenceSystem())) {
-				newBzField.setRefrenceSystem((SFTSystem) setupSystemFromClass(soft, getStaticType(annBzFld.refrenceSystem()), false));
+			if (annBzFld != null && !Str.isEmpty(annBzFld.refrenceTable())) {
+				newBzField.setRefrenceSystem((SFTSystem) setupSystemFromClass(soft, getStaticType(annBzFld.refrenceTable()), false));
 				fieldLib = fieldLibs.get("System");
 			} else if (manyToOne != null) {
 				newBzField.setRefrenceSystem((SFTSystem) setupSystemFromClass(soft, type, false));
@@ -609,7 +609,7 @@ public class SFTBizEngine extends BizEngine {
 
 	}
 
-	private void copyProperties(BzFld ann, AbstractSystemData fld) {
+	private void copyProperties(CocField ann, AbstractSystemData fld) {
 		fld.setName(ann.name());
 		fld.setDesc(ann.desc());
 		fld.setGridField(ann.gridField());
@@ -619,7 +619,7 @@ public class SFTBizEngine extends BizEngine {
 		fld.setOptions(ann.options());
 		fld.setPattern(ann.pattern());
 		fld.setRegexpMask(ann.regexpMask());
-		fld.setMappingToMaster(ann.masterMapping());
+		fld.setMappingToMaster(ann.isChildTable());
 		fld.setDisabled(ann.disabled());
 		fld.setDisabledNavi(ann.disabledNavi());
 		fld.setCascadeMode(ann.cascadeMode());

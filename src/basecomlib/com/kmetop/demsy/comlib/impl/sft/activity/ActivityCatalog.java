@@ -8,10 +8,10 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.field.RichText;
 import com.kmetop.demsy.comlib.biz.field.Upload;
 import com.kmetop.demsy.comlib.impl.base.ebusiness.product.Product;
@@ -21,116 +21,116 @@ import com.kmetop.demsy.comlib.web.IStatistic;
 import com.kmetop.demsy.lang.Str;
 
 @Entity
-@BzSys(name = "活动设置", code = "ActivityCatalog", orderby = 1//
-, actions = { @BzAct(name = "添加", typeCode = TYPE_BZFORM_NEW, mode = "c")//
-		, @BzAct(jsonData = "CommonBizAction.data.js") //
-		, @BzAct(name = "统计股价竞猜", typeCode = TYPE_BZFORM_EDIT, mode = "e3", plugin = "com.kmetop.demsy.plugins.activity.StockGuessStat") //
+@CocTable(name = "活动设置", code = "ActivityCatalog", orderby = 1//
+, actions = { @CocOperation(name = "添加", typeCode = TYPE_BZFORM_NEW, mode = "c")//
+		, @CocOperation(jsonData = "CommonBizAction.data.js") //
+		, @CocOperation(name = "统计股价竞猜", typeCode = TYPE_BZFORM_EDIT, mode = "e3", plugin = "com.kmetop.demsy.plugins.activity.StockGuessStat") //
 
 }//
 , groups = {//
-@BzGrp(name = "基本信息", code = "basic"//
-, fields = { @BzFld(property = "type", gridField = false) //
-		, @BzFld(name = "活动名称", property = "name", mode = "c:M e:M v:S e3:S *:N", gridOrder = 1)//
-		, @BzFld(property = "expiredFrom", gridOrder = 2) //
-		, @BzFld(property = "expiredTo", gridOrder = 3) //
-		, @BzFld(property = "prizeExpiredFrom") //
-		, @BzFld(property = "prizeExpiredTo") //
-		, @BzFld(property = "limitLogin") //
-		, @BzFld(property = "limitTimes") //
-		, @BzFld(property = "votePolicy") //
-		, @BzFld(property = "voteTimes") //
-		, @BzFld(property = "clickNum", gridOrder = 4) //
-		, @BzFld(property = "commentNum", gridOrder = 5) //
-		, @BzFld(property = "attendNum", gridOrder = 6) //
-}), @BzGrp(name = "图片按钮", code = "img"//
-, fields = { @BzFld(property = "image") //
-		, @BzFld(property = "buttonShow") //
-		, @BzFld(property = "buttonDetail") //
-		, @BzFld(property = "buttonEntry") //
-}), @BzGrp(name = "活动详情", code = "detail"//
-, fields = { @BzFld(property = "desc", name = "活动摘要", mode = "c:M e:M v:S e3:S *:N") //
-		, @BzFld(property = "content", gridField = false) //
-}), @BzGrp(name = "其他属性", code = "others"//
-, fields = { @BzFld(property = "stockResult", gridField = false) //
-		, @BzFld(property = "product", gridField = false) //
-		, @BzFld(property = "productPrice", gridField = false) //
+@CocGroup(name = "基本信息", code = "basic"//
+, fields = { @CocField(property = "type", gridField = false) //
+		, @CocField(name = "活动名称", property = "name", mode = "c:M e:M v:S e3:S *:N", gridOrder = 1)//
+		, @CocField(property = "expiredFrom", gridOrder = 2) //
+		, @CocField(property = "expiredTo", gridOrder = 3) //
+		, @CocField(property = "prizeExpiredFrom") //
+		, @CocField(property = "prizeExpiredTo") //
+		, @CocField(property = "limitLogin") //
+		, @CocField(property = "limitTimes") //
+		, @CocField(property = "votePolicy") //
+		, @CocField(property = "voteTimes") //
+		, @CocField(property = "clickNum", gridOrder = 4) //
+		, @CocField(property = "commentNum", gridOrder = 5) //
+		, @CocField(property = "attendNum", gridOrder = 6) //
+}), @CocGroup(name = "图片按钮", code = "img"//
+, fields = { @CocField(property = "image") //
+		, @CocField(property = "buttonShow") //
+		, @CocField(property = "buttonDetail") //
+		, @CocField(property = "buttonEntry") //
+}), @CocGroup(name = "活动详情", code = "detail"//
+, fields = { @CocField(property = "desc", name = "活动摘要", mode = "c:M e:M v:S e3:S *:N") //
+		, @CocField(property = "content", gridField = false) //
+}), @CocGroup(name = "其他属性", code = "others"//
+, fields = { @CocField(property = "stockResult", gridField = false) //
+		, @CocField(property = "product", gridField = false) //
+		, @CocField(property = "productPrice", gridField = false) //
 })
 //
 }// end groups
 )
 public class ActivityCatalog extends SFTBizComponent implements IActivity, IStatistic {
 
-	@BzFld(name = "活动类型", mode = "c:M e:S *:N v:S", options = "1:摄影大赛,2:征文大赛,3:股票竞猜,4:网络任务,5:产品促销")
+	@CocField(name = "活动类型", mode = "c:M e:S *:N v:S", options = "1:摄影大赛,2:征文大赛,3:股票竞猜,4:网络任务,5:产品促销")
 	protected Byte type;
 
-	@BzFld(name = "动画图片", mode = "c:E e:E *:N v:S", uploadType = "*.bmp;*.jpg;*.gif;*.png;*.swf;*.flv")
+	@CocField(name = "动画图片", mode = "c:E e:E *:N v:S", uploadType = "*.bmp;*.jpg;*.gif;*.png;*.swf;*.flv")
 	protected Upload image;
 
-	@BzFld(name = "展示按钮", mode = "c:E e:E *:N v:S", uploadType = "*.bmp;*.jpg;*.gif;*.png;")
+	@CocField(name = "展示按钮", mode = "c:E e:E *:N v:S", uploadType = "*.bmp;*.jpg;*.gif;*.png;")
 	protected Upload buttonShow;
 
-	@BzFld(name = "详情按钮", mode = "c:E e:E *:N v:S", uploadType = "*.bmp;*.jpg;*.gif;*.png;")
+	@CocField(name = "详情按钮", mode = "c:E e:E *:N v:S", uploadType = "*.bmp;*.jpg;*.gif;*.png;")
 	protected Upload buttonDetail;
 
-	@BzFld(name = "投稿按钮", mode = "c:E e:E *:N v:S", uploadType = "*.bmp;*.jpg;*.gif;*.png;")
+	@CocField(name = "投稿按钮", mode = "c:E e:E *:N v:S", uploadType = "*.bmp;*.jpg;*.gif;*.png;")
 	protected Upload buttonEntry;
 
-	@BzFld(name = "规则说明", mode = "c:E e:E *:N v:S")
+	@CocField(name = "规则说明", mode = "c:E e:E *:N v:S")
 	protected RichText content;
 
 	/*
 	 * 活动限制
 	 */
-	@BzFld(name = "活动有效期自", mode = "c:M e:M *:N v:S", pattern = "yyyy-MM-dd HH:mm:ss")
+	@CocField(name = "活动有效期自", mode = "c:M e:M *:N v:S", pattern = "yyyy-MM-dd HH:mm:ss")
 	protected Date expiredFrom;
 
-	@BzFld(name = "活动有效期至", mode = "c:M e:M *:N v:S", pattern = "yyyy-MM-dd HH:mm:ss")
+	@CocField(name = "活动有效期至", mode = "c:M e:M *:N v:S", pattern = "yyyy-MM-dd HH:mm:ss")
 	protected Date expiredTo;
 
-	@BzFld(name = "限制参与方式", mode = "c:E e:E *:N v:S", options = "0:匿名参与,1:实名参与", disabledNavi = true)
+	@CocField(name = "限制参与方式", mode = "c:E e:E *:N v:S", options = "0:匿名参与,1:实名参与", disabledNavi = true)
 	protected boolean limitLogin;
 
-	@BzFld(name = "限制参与次数", mode = "c:E e:E *:N v:S", uiTemplate = "ui.widget.field.Spinner")
+	@CocField(name = "限制参与次数", mode = "c:E e:E *:N v:S", uiTemplate = "ui.widget.field.Spinner")
 	protected byte limitTimes;
 
-	@BzFld(name = "领奖有效期自", mode = "c:E e:E *:N v:S", pattern = "yyyy-MM-dd HH:mm:ss")
+	@CocField(name = "领奖有效期自", mode = "c:E e:E *:N v:S", pattern = "yyyy-MM-dd HH:mm:ss")
 	protected Date prizeExpiredFrom;
 
-	@BzFld(name = "领奖有效期至", mode = "c:E e:E *:N v:S", pattern = "yyyy-MM-dd HH:mm:ss")
+	@CocField(name = "领奖有效期至", mode = "c:E e:E *:N v:S", pattern = "yyyy-MM-dd HH:mm:ss")
 	protected Date prizeExpiredTo;
 
-	@BzFld(name = "投票策略", mode = "c:E e:E *:N v:S", cascadeMode = "type:1,2:M", options = "0:不支持投票,1:实名投票,2:匿名投票", disabledNavi = true)
+	@CocField(name = "投票策略", mode = "c:E e:E *:N v:S", cascadeMode = "type:1,2:M", options = "0:不支持投票,1:实名投票,2:匿名投票", disabledNavi = true)
 	protected byte votePolicy;
 
-	@BzFld(name = "限制投票次数", mode = "c:E e:E *:N v:S", uiTemplate = "ui.widget.field.Spinner")
+	@CocField(name = "限制投票次数", mode = "c:E e:E *:N v:S", uiTemplate = "ui.widget.field.Spinner")
 	protected byte voteTimes;
 
 	/*
 	 * 股价竞猜活动
 	 */
-	@BzFld(name = "收盘价", mode = "*:N v:P e3:M")
+	@CocField(name = "收盘价", mode = "*:N v:P e3:M")
 	protected Double stockResult;
 
 	/*
 	 * 产品促销
 	 */
 	@ManyToOne
-	@BzFld(name = "促销产品", cascadeMode = "type:5:M", disabledNavi = true)
+	@CocField(name = "促销产品", cascadeMode = "type:5:M", disabledNavi = true)
 	protected Product product;
 
-	@BzFld(name = "促销价格", cascadeMode = "type:5:M")
+	@CocField(name = "促销价格", cascadeMode = "type:5:M")
 	protected Double productPrice;
 
 	/*
 	 * 流量统计
 	 */
-	@BzFld(name = "点击次数", mode = "*:N v:S")
+	@CocField(name = "点击次数", mode = "*:N v:S")
 	protected Integer clickNum;
 
-	@BzFld(name = "评论次数", mode = "*:N v:S")
+	@CocField(name = "评论次数", mode = "*:N v:S")
 	protected Integer commentNum;
 
-	@BzFld(name = "参与次数", mode = "*:N v:S")
+	@CocField(name = "参与次数", mode = "*:N v:S")
 	protected int attendNum;
 
 	public Byte getType() {

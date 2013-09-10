@@ -2,6 +2,9 @@ package com.jiongsoft.cocit.utils.sort;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import org.nutz.lang.Mirror;
 
 public abstract class AbstractSort implements SortStrategy {
 	public void sort(List list, String field, boolean nullGT) {
@@ -13,6 +16,36 @@ public abstract class AbstractSort implements SortStrategy {
 		list.clear();
 		for (Object obj : array) {
 			list.add(obj);
+		}
+	}
+
+	public <T> T getValue(Object obj, final String path) {
+		if (obj == null) {
+			return null;
+		}
+
+		int dot = path.indexOf(".");
+		if (dot > -1) {
+			Object subObj = null;
+			try {
+				if (obj instanceof Map) {
+					subObj = ((Map) obj).get(path.substring(0, dot));
+				} else {
+					subObj = Mirror.me(obj.getClass()).getValue(obj, path.substring(0, dot));
+				}
+			} catch (Throwable e) {
+			}
+			if (subObj == null) {
+				return null;
+			}
+
+			return (T) getValue(subObj, path.substring(dot + 1));
+		} else {
+			try {
+				return (T) Mirror.me(obj.getClass()).getValue(obj, path);
+			} catch (Throwable e) {
+				return null;
+			}
 		}
 	}
 

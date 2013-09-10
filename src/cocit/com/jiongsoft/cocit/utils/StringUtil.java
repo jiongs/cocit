@@ -103,48 +103,71 @@ public abstract class StringUtil {
 		return new String(Hex.encodeHex(str.getBytes()));
 	}
 
-	public static <T> T castTo(String value, T defaultReturn) {
+	/**
+	 * 将指定的值转换成特定类型的对象，可以是String/Long/Integer/Short/Byte/Double/Float/Boolean/Date/Number。
+	 * <p>
+	 * 如果值类型不属于上面的任何类型，则将value当作一个JSON文本，并试图将其转换成指定类型的java对象。
+	 * 
+	 * @param text
+	 *            文本字符串值
+	 * @param defaultReturn
+	 *            返回的默认值
+	 * @return 转换后的值对象
+	 */
+	public static <T> T castTo(String text, T defaultReturn) {
 
-		if (value == null)
+		if (text == null)
 			return defaultReturn;
 		if (defaultReturn == null)
-			return (T) value;
+			return (T) text;
 
 		Class valueType = defaultReturn.getClass();
 
 		try {
-			return (T) castTo(value, valueType);
+			return (T) castTo(text, valueType);
 		} catch (Throwable e) {
+			Log.error("将文本转换成指定的Java对象失败！text=%s, valueType=%s, defaultReturn=%s", text, valueType, defaultReturn);
 		}
 
 		return defaultReturn;
-
 	}
 
-	public static <T> T castTo(String value, Class<T> valueType) throws Throwable {
+	/**
+	 * 将指定的值转换成特定类型的对象，可以是String/Long/Integer/Short/Byte/Double/Float/Boolean/Date/Number。
+	 * <p>
+	 * 如果值类型不属于上面的任何类型，则将value当作一个JSON文本，并试图将其转换成指定类型的java对象。
+	 * 
+	 * @param text
+	 *            文本字符串值
+	 * @param valueType
+	 *            需要转换的值类型
+	 * @return 转换后的值对象
+	 */
+	public static <T> T castTo(String text, Class<T> valueType) {
+		if (text == null || valueType == null)
+			return null;
 
 		if (valueType.equals(String.class))
-			return (T) value;
-		if (Long.class.isAssignableFrom(valueType))
-			return (T) Long.valueOf(value);
-		if (Integer.class.isAssignableFrom(valueType))
-			return (T) Integer.valueOf(value);
-		if (Short.class.isAssignableFrom(valueType))
-			return (T) Short.valueOf(value);
-		if (Byte.class.isAssignableFrom(valueType))
-			return (T) Byte.valueOf(value);
-		if (Double.class.isAssignableFrom(valueType))
-			return (T) Double.valueOf(value);
-		if (Float.class.isAssignableFrom(valueType))
-			return (T) Float.valueOf(value);
-		if (Boolean.class.isAssignableFrom(valueType))
-			return (T) Boolean.valueOf(value);
+			return (T) text;
+		if (valueType.equals(Long.class))
+			return (T) Long.valueOf(text);
+		if (valueType.equals(Integer.class))
+			return (T) Integer.valueOf(text);
+		if (valueType.equals(Short.class))
+			return (T) Short.valueOf(text);
+		if (valueType.equals(Byte.class))
+			return (T) Byte.valueOf(text);
+		if (valueType.equals(Double.class))
+			return (T) Double.valueOf(text);
+		if (valueType.equals(Float.class))
+			return (T) Float.valueOf(text);
+		if (valueType.equals(Boolean.class))
+			return (T) Boolean.valueOf(text);
 		if (Date.class.isAssignableFrom(valueType))
-			return (T) DateUtil.parse(value);
-		if (Class.class.isAssignableFrom(valueType))
-			return (T) ClassUtil.forName(value);
+			return (T) DateUtil.parse(text);
+		if (Number.class.isAssignableFrom(valueType))
+			return ClassUtil.newInstance(valueType, text);
 
-		return (T) ClassUtil.newInstance(valueType, value);
-
+		return Json.fromJson(valueType, text);
 	}
 }

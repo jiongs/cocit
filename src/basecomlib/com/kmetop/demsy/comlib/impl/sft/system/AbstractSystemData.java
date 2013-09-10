@@ -13,13 +13,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
+import com.jiongsoft.cocit.entity.annotation.CocField;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.IBizField;
 import com.kmetop.demsy.comlib.biz.IBizFieldGroup;
 import com.kmetop.demsy.comlib.biz.IBizFieldType;
-import com.kmetop.demsy.comlib.biz.ann.BzAct;
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
-import com.kmetop.demsy.comlib.biz.ann.BzGrp;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 import com.kmetop.demsy.comlib.impl.sft.dic.DicCategory;
 import com.kmetop.demsy.orm.ann.Prop;
@@ -56,64 +56,64 @@ import com.kmetop.demsy.orm.ann.Prop;
  * bu:N——批量修改数据时，字段不可见
  */
 @Entity
-@BzSys(name = "业务字段", code = BIZSYS_BZUDF_FIELD, catalog = BIZCATA_UDF_CONSOLE, orderby = ORDER_BZUDF_FIELD, buildin = true//
-, actions = { @BzAct(name = "新增字段", typeCode = TYPE_BZFORM_NEW, mode = "c")//
-		, @BzAct(name = "批量修改", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu")//
-		, @BzAct(jsonData = "CommonBizAction.data.js") //
+@CocTable(name = "业务字段", code = BIZSYS_BZUDF_FIELD, catalog = BIZCATA_UDF_CONSOLE, orderby = ORDER_BZUDF_FIELD, buildin = true//
+, actions = { @CocOperation(name = "新增字段", typeCode = TYPE_BZFORM_NEW, mode = "c")//
+		, @CocOperation(name = "批量修改", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu")//
+		, @CocOperation(jsonData = "CommonBizAction.data.js") //
 }//
 , groups = { //
-@BzGrp(name = "基本信息", code = "basic"//
+@CocGroup(name = "基本信息", code = "basic"//
 , fields = {
 //
-		@BzFld(name = "字段名称", property = "name", mode = "c:M e:M", gridOrder = 1, desc = "字段业务名称")//
-		, @BzFld(name = "字段编号", property = "code", mode = "c:M e:M", gridOrder = 2, desc = "由数字、字母、下划线组成，且只能有数字、字母开头") //
-		, @BzFld(name = "字段属性", property = "propName") //
-		, @BzFld(name = "人工顺序", property = "orderby", gridOrder = 6) //
-		, @BzFld(name = "所属系统", property = "system", refrenceSystem = BIZSYS_BZUDF_SYSTEM, disabledNavi = true, masterMapping = true, mode = "*:S bu:N c:M e:M") //
-		, @BzFld(name = "所属分组", property = "dataGroup", refrenceSystem = BIZSYS_BZUDF_FIELD_GROUP, disabledNavi = true, cascadeMode = "system:*:system", mode = "bu:N c:M e:M *:S", gridOrder = 3) //
-		, @BzFld(name = "字段类型", property = "type", refrenceSystem = BIZSYS_DEMSY_LIB_FIELD, masterMapping = false, disabledNavi = true, mode = "*:S bu:N c:M e:M", options = "['version eq 2']", gridOrder = 4) //
-		, @BzFld(name = "字段模式", property = "mode", gridOrder = 5) //
-		, @BzFld(name = "级联模式", property = "cascadeMode") //
-		, @BzFld(name = "GRID表头", property = "gridField", disabledNavi = true, mode = "bu:E", options = "1:显示,0:不显示") //
-		, @BzFld(property = "privacy", name = "隐私字段", options = "1:隐私,0:公开", mode = "*:S") //
+		@CocField(name = "字段名称", property = "name", mode = "c:M e:M", gridOrder = 1, desc = "字段业务名称")//
+		, @CocField(name = "字段编号", property = "code", mode = "c:M e:M", gridOrder = 2, desc = "由数字、字母、下划线组成，且只能有数字、字母开头") //
+		, @CocField(name = "字段属性", property = "propName") //
+		, @CocField(name = "人工顺序", property = "orderby", gridOrder = 6) //
+		, @CocField(name = "所属系统", property = "system", refrenceTable = BIZSYS_BZUDF_SYSTEM, disabledNavi = true, isChildTable = true, mode = "*:S bu:N c:M e:M") //
+		, @CocField(name = "所属分组", property = "dataGroup", refrenceTable = BIZSYS_BZUDF_FIELD_GROUP, disabledNavi = true, cascadeMode = "system:*:system", mode = "bu:N c:M e:M *:S", gridOrder = 3) //
+		, @CocField(name = "字段类型", property = "type", refrenceTable = BIZSYS_DEMSY_LIB_FIELD, isChildTable = false, disabledNavi = true, mode = "*:S bu:N c:M e:M", options = "['version eq 2']", gridOrder = 4) //
+		, @CocField(name = "字段模式", property = "mode", gridOrder = 5) //
+		, @CocField(name = "级联模式", property = "cascadeMode") //
+		, @CocField(name = "GRID表头", property = "gridField", disabledNavi = true, mode = "bu:E", options = "1:显示,0:不显示") //
+		, @CocField(property = "privacy", name = "隐私字段", options = "1:隐私,0:公开", mode = "*:S") //
 })// end group
-		, @BzGrp(name = "字段属性设置", code = "properties"//
+		, @CocGroup(name = "字段属性设置", code = "properties"//
 		, fields = {
 				// GRID
-				@BzFld(name = "表头顺序", property = "gridOrder", cascadeMode = "gridField:1:E") //
-				, @BzFld(name = "表头宽度", property = "gridWidth", cascadeMode = "gridField:1:E") //
+				@CocField(name = "表头顺序", property = "gridOrder", cascadeMode = "gridField:1:E") //
+				, @CocField(name = "表头宽度", property = "gridWidth", cascadeMode = "gridField:1:E") //
 				// 系统引用
-				, @BzFld(name = "引用系统", property = "refrenceSystem", refrenceSystem = BIZSYS_BZUDF_SYSTEM, disabledNavi = true, cascadeMode = "type:7,System:M", mode = "*:S c:M e:M") //
-				, @BzFld(name = "引用字段", property = "refrenceFields", mode = "*:S cE e:E") //
-				, @BzFld(name = "从属系统", property = "mappingToMaster", disabledNavi = true, cascadeMode = "type:7,System:E") //
-				, @BzFld(name = "数据多选", property = "sysMultiple", gridField = false, disabledNavi = true, options = "1:多选,0:单选", cascadeMode = "type:7,System:E") //
-				, @BzFld(name = "数据冗余", property = "sysRedundancy", gridField = false, disabledNavi = true, cascadeMode = "type:7,System:E") // })
+				, @CocField(name = "引用系统", property = "refrenceSystem", refrenceTable = BIZSYS_BZUDF_SYSTEM, disabledNavi = true, cascadeMode = "type:7,System:M", mode = "*:S c:M e:M") //
+				, @CocField(name = "引用字段", property = "refrenceFields", mode = "*:S cE e:E") //
+				, @CocField(name = "从属系统", property = "mappingToMaster", disabledNavi = true, cascadeMode = "type:7,System:E") //
+				, @CocField(name = "数据多选", property = "sysMultiple", gridField = false, disabledNavi = true, options = "1:多选,0:单选", cascadeMode = "type:7,System:E") //
+				, @CocField(name = "数据冗余", property = "sysRedundancy", gridField = false, disabledNavi = true, cascadeMode = "type:7,System:E") // })
 				// 数值
-				, @BzFld(name = "显示格式", property = "pattern", gridField = false, cascadeMode = "type:2,5,Date,Long,Integer,Double,Float,Byte,Short,BigInteger,BigDecimal:E") //
-				, @BzFld(name = "字段精度", property = "precision", gridField = false, cascadeMode = "type:1,2,String,Long,Integer,Double,Float,Byte,Short,BigInteger,BigDecimal:E") //
-				, @BzFld(name = "小数位数", property = "scale", gridField = false, cascadeMode = "type:2,Long,Integer,Double,Float,Byte,Short,BigInteger,BigDecimal:E") //
-				, @BzFld(name = "密码输入", property = "password", gridField = false, disabledNavi = true, cascadeMode = "type:1,String:E") //
-				, @BzFld(name = "字段校验", property = "regexpMask", gridField = false, cascadeMode = "type:1,String:E") //
-				, @BzFld(name = "计量单位", property = "uomOption", gridField = false, cascadeMode = "type:2,Long,Integer,Double,Float,Byte,Short,BigInteger,BigDecimal:E") //
-				, @BzFld(name = "计量单位选项", property = "uomOptions", gridField = false, cascadeMode = "type:2,Long,Integer,Double,Float,Byte,Short,BigInteger,BigDecimal:E") //
+				, @CocField(name = "显示格式", property = "pattern", gridField = false, cascadeMode = "type:2,5,Date,Long,Integer,Double,Float,Byte,Short,BigInteger,BigDecimal:E") //
+				, @CocField(name = "字段精度", property = "precision", gridField = false, cascadeMode = "type:1,2,String,Long,Integer,Double,Float,Byte,Short,BigInteger,BigDecimal:E") //
+				, @CocField(name = "小数位数", property = "scale", gridField = false, cascadeMode = "type:2,Long,Integer,Double,Float,Byte,Short,BigInteger,BigDecimal:E") //
+				, @CocField(name = "密码输入", property = "password", gridField = false, disabledNavi = true, cascadeMode = "type:1,String:E") //
+				, @CocField(name = "字段校验", property = "regexpMask", gridField = false, cascadeMode = "type:1,String:E") //
+				, @CocField(name = "计量单位", property = "uomOption", gridField = false, cascadeMode = "type:2,Long,Integer,Double,Float,Byte,Short,BigInteger,BigDecimal:E") //
+				, @CocField(name = "计量单位选项", property = "uomOptions", gridField = false, cascadeMode = "type:2,Long,Integer,Double,Float,Byte,Short,BigInteger,BigDecimal:E") //
 				//
-				, @BzFld(name = "字典选项", property = "options", gridField = false, cascadeMode = "type:1,2,13,String,Long,Integer,Double,Float,Byte,Short,BigInteger,BigDecimal,Boolean:E") //
-				, @BzFld(name = "文件类型", property = "fileType", gridField = false, cascadeMode = "type:4,Upload:M") //
+				, @CocField(name = "字典选项", property = "options", gridField = false, cascadeMode = "type:1,2,13,String,Long,Integer,Double,Float,Byte,Short,BigInteger,BigDecimal,Boolean:E") //
+				, @CocField(name = "文件类型", property = "fileType", gridField = false, cascadeMode = "type:4,Upload:M") //
 		}) // end groups
-		, @BzGrp(name = "其他属性设置", code = "other"//
+		, @CocGroup(name = "其他属性设置", code = "other"//
 		, fields = {
 				//
-				@BzFld(name = "停用状态", property = "disabled", gridField = false, mode = "bu:E", options = "1:停用,0:启用") //
-				, @BzFld(name = "数据导航", property = "disabledNavi", gridField = false, disabledNavi = true, options = "1:隐藏,0:显示") //
-				, @BzFld(name = "默认分组", property = "groupBy", disabledNavi = true, gridField = false) //
-				, @BzFld(name = "临时字段", property = "transientField", disabledNavi = true, gridField = false) //
-				, @BzFld(name = "字段描述", property = "desc", desc = "对字段进行详细的描述，说明字段的用途、目的") //
-				, @BzFld(name = "窗体模版", property = "uiTemplate", gridField = false) //
-				, @BzFld(name = "内置字段", property = "buildin", disabledNavi = true, mode = "*:N") //
-				, @BzFld(name = "创建时间", property = "created", mode = "*:P") //
-				, @BzFld(name = "更新时间", property = "updated", mode = "*:P") //
-				, @BzFld(name = "创建帐号", property = "createdBy", mode = "*:P") //
-				, @BzFld(name = "更新帐号", property = "updatedBy", mode = "*:P") //
+				@CocField(name = "停用状态", property = "disabled", gridField = false, mode = "bu:E", options = "1:停用,0:启用") //
+				, @CocField(name = "数据导航", property = "disabledNavi", gridField = false, disabledNavi = true, options = "1:隐藏,0:显示") //
+				, @CocField(name = "默认分组", property = "groupBy", disabledNavi = true, gridField = false) //
+				, @CocField(name = "临时字段", property = "transientField", disabledNavi = true, gridField = false) //
+				, @CocField(name = "字段描述", property = "desc", desc = "对字段进行详细的描述，说明字段的用途、目的") //
+				, @CocField(name = "窗体模版", property = "uiTemplate", gridField = false) //
+				, @CocField(name = "内置字段", property = "buildin", disabledNavi = true, mode = "*:N") //
+				, @CocField(name = "创建时间", property = "created", mode = "*:P") //
+				, @CocField(name = "更新时间", property = "updated", mode = "*:P") //
+				, @CocField(name = "创建帐号", property = "createdBy", mode = "*:P") //
+				, @CocField(name = "更新帐号", property = "updatedBy", mode = "*:P") //
 		}) // end groups
 })
 // 为避免多实体一个表的情况，现将SystemData改为AbstractSystemData，从而避免DTYPE字段。

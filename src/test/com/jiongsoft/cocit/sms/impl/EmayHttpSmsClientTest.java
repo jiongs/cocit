@@ -15,7 +15,7 @@ import org.junit.Test;
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitHttpContext;
 import com.jiongsoft.cocit.cocsoft.CocSoft;
-import com.jiongsoft.cocit.sms.SmsClient;
+import com.jiongsoft.cocit.cocsoft.CocSoftConfig;
 import com.jiongsoft.cocit.sms.impl.EmayHttpSmsClient;
 import com.jiongsoft.cocit.utils.DateUtil;
 
@@ -73,11 +73,11 @@ public class EmayHttpSmsClientTest {
 				softContext.getSoft();
 				result = soft;
 
-				soft.getConfig(SmsClient.CFG_PROXY_HOST, "");
+				soft.getConfig(CocSoftConfig.CFG_PROXY_HOST, "");
 				result = "192.168.128.3";
-				soft.getConfig(SmsClient.CFG_PROXY_PORT, 80);
+				soft.getConfig(CocSoftConfig.CFG_PROXY_PORT, 80);
 				result = 80;
-				soft.getConfig(SmsClient.CFG_URL, "http://sdkhttp.eucp.b2m.cn");
+				soft.getConfig(CocSoftConfig.CFG_URL, "http://sdkhttp.eucp.b2m.cn");
 				result = "http://sdkhttp.eucp.b2m.cn";
 
 				/*
@@ -93,9 +93,9 @@ public class EmayHttpSmsClientTest {
 				/*
 				 * 茶缘帐号
 				 */
-				soft.getConfig(SmsClient.CFG_UID, "");
+				soft.getConfig(CocSoftConfig.CFG_UID, "");
 				result = "3SDK-KYJ-0130-KJXQL";
-				soft.getConfig(SmsClient.CFG_PWD, "");
+				soft.getConfig(CocSoftConfig.CFG_PWD, "");
 				result = "356860";
 				soft.getConfig("sms.key", "");
 				result = "147080";

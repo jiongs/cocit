@@ -32,24 +32,32 @@ public abstract class DateUtil {
 		return (new SimpleDateFormat(DEFAULT_DATE_PATTERN)).format(date);
 	}
 
-	public static Date parse(String s) throws ParseException {
+	public static Date parse(String s) {
 		if (s == null) {
 			return null;
 		}
 		s = s.trim();
 		int len = s.length();
-		if (len >= 19) {
-			return new SimpleDateFormat(DEFAULT_DATE_TIME_PATTERN).parse(s.trim());
-		} else if (len >= 16) {
-			return new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(s.trim());
-		} else if (len >= 13) {
-			return new SimpleDateFormat("yyyy-MM-dd HH").parse(s.trim());
+		try {
+			if (len >= 19) {
+				return new SimpleDateFormat(DEFAULT_DATE_TIME_PATTERN).parse(s.trim());
+			} else if (len >= 16) {
+				return new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(s.trim());
+			} else if (len >= 13) {
+				return new SimpleDateFormat("yyyy-MM-dd HH").parse(s.trim());
+			}
+			return new SimpleDateFormat(DEFAULT_DATE_PATTERN).parse(s.trim());
+		} catch (ParseException e) {
+			throw new CocException(e);
 		}
-		return new SimpleDateFormat(DEFAULT_DATE_PATTERN).parse(s.trim());
 	}
 
-	public static Date parse(String s, String format) throws ParseException {
-		return new SimpleDateFormat(format).parse(s);
+	public static Date parse(String s, String format) {
+		try {
+			return new SimpleDateFormat(format).parse(s);
+		} catch (ParseException e) {
+			throw new CocException(e);
+		}
 	}
 
 	public static String formatDate(Date date) {
@@ -173,12 +181,7 @@ public abstract class DateUtil {
 	}
 
 	public static Date getToday() {
-		try {
-			return parse(getCurrentDate());
-		} catch (ParseException e) {
-			e.printStackTrace();
-			return null;
-		}
+		return parse(getCurrentDate());
 	}
 
 	public static Date getNext(int day) {
@@ -190,12 +193,7 @@ public abstract class DateUtil {
 	}
 
 	public static Date getNextDay(Date d) {
-		try {
-			return parse(getNextDay(formatDate(d)));
-		} catch (ParseException e) {
-			e.printStackTrace();
-			return null;
-		}
+		return parse(getNextDay(formatDate(d)));
 	}
 
 	@SuppressWarnings("unused")

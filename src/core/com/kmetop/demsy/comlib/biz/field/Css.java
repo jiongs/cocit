@@ -1,35 +1,35 @@
 package com.kmetop.demsy.comlib.biz.field;
 
-import com.kmetop.demsy.comlib.biz.ann.BzFld;
+import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.kmetop.demsy.lang.Str;
 
-@BzFld(uiTemplate = "ui.widget.field.Composite")
+@CocField(uiTemplate = "ui.widget.field.Composite")
 public class Css extends JsonField<Css> {
-	@BzFld(name = "宽度", order = 1)
+	@CocField(name = "宽度", order = 1)
 	protected String width;
 
-	@BzFld(name = "高度", order = 2)
+	@CocField(name = "高度", order = 2)
 	protected String height;
 
-	@BzFld(name = "背景", order = 3, uiTemplate = "ui.widget.field.CssBackground")
+	@CocField(name = "背景", order = 3, uiTemplate = "ui.widget.field.CssBackground")
 	protected CssBackground background;
 
-	@BzFld(name = "边框", order = 4, uiTemplate = "ui.widget.field.CssBorder")
+	@CocField(name = "边框", order = 4, uiTemplate = "ui.widget.field.CssBorder")
 	protected CssBorder border;
 
-	@BzFld(name = "上边框", order = 5, uiTemplate = "ui.widget.field.CssBorder")
+	@CocField(name = "上边框", order = 5, uiTemplate = "ui.widget.field.CssBorder")
 	protected CssBorder borderTop;
 
-	@BzFld(name = "下边框", order = 6, uiTemplate = "ui.widget.field.CssBorder")
+	@CocField(name = "下边框", order = 6, uiTemplate = "ui.widget.field.CssBorder")
 	protected CssBorder borderBottom;
 
-	@BzFld(name = "左边框", order = 7, uiTemplate = "ui.widget.field.CssBorder")
+	@CocField(name = "左边框", order = 7, uiTemplate = "ui.widget.field.CssBorder")
 	protected CssBorder borderLeft;
 
-	@BzFld(name = "右边框", order = 8, uiTemplate = "ui.widget.field.CssBorder")
+	@CocField(name = "右边框", order = 8, uiTemplate = "ui.widget.field.CssBorder")
 	protected CssBorder borderRight;
 
-	@BzFld(name = "字体", order = 9, uiTemplate = "ui.widget.field.CssFont")
+	@CocField(name = "字体", order = 9, uiTemplate = "ui.widget.field.CssFont")
 	protected CssFont font;
 
 	public Css() {

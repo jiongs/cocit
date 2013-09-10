@@ -51,6 +51,8 @@ import org.nutz.trans.Trans;
 import com.jiongsoft.cocit.corm.expr.CndExpr;
 import com.jiongsoft.cocit.corm.expr.Expr;
 import com.jiongsoft.cocit.corm.expr.ExprRule;
+import com.jiongsoft.cocit.entity.CocEntity;
+import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.IBizEngine;
 import com.kmetop.demsy.comlib.LibConst;
@@ -59,9 +61,7 @@ import com.kmetop.demsy.comlib.biz.IBizField;
 import com.kmetop.demsy.comlib.biz.IBizFieldGroup;
 import com.kmetop.demsy.comlib.biz.IBizFieldType;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
-import com.kmetop.demsy.comlib.biz.ann.BzSys;
 import com.kmetop.demsy.comlib.biz.field.IExtField;
-import com.kmetop.demsy.comlib.entity.IBizEntity;
 import com.kmetop.demsy.comlib.entity.IDemsySoft;
 import com.kmetop.demsy.comlib.entity.ISoftConfig;
 import com.kmetop.demsy.comlib.security.IAction;
@@ -186,7 +186,7 @@ public abstract class BizEngine implements IBizEngine {
 				continue;
 			}
 			try {
-				BzSys ann = (BzSys) type.getAnnotation(BzSys.class);
+				CocTable ann = (CocTable) type.getAnnotation(CocTable.class);
 				if (ann != null) {
 					if (Str.isEmpty(ann.code())) {
 						staticSystemTypes.put("_" + type.getSimpleName(), type);
@@ -1060,7 +1060,7 @@ public abstract class BizEngine implements IBizEngine {
 				}
 
 				// 版本验证
-				BzSys info = (BzSys) cls.getAnnotation(BzSys.class);
+				CocTable info = (CocTable) cls.getAnnotation(CocTable.class);
 				String newVersion = getVersion(system);
 				String oldVersion = info.version();
 				if (!newVersion.equals(oldVersion)) {
@@ -1896,7 +1896,7 @@ public abstract class BizEngine implements IBizEngine {
 		if (klass == null) {
 			return null;
 		}
-		BzSys sysann = (BzSys) klass.getAnnotation(BzSys.class);
+		CocTable sysann = (CocTable) klass.getAnnotation(CocTable.class);
 		if (sysann == null || Str.isEmpty(sysann.jsonData())) {
 			return null;
 		}
@@ -2168,7 +2168,7 @@ public abstract class BizEngine implements IBizEngine {
 				Pager pager = new Pager(type);
 				pager.setQueryExpr(expr.setPager(pageIndex, 200));
 
-				List<IBizEntity> datas = null;
+				List<CocEntity> datas = null;
 				try {
 					datas = orm().query(pager);
 				} catch (Throwable e) {
