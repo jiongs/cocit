@@ -18,7 +18,7 @@ import com.kmetop.demsy.comlib.entity.base.BaseUser;
 @Entity
 @CocTable(name = "网站登录帐号", code = BIZSYS_ADMIN_WEBUSER, catalog = BIZCATA_ADMIN, orderby = ORDER_SYSADMIN_WEBUSER, buildin = false//
 , actions = { @CocOperation(name = "审核", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu1")//
-		, @CocOperation(name = "员工注册", typeCode = TYPE_BZFORM_NEW, mode = "c1", plugin = "com.kmetop.demsy.plugins.security.SaveStaffUser", info = "注册成功！审核通过后方可登录。", error = "注册失败！请检查错误信息。")//
+		, @CocOperation(name = "员工注册", typeCode = TYPE_BZFORM_NEW, mode = "c1", pluginName = "com.kmetop.demsy.plugins.security.SaveStaffUser", info = "注册成功！审核通过后方可登录。", error = "注册失败！请检查错误信息。")//
 		, @CocOperation(name = "编辑帐号", typeCode = TYPE_BZFORM_EDIT, mode = "e1", info = "修改个人资料成功！", disabled = true)//
 		, @CocOperation(jsonData = "CommonBizAction.data.js") //
 }//

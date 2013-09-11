@@ -17,7 +17,7 @@ import com.kmetop.demsy.comlib.security.IAdminUser;
 
 @Entity
 @CocTable(name = "后台登录帐号", code = BIZSYS_ADMIN_USER, catalog = BIZCATA_ADMIN, orderby = ORDER_SYSADMIN_USER, buildin = false//
-, actions = { @CocOperation(name = "添加帐号", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = "com.kmetop.demsy.plugins.security.SaveUser")//
+, actions = { @CocOperation(name = "添加帐号", typeCode = TYPE_BZFORM_NEW, mode = "c", pluginName = "com.kmetop.demsy.plugins.security.SaveUser")//
 		, @CocOperation(jsonData = "CommonBizAction.data.js") //
 }//
 , groups = { @CocGroup(name = "基本信息", code = "basic"//

@@ -12,8 +12,8 @@ public abstract class Log {
 
 	/**
 	 * 
-	 * @param message
-	 * @param operationArgs
+	 * @param content
+	 * @param pathArgs
 	 *            可变参数，最后一个参数可以是Throwable
 	 */
 	public static void debug(String message, Object... args) {
@@ -43,8 +43,8 @@ public abstract class Log {
 
 	/**
 	 * 
-	 * @param message
-	 * @param operationArgs
+	 * @param content
+	 * @param pathArgs
 	 *            可变参数，最后一个参数可以是Throwable
 	 */
 	public static void info(String message, Object... args) {
@@ -74,8 +74,8 @@ public abstract class Log {
 
 	/**
 	 * 
-	 * @param message
-	 * @param operationArgs
+	 * @param content
+	 * @param pathArgs
 	 *            可变参数，最后一个参数可以是Throwable
 	 */
 	public static void warn(String message, Object... args) {
@@ -108,7 +108,7 @@ public abstract class Log {
 	/**
 	 * 
 	 * @param fmt
-	 * @param operationArgs
+	 * @param pathArgs
 	 *            可变参数，最后一个参数可以是Throwable
 	 */
 	public static void error(String message, Object... args) {

@@ -31,7 +31,7 @@ public final class Configuration {
 	/** URL where to retrieve current version */
 	private static String urlCurrentVersion;
 
-	/** Max size of a subject on message-overview-site */
+	/** Max size of a subject on content-overview-site */
 	private static int maxLenSubjectOnMailslisting;
 
 	/** Should all messages be displayed on one page? */

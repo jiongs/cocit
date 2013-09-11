@@ -23,8 +23,8 @@ import com.kmetop.demsy.comlib.impl.base.ebusiness.product.ProductOperator;
 
 @Entity
 @CocTable(name = "订单清单", code = IOrderItem.SYS_CODE, orderby = 2,//
-actions = { @CocOperation(name = "备货", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu1", plugin = "com.kmetop.demsy.plugins.eshop.OrderSended")//
-		, @CocOperation(name = "打折", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu", plugin = "com.kmetop.demsy.plugins.eshop.OrderAdjustCast")//
+actions = { @CocOperation(name = "备货", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu1", pluginName = "com.kmetop.demsy.plugins.eshop.OrderSended")//
+		, @CocOperation(name = "打折", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu", pluginName = "com.kmetop.demsy.plugins.eshop.OrderAdjustCast")//
 		, @CocOperation(name = "详情", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
 // , @CocOperation(name = "删除条目", typeCode = TYPE_BZ_DEL, mode = "d") //
 },//

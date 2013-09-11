@@ -26,13 +26,13 @@ import com.kmetop.demsy.comlib.web.IResearchSubject;
 @Entity
 @CocTable(name = "网站调查管理", code = IResearchSubject.SYS_CODE, catalog = BIZCATA_WEB, orderby = ORDER_WEB_RESEARCH, buildin = true//
 , actions = {
-		@CocOperation(name = "添加调查", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = "com.kmetop.demsy.plugins.web.SaveResearchSubject")//
+		@CocOperation(name = "添加调查", typeCode = TYPE_BZFORM_NEW, mode = "c", pluginName = "com.kmetop.demsy.plugins.web.SaveResearchSubject")//
 		,
-		@CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", plugin = "com.kmetop.demsy.plugins.web.SaveResearchSubject") //
+		@CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", pluginName = "com.kmetop.demsy.plugins.web.SaveResearchSubject") //
 		,
 		@CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d") //
 		,
-		@CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v", plugin = "com.kmetop.demsy.plugins.web.LoadResearchSubject") //
+		@CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v", pluginName = "com.kmetop.demsy.plugins.web.LoadResearchSubject") //
 		, @CocOperation(jsonData = "CommonBizAction_orderby.data.js") //
 }, groups = { @CocGroup(name = "基本信息", code = "basic"//
 , fields = {

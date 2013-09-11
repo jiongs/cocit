@@ -50,7 +50,7 @@ public abstract class BaseCocitHttpContext implements CocitHttpContext {
 	 * 
 	 * @return 正在通过HTTP请求访问的软件
 	 */
-	public CocSoftService getSoft() {
+	public CocSoftService getSoftService() {
 		return soft;
 	}
 
@@ -59,7 +59,7 @@ public abstract class BaseCocitHttpContext implements CocitHttpContext {
 	 * 
 	 * @return
 	 */
-	public <T> T getSoftConfig(String configKey, T defaultReturn) {
+	public <T> T getConfig(String configKey, T defaultReturn) {
 		return soft.getConfig(configKey, defaultReturn);
 	}
 

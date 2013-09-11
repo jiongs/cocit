@@ -28,7 +28,9 @@ public @interface CocOperation {
 
 	public String mode() default "";
 
-	public String plugin() default "";
+	public String pluginName() default "";
+
+	public Class plugin() default void.class;
 
 	public String image() default "";
 

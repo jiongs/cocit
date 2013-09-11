@@ -20,7 +20,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 @Entity
 @CocTable(name = "活动报名管理", code = "VisitActivityRegister", catalog = "_ynby_visit", pathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 3//
 // 操作按钮
-, actions = { @CocOperation(name = "报名", typeCode = 101, mode = "c", plugin = "com.jiongsoft.ynby.plugins.VisitActivityPlugins$SaveRegister")//
+, actions = { @CocOperation(name = "报名", typeCode = 101, mode = "c", pluginName = "com.jiongsoft.ynby.plugins.VisitActivityPlugins$SaveRegister")//
 		, @CocOperation(name = "删除", typeCode = 299, mode = "d") //
 		, @CocOperation(name = "查看", typeCode = 102, mode = "v") //
 }// end: actions

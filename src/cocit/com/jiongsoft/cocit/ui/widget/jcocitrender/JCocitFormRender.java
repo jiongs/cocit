@@ -1,4 +1,4 @@
-package com.jiongsoft.cocit.ui.render.jCocit;
+package com.jiongsoft.cocit.ui.widget.jcocitrender;
 
 import static com.jiongsoft.cocit.service.CocEntityFieldService.TYPE_BOOL;
 import static com.jiongsoft.cocit.service.CocEntityFieldService.TYPE_DATE;
@@ -16,19 +16,19 @@ import java.util.List;
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.service.CocEntityFieldService;
 import com.jiongsoft.cocit.service.CocEntityTableService;
-import com.jiongsoft.cocit.ui.model.CuiFormModel;
-import com.jiongsoft.cocit.ui.model.CuiGridModel;
-import com.jiongsoft.cocit.ui.model.CuiFormModel.FormField;
-import com.jiongsoft.cocit.ui.model.CuiGridModel.GridColumn;
-import com.jiongsoft.cocit.ui.render.BaseCuiRender;
+import com.jiongsoft.cocit.ui.widget.EntityFormWidgetModel;
+import com.jiongsoft.cocit.ui.widget.GridWidgetModel;
+import com.jiongsoft.cocit.ui.widget.WidgetRender;
+import com.jiongsoft.cocit.ui.widget.EntityFormWidgetModel.FormField;
+import com.jiongsoft.cocit.ui.widget.GridWidgetModel.GridColumn;
 import com.jiongsoft.cocit.utils.KeyValue;
 import com.jiongsoft.cocit.utils.Lang;
 import com.jiongsoft.cocit.utils.StringUtil;
 
-public class JCocitFormRender extends BaseCuiRender<CuiFormModel> {
+public class JCocitFormRender extends WidgetRender<EntityFormWidgetModel> {
 
 	@Override
-	public void render(Writer writer, CuiFormModel model) throws Throwable {
+	public void render(Writer writer, EntityFormWidgetModel model) throws Throwable {
 		StringBuffer sb = new StringBuffer();
 
 		Object formData = model.getData();
@@ -140,11 +140,11 @@ public class JCocitFormRender extends BaseCuiRender<CuiFormModel> {
 		print(writer, sb.toString());
 	}
 
-	private void printFieldLabel(StringBuffer sb, CuiFormModel model, CocEntityFieldService entityField) throws IOException {
+	private void printFieldLabel(StringBuffer sb, EntityFormWidgetModel model, CocEntityFieldService entityField) throws IOException {
 		print(sb, entityField.getName());
 	}
 
-	private void printEditBox(StringBuffer sb, CuiFormModel model, CocEntityFieldService entityField, Object fldvalue) throws IOException {
+	private void printEditBox(StringBuffer sb, EntityFormWidgetModel model, CocEntityFieldService entityField, Object fldvalue) throws IOException {
 
 		byte type = entityField.getType();
 		switch (type) {
@@ -235,7 +235,7 @@ public class JCocitFormRender extends BaseCuiRender<CuiFormModel> {
 
 	private void printFK(StringBuffer sb, CocEntityFieldService fieldService, Object fieldValue) {
 		CocEntityTableService entityTable = fieldService.getFkEntityTable();
-		CuiGridModel gridModel = Cocit.getUIModelFactory().getGridModel(null, entityTable);
+		GridWidgetModel gridModel = Cocit.getWidgetModelFactory().getGridUI(null, entityTable);
 		List<GridColumn> columns = gridModel.getColumns();
 
 		String id = Lang.idOrtoString(fieldValue);

@@ -1,6 +1,7 @@
-package com.jiongsoft.cocit.ui.model;
+package com.jiongsoft.cocit.ui.widget;
 
 import java.util.List;
+
 
 /**
  * Grid数据模型：由Grid界面模型和Grid数据组成。
@@ -8,7 +9,7 @@ import java.util.List;
  * @author jiongsoft
  * 
  */
-public class CuiGridModelData extends BaseCuiModelData<CuiGridModel, List> {
+public class GridWidgetData extends WidgetData<GridWidgetModel, List> {
 	private int total;
 
 	public int getTotal() {

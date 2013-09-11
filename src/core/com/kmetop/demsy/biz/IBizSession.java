@@ -321,6 +321,6 @@ public interface IBizSession<T> {
 	/**
 	 * 异步运行： 其他文档参将对应的同步方法
 	 */
-	public void asynRun(Object obj, CndExpr fieldRexpr, CocEntityPlugin... plugins);
+	public Object asynRun(Object obj, CndExpr fieldRexpr, CocEntityPlugin... plugins);
 
 }

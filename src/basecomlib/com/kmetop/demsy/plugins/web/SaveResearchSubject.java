@@ -28,7 +28,7 @@ public class SaveResearchSubject extends LoadResearchSubject {
 		Class optionType = Demsy.bizEngine.getType(IResearchOption.SYS_CODE);
 		Class resultType = Demsy.bizEngine.getType(IResearchResult.SYS_CODE);
 
-		IResearchSubject subject = (IResearchSubject) event.getEntityData();
+		IResearchSubject subject = (IResearchSubject) event.getEntity();
 		if (Obj.getId(subject) == null) {
 			orm.save(subject);
 		}

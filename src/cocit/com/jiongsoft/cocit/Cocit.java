@@ -9,8 +9,8 @@ import com.jiongsoft.cocit.service.CocServiceFactory;
 import com.jiongsoft.cocit.service.CocSoftService;
 import com.jiongsoft.cocit.service.CocEntityManagerFactory;
 import com.jiongsoft.cocit.sms.SmsClient;
-import com.jiongsoft.cocit.ui.CuiRenderFactory;
-import com.jiongsoft.cocit.ui.model.CuiModelFactory;
+import com.jiongsoft.cocit.ui.widget.WidgetModelFactory;
+import com.jiongsoft.cocit.ui.widget.WidgetRenderFactory;
 import com.jiongsoft.cocit.utils.Log;
 
 /**
@@ -190,19 +190,19 @@ public abstract class Cocit {
 	/**
 	 * 获取CoC UI模型工厂
 	 * 
-	 * @return 返回已被缓存的CoC UI模型工厂{@link CuiModelFactory}的单例对象。
+	 * @return 返回已被缓存的CoC UI模型工厂{@link WidgetModelFactory}的单例对象。
 	 */
-	public static CuiModelFactory getUIModelFactory() {
-		return beanFactory.getBean(CuiModelFactory.class);
+	public static WidgetModelFactory getWidgetModelFactory() {
+		return beanFactory.getBean(WidgetModelFactory.class);
 	}
 
 	/**
 	 * 获取CoC UIRender 工厂
 	 * 
-	 * @return 返回已被缓存的CoC UI Render工厂{@link CuiRenderFactory}的单例对象。
+	 * @return 返回已被缓存的CoC UI Render工厂{@link WidgetRenderFactory}的单例对象。
 	 */
-	public static CuiRenderFactory getUIRenderFactory() {
-		return beanFactory.getBean(CuiRenderFactory.class);
+	public static WidgetRenderFactory getWidgetRenderFactory() {
+		return beanFactory.getBean(WidgetRenderFactory.class);
 	}
 
 	public static CormFactory getOrmFactory() {

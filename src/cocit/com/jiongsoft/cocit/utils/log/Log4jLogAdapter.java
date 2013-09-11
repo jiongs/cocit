@@ -4,8 +4,6 @@ import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import com.jiongsoft.cocit.utils.Log;
-
 public class Log4jLogAdapter implements LogAdapter {
 
 	public static final String LOG4J_CLASS_NAME = "org.apache.log4j.Logger";
@@ -14,7 +12,7 @@ public class Log4jLogAdapter implements LogAdapter {
 		try {
 			Class.forName(LOG4J_CLASS_NAME, true, Thread.currentThread().getContextClassLoader());
 		} catch (ClassNotFoundException e) {
-			Log.debug("", e);
+			System.out.print(e);
 			return false;
 		}
 
@@ -74,6 +72,7 @@ public class Log4jLogAdapter implements LogAdapter {
 	static class Log4JLogger extends AbstractLog {
 
 		public static final String SUPER_FQCN = AbstractLog.class.getName();
+
 		public static final String SELF_FQCN = Log4JLogger.class.getName();
 
 		private Logger logger;

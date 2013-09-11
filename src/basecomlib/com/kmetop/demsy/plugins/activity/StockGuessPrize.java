@@ -24,7 +24,7 @@ public class StockGuessPrize extends BaseEntityPlugin {
 	@Override
 	public void before(CocEntityEvent event) {
 		IOrm orm = (IOrm) event.getOrm();
-		List<StockActivity> list = (List<StockActivity>) event.getEntityData();
+		List<StockActivity> list = (List<StockActivity>) event.getEntity();
 		for (StockActivity one : list) {
 			Byte status = one.getStatus();
 

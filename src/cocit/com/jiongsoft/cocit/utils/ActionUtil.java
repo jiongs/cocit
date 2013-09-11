@@ -11,7 +11,7 @@ public abstract class ActionUtil {
 	/**
 	 * 编码路径参数
 	 * 
-	 * @param operationArgs
+	 * @param pathArgs
 	 * @return
 	 */
 	public static String encodeArgs(Object... args) {
@@ -31,13 +31,13 @@ public abstract class ActionUtil {
 	/**
 	 * 解码路径参数
 	 * 
-	 * @param operationArgs
+	 * @param pathArgs
 	 * @return
 	 */
 	public static String[] decodeArgs(String args) {
 		String str = args;
 
-		// String str = StringUtil.decodeHex(operationArgs);
+		// String str = StringUtil.decodeHex(pathArgs);
 
 		return StringUtil.toArray(str, ":");
 	}
@@ -103,6 +103,10 @@ public abstract class ActionUtil {
 	 * 参数：entityModuleID:entityTableID:entityOperationID
 	 */
 	public static final String DELETE_ENTITY_DATA = ACTION_PATH_PREFIX + "/deleteEntityData/*";
+
+	public static final String EXEC_ENTITY_TASK = ACTION_PATH_PREFIX + "/execEntityTask/*";
+
+	public static final String EXEC_ENTITY_ASYN_TASK = ACTION_PATH_PREFIX + "/execEntityAsynTask/*";
 
 	/**
 	 * 获取手机验证码

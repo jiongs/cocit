@@ -45,7 +45,7 @@ public class ZrSmsClient implements SmsClient {
 	public ZrSmsClient() {
 
 		CocitHttpContext ctx = Cocit.getHttpContext();
-		CocSoftService soft = ctx.getSoft();
+		CocSoftService soft = ctx.getSoftService();
 
 		this.proxyHost = soft.getConfig(CocConfigService.CFG_PROXY_HOST, "");
 		this.proxyPort = soft.getConfig(CocConfigService.CFG_PROXY_PORT, 80);

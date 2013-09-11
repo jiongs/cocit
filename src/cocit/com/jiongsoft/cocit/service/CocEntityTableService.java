@@ -70,7 +70,7 @@ public interface CocEntityTableService extends CocService {
 	 * 验证指定的数据是否合法
 	 * 
 	 * @param opMode
-	 * @param entityData
+	 * @param entity
 	 * @throws CocException
 	 */
 	void validate(String opMode, Object entityData) throws CocException;

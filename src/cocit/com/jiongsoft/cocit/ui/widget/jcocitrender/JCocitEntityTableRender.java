@@ -1,20 +1,20 @@
-package com.jiongsoft.cocit.ui.render.jCocit;
+package com.jiongsoft.cocit.ui.widget.jcocitrender;
 
 import java.io.Writer;
 
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitHttpContext;
-import com.jiongsoft.cocit.ui.model.CuiEntityTableModel;
-import com.jiongsoft.cocit.ui.model.CuiGridModel;
-import com.jiongsoft.cocit.ui.model.CuiMenuModel;
-import com.jiongsoft.cocit.ui.model.CuiSearchBoxModel;
-import com.jiongsoft.cocit.ui.model.CuiTreeModel;
-import com.jiongsoft.cocit.ui.render.BaseCuiRender;
+import com.jiongsoft.cocit.ui.widget.EntityTableWidgetModel;
+import com.jiongsoft.cocit.ui.widget.GridWidgetModel;
+import com.jiongsoft.cocit.ui.widget.MenuWidgetModel;
+import com.jiongsoft.cocit.ui.widget.SearchBoxWidgetModel;
+import com.jiongsoft.cocit.ui.widget.TreeWidgetModel;
+import com.jiongsoft.cocit.ui.widget.WidgetRender;
 
-class JCocitEntityTableRender extends BaseCuiRender<CuiEntityTableModel> {
+class JCocitEntityTableRender extends WidgetRender<EntityTableWidgetModel> {
 
 	@Override
-	public void render(Writer out, CuiEntityTableModel model) throws Throwable {
+	public void render(Writer out, EntityTableWidgetModel model) throws Throwable {
 		CocitHttpContext ctx = Cocit.getHttpContext();
 		int width = model.get("width", ctx.getClientUIWidth());
 		int height = model.get("height", ctx.getClientUIHeight());
@@ -29,7 +29,7 @@ class JCocitEntityTableRender extends BaseCuiRender<CuiEntityTableModel> {
 		/*
 		 * 工具栏菜单：工具栏菜单ID将被DataGrid引用
 		 */
-		CuiMenuModel menu = model.getOperationMenuModel();
+		MenuWidgetModel menu = model.getOperationMenuModel();
 		if (menu != null) {
 			menu.set("token", token);
 			menu.render(out);
@@ -46,7 +46,7 @@ class JCocitEntityTableRender extends BaseCuiRender<CuiEntityTableModel> {
 		/*
 		 * 1.左边为导航树
 		 */
-		CuiTreeModel tree = model.getNaviTreeModel();
+		TreeWidgetModel tree = model.getNaviTreeModel();
 		if (tree != null) {
 
 			tree.set("height", "" + treeHeight);
@@ -54,7 +54,7 @@ class JCocitEntityTableRender extends BaseCuiRender<CuiEntityTableModel> {
 
 			print(out, "<td valign=\"top\" width=\"%s\" style=\"padding:5px;\">", treeWidth);
 
-			CuiSearchBoxModel searchModel = model.getSearchBoxModel();
+			SearchBoxWidgetModel searchModel = model.getSearchBoxModel();
 			if (searchModel != null) {
 				searchModel.set("width", "" + treeWidth);
 				searchModel.render(out);
@@ -70,7 +70,7 @@ class JCocitEntityTableRender extends BaseCuiRender<CuiEntityTableModel> {
 		/*
 		 * 2.右边为DataGrid
 		 */
-		CuiGridModel grid = model.getGridModel();
+		GridWidgetModel grid = model.getGridModel();
 		if (grid != null) {
 			grid.set("width", "" + gridWidth);
 			grid.set("height", "" + gridHeight);

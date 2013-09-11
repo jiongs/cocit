@@ -71,7 +71,7 @@ public class OrderAdjustCast extends BaseEntityPlugin {
 
 	@Override
 	public void before(CocEntityEvent event) {
-		Object data = event.getEntityData();
+		Object data = event.getEntity();
 		if (data instanceof List) {
 			List list = (List) data;
 			for (Object obj : list) {
@@ -95,7 +95,7 @@ public class OrderAdjustCast extends BaseEntityPlugin {
 
 		List<Long> orderList = new LinkedList();
 
-		Object data = event.getEntityData();
+		Object data = event.getEntity();
 		if (data instanceof List) {
 			List list = (List) data;
 			for (Object obj : list) {

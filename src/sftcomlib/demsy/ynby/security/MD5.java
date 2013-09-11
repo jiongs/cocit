@@ -10,7 +10,7 @@ package demsy.ynby.security;
 import java.lang.reflect.Array;
 
 /*******************************************************************************
- * md5 类实现了RSA Data Security, Inc.在提交给IETF 的RFC1321中的MD5 message-digest 算法。
+ * md5 类实现了RSA Data Security, Inc.在提交给IETF 的RFC1321中的MD5 content-digest 算法。
  ******************************************************************************/
 
 public class MD5 {
@@ -393,8 +393,8 @@ public class MD5 {
 			System.out.println("MD5(\"\"):" + m.getMD5ofStr(""));
 			System.out.println("MD5(\"a\"):" + m.getMD5ofStr("a"));
 			System.out.println("MD5(\"abc\"):" + m.getMD5ofStr("abc"));
-			System.out.println("MD5(\"message digest\"):"
-					+ m.getMD5ofStr("message digest"));
+			System.out.println("MD5(\"content digest\"):"
+					+ m.getMD5ofStr("content digest"));
 			System.out.println("MD5(\"abcdefghijklmnopqrstuvwxyz\"):"
 					+ m.getMD5ofStr("abcdefghijklmnopqrstuvwxyz"));
 			System.out

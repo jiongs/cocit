@@ -21,7 +21,7 @@ import com.kmetop.demsy.orm.ann.Prop;
 
 @Entity
 @CocTable(name = "调查结果", code = IResearchResult.SYS_CODE, catalog = BIZCATA_WEB, orderby = ORDER_WEB_RESEARCH, buildin = true//
-, actions = { @CocOperation(name = "批量添加", typeCode = TYPE_BZFORM_ADD_N, mode = "c_n", disabled = true, plugin = "com.kmetop.demsy.plugins.web.SaveResearchResult", info = "提交调查成功！") //
+, actions = { @CocOperation(name = "批量添加", typeCode = TYPE_BZFORM_ADD_N, mode = "c_n", disabled = true, pluginName = "com.kmetop.demsy.plugins.web.SaveResearchResult", info = "提交调查成功！") //
 		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
 }, groups = { @CocGroup(name = "基本信息", code = "basic"//
 , fields = { @CocField(property = "subject") //

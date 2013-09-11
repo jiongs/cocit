@@ -39,7 +39,7 @@ public class OfflineMessageAssembler {
 	 * Ermittelt das "From"-Array und setzt default-Werte, falls es bei der
 	 * Ermittlung Probleme gibt.
 	 * 
-	 * @param message
+	 * @param content
 	 *            Message, dessen "From"-Array ermittelt werden soll.
 	 * @return <code>Address[]</code> mit "From"-Adressen.
 	 */
@@ -75,7 +75,7 @@ public class OfflineMessageAssembler {
 	 * Ermittelt das Sent-Date und liefert NULL, falls es bei der Ermittlung
 	 * Probleme gibt.
 	 * 
-	 * @param message
+	 * @param content
 	 *            Message, dessen Sent-Date ermittelt werden soll.
 	 * @return <code>Date</code>-Objekt mit Sent-Date, wenn ermittelt; sonst
 	 *         NULL
@@ -95,7 +95,7 @@ public class OfflineMessageAssembler {
 	 * Ermittelt das Subject und liefert NULL, falls es bei der Ermittlung
 	 * Probleme gibt.
 	 * 
-	 * @param message
+	 * @param content
 	 *            Message, dessen Subject ermittelt werden soll.
 	 * @return <code>String</code>-Objekt mit Subject, wenn ermittelt; sonst
 	 *         NULL
@@ -115,7 +115,7 @@ public class OfflineMessageAssembler {
 	 * Ermittelt ein gegebenes Header-Array und liefert NULL, falls es bei der
 	 * Ermittlung Probleme gibt.
 	 * 
-	 * @param message
+	 * @param content
 	 *            Message, dessen Header-Array ermittelt werden soll.
 	 * @return <code>String[]</code>-Objekt mit Header, wenn ermittelt; sonst
 	 *         NULL
@@ -139,7 +139,7 @@ public class OfflineMessageAssembler {
 	 * Mail hat lediglich die Properties, die wir fuer die Anzeige auf der
 	 * Uebersichtsseite brauchen.
 	 * 
-	 * @param message
+	 * @param content
 	 *            Message, aus der das OfflineMimeMessage-Objekt gebaut werden
 	 *            soll.
 	 */
@@ -200,7 +200,7 @@ public class OfflineMessageAssembler {
 	/**
 	 * Baut aus einem Message-Objekt ein OfflineMimeMessage-Objekt.
 	 * 
-	 * @param message
+	 * @param content
 	 *            Message, aus der das OfflineMimeMessage-Objekt gebaut werden
 	 *            soll.
 	 */

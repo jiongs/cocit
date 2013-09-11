@@ -1,9 +1,9 @@
-package com.jiongsoft.cocit.ui.model;
+package com.jiongsoft.cocit.ui.widget;
 
 import com.jiongsoft.cocit.utils.Tree;
 
 /**
- * 树界面模型：可以包含树所需要的数据，如果数据不存在则表示将异步获取JSON格式的树型数据。
+ * 树窗体界面模型：可以包含树所需要的数据，如果数据不存在则表示将异步获取JSON格式的树型数据。
  * 
  * <B>属性设置：</B>
  * <UL>
@@ -13,7 +13,7 @@ import com.jiongsoft.cocit.utils.Tree;
  * @author jiongsoft
  * 
  */
-public class CuiTreeModel extends BaseCuiModel {
+public class TreeWidgetModel extends WidgetModel {
 
 	// Tree数据，如果该值为Null，则将通过AJAX方式加载树数据。
 	private Tree data;

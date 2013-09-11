@@ -1,6 +1,6 @@
-package com.jiongsoft.cocit.ui.model;
+package com.jiongsoft.cocit.ui.widget;
 
-import static com.jiongsoft.cocit.Cocit.getUIRenderFactory;
+import static com.jiongsoft.cocit.Cocit.getWidgetRenderFactory;
 
 import java.io.Writer;
 import java.util.Properties;
@@ -16,7 +16,7 @@ import com.jiongsoft.cocit.utils.StringUtil;
  * @author yongshan.ji
  * 
  */
-public abstract class BaseCuiModel implements CuiModel {
+public abstract class WidgetModel implements CuiModel {
 
 	private String id;
 
@@ -27,13 +27,13 @@ public abstract class BaseCuiModel implements CuiModel {
 
 	protected CocException exception;
 
-	public BaseCuiModel() {
+	public WidgetModel() {
 		extProps = new Properties();
 	}
 
 	@Override
 	public void render(Writer out) throws Throwable {
-		getUIRenderFactory().getRender(getClass()).render(out, this);
+		getWidgetRenderFactory().getRender(getClass()).render(out, this);
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public abstract class BaseCuiModel implements CuiModel {
 		try {
 			return (T) StringUtil.castTo(value, valueType);
 		} catch (Throwable e) {
-			Log.error("BaseCuiModel.get: 出错！ {propName:%s, defaultReturn:%s, valueType:%s}", propName, defaultReturn, valueType.getName(), e);
+			Log.error("WidgetModel.get: 出错！ {propName:%s, defaultReturn:%s, valueType:%s}", propName, defaultReturn, valueType.getName(), e);
 		}
 
 		return defaultReturn;

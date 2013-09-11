@@ -64,7 +64,7 @@ public class EmayHttpSmsClient implements SmsClient {
 		CocitHttpContext ctx = Cocit.getHttpContext();
 
 		if (ctx != null) {
-			CocSoftService soft = ctx.getSoft();
+			CocSoftService soft = ctx.getSoftService();
 
 			this.proxyHost = soft.getConfig(CocConfigService.CFG_PROXY_HOST, "");
 			this.proxyPort = soft.getConfig(CocConfigService.CFG_PROXY_PORT, 80);
@@ -184,7 +184,7 @@ public class EmayHttpSmsClient implements SmsClient {
 		// }
 
 		HttpURLConnection httpURLConnection = null;
-		String strUrl = String.format("%s/sdkproxy/sendsms.action?cdkey=%s&password=%s&phone=%s&message=%s", this.url, this.uid, this.pwd, mobile, content);
+		String strUrl = String.format("%s/sdkproxy/sendsms.action?cdkey=%s&password=%s&phone=%s&content=%s", this.url, this.uid, this.pwd, mobile, content);
 		try {
 			httpURLConnection = this.createConnection(strUrl);
 			httpURLConnection.setRequestMethod("POST");

@@ -17,7 +17,7 @@ import com.kmetop.demsy.comlib.impl.BizComponent;
 
 @Entity
 @CocTable(name = "网站投票管理", code = BIZSYS_WEB_VOTE, catalog = BIZCATA_WEB, orderby = ORDER_WEB_VOTE, buildin = true//
-, actions = { @CocOperation(name = "添加", typeCode = TYPE_BZFORM_NEW, mode = "c", disabled = true, info = "投票成功！", plugin = "com.kmetop.demsy.plugins.web.SaveVote")//
+, actions = { @CocOperation(name = "添加", typeCode = TYPE_BZFORM_NEW, mode = "c", disabled = true, info = "投票成功！", pluginName = "com.kmetop.demsy.plugins.web.SaveVote")//
 		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
 }//
 , groups = { @CocGroup(name = "基本信息", code = "basic"//

@@ -15,7 +15,7 @@ public class SaveBbsTopic extends BaseEntityPlugin {
 
 	@Override
 	public void before(CocEntityEvent event) {
-		LybbsPosttopic obj = (LybbsPosttopic) event.getEntityData();
+		LybbsPosttopic obj = (LybbsPosttopic) event.getEntity();
 
 		// 回复
 		if (obj.getId() != null && obj.getId() > 0) {

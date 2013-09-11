@@ -23,9 +23,9 @@ import com.kmetop.demsy.lang.Str;
 
 @Entity
 @CocTable(name = "功能模块授权", code = BIZSYS_ADMIN_PERMISSION, catalog = BIZCATA_ADMIN, orderby = ORDER_SYSADMIN_PERMISSION, buildin = false//
-, actions = { @CocOperation(name = "新增权限", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = "com.kmetop.demsy.plugins.security.SavePermission")//
-		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", plugin = "com.kmetop.demsy.plugins.security.SavePermission") //
-		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d", plugin = "com.kmetop.demsy.plugins.security.SavePermission") //
+, actions = { @CocOperation(name = "新增权限", typeCode = TYPE_BZFORM_NEW, mode = "c", pluginName = "com.kmetop.demsy.plugins.security.SavePermission")//
+		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", pluginName = "com.kmetop.demsy.plugins.security.SavePermission") //
+		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d", pluginName = "com.kmetop.demsy.plugins.security.SavePermission") //
 		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
 }//
 , groups = { @CocGroup(name = "基本信息", code = "basic"//

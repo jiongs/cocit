@@ -1,12 +1,12 @@
-package com.jiongsoft.cocit.ui.render.jCocit;
+package com.jiongsoft.cocit.ui.widget.jcocitrender;
 
 import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
-import com.jiongsoft.cocit.ui.model.CuiTreeModel;
-import com.jiongsoft.cocit.ui.model.CuiTreeModelData;
-import com.jiongsoft.cocit.ui.render.BaseCuiRender;
+import com.jiongsoft.cocit.ui.widget.TreeWidgetModel;
+import com.jiongsoft.cocit.ui.widget.TreeWidgetData;
+import com.jiongsoft.cocit.ui.widget.WidgetRender;
 import com.jiongsoft.cocit.utils.Json;
 import com.jiongsoft.cocit.utils.Lang;
 import com.jiongsoft.cocit.utils.Tree;
@@ -14,10 +14,10 @@ import com.jiongsoft.cocit.utils.Tree.Node;
 
 abstract class JCocitTreeRenders {
 
-	static class ModelRender extends BaseCuiRender<CuiTreeModel> {
+	static class ModelRender extends WidgetRender<TreeWidgetModel> {
 
 		@Override
-		public void render(Writer out, CuiTreeModel model) throws Throwable {
+		public void render(Writer out, TreeWidgetModel model) throws Throwable {
 			if (model.getData() != null) {
 				print(out, "<script type=\"text/javascript\">var treedata_%s=", model.get("token", ""));
 				new DataRender().outNodes(out, model.getData().getChildren());
@@ -54,10 +54,10 @@ abstract class JCocitTreeRenders {
 		}
 	}
 
-	static class DataRender extends BaseCuiRender<CuiTreeModelData> {
+	static class DataRender extends WidgetRender<TreeWidgetData> {
 
 		@Override
-		public void render(Writer out, CuiTreeModelData model) throws Throwable {
+		public void render(Writer out, TreeWidgetData model) throws Throwable {
 
 			Tree tree = model.getData();
 			List<Node> nodes = tree.getChildren();

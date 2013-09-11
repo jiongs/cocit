@@ -12,7 +12,7 @@ import javax.mail.Message;
 import com.kmetop.demsy.modules.webmail.spi.Lifecycle;
 
 /**
- * Bean that takes the result-data of a message-retrieve-action
+ * Bean that takes the result-data of a content-retrieve-action
  * 
  * @author Stephan Sann
  * @version 1.0
@@ -28,10 +28,10 @@ public class RetrieveMessagesResultModel implements Lifecycle, Serializable {
 	// -------------------------------------------------------------
 	// instance-vars
 
-	/** Hold the message-array */
+	/** Hold the content-array */
 	private Message[] messages = null;
 
-	/** Holds the (overall) amount of messages within the message-folder */
+	/** Holds the (overall) amount of messages within the content-folder */
 	private int overallMessageCount = 0;
 
 	// --------------------------------------------------------- getter und

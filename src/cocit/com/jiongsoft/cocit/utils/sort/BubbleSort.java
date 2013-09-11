@@ -1,13 +1,10 @@
 package com.jiongsoft.cocit.utils.sort;
 
-import com.jiongsoft.cocit.utils.Log;
-
 /**
  * 
  * 利用冒泡排序法对数组排序，数组中元素必须实现了Comparable接口。
  */
 public class BubbleSort extends AbstractSort {
-
 	/**
 	 * 对数组obj中的元素以冒泡排序算法进行排序
 	 */
@@ -27,7 +24,7 @@ public class BubbleSort extends AbstractSort {
 						obj[j + 1] = tmp;
 					}
 				} catch (Throwable ex) {
-					Log.warn("", ex);
+					log.warn("", ex);
 				}
 			}
 		}

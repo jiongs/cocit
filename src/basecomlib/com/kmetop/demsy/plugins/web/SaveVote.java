@@ -11,7 +11,7 @@ public class SaveVote extends BaseEntityPlugin {
 
 	@Override
 	public void before(CocEntityEvent event) {
-		Vote vote = (Vote) event.getEntityData();
+		Vote vote = (Vote) event.getEntity();
 
 		// 回复
 		if (vote.getId() != null && vote.getId() > 0) {

@@ -20,7 +20,7 @@ import com.kmetop.demsy.comlib.impl.BizComponent;
 
 @Entity
 @CocTable(name = "系统分类", code = BIZSYS_BZUDF_CATALOG, catalog = BIZCATA_UDF_CONSOLE, orderby = ORDER_BZUDF_CATALOG, buildin = true//
-, actions = { @CocOperation(name = "新增分类", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = "com.kmetop.demsy.plugins.biz.CreateBizCatalog")//
+, actions = { @CocOperation(name = "新增分类", typeCode = TYPE_BZFORM_NEW, mode = "c", pluginName = "com.kmetop.demsy.plugins.biz.CreateBizCatalog")//
 		, @CocOperation(jsonData = "CommonBizAction.data.js") //
 }//
 , groups = { @CocGroup(name = "基本信息", code = "basic"//

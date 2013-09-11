@@ -9,7 +9,7 @@ public class SaveStaffUser extends SaveUser {
 	public void before(CocEntityEvent event) {
 		super.before(event);
 
-		BaseUser user = (BaseUser) event.getEntityData();
+		BaseUser user = (BaseUser) event.getEntity();
 		user.setDisabled(true);
 	}
 }

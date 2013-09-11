@@ -20,9 +20,9 @@ import com.kmetop.demsy.comlib.web.IActivityEntry;
 
 @Entity
 @CocTable(name = "股价竞猜", code = "StockActivity", orderby = 3//
-, actions = { @CocOperation(name = "竞猜", typeCode = TYPE_BZFORM_NEW, mode = "c", info = "竞猜成功！", plugin = "com.kmetop.demsy.plugins.activity.SaveActivityEntry")//
+, actions = { @CocOperation(name = "竞猜", typeCode = TYPE_BZFORM_NEW, mode = "c", info = "竞猜成功！", pluginName = "com.kmetop.demsy.plugins.activity.SaveActivityEntry")//
 		, @CocOperation(name = "详情", typeCode = TYPE_BZFORM_EDIT, mode = "v")//
-		, @CocOperation(name = "兑奖", typeCode = TYPE_BZ_EXEC_SYNC, mode = "bu1", plugin = "com.kmetop.demsy.plugins.activity.StockGuessPrize") //
+		, @CocOperation(name = "兑奖", typeCode = TYPE_BZ_EXEC_SYNC, mode = "bu1", pluginName = "com.kmetop.demsy.plugins.activity.StockGuessPrize") //
 		, @CocOperation(name = "领奖", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu") //
 }//
 , groups = { @CocGroup(name = "其他信息", code = "basic"//

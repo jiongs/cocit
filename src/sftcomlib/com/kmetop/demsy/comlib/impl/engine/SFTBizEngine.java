@@ -430,7 +430,11 @@ public class SFTBizEngine extends BizEngine {
 		action.setOrderby(actionOrder);
 		action.setTargetUrl(actann.targetUrl());
 		action.setTargetWindow(actann.targetWindow());
-		action.setPlugin(actann.plugin());
+		action.setPlugin(actann.pluginName());
+		Class plugin = actann.plugin();
+		if (!plugin.equals(void.class)) {
+			action.setPlugin(plugin.getName());
+		}
 		action.setImage(new Upload(actann.image()));
 		action.setLogo(new Upload(actann.logo()));
 		action.setTemplate(actann.template());
@@ -460,8 +464,7 @@ public class SFTBizEngine extends BizEngine {
 	}
 
 	private void parseBizAction(List<BizAction> list, IOrm orm, Long soft, IBizSystem system, BizAction newAction, BizAction parentAction, int actionOrder) {
-		BizAction action = (BizAction) orm.load(BizAction.class, CndExpr.eq(F_TYPE_CODE, newAction.getTypeCode()).and(CndExpr.eq(F_MODE, newAction.getMode()))
-				.and(CndExpr.eq(F_SYSTEM, system.getId())));
+		BizAction action = (BizAction) orm.load(BizAction.class, CndExpr.eq(F_TYPE_CODE, newAction.getTypeCode()).and(CndExpr.eq(F_MODE, newAction.getMode())).and(CndExpr.eq(F_SYSTEM, system.getId())));
 		if (action == null) {
 			action = newAction;
 		}

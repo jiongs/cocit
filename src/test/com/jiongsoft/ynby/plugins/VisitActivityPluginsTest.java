@@ -29,7 +29,7 @@ public class VisitActivityPluginsTest {
 		CocEntityEvent<VisitActivity> event = new CocEntityEvent();
 		VisitActivity entity = new VisitActivity();
 
-		event.setEntityData(entity);
+		event.setEntity(entity);
 
 		plugin.before(event);
 	}
@@ -47,7 +47,7 @@ public class VisitActivityPluginsTest {
 
 		entity.setPlanPersonNumber(10);
 
-		event.setEntityData(entity);
+		event.setEntity(entity);
 
 		plugin.before(event);
 	}
@@ -66,7 +66,7 @@ public class VisitActivityPluginsTest {
 
 		entity.setPlanPersonNumber(10);
 
-		event.setEntityData(entity);
+		event.setEntity(entity);
 
 		plugin.before(event);
 	}
@@ -84,7 +84,7 @@ public class VisitActivityPluginsTest {
 		// 计划人数非法
 		entity.setPlanPersonNumber(0);
 
-		event.setEntityData(entity);
+		event.setEntity(entity);
 
 		plugin.before(event);
 	}
@@ -100,7 +100,7 @@ public class VisitActivityPluginsTest {
 		entity.setExpiredTo(new Date(2013 - 1900, 10 - 1, 25));
 		entity.setPlanPersonNumber(50);
 
-		event.setEntityData(entity);
+		event.setEntity(entity);
 
 		plugin.before(event);
 	}

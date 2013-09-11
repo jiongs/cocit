@@ -26,7 +26,7 @@ import com.jiongsoft.cocit.entity.annotation.CocTable;
 , groups = { @CocGroup(name = "基本信息", code = "basic"//
 , fields = { @CocField(property = "datetime")//
 		, @CocField(property = "locationinfo") //
-		, @CocField(property = "message") //
+		, @CocField(property = "content") //
 		, @CocField(property = "remoteIp")//
 		, @CocField(property = "remoteUri")//
 		, @CocField(property = "eslipse")//

@@ -186,7 +186,7 @@ public class ReactionMailBasisAssembler {
 
 		if ((source == null) || (source.length() < 1)) {
 
-			source = "message";
+			source = "content";
 		}
 
 		return (source.replaceAll("[ /\\\\><\\*\\.\\?\"'\\|:;]", "_") + ".eml");
@@ -195,7 +195,7 @@ public class ReactionMailBasisAssembler {
 	/**
 	 * Erstellt einen MimeBodyPart aus einer Message.
 	 * 
-	 * @param message
+	 * @param content
 	 *            Message, aus der der MimeBodyPart erstellt wird.
 	 * @return <code>MimeBodyPart</code>
 	 */
@@ -241,14 +241,14 @@ public class ReactionMailBasisAssembler {
 	 * Determines all TO-recipients (in case of "reply to all")
 	 * 
 	 * @param originMessage
-	 *            The origin message
+	 *            The origin content
 	 * @return <code>Address</code>-array containing all TO-recipients
 	 */
 	private static Address[] getToRecipientsForReplyToAll(Message originMessage) throws Exception {
 
 		List<Address> rcptToList = new ArrayList<Address>();
 
-		// add reply-to-address(es) of the origin message
+		// add reply-to-address(es) of the origin content
 		Address[] originReplyTo = originMessage.getReplyTo();
 
 		if ((originReplyTo != null) && (originReplyTo.length >= 1)) {
@@ -256,7 +256,7 @@ public class ReactionMailBasisAssembler {
 			rcptToList.addAll(Arrays.asList(originReplyTo));
 		}
 
-		// add to-address(es) of the origin message
+		// add to-address(es) of the origin content
 		Address[] originToRcpts = originMessage.getRecipients(RecipientType.TO);
 
 		if ((originToRcpts != null) && (originToRcpts.length >= 1)) {

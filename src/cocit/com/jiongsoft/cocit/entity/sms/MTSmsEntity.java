@@ -23,7 +23,7 @@ import com.jiongsoft.cocit.utils.ActionUtil;
 @Entity
 @CocTable(name = "短信发送管理", code = "MTSmsEntity", pathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 1//
 // 操作按钮
-, actions = { @CocOperation(name = "发送短信", typeCode = 101, mode = "c")//
+, actions = { @CocOperation(name = "发送短信", typeCode = 101, mode = "c", plugin = SmsPlugins.SendSMS.class)//
 		, @CocOperation(name = "删除短信", typeCode = 299, mode = "d") //
 		, @CocOperation(name = "查看短信", typeCode = 102, mode = "v") //
 }// end: actions

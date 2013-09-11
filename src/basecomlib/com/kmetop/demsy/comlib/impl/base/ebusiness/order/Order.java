@@ -22,9 +22,9 @@ import com.kmetop.demsy.lang.Str;
 
 @Entity
 @CocTable(name = "订单信息管理", code = IOrder.SYS_CODE, orderby = 1,//
-actions = { @CocOperation(name = "付款", typeCode = TYPE_BZFORM_EDIT, mode = "e2", plugin = "com.kmetop.demsy.plugins.eshop.OrderBuyerPayed")//
-		, @CocOperation(name = "退款", typeCode = TYPE_BZFORM_EDIT, mode = "e3", plugin = "com.kmetop.demsy.plugins.eshop.OrderRefund")//
-		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d", plugin = "com.kmetop.demsy.plugins.eshop.OrderDelete")//
+actions = { @CocOperation(name = "付款", typeCode = TYPE_BZFORM_EDIT, mode = "e2", pluginName = "com.kmetop.demsy.plugins.eshop.OrderBuyerPayed")//
+		, @CocOperation(name = "退款", typeCode = TYPE_BZFORM_EDIT, mode = "e3", pluginName = "com.kmetop.demsy.plugins.eshop.OrderRefund")//
+		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d", pluginName = "com.kmetop.demsy.plugins.eshop.OrderDelete")//
 		// , @CocOperation(name = "发货处理", typeCode = TYPE_BZ_EDIT, mode = "e1", plugin
 		// = "com.kmetop.demsy.plugins.eshop.OrderSended")//
 		// , @CocOperation(name = "调整费用", typeCode = TYPE_BZ_EDIT_N, mode = "bu",

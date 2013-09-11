@@ -159,7 +159,7 @@ public class FileUploadCommand extends Command {
 	 * @param out
 	 *            response.
 	 * @param errorMsg
-	 *            error message
+	 *            error content
 	 * @param path
 	 *            path
 	 * @throws IOException
@@ -175,7 +175,7 @@ public class FileUploadCommand extends Command {
 	 * @param out
 	 *            out put stream
 	 * @param errorMsg
-	 *            error message
+	 *            error content
 	 * @throws IOException
 	 *             when error occurs
 	 */

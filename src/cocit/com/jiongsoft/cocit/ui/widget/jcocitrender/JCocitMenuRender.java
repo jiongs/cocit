@@ -1,28 +1,28 @@
-package com.jiongsoft.cocit.ui.render.jCocit;
+package com.jiongsoft.cocit.ui.widget.jcocitrender;
 
 import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
-import com.jiongsoft.cocit.ui.model.CuiMenuModel;
-import com.jiongsoft.cocit.ui.model.CuiSearchBoxModel;
-import com.jiongsoft.cocit.ui.render.BaseCuiRender;
+import com.jiongsoft.cocit.ui.widget.MenuWidgetModel;
+import com.jiongsoft.cocit.ui.widget.SearchBoxWidgetModel;
+import com.jiongsoft.cocit.ui.widget.WidgetRender;
 import com.jiongsoft.cocit.utils.Lang;
 import com.jiongsoft.cocit.utils.StringUtil;
 import com.jiongsoft.cocit.utils.Tree;
 import com.jiongsoft.cocit.utils.Tree.Node;
 
 @SuppressWarnings("unused")
-class JCocitMenuRender extends BaseCuiRender<CuiMenuModel> {
+class JCocitMenuRender extends WidgetRender<MenuWidgetModel> {
 
 	@Override
-	public void render(Writer out, CuiMenuModel model) throws Throwable {
+	public void render(Writer out, MenuWidgetModel model) throws Throwable {
 		// this.printJSMenu(out, model);
 
 		printHtmlMenu(out, model);
 	}
 
-	private void printHtmlMenu(Writer out, CuiMenuModel model) throws Throwable {
+	private void printHtmlMenu(Writer out, MenuWidgetModel model) throws Throwable {
 		Tree tree = model.getData();
 
 		// 工具栏容器：DIV
@@ -88,7 +88,7 @@ class JCocitMenuRender extends BaseCuiRender<CuiMenuModel> {
 		/*
 		 * 2.右边为搜索框
 		 */
-		CuiSearchBoxModel searchMode = model.getSearchBoxModel();
+		SearchBoxWidgetModel searchMode = model.getSearchBoxModel();
 		if (searchMode != null) {
 			print(out, "</td><td align=\"left\" style=\"padding-left: 5px;\">");
 
@@ -102,7 +102,7 @@ class JCocitMenuRender extends BaseCuiRender<CuiMenuModel> {
 		print(out, "</div>");
 	}
 
-	private void printHtmlSubMenu(Writer out, CuiMenuModel model, Node node) throws IOException {
+	private void printHtmlSubMenu(Writer out, MenuWidgetModel model, Node node) throws IOException {
 		print(out, "<div id=\"submenu_%s_%s\" data-options=\"onClick: jCocit.entity.doAction\" style=\"width:120px;\">", //
 				model.get("token", ""), node.getId());
 
@@ -138,7 +138,7 @@ class JCocitMenuRender extends BaseCuiRender<CuiMenuModel> {
 		print(out, "</div>");
 	}
 
-	private void printJSMenu(Writer out, CuiMenuModel model) throws IOException {
+	private void printJSMenu(Writer out, MenuWidgetModel model) throws IOException {
 		print(out, "<script type=\"text/javascript\">var toolbar_%s = [", model.get("token", ""));
 
 		Tree tree = model.getData();

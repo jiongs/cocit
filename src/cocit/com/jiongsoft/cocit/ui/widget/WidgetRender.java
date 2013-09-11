@@ -1,4 +1,4 @@
-package com.jiongsoft.cocit.ui.render;
+package com.jiongsoft.cocit.ui.widget;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -6,7 +6,7 @@ import java.io.Writer;
 import com.jiongsoft.cocit.ui.CuiModel;
 import com.jiongsoft.cocit.ui.CuiRender;
 
-public abstract class BaseCuiRender<T extends CuiModel> implements CuiRender<T> {
+public abstract class WidgetRender<T extends CuiModel> implements CuiRender<T> {
 
 	protected void print(Writer out, String format, Object... args) throws IOException {
 		out.write("\n");

@@ -14,7 +14,7 @@ public class SetPhotoStatus extends BaseEntityPlugin {
 	@Override
 	public synchronized void before(CocEntityEvent event) {
 		IOrm orm = (IOrm) event.getOrm();
-		Object obj = event.getEntityData();
+		Object obj = event.getEntity();
 		if (obj instanceof List) {
 			List<PhotoActivity> list = (List) obj;
 			for (PhotoActivity photo : list) {

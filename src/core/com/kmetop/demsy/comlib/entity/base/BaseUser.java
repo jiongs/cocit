@@ -17,7 +17,7 @@ import com.kmetop.demsy.comlib.impl.BizComponent;
 import com.kmetop.demsy.comlib.security.IUser;
 import com.kmetop.demsy.lang.Str;
 
-@CocTable(actions = { @CocOperation(name = "注册", typeCode = TYPE_BZFORM_NEW, mode = "c1", plugin = "com.kmetop.demsy.plugins.security.SaveUser")//
+@CocTable(actions = { @CocOperation(name = "注册", typeCode = TYPE_BZFORM_NEW, mode = "c1", pluginName = "com.kmetop.demsy.plugins.security.SaveUser")//
 		, @CocOperation(jsonData = "CommonBizAction.data.js") //
 }//
 , groups = { @CocGroup(name = "账户信息", code = "basicinfo"//

@@ -41,7 +41,7 @@ public class SaveResearchResult extends BaseEntityPlugin {
 		Class questionType = Demsy.bizEngine.getType(IResearchQuestion.SYS_CODE);
 		Map<Long, IResearchQuestion> mapMustableQuestions = new HashMap();
 
-		Object obj = event.getEntityData();
+		Object obj = event.getEntity();
 		List<IResearchResult> list = new ArrayList();
 
 		if (obj instanceof List) {

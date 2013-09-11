@@ -34,7 +34,7 @@ import com.kmetop.demsy.lang.Str;
 @CocTable(name = "论坛发帖管理", code = IBbsTopic.SYS_CODE, catalog = BIZCATA_WEB, orderby = ORDER_WEB_FORUM_TOPIC//
 , actions = {
 //
-		@CocOperation(name = "发帖", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = "com.kmetop.demsy.plugins.bbs.SaveBbsTopic", info = "发帖成功!", error = "发帖失败!")//
+		@CocOperation(name = "发帖", typeCode = TYPE_BZFORM_NEW, mode = "c", pluginName = "com.kmetop.demsy.plugins.bbs.SaveBbsTopic", info = "发帖成功!", error = "发帖失败!")//
 		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e") //
 		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d") //
 		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //

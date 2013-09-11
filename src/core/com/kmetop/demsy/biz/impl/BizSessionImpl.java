@@ -122,12 +122,12 @@ public class BizSessionImpl implements IBizSession {
 		final CocEntityEvent event = createEvent();
 		Trans.exec(new Atom() {
 			public void run() {
-				event.setEntityData(obj);
+				event.setEntity(obj);
 				event.setExpr(fieldRexpr);
 
 				fireBeforeEvent(plugins, event);
 
-				event.setReturnValue(orm().save(event.getEntityData(), null));
+				event.setReturnValue(orm().save(event.getEntity(), null));
 
 				fireAfterEvent(plugins, event);
 			}
@@ -140,12 +140,12 @@ public class BizSessionImpl implements IBizSession {
 		final CocEntityEvent event = createEvent();
 		Trans.exec(new Atom() {
 			public void run() {
-				event.setEntityData(obj);
+				event.setEntity(obj);
 				event.setExpr(expr);
 
 				fireBeforeEvent(plugins, event);
 
-				event.setReturnValue(orm().updateMore(event.getEntityData(), (CndExpr) event.getExpr()));
+				event.setReturnValue(orm().updateMore(event.getEntity(), (CndExpr) event.getExpr()));
 
 				fireAfterEvent(plugins, event);
 			}
@@ -158,7 +158,7 @@ public class BizSessionImpl implements IBizSession {
 		final CocEntityEvent event = createEvent();
 		Trans.exec(new Atom() {
 			public void run() {
-				event.setEntityData(entity);
+				event.setEntity(entity);
 
 				fireBeforeEvent(plugins, event);
 
@@ -289,7 +289,7 @@ public class BizSessionImpl implements IBizSession {
 		final CocEntityEvent event = createEvent();
 		Trans.exec(new Atom() {
 			public void run() {
-				event.setEntityData(pager);
+				event.setEntity(pager);
 
 				fireLoadEvent(plugins, event);
 
@@ -306,7 +306,7 @@ public class BizSessionImpl implements IBizSession {
 		final CocEntityEvent event = createEvent();
 		Trans.exec(new Atom() {
 			public void run() {
-				event.setEntityData(obj);
+				event.setEntity(obj);
 				event.setExpr(expr);
 				fireBeforeEvent(plugins, event);
 				// noop
@@ -338,6 +338,16 @@ public class BizSessionImpl implements IBizSession {
 		return ret.get(0);
 	}
 
+	@Override
+	public Object asynRun(Object obj, CndExpr fieldRexpr, CocEntityPlugin... plugins) {
+		CocEntityEvent event = createEvent();
+		event.setEntity(obj);
+		event.setExpr(fieldRexpr);
+		put(new DelayAction(ActionType.run, event, plugins));
+
+		return event.getReturnValue();
+	}
+
 	// ========================================================================
 	// 异步实体管理
 	// ========================================================================
@@ -345,14 +355,14 @@ public class BizSessionImpl implements IBizSession {
 	@Override
 	public void asynSave(Object obj, CocEntityPlugin... plugins) {
 		CocEntityEvent event = createEvent();
-		event.setEntityData(obj);
+		event.setEntity(obj);
 		put(new DelayAction(ActionType.save, event, plugins));
 	}
 
 	@Override
 	public void asynSave(Object obj, CndExpr fieldRexpr, CocEntityPlugin... plugins) {
 		CocEntityEvent event = createEvent();
-		event.setEntityData(obj);
+		event.setEntity(obj);
 		event.setExpr(fieldRexpr);
 		put(new DelayAction(ActionType.save, event, plugins));
 	}
@@ -360,7 +370,7 @@ public class BizSessionImpl implements IBizSession {
 	@Override
 	public void asynUpdateMore(Object obj, CndExpr expr, CocEntityPlugin... plugins) {
 		CocEntityEvent event = createEvent();
-		event.setEntityData(obj);
+		event.setEntity(obj);
 		event.setExpr(expr);
 		put(new DelayAction(ActionType.updateMore, event, plugins));
 	}
@@ -368,7 +378,7 @@ public class BizSessionImpl implements IBizSession {
 	@Override
 	public void asynDelete(Object obj, CocEntityPlugin... plugins) {
 		CocEntityEvent event = createEvent();
-		event.setEntityData(obj);
+		event.setEntity(obj);
 		put(new DelayAction(ActionType.delete, event, plugins));
 	}
 
@@ -383,16 +393,8 @@ public class BizSessionImpl implements IBizSession {
 	@Override
 	public void asynQuery(Pager pager, CocEntityPlugin... plugins) {
 		CocEntityEvent event = createEvent();
-		event.setEntityData(pager);
+		event.setEntity(pager);
 		put(new DelayAction(ActionType.query, event, plugins));
-	}
-
-	@Override
-	public void asynRun(Object obj, CndExpr fieldRexpr, CocEntityPlugin... plugins) {
-		CocEntityEvent event = createEvent();
-		event.setEntityData(obj);
-		event.setExpr(fieldRexpr);
-		put(new DelayAction(ActionType.run, event, plugins));
 	}
 
 	private void put(DelayAction action) {
@@ -437,21 +439,21 @@ public class BizSessionImpl implements IBizSession {
 		protected void execute(DelayAction action) throws Exception {
 			CocEntityEvent event = action.event;
 			if (action.type == ActionType.save) {
-				if (event.getEntityData() instanceof RunningLog) {
-					RunningLogDao.me().save((RunningLog) event.getEntityData());
+				if (event.getEntity() instanceof RunningLog) {
+					RunningLogDao.me().save((RunningLog) event.getEntity());
 					return;
 				}
-				BizSessionImpl.this.save((Object) event.getEntityData(), (NullCndExpr) event.getExpr(), action.plugins);
+				BizSessionImpl.this.save((Object) event.getEntity(), (NullCndExpr) event.getExpr(), action.plugins);
 			} else if (action.type == ActionType.updateMore) {
-				BizSessionImpl.this.updateMore(event.getEntityData(), (CndExpr) event.getExpr(), action.plugins);
+				BizSessionImpl.this.updateMore(event.getEntity(), (CndExpr) event.getExpr(), action.plugins);
 			} else if (action.type == ActionType.delete) {
-				BizSessionImpl.this.delete(event.getEntityData(), action.plugins);
+				BizSessionImpl.this.delete(event.getEntity(), action.plugins);
 			} else if (action.type == ActionType.deleteMore) {
 				BizSessionImpl.this.deleteMore(event.getEntityType(), (CndExpr) event.getExpr(), action.plugins);
 			} else if (action.type == ActionType.query) {
-				BizSessionImpl.this.query((Pager) event.getEntityData(), action.plugins);
+				BizSessionImpl.this.query((Pager) event.getEntity(), action.plugins);
 			} else if (action.type == ActionType.run) {
-				BizSessionImpl.this.run(event.getEntityData(), (CndExpr) event.getExpr(), action.plugins);
+				BizSessionImpl.this.run(event.getEntity(), (CndExpr) event.getExpr(), action.plugins);
 			}
 		}
 
@@ -476,7 +478,7 @@ public class BizSessionImpl implements IBizSession {
 				try {
 					execute(action);
 				} catch (Throwable e) {
-					Object obj = action.event.getEntityData();
+					Object obj = action.event.getEntity();
 					if (obj instanceof RunningLog) {
 						System.err.println("异步BizSession: 执行任务出错! [action=" + action + ", obj=" + obj + "] " + e);
 					} else {

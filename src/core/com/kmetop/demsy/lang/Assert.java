@@ -32,8 +32,8 @@ public abstract class Assert {
 	 * 
 	 * @param expression
 	 *            a boolean expression
-	 * @param message
-	 *            the exception message to use if the assertion fails
+	 * @param content
+	 *            the exception content to use if the assertion fails
 	 * @throws IllegalArgumentException
 	 *             if expression is <code>false</code>
 	 */
@@ -70,8 +70,8 @@ public abstract class Assert {
 	 * 
 	 * @param object
 	 *            the object to check
-	 * @param message
-	 *            the exception message to use if the assertion fails
+	 * @param content
+	 *            the exception content to use if the assertion fails
 	 * @throws IllegalArgumentException
 	 *             if the object is not <code>null</code>
 	 */
@@ -106,8 +106,8 @@ public abstract class Assert {
 	 * 
 	 * @param object
 	 *            the object to check
-	 * @param message
-	 *            the exception message to use if the assertion fails
+	 * @param content
+	 *            the exception content to use if the assertion fails
 	 * @throws IllegalArgumentException
 	 *             if the object is <code>null</code>
 	 */
@@ -143,8 +143,8 @@ public abstract class Assert {
 	 * 
 	 * @param text
 	 *            the String to check
-	 * @param message
-	 *            the exception message to use if the assertion fails
+	 * @param content
+	 *            the exception content to use if the assertion fails
 	 * @see StringUtils#hasLength
 	 */
 	public static void hasLength(String text, String message) {
@@ -180,8 +180,8 @@ public abstract class Assert {
 	 * 
 	 * @param text
 	 *            the String to check
-	 * @param message
-	 *            the exception message to use if the assertion fails
+	 * @param content
+	 *            the exception content to use if the assertion fails
 	 * @see StringUtils#hasText
 	 */
 	public static void hasText(String text, String message) {
@@ -218,8 +218,8 @@ public abstract class Assert {
 	 *            the text to search
 	 * @param substring
 	 *            the substring to find within the text
-	 * @param message
-	 *            the exception message to use if the assertion fails
+	 * @param content
+	 *            the exception content to use if the assertion fails
 	 */
 	public static void doesNotContain(String textToSearch, String substring, String message) {
 		if (!Str.isEmpty(textToSearch) && !Str.isEmpty(substring) && textToSearch.indexOf(substring) != -1) {
@@ -253,8 +253,8 @@ public abstract class Assert {
 	 * 
 	 * @param array
 	 *            the array to check
-	 * @param message
-	 *            the exception message to use if the assertion fails
+	 * @param content
+	 *            the exception content to use if the assertion fails
 	 * @throws IllegalArgumentException
 	 *             if the object array is <code>null</code> or has no elements
 	 */
@@ -291,8 +291,8 @@ public abstract class Assert {
 	 * 
 	 * @param array
 	 *            the array to check
-	 * @param message
-	 *            the exception message to use if the assertion fails
+	 * @param content
+	 *            the exception content to use if the assertion fails
 	 * @throws IllegalArgumentException
 	 *             if the object array contains a <code>null</code> element
 	 */
@@ -333,8 +333,8 @@ public abstract class Assert {
 	 * 
 	 * @param collection
 	 *            the collection to check
-	 * @param message
-	 *            the exception message to use if the assertion fails
+	 * @param content
+	 *            the exception content to use if the assertion fails
 	 * @throws IllegalArgumentException
 	 *             if the collection is <code>null</code> or has no elements
 	 */
@@ -371,8 +371,8 @@ public abstract class Assert {
 	 * 
 	 * @param map
 	 *            the map to check
-	 * @param message
-	 *            the exception message to use if the assertion fails
+	 * @param content
+	 *            the exception content to use if the assertion fails
 	 * @throws IllegalArgumentException
 	 *             if the map is <code>null</code> or has no entries
 	 */
@@ -429,11 +429,11 @@ public abstract class Assert {
 	 *            the type to check against
 	 * @param obj
 	 *            the object to check
-	 * @param message
-	 *            a message which will be prepended to the message produced by
+	 * @param content
+	 *            a content which will be prepended to the content produced by
 	 *            the function itself, and which may be used to provide context.
 	 *            It should normally end in a ": " or ". " so that the function
-	 *            generate message looks ok when prepended to it.
+	 *            generate content looks ok when prepended to it.
 	 * @throws IllegalArgumentException
 	 *             if the object is not an instance of clazz
 	 * @see Class#isInstance
@@ -476,11 +476,11 @@ public abstract class Assert {
 	 *            the super type to check against
 	 * @param subType
 	 *            the sub type to check
-	 * @param message
-	 *            a message which will be prepended to the message produced by
+	 * @param content
+	 *            a content which will be prepended to the content produced by
 	 *            the function itself, and which may be used to provide context.
 	 *            It should normally end in a ": " or ". " so that the function
-	 *            generate message looks ok when prepended to it.
+	 *            generate content looks ok when prepended to it.
 	 * @throws IllegalArgumentException
 	 *             if the classes are not assignable
 	 */
@@ -502,8 +502,8 @@ public abstract class Assert {
 	 * 
 	 * @param expression
 	 *            a boolean expression
-	 * @param message
-	 *            the exception message to use if the assertion fails
+	 * @param content
+	 *            the exception content to use if the assertion fails
 	 * @throws IllegalStateException
 	 *             if expression is <code>false</code>
 	 */

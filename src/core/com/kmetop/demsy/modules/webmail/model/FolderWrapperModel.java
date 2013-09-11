@@ -52,7 +52,7 @@ public class FolderWrapperModel implements Lifecycle, Serializable {
 	/** Hier merken wir uns das originale Message-Array */
 	private Message[] messages = null;
 
-	/** Holds the (overall) amount of messages within the message-folder */
+	/** Holds the (overall) amount of messages within the content-folder */
 	private int overallMessageCount = 0;
 
 	// --------------------------------------------------------- Getter und

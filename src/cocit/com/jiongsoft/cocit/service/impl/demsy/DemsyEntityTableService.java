@@ -341,7 +341,7 @@ class DemsyEntityTableService implements CocEntityTableService {
 
 			String mode = field.getMode(opMode);
 
-			// String cascadeMode = this.getCascadeMode(field, entityData)[1];
+			// String cascadeMode = this.getCascadeMode(field, entity)[1];
 			// if (getModeValue(mode) < getModeValue(cascadeMode)) {
 			// mode = cascadeMode;
 			// }

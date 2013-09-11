@@ -1,5 +1,5 @@
 // $codepro.audit.disable unnecessaryImport
-package com.jiongsoft.cocit.ui.model;
+package com.jiongsoft.cocit.ui.widget.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +9,17 @@ import com.jiongsoft.cocit.service.CocEntityGroupService;
 import com.jiongsoft.cocit.service.CocEntityModuleService;
 import com.jiongsoft.cocit.service.CocEntityOperationService;
 import com.jiongsoft.cocit.service.CocEntityTableService;
-import com.jiongsoft.cocit.ui.model.CuiFormModel.FormField;
-import com.jiongsoft.cocit.ui.model.CuiGridModel.GridColumn;
+import com.jiongsoft.cocit.ui.widget.EntityFormWidgetModel;
+import com.jiongsoft.cocit.ui.widget.EntityModuleWidgetModel;
+import com.jiongsoft.cocit.ui.widget.EntityTableWidgetModel;
+import com.jiongsoft.cocit.ui.widget.GridWidgetModel;
+import com.jiongsoft.cocit.ui.widget.MenuWidgetModel;
+import com.jiongsoft.cocit.ui.widget.SearchBoxWidgetModel;
+import com.jiongsoft.cocit.ui.widget.TreeWidgetModel;
+import com.jiongsoft.cocit.ui.widget.TreeWidgetData;
+import com.jiongsoft.cocit.ui.widget.WidgetModelFactory;
+import com.jiongsoft.cocit.ui.widget.EntityFormWidgetModel.FormField;
+import com.jiongsoft.cocit.ui.widget.GridWidgetModel.GridColumn;
 import com.jiongsoft.cocit.utils.ActionUtil;
 import com.jiongsoft.cocit.utils.KeyValue;
 import com.jiongsoft.cocit.utils.Lang;
@@ -18,22 +27,22 @@ import com.jiongsoft.cocit.utils.StringUtil;
 import com.jiongsoft.cocit.utils.Tree;
 import com.jiongsoft.cocit.utils.Tree.Node;
 
-public class SimpleCuiModelFactory implements CuiModelFactory {
+public class WidgetModelFactoryImpl implements WidgetModelFactory {
 
 	@Override
-	public CuiEntityModuleModel getEntytyModuleUI(CocEntityModuleService entityModule) {
+	public EntityModuleWidgetModel getEntytyModuleUI(CocEntityModuleService entityModule) {
 		CocEntityTableService mainTable = entityModule.getEntityTable();
-		CuiEntityTableModel mainModel = getEntityTableUI(entityModule, mainTable);
+		EntityTableWidgetModel mainModel = getEntityTableUI(entityModule, mainTable);
 
-		CuiEntityModuleModel ret = new CuiEntityModuleModel(mainModel);
+		EntityModuleWidgetModel ret = new EntityModuleWidgetModel(mainModel);
 		ret.setId("" + entityModule.getID());
 		ret.setName(entityModule.getName());
 
 		List<CocEntityTableService> childrenTables = entityModule.getChildrenEntityTables();
 		if (childrenTables != null) {
-			List<CuiEntityTableModel> childrenModels = new ArrayList();
+			List<EntityTableWidgetModel> childrenModels = new ArrayList();
 			for (CocEntityTableService table : childrenTables) {
-				CuiEntityTableModel model = new CuiEntityTableModel();
+				EntityTableWidgetModel model = new EntityTableWidgetModel();
 
 				model.setId("" + table.getID());
 				model.setName(table.getName());
@@ -50,15 +59,15 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 	}
 
 	@Override
-	public CuiEntityTableModel getEntityTableUI(CocEntityModuleService entityModule, CocEntityTableService entityTable) {
-		CuiEntityTableModel model = new CuiEntityTableModel();
+	public EntityTableWidgetModel getEntityTableUI(CocEntityModuleService entityModule, CocEntityTableService entityTable) {
+		EntityTableWidgetModel model = new EntityTableWidgetModel();
 
 		model.setId("" + entityTable.getID());
 		model.setName(entityTable.getName());
 
 		model.setNaviTreeModel(this.getEntityNaviUI(entityModule, entityTable));
-		model.setOperationMenuModel(this.getOperationMenuModel(entityModule, entityTable));
-		model.setGridModel(this.getGridModel(entityModule, entityTable));
+		model.setOperationMenuModel(this.getOperationMenuUI(entityModule, entityTable));
+		model.setGridModel(this.getGridUI(entityModule, entityTable));
 
 		// 将搜索框放在左边导航树顶部
 		// model.setSearchBoxModel(this.getSearchBoxModel(entityModule, entityTable));
@@ -67,9 +76,9 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 	}
 
 	@Override
-	public CuiSearchBoxModel getSearchBoxModel(CocEntityModuleService entityModule, CocEntityTableService entityTable) {
+	public SearchBoxWidgetModel getSearchBoxUI(CocEntityModuleService entityModule, CocEntityTableService entityTable) {
 
-		CuiSearchBoxModel ret = new CuiSearchBoxModel();
+		SearchBoxWidgetModel ret = new SearchBoxWidgetModel();
 		ret.setId("" + entityTable.getID());
 
 		List<KeyValue> list = new ArrayList();
@@ -95,8 +104,8 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 	}
 
 	@Override
-	public CuiGridModel getGridModel(CocEntityModuleService entityModule, CocEntityTableService entityTable) {
-		CuiGridModel model = new CuiGridModel();
+	public GridWidgetModel getGridUI(CocEntityModuleService entityModule, CocEntityTableService entityTable) {
+		GridWidgetModel model = new GridWidgetModel();
 
 		model.setId("" + entityTable.getID());
 		model.setName(entityTable.getName());
@@ -155,10 +164,10 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 	}
 
 	@Override
-	public CuiMenuModel getOperationMenuModel(CocEntityModuleService entityModule, CocEntityTableService entityTable) {
+	public MenuWidgetModel getOperationMenuUI(CocEntityModuleService entityModule, CocEntityTableService entityTable) {
 		List<CocEntityOperationService> dataOperations = entityTable.getEntityOperations();
 
-		CuiMenuModel model = new CuiMenuModel();
+		MenuWidgetModel model = new MenuWidgetModel();
 		model.setId("" + entityTable.getID());
 
 		Tree tree = Tree.make();
@@ -187,18 +196,18 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 		model.setData(tree);
 
 		// 将搜索框放在菜单栏右边
-		model.setSearchBoxModel(this.getSearchBoxModel(entityModule, entityTable));
+		model.setSearchBoxModel(this.getSearchBoxUI(entityModule, entityTable));
 
 		return model;
 	}
 
 	@Override
-	public CuiTreeModel getEntityNaviUI(CocEntityModuleService entityModule, CocEntityTableService entityTable) {
+	public TreeWidgetModel getEntityNaviUI(CocEntityModuleService entityModule, CocEntityTableService entityTable) {
 		if (Lang.isNil(entityTable.getEntityFieldsForNaviTree()))
 			return null;
 
 		// 创建树模型
-		CuiTreeModel model = new CuiTreeModel();
+		TreeWidgetModel model = new TreeWidgetModel();
 		model.setId("" + entityTable.getID());
 		model.set("onlyLeafCheck", "true");
 		// model.set("onlyLeafValue", "true");
@@ -207,21 +216,21 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 		model.setDataLoadUrl(ActionUtil.GET_ENTITY_NAVI_DATA.replace("*", ActionUtil.encodeArgs(entityModule.getID(), entityTable.getID())));
 
 		// 获取树数据
-		// Tree entityData = entityTable.getNaviTree();
-		// model.setData(entityData);
+		// Tree entity = entityTable.getNaviTree();
+		// model.setData(entity);
 
 		// 返回
 		return model;
 	}
 
 	@Override
-	public CuiTreeModelData getEntityNaviData(CocEntityModuleService entityModule, CocEntityTableService entityTable) {
+	public TreeWidgetData getEntityNaviData(CocEntityModuleService entityModule, CocEntityTableService entityTable) {
 		if (Lang.isNil(entityTable.getEntityFieldsForNaviTree()))
 			return null;
 
 		// 创建模型
-		CuiTreeModelData ret = new CuiTreeModelData();
-		CuiTreeModel model = new CuiTreeModel();
+		TreeWidgetData ret = new TreeWidgetData();
+		TreeWidgetModel model = new TreeWidgetModel();
 		model.setId("" + entityTable.getID());
 
 		// 查询数据
@@ -236,8 +245,8 @@ public class SimpleCuiModelFactory implements CuiModelFactory {
 	}
 
 	@Override
-	public CuiFormModel getEntityFormUI(CocEntityModuleService entityModule, CocEntityTableService entityTable, CocEntityOperationService entityOp, Object entityEntity) {
-		CuiFormModel ret = new CuiFormModel();
+	public EntityFormWidgetModel getEntityFormUI(CocEntityModuleService entityModule, CocEntityTableService entityTable, CocEntityOperationService entityOp, Object entityEntity) {
+		EntityFormWidgetModel ret = new EntityFormWidgetModel();
 
 		List<CocEntityGroupService> groups = entityTable.getEntityGroups();
 		for (CocEntityGroupService group : groups) {

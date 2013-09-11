@@ -23,10 +23,10 @@ public class NestedIOException extends IOException {
 
 	/**
 	 * Construct a <code>NestedIOException</code> with the specified detail
-	 * message.
+	 * content.
 	 * 
 	 * @param msg
-	 *            the detail message
+	 *            the detail content
 	 */
 	public NestedIOException(String msg) {
 		super(msg);
@@ -34,10 +34,10 @@ public class NestedIOException extends IOException {
 
 	/**
 	 * Construct a <code>NestedIOException</code> with the specified detail
-	 * message and nested exception.
+	 * content and nested exception.
 	 * 
 	 * @param msg
-	 *            the detail message
+	 *            the detail content
 	 * @param cause
 	 *            the nested exception
 	 */
@@ -47,7 +47,7 @@ public class NestedIOException extends IOException {
 	}
 
 	/**
-	 * Return the detail message, including the message from the nested
+	 * Return the detail content, including the content from the nested
 	 * exception if there is one.
 	 */
 	public String getMessage() {

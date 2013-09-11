@@ -32,7 +32,7 @@ import com.kmetop.demsy.lang.Str;
 @CocTable(name = "博客文章管理", code = IBlogPost.SYS_CODE, catalog = BIZCATA_WEB, orderby = ORDER_WEB_BLOG_TOPIC//
 , actions = {
 //
-		@CocOperation(name = "写博文", typeCode = TYPE_BZFORM_NEW, mode = "c",plugin = "com.kmetop.demsy.plugins.bbs.SaveBlogPost")//
+		@CocOperation(name = "写博文", typeCode = TYPE_BZFORM_NEW, mode = "c",pluginName = "com.kmetop.demsy.plugins.bbs.SaveBlogPost")//
 		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e") //
 		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d") //
 		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //

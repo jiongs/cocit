@@ -63,7 +63,7 @@ public class EmaySDKSmsClient implements SmsClient {
 		CocitHttpContext ctx = Cocit.getHttpContext();
 
 		if (ctx != null) {
-			CocSoftService soft = ctx.getSoft();
+			CocSoftService soft = ctx.getSoftService();
 
 			this.proxyHost = soft.getConfig(CocConfigService.CFG_PROXY_HOST, "");
 			this.proxyPort = soft.getConfig(CocConfigService.CFG_PROXY_PORT, 80);

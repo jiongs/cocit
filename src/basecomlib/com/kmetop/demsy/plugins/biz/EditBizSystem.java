@@ -14,7 +14,7 @@ public class EditBizSystem extends BaseEntityPlugin {
 
 	@Override
 	public void after(CocEntityEvent event) {
-		IBizSystem sys = (IBizSystem) event.getEntityData();
+		IBizSystem sys = (IBizSystem) event.getEntity();
 		if (sys == null) {
 			return;
 		}

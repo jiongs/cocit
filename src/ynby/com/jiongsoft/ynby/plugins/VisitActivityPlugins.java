@@ -22,7 +22,7 @@ public class VisitActivityPlugins {
 	public static class SaveActivity extends BaseEntityPlugin<VisitActivity> {
 		@Override
 		public void before(CocEntityEvent<VisitActivity> event) {
-			VisitActivity entity = event.getEntityData();
+			VisitActivity entity = event.getEntity();
 
 			Date date = entity.getPlanDate();
 			String dateStr = DateUtil.formatDate(date, "yyyy年MM月dd日 E");
@@ -55,7 +55,7 @@ public class VisitActivityPlugins {
 	public static class SaveRegister extends BaseEntityPlugin<VisitActivityRegister> {
 		@Override
 		public synchronized void before(CocEntityEvent<VisitActivityRegister> event) {
-			VisitActivityRegister entity = event.getEntityData();
+			VisitActivityRegister entity = event.getEntity();
 			VisitActivity activity = entity.getActivity();
 
 			// 检查短信验证码

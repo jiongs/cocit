@@ -32,7 +32,7 @@ public class OrderBuyerPayed extends BaseEntityPlugin {
 	@Override
 	public void before(CocEntityEvent event) {
 		IOrm orm = (IOrm) event.getOrm();
-		Object data = event.getEntityData();
+		Object data = event.getEntity();
 		if (data instanceof List) {
 			List list = (List) data;
 			for (Object obj : list) {

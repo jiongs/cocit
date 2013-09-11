@@ -1,10 +1,10 @@
-package com.jiongsoft.cocit.ui.model;
+package com.jiongsoft.cocit.ui.widget;
 
 import java.util.List;
 
 import com.jiongsoft.cocit.utils.KeyValue;
 
-public class CuiSearchBoxModel extends BaseCuiModel {
+public class SearchBoxWidgetModel extends WidgetModel {
 	private List<KeyValue> data;
 
 	public List<KeyValue> getData() {

@@ -15,7 +15,7 @@ public class CreateBizCatalog extends BaseEntityPlugin {
 	@Override
 	public void after(CocEntityEvent event) {
 		IOrm orm = (IOrm) event.getOrm();
-		IBizCatalog catalog = (IBizCatalog) event.getEntityData();
+		IBizCatalog catalog = (IBizCatalog) event.getEntity();
 
 		// 将【业务分类】转换成【文件夹模块】
 		Demsy.moduleEngine.makeModule(orm, Demsy.me().getSoft(), catalog);

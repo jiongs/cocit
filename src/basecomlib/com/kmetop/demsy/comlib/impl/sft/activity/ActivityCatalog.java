@@ -24,7 +24,7 @@ import com.kmetop.demsy.lang.Str;
 @CocTable(name = "活动设置", code = "ActivityCatalog", orderby = 1//
 , actions = { @CocOperation(name = "添加", typeCode = TYPE_BZFORM_NEW, mode = "c")//
 		, @CocOperation(jsonData = "CommonBizAction.data.js") //
-		, @CocOperation(name = "统计股价竞猜", typeCode = TYPE_BZFORM_EDIT, mode = "e3", plugin = "com.kmetop.demsy.plugins.activity.StockGuessStat") //
+		, @CocOperation(name = "统计股价竞猜", typeCode = TYPE_BZFORM_EDIT, mode = "e3", pluginName = "com.kmetop.demsy.plugins.activity.StockGuessStat") //
 
 }//
 , groups = {//

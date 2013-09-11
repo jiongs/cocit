@@ -1,4 +1,4 @@
-package com.jiongsoft.cocit.ui.model;
+package com.jiongsoft.cocit.ui.widget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import com.jiongsoft.cocit.service.CocEntityFieldService;
 import com.jiongsoft.cocit.utils.ActionUtil;
 
 /**
- * 数据表Grid界面模型：由多个Grid列和数据组成，如果数据不存在则表示将异步获取Grid数据。
+ * 数据表Grid窗体界面模型：由多个Grid列和数据组成，如果数据不存在则表示将异步获取Grid数据。
  * 
  * <b>属性说明：</b>
  * <UL>
@@ -20,7 +20,7 @@ import com.jiongsoft.cocit.utils.ActionUtil;
  * @author yongshan.ji
  * 
  */
-public class CuiGridModel extends BaseCuiModel {
+public class GridWidgetModel extends WidgetModel {
 
 	private String name;
 
@@ -38,7 +38,7 @@ public class CuiGridModel extends BaseCuiModel {
 	private List<GridColumn> columns;
 	private int columnsTotalWidth;
 
-	public CuiGridModel() {
+	public GridWidgetModel() {
 		super();
 		columns = new ArrayList();
 	}

@@ -40,7 +40,7 @@ public class UtilsAction {
 			message = "验证码非法！";
 		}
 
-		return new AlertsModel(statusCode, message);
+		return AlertsModel.make(statusCode, message);
 	}
 
 	@At(ActionUtil.GET_SMS_VERIFICATION_CODE)
@@ -52,7 +52,7 @@ public class UtilsAction {
 
 			String code = VerificationCodeUtil.makeVerificationCode(ctx.getRequest());
 
-			CocSoftService soft = ctx.getSoft();
+			CocSoftService soft = ctx.getSoftService();
 			SmsClient smsClient = soft.getSmsClient();
 			String tpl = soft.getConfig(CocConfigService.CFG_VERIFICATION_CODE_TEMPLATE, "请输入您的验证码 %s");
 
@@ -67,6 +67,6 @@ public class UtilsAction {
 			message = "获取短信验证码失败！";
 		}
 
-		return new AlertsModel(statusCode, message);
+		return AlertsModel.make(statusCode, message);
 	}
 }

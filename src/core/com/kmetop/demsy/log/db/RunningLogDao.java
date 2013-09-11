@@ -112,7 +112,7 @@ public class RunningLogDao {
 		sb.append(",").append(naming.propertyToColumnName("loggername"));
 		sb.append(",").append(naming.propertyToColumnName("datetime"));
 		sb.append(",").append(naming.propertyToColumnName("level"));
-		sb.append(",").append(naming.propertyToColumnName("message"));
+		sb.append(",").append(naming.propertyToColumnName("content"));
 		sb.append(",").append(naming.propertyToColumnName("threadname"));
 		sb.append(",").append(naming.propertyToColumnName("stacktrace"));
 		sb.append(",").append(naming.propertyToColumnName("ndc"));
@@ -150,7 +150,7 @@ public class RunningLogDao {
 	// sb.append(",").append(naming.propertyToColumnName("level")).append(' ');
 	// sb.append(dialect.getTypeName(Types.VARCHAR, 20, 0, 0));
 	//
-	// sb.append(",").append(naming.propertyToColumnName("message")).append(' ');
+	// sb.append(",").append(naming.propertyToColumnName("content")).append(' ');
 	// sb.append(dialect.getTypeName(Types.CLOB, 0, 0, 0));
 	//
 	// sb.append(",").append(naming.propertyToColumnName("threadname")).append(' ');

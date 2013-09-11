@@ -207,7 +207,7 @@ public class DisplayMessageAssembler {
 	/**
 	 * Erstellt eine DisplayMessageBean, die eine fehlerhafte Mail anzeigt.
 	 * 
-	 * @param message
+	 * @param content
 	 *            Fehlerhafte Message
 	 * @param displayMessage
 	 *            Aktuelle DisplayMessageBean
@@ -236,7 +236,7 @@ public class DisplayMessageAssembler {
 		StringBuffer mt = new StringBuffer("Message faulty!\n\n");
 		mt.append("The requested messages is faulty because of this reason:\n");
 		mt.append(e.getMessage()).append("\n\n");
-		mt.append("This is the faulty source of the requested message:\n\n");
+		mt.append("This is the faulty source of the requested content:\n\n");
 		mt.append(displayMessage.getMessageSource());
 
 		// Info-Text-Message erstellen
@@ -253,7 +253,7 @@ public class DisplayMessageAssembler {
 	/**
 	 * Baut aus einem Message-Objekt ein DisplayMessage-Objekt.
 	 * 
-	 * @param message
+	 * @param content
 	 *            Message, aus der das DisplayMessage-Objekt gebaut werden soll.
 	 */
 	public static DisplayMessageModel assembleDisplayMessage(Message message)
@@ -270,7 +270,7 @@ public class DisplayMessageAssembler {
 	 * 
 	 * @param displayMessage
 	 *            Bereits existierende Display-Message
-	 * @param message
+	 * @param content
 	 *            Message, aus der das DisplayMessage-Objekt gebaut werden soll.
 	 */
 	public static DisplayMessageModel refurbishGivenDisplayMessage(

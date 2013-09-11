@@ -1,4 +1,4 @@
-package com.jiongsoft.cocit.ui.render.jCocit;
+package com.jiongsoft.cocit.ui.widget.jcocitrender;
 
 import java.io.StringWriter;
 import java.io.Writer;
@@ -6,15 +6,15 @@ import java.util.List;
 
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitHttpContext;
-import com.jiongsoft.cocit.ui.model.CuiEntityModuleModel;
-import com.jiongsoft.cocit.ui.model.CuiEntityTableModel;
-import com.jiongsoft.cocit.ui.render.BaseCuiRender;
+import com.jiongsoft.cocit.ui.widget.EntityModuleWidgetModel;
+import com.jiongsoft.cocit.ui.widget.EntityTableWidgetModel;
+import com.jiongsoft.cocit.ui.widget.WidgetRender;
 import com.jiongsoft.cocit.utils.Lang;
 
-class JCocitEntityModuleRender extends BaseCuiRender<CuiEntityModuleModel> {
+class JCocitEntityModuleRender extends WidgetRender<EntityModuleWidgetModel> {
 
 	@Override
-	public void render(Writer writer, CuiEntityModuleModel model) throws Throwable {
+	public void render(Writer writer, EntityModuleWidgetModel model) throws Throwable {
 		StringWriter out = new StringWriter();
 
 		String contextPath = Cocit.getContextPath();
@@ -77,11 +77,11 @@ class JCocitEntityModuleRender extends BaseCuiRender<CuiEntityModuleModel> {
 		int mainTabsHeight = height / 2;
 		int childrenTabsHeight = height - mainTabsHeight - 1;
 
-		CuiEntityTableModel mainEntityTable = model.getEntityTableModel();
+		EntityTableWidgetModel mainEntityTable = model.getEntityTableModel();
 		if (mainEntityTable == null) {
 			childrenTabsHeight = height;
 		}
-		List<CuiEntityTableModel> childrenEntityTables = model.getChildrenEntityTableModels();
+		List<EntityTableWidgetModel> childrenEntityTables = model.getChildrenEntityTableModels();
 		if (Lang.isNil(childrenEntityTables)) {
 			mainTabsHeight = height;
 		}
@@ -129,7 +129,7 @@ class JCocitEntityModuleRender extends BaseCuiRender<CuiEntityModuleModel> {
 
 			// fkfield: 表示业务子表将通过哪个外键字段关联到业务主表？
 			String fkfield;
-			for (CuiEntityTableModel childEntityTable : childrenEntityTables) {
+			for (EntityTableWidgetModel childEntityTable : childrenEntityTables) {
 				fkfield = childEntityTable.get("fkfield", "");
 				print(out, "<div title=\"%s\" class=\"jCocit-gridtab\" data-options=\"token:'%s', fkfield: '%s', url: '%s?_uiHeight=%s&_uiWidth=%s',closable: false, cache: true\" style=\"padding:5px\"></div>"//
 						, childEntityTable.getName(), token, fkfield, childEntityTable.getLoadUrl(), childrenTabsHeight, width);
@@ -139,7 +139,7 @@ class JCocitEntityModuleRender extends BaseCuiRender<CuiEntityModuleModel> {
 
 			// 子模块工具菜单——位于主模块TABS右边
 			// print(out, "<div id=\"tabtools_%s\">", model.getId());
-			// for (CuiEntityTableModel child : children) {
+			// for (EntityTableWidgetModel child : children) {
 			// print(out, "<a href=\"javascript:void(0)\" class=\"jCocit-ui jCocit-button\" data-options=\"plain: false");
 			// // print(out, ", iconCls:'icon-add'");
 			// print(out, "\">%s</a>", child.getName());

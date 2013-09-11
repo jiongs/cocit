@@ -30,7 +30,7 @@ import com.kmetop.demsy.lang.Str;
 @CocTable(name = "订单发货管理", code = ILogistics.SYS_CODE, orderby = 3,//
 actions = {
 		@CocOperation(name = "发货说明", typeCode = TYPE_BZFORM_EDIT, mode = "e2")//
-		, @CocOperation(name = "发货打印", typeCode = TYPE_BZFORM_PRINT, mode = "p", template = "ui.print.LogisticsBill", params = "printNum eq 0", info = "订单发货成功", error = "订单发货失败", plugin = "com.kmetop.demsy.plugins.eshop.PrintLogisticsBill") //
+		, @CocOperation(name = "发货打印", typeCode = TYPE_BZFORM_PRINT, mode = "p", template = "ui.print.LogisticsBill", params = "printNum eq 0", info = "订单发货成功", error = "订单发货失败", pluginName = "com.kmetop.demsy.plugins.eshop.PrintLogisticsBill") //
 		, @CocOperation(name = "订单详情", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
 		, @CocOperation(name = "转发", typeCode = TYPE_BZFORM_EDIT, mode = "e1")//
 		, @CocOperation(name = "导出XLS", typeCode = TYPE_BZFORM_EXPORT_XLS, mode = "xls") //

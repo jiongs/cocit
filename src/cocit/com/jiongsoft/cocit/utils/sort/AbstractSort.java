@@ -6,9 +6,12 @@ import java.util.Map;
 
 import org.nutz.lang.Mirror;
 
-import com.jiongsoft.cocit.utils.Log;
+import com.jiongsoft.cocit.utils.log.ILog;
+import com.jiongsoft.cocit.utils.log.Logs;
 
 public abstract class AbstractSort implements SortStrategy {
+	ILog log = Logs.get();
+
 	public void sort(List list, String field, boolean nullGT) {
 		if (list == null) {
 			return;
@@ -36,7 +39,7 @@ public abstract class AbstractSort implements SortStrategy {
 					subObj = Mirror.me(obj.getClass()).getValue(obj, path.substring(0, dot));
 				}
 			} catch (Throwable e) {
-				Log.warn("", e);
+				log.warn("", e);
 			}
 			if (subObj == null) {
 				return null;
@@ -47,7 +50,7 @@ public abstract class AbstractSort implements SortStrategy {
 			try {
 				return (T) Mirror.me(obj.getClass()).getValue(obj, path);
 			} catch (Throwable e) {
-				Log.warn("", e);
+				log.warn("", e);
 				return null;
 			}
 		}

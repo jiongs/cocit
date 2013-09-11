@@ -1,18 +1,34 @@
 package com.jiongsoft.cocit.ui.model;
 
-import java.io.Writer;
-
-import com.jiongsoft.cocit.ui.CuiModel;
 import com.jiongsoft.cocit.utils.Json;
 
 /**
- * Alerts模型：用于产生客户端AJAX所需要的提示信息。
+ * Alerts模型：用于产生客户端AJAX所需要的JSON对象，通常用于提示框。
+ * <p>
+ * <code>
+ * {
+ * 	"statusCode": 200,
+ * 	"message": "操作成功"
+ * }
+ * <p>
+ * {
+ * 	"statusCode": 300,
+ * 	"message": "操作失败"
+ * }
+ * <p>
+ * {
+ * 	"statusCode": 301,
+ * 	"message": "无权执行该操作"
+ * }
+ * </code>
  * 
  * @author jiongsoft
  * 
  */
-public class AlertsModel implements CuiModel {
+public class AlertsModel extends JSONModel {
+
 	/**
+	 * 
 	 * <UL>
 	 * <LI>SUCCESS : 200, 操作成功
 	 * <LI>SUCCESS_EXTRA_CHANNEL_USER : 201,
@@ -21,21 +37,12 @@ public class AlertsModel implements CuiModel {
 	 * <LI>ERROR_WHETHER_KICK_OUT : 302,
 	 * <LI>ERROR_DONT_KICK_OUT : 303
 	 * </UL>
+	 * 
+	 * @param statusCode
+	 * @param message
 	 */
-	int statusCode;
-
-	/**
-	 * 提示信息
-	 */
-	String message;
-
-	public AlertsModel(int statusCode, String message) {
-		this.statusCode = statusCode;
-		this.message = message;
-	}
-
-	@Override
-	public void render(Writer out) throws Throwable {
+	public static AlertsModel make(int statusCode, String message) {
+		AlertsModel model = new AlertsModel();
 
 		StringBuffer sb = new StringBuffer();
 		sb.append('{');
@@ -43,12 +50,8 @@ public class AlertsModel implements CuiModel {
 		sb.append(", \"message\" : " + Json.toJson(message));
 		sb.append('}');
 
-		out.write(sb.toString());
-	}
+		model.content = sb.toString();
 
-	@Override
-	public String getContentType() {
-		return CONTENT_TYPE_JSON;
+		return model;
 	}
-
 }

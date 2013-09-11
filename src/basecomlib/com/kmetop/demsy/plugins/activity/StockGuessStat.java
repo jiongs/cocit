@@ -25,7 +25,7 @@ public class StockGuessStat extends BaseEntityPlugin {
 
 	@Override
 	public void before(CocEntityEvent event) {
-		ActivityCatalog activity = (ActivityCatalog) event.getEntityData();
+		ActivityCatalog activity = (ActivityCatalog) event.getEntity();
 		Byte type = activity.getType();
 		if (type == null || !type.equals(IActivity.TYPE_STOCK)) {
 			throw new DemsyException("统计出错：活动类型非法！");

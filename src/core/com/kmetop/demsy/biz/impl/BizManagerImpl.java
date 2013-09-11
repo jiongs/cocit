@@ -181,9 +181,9 @@ public class BizManagerImpl implements IBizManager {
 	}
 
 	@Override
-	public void asynRun(Object obj, String actionID) throws DemsyException {
+	public Object asynRun(Object obj, String actionID) throws DemsyException {
 
-		bizSession.asynRun(obj, buildCndExpr(null, actionID), loadPlugins(actionID));
+		return bizSession.asynRun(obj, buildCndExpr(null, actionID), loadPlugins(actionID));
 	}
 
 	public IModule getModule() {

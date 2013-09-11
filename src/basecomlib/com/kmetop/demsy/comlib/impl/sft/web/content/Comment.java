@@ -21,7 +21,7 @@ import com.kmetop.demsy.orm.ann.Prop;
 
 @Entity
 @CocTable(name = "网站留言管理", code = "Comment", catalog = BIZCATA_WEB, orderby = ORDER_WEB_COMMENT, buildin = true//
-, actions = { @CocOperation(name = "添加", typeCode = TYPE_BZFORM_NEW, mode = "c", disabled = true, info = "提交成功！审核通过后发布。", plugin = "com.kmetop.demsy.plugins.web.SaveComment")//
+, actions = { @CocOperation(name = "添加", typeCode = TYPE_BZFORM_NEW, mode = "c", disabled = true, info = "提交成功！审核通过后发布。", pluginName = "com.kmetop.demsy.plugins.web.SaveComment")//
 		, @CocOperation(name = "审核", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu")//
 		, @CocOperation(name = "回复", typeCode = TYPE_BZFORM_EDIT, mode = "e") //
 		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d") //

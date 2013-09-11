@@ -17,8 +17,8 @@ import com.kmetop.demsy.comlib.web.IActivityEntry;
 
 @Entity
 @CocTable(name = "摄影投稿", code = "PhotoActivity", orderby = 2//
-, actions = { @CocOperation(name = "投稿", typeCode = TYPE_BZFORM_NEW, mode = "c", info = "投稿成功，审核后发布！", plugin = "com.kmetop.demsy.plugins.activity.SaveActivityEntry")//
-		, @CocOperation(name = "审核", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu", plugin = "com.kmetop.demsy.plugins.activity.SetPhotoStatus")//
+, actions = { @CocOperation(name = "投稿", typeCode = TYPE_BZFORM_NEW, mode = "c", info = "投稿成功，审核后发布！", pluginName = "com.kmetop.demsy.plugins.activity.SaveActivityEntry")//
+		, @CocOperation(name = "审核", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu", pluginName = "com.kmetop.demsy.plugins.activity.SetPhotoStatus")//
 		, @CocOperation(jsonData = "CommonBizAction.data.js") //
 }//
 , groups = { @CocGroup(name = "作品信息", code = "basic"//

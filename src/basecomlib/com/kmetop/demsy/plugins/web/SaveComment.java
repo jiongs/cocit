@@ -12,7 +12,7 @@ public class SaveComment extends BaseEntityPlugin {
 
 	@Override
 	public void before(CocEntityEvent event) {
-		Comment comment = (Comment) event.getEntityData();
+		Comment comment = (Comment) event.getEntity();
 
 		// 回复
 		if (comment.getId() != null && comment.getId() > 0) {

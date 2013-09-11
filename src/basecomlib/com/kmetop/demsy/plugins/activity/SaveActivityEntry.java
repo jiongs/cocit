@@ -18,7 +18,7 @@ public class SaveActivityEntry extends BaseEntityPlugin {
 
 	@Override
 	public void before(CocEntityEvent event) {
-		IActivityEntry entry = (IActivityEntry) event.getEntityData();
+		IActivityEntry entry = (IActivityEntry) event.getEntity();
 		IActivity catalog = entry.getCatalog();
 
 		Demsy me = Demsy.me();

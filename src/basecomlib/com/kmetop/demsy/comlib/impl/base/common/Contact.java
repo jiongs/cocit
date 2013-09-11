@@ -19,8 +19,8 @@ import com.kmetop.demsy.comlib.impl.BizComponent;
 @CocTable(name = "联系人信息", code = IContact.SYS_CODE, catalog = BIZCATA_BASE,//
 actions = {
 //
-		@CocOperation(name = "添加", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = "com.kmetop.demsy.plugins.common.SaveContact")//
-		, @CocOperation(name = "修改", typeCode = TYPE_BZFORM_EDIT, mode = "e", plugin = "com.kmetop.demsy.plugins.common.SaveContact") //
+		@CocOperation(name = "添加", typeCode = TYPE_BZFORM_NEW, mode = "c", pluginName = "com.kmetop.demsy.plugins.common.SaveContact")//
+		, @CocOperation(name = "修改", typeCode = TYPE_BZFORM_EDIT, mode = "e", pluginName = "com.kmetop.demsy.plugins.common.SaveContact") //
 		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
 		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d") //
 },//

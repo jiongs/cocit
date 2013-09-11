@@ -100,8 +100,8 @@ public class CocitTest {
 		assertNotNull(beanFactory);
 
 		assertNotNull(Cocit.getServiceFactory());
-		assertNotNull(Cocit.getUIModelFactory());
-		assertNotNull(Cocit.getUIRenderFactory());
+		assertNotNull(Cocit.getWidgetModelFactory());
+		assertNotNull(Cocit.getWidgetRenderFactory());
 		assertNotNull(Cocit.getEntityManagerFactory());
 		assertNull(Cocit.getOrmFactory());
 
@@ -148,10 +148,10 @@ public class CocitTest {
 		ctx = Cocit.getHttpContext();
 		assertNotNull(ctx);
 
-		assertNotNull(ctx.getSoft());
+		assertNotNull(ctx.getSoftService());
 
-		assertNotNull(ctx.getSoft().getSmsClient());
+		assertNotNull(ctx.getSoftService().getSmsClient());
 
-		assertNotNull(ctx.getSoft().getSmsClient() instanceof ZrSmsClient);
+		assertNotNull(ctx.getSoftService().getSmsClient() instanceof ZrSmsClient);
 	}
 }

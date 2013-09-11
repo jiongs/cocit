@@ -22,8 +22,8 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 @Entity
 @CocTable(name = "活动设置", code = "VisitActivity", catalog = "_ynby_visit", pathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 2//
 // 操作按钮
-, actions = { @CocOperation(name = "添加", typeCode = 101, mode = "c", plugin = "com.jiongsoft.ynby.plugins.VisitActivityPlugins$SaveActivity")//
-		, @CocOperation(name = "修改", typeCode = 102, mode = "e", plugin = "com.jiongsoft.ynby.plugins.VisitActivityPlugins$SaveActivity") //
+, actions = { @CocOperation(name = "添加", typeCode = 101, mode = "c", pluginName = "com.jiongsoft.ynby.plugins.VisitActivityPlugins$SaveActivity")//
+		, @CocOperation(name = "修改", typeCode = 102, mode = "e", pluginName = "com.jiongsoft.ynby.plugins.VisitActivityPlugins$SaveActivity") //
 		, @CocOperation(name = "删除", typeCode = 299, mode = "d") //
 		, @CocOperation(name = "查看", typeCode = 102, mode = "v") //
 }// end: actions

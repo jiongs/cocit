@@ -1,18 +1,18 @@
-package com.jiongsoft.cocit.ui.render.jCocit;
+package com.jiongsoft.cocit.ui.widget.jcocitrender;
 
 import java.io.Writer;
 import java.util.List;
 
 import com.jiongsoft.cocit.service.CocEntityFieldService;
-import com.jiongsoft.cocit.ui.model.CuiSearchBoxModel;
-import com.jiongsoft.cocit.ui.render.BaseCuiRender;
+import com.jiongsoft.cocit.ui.widget.SearchBoxWidgetModel;
+import com.jiongsoft.cocit.ui.widget.WidgetRender;
 import com.jiongsoft.cocit.utils.KeyValue;
 import com.jiongsoft.cocit.utils.Lang;
 
-class JCocitSearchBoxRender extends BaseCuiRender<CuiSearchBoxModel> {
+class JCocitSearchBoxRender extends WidgetRender<SearchBoxWidgetModel> {
 
 	@Override
-	public void render(Writer out, CuiSearchBoxModel model) throws Throwable {
+	public void render(Writer out, SearchBoxWidgetModel model) throws Throwable {
 
 		// 下拉菜单：分类查询
 		List<KeyValue> list = model.getData();

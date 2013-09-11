@@ -12,7 +12,7 @@ public class SaveBlogPost extends BaseEntityPlugin {
 
 	@Override
 	public void before(CocEntityEvent event) {
-		LyblogPosts obj = (LyblogPosts) event.getEntityData();
+		LyblogPosts obj = (LyblogPosts) event.getEntity();
 
 		// 回复
 		if (obj.getId() != null && obj.getId() > 0) {

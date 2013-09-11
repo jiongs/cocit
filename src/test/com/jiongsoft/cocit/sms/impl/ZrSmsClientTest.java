@@ -36,7 +36,7 @@ public class ZrSmsClientTest {
 			{
 				Cocit.getHttpContext();
 				result = softContext;
-				softContext.getSoft();
+				softContext.getSoftService();
 				result = soft;
 
 				soft.getConfig(CocConfigService.CFG_PROXY_HOST, "");

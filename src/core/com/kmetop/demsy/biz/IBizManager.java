@@ -240,5 +240,5 @@ public interface IBizManager<T> {
 	 * @param opMode
 	 *            操作码
 	 */
-	public void asynRun(Object obj, String opMode) throws DemsyException;
+	public Object asynRun(Object obj, String opMode) throws DemsyException;
 }

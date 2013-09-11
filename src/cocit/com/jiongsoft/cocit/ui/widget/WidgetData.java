@@ -1,11 +1,10 @@
-package com.jiongsoft.cocit.ui.model;
+package com.jiongsoft.cocit.ui.widget;
 
-import static com.jiongsoft.cocit.Cocit.getUIRenderFactory;
+import static com.jiongsoft.cocit.Cocit.getWidgetRenderFactory;
 
 import java.io.Writer;
 
 import com.jiongsoft.cocit.ui.CuiModel;
-import com.jiongsoft.cocit.utils.CocException;
 
 /**
  * 数据模型：用于表示通过AJAX访问的数据模型。由两部分组成：1.模型，2.数据
@@ -17,7 +16,7 @@ import com.jiongsoft.cocit.utils.CocException;
  * @param <T>界面模型泛型
  * @param <D>数据泛型
  */
-public abstract class BaseCuiModelData<TModel extends BaseCuiModel, TData> implements CuiModel {
+public abstract class WidgetData<TModel extends WidgetModel, TData> implements CuiModel {
 
 	/**
 	 * HTML模型：数据的输出依赖于该HTML模型
@@ -29,11 +28,11 @@ public abstract class BaseCuiModelData<TModel extends BaseCuiModel, TData> imple
 	 */
 	protected TData data;
 
-	protected CocException exception;
+	protected Throwable exception;
 
 	@Override
 	public void render(Writer out) throws Throwable {
-		getUIRenderFactory().getRender(getClass()).render(out, this);
+		getWidgetRenderFactory().getRender(getClass()).render(out, this);
 	}
 
 	@Override
@@ -57,11 +56,11 @@ public abstract class BaseCuiModelData<TModel extends BaseCuiModel, TData> imple
 		this.data = data;
 	}
 
-	public CocException getException() {
+	public Throwable getException() {
 		return exception;
 	}
 
-	public void setException(CocException exception) {
+	public void setException(Throwable exception) {
 		this.exception = exception;
 	}
 

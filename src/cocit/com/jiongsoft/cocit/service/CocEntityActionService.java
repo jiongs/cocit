@@ -1,4 +1,4 @@
-package com.jiongsoft.cocit.actions;
+package com.jiongsoft.cocit.service;
 
 import java.util.Iterator;
 import java.util.List;
@@ -8,18 +8,12 @@ import org.nutz.lang.Mirror;
 
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitHttpContext;
+import com.jiongsoft.cocit.actions.CocEntityAction;
 import com.jiongsoft.cocit.mvc.adaptor.EntityParamNode;
 import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.orm.expr.Expr;
-import com.jiongsoft.cocit.service.CocEntityModuleService;
-import com.jiongsoft.cocit.service.CocEntityOperationService;
-import com.jiongsoft.cocit.service.CocEntityTableService;
-import com.jiongsoft.cocit.service.CocServiceFactory;
-import com.jiongsoft.cocit.service.CocEntityManager;
-import com.jiongsoft.cocit.service.CocEntityManagerFactory;
-import com.jiongsoft.cocit.ui.model.CuiModelFactory;
+import com.jiongsoft.cocit.ui.widget.WidgetModelFactory;
 import com.jiongsoft.cocit.utils.ActionUtil;
-import com.jiongsoft.cocit.utils.CocException;
 import com.jiongsoft.cocit.utils.Json;
 import com.jiongsoft.cocit.utils.Log;
 import com.jiongsoft.cocit.utils.StringUtil;
@@ -30,73 +24,70 @@ import com.jiongsoft.cocit.utils.StringUtil;
  * @author yongshan.ji
  * 
  */
-class CocEntityActionService {
+public class CocEntityActionService {
 
-	String operationArgs;
+	public String pathArgs;
 
-	Long entityModuleID;
+	public Long entityModuleID;
 
-	Long entityTableID;
+	public Long entityTableID;
 
-	Long entityOperationID;
+	public Long entityOperationID;
 
-	String entityOperationMode;
+	public String entityOperationMode;
 
-	CocEntityModuleService entityModule;
+	public CocEntityModuleService entityModule;
 
-	CocEntityTableService entityTable;
+	public CocEntityTableService entityTable;
 
-	CocEntityOperationService entityOperation;
+	public CocEntityOperationService entityOperation;
 
-	CocEntityManager entityManager;
+	public CocEntityManager entityManager;
 
-	CuiModelFactory modelFactory;
+	public WidgetModelFactory modelFactory;
 
-	Object entityData;
+	public Object entity;
 
-	CocException exception;
+	public Throwable exception;
 
-	/**
-	 * 执行批量数据操作时的数据列表
-	 */
-	List entityDataList;
+	public String[] entityID;
 
 	/**
 	 * 构造一个Action Service对象
 	 * 
-	 * @param operationArgs
+	 * @param pathArgs
 	 *            参数组成“entityModuleID:entityTableID:entityOperationID”
 	 * @return
 	 */
-	static CocEntityActionService make(String args) {
+	public static CocEntityActionService make(String args) {
 		return new CocEntityActionService(args, null, null);
 	}
 
 	/**
 	 * 
-	 * @param operationArgs
+	 * @param pathArgs
 	 *            参数组成“entityModuleID:entityTableID:entityOperationID”
 	 * @return
 	 */
-	static CocEntityActionService make(String args, String dataID, EntityParamNode dataNode) {
-		return new CocEntityActionService(args, dataID, dataNode);
+	public static CocEntityActionService make(String args, String entityID, EntityParamNode dataNode) {
+		return new CocEntityActionService(args, entityID, dataNode);
 	}
 
-	private CocEntityActionService(String args, String dataID, EntityParamNode dataNode) {
-		Log.debug("CocEntityActionService... {operationArgs:%s, operationArgs:%s, dataNode:%s}", args, dataID, dataNode);
+	private CocEntityActionService(String args, String entityID, EntityParamNode dataNode) {
+		Log.debug("CocEntityActionService... {pathArgs:%s, pathArgs:%s, dataNode:%s}", args, entityID, dataNode);
 
-		this.operationArgs = args;
+		this.pathArgs = args;
 
 		initEntityOperation(args);
-		this.initEntityData(dataID);
+		this.initEntity(entityID);
 
 		// 注入HTTP参数到实体对象中
 		if (dataNode != null) {
 			Class type = entityManager.getType();
-			entityData = dataNode.inject(Mirror.me(type), entityData, null);
+			entity = dataNode.inject(Mirror.me(type), entity, null);
 		}
 
-		modelFactory = Cocit.getUIModelFactory();
+		modelFactory = Cocit.getWidgetModelFactory();
 	}
 
 	private void initEntityOperation(String args) {
@@ -109,7 +100,7 @@ class CocEntityActionService {
 		String argTableID = argArr.length > 1 ? argArr[1] : null;
 		String argOperationID = argArr.length > 2 ? argArr[2] : null;
 
-		Log.debug("CocEntityActionService.initEntityOperation... {operationArgs:%s, entityModuleID:%s, entityTableID:%s, entityOperationID:%s}", args, argModuleID, argTableID, argOperationID);
+		Log.debug("CocEntityActionService.initEntityOperation... {pathArgs:%s, entityModuleID:%s, entityTableID:%s, entityOperationID:%s}", args, argModuleID, argTableID, argOperationID);
 
 		/*
 		 * 获取数据模块和数据表对象
@@ -136,20 +127,20 @@ class CocEntityActionService {
 
 	}
 
-	private void initEntityData(String argEntityID) {
+	private void initEntity(String argEntityID) {
 		if (argEntityID == null) {
 			return;
 		}
 
-		Log.debug("CocEntityActionService.initData... arrDataID = %s", argEntityID);
+		Log.debug("CocEntityActionService.initEntity... argEntityID = %s", argEntityID);
 
 		// 加载单条数据
-		String[] arrDataID = StringUtil.toArray(argEntityID);
-		if (arrDataID != null && arrDataID.length == 1) {
-			Long dataID = StringUtil.castTo(arrDataID[0], 0L);
+		entityID = StringUtil.toArray(argEntityID);
+		if (entityID != null && entityID.length == 1) {
+			Long id = StringUtil.castTo(entityID[0], 0L);
 			try {
-				entityData = entityManager.load(dataID, entityOperationMode);
-			} catch (CocException e) {
+				entity = entityManager.load(id, entityOperationMode);
+			} catch (Throwable e) {
 				Log.warn("", e);
 				exception = e;
 			}
@@ -242,7 +233,7 @@ class CocEntityActionService {
 	}
 
 	@SuppressWarnings("unused")
-	CndExpr makeExpr() {
+	public CndExpr makeExpr() {
 		CocitHttpContext httpContext = Cocit.getHttpContext();
 
 		StringBuffer logExpr = new StringBuffer();
@@ -304,7 +295,7 @@ class CocEntityActionService {
 		/*
 		 * 返回解析结果
 		 */
-		Log.info("查询条件：opArgs = %s, queryExpr = %s", operationArgs, logExpr.toString());
+		Log.info("查询条件：opArgs = %s, queryExpr = %s", pathArgs, logExpr.toString());
 		return retExpr;
 	}
 }

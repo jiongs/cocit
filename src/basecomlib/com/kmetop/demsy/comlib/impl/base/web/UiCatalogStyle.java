@@ -22,10 +22,10 @@ import com.kmetop.demsy.orm.ann.Prop;
 @Entity
 @CocTable(name = "样式管理", code = BIZSYS_UIUDF_STYLE, catalog = BIZCATA_UDF_CONSOLE, orderby = ORDER_UIUDF_CATALOG_STYLE//
 , layout = 1, actions = {
-		@CocOperation(name = "新增样式", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = "com.kmetop.demsy.plugins.web.SaveCatalogStyle")//
+		@CocOperation(name = "新增样式", typeCode = TYPE_BZFORM_NEW, mode = "c", pluginName = "com.kmetop.demsy.plugins.web.SaveCatalogStyle")//
 		// , @CocOperation(name = "批量修改", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu")//
 		,
-		@CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", plugin = "com.kmetop.demsy.plugins.web.SaveCatalogStyle") //
+		@CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", pluginName = "com.kmetop.demsy.plugins.web.SaveCatalogStyle") //
 		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d") //
 		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
 }//

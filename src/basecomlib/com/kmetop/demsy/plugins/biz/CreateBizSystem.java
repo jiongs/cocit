@@ -16,7 +16,7 @@ public class CreateBizSystem extends BaseEntityPlugin {
 	@Override
 	public void after(CocEntityEvent event) {
 		IOrm orm = (IOrm) event.getOrm();
-		IBizSystem sys = (IBizSystem) event.getEntityData();
+		IBizSystem sys = (IBizSystem) event.getEntity();
 		if (sys == null) {
 			return;
 		}

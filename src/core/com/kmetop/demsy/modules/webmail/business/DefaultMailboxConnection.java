@@ -273,7 +273,7 @@ public class DefaultMailboxConnection implements MailboxConnection {
 	public RetrieveMessagesResultModel getMessages(int aStartNumber, int anEndNumber,
 			boolean adjustParameters) throws MailboxFolderException, MessageRetrieveException {
 
-		// Open folder (should happen before getting the message-count)
+		// Open folder (should happen before getting the content-count)
 		this.openFolder(Folder.READ_ONLY);
 
 		try {

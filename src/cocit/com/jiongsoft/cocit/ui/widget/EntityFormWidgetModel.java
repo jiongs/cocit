@@ -1,4 +1,4 @@
-package com.jiongsoft.cocit.ui.model;
+package com.jiongsoft.cocit.ui.widget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,17 +7,17 @@ import java.util.Properties;
 import com.jiongsoft.cocit.service.CocEntityFieldService;
 
 /**
- * 业务表单模型
+ * 实体表单模型
  * 
  * @author yongshan.ji
  * 
  */
-public class CuiFormModel extends BaseCuiModel {
+public class EntityFormWidgetModel extends WidgetModel {
 	private Object data;
 
 	private List<FormField> groupFields;
 
-	public CuiFormModel() {
+	public EntityFormWidgetModel() {
 		this.groupFields = new ArrayList();
 	}
 

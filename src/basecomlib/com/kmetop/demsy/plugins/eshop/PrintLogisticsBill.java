@@ -26,7 +26,7 @@ public class PrintLogisticsBill extends BaseEntityPlugin {
 
 	@Override
 	public void before(CocEntityEvent event) {
-		Logistics en = (Logistics) event.getEntityData();
+		Logistics en = (Logistics) event.getEntity();
 		en.setPrintNum(en.getPrintNum() + 1);
 		en.setPrintDate(new Date());
 		// 发货处理

@@ -33,7 +33,7 @@ import com.kmetop.demsy.lang.Str;
 @CocTable(name = "论坛回帖管理", code = IBbsReply.SYS_CODE, catalog = BIZCATA_WEB, orderby = ORDER_WEB_FORUM_REPLY//
 , actions = {
 //
-		@CocOperation(name = "回复", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = "com.kmetop.demsy.plugins.bbs.SaveBbsReply", info = "回帖成功!", error = "回帖失败!")//
+		@CocOperation(name = "回复", typeCode = TYPE_BZFORM_NEW, mode = "c", pluginName = "com.kmetop.demsy.plugins.bbs.SaveBbsReply", info = "回帖成功!", error = "回帖失败!")//
 		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e") //
 		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d") //
 		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //

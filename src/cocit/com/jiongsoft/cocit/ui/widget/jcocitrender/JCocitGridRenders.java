@@ -1,21 +1,21 @@
-package com.jiongsoft.cocit.ui.render.jCocit;
+package com.jiongsoft.cocit.ui.widget.jcocitrender;
 
 import java.io.Writer;
 import java.util.List;
 
-import com.jiongsoft.cocit.ui.model.CuiGridModel;
-import com.jiongsoft.cocit.ui.model.CuiGridModelData;
-import com.jiongsoft.cocit.ui.model.CuiGridModel.GridColumn;
-import com.jiongsoft.cocit.ui.render.BaseCuiRender;
+import com.jiongsoft.cocit.ui.widget.GridWidgetModel;
+import com.jiongsoft.cocit.ui.widget.GridWidgetData;
+import com.jiongsoft.cocit.ui.widget.WidgetRender;
+import com.jiongsoft.cocit.ui.widget.GridWidgetModel.GridColumn;
 import com.jiongsoft.cocit.utils.Json;
 import com.jiongsoft.cocit.utils.Lang;
 
 abstract class JCocitGridRenders {
 
-	static class ModelRender extends BaseCuiRender<CuiGridModel> {
+	static class ModelRender extends WidgetRender<GridWidgetModel> {
 
 		@Override
-		public void render(Writer out, CuiGridModel model) throws Throwable {
+		public void render(Writer out, GridWidgetModel model) throws Throwable {
 			String title = "";// model.getName()
 			int height = model.get("height", 353);
 			int colTotalWidth = model.getColumnsTotalWidth();
@@ -81,13 +81,13 @@ abstract class JCocitGridRenders {
 		}
 	}
 
-	static class DataRender extends BaseCuiRender<CuiGridModelData> {
+	static class DataRender extends WidgetRender<GridWidgetData> {
 
 		@Override
-		public void render(Writer out, CuiGridModelData model) throws Throwable {
+		public void render(Writer out, GridWidgetData model) throws Throwable {
 			print(out, "{\"total\":%s,\"rows\":[", model.getTotal());
 
-			CuiGridModel gridModel = model.getModel();
+			GridWidgetModel gridModel = model.getModel();
 			List<GridColumn> columns = gridModel.getColumns();
 			List data = model.getData();
 			if (data != null) {

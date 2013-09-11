@@ -30,7 +30,7 @@ public class DemsyCocitHttpContext extends BaseCocitHttpContext {
 	public int getAdminTopHeight() {
 		int ret = 0;
 		int browserWidth = getBrowserHeight();
-		String w = this.getSoftConfig("admin.ui.topHeight", "");
+		String w = this.getConfig("admin.ui.topHeight", "");
 
 		try {
 			if (w.endsWith("%"))
@@ -49,7 +49,7 @@ public class DemsyCocitHttpContext extends BaseCocitHttpContext {
 	public int getAdminLeftWidth() {
 		int ret = 0;
 		int browserWidth = getBrowserWidth();
-		String w = this.getSoftConfig("admin.ui.leftWidth", "");
+		String w = this.getConfig("admin.ui.leftWidth", "");
 		try {
 			if (w.endsWith("%"))
 				ret = browserWidth * Integer.parseInt(w.substring(0, w.length() - 1)) / 100;

@@ -11,7 +11,7 @@ public class SaveContact extends BaseEntityPlugin {
 	@Override
 	public void before(CocEntityEvent event) {
 		StringBuffer error = new StringBuffer();
-		Contact c = (Contact) event.getEntityData();
+		Contact c = (Contact) event.getEntity();
 		if (Str.isEmpty(c.getProvince()))
 			error.append("省份必填；");
 		if (Str.isEmpty(c.getCity()))

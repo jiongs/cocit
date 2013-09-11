@@ -32,14 +32,14 @@ public interface CocitHttpContext {
 	 * 
 	 * @return 正在通过HTTP请求访问的软件
 	 */
-	CocSoftService getSoft();
+	CocSoftService getSoftService();
 
 	/**
 	 * 获取软件配置
 	 * 
 	 * @return
 	 */
-	<T> T getSoftConfig(String configKey, T defaultReturn);
+	<T> T getConfig(String configKey, T defaultReturn);
 
 	// /**
 	// * 获取当前登录用户

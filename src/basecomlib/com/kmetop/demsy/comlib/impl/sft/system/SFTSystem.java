@@ -23,9 +23,9 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 
 @Entity
 @CocTable(name = "系统自定义", code = BIZSYS_BZUDF_SYSTEM, catalog = BIZCATA_UDF_CONSOLE, orderby = ORDER_BZUDF_SYSTEM, buildin = true//
-, actions = { @CocOperation(name = "新增系统", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = "com.kmetop.demsy.plugins.biz.CreateBizSystem")//
+, actions = { @CocOperation(name = "新增系统", typeCode = TYPE_BZFORM_NEW, mode = "c", pluginName = "com.kmetop.demsy.plugins.biz.CreateBizSystem")//
 		, @CocOperation(jsonData = "CommonBizAction.data.js") //
-		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", plugin = "com.kmetop.demsy.plugins.biz.EditBizSystem") //
+		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", pluginName = "com.kmetop.demsy.plugins.biz.EditBizSystem") //
 }//
 , groups = { @CocGroup(name = "基本信息", code = "basic"//
 , fields = { @CocField(name = "系统名称", property = "name", mode = "c:M e:M")//

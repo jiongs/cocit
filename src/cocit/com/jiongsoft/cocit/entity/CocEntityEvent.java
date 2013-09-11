@@ -17,7 +17,7 @@ public class CocEntityEvent<T> {
 	private Map param = new HashMap();
 
 	// 方法参数
-	private T entityData;
+	private T entity;
 
 	private Class entityType;
 
@@ -35,12 +35,12 @@ public class CocEntityEvent<T> {
 	 * 
 	 * @return
 	 */
-	public T getEntityData() {
-		return entityData;
+	public T getEntity() {
+		return entity;
 	}
 
-	public void setEntityData(T entity) {
-		this.entityData = entity;
+	public void setEntity(T entity) {
+		this.entity = entity;
 	}
 
 	public Map getParam() {

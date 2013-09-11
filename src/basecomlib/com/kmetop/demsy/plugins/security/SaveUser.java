@@ -13,7 +13,7 @@ public class SaveUser extends BaseEntityPlugin {
 
 	@Override
 	public void before(CocEntityEvent event) {
-		BaseUser user = (BaseUser) event.getEntityData();
+		BaseUser user = (BaseUser) event.getEntity();
 		String code = user.getCode();
 		IOrm orm = (IOrm) event.getOrm();
 		int count = orm.count(user.getClass(), Expr.eq(LibConst.F_SOFT_ID, Demsy.me().getSoft()).and(Expr.eq(LibConst.F_CODE, code)));

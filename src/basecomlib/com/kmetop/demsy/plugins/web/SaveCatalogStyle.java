@@ -13,7 +13,7 @@ public class SaveCatalogStyle extends BaseEntityPlugin {
 
 	@Override
 	public void before(CocEntityEvent event) {
-		UiCatalogStyle style = (UiCatalogStyle) event.getEntityData();
+		UiCatalogStyle style = (UiCatalogStyle) event.getEntity();
 		String name = style.getName();
 		IOrm orm = (IOrm) event.getOrm();
 		int count = orm.count(style.getClass(), Expr.eq(LibConst.F_SOFT_ID, Demsy.me().getSoft()).and(Expr.eq(LibConst.F_NAME, name)));
