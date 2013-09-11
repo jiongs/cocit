@@ -2,23 +2,23 @@ package com.kmetop.demsy.plugins.activity;
 
 import java.util.Date;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
-import com.jiongsoft.cocit.corm.expr.Expr;
+import com.jiongsoft.cocit.entity.CocEntityEvent;
+import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
+import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
-import com.kmetop.demsy.biz.BizEvent;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.web.IActivity;
 import com.kmetop.demsy.comlib.web.IActivityEntry;
 import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.plugins.BizPlugin;
 
-public class SaveActivityEntry extends BizPlugin {
+public class SaveActivityEntry extends BaseEntityPlugin {
 
 	@Override
-	public void before(BizEvent event) {
-		IActivityEntry entry = (IActivityEntry) event.getEntity();
+	public void before(CocEntityEvent event) {
+		IActivityEntry entry = (IActivityEntry) event.getEntityData();
 		IActivity catalog = entry.getCatalog();
 
 		Demsy me = Demsy.me();
@@ -42,7 +42,7 @@ public class SaveActivityEntry extends BizPlugin {
 		// 次数限制
 		int limitTimes = catalog.getLimitTimes();
 		if (limitTimes > 0) {
-			IOrm orm = event.getOrm();
+			IOrm orm = (IOrm) event.getOrm();
 			CndExpr expr = Expr.eq("catalog", catalog);
 			if (catalog.isLimitLogin()) {
 				expr = Expr.and(expr, Expr.eq(LibConst.F_CREATED_BY, me.username()));
@@ -57,13 +57,13 @@ public class SaveActivityEntry extends BizPlugin {
 	}
 
 	@Override
-	public void after(BizEvent event) {
+	public void after(CocEntityEvent event) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void loaded(BizEvent event) {
+	public void loaded(CocEntityEvent event) {
 		// TODO Auto-generated method stub
 
 	}

@@ -1,20 +1,20 @@
 package com.kmetop.demsy.plugins.biz;
 
+import com.jiongsoft.cocit.entity.CocEntityEvent;
+import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
 import com.kmetop.demsy.Demsy;
-import com.kmetop.demsy.biz.BizEvent;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.lang.Cls;
-import com.kmetop.demsy.plugins.BizPlugin;
 
-public class EditBizSystem extends BizPlugin {
+public class EditBizSystem extends BaseEntityPlugin {
 
 	@Override
-	public void before(BizEvent event) {
+	public void before(CocEntityEvent event) {
 	}
 
 	@Override
-	public void after(BizEvent event) {
-		IBizSystem sys = (IBizSystem) event.getEntity();
+	public void after(CocEntityEvent event) {
+		IBizSystem sys = (IBizSystem) event.getEntityData();
 		if (sys == null) {
 			return;
 		}
@@ -28,7 +28,7 @@ public class EditBizSystem extends BizPlugin {
 	}
 
 	@Override
-	public void loaded(BizEvent event) {
+	public void loaded(CocEntityEvent event) {
 		// TODO Auto-generated method stub
 
 	}

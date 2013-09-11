@@ -28,8 +28,8 @@ import org.nutz.lang.Lang;
 import org.nutz.lang.Mirror;
 import org.nutz.lang.Strings;
 
-import com.jiongsoft.cocit.entity.CocEntity;
 import com.kmetop.demsy.Demsy;
+import com.kmetop.demsy.comlib.entity.IBizEntity;
 
 public class JSON {
 	private static String NL = "\n";
@@ -97,8 +97,8 @@ public class JSON {
 				string2Json(obj.toString());
 			} else if (Cls.isDate(obj.getClass())) {
 				string2Json(Dates.formatDateTime((Date) obj));
-			} else if (obj instanceof CocEntity) {
-				CocEntity en = (CocEntity) obj;
+			} else if (obj instanceof IBizEntity) {
+				IBizEntity en = (IBizEntity) obj;
 				writer.append("{entityGuid : ");
 				string2Json(en.getEntityGuid());
 				writer.append("}");

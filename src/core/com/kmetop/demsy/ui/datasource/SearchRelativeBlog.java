@@ -2,8 +2,8 @@ package com.kmetop.demsy.ui.datasource;
 
 import static com.kmetop.demsy.Demsy.bizEngine;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
-import com.jiongsoft.cocit.corm.expr.Expr;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
+import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.comlib.web.IBlogPost;

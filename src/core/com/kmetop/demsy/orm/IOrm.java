@@ -3,8 +3,9 @@ package com.kmetop.demsy.orm;
 import java.io.Serializable;
 import java.util.List;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
-import com.jiongsoft.cocit.corm.expr.NullCndExpr;
+import com.jiongsoft.cocit.orm.Corm;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
+import com.jiongsoft.cocit.orm.expr.NullCndExpr;
 import com.kmetop.demsy.orm.dialect.Dialect;
 import com.kmetop.demsy.orm.generator.INamingStrategy;
 import com.kmetop.demsy.orm.mapping.EnMapping;
@@ -22,7 +23,7 @@ import com.kmetop.demsy.orm.mapping.EnMapping;
  * @author yongshan.ji
  * @param <T>
  */
-public interface IOrm {
+public interface IOrm  extends Corm{
 	public IMetaDao getMetaDao();
 
 	/**
@@ -135,7 +136,7 @@ public interface IOrm {
 	 *            实体ID
 	 * @return 成功删除的记录数
 	 */
-	public int delete(Class<Object> classOfEntity, Serializable id);
+	public int delete(Class classOfEntity, Serializable id);
 
 	/**
 	 * <b>批量删除</b>

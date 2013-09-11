@@ -11,13 +11,13 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.jiongsoft.cocit.corm.expr.Expr;
-import com.jiongsoft.cocit.entity.CocEntity;
+import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.IBizSession;
 import com.kmetop.demsy.comlib.IBizEngine;
 import com.kmetop.demsy.comlib.biz.IBizField;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
+import com.kmetop.demsy.comlib.entity.IBizEntity;
 import com.kmetop.demsy.comlib.security.IAction;
 
 /**
@@ -121,14 +121,14 @@ public class SystemExcel extends Excel {
 		Long softID = Demsy.me().getSoft().getId();
 
 		IBizField pkfld = fields.get(excelHeads[0]);
-		final List<CocEntity> list = new ArrayList();
+		final List<IBizEntity> list = new ArrayList();
 		int rowIndex = 1;
 		int colIndex = 0;
 		for (String[] row : excelRows) {
 			rowIndex++;
-			CocEntity data = (CocEntity) session.load(systemClass, Expr.eq(bizEngine.getPropName(pkfld), row[0]));
+			IBizEntity data = (IBizEntity) session.load(systemClass, Expr.eq(bizEngine.getPropName(pkfld), row[0]));
 			if (data == null) {
-				data = (CocEntity) systemClass.newInstance();
+				data = (IBizEntity) systemClass.newInstance();
 			}
 			for (int i = 0; i < row.length; i++) {
 				colIndex = i + 1;

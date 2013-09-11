@@ -13,9 +13,9 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.orm.ann.Prop;
 
@@ -23,7 +23,7 @@ import com.kmetop.demsy.orm.ann.Prop;
 @CocTable(name = "样式管理", code = BIZSYS_UIUDF_STYLE, catalog = BIZCATA_UDF_CONSOLE, orderby = ORDER_UIUDF_CATALOG_STYLE//
 , layout = 1, actions = {
 		@CocOperation(name = "新增样式", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = "com.kmetop.demsy.plugins.web.SaveCatalogStyle")//
-		// , @BzAct(name = "批量修改", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu")//
+		// , @CocOperation(name = "批量修改", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu")//
 		,
 		@CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", plugin = "com.kmetop.demsy.plugins.web.SaveCatalogStyle") //
 		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d") //

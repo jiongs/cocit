@@ -71,5 +71,5 @@ public interface IBizSystem extends IBizComponent {
 
 	byte getLayout();
 
-	String getActionPathPrefix();
+	String getPathPrefix();
 }

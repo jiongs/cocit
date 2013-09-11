@@ -1,17 +1,17 @@
 package com.kmetop.demsy.plugins.common;
 
-import com.kmetop.demsy.biz.BizEvent;
+import com.jiongsoft.cocit.entity.CocEntityEvent;
+import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
 import com.kmetop.demsy.comlib.impl.base.common.Contact;
 import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.Str;
-import com.kmetop.demsy.plugins.BizPlugin;
 
-public class SaveContact extends BizPlugin {
+public class SaveContact extends BaseEntityPlugin {
 
 	@Override
-	public void before(BizEvent event) {
+	public void before(CocEntityEvent event) {
 		StringBuffer error = new StringBuffer();
-		Contact c = (Contact) event.getEntity();
+		Contact c = (Contact) event.getEntityData();
 		if (Str.isEmpty(c.getProvince()))
 			error.append("省份必填；");
 		if (Str.isEmpty(c.getCity()))
@@ -37,12 +37,12 @@ public class SaveContact extends BizPlugin {
 	}
 
 	@Override
-	public void after(BizEvent event) {
+	public void after(CocEntityEvent event) {
 
 	}
 
 	@Override
-	public void loaded(BizEvent event) {
+	public void loaded(CocEntityEvent event) {
 
 	}
 

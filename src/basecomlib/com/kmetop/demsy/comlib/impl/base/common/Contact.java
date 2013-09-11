@@ -1,16 +1,16 @@
 package com.kmetop.demsy.comlib.impl.base.common;
 
-import static com.kmetop.demsy.biz.BizConst.TYPE_BZ_DEL;
 import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_EDIT;
 import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_NEW;
+import static com.kmetop.demsy.biz.BizConst.TYPE_BZ_DEL;
 import static com.kmetop.demsy.comlib.LibConst.BIZCATA_BASE;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.common.IContact;
 import com.kmetop.demsy.comlib.impl.BizComponent;
@@ -39,7 +39,7 @@ fields = { @CocField(property = "createdBy", mode = "*:N v:P", name = "登录帐
 		fields = { @CocField(name = "创建时间", property = "created", mode = "*:N v:P") //
 				, @CocField(name = "修改时间", property = "created", mode = "*:N v:P") //
 				, @CocField(property = "createdIP", privacy = true) //
-		}) // @BzGrp
+		}) // @CocGroup
 }// end groups
 )
 public class Contact extends BizComponent implements IContact {

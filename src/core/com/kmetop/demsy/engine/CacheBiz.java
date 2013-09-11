@@ -11,8 +11,8 @@ import static com.kmetop.demsy.comlib.LibConst.F_SYSTEM;
 
 import java.util.List;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
-import com.jiongsoft.cocit.corm.expr.Expr;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
+import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.biz.IBizAction;
 import com.kmetop.demsy.comlib.biz.IBizField;

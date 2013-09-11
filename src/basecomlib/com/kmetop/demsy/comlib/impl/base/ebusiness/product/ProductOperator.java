@@ -4,9 +4,9 @@ import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_NEW;
 
 import javax.persistence.Entity;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.eshop.IProductOperator;
 import com.kmetop.demsy.comlib.impl.BizComponent;
@@ -31,7 +31,7 @@ fields = {
 		@CocField(name = "更新时间", property = "updated", mode = "*:N v:P"), //
 		@CocField(name = "创建帐号", property = "createdBy", mode = "*:N v:P"), //
 		@CocField(name = "更新帐号", property = "updatedBy", mode = "*:N v:P") //
-}) // @BzGrp
+}) // @CocGroup
 }// end groups
 )
 public class ProductOperator extends BizComponent implements IProductOperator {

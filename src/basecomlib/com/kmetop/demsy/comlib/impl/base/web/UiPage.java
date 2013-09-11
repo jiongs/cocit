@@ -13,9 +13,9 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.field.FakeSubSystem;
 import com.kmetop.demsy.comlib.impl.BizComponent;
@@ -42,8 +42,8 @@ import com.kmetop.demsy.orm.ann.Prop;
 		, @CocField(property = "pageHeight") //
 		, @CocField(property = "keywords", gridOrder = 2) //
 		, @CocField(property = "desc", name = "页面摘要", mode = "e1:N") //
-// , @BzFld(property = "created", name = "创建时间", mode = "*:P") //
-// , @BzFld(property = "updated", name = "更新时间", mode = "*:P") //
+// , @CocField(property = "created", name = "创建时间", mode = "*:P") //
+// , @CocField(property = "updated", name = "更新时间", mode = "*:P") //
 }), @CocGroup(name = "样式设计", code = "styles"//
 , fields = { @CocField(property = "styleItems") //
 }) }// end groups

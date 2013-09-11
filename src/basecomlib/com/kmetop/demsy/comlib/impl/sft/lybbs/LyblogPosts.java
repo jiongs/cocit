@@ -1,9 +1,9 @@
 package com.kmetop.demsy.comlib.impl.sft.lybbs;
 
-import static com.kmetop.demsy.biz.BizConst.TYPE_BZ_DEL;
 import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_EDIT;
 import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_EDIT_N;
 import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_NEW;
+import static com.kmetop.demsy.biz.BizConst.TYPE_BZ_DEL;
 import static com.kmetop.demsy.comlib.LibConst.BIZCATA_WEB;
 import static com.kmetop.demsy.comlib.LibConst.ORDER_WEB_BLOG_TOPIC;
 
@@ -18,9 +18,9 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Transient;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.field.RichText;
 import com.kmetop.demsy.comlib.web.IBlogPost;
@@ -111,7 +111,7 @@ public class LyblogPosts implements IBlogPost, IStatistic {
 
 	//
 	// @Column(name = "longlastclickat")
-	// @BzFld(name = "最近点击", mode = "v:S *:N")
+	// @CocField(name = "最近点击", mode = "v:S *:N")
 	// protected long lastClickAt;
 
 	// protected double clickFrequency;
@@ -123,7 +123,7 @@ public class LyblogPosts implements IBlogPost, IStatistic {
 	@CocField(name = "是否推荐", mode = "elite:E v:S *:N", options = "1:推荐,0:未推荐")
 	protected boolean elite;
 
-	// @BzFld(name = "推荐时间", mode = "v:S *:N")
+	// @CocField(name = "推荐时间", mode = "v:S *:N")
 	// @Column(name = "longrecommendat")
 	// protected long eliteAt;
 
@@ -135,7 +135,7 @@ public class LyblogPosts implements IBlogPost, IStatistic {
 	protected boolean hide;
 
 	// @Column(name = "longhideat")
-	// @BzFld(name = "屏蔽时间", mode = "v:S *:N")
+	// @CocField(name = "屏蔽时间", mode = "v:S *:N")
 	// protected long hideAt;
 
 	public String toString() {

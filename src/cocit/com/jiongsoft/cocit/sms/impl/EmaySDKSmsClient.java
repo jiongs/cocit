@@ -8,8 +8,8 @@ import cn.emay.sdk.client.api.MO;
 
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitHttpContext;
-import com.jiongsoft.cocit.cocsoft.CocSoft;
-import com.jiongsoft.cocit.cocsoft.CocSoftConfig;
+import com.jiongsoft.cocit.service.CocConfigService;
+import com.jiongsoft.cocit.service.CocSoftService;
 import com.jiongsoft.cocit.sms.SmsClient;
 import com.jiongsoft.cocit.utils.Log;
 import com.jiongsoft.cocit.utils.StringUtil;
@@ -50,23 +50,26 @@ public class EmaySDKSmsClient implements SmsClient {
 	private Client emayClient;
 
 	private String proxyHost;
+
 	private int proxyPort;
 
 	private String uid;
+
 	private String pwd;// 本地明文密码
+
 	private String key;// 序列号
 
 	public EmaySDKSmsClient() {
 		CocitHttpContext ctx = Cocit.getHttpContext();
 
 		if (ctx != null) {
-			CocSoft soft = ctx.getSoft();
+			CocSoftService soft = ctx.getSoft();
 
-			this.proxyHost = soft.getConfig(CocSoftConfig.CFG_PROXY_HOST, "");
-			this.proxyPort = soft.getConfig(CocSoftConfig.CFG_PROXY_PORT, 80);
+			this.proxyHost = soft.getConfig(CocConfigService.CFG_PROXY_HOST, "");
+			this.proxyPort = soft.getConfig(CocConfigService.CFG_PROXY_PORT, 80);
 
-			this.uid = soft.getConfig(CocSoftConfig.CFG_UID, "");
-			this.pwd = soft.getConfig(CocSoftConfig.CFG_PWD, "");
+			this.uid = soft.getConfig(CocConfigService.CFG_UID, "");
+			this.pwd = soft.getConfig(CocConfigService.CFG_PWD, "");
 			this.key = soft.getConfig("sms.key", "");
 
 			try {
@@ -77,7 +80,7 @@ public class EmaySDKSmsClient implements SmsClient {
 				Log.info("EmaySmsClient.new: registResult=%s {uid:%s, pwd:%s, key:%s, proxyHost:%s, proxyPort:%s}", registResult, uid, pwd, key, proxyHost, proxyPort);
 
 			} catch (Exception e) {
-				Log.error("EmaySmsClient.new: 失败！{uid:%s, pwd:%s, key:%s, proxyHost:%s, proxyPort:%s}", uid, pwd, key, proxyHost, proxyPort);
+				Log.error("EmaySmsClient.new: 失败！{uid:%s, pwd:%s, key:%s, proxyHost:%s, proxyPort:%s}", uid, pwd, key, proxyHost, proxyPort, e);
 			}
 		}
 	}

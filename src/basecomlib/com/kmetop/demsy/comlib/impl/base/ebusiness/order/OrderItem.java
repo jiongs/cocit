@@ -1,15 +1,15 @@
 package com.kmetop.demsy.comlib.impl.base.ebusiness.order;
 
-import static com.kmetop.demsy.biz.BizConst.*;
+import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_EDIT;
 import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_EDIT_N;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.eshop.IOrder;
 import com.kmetop.demsy.comlib.eshop.IOrderItem;
@@ -26,7 +26,7 @@ import com.kmetop.demsy.comlib.impl.base.ebusiness.product.ProductOperator;
 actions = { @CocOperation(name = "备货", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu1", plugin = "com.kmetop.demsy.plugins.eshop.OrderSended")//
 		, @CocOperation(name = "打折", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu", plugin = "com.kmetop.demsy.plugins.eshop.OrderAdjustCast")//
 		, @CocOperation(name = "详情", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
-// , @BzAct(name = "删除条目", typeCode = TYPE_BZ_DEL, mode = "d") //
+// , @CocOperation(name = "删除条目", typeCode = TYPE_BZ_DEL, mode = "d") //
 },//
 groups = { //
 @CocGroup(name = "基本信息", code = "basic",//
@@ -42,7 +42,7 @@ fields = { @CocField(property = "price", gridOrder = 4)//
 		, @CocField(property = "discount", gridOrder = 6)//
 		, @CocField(property = "subtotal", gridOrder = 7) //
 		, @CocField(property = "status", gridOrder = 8) //
-}), // @BzGrp
+}), // @CocGroup
 		@CocGroup(name = "其他属性", code = "other",//
 		fields = {
 				// 其他信息
@@ -51,12 +51,12 @@ fields = { @CocField(property = "price", gridOrder = 4)//
 				@CocField(name = "下单帐号", property = "createdBy", mode = "*:N v:S"), //
 				@CocField(name = "更新帐号", property = "updatedBy", mode = "*:N v:S"), //
 				@CocField(name = "下单IP", property = "createdIP", mode = "*:N v:S") //
-		}) // @BzGrp
+		}) // @CocGroup
 }// end groups
 )
 public class OrderItem extends BizComponent implements IOrderItem {
 	@ManyToOne
-	@CocField(name = "订单", mode = "*:N v:S", disabledNavi = true, isChildTable = true)
+	@CocField(name = "订单", mode = "*:N v:S", disabledNavi = true, isFkChild = true)
 	protected Order order;
 
 	@ManyToOne

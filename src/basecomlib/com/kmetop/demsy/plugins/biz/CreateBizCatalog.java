@@ -1,21 +1,21 @@
 package com.kmetop.demsy.plugins.biz;
 
+import com.jiongsoft.cocit.entity.CocEntityEvent;
+import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
 import com.kmetop.demsy.Demsy;
-import com.kmetop.demsy.biz.BizEvent;
 import com.kmetop.demsy.comlib.biz.IBizCatalog;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.plugins.BizPlugin;
 
-public class CreateBizCatalog extends BizPlugin {
+public class CreateBizCatalog extends BaseEntityPlugin {
 
 	@Override
-	public void before(BizEvent event) {
+	public void before(CocEntityEvent event) {
 	}
 
 	@Override
-	public void after(BizEvent event) {
-		IOrm orm = event.getOrm();
-		IBizCatalog catalog = (IBizCatalog) event.getEntity();
+	public void after(CocEntityEvent event) {
+		IOrm orm = (IOrm) event.getOrm();
+		IBizCatalog catalog = (IBizCatalog) event.getEntityData();
 
 		// 将【业务分类】转换成【文件夹模块】
 		Demsy.moduleEngine.makeModule(orm, Demsy.me().getSoft(), catalog);
@@ -23,7 +23,7 @@ public class CreateBizCatalog extends BizPlugin {
 	}
 
 	@Override
-	public void loaded(BizEvent event) {
+	public void loaded(CocEntityEvent event) {
 		// TODO Auto-generated method stub
 
 	}

@@ -6,9 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.eshop.ILogistics;
 import com.kmetop.demsy.comlib.eshop.ILogisticsItem;
@@ -17,7 +17,7 @@ import com.kmetop.demsy.comlib.impl.BizComponent;
 @Entity
 @CocTable(name = "发货清单", code = ILogisticsItem.SYS_CODE, orderby = 4,//
 actions = { @CocOperation(name = "详情", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
-// , @BzAct(name = "永久删除", typeCode = TYPE_BZ_DEL, mode = "d") //
+// , @CocOperation(name = "永久删除", typeCode = TYPE_BZ_DEL, mode = "d") //
 },//
 groups = { //
 @CocGroup(name = "基本信息", code = "basic",//
@@ -33,7 +33,7 @@ fields = { @CocField(property = "logistics", gridOrder = 1) //
 }) })
 public class LogisticsItem extends BizComponent implements ILogisticsItem {
 	@ManyToOne
-	@CocField(name = "物流单", mode = "*:N v:S", disabledNavi = true, isChildTable = true)
+	@CocField(name = "物流单", mode = "*:N v:S", disabledNavi = true, isFkChild = true)
 	protected Logistics logistics;
 
 	@CocField(name = "单价(元)", mode = "*:N v:S", pattern = "#,##0.00")

@@ -39,7 +39,7 @@ public class CssBox extends JsonField<CssBox> {
 	@CocField(name = "右边框", order = 15, uiTemplate = "ui.widget.field.CssBorder")
 	protected CssBorder borderRight;
 
-	// @BzFld(name = "字体", order = 9, uiTemplate = "ui.widget.field.CssFont")
+	// @CocField(name = "字体", order = 9, uiTemplate = "ui.widget.field.CssFont")
 	// protected CssFont font;
 
 	public CssBox() {

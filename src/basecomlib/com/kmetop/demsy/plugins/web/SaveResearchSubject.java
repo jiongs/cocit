@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.nutz.json.Json;
 
-import com.jiongsoft.cocit.corm.expr.Expr;
+import com.jiongsoft.cocit.entity.CocEntityEvent;
+import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
-import com.kmetop.demsy.biz.BizEvent;
 import com.kmetop.demsy.comlib.web.IResearchOption;
 import com.kmetop.demsy.comlib.web.IResearchQuestion;
 import com.kmetop.demsy.comlib.web.IResearchResult;
@@ -21,14 +21,14 @@ import com.kmetop.demsy.orm.IOrm;
 public class SaveResearchSubject extends LoadResearchSubject {
 
 	@Override
-	public void before(BizEvent event) {
-		IOrm orm = event.getOrm();
+	public void before(CocEntityEvent event) {
+		IOrm orm = (IOrm) event.getOrm();
 
 		Class questionType = Demsy.bizEngine.getType(IResearchQuestion.SYS_CODE);
 		Class optionType = Demsy.bizEngine.getType(IResearchOption.SYS_CODE);
 		Class resultType = Demsy.bizEngine.getType(IResearchResult.SYS_CODE);
 
-		IResearchSubject subject = (IResearchSubject) event.getEntity();
+		IResearchSubject subject = (IResearchSubject) event.getEntityData();
 		if (Obj.getId(subject) == null) {
 			orm.save(subject);
 		}

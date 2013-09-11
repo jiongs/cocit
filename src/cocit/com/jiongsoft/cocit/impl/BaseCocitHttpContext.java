@@ -1,3 +1,4 @@
+// $codepro.audit.disable unnecessaryCast
 package com.jiongsoft.cocit.impl;
 
 import javax.servlet.http.HttpServletRequest;
@@ -5,15 +6,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitHttpContext;
-import com.jiongsoft.cocit.cocsoft.CocSoft;
+import com.jiongsoft.cocit.service.CocSoftService;
 import com.jiongsoft.cocit.utils.Log;
 import com.jiongsoft.cocit.utils.StringUtil;
 
 public abstract class BaseCocitHttpContext implements CocitHttpContext {
 
 	protected HttpServletRequest request;
+
 	protected HttpServletResponse response;
-	protected CocSoft soft;
+
+	protected CocSoftService soft;
 
 	protected BaseCocitHttpContext(HttpServletRequest req, HttpServletResponse res) {
 		this.request = req;
@@ -21,7 +24,7 @@ public abstract class BaseCocitHttpContext implements CocitHttpContext {
 
 		String domain = request.getServerName();
 
-		this.soft = Cocit.getComFactory().getSoft(domain);
+		this.soft = Cocit.getServiceFactory().getSoftService(domain);
 	}
 
 	/**
@@ -47,7 +50,7 @@ public abstract class BaseCocitHttpContext implements CocitHttpContext {
 	 * 
 	 * @return 正在通过HTTP请求访问的软件
 	 */
-	public CocSoft getSoft() {
+	public CocSoftService getSoft() {
 		return soft;
 	}
 
@@ -79,7 +82,7 @@ public abstract class BaseCocitHttpContext implements CocitHttpContext {
 		try {
 			return (T) StringUtil.castTo(value, valueType);
 		} catch (Throwable e) {
-			Log.error("StringUtil.getParameterValue: 出错！ {key:%s, defaultReturn:%s, valueType:%s}", key, defaultReturn, valueType.getName());
+			Log.error("StringUtil.getParameterValue: 出错！ {key:%s, defaultReturn:%s, valueType:%s}", key, defaultReturn, valueType.getName(), e);
 		}
 
 		return defaultReturn;

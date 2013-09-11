@@ -8,9 +8,9 @@ import static com.kmetop.demsy.comlib.LibConst.ORDER_SYSADMIN_REALM;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.impl.BizComponent;
 import com.kmetop.demsy.comlib.security.IRealm;

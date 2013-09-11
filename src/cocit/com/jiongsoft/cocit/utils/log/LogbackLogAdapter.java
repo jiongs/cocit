@@ -2,6 +2,8 @@ package com.jiongsoft.cocit.utils.log;
 
 import org.slf4j.LoggerFactory;
 
+import com.jiongsoft.cocit.utils.Log;
+
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.LoggingEvent;
@@ -13,6 +15,7 @@ public class LogbackLogAdapter implements LogAdapter {
 		try {
 			Class.forName(LOGBACK_CLASS_NAME, true, Thread.currentThread().getContextClassLoader());
 		} catch (ClassNotFoundException e) {
+			Log.debug("", e);
 			return false;
 		}
 		return true;

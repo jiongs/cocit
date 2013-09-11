@@ -1,22 +1,22 @@
 package com.kmetop.demsy.plugins.security;
 
+import com.jiongsoft.cocit.entity.CocEntityEvent;
+import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
 import com.kmetop.demsy.Demsy;
-import com.kmetop.demsy.biz.BizEvent;
-import com.kmetop.demsy.plugins.BizPlugin;
 
-public class SavePermission extends BizPlugin {
+public class SavePermission extends BaseEntityPlugin {
 
 	@Override
-	public void before(BizEvent event) {
+	public void before(CocEntityEvent event) {
 	}
 
 	@Override
-	public void after(BizEvent event) {
+	public void after(CocEntityEvent event) {
 		Demsy.security.clearPermissions();
 	}
 
 	@Override
-	public void loaded(BizEvent event) {
+	public void loaded(CocEntityEvent event) {
 		// TODO Auto-generated method stub
 
 	}

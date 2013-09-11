@@ -7,9 +7,9 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Transient;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.biz.field.Upload;

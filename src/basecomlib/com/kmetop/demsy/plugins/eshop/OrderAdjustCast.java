@@ -3,16 +3,16 @@ package com.kmetop.demsy.plugins.eshop;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.jiongsoft.cocit.corm.expr.Expr;
+import com.jiongsoft.cocit.entity.CocEntityEvent;
+import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
-import com.kmetop.demsy.biz.BizEvent;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.eshop.IOrder;
 import com.kmetop.demsy.comlib.eshop.IOrderItem;
 import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.Obj;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.plugins.BizPlugin;
 
 /**
  * 调整订单费用
@@ -20,7 +20,7 @@ import com.kmetop.demsy.plugins.BizPlugin;
  * @author yongshan.ji
  * 
  */
-public class OrderAdjustCast extends BizPlugin {
+public class OrderAdjustCast extends BaseEntityPlugin {
 
 	protected void evalCast(IOrder order) {
 		if (order.getStatus() != IOrder.STATUS_WAIT_BUYER_PAY) {
@@ -70,8 +70,8 @@ public class OrderAdjustCast extends BizPlugin {
 	}
 
 	@Override
-	public void before(BizEvent event) {
-		Object data = event.getEntity();
+	public void before(CocEntityEvent event) {
+		Object data = event.getEntityData();
 		if (data instanceof List) {
 			List list = (List) data;
 			for (Object obj : list) {
@@ -89,13 +89,13 @@ public class OrderAdjustCast extends BizPlugin {
 	}
 
 	@Override
-	public void after(BizEvent event) {
+	public void after(CocEntityEvent event) {
 		Class ordertype = null;
 		Class itemtype = null;
 
 		List<Long> orderList = new LinkedList();
 
-		Object data = event.getEntity();
+		Object data = event.getEntityData();
 		if (data instanceof List) {
 			List list = (List) data;
 			for (Object obj : list) {
@@ -142,7 +142,7 @@ public class OrderAdjustCast extends BizPlugin {
 	}
 
 	@Override
-	public void loaded(BizEvent event) {
+	public void loaded(CocEntityEvent event) {
 
 	}
 

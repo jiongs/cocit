@@ -17,11 +17,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
-import com.jiongsoft.cocit.corm.expr.CndType;
-import com.jiongsoft.cocit.corm.expr.CombCndExpr;
-import com.jiongsoft.cocit.corm.expr.Expr;
-import com.jiongsoft.cocit.corm.expr.SimpleCndExpr;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
+import com.jiongsoft.cocit.orm.expr.CndType;
+import com.jiongsoft.cocit.orm.expr.CombCndExpr;
+import com.jiongsoft.cocit.orm.expr.Expr;
+import com.jiongsoft.cocit.orm.expr.SimpleCndExpr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.biz.IBizSystem;

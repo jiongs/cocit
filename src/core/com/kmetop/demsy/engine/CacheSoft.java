@@ -1,10 +1,10 @@
 package com.kmetop.demsy.engine;
 
 import static com.kmetop.demsy.Demsy.bizEngine;
-import static com.kmetop.demsy.comlib.LibConst.BIZSYS_DEMSY_SOFT;
 import static com.kmetop.demsy.comlib.LibConst.BIZSYS_ADMIN_CONFIG;
 import static com.kmetop.demsy.comlib.LibConst.BIZSYS_ADMIN_MODULE;
 import static com.kmetop.demsy.comlib.LibConst.BIZSYS_ADMIN_REALM;
+import static com.kmetop.demsy.comlib.LibConst.BIZSYS_DEMSY_SOFT;
 import static com.kmetop.demsy.comlib.LibConst.F_CODE;
 import static com.kmetop.demsy.comlib.LibConst.F_DOMAIN;
 import static com.kmetop.demsy.comlib.LibConst.F_ORDER_BY;
@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.jiongsoft.cocit.corm.expr.Expr;
+import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.entity.IDemsySoft;
 import com.kmetop.demsy.comlib.entity.ISoftConfig;

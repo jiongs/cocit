@@ -6,8 +6,8 @@ import static com.kmetop.demsy.mvc.MvcConst.MvcUtil.contextPath;
 
 import java.util.Map;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
-import com.jiongsoft.cocit.corm.expr.Expr;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
+import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.security.IModule;
 import com.kmetop.demsy.comlib.security.IUserRole;

@@ -14,9 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.field.Upload;
 import com.kmetop.demsy.comlib.web.IBbsForum;
@@ -37,9 +37,9 @@ import com.kmetop.demsy.lang.Cls;
 		@CocField(property = "name", gridOrder = 1)//
 		, @CocField(property = "teamlogo", gridOrder = 2) //
 		, @CocField(property = "parent")//
-		// , @BzFld(property = "privateforum") //
-		// , @BzFld(property = "dbpassword") //
-		// , @BzFld(property = "indexforum") //
+		// , @CocField(property = "privateforum") //
+		// , @CocField(property = "dbpassword") //
+		// , @CocField(property = "indexforum") //
 		, @CocField(property = "type", gridOrder = 3) //
 		, @CocField(property = "checkPostStatus") //
 		, @CocField(property = "adminUsers", gridOrder = 4) //
@@ -48,14 +48,14 @@ import com.kmetop.demsy.lang.Cls;
 		, @CocField(property = "replynumber", gridOrder = 6) //
 		, @CocField(property = "orderby", gridOrder = 6) //
 })
-// , @BzGrp(name = "定时状态", code = "timestatus"//
+// , @CocGroup(name = "定时状态", code = "timestatus"//
 // , fields = {
 // //
-// @BzFld(property = "timestatus")//
-// , @BzFld(property = "timefromhour")//
-// , @BzFld(property = "timefromminute") //
-// , @BzFld(property = "timetohour") //
-// , @BzFld(property = "timetominute") //
+// @CocField(property = "timestatus")//
+// , @CocField(property = "timefromhour")//
+// , @CocField(property = "timefromminute") //
+// , @CocField(property = "timetohour") //
+// , @CocField(property = "timetominute") //
 // })
 }// end groups
 )

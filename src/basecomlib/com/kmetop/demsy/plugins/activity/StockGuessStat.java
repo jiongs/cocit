@@ -4,15 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.jiongsoft.cocit.corm.expr.Expr;
-import com.kmetop.demsy.biz.BizEvent;
+import com.jiongsoft.cocit.entity.CocEntityEvent;
+import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.comlib.impl.sft.activity.ActivityCatalog;
 import com.kmetop.demsy.comlib.impl.sft.activity.StockActivity;
 import com.kmetop.demsy.comlib.web.IActivity;
 import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.Obj;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.plugins.BizPlugin;
 import com.kmetop.demsy.util.sort.SortUtils;
 
 /**
@@ -21,11 +21,11 @@ import com.kmetop.demsy.util.sort.SortUtils;
  * @author yongshan.ji
  * 
  */
-public class StockGuessStat extends BizPlugin {
+public class StockGuessStat extends BaseEntityPlugin {
 
 	@Override
-	public void before(BizEvent event) {
-		ActivityCatalog activity = (ActivityCatalog) event.getEntity();
+	public void before(CocEntityEvent event) {
+		ActivityCatalog activity = (ActivityCatalog) event.getEntityData();
 		Byte type = activity.getType();
 		if (type == null || !type.equals(IActivity.TYPE_STOCK)) {
 			throw new DemsyException("统计出错：活动类型非法！");
@@ -37,7 +37,7 @@ public class StockGuessStat extends BizPlugin {
 			throw new DemsyException("统计出错：请先填写收盘价！");
 		}
 
-		IOrm orm = event.getOrm();
+		IOrm orm = (IOrm) event.getOrm();
 		// 按竞猜时间升序排序
 		List<StockActivity> list = orm.query(StockActivity.class, Expr.eq("catalog", activity).addAsc("created"));
 		Map<String, StockActivity> map = new HashMap();
@@ -83,12 +83,12 @@ public class StockGuessStat extends BizPlugin {
 	}
 
 	@Override
-	public void after(BizEvent event) {
+	public void after(CocEntityEvent event) {
 
 	}
 
 	@Override
-	public void loaded(BizEvent event) {
+	public void loaded(CocEntityEvent event) {
 
 	}
 

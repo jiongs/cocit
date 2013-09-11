@@ -107,5 +107,5 @@ public interface IModule<T> extends IBizComponent, ITreeEntity<T> {
 	 * 
 	 * @return
 	 */
-	public String getActionPathPrefix();
+	public String getPathPrefix();
 }

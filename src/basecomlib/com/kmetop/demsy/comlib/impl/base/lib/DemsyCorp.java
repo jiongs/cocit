@@ -4,9 +4,9 @@ import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_NEW;
 
 import javax.persistence.Entity;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.entity.IDemsyCorp;

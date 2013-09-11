@@ -1,6 +1,6 @@
 package com.kmetop.demsy.mvc.controller;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.kmetop.demsy.mvc.ui.IUIViewController;
 import com.kmetop.demsy.mvc.ui.UIBlockContext;
 

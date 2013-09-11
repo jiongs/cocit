@@ -2,17 +2,17 @@ package com.kmetop.demsy.plugins.bbs;
 
 import java.util.Date;
 
+import com.jiongsoft.cocit.entity.CocEntityEvent;
+import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
 import com.kmetop.demsy.Demsy;
-import com.kmetop.demsy.biz.BizEvent;
 import com.kmetop.demsy.comlib.impl.sft.lybbs.LyblogPosts;
 import com.kmetop.demsy.lang.DemsyException;
-import com.kmetop.demsy.plugins.BizPlugin;
 
-public class SaveBlogPost extends BizPlugin {
+public class SaveBlogPost extends BaseEntityPlugin {
 
 	@Override
-	public void before(BizEvent event) {
-		LyblogPosts obj = (LyblogPosts) event.getEntity();
+	public void before(CocEntityEvent event) {
+		LyblogPosts obj = (LyblogPosts) event.getEntityData();
 
 		// 回复
 		if (obj.getId() != null && obj.getId() > 0) {
@@ -30,12 +30,12 @@ public class SaveBlogPost extends BizPlugin {
 	}
 
 	@Override
-	public void after(BizEvent event) {
+	public void after(CocEntityEvent event) {
 
 	}
 
 	@Override
-	public void loaded(BizEvent event) {
+	public void loaded(CocEntityEvent event) {
 
 	}
 

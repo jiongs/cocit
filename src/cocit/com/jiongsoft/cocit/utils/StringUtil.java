@@ -1,3 +1,4 @@
+// $codepro.audit.disable unnecessaryCast
 package com.jiongsoft.cocit.utils;
 
 import java.io.IOException;
@@ -85,6 +86,7 @@ public abstract class StringUtil {
 		try {
 			return new String(Hex.decodeHex(str.toCharArray()));
 		} catch (DecoderException e) {
+			Log.warn("", e);
 			return null;
 		}
 	}
@@ -126,7 +128,7 @@ public abstract class StringUtil {
 		try {
 			return (T) castTo(text, valueType);
 		} catch (Throwable e) {
-			Log.error("将文本转换成指定的Java对象失败！text=%s, valueType=%s, defaultReturn=%s", text, valueType, defaultReturn);
+			Log.error("将文本转换成指定的Java对象失败！text=%s, valueType=%s, defaultReturn=%s", text, valueType, defaultReturn, e);
 		}
 
 		return defaultReturn;

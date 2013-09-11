@@ -1,6 +1,6 @@
 package com.kmetop.demsy.comlib.impl.sft.dic;
 
-import static com.kmetop.demsy.comlib.LibConst.*;
+import static com.kmetop.demsy.comlib.LibConst.BIZCATA_BASE;
 
 import java.util.List;
 
@@ -9,9 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.biz.BizConst;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;

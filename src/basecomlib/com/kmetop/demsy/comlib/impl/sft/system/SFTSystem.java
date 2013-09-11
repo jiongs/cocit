@@ -13,9 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.comlib.impl.base.biz.BizCatalog;
@@ -32,7 +32,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 		, @CocField(name = "系统编号", property = "code") //
 		, @CocField(name = "路径前缀", property = "actionPathPrefix", gridField = true) //
 		, @CocField(name = "人工顺序", property = "orderby") //
-		, @CocField(name = "系统分类", property = "catalog", groupBy = true, refrenceTable = BIZSYS_BZUDF_CATALOG) //
+		, @CocField(name = "系统分类", property = "catalog", groupBy = true, fkTable = BIZSYS_BZUDF_CATALOG) //
 }), @CocGroup(name = "扩展信息", code = "ext"//
 , fields = { @CocField(name = "窗体模版", property = "template", gridField = false) //
 		, @CocField(name = "映射实体类", property = "mappingClass", gridField = false, mode = "*:P") //
@@ -148,12 +148,12 @@ public class SFTSystem extends SFTBizComponent implements IBizSystem {
 	}
 
 	@Column(length = 10)
-	public String getActionPathPrefix() {
-		return get("actionPathPrefix");
+	public String getPathPrefix() {
+		return get("pathPrefix");
 	}
 
-	public void setActionPathPrefix(String actionPathPrefix) {
-		this.set("actionPathPrefix", actionPathPrefix);
+	public void setPathPrefix(String pathPrefix) {
+		this.set("pathPrefix", pathPrefix);
 	}
 
 }

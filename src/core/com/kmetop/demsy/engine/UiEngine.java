@@ -29,9 +29,9 @@ import java.util.Map;
 
 import org.nutz.lang.Mirror;
 
-import com.jiongsoft.cocit.corm.expr.Expr;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocField2;
+import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.IUiEngine;
 import com.kmetop.demsy.comlib.LibConst;
@@ -702,7 +702,7 @@ public class UiEngine implements IUiEngine, MvcConst {
 			}
 			if (bizEngine.isMultiUpload(bzField)) {
 				CocField ann = (CocField) bzFieldType.getAnnotation(CocField.class);
-				refSystem = bizEngine.getSystem(ann.refrenceTable());
+				refSystem = bizEngine.getSystem(ann.fkTable());
 				refProps = Str.toArray(ann.refrenceFields());
 			}
 

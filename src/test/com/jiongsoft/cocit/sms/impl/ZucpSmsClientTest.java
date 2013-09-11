@@ -15,8 +15,8 @@ import org.junit.Test;
 
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitHttpContext;
-import com.jiongsoft.cocit.cocsoft.CocSoft;
-import com.jiongsoft.cocit.cocsoft.CocSoftConfig;
+import com.jiongsoft.cocit.service.CocConfigService;
+import com.jiongsoft.cocit.service.CocSoftService;
 import com.jiongsoft.cocit.utils.DateUtil;
 
 public class ZucpSmsClientTest {
@@ -29,22 +29,22 @@ public class ZucpSmsClientTest {
 			@Mocked
 			CocitHttpContext softContext;
 			@Mocked
-			CocSoft soft;
+			CocSoftService soft;
 			{
 				Cocit.getHttpContext();
 				result = softContext;
 				softContext.getSoft();
 				result = soft;
 
-				soft.getConfig(CocSoftConfig.CFG_PROXY_HOST, "");
+				soft.getConfig(CocConfigService.CFG_PROXY_HOST, "");
 				result = "192.168.128.3";
-				soft.getConfig(CocSoftConfig.CFG_PROXY_PORT, 80);
+				soft.getConfig(CocConfigService.CFG_PROXY_PORT, 80);
 				result = 80;
-				soft.getConfig(CocSoftConfig.CFG_URL, "http://sdk2.zucp.net:8060/webservice.asmx");
+				soft.getConfig(CocConfigService.CFG_URL, "http://sdk2.zucp.net:8060/webservice.asmx");
 				result = "http://sdk2.zucp.net:8060/webservice.asmx";
-				soft.getConfig(CocSoftConfig.CFG_UID, "");
+				soft.getConfig(CocConfigService.CFG_UID, "");
 				result = "SDK-BBX-010-18027";
-				soft.getConfig(CocSoftConfig.CFG_PWD, "");
+				soft.getConfig(CocConfigService.CFG_PWD, "");
 				result = "0b2D5-7D";
 			}
 		};

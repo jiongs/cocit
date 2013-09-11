@@ -21,7 +21,7 @@ public class CssFont extends JsonField<CssFont> {
 	@CocField(name = "文本修饰", order = 5, options = ":修饰,none:默认,underline:下划线,overline:上划线,line-through:穿越线,blink:闪烁,inherit:继承")
 	protected String decoration;
 
-	// @BzFld(name = "名称")
+	// @CocField(name = "名称")
 	protected String name;
 
 	public CssFont() {

@@ -8,10 +8,10 @@ import org.junit.Test;
 import org.junit.runner.JUnitCore;
 
 import com.jiongsoft.TestAll;
+import com.jiongsoft.cocit.entity.CocEntityEvent;
 import com.jiongsoft.cocit.utils.CocException;
 import com.jiongsoft.ynby.entity.VisitActivity;
 import com.jiongsoft.ynby.plugins.VisitActivityPlugins.SaveActivity;
-import com.kmetop.demsy.biz.BizEvent;
 
 public class VisitActivityPluginsTest {
 	@Before
@@ -26,10 +26,10 @@ public class VisitActivityPluginsTest {
 	public void testSaveActivity1() {
 		SaveActivity plugin = new SaveActivity();
 
-		BizEvent<VisitActivity> event = new BizEvent();
+		CocEntityEvent<VisitActivity> event = new CocEntityEvent();
 		VisitActivity entity = new VisitActivity();
 
-		event.setEntity(entity);
+		event.setEntityData(entity);
 
 		plugin.before(event);
 	}
@@ -38,7 +38,7 @@ public class VisitActivityPluginsTest {
 	public void testSaveActivity2() {
 		SaveActivity plugin = new SaveActivity();
 
-		BizEvent<VisitActivity> event = new BizEvent();
+		CocEntityEvent<VisitActivity> event = new CocEntityEvent();
 		VisitActivity entity = new VisitActivity();
 		entity.setPlanDate(new Date(2013 - 1900, 10 - 1, 27));
 
@@ -47,7 +47,7 @@ public class VisitActivityPluginsTest {
 
 		entity.setPlanPersonNumber(10);
 
-		event.setEntity(entity);
+		event.setEntityData(entity);
 
 		plugin.before(event);
 	}
@@ -56,7 +56,7 @@ public class VisitActivityPluginsTest {
 	public void testSaveActivity3() {
 		SaveActivity plugin = new SaveActivity();
 
-		BizEvent<VisitActivity> event = new BizEvent();
+		CocEntityEvent<VisitActivity> event = new CocEntityEvent();
 		VisitActivity entity = new VisitActivity();
 		entity.setPlanDate(new Date(2013 - 1900, 10 - 1, 27));
 
@@ -66,7 +66,7 @@ public class VisitActivityPluginsTest {
 
 		entity.setPlanPersonNumber(10);
 
-		event.setEntity(entity);
+		event.setEntityData(entity);
 
 		plugin.before(event);
 	}
@@ -75,7 +75,7 @@ public class VisitActivityPluginsTest {
 	public void testSaveActivity4() {
 		SaveActivity plugin = new SaveActivity();
 
-		BizEvent<VisitActivity> event = new BizEvent();
+		CocEntityEvent<VisitActivity> event = new CocEntityEvent();
 		VisitActivity entity = new VisitActivity();
 		entity.setPlanDate(new Date(2013 - 1900, 10 - 1, 27));
 		entity.setExpiredFrom(new Date(2013 - 1900, 10 - 1, 22));
@@ -84,7 +84,7 @@ public class VisitActivityPluginsTest {
 		// 计划人数非法
 		entity.setPlanPersonNumber(0);
 
-		event.setEntity(entity);
+		event.setEntityData(entity);
 
 		plugin.before(event);
 	}
@@ -93,14 +93,14 @@ public class VisitActivityPluginsTest {
 	public void testSaveActivity5() {
 		SaveActivity plugin = new SaveActivity();
 
-		BizEvent<VisitActivity> event = new BizEvent();
+		CocEntityEvent<VisitActivity> event = new CocEntityEvent();
 		VisitActivity entity = new VisitActivity();
 		entity.setPlanDate(new Date(2013 - 1900, 10 - 1, 27));
 		entity.setExpiredFrom(new Date(2013 - 1900, 10 - 1, 22));
 		entity.setExpiredTo(new Date(2013 - 1900, 10 - 1, 25));
 		entity.setPlanPersonNumber(50);
 
-		event.setEntity(entity);
+		event.setEntityData(entity);
 
 		plugin.before(event);
 	}

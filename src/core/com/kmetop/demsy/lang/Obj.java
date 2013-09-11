@@ -30,10 +30,10 @@ import java.util.Map;
 
 import org.nutz.lang.Mirror;
 
-import com.jiongsoft.cocit.corm.expr.Expr;
-import com.jiongsoft.cocit.entity.CocEntity;
+import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.LibConst;
+import com.kmetop.demsy.comlib.entity.IBizEntity;
 import com.kmetop.demsy.comlib.entity.IDynamic;
 import com.kmetop.demsy.orm.mapping.EnMapping;
 
@@ -344,8 +344,8 @@ public abstract class Obj {
 			return toString((short[]) obj);
 		}
 
-		if (obj instanceof CocEntity)
-			return Cls.getType(obj.getClass()).getSimpleName() + "#" + ((CocEntity) obj).getId();
+		if (obj instanceof IBizEntity)
+			return Cls.getType(obj.getClass()).getSimpleName() + "#" + ((IBizEntity) obj).getId();
 		else
 			return Cls.getType(obj.getClass()).getSimpleName() + "@" + Integer.toHexString(obj.hashCode());
 	}
@@ -669,15 +669,15 @@ public abstract class Obj {
 	}
 
 	public static Serializable getId(Object obj) {
-		if (obj instanceof CocEntity) {
-			return ((CocEntity) obj).getId();
+		if (obj instanceof IBizEntity) {
+			return ((IBizEntity) obj).getId();
 		}
 		return getValue(obj, F_ID);
 	}
 
 	public static Serializable getId(EnMapping mapping, Object obj) {
-		if (obj instanceof CocEntity) {
-			return ((CocEntity) obj).getId();
+		if (obj instanceof IBizEntity) {
+			return ((IBizEntity) obj).getId();
 		}
 		String field = F_ID;
 		if (mapping != null) {
@@ -691,8 +691,8 @@ public abstract class Obj {
 	}
 
 	public static void setId(EnMapping mapping, Object obj, Serializable id) {
-		if (obj instanceof CocEntity) {
-			((CocEntity) obj).setId((Long) id);
+		if (obj instanceof IBizEntity) {
+			((IBizEntity) obj).setId((Long) id);
 			return;
 		}
 		String field = F_ID;

@@ -1,10 +1,12 @@
 package com.kmetop.demsy.engine;
 
 import static com.kmetop.demsy.Demsy.bizEngine;
-import static com.kmetop.demsy.comlib.LibConst.*;
+import static com.kmetop.demsy.comlib.LibConst.BIZSYS_ADMIN_MODULE;
+import static com.kmetop.demsy.comlib.LibConst.F_CODE;
+import static com.kmetop.demsy.comlib.LibConst.F_GUID;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
-import com.jiongsoft.cocit.corm.expr.Expr;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
+import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.security.IModule;
 import com.kmetop.demsy.lang.Str;

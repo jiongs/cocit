@@ -12,9 +12,9 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.IBizFieldType;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
@@ -32,7 +32,7 @@ import com.kmetop.demsy.lang.Str;
 		, @CocField(name = "窗体模版", property = "uiTemplate") //
 		, @CocField(name = "类型描述", property = "desc", gridField = false) //
 		, @CocField(name = "停用状态", property = "disabled", options = "1:停用,0:启用", gridField = false) //
-		, @CocField(name = "字段分类", property = "parent", refrenceTable = BIZSYS_DEMSY_LIB_FIELD, gridField = false) //
+		, @CocField(name = "字段分类", property = "parent", fkTable = BIZSYS_DEMSY_LIB_FIELD, gridField = false) //
 		, @CocField(name = "字段类型", property = "className", gridField = false) //
 		, @CocField(name = "字段排序", property = "orderby", gridField = false) //
 		, @CocField(name = "创建时间", property = "created", mode = "*:P") //

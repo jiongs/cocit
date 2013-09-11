@@ -13,9 +13,9 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.IBizAction;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
@@ -34,8 +34,8 @@ import com.kmetop.demsy.lang.Str;
 , fields = { @CocField(name = "操作名称", property = "name", mode = "c:M e:M")//
 		, @CocField(name = "操作编号", property = "code") //
 		, @CocField(name = "人工顺序", property = "orderby") //
-		, @CocField(name = "业务系统", property = "system", refrenceTable = BIZSYS_BZUDF_SYSTEM, isChildTable = true, mode = "c:M e:M") //
-		, @CocField(name = "操作组件", property = "actionLib", disabledNavi = true, refrenceTable = BIZSYS_DEMSY_LIB_ACTION) //
+		, @CocField(name = "业务系统", property = "system", fkTable = BIZSYS_BZUDF_SYSTEM, isFkChild = true, mode = "c:M e:M") //
+		, @CocField(name = "操作组件", property = "actionLib", disabledNavi = true, fkTable = BIZSYS_DEMSY_LIB_ACTION) //
 		, @CocField(name = "模式编码", property = "mode", desc = "用于识别执行该操作时各个字段的显示模式") //
 		, @CocField(name = "类型代码", property = "typeCode", desc = "该业务代码用于识别操作类型") //
 		, @CocField(name = "业务插件", property = "plugin", desc = "执行操作时将同时调用业务插件中的方法") //

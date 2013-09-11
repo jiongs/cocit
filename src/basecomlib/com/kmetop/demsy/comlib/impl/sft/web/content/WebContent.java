@@ -13,9 +13,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.field.RichText;
 import com.kmetop.demsy.comlib.biz.field.Upload;
@@ -31,7 +31,7 @@ import com.kmetop.demsy.orm.ann.Prop;
 @Entity
 @CocTable(name = "网站信息发布", code = IWebContent.SYS_CODE, catalog = BIZCATA_WEB, orderby = ORDER_WEB_INFO, buildin = true//
 , actions = { @CocOperation(name = "录入", typeCode = TYPE_BZFORM_NEW, mode = "c")//
-		// , @BzAct(name = "转换为产品信息", typeCode = TYPE_BZFORM_EDIT_N, mode =
+		// , @CocOperation(name = "转换为产品信息", typeCode = TYPE_BZFORM_EDIT_N, mode =
 		// "bu1", plugin =
 		// "com.kmetop.demsy.plugins.web.ConvertInfoToProduct")//
 		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e") //
@@ -113,7 +113,7 @@ public class WebContent extends SFTBizComponent implements IWebContent, IStatist
 	protected Upload linkPath;
 
 	// @Column(length = 16)
-	// @BzFld(name = "链接目标", disabledNavi = true, cascadeMode =
+	// @CocField(name = "链接目标", disabledNavi = true, cascadeMode =
 	// "typeCode:2:E typeCode:0,99:N", gridField = false, options =
 	// "_blank:新窗口,_parent:父窗口")
 	// private String linkTarget;

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.kmetop.demsy.comlib.biz.IBizField;
 import com.kmetop.demsy.comlib.biz.IBizFieldGroup;
 import com.kmetop.demsy.comlib.biz.IBizFieldType;

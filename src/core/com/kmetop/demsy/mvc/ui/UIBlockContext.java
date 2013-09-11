@@ -15,15 +15,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
-import com.jiongsoft.cocit.corm.expr.Expr;
-import com.jiongsoft.cocit.corm.expr.ExprRule;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
+import com.jiongsoft.cocit.orm.expr.Expr;
+import com.jiongsoft.cocit.orm.expr.ExprRule;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.biz.IBizField;
 import com.kmetop.demsy.comlib.biz.IBizFieldType;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.comlib.biz.field.Dataset;
-import com.kmetop.demsy.comlib.impl.BizComponent;
+import com.kmetop.demsy.comlib.entity.IBizEntity;
 import com.kmetop.demsy.comlib.security.IModule;
 import com.kmetop.demsy.comlib.ui.IPage;
 import com.kmetop.demsy.comlib.ui.IPageBlock;
@@ -381,7 +381,8 @@ public class UIBlockContext {
 		}
 
 		if (log.isTraceEnabled())
-			log.tracef("板块数据集查询规则: [moduleGuid=%s, rules=%s, rules2=%s, ui:%s] module=%s, catalogModule=%s", moduleGuid, datasource.getRules(), datasource.getRules2(), block.getViewType(), module, catalogModule);
+			log.tracef("板块数据集查询规则: [moduleGuid=%s, rules=%s, rules2=%s, ui:%s] module=%s, catalogModule=%s", moduleGuid, datasource.getRules(), datasource.getRules2(), block.getViewType(), module,
+					catalogModule);
 
 		// 解析动态模块
 		boolean isFullDynaCatalogModule = false;
@@ -621,8 +622,8 @@ public class UIBlockContext {
 				item.setTarget(block.getLinkTarget());
 			}
 		}
-		if (obj instanceof BizComponent) {
-			Date updated = ((BizComponent) obj).getUpdated();
+		if (obj instanceof IBizEntity) {
+			Date updated = ((IBizEntity) obj).getUpdated();
 			short days = 3;
 			if (updated != null && new Date().getTime() - updated.getTime() <= days * 86400000) {
 				if (titleLen != null && titleLen > 2)

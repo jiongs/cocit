@@ -11,9 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.entity.base.BaseAction;
 import com.kmetop.demsy.comlib.security.IAction;
@@ -30,7 +30,7 @@ import com.kmetop.demsy.comlib.security.IAction;
 		, @CocField(name = "模式编码", property = "mode", desc = "用于识别执行该操作时各个字段的显示模式") //
 		, @CocField(name = "类型代码", property = "typeCode", desc = "该业务代码用于识别操作类型") //
 		, @CocField(name = "业务插件", property = "plugin", desc = "执行操作时将同时调用业务插件中的方法") //
-		, @CocField(name = "分类操作", property = "parentAction", refrenceTable = BIZSYS_DEMSY_LIB_ACTION) //
+		, @CocField(name = "分类操作", property = "parentAction", fkTable = BIZSYS_DEMSY_LIB_ACTION) //
 		, @CocField(name = "分类操作", property = "parentAction.name") //
 		, @CocField(name = "停用状态", property = "disabled", options = "1:停用,0:启用") //
 		, @CocField(name = "按钮徽标", property = "logo", uploadType = "*.jpg;*.gif;*.png") //

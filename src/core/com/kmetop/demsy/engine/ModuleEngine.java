@@ -25,11 +25,10 @@ import java.util.Map;
 import org.nutz.dao.Sqls;
 import org.nutz.lang.Mirror;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
-import com.jiongsoft.cocit.entity.CocEntity;
+import com.jiongsoft.cocit.entity.CocEntityPlugin;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.utils.ActionUtil;
 import com.kmetop.demsy.Demsy;
-import com.kmetop.demsy.biz.IBizPlugin;
 import com.kmetop.demsy.comlib.IModuleEngine;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.biz.IBizAction;
@@ -37,6 +36,7 @@ import com.kmetop.demsy.comlib.biz.IBizField;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.comlib.biz.field.Upload;
 import com.kmetop.demsy.comlib.entity.IBizComponent;
+import com.kmetop.demsy.comlib.entity.IBizEntity;
 import com.kmetop.demsy.comlib.entity.IDemsyCorp;
 import com.kmetop.demsy.comlib.entity.IDemsySoft;
 import com.kmetop.demsy.comlib.entity.ISoftConfig;
@@ -49,9 +49,9 @@ import com.kmetop.demsy.lang.Assert;
 import com.kmetop.demsy.lang.Cls;
 import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.Nodes;
-import com.kmetop.demsy.lang.Option;
 import com.kmetop.demsy.lang.Nodes.Node;
 import com.kmetop.demsy.lang.Obj;
+import com.kmetop.demsy.lang.Option;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.log.Log;
 import com.kmetop.demsy.log.Logs;
@@ -75,7 +75,7 @@ public abstract class ModuleEngine implements IModuleEngine {
 
 	protected Map<Long, IDataSource> dataSourceCache;
 
-	protected Map<Long, IBizPlugin[]> actionPlugins;
+	protected Map<Long, CocEntityPlugin[]> actionPlugins;
 
 	public ModuleEngine() {
 		corpCache = new HashMap();
@@ -86,23 +86,23 @@ public abstract class ModuleEngine implements IModuleEngine {
 	}
 
 	@Override
-	public IBizPlugin[] getPlugins(IAction action) {
-		IBizPlugin[] ret = actionPlugins.get(action.getId());
+	public CocEntityPlugin[] getPlugins(IAction action) {
+		CocEntityPlugin[] ret = actionPlugins.get(action.getId());
 		if (ret != null)
 			return ret;
 
 		String[] pluginArray = Str.toArray(action.getPlugin(), ",");
-		List<IBizPlugin> plugins = new ArrayList(pluginArray.length);
+		List<CocEntityPlugin> plugins = new ArrayList(pluginArray.length);
 		for (String pstr : pluginArray) {
 			try {
-				IBizPlugin plugin = (IBizPlugin) Mirror.me(Cls.forName(pstr)).born();
+				CocEntityPlugin plugin = (CocEntityPlugin) Mirror.me(Cls.forName(pstr)).born();
 				plugins.add(plugin);
 			} catch (Throwable e) {
 				log.errorf("加载业务插件出错! [action=%s] %s", action, e);
 			}
 		}
 
-		ret = new IBizPlugin[plugins.size()];
+		ret = new CocEntityPlugin[plugins.size()];
 		plugins.toArray(ret);
 
 		return ret;
@@ -315,14 +315,14 @@ public abstract class ModuleEngine implements IModuleEngine {
 
 		node.setName(module.getName());
 
-		String actionPathPrefix = module.getActionPathPrefix();
+		String actionPathPrefix = module.getPathPrefix();
 
 		switch (module.getType()) {
 		case IModule.TYPE_FOLDER:
 			break;
 		case IModule.TYPE_BIZ:
 			if (ActionUtil.ACTION_PATH_PREFIX.equals(actionPathPrefix)) {
-				node.setParams(MvcUtil.contextPath(ActionUtil.GET_BIZ_MODULE_UI, ActionUtil.encodeArgs(module.getId())));
+				node.setParams(MvcUtil.contextPath(ActionUtil.GET_ENTITY_MODULE_UI, ActionUtil.encodeArgs(module.getId())));
 			} else {
 				node.setParams(MvcUtil.contextPath(MvcConst.URL_BZMAIN, module.getId()));
 			}
@@ -528,8 +528,8 @@ public abstract class ModuleEngine implements IModuleEngine {
 				Class type = bizEngine.getType(refSys);
 
 				if (orm.count(type, null) < 10) {
-					List<? extends CocEntity> datas = orm.query(type, Cls.hasField(klass, F_ORDER_BY) ? CndExpr.asc(F_ORDER_BY) : null);
-					for (CocEntity data : datas) {
+					List<? extends IBizEntity> datas = orm.query(type, Cls.hasField(klass, F_ORDER_BY) ? CndExpr.asc(F_ORDER_BY) : null);
+					for (IBizEntity data : datas) {
 						Node node = root.addNode(item.getId(), item.getId() + "_" + fld.getId() + "_" + data.getId());
 						node.setName(data.toString());
 						node.setType(TYPE_BZ_SAVE);

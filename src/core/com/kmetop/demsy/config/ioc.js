@@ -44,7 +44,7 @@
 			pkgs: ["com.kmetop.demsy.comlib.impl.entity"
 					, "com.kmetop.demsy.comlib.impl.base"
 					, "com.kmetop.demsy.comlib.impl.sft"
-					, "com.kmetop.ebuziness"
+					, "com.jiongsoft.cocit.entity"
 				]
 		}
 	}

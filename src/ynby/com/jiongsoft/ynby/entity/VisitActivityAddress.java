@@ -2,9 +2,9 @@ package com.jiongsoft.ynby.entity;
 
 import javax.persistence.Entity;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.jiongsoft.cocit.utils.ActionUtil;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
@@ -17,7 +17,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
  * 
  */
 @Entity
-@CocTable(name = "活动地点设置", code = "VisitActivityAddress", catalog = "_ynby_visit", actionPathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 1//
+@CocTable(name = "活动地点设置", code = "VisitActivityAddress", catalog = "_ynby_visit", pathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 1//
 // 操作按钮
 , actions = { @CocOperation(name = "添加", typeCode = 101, mode = "c")//
 		, @CocOperation(name = "修改", typeCode = 102, mode = "e") //
@@ -34,7 +34,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 		, @CocField(name = "联系电话", property = "contactTel", mode = "c:M e:E v:S *:N", gridOrder = 4) //
 		, @CocField(name = "地点描述", property = "desc", mode = "c:E e:E v:S *:N", gridOrder = 10) //
 }// end: fields
-) // end: BzGrp
+) // end: CocGroup
 }// end: groups
 )
 public class VisitActivityAddress extends SFTBizComponent {

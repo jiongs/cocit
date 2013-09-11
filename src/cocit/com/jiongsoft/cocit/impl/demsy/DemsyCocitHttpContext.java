@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jiongsoft.cocit.impl.BaseCocitHttpContext;
+import com.jiongsoft.cocit.utils.Log;
 import com.kmetop.demsy.Demsy;
 
 public class DemsyCocitHttpContext extends BaseCocitHttpContext {
@@ -37,6 +38,7 @@ public class DemsyCocitHttpContext extends BaseCocitHttpContext {
 			else
 				ret = Integer.parseInt(w);
 		} catch (Throwable e) {
+			Log.warn("", e);
 			ret = 95;
 		}
 
@@ -54,6 +56,7 @@ public class DemsyCocitHttpContext extends BaseCocitHttpContext {
 			else
 				ret = Integer.parseInt(w);
 		} catch (Throwable e) {
+			Log.warn("", e);
 			ret = new Double(browserWidth * 0.2).intValue();
 		}
 

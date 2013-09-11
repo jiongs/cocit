@@ -3,7 +3,7 @@ package com.kmetop.demsy.comlib;
 import java.io.Serializable;
 import java.util.List;
 
-import com.kmetop.demsy.biz.IBizPlugin;
+import com.jiongsoft.cocit.entity.CocEntityPlugin;
 import com.kmetop.demsy.comlib.biz.IBizCatalog;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.comlib.entity.IDemsyCorp;
@@ -88,7 +88,7 @@ public interface IModuleEngine {
 	 */
 	IAction getAction(IModule module, Serializable opID);
 
-	IBizPlugin[] getPlugins(IAction action);
+	CocEntityPlugin[] getPlugins(IAction action);
 
 	/**
 	 * 创建软件功能模块菜单

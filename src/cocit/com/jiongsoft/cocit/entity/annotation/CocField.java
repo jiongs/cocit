@@ -35,12 +35,12 @@ public @interface CocField {
 
 	public boolean gridField() default true;
 
-	public String refrenceTable() default "";
+	public String fkTable() default "";
 
 	// 子系统字段，引用的
 	public String refrenceFields() default "";
 
-	public boolean isChildTable() default false;
+	public boolean isFkChild() default false;
 
 	public boolean password() default false;
 

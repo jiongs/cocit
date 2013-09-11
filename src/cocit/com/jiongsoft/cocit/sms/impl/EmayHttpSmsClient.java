@@ -14,8 +14,8 @@ import java.util.List;
 
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitHttpContext;
-import com.jiongsoft.cocit.cocsoft.CocSoft;
-import com.jiongsoft.cocit.cocsoft.CocSoftConfig;
+import com.jiongsoft.cocit.service.CocConfigService;
+import com.jiongsoft.cocit.service.CocSoftService;
 import com.jiongsoft.cocit.sms.SmsClient;
 import com.jiongsoft.cocit.utils.Log;
 
@@ -64,14 +64,14 @@ public class EmayHttpSmsClient implements SmsClient {
 		CocitHttpContext ctx = Cocit.getHttpContext();
 
 		if (ctx != null) {
-			CocSoft soft = ctx.getSoft();
+			CocSoftService soft = ctx.getSoft();
 
-			this.proxyHost = soft.getConfig(CocSoftConfig.CFG_PROXY_HOST, "");
-			this.proxyPort = soft.getConfig(CocSoftConfig.CFG_PROXY_PORT, 80);
+			this.proxyHost = soft.getConfig(CocConfigService.CFG_PROXY_HOST, "");
+			this.proxyPort = soft.getConfig(CocConfigService.CFG_PROXY_PORT, 80);
 
-			this.url = soft.getConfig(CocSoftConfig.CFG_URL, "http://sdkhttp.eucp.b2m.cn");
-			this.uid = soft.getConfig(CocSoftConfig.CFG_UID, "");
-			this.pwd = soft.getConfig(CocSoftConfig.CFG_PWD, "");
+			this.url = soft.getConfig(CocConfigService.CFG_URL, "http://sdkhttp.eucp.b2m.cn");
+			this.uid = soft.getConfig(CocConfigService.CFG_UID, "");
+			this.pwd = soft.getConfig(CocConfigService.CFG_PWD, "");
 			this.key = soft.getConfig("sms.key", "");
 
 			this.register();
@@ -242,6 +242,7 @@ public class EmayHttpSmsClient implements SmsClient {
 		try {
 			connection = url.openConnection();
 		} catch (Throwable e) {
+			Log.warn("", e);
 			if (this.proxyHost != null && proxyHost.trim().length() > 0) {
 				SocketAddress proxyAddress = new InetSocketAddress(this.proxyHost, this.proxyPort);
 				Proxy typeProxy = new Proxy(Proxy.Type.HTTP, proxyAddress);

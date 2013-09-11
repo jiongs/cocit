@@ -48,11 +48,10 @@ import org.nutz.resource.Scans;
 import org.nutz.trans.Atom;
 import org.nutz.trans.Trans;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
-import com.jiongsoft.cocit.corm.expr.Expr;
-import com.jiongsoft.cocit.corm.expr.ExprRule;
-import com.jiongsoft.cocit.entity.CocEntity;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
+import com.jiongsoft.cocit.orm.expr.Expr;
+import com.jiongsoft.cocit.orm.expr.ExprRule;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.IBizEngine;
 import com.kmetop.demsy.comlib.LibConst;
@@ -62,6 +61,7 @@ import com.kmetop.demsy.comlib.biz.IBizFieldGroup;
 import com.kmetop.demsy.comlib.biz.IBizFieldType;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.comlib.biz.field.IExtField;
+import com.kmetop.demsy.comlib.entity.IBizEntity;
 import com.kmetop.demsy.comlib.entity.IDemsySoft;
 import com.kmetop.demsy.comlib.entity.ISoftConfig;
 import com.kmetop.demsy.comlib.security.IAction;
@@ -2168,7 +2168,7 @@ public abstract class BizEngine implements IBizEngine {
 				Pager pager = new Pager(type);
 				pager.setQueryExpr(expr.setPager(pageIndex, 200));
 
-				List<CocEntity> datas = null;
+				List<IBizEntity> datas = null;
 				try {
 					datas = orm().query(pager);
 				} catch (Throwable e) {

@@ -1,5 +1,7 @@
 package com.jiongsoft.cocit.utils.sort;
 
+import com.jiongsoft.cocit.utils.Log;
+
 /**
  * 希尔排序，要求待排序的数组必须实现Comparable接口
  */
@@ -35,6 +37,7 @@ public class ShellSort extends AbstractSort {
 							break;
 						}
 					} catch (Throwable ex) {
+						Log.warn("", ex);
 						break;
 					}
 				}

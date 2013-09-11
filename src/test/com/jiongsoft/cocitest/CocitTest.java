@@ -20,7 +20,7 @@ import org.testng.annotations.Test;
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitBeanFactory;
 import com.jiongsoft.cocit.CocitHttpContext;
-import com.jiongsoft.cocit.cocsoft.CocSoftConfig;
+import com.jiongsoft.cocit.service.CocConfigService;
 import com.jiongsoft.cocit.sms.impl.ZrSmsClient;
 import com.jiongsoft.cocit.utils.Json;
 import com.kmetop.demsy.Demsy;
@@ -99,11 +99,11 @@ public class CocitTest {
 		beanFactory = Cocit.getBean("cocitBeanFactory");
 		assertNotNull(beanFactory);
 
-		assertNotNull(Cocit.getComFactory());
-		assertNotNull(Cocit.getCuiModelFactory());
-		assertNotNull(Cocit.getCuiRenderFactory());
+		assertNotNull(Cocit.getServiceFactory());
+		assertNotNull(Cocit.getUIModelFactory());
+		assertNotNull(Cocit.getUIRenderFactory());
 		assertNotNull(Cocit.getEntityManagerFactory());
-		assertNull(Cocit.getCormFactory());
+		assertNull(Cocit.getOrmFactory());
 
 	}
 
@@ -129,15 +129,15 @@ public class CocitTest {
 				result = mockDemsyConfig;
 				mockDemsyConfig.get("sms.type", "");
 				result = "zr";
-				mockDemsyConfig.get(CocSoftConfig.CFG_PROXY_HOST, "");
+				mockDemsyConfig.get(CocConfigService.CFG_PROXY_HOST, "");
 				result = "192.168.128.3";
-				mockDemsyConfig.get(CocSoftConfig.CFG_PROXY_PORT, "");
+				mockDemsyConfig.get(CocConfigService.CFG_PROXY_PORT, "");
 				result = "80";
-				mockDemsyConfig.get(CocSoftConfig.CFG_URL, "");
+				mockDemsyConfig.get(CocConfigService.CFG_URL, "");
 				result = "http://oa.zrsms.com";
-				mockDemsyConfig.get(CocSoftConfig.CFG_UID, "");
+				mockDemsyConfig.get(CocConfigService.CFG_UID, "");
 				result = "zlsandi";
-				mockDemsyConfig.get(CocSoftConfig.CFG_PWD, "");
+				mockDemsyConfig.get(CocConfigService.CFG_PWD, "");
 				result = "zlsandi";
 			}
 		};

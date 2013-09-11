@@ -2,7 +2,7 @@ package com.kmetop.demsy.ui.datasource;
 
 import java.util.List;
 
-import com.jiongsoft.cocit.corm.expr.Expr;
+import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.mvc.ui.UIBlockContext;
 import com.kmetop.demsy.mvc.ui.UIBlockDataModel;

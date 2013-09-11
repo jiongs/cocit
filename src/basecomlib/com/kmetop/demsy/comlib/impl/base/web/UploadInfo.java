@@ -14,14 +14,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
-import com.jiongsoft.cocit.entity.impl.BaseCocEntity;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.biz.IBizField;
 import com.kmetop.demsy.comlib.biz.field.Upload;
+import com.kmetop.demsy.comlib.impl.BizEntity;
 import com.kmetop.demsy.comlib.impl.base.security.Module;
 import com.kmetop.demsy.comlib.impl.sft.system.AbstractSystemData;
 import com.kmetop.demsy.comlib.security.IModule;
@@ -37,8 +37,8 @@ import com.kmetop.demsy.comlib.web.IUploadInfo;
 		, @CocField(name = "文件路径", property = "path") //
 		, @CocField(name = "文件大小", property = "contentLength", pattern = "#,###") //
 		, @CocField(name = "文件标题", property = "name") //
-		, @CocField(name = "上传模块", property = "module", refrenceTable = BIZSYS_ADMIN_MODULE) //
-		, @CocField(name = "上传字段", property = "bzfield", refrenceTable = BIZSYS_BZUDF_FIELD) //
+		, @CocField(name = "上传模块", property = "module", fkTable = BIZSYS_ADMIN_MODULE) //
+		, @CocField(name = "上传字段", property = "bzfield", fkTable = BIZSYS_BZUDF_FIELD) //
 		, @CocField(name = "上传时间", property = "created", mode = "*:P") //
 		, @CocField(name = "上传帐号", property = "createdBy", mode = "*:P") //
 		, @CocField(name = "存储路径", property = "abstractPath") //
@@ -46,7 +46,7 @@ import com.kmetop.demsy.comlib.web.IUploadInfo;
 		, @CocField(name = "上传工具", property = "extName") //
 }) }// end groups
 )
-public class UploadInfo extends BaseCocEntity implements IUploadInfo {
+public class UploadInfo extends BizEntity implements IUploadInfo {
 	private String name;
 
 	private Upload path;
@@ -67,50 +67,6 @@ public class UploadInfo extends BaseCocEntity implements IUploadInfo {
 
 	@Column(length = 64)
 	private String contentType;
-
-	@Column(name = "_created", updatable = false)
-	protected Date created;
-
-	@Column(name = "_updated")
-	protected Date updated;
-
-	@Column(name = "_created_by", length = 32, updatable = false)
-	protected String createdBy;
-
-	@Column(name = "_updated_by", length = 32)
-	protected String updatedBy;
-
-	public Date getCreated() {
-		return created;
-	}
-
-	public void setCreated(Date created) {
-		this.created = created;
-	}
-
-	public Date getUpdated() {
-		return updated;
-	}
-
-	public void setUpdated(Date updated) {
-		this.updated = updated;
-	}
-
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public String getUpdatedBy() {
-		return updatedBy;
-	}
-
-	public void setUpdatedBy(String updatedBy) {
-		this.updatedBy = updatedBy;
-	}
 
 	public String getAbstractPath() {
 		return Demsy.contextDir + path;

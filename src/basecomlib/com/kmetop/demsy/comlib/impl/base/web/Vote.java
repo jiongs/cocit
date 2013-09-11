@@ -9,9 +9,9 @@ import static com.kmetop.demsy.comlib.LibConst.ORDER_WEB_VOTE;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.impl.BizComponent;
 

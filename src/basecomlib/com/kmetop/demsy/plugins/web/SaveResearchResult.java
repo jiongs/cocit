@@ -9,9 +9,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.jiongsoft.cocit.corm.expr.Expr;
+import com.jiongsoft.cocit.entity.CocEntityEvent;
+import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
-import com.kmetop.demsy.biz.BizEvent;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.web.IResearchOption;
 import com.kmetop.demsy.comlib.web.IResearchQuestion;
@@ -21,13 +22,12 @@ import com.kmetop.demsy.lang.Dates;
 import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.plugins.BizPlugin;
 
-public class SaveResearchResult extends BizPlugin {
+public class SaveResearchResult extends BaseEntityPlugin {
 
 	@Override
-	public void before(BizEvent event) {
-		IOrm orm = event.getOrm();
+	public void before(CocEntityEvent event) {
+		IOrm orm = (IOrm) event.getOrm();
 		Demsy me = Demsy.me();
 		IResearchSubject subject = null;
 
@@ -41,7 +41,7 @@ public class SaveResearchResult extends BizPlugin {
 		Class questionType = Demsy.bizEngine.getType(IResearchQuestion.SYS_CODE);
 		Map<Long, IResearchQuestion> mapMustableQuestions = new HashMap();
 
-		Object obj = event.getEntity();
+		Object obj = event.getEntityData();
 		List<IResearchResult> list = new ArrayList();
 
 		if (obj instanceof List) {

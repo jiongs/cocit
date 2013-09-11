@@ -13,9 +13,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.IBizField;
 import com.kmetop.demsy.comlib.biz.IBizFieldGroup;
@@ -69,9 +69,9 @@ import com.kmetop.demsy.orm.ann.Prop;
 		, @CocField(name = "字段编号", property = "code", mode = "c:M e:M", gridOrder = 2, desc = "由数字、字母、下划线组成，且只能有数字、字母开头") //
 		, @CocField(name = "字段属性", property = "propName") //
 		, @CocField(name = "人工顺序", property = "orderby", gridOrder = 6) //
-		, @CocField(name = "所属系统", property = "system", refrenceTable = BIZSYS_BZUDF_SYSTEM, disabledNavi = true, isChildTable = true, mode = "*:S bu:N c:M e:M") //
-		, @CocField(name = "所属分组", property = "dataGroup", refrenceTable = BIZSYS_BZUDF_FIELD_GROUP, disabledNavi = true, cascadeMode = "system:*:system", mode = "bu:N c:M e:M *:S", gridOrder = 3) //
-		, @CocField(name = "字段类型", property = "type", refrenceTable = BIZSYS_DEMSY_LIB_FIELD, isChildTable = false, disabledNavi = true, mode = "*:S bu:N c:M e:M", options = "['version eq 2']", gridOrder = 4) //
+		, @CocField(name = "所属系统", property = "system", fkTable = BIZSYS_BZUDF_SYSTEM, disabledNavi = true, isFkChild = true, mode = "*:S bu:N c:M e:M") //
+		, @CocField(name = "所属分组", property = "dataGroup", fkTable = BIZSYS_BZUDF_FIELD_GROUP, disabledNavi = true, cascadeMode = "system:*:system", mode = "bu:N c:M e:M *:S", gridOrder = 3) //
+		, @CocField(name = "字段类型", property = "type", fkTable = BIZSYS_DEMSY_LIB_FIELD, isFkChild = false, disabledNavi = true, mode = "*:S bu:N c:M e:M", options = "['version eq 2']", gridOrder = 4) //
 		, @CocField(name = "字段模式", property = "mode", gridOrder = 5) //
 		, @CocField(name = "级联模式", property = "cascadeMode") //
 		, @CocField(name = "GRID表头", property = "gridField", disabledNavi = true, mode = "bu:E", options = "1:显示,0:不显示") //
@@ -83,7 +83,7 @@ import com.kmetop.demsy.orm.ann.Prop;
 				@CocField(name = "表头顺序", property = "gridOrder", cascadeMode = "gridField:1:E") //
 				, @CocField(name = "表头宽度", property = "gridWidth", cascadeMode = "gridField:1:E") //
 				// 系统引用
-				, @CocField(name = "引用系统", property = "refrenceSystem", refrenceTable = BIZSYS_BZUDF_SYSTEM, disabledNavi = true, cascadeMode = "type:7,System:M", mode = "*:S c:M e:M") //
+				, @CocField(name = "引用系统", property = "refrenceSystem", fkTable = BIZSYS_BZUDF_SYSTEM, disabledNavi = true, cascadeMode = "type:7,System:M", mode = "*:S c:M e:M") //
 				, @CocField(name = "引用字段", property = "refrenceFields", mode = "*:S cE e:E") //
 				, @CocField(name = "从属系统", property = "mappingToMaster", disabledNavi = true, cascadeMode = "type:7,System:E") //
 				, @CocField(name = "数据多选", property = "sysMultiple", gridField = false, disabledNavi = true, options = "1:多选,0:单选", cascadeMode = "type:7,System:E") //

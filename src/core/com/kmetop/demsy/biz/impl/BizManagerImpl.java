@@ -5,10 +5,10 @@ import static com.kmetop.demsy.Demsy.security;
 
 import java.util.List;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.entity.CocEntityPlugin;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.IBizManager;
-import com.kmetop.demsy.biz.IBizPlugin;
 import com.kmetop.demsy.biz.IBizSession;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.comlib.security.IAction;
@@ -252,7 +252,7 @@ public class BizManagerImpl implements IBizManager {
 	 * 
 	 * @return
 	 */
-	protected IBizPlugin[] loadPlugins(String actionID) {
+	protected CocEntityPlugin[] loadPlugins(String actionID) {
 		IAction action = Demsy.moduleEngine.getAction(bizModule, actionID);
 		if (action == null)
 			return null;

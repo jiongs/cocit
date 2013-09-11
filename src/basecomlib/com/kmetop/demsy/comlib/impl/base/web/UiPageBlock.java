@@ -1,6 +1,7 @@
 package com.kmetop.demsy.comlib.impl.base.web;
 
-import static com.kmetop.demsy.biz.BizConst.*;
+import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_EDIT;
+import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_EDIT_N;
 import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_NEW;
 import static com.kmetop.demsy.comlib.LibConst.BIZCATA_UDF_CONSOLE;
 import static com.kmetop.demsy.comlib.LibConst.BIZSYS_UIUDF_PAGE_BLOCK;
@@ -10,9 +11,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.field.CssPosition;
 import com.kmetop.demsy.comlib.biz.field.Dataset;
@@ -71,13 +72,13 @@ import com.kmetop.demsy.orm.ann.Prop;
 		, @CocField(property = "placeHolder", mode = "e1:N", name = "占位符", disabledNavi = true)//
 		, @CocField(property = "ajaxLoad") //
 		, @CocField(name = "停用状态", property = "disabled", disabledNavi = true, options = "1:停用,0:启用", mode = "e1:N") //
-// , @BzFld(property = "type") //
-// , @BzFld(name = "内置状态", property = "buildin", disabledNavi = true,
+// , @CocField(property = "type") //
+// , @CocField(name = "内置状态", property = "buildin", disabledNavi = true,
 // mode = "*:N") //
-// , @BzFld(name = "创建时间", property = "created", mode = "*:N v:P") //
-// , @BzFld(name = "更新时间", property = "updated", mode = "*:N v:P") //
-// , @BzFld(name = "创建帐号", property = "createdBy", mode = "*:N v:P") //
-// , @BzFld(name = "更新帐号", property = "updatedBy", mode = "*:N v:P") //
+// , @CocField(name = "创建时间", property = "created", mode = "*:N v:P") //
+// , @CocField(name = "更新时间", property = "updated", mode = "*:N v:P") //
+// , @CocField(name = "创建帐号", property = "createdBy", mode = "*:N v:P") //
+// , @CocField(name = "更新帐号", property = "updatedBy", mode = "*:N v:P") //
 }), @CocGroup(name = "样式设计", code = "styles"//
 , fields = { @CocField(property = "styleItems") //
 }) // end group
@@ -91,7 +92,7 @@ public class UiPageBlock extends BizComponent implements IPageBlock {
 	protected UiCatalog catalog;// 每个网站版本的网站由多个页面模版组成
 
 	@ManyToOne
-	@CocField(name = "所属页面", mode = "c:M e:M c1:M bu:E e1:N", groupBy = true, isChildTable = true, cascadeMode = "catalog:*:catalog", options = "['type in 0,2']")
+	@CocField(name = "所属页面", mode = "c:M e:M c1:M bu:E e1:N", groupBy = true, isFkChild = true, cascadeMode = "catalog:*:catalog", options = "['type in 0,2']")
 	@Prop("uiPage")
 	protected UiPage page;
 

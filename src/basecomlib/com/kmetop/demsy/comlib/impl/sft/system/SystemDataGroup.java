@@ -10,9 +10,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.IBizFieldGroup;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
@@ -28,7 +28,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 		,
 		@CocField(name = "分组编号", property = "code") //
 		,
-		@CocField(name = "所属系统", property = "system", refrenceTable = BIZSYS_BZUDF_SYSTEM, isChildTable = true, mode = "c:M *:S") //
+		@CocField(name = "所属系统", property = "system", fkTable = BIZSYS_BZUDF_SYSTEM, isFkChild = true, mode = "c:M *:S") //
 		, @CocField(name = "人工顺序", property = "orderby") //
 		, @CocField(name = "字段模式", property = "mode") //
 		, @CocField(name = "表单列数", property = "columns") //

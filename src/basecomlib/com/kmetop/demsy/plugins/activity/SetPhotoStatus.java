@@ -2,19 +2,19 @@ package com.kmetop.demsy.plugins.activity;
 
 import java.util.List;
 
-import com.jiongsoft.cocit.corm.expr.Expr;
-import com.kmetop.demsy.biz.BizEvent;
+import com.jiongsoft.cocit.entity.CocEntityEvent;
+import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.comlib.impl.sft.activity.ActivityCatalog;
 import com.kmetop.demsy.comlib.impl.sft.activity.PhotoActivity;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.plugins.BizPlugin;
 
-public class SetPhotoStatus extends BizPlugin {
+public class SetPhotoStatus extends BaseEntityPlugin {
 
 	@Override
-	public synchronized void before(BizEvent event) {
-		IOrm orm = event.getOrm();
-		Object obj = event.getEntity();
+	public synchronized void before(CocEntityEvent event) {
+		IOrm orm = (IOrm) event.getOrm();
+		Object obj = event.getEntityData();
 		if (obj instanceof List) {
 			List<PhotoActivity> list = (List) obj;
 			for (PhotoActivity photo : list) {
@@ -33,13 +33,13 @@ public class SetPhotoStatus extends BizPlugin {
 	}
 
 	@Override
-	public void after(BizEvent event) {
+	public void after(CocEntityEvent event) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void loaded(BizEvent event) {
+	public void loaded(CocEntityEvent event) {
 		// TODO Auto-generated method stub
 
 	}

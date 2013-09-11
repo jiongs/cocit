@@ -14,9 +14,9 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.biz.field.Upload;
@@ -31,7 +31,7 @@ import com.kmetop.demsy.lang.Str;
 }//
 , groups = { @CocGroup(name = "基本信息", code = "basic"//
 , fields = { @CocField(name = "软件名称", property = "name", mode = "c:M e:M")//
-		, @CocField(name = "软件用户", property = "corp", groupBy = true, refrenceTable = BIZSYS_DEMSY_CORP, mode = "c:M e:M") //
+		, @CocField(name = "软件用户", property = "corp", groupBy = true, fkTable = BIZSYS_DEMSY_CORP, mode = "c:M e:M") //
 		, @CocField(name = "软件域名", property = "domain") //
 		, @CocField(name = "登录帐号", property = "code", mode = "c:M e:M *:S") //
 		, @CocField(name = "登录密码", property = "rawPassword", password = true, gridField = false, mode = "*:N c:E e:E") //
@@ -42,7 +42,7 @@ import com.kmetop.demsy.lang.Str;
 		, @CocField(name = "有效期至", property = "expiredTo") //
 		, @CocField(name = "软件徽标", property = "logo", uploadType = "*.jpg;*.gif;*.png") //
 		, @CocField(name = "软件图片", property = "image", uploadType = "*.jpg;*.gif;*.png") //
-		, @CocField(name = "软件数据源", property = "dataSource", refrenceTable = BIZSYS_DEMSY_DATASOURCE) //
+		, @CocField(name = "软件数据源", property = "dataSource", fkTable = BIZSYS_DEMSY_DATASOURCE) //
 		, @CocField(name = "软件描述", property = "desc") //
 		, @CocField(name = "停用状态", property = "disabled", options = "1:停用,0:启用") //
 		, @CocField(name = "锁定状态", property = "locked", options = "1:锁定,0:未锁定") //

@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.kmetop.demsy.lang.Obj;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.mvc.ui.UIBlockContext;

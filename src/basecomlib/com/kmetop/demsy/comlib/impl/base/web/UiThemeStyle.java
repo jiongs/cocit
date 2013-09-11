@@ -7,9 +7,9 @@ import static com.kmetop.demsy.comlib.LibConst.ORDER_UIUDF_THEME_STYLE;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.field.FakeSubSystem;
 import com.kmetop.demsy.comlib.ui.IStyle;
@@ -91,7 +91,7 @@ public class UiThemeStyle extends BaseStyle {
 	protected UiCatalog catalog;
 
 	@ManyToOne
-	@CocField(name = "界面主题", mode = "c:M e:M", isChildTable = true, cascadeMode = "catalog:*:catalog")
+	@CocField(name = "界面主题", mode = "c:M e:M", isFkChild = true, cascadeMode = "catalog:*:catalog")
 	@Prop("uiTheme")
 	protected UiCatalogTheme theme;
 

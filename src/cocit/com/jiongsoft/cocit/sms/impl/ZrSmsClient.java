@@ -16,8 +16,8 @@ import java.util.List;
 
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitHttpContext;
-import com.jiongsoft.cocit.cocsoft.CocSoft;
-import com.jiongsoft.cocit.cocsoft.CocSoftConfig;
+import com.jiongsoft.cocit.service.CocConfigService;
+import com.jiongsoft.cocit.service.CocSoftService;
 import com.jiongsoft.cocit.sms.SmsClient;
 import com.jiongsoft.cocit.utils.Log;
 
@@ -45,14 +45,14 @@ public class ZrSmsClient implements SmsClient {
 	public ZrSmsClient() {
 
 		CocitHttpContext ctx = Cocit.getHttpContext();
-		CocSoft soft = ctx.getSoft();
+		CocSoftService soft = ctx.getSoft();
 
-		this.proxyHost = soft.getConfig(CocSoftConfig.CFG_PROXY_HOST, "");
-		this.proxyPort = soft.getConfig(CocSoftConfig.CFG_PROXY_PORT, 80);
+		this.proxyHost = soft.getConfig(CocConfigService.CFG_PROXY_HOST, "");
+		this.proxyPort = soft.getConfig(CocConfigService.CFG_PROXY_PORT, 80);
 
-		this.url = soft.getConfig(CocSoftConfig.CFG_URL, "http://oa.zrsms.com");
-		this.uid = soft.getConfig(CocSoftConfig.CFG_UID, "");
-		this.pwd = soft.getConfig(CocSoftConfig.CFG_PWD, "");
+		this.url = soft.getConfig(CocConfigService.CFG_URL, "http://oa.zrsms.com");
+		this.uid = soft.getConfig(CocConfigService.CFG_UID, "");
+		this.pwd = soft.getConfig(CocConfigService.CFG_PWD, "");
 		this.pwdMD5 = this.getMD5(pwd);
 
 		Log.info("SmsClientZucpImpl.new: {url:%s, sn:%s, pwd:%s, pwdMD5:%s, proxyHost:%s, proxyPort:%s}", url, uid, pwd, pwdMD5, proxyHost, proxyPort);
@@ -223,6 +223,7 @@ public class ZrSmsClient implements SmsClient {
 		try {
 			connection = url.openConnection();
 		} catch (Throwable e) {
+			Log.warn("", e);
 			if (this.proxyHost != null && proxyHost.trim().length() > 0) {
 				SocketAddress proxyAddress = new InetSocketAddress(this.proxyHost, this.proxyPort);
 				Proxy typeProxy = new Proxy(Proxy.Type.HTTP, proxyAddress);

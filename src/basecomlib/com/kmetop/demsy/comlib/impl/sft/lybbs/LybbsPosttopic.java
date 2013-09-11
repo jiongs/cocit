@@ -19,9 +19,9 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Transient;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.field.RichText;
 import com.kmetop.demsy.comlib.security.IUser;
@@ -40,10 +40,10 @@ import com.kmetop.demsy.lang.Str;
 		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
 		, @CocOperation(name = "审核", typeCode = TYPE_BZFORM_EDIT_N, mode = "audit")//
 		, @CocOperation(name = "移动", typeCode = TYPE_BZFORM_EDIT_N, mode = "move") //
-// , @BzAct(name = "配色", typeCode = TYPE_BZFORM_EDIT_N, mode = "color")//
-// , @BzAct(name = "固定", typeCode = TYPE_BZFORM_EDIT_N, mode = "locktop")//
-// , @BzAct(name = "锁定", typeCode = TYPE_BZFORM_EDIT_N, mode = "lockreply")//
-// , @BzAct(name = "精华", typeCode = TYPE_BZFORM_EDIT_N, mode = "elite") //
+// , @CocOperation(name = "配色", typeCode = TYPE_BZFORM_EDIT_N, mode = "color")//
+// , @CocOperation(name = "固定", typeCode = TYPE_BZFORM_EDIT_N, mode = "locktop")//
+// , @CocOperation(name = "锁定", typeCode = TYPE_BZFORM_EDIT_N, mode = "lockreply")//
+// , @CocOperation(name = "精华", typeCode = TYPE_BZFORM_EDIT_N, mode = "elite") //
 }//
 , groups = { @CocGroup(name = "基本信息", code = "basic"//
 , fields = {
@@ -58,20 +58,20 @@ import com.kmetop.demsy.lang.Str;
 		, @CocField(property = "created", gridOrder = 4) //
 		, @CocField(property = "createdBy", gridOrder = 5) //
 		, @CocField(property = "createdIP") //
-		// , @BzFld(property = "lasteditauthor") //
-		// , @BzFld(property = "lasteditip") //
-		// , @BzFld(property = "lasteditat") //
+		// , @CocField(property = "lasteditauthor") //
+		// , @CocField(property = "lasteditip") //
+		// , @CocField(property = "lasteditat") //
 		, @CocField(property = "clickNum", gridOrder = 6)//
 		, @CocField(property = "commentNum", gridOrder = 7) //
 }), @CocGroup(name = "帖子状态", code = "status"//
 , fields = {
 //
-// @BzFld(property = "locktop")//
-// , @BzFld(property = "lockreply")//
+// @CocField(property = "locktop")//
+// , @CocField(property = "lockreply")//
 @CocField(property = "status", gridOrder = 8) //
-// , @BzFld(property = "elite") //
-// , @BzFld(property = "color") //
-// , @BzFld(property = "boldcode") //
+// , @CocField(property = "elite") //
+// , @CocField(property = "color") //
+// , @CocField(property = "boldcode") //
 }) }// end groups
 )
 public class LybbsPosttopic implements IBbsTopic, IStatistic {
@@ -136,14 +136,14 @@ public class LybbsPosttopic implements IBbsTopic, IStatistic {
 	protected Integer commentNum;
 
 	// @Column(length = 40)
-	// @BzFld(name = "回复网友", mode = "*:N v:S")
+	// @CocField(name = "回复网友", mode = "*:N v:S")
 	// protected String lasteditauthor;
 
 	// @Column(length = 64)
-	// @BzFld(name = "回复IP", mode = "*:N v:S")
+	// @CocField(name = "回复IP", mode = "*:N v:S")
 	// protected String lasteditip;
 	//
-	// @BzFld(name = "回复时间", mode = "*:N v:S")
+	// @CocField(name = "回复时间", mode = "*:N v:S")
 	// protected Integer lasteditat;
 	//
 	// @Transient
@@ -412,7 +412,7 @@ public class LybbsPosttopic implements IBbsTopic, IStatistic {
 	 * 停用字段
 	 */
 
-	// @BzFld(name = "查看值")
+	// @CocField(name = "查看值")
 	// protected Integer viewnumber;
 	// protected Integer postat;
 	// protected Short locktopid;

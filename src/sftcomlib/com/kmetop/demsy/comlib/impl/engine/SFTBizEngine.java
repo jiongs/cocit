@@ -20,13 +20,13 @@ import javax.persistence.ManyToOne;
 
 import org.nutz.lang.Mirror;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
-import com.jiongsoft.cocit.corm.expr.Expr;
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocCatalog;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
+import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.comlib.biz.IBizField;
 import com.kmetop.demsy.comlib.biz.IBizFieldType;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
@@ -309,7 +309,7 @@ public class SFTBizEngine extends BizEngine {
 		system.setLayout(sysann.layout());
 		system.setOrderby(sysOrder);
 		system.setTemplate(sysann.template());
-		system.setActionPathPrefix(sysann.actionPathPrefix());
+		system.setPathPrefix(sysann.pathPrefix());
 		system.setMappingClass(klass.getName());
 		system.setExtendClass(klass.getSuperclass().getSimpleName());
 		system.setBuildin(true);
@@ -376,8 +376,8 @@ public class SFTBizEngine extends BizEngine {
 		}
 		if (f == null || f.getAnnotation(CocField.class) == null) {
 			copyProperties(fldann, field);
-			if (!Str.isEmpty(fldann.refrenceTable())) {
-				field.setRefrenceSystem((SFTSystem) setupSystemFromClass(soft, getStaticType(fldann.refrenceTable()), false));
+			if (!Str.isEmpty(fldann.fkTable())) {
+				field.setRefrenceSystem((SFTSystem) setupSystemFromClass(soft, getStaticType(fldann.fkTable()), false));
 				field.setType((SystemDataType) fieldLibs.get("System"));
 			}
 		}
@@ -566,8 +566,8 @@ public class SFTBizEngine extends BizEngine {
 
 			// 解析字段类型
 			IBizFieldType fieldLib;
-			if (annBzFld != null && !Str.isEmpty(annBzFld.refrenceTable())) {
-				newBzField.setRefrenceSystem((SFTSystem) setupSystemFromClass(soft, getStaticType(annBzFld.refrenceTable()), false));
+			if (annBzFld != null && !Str.isEmpty(annBzFld.fkTable())) {
+				newBzField.setRefrenceSystem((SFTSystem) setupSystemFromClass(soft, getStaticType(annBzFld.fkTable()), false));
 				fieldLib = fieldLibs.get("System");
 			} else if (manyToOne != null) {
 				newBzField.setRefrenceSystem((SFTSystem) setupSystemFromClass(soft, type, false));
@@ -619,7 +619,7 @@ public class SFTBizEngine extends BizEngine {
 		fld.setOptions(ann.options());
 		fld.setPattern(ann.pattern());
 		fld.setRegexpMask(ann.regexpMask());
-		fld.setMappingToMaster(ann.isChildTable());
+		fld.setMappingToMaster(ann.isFkChild());
 		fld.setDisabled(ann.disabled());
 		fld.setDisabledNavi(ann.disabledNavi());
 		fld.setCascadeMode(ann.cascadeMode());

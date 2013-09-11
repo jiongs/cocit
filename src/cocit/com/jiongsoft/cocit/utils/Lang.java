@@ -42,6 +42,7 @@ public abstract class Lang {
 				ret = obj.toString();
 			}
 		} catch (NoSuchFieldException e) {
+			Log.warn("", e);
 			ret = obj.toString();
 		}
 
@@ -56,7 +57,7 @@ public abstract class Lang {
 	}
 
 	public static String format(Object value, String pattern) {
-		if (pattern != null && pattern.startsWith("*")) {
+		if (pattern != null && pattern.charAt(0) == '*') {
 			pattern = pattern.substring(1);
 		}
 		if (value instanceof String) {
@@ -66,6 +67,7 @@ public abstract class Lang {
 				try {
 					return DateUtil.formatDate((Date) value, pattern);
 				} catch (Throwable e) {
+					Log.warn("", e);
 					return DateUtil.formatDateTime((Date) value);
 				}
 			} else {
@@ -89,7 +91,7 @@ public abstract class Lang {
 			} else {
 				StringBuffer sb = new StringBuffer();
 				for (Object obj : list) {
-					sb.append(",").append(obj);
+					sb.append(',').append(obj);
 				}
 				return sb.substring(1);
 			}
@@ -116,16 +118,18 @@ public abstract class Lang {
 					subObj = Mirror.me(obj.getClass()).getValue(obj, path.substring(0, dot));
 				}
 			} catch (Throwable e) {
+				Log.warn("", e);
 			}
 			if (subObj == null) {
 				return null;
 			}
 
-			return (T) getValue(subObj, path.substring(dot + 1));
+			return getValue(subObj, path.substring(dot + 1));
 		} else {
 			try {
 				return (T) Mirror.me(obj.getClass()).getValue(obj, path);
 			} catch (Throwable e) {
+				Log.warn("", e);
 				return null;
 			}
 		}
@@ -149,6 +153,7 @@ public abstract class Lang {
 				setValue(obj, prop, fldval);
 			}
 		} catch (NoSuchFieldException e) {
+			Log.warn("", e);
 		}
 	}
 

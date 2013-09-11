@@ -5,9 +5,9 @@ import static com.kmetop.demsy.Demsy.moduleEngine;
 import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_EDIT_N;
 import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_NEW;
 import static com.kmetop.demsy.comlib.LibConst.BIZCATA_ADMIN;
+import static com.kmetop.demsy.comlib.LibConst.BIZSYS_ADMIN_MODULE;
 import static com.kmetop.demsy.comlib.LibConst.BIZSYS_BZUDF_SYSTEM;
 import static com.kmetop.demsy.comlib.LibConst.BIZSYS_DEMSY_DATASOURCE;
-import static com.kmetop.demsy.comlib.LibConst.BIZSYS_ADMIN_MODULE;
 import static com.kmetop.demsy.comlib.LibConst.ORDER_SYSADMIN_MODULE;
 
 import java.util.List;
@@ -17,9 +17,9 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.comlib.biz.field.Upload;
@@ -58,9 +58,9 @@ import com.kmetop.demsy.comlib.security.IModule;
 		@CocGroup(name = "模块属性设置", code = "properties"//
 		, fields = {
 				//
-				@CocField(name = "上级模块", property = "parent", refrenceTable = BIZSYS_ADMIN_MODULE, mode = "bu:E", cascadeMode = "type:1,2,3,4,5,6:M type:90:E", options = "['type eq 90']"), //
-				@CocField(name = "业务系统", property = "refSystem", refrenceTable = BIZSYS_BZUDF_SYSTEM, gridField = false, disabledNavi = true, cascadeMode = "type:2:M"), //
-				@CocField(name = "模块数据源", property = "dataSource", refrenceTable = BIZSYS_DEMSY_DATASOURCE, cascadeMode = "type:2:E", gridField = false),//
+				@CocField(name = "上级模块", property = "parent", fkTable = BIZSYS_ADMIN_MODULE, mode = "bu:E", cascadeMode = "type:1,2,3,4,5,6:M type:90:E", options = "['type eq 90']"), //
+				@CocField(name = "业务系统", property = "refSystem", fkTable = BIZSYS_BZUDF_SYSTEM, gridField = false, disabledNavi = true, cascadeMode = "type:2:M"), //
+				@CocField(name = "模块数据源", property = "dataSource", fkTable = BIZSYS_DEMSY_DATASOURCE, cascadeMode = "type:2:E", gridField = false),//
 				@CocField(name = "模块路径", property = "path", cascadeMode = "type:1:E", gridField = false) //
 		}) //
 		, @CocGroup(name = "其他属性设置", code = "other"//
@@ -263,11 +263,11 @@ public class Module extends BizComponent implements IModule<Module> {
 	}
 
 	@Column(length = 10)
-	public String getActionPathPrefix() {
-		return get("actionPathPrefix");
+	public String getPathPrefix() {
+		return get("pathPrefix");
 	}
 
-	public void setActionPathPrefix(String actionPathPrefix) {
-		this.set("actionPathPrefix", actionPathPrefix);
+	public void setPathPrefix(String pathPrefix) {
+		this.set("pathPrefix", pathPrefix);
 	}
 }

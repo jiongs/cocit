@@ -1,5 +1,7 @@
 package com.jiongsoft.cocit.utils.sort;
 
+import com.jiongsoft.cocit.utils.Log;
+
 /**
  * 快速排序，要求待排序的数组必须实现Comparable接口
  */
@@ -48,6 +50,7 @@ public class QuickSort extends AbstractSort {
 							break;
 						}
 					} catch (Throwable ex) {
+						Log.warn("", ex);
 						break;
 					}
 				}
@@ -59,6 +62,7 @@ public class QuickSort extends AbstractSort {
 							break;
 						}
 					} catch (Throwable ex) {
+						Log.warn("", ex);
 						break;
 					}
 				}
@@ -102,6 +106,7 @@ public class QuickSort extends AbstractSort {
 				obj[center] = tmp;
 			}
 		} catch (Throwable ex) {
+			Log.warn("", ex);
 		}
 		try {
 			if (compare(getValue(obj[left], sortField), getValue(obj[right], sortField), nullGT) > 0) {
@@ -110,6 +115,7 @@ public class QuickSort extends AbstractSort {
 				obj[right] = tmp;
 			}
 		} catch (Throwable ex) {
+			Log.warn("", ex);
 		}
 		try {
 			if (compare(getValue(obj[center], sortField), getValue(obj[right], sortField), nullGT) > 0) {
@@ -118,6 +124,7 @@ public class QuickSort extends AbstractSort {
 				obj[center] = tmp;
 			}
 		} catch (Throwable ex) {
+			Log.warn("", ex);
 		}
 
 		// 将枢纽元置于数组的倒数第二个

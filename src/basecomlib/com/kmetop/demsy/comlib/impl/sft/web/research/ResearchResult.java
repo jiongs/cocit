@@ -9,9 +9,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 import com.kmetop.demsy.comlib.web.IResearchQuestion;
@@ -37,25 +37,25 @@ import com.kmetop.demsy.orm.ann.Prop;
 )
 public class ResearchResult extends SFTBizComponent implements IResearchResult {
 	@ManyToOne
-	@CocField(name = "调查主题", mode = "c_n:E *:N v:S", isChildTable = true)
+	@CocField(name = "调查主题", mode = "c_n:E *:N v:S", isFkChild = true)
 	private ResearchSubject subject;
 
 	@ManyToOne
-	@CocField(name = "调查问题", mode = "c_n:E *:N v:S", isChildTable = true, disabledNavi = true)
+	@CocField(name = "调查问题", mode = "c_n:E *:N v:S", isFkChild = true, disabledNavi = true)
 	private ResearchQuestion question;
 
 	@Prop("answerOption")
 	@ManyToOne
-	@CocField(name = "选择项", mode = "c_n:E *:N v:S", isChildTable = true, disabledNavi = true)
+	@CocField(name = "选择项", mode = "c_n:E *:N v:S", isFkChild = true, disabledNavi = true)
 	private ResearchAnswerOption option;
 
 	@Column(length = 255)
-	@CocField(name = "问卷回答", mode = "c_n:E *:N v:S", isChildTable = true, disabledNavi = true)
+	@CocField(name = "问卷回答", mode = "c_n:E *:N v:S", isFkChild = true, disabledNavi = true)
 	private String answerText;
 
 	@Column(length = 32)
 	@Prop("remoteIp")
-	@CocField(name = "IP地址", mode = "*:N v:S", isChildTable = true, gridField = false)
+	@CocField(name = "IP地址", mode = "*:N v:S", isFkChild = true, gridField = false)
 	private String createdIP;
 
 	@Prop("value")

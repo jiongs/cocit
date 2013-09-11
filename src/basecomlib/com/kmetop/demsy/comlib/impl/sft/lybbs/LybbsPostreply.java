@@ -19,9 +19,9 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Transient;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.field.RichText;
 import com.kmetop.demsy.comlib.security.IUser;
@@ -52,9 +52,9 @@ import com.kmetop.demsy.lang.Str;
 		, @CocField(property = "created", gridOrder = 4) //
 		, @CocField(property = "createdBy", gridOrder = 5) //
 		, @CocField(property = "createdIP", gridOrder = 6) //
-// , @BzFld(property = "updatedBy") //
-// , @BzFld(property = "updatedIP") //
-// , @BzFld(property = "updated") //
+// , @CocField(property = "updatedBy") //
+// , @CocField(property = "updatedIP") //
+// , @CocField(property = "updated") //
 }), @CocGroup(name = "帖子状态", code = "status"//
 , fields = {//
 @CocField(property = "status", gridOrder = 7) //

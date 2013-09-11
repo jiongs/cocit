@@ -1,22 +1,22 @@
 package com.kmetop.demsy.plugins.activity;
 
-import com.kmetop.demsy.biz.BizEvent;
-import com.kmetop.demsy.plugins.BizPlugin;
+import com.jiongsoft.cocit.entity.CocEntityEvent;
+import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
 
-public class StatStockGuessResult extends BizPlugin {
+public class StatStockGuessResult extends BaseEntityPlugin {
 
 	@Override
-	public void before(BizEvent event) {
+	public void before(CocEntityEvent event) {
 
 	}
 
 	@Override
-	public void after(BizEvent event) {
+	public void after(CocEntityEvent event) {
 
 	}
 
 	@Override
-	public void loaded(BizEvent event) {
+	public void loaded(CocEntityEvent event) {
 
 	}
 

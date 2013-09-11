@@ -2,7 +2,7 @@ package com.kmetop.demsy.biz;
 
 import java.util.List;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.comlib.security.IModule;
 import com.kmetop.demsy.lang.DemsyException;

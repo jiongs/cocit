@@ -11,7 +11,9 @@ import java.util.Properties;
  */
 public class KeyValue {
 	private String key;
+
 	private String value;
+
 	private Properties extProps;
 
 	public static KeyValue make(String key, String value) {
@@ -47,13 +49,14 @@ public class KeyValue {
 		if (value == null)
 			return defaultReturn;
 		if (defaultReturn == null)
-			return (T) value;
+			return null;
 
 		Class valueType = defaultReturn.getClass();
 
 		try {
 			return (T) StringUtil.castTo(value, valueType);
 		} catch (Throwable e) {
+			Log.warn("", e);
 		}
 
 		return defaultReturn;

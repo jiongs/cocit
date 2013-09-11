@@ -11,9 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.IBizCatalog;
 import com.kmetop.demsy.comlib.impl.BizComponent;
@@ -26,7 +26,7 @@ import com.kmetop.demsy.comlib.impl.BizComponent;
 , groups = { @CocGroup(name = "基本信息", code = "basic"//
 , fields = { @CocField(name = "分类名称", property = "name", mode = "c:M e:M")//
 		, @CocField(name = "分类编号", property = "code") //
-		, @CocField(name = "上级分类", property = "parent", refrenceTable = BIZSYS_BZUDF_CATALOG) //
+		, @CocField(name = "上级分类", property = "parent", fkTable = BIZSYS_BZUDF_CATALOG) //
 		, @CocField(name = "上级分类", property = "parent.name", mode="*:N") //
 		, @CocField(name = "人工顺序", property = "orderby") //
 		, @CocField(name = "分类描述", property = "desc") //

@@ -1,6 +1,8 @@
 package com.kmetop.demsy.comlib.impl.base.ebusiness.order;
 
-import static com.kmetop.demsy.biz.BizConst.*;
+import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_EDIT;
+import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_EXPORT_XLS;
+import static com.kmetop.demsy.biz.BizConst.TYPE_BZ_DEL;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -9,9 +11,9 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.eshop.IOrder;
 import com.kmetop.demsy.comlib.impl.BizComponent;
@@ -23,13 +25,13 @@ import com.kmetop.demsy.lang.Str;
 actions = { @CocOperation(name = "付款", typeCode = TYPE_BZFORM_EDIT, mode = "e2", plugin = "com.kmetop.demsy.plugins.eshop.OrderBuyerPayed")//
 		, @CocOperation(name = "退款", typeCode = TYPE_BZFORM_EDIT, mode = "e3", plugin = "com.kmetop.demsy.plugins.eshop.OrderRefund")//
 		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d", plugin = "com.kmetop.demsy.plugins.eshop.OrderDelete")//
-		// , @BzAct(name = "发货处理", typeCode = TYPE_BZ_EDIT, mode = "e1", plugin
+		// , @CocOperation(name = "发货处理", typeCode = TYPE_BZ_EDIT, mode = "e1", plugin
 		// = "com.kmetop.demsy.plugins.eshop.OrderSended")//
-		// , @BzAct(name = "调整费用", typeCode = TYPE_BZ_EDIT_N, mode = "bu",
+		// , @CocOperation(name = "调整费用", typeCode = TYPE_BZ_EDIT_N, mode = "bu",
 		// plugin = "com.kmetop.demsy.plugins.eshop.OrderAdjustCast")//
 		, @CocOperation(name = "详情", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
 		, @CocOperation(name = "导出到XLS", typeCode = TYPE_BZFORM_EXPORT_XLS, mode = "xls") //
-// , @BzAct(name = "永久删除", typeCode = TYPE_BZ_DEL, mode = "d") //
+// , @CocOperation(name = "永久删除", typeCode = TYPE_BZ_DEL, mode = "d") //
 },//
 groups = { //
 @CocGroup(name = "基本信息", code = "basic",//
@@ -42,7 +44,7 @@ fields = { @CocField(property = "timeID")//
 		, @CocField(property = "itemsCatalog") //
 		, @CocField(property = "itemsAmount", gridOrder = 3) //
 		, @CocField(property = "itemsCost") //
-		// , @BzFld(property = "discount") //
+		// , @CocField(property = "discount") //
 		, @CocField(property = "logisticsCost") //
 		, @CocField(property = "totalCost", gridOrder = 4) //
 		, @CocField(property = "createdBy", name = "登录帐号", mode = "*:N v:S") //
@@ -129,7 +131,7 @@ public class Order extends BizComponent implements IOrder {
 	protected int itemsAmount;
 
 	//
-	// @BzFld(name = "折扣", mode = "*:N v:S bu:E")
+	// @CocField(name = "折扣", mode = "*:N v:S bu:E")
 	// protected Double discount;
 
 	@CocField(name = "合计(元)", mode = "*:N v:S e1:S e2:S e3:S", pattern = "#,##0.00")

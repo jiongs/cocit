@@ -30,7 +30,6 @@ public class RootUserFactory extends BaseConfig implements IRootUserFactory {
 				public boolean isBuildin() {
 					return true;
 				}
-
 			};
 			user.setUsername(username);
 			user.setPassword(password);

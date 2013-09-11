@@ -157,7 +157,7 @@ public abstract class BizCompiler {
 		if (!Str.isEmpty(tableName)) {
 			src.append("\n@Table(name = \"" + tableName + "\")");
 		}
-		src.append("\n@BzSys(")//
+		src.append("\n@CocTable(")//
 				.append("name = \"").append(system.getName().replace("\"", "\\\"")).append("\"")//
 				.append(", id = ").append(system.getId())//
 				.append(", code = \"").append(system.getCode().replace("\"", "\\\"")).append("\"")//
@@ -187,7 +187,7 @@ public abstract class BizCompiler {
 		} else if (engine.isManyToOne(fld)) {
 			src.append("\n").append(TAB).append("@OneToMany(mappedBy = \"" + mappedBy + "\")");
 		}
-		src.append("\n").append(TAB).append("@BzFld(")//
+		src.append("\n").append(TAB).append("@CocField(")//
 				.append("name = \"").append(fld.getName().replace("\"", "\\\"")).append("\"")//
 				.append(", id = ").append(fld.getId())//
 				.append(", code = \"").append(fld.getCode().replace("\"", "\\\"")).append("\"");
@@ -233,7 +233,7 @@ public abstract class BizCompiler {
 		}
 
 		src.append("\n").append(TAB)
-				.append("@BzFld(")
+				.append("@CocField(")
 				//
 				.append("name = \"").append(fld.getName() == null ? "" : fld.getName().replace("\"", "\\\""))
 				.append("\"")

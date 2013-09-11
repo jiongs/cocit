@@ -3,7 +3,7 @@ package com.jiongsoft.cocit;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.jiongsoft.cocit.cocsoft.CocSoft;
+import com.jiongsoft.cocit.service.CocSoftService;
 
 /**
  * Cocit HTTP环境：用来管理HTTP请求的一次生命周期。
@@ -32,7 +32,7 @@ public interface CocitHttpContext {
 	 * 
 	 * @return 正在通过HTTP请求访问的软件
 	 */
-	CocSoft getSoft();
+	CocSoftService getSoft();
 
 	/**
 	 * 获取软件配置

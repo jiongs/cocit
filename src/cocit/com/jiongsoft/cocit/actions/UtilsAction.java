@@ -6,12 +6,13 @@ import org.nutz.mvc.annotation.Ok;
 
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitHttpContext;
-import com.jiongsoft.cocit.cocsoft.CocSoft;
-import com.jiongsoft.cocit.cocsoft.CocSoftConfig;
-import com.jiongsoft.cocit.cocui.CuiModelView;
-import com.jiongsoft.cocit.cocui.model.AlertsModel;
+import com.jiongsoft.cocit.service.CocConfigService;
+import com.jiongsoft.cocit.service.CocSoftService;
 import com.jiongsoft.cocit.sms.SmsClient;
+import com.jiongsoft.cocit.ui.CuiModelView;
+import com.jiongsoft.cocit.ui.model.AlertsModel;
 import com.jiongsoft.cocit.utils.ActionUtil;
+import com.jiongsoft.cocit.utils.Log;
 import com.jiongsoft.cocit.utils.VerificationCodeUtil;
 
 @Ok(CuiModelView.VIEW_TYPE)
@@ -34,6 +35,7 @@ public class UtilsAction {
 
 			message = "检查验证码成功！";
 		} catch (Throwable e) {
+			Log.warn("", e);
 			statusCode = 300;
 			message = "验证码非法！";
 		}
@@ -50,9 +52,9 @@ public class UtilsAction {
 
 			String code = VerificationCodeUtil.makeVerificationCode(ctx.getRequest());
 
-			CocSoft soft = ctx.getSoft();
+			CocSoftService soft = ctx.getSoft();
 			SmsClient smsClient = soft.getSmsClient();
-			String tpl = soft.getConfig(CocSoftConfig.CFG_VERIFICATION_CODE_TEMPLATE, "请输入您的验证码 %s");
+			String tpl = soft.getConfig(CocConfigService.CFG_VERIFICATION_CODE_TEMPLATE, "请输入您的验证码 %s");
 
 			String content = String.format(tpl, code);
 
@@ -60,6 +62,7 @@ public class UtilsAction {
 
 			message = "获取短信验证码成功！请注意查看您的手机短信。";
 		} catch (Throwable e) {
+			Log.warn("", e);
 			statusCode = 300;
 			message = "获取短信验证码失败！";
 		}

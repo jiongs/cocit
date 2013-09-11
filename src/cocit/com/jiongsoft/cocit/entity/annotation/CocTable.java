@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 业务表注释。使用该注释自动将CoC实体类转换成Coc业务表。
+ * 实体表注释。使用该注释自动将CoC实体类转换成Coc实体数据表。
  * 
  * @author yongshan.ji
  * 
@@ -53,6 +53,6 @@ public @interface CocTable {
 	 * 
 	 * @return
 	 */
-	public String actionPathPrefix() default "";
+	public String pathPrefix() default "";
 
 }

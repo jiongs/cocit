@@ -4,9 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.jiongsoft.cocit.utils.ActionUtil;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
@@ -18,9 +18,9 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
  * 
  */
 @Entity
-@CocTable(name = "活动报名管理", code = "VisitActivityRegister", catalog = "_ynby_visit", actionPathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 3//
+@CocTable(name = "活动报名管理", code = "VisitActivityRegister", catalog = "_ynby_visit", pathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 3//
 // 操作按钮
-, actions = { @CocOperation(name = "添加", typeCode = 101, mode = "c", plugin = "com.jiongsoft.ynby.plugins.VisitActivityPlugins$SaveRegister")//
+, actions = { @CocOperation(name = "报名", typeCode = 101, mode = "c", plugin = "com.jiongsoft.ynby.plugins.VisitActivityPlugins$SaveRegister")//
 		, @CocOperation(name = "删除", typeCode = 299, mode = "d") //
 		, @CocOperation(name = "查看", typeCode = 102, mode = "v") //
 }// end: actions
@@ -43,7 +43,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 		, @CocField(name = "报名时间", mode = "*:N v:S", property = "created", pattern = "yyyy-MM-dd HH:mm:ss", gridOrder = 12) //
 		, @CocField(name = "IP地址", mode = "*:N v:S", property = "personNumber", gridOrder = 13) //
 }// end: fields
-) // end: BzGrp
+) // end: CocGroup
 }// end: groups
 )
 public class VisitActivityRegister extends SFTBizComponent {

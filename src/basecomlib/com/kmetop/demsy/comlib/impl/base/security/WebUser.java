@@ -9,9 +9,9 @@ import static com.kmetop.demsy.comlib.LibConst.ORDER_SYSADMIN_WEBUSER;
 
 import javax.persistence.Entity;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.entity.base.BaseUser;
 
@@ -37,17 +37,17 @@ import com.kmetop.demsy.comlib.entity.base.BaseUser;
 		, @CocField(name = "密码问题", property = "pwdQuestion", gridField = false, mode = "c1:N e1:N") //
 		, @CocField(name = "密码答案", property = "pwdAnswer", gridField = false, mode = "c1:N e1:N") //
 		, @CocField(name = "用户头像", property = "image", gridField = false, uploadType = "*.jpg;*.gif;*.png", mode = "c1:E e1:E") //
-		// , @BzFld(name = "用户徽标", property = "logo", gridField = false,
+		// , @CocField(name = "用户徽标", property = "logo", gridField = false,
 		// uploadType = "*.jpg;*.gif;*.png", mode = "c1:N e1:N") //
-		// , @BzFld(name = "权限有效期自", property = "permissionExpiredFrom") //
-		// , @BzFld(name = "权限有效期至", property = "permissionExpiredTo") // /
-		// , @BzFld(name = "最近登录地址", property = "lastedRemoteAddr", mode =
+		// , @CocField(name = "权限有效期自", property = "permissionExpiredFrom") //
+		// , @CocField(name = "权限有效期至", property = "permissionExpiredTo") // /
+		// , @CocField(name = "最近登录地址", property = "lastedRemoteAddr", mode =
 		// "*:P") //
-		// , @BzFld(name = "最近登录时间", property = "lastedLoginDate", mode =
+		// , @CocField(name = "最近登录时间", property = "lastedLoginDate", mode =
 		// "v:S *:N")
 		// //
 		, @CocField(name = "个人签名", property = "desc", mode = "c1:E e1:E e:E *:N v:S") //
-		// , @BzFld(name = "登录次数", property = "loginedCount", mode = "v:S *:N")
+		// , @CocField(name = "登录次数", property = "loginedCount", mode = "v:S *:N")
 		// //
 		, @CocField(name = "账户停用", property = "disabled", mode = "bu1:E v:S *:N", gridOrder = 8, options = "0:启用,1:停用") //
 		, @CocField(name = "注册时间", property = "created", mode = "v:S *:N", gridOrder = 7, pattern = "yyyy-MM-dd HH:mm") //

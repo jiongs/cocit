@@ -3,13 +3,13 @@ package com.kmetop.demsy.plugins.eshop;
 import java.util.Date;
 import java.util.List;
 
-import com.kmetop.demsy.biz.BizEvent;
+import com.jiongsoft.cocit.entity.CocEntityEvent;
+import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
 import com.kmetop.demsy.comlib.eshop.IOrder;
 import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.log.Log;
 import com.kmetop.demsy.log.Logs;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.plugins.BizPlugin;
 
 /**
  * 删除3天以上的过期订单
@@ -17,7 +17,7 @@ import com.kmetop.demsy.plugins.BizPlugin;
  * @author yongshan.ji
  * 
  */
-public class OrderDelete extends BizPlugin {
+public class OrderDelete extends BaseEntityPlugin {
 	protected static Log log = Logs.get();
 
 	protected void process(IOrm orm, IOrder order) {
@@ -32,9 +32,9 @@ public class OrderDelete extends BizPlugin {
 	}
 
 	@Override
-	public void before(BizEvent event) {
-		IOrm orm = event.getOrm();
-		Object data = event.getEntity();
+	public void before(CocEntityEvent event) {
+		IOrm orm = (IOrm) event.getOrm();
+		Object data = event.getEntityData();
 		if (data instanceof List) {
 			List list = (List) data;
 			for (Object obj : list) {
@@ -46,12 +46,12 @@ public class OrderDelete extends BizPlugin {
 	}
 
 	@Override
-	public void after(BizEvent event) {
+	public void after(CocEntityEvent event) {
 
 	}
 
 	@Override
-	public void loaded(BizEvent event) {
+	public void loaded(CocEntityEvent event) {
 
 	}
 

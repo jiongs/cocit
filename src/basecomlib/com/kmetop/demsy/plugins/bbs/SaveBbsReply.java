@@ -2,20 +2,20 @@ package com.kmetop.demsy.plugins.bbs;
 
 import java.util.Date;
 
+import com.jiongsoft.cocit.entity.CocEntityEvent;
+import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
 import com.kmetop.demsy.Demsy;
-import com.kmetop.demsy.biz.BizEvent;
 import com.kmetop.demsy.comlib.impl.sft.lybbs.LybbsDb;
 import com.kmetop.demsy.comlib.impl.sft.lybbs.LybbsPostreply;
 import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.plugins.BizPlugin;
 
-public class SaveBbsReply extends BizPlugin {
+public class SaveBbsReply extends BaseEntityPlugin {
 
 	@Override
-	public void before(BizEvent event) {
-		LybbsPostreply obj = (LybbsPostreply) event.getEntity();
+	public void before(CocEntityEvent event) {
+		LybbsPostreply obj = (LybbsPostreply) event.getEntityData();
 
 		// 回复
 		if (obj.getId() != null && obj.getId() > 0) {
@@ -52,19 +52,19 @@ public class SaveBbsReply extends BizPlugin {
 				}
 			}
 
-			IOrm orm = event.getOrm();
+			IOrm orm = (IOrm) event.getOrm();
 			Demsy.moduleEngine.increase(orm, obj.getForum(), "replynumber");
 			Demsy.moduleEngine.increase(orm, obj.getTopic(), "commentNum");
 		}
 	}
 
 	@Override
-	public void after(BizEvent event) {
+	public void after(CocEntityEvent event) {
 
 	}
 
 	@Override
-	public void loaded(BizEvent event) {
+	public void loaded(CocEntityEvent event) {
 
 	}
 

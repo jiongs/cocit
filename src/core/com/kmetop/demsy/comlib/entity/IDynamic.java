@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public interface IDynamic {
 
-	Object get(String extPropName);
+	Object get(String property);
 
 	void set(String key, Object value);
 

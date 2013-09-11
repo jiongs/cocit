@@ -5,9 +5,9 @@ import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_NEW;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.field.MultiUpload;
 import com.kmetop.demsy.comlib.biz.field.Upload;
@@ -31,7 +31,7 @@ fields = { @CocField(property = "product"),//
 )
 public class ProductAttribute extends BizComponent implements IProductAttribute {
 	@ManyToOne
-	@CocField(name = "产品名称", mode = "c:M e:M bu:E v:S *:N", disabledNavi = true, isChildTable = true)
+	@CocField(name = "产品名称", mode = "c:M e:M bu:E v:S *:N", disabledNavi = true, isFkChild = true)
 	protected Product product;
 
 	@CocField(name = "特征图片", uploadType = "*.jpg;*.gif;*.png;*.bmp", mode = "c:E e:E v:S *:N")

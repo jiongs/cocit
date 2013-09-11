@@ -1,7 +1,7 @@
 package com.kmetop.demsy.comlib.impl.base.log;
 
-import static com.kmetop.demsy.biz.BizConst.*;
 import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_EDIT;
+import static com.kmetop.demsy.biz.BizConst.TYPE_BZ_CLEAR;
 import static com.kmetop.demsy.comlib.LibConst.BIZCATA_DEMSY_ADMIN;
 import static com.kmetop.demsy.comlib.LibConst.ORDER_DEMSY_LOG;
 
@@ -11,9 +11,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 
 @Entity

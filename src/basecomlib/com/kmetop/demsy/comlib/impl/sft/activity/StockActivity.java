@@ -2,8 +2,8 @@ package com.kmetop.demsy.comlib.impl.sft.activity;
 
 import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_EDIT;
 import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_EDIT_N;
-import static com.kmetop.demsy.biz.BizConst.TYPE_BZ_EXEC_SYNC;
 import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_NEW;
+import static com.kmetop.demsy.biz.BizConst.TYPE_BZ_EXEC_SYNC;
 
 import java.util.Date;
 
@@ -11,9 +11,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 import com.kmetop.demsy.comlib.web.IActivityEntry;

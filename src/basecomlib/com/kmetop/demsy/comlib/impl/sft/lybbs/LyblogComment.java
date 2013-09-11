@@ -1,9 +1,9 @@
 package com.kmetop.demsy.comlib.impl.sft.lybbs;
 
-import static com.kmetop.demsy.biz.BizConst.TYPE_BZ_DEL;
 import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_EDIT;
 import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_EDIT_N;
 import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_NEW;
+import static com.kmetop.demsy.biz.BizConst.TYPE_BZ_DEL;
 import static com.kmetop.demsy.comlib.LibConst.BIZCATA_WEB;
 import static com.kmetop.demsy.comlib.LibConst.ORDER_WEB_BLOG_COMMENT;
 
@@ -19,9 +19,9 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Transient;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.field.RichText;
 import com.kmetop.demsy.comlib.web.IBlogPostComment;
@@ -47,7 +47,7 @@ import com.kmetop.demsy.lang.Str;
 		, @CocField(property = "created", gridOrder = 3) //
 		, @CocField(property = "createdBy", gridOrder = 4) //
 		, @CocField(property = "createdIP", gridOrder = 7) //
-// , @BzFld(property = "hide", gridOrder = 9) //
+// , @CocField(property = "hide", gridOrder = 9) //
 }) }// end groups
 )
 public class LyblogComment implements IBlogPostComment {
@@ -96,7 +96,7 @@ public class LyblogComment implements IBlogPostComment {
 	@CocField(name = "IP地址", mode = "v:S *:N")
 	protected String createdIP;
 
-	// @BzFld(name = "是否屏蔽", mode = "hide:E v:S *:N", options = "1:屏蔽,0:显示")
+	// @CocField(name = "是否屏蔽", mode = "hide:E v:S *:N", options = "1:屏蔽,0:显示")
 	// protected byte hide;
 
 	public String toString() {

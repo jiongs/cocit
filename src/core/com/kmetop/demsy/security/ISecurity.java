@@ -2,7 +2,7 @@ package com.kmetop.demsy.security;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.kmetop.demsy.comlib.entity.IDemsySoft;
 import com.kmetop.demsy.comlib.security.IModule;
 import com.kmetop.demsy.comlib.security.IUser;

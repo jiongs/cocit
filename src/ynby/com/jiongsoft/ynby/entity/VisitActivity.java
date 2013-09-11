@@ -6,9 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.jiongsoft.cocit.utils.ActionUtil;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
@@ -20,7 +20,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
  * 
  */
 @Entity
-@CocTable(name = "活动设置", code = "VisitActivity", catalog = "_ynby_visit", actionPathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 2//
+@CocTable(name = "活动设置", code = "VisitActivity", catalog = "_ynby_visit", pathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 2//
 // 操作按钮
 , actions = { @CocOperation(name = "添加", typeCode = 101, mode = "c", plugin = "com.jiongsoft.ynby.plugins.VisitActivityPlugins$SaveActivity")//
 		, @CocOperation(name = "修改", typeCode = 102, mode = "e", plugin = "com.jiongsoft.ynby.plugins.VisitActivityPlugins$SaveActivity") //
@@ -43,7 +43,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 		, @CocField(name = "参加人数", mode = "*:N v:S c:N e:E", property = "attendPersonNumber")//
 		, @CocField(name = "活动描述", mode = "*:N v:S c:E e:E", property = "desc") //
 }// end: fields
-) // end: BzGrp
+) // end: CocGroup
 }// end: groups
 )
 public class VisitActivity extends SFTBizComponent {

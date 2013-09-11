@@ -17,8 +17,8 @@ import org.nutz.lang.Strings;
 import org.nutz.trans.Atom;
 import org.nutz.trans.Trans;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
-import com.jiongsoft.cocit.corm.expr.Expr;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
+import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.BizConst;
 import com.kmetop.demsy.comlib.biz.IBizCatalog;
@@ -153,7 +153,7 @@ public class SFTModuleEngine extends ModuleEngine {
 	// } catch (NoSuchFieldException e1) {
 	// continue;
 	// }
-	// BzSys sys = (BzSys) klass.getAnnotation(BzSys.class);
+	// CocTable sys = (CocTable) klass.getAnnotation(CocTable.class);
 	// if (sys == null || sys.id() > 0) {
 	// continue;
 	// }
@@ -389,7 +389,7 @@ public class SFTModuleEngine extends ModuleEngine {
 		module.setEntityGuid(resource.getEntityGuid());
 		module.setType(type);
 		module.setRefSystem(system);
-		module.setActionPathPrefix(system.getActionPathPrefix());
+		module.setPathPrefix(system.getPathPrefix());
 		module.setUpgradeFrom(resource.getId());
 		Menu menu = (Menu) orm.load(Menu.class, CndExpr.eq(F_RESOURCE, resource));
 		module.setOrderby(menu != null ? menu.getOrderby() : resource.getOrderby());
@@ -599,7 +599,7 @@ public class SFTModuleEngine extends ModuleEngine {
 			module.setType(IModule.TYPE_BIZ);
 			module.setParent((Module) this.makeModule(orm, soft, system.getCatalog()));
 			module.setRefSystem(system);
-			module.setActionPathPrefix(system.getActionPathPrefix());
+			module.setPathPrefix(system.getPathPrefix());
 			module.setHidden(bizEngine.isSlave(system));
 			module.setSoftID(soft.getId());
 
@@ -650,7 +650,7 @@ public class SFTModuleEngine extends ModuleEngine {
 			module.setCode(code);
 			module.setType(IModule.TYPE_BIZ);
 			module.setRefSystem(sys);
-			module.setActionPathPrefix(sys.getActionPathPrefix());
+			module.setPathPrefix(sys.getPathPrefix());
 			module.setHidden(bizEngine.isSlave(sys));
 			module.setBuildin(sys.isBuildin());
 			module.setSoftID(soft.getId());

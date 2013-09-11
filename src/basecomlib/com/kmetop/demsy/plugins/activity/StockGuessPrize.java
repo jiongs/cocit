@@ -3,15 +3,15 @@ package com.kmetop.demsy.plugins.activity;
 import java.util.Date;
 import java.util.List;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
-import com.jiongsoft.cocit.corm.expr.Expr;
-import com.kmetop.demsy.biz.BizEvent;
+import com.jiongsoft.cocit.entity.CocEntityEvent;
+import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
+import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.comlib.impl.base.ebusiness.order.Order;
 import com.kmetop.demsy.comlib.impl.sft.activity.ActivityCatalog;
 import com.kmetop.demsy.comlib.impl.sft.activity.StockActivity;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.plugins.BizPlugin;
 
 /**
  * 查找订单号并对订单号进行兑奖
@@ -19,12 +19,12 @@ import com.kmetop.demsy.plugins.BizPlugin;
  * @author yongshan.ji
  * 
  */
-public class StockGuessPrize extends BizPlugin {
+public class StockGuessPrize extends BaseEntityPlugin {
 
 	@Override
-	public void before(BizEvent event) {
-		IOrm orm = event.getOrm();
-		List<StockActivity> list = (List<StockActivity>) event.getEntity();
+	public void before(CocEntityEvent event) {
+		IOrm orm = (IOrm) event.getOrm();
+		List<StockActivity> list = (List<StockActivity>) event.getEntityData();
 		for (StockActivity one : list) {
 			Byte status = one.getStatus();
 
@@ -89,12 +89,12 @@ public class StockGuessPrize extends BizPlugin {
 	}
 
 	@Override
-	public void after(BizEvent event) {
+	public void after(CocEntityEvent event) {
 
 	}
 
 	@Override
-	public void loaded(BizEvent event) {
+	public void loaded(CocEntityEvent event) {
 
 	}
 

@@ -1,8 +1,8 @@
 package com.kmetop.demsy.comlib.impl.base.security;
 
-import static com.kmetop.demsy.biz.BizConst.TYPE_BZ_DEL;
 import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_EDIT;
 import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_NEW;
+import static com.kmetop.demsy.biz.BizConst.TYPE_BZ_DEL;
 import static com.kmetop.demsy.comlib.LibConst.BIZCATA_ADMIN;
 import static com.kmetop.demsy.comlib.LibConst.BIZSYS_ADMIN_PERMISSION;
 import static com.kmetop.demsy.comlib.LibConst.ORDER_SYSADMIN_PERMISSION;
@@ -11,10 +11,10 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
-import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocField2;
+import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.field.Dataset;
 import com.kmetop.demsy.comlib.impl.BizComponent;

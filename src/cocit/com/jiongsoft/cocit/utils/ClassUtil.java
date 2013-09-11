@@ -1,3 +1,4 @@
+// $codepro.audit.disable unnecessaryCast
 package com.jiongsoft.cocit.utils;
 
 import java.lang.reflect.Array;
@@ -243,6 +244,7 @@ public abstract class ClassUtil {
 		try {
 			return Mirror.me(klass).getField(propName) != null;
 		} catch (Throwable e) {
+			Log.warn("", e);
 			return false;
 		}
 	}

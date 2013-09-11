@@ -9,11 +9,11 @@ import java.util.StringTokenizer;
 import org.nutz.json.Json;
 import org.nutz.lang.Mirror;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
-import com.jiongsoft.cocit.corm.expr.Expr;
-import com.jiongsoft.cocit.corm.expr.ExprRule;
-import com.jiongsoft.cocit.corm.expr.ExprRuleGroup;
-import com.jiongsoft.cocit.corm.expr.SimpleCndExpr;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
+import com.jiongsoft.cocit.orm.expr.Expr;
+import com.jiongsoft.cocit.orm.expr.ExprRule;
+import com.jiongsoft.cocit.orm.expr.ExprRuleGroup;
+import com.jiongsoft.cocit.orm.expr.SimpleCndExpr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.BizConst;
 import com.kmetop.demsy.biz.IBizManager;

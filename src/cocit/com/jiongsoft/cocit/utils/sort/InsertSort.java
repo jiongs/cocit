@@ -1,5 +1,7 @@
 package com.jiongsoft.cocit.utils.sort;
 
+import com.jiongsoft.cocit.utils.Log;
+
 /**
  * 插入排序，要求待排序的数组必须实现Comparable接口
  */
@@ -44,13 +46,14 @@ public class InsertSort extends AbstractSort {
 				}
 				if (compare(value1, value2, nullGT) < 0) {
 					// 如果待插入的元素小于当前元素，则把当前元素后面的元素依次后移一位
-					for (int j = size; j > i; j--) {
+					for (int j = size; j > i; j--) { // $codepro.audit.disable useArraycopyRatherThanALoop
 						obj[j] = obj[j - 1];
 					}
 					obj[i] = c;
 					break;
 				}
 			} catch (Throwable ex) {
+				Log.warn("", ex);
 			}
 		}
 	}

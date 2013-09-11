@@ -6,12 +6,11 @@ import java.util.Properties;
 import javax.persistence.Column;
 import javax.persistence.Transient;
 
-import com.jiongsoft.cocit.entity.impl.BaseCocEntity;
 import com.kmetop.demsy.comlib.entity.IDynamic;
 import com.kmetop.demsy.lang.Ex;
 import com.kmetop.demsy.lang.Props;
 
-public abstract class DynaEntity extends BaseCocEntity implements IDynamic {
+public abstract class DynaEntity extends BizEntity implements IDynamic {
 
 	@Column(name = "_status_value")
 	protected Integer maskValue;

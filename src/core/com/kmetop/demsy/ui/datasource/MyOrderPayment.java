@@ -5,8 +5,8 @@ import static com.kmetop.demsy.Demsy.bizEngine;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
-import com.jiongsoft.cocit.corm.expr.Expr;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
+import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.entity.IDemsySoft;

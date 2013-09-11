@@ -4,17 +4,17 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.jiongsoft.cocit.corm.expr.Expr;
+import com.jiongsoft.cocit.entity.CocEntityEvent;
+import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.actions.OrderActions;
-import com.kmetop.demsy.biz.BizEvent;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.eshop.IOrder;
 import com.kmetop.demsy.comlib.impl.base.ebusiness.order.Logistics;
 import com.kmetop.demsy.comlib.impl.base.ebusiness.order.Order;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.plugins.BizPlugin;
 
 /**
  * 打印单据
@@ -22,11 +22,11 @@ import com.kmetop.demsy.plugins.BizPlugin;
  * @author yongshan.ji
  * 
  */
-public class PrintLogisticsBill extends BizPlugin {
+public class PrintLogisticsBill extends BaseEntityPlugin {
 
 	@Override
-	public void before(BizEvent event) {
-		Logistics en = (Logistics) event.getEntity();
+	public void before(CocEntityEvent event) {
+		Logistics en = (Logistics) event.getEntityData();
 		en.setPrintNum(en.getPrintNum() + 1);
 		en.setPrintDate(new Date());
 		// 发货处理
@@ -36,7 +36,7 @@ public class PrintLogisticsBill extends BizPlugin {
 			orderID = orderID.substring(0, idx);
 		}
 
-		IOrm orm = event.getOrm();
+		IOrm orm = (IOrm) event.getOrm();
 		IOrder order = (IOrder) orm.load(Order.class, Expr.eq(LibConst.F_TIME_ID, orderID).and(Expr.eq(LibConst.F_SOFT_ID, Demsy.me().getSoft().getId())));
 
 		List<Logistics> list = orm.query(Logistics.class, Expr.beginWith("orderID", order.getOrderID()).addAsc("orderID"));

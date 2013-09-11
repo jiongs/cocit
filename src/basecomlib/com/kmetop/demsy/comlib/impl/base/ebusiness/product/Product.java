@@ -11,9 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.field.MultiUpload;
 import com.kmetop.demsy.comlib.biz.field.RichText;
@@ -21,7 +21,6 @@ import com.kmetop.demsy.comlib.biz.field.SubSystem;
 import com.kmetop.demsy.comlib.biz.field.Upload;
 import com.kmetop.demsy.comlib.eshop.IProduct;
 import com.kmetop.demsy.comlib.impl.BizComponent;
-import com.kmetop.demsy.lang.Str;
 
 @Entity
 @CocTable(name = "产品信息管理", code = IProduct.SYS_CODE, orderby = 4,//
@@ -30,12 +29,12 @@ actions = {
 		@CocOperation(name = "添加产品", typeCode = TYPE_BZFORM_NEW, mode = "c"),//
 		@CocOperation(name = "调整分类", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu"),//
 		@CocOperation(name = "批量推荐", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu2"),//
-		// @BzAct(name = "调整销售数据", typeCode = TYPE_BZFORM_EDIT, mode = "e1"),//
-		// @BzAct(name = "批量调整运营商", typeCode = TYPE_BZFORM_EDIT_N, mode =
+		// @CocOperation(name = "调整销售数据", typeCode = TYPE_BZFORM_EDIT, mode = "e1"),//
+		// @CocOperation(name = "批量调整运营商", typeCode = TYPE_BZFORM_EDIT_N, mode =
 		// "bu1"),//
-		// @BzAct(name = "批量调整发货点", typeCode = TYPE_BZFORM_EDIT_N, mode =
+		// @CocOperation(name = "批量调整发货点", typeCode = TYPE_BZFORM_EDIT_N, mode =
 		// "bu3"),//
-		// @BzAct(name = "批量设置网购", typeCode = TYPE_BZFORM_EDIT_N, mode =
+		// @CocOperation(name = "批量设置网购", typeCode = TYPE_BZFORM_EDIT_N, mode =
 		// "bu4"),//
 		@CocOperation(jsonData = "CommonBizAction.data.js") //
 },//
@@ -72,7 +71,7 @@ fields = { @CocField(property = "clickNum", gridOrder = 8)//
 		, @CocField(name = "更新时间", property = "updated", mode = "*:N v:S") //
 		, @CocField(name = "创建帐号", property = "createdBy", mode = "*:N v:S") //
 		, @CocField(name = "更新帐号", property = "updatedBy", mode = "*:N v:S") //
-}) // @BzGrp
+}) // @CocGroup
 }// end groups
 )
 public class Product extends BizComponent implements IProduct {

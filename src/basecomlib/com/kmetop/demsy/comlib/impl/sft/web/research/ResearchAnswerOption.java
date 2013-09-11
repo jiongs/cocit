@@ -7,9 +7,9 @@ import static com.kmetop.demsy.comlib.LibConst.ORDER_WEB_RESEARCH;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 import com.kmetop.demsy.comlib.web.IResearchOption;
@@ -19,8 +19,8 @@ import com.kmetop.demsy.comlib.web.IResearchSubject;
 @Entity
 @CocTable(name = "选项列表", code = IResearchOption.SYS_CODE, catalog = BIZCATA_WEB, orderby = ORDER_WEB_RESEARCH, buildin = true//
 , actions = { @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
-// @BzAct(name = "添加选项", typeCode = TYPE_BZFORM_NEW, mode = "c")//
-// , @BzAct(jsonData = "CommonBizAction.data.js") //
+// @CocOperation(name = "添加选项", typeCode = TYPE_BZFORM_NEW, mode = "c")//
+// , @CocOperation(jsonData = "CommonBizAction.data.js") //
 }, groups = { @CocGroup(name = "基本信息", code = "basic"//
 , fields = { @CocField(property = "subject") //
 		, @CocField(property = "question") //
@@ -28,7 +28,7 @@ import com.kmetop.demsy.comlib.web.IResearchSubject;
 		, @CocField(property = "type") //
 		, @CocField(property = "orderby", name = "人工顺序", mode = "*:N v:S") //
 		, @CocField(property = "result") //
-		// , @BzFld(property = "desc", name = "选项描述", mode = "c:E e:E *:N v:S",
+		// , @CocField(property = "desc", name = "选项描述", mode = "c:E e:E *:N v:S",
 		// gridField = false) //
 		, @CocField(property = "created", name = "创建时间", mode = "*:N v:S", pattern = "yyyy-MM-dd HH:mm", gridField = false) //
 		, @CocField(property = "createdBy", name = "创建帐号", mode = "*:N v:S", gridField = false) //
@@ -39,11 +39,11 @@ import com.kmetop.demsy.comlib.web.IResearchSubject;
 )
 public class ResearchAnswerOption extends SFTBizComponent implements IResearchOption {
 	@ManyToOne
-	@CocField(name = "调查主题", mode = "c:M e:M *:N v:S", isChildTable = true)
+	@CocField(name = "调查主题", mode = "c:M e:M *:N v:S", isFkChild = true)
 	private ResearchSubject subject;
 
 	@ManyToOne
-	@CocField(name = "问题名称", mode = "c:M e:M *:N v:S", isChildTable = true, disabledNavi = true)
+	@CocField(name = "问题名称", mode = "c:M e:M *:N v:S", isFkChild = true, disabledNavi = true)
 	private ResearchQuestion question;
 
 	@CocField(name = "回答方式", mode = "c:M e:M *:N v:S", options = "0:选择,1:输入")

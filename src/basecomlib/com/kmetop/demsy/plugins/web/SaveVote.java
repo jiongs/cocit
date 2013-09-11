@@ -1,23 +1,23 @@
 package com.kmetop.demsy.plugins.web;
 
+import com.jiongsoft.cocit.entity.CocEntityEvent;
+import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
 import com.kmetop.demsy.Demsy;
-import com.kmetop.demsy.biz.BizEvent;
 import com.kmetop.demsy.comlib.impl.base.web.Vote;
 import com.kmetop.demsy.comlib.security.IModule;
 import com.kmetop.demsy.orm.IOrm;
-import com.kmetop.demsy.plugins.BizPlugin;
 
-public class SaveVote extends BizPlugin {
+public class SaveVote extends BaseEntityPlugin {
 
 	@Override
-	public void before(BizEvent event) {
-		Vote vote = (Vote) event.getEntity();
+	public void before(CocEntityEvent event) {
+		Vote vote = (Vote) event.getEntityData();
 
 		// 回复
 		if (vote.getId() != null && vote.getId() > 0) {
 
 		} else {// 评论
-			IOrm orm = event.getOrm();
+			IOrm orm = (IOrm) event.getOrm();
 
 			IModule module = Demsy.moduleEngine.getModule(vote.getModuleID());
 			Object subject = orm.load(Demsy.bizEngine.getType(Demsy.moduleEngine.getSystem(module)), vote.getSubjectID());
@@ -32,12 +32,12 @@ public class SaveVote extends BizPlugin {
 	}
 
 	@Override
-	public void after(BizEvent event) {
+	public void after(CocEntityEvent event) {
 
 	}
 
 	@Override
-	public void loaded(BizEvent event) {
+	public void loaded(CocEntityEvent event) {
 
 	}
 

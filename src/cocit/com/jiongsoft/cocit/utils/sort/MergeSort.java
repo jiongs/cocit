@@ -1,5 +1,7 @@
 package com.jiongsoft.cocit.utils.sort;
 
+import com.jiongsoft.cocit.utils.Log;
+
 public class MergeSort extends AbstractSort {
 	private Object[] bridge;
 
@@ -36,6 +38,7 @@ public class MergeSort extends AbstractSort {
 					bridge[third++] = obj[mid++];
 				}
 			} catch (Throwable ex) {
+				Log.warn("", ex);
 				bridge[third++] = obj[mid++];
 			}
 		}

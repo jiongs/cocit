@@ -1,13 +1,13 @@
 package com.kmetop.demsy.plugins.lib;
 
-import com.kmetop.demsy.biz.BizEvent;
+import com.jiongsoft.cocit.entity.CocEntityEvent;
+import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
 import com.kmetop.demsy.config.SoftConfigManager;
-import com.kmetop.demsy.plugins.BizPlugin;
 
-public class ClearSoftConfigCache extends BizPlugin {
+public class ClearSoftConfigCache extends BaseEntityPlugin {
 
 	@Override
-	public void after(BizEvent event) {
+	public void after(CocEntityEvent event) {
 		SoftConfigManager.clearCache();
 	}
 

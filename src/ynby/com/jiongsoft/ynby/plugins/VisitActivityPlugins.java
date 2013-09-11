@@ -2,14 +2,14 @@ package com.jiongsoft.ynby.plugins;
 
 import java.util.Date;
 
+import com.jiongsoft.cocit.entity.CocEntityEvent;
+import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
 import com.jiongsoft.cocit.utils.CocException;
 import com.jiongsoft.cocit.utils.DateUtil;
 import com.jiongsoft.cocit.utils.VerificationCodeUtil;
 import com.jiongsoft.ynby.entity.VisitActivity;
 import com.jiongsoft.ynby.entity.VisitActivityRegister;
 import com.kmetop.demsy.Demsy;
-import com.kmetop.demsy.biz.BizEvent;
-import com.kmetop.demsy.plugins.BizPlugin;
 
 public class VisitActivityPlugins {
 
@@ -19,10 +19,10 @@ public class VisitActivityPlugins {
 	 * @author JiongSoft
 	 * 
 	 */
-	public static class SaveActivity extends BizPlugin<VisitActivity> {
+	public static class SaveActivity extends BaseEntityPlugin<VisitActivity> {
 		@Override
-		public void before(BizEvent<VisitActivity> event) {
-			VisitActivity entity = event.getEntity();
+		public void before(CocEntityEvent<VisitActivity> event) {
+			VisitActivity entity = event.getEntityData();
 
 			Date date = entity.getPlanDate();
 			String dateStr = DateUtil.formatDate(date, "yyyy年MM月dd日 E");
@@ -52,10 +52,10 @@ public class VisitActivityPlugins {
 	 * @author JiongSoft
 	 * 
 	 */
-	public static class SaveRegister extends BizPlugin<VisitActivityRegister> {
+	public static class SaveRegister extends BaseEntityPlugin<VisitActivityRegister> {
 		@Override
-		public synchronized void before(BizEvent<VisitActivityRegister> event) {
-			VisitActivityRegister entity = event.getEntity();
+		public synchronized void before(CocEntityEvent<VisitActivityRegister> event) {
+			VisitActivityRegister entity = event.getEntityData();
 			VisitActivity activity = entity.getActivity();
 
 			// 检查短信验证码

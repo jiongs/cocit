@@ -1,5 +1,11 @@
 package com.jiongsoft.cocit.utils;
 
+/**
+ * Action 工具类: 服务于 actions 包下的 XxxAction 类。
+ * 
+ * @author yongshan.ji
+ * 
+ */
 public abstract class ActionUtil {
 
 	/**
@@ -54,49 +60,49 @@ public abstract class ActionUtil {
 	/**
 	 * “业务模块”访问路径之模块界面，模块界面可以包括一个主表界面和多个从表界面组成的Tabs界面。
 	 * <p>
-	 * 参数：moduleID
+	 * 参数：entityModuleID
 	 */
-	public static final String GET_BIZ_MODULE_UI = ACTION_PATH_PREFIX + "/getBizModuleUI/*";
+	public static final String GET_ENTITY_MODULE_UI = ACTION_PATH_PREFIX + "/getEntityModuleUI/*";
 
 	/**
 	 * “业务模块”访问路径之数据表管理界面，数据表管理界面包括左边导航树、顶部操作菜单、GRID；不包括子表。
 	 * <p>
-	 * 参数：moduleID:tableID
+	 * 参数：entityModuleID:entityTableID
 	 */
-	public static final String GET_BIZ_TABLE_UI = ACTION_PATH_PREFIX + "/getBizTableUI/*";
+	public static final String GET_ENTITY_TABLE_UI = ACTION_PATH_PREFIX + "/getEntityTableUI/*";
 
 	/**
 	 * “业务模块”访问路径之Grid数据，数据格式通常为JSON或XML格式。
 	 * <p>
-	 * 参数：moduleID:tableID
+	 * 参数：entityModuleID:entityTableID
 	 */
-	public static final String GET_BIZ_GRID_DATA = ACTION_PATH_PREFIX + "/getBizGridData/*";
+	public static final String GET_ENTITY_GRID_DATA = ACTION_PATH_PREFIX + "/getEntityGridData/*";
 
 	/**
 	 * “业务模块”访问路径之导航树数据，数据格式通常为JSON或XML格式。
 	 * <p>
-	 * 参数：moduleID:tableID
+	 * 参数：entityModuleID:entityTableID
 	 */
-	public static final String GET_BIZ_NAVI_DATA = ACTION_PATH_PREFIX + "/getBizNaviData/*";
+	public static final String GET_ENTITY_NAVI_DATA = ACTION_PATH_PREFIX + "/getEntityNaviData/*";
 
 	/**
 	 * “业务模块”访问路径之加载业务表单
 	 * <p>
-	 * 参数：moduleID:tableID:operationID
+	 * 参数：entityModuleID:entityTableID:entityOperationID
 	 */
-	public static final String GET_BIZ_FORM_UI = ACTION_PATH_PREFIX + "/getBizFormUI/*";
+	public static final String GET_ENTITY_FORM_UI = ACTION_PATH_PREFIX + "/getEntityFormUI/*";
 
 	/**
 	 * “业务模块”访问路径之保存业务表单
 	 */
-	public static final String SAVE_BIZ_FORM_DATA = ACTION_PATH_PREFIX + "/saveBizFormData/*";
+	public static final String SAVE_ENTITY_FORM_DATA = ACTION_PATH_PREFIX + "/saveEntityFormData/*";
 
 	/**
 	 * “业务模块”访问路径之删除业务数据
 	 * <p>
-	 * 参数：moduleID:tableID:operationID
+	 * 参数：entityModuleID:entityTableID:entityOperationID
 	 */
-	public static final String DELETE_BIZ_DATA = ACTION_PATH_PREFIX + "/deleteBizData/*";
+	public static final String DELETE_ENTITY_DATA = ACTION_PATH_PREFIX + "/deleteEntityData/*";
 
 	/**
 	 * 获取手机验证码

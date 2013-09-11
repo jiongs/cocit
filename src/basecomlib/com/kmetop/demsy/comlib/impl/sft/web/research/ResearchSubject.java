@@ -14,9 +14,9 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.field.Upload;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
@@ -57,7 +57,7 @@ import com.kmetop.demsy.comlib.web.IResearchSubject;
 		@CocField(property = "questionsJson") //
 		,
 		@CocField(property = "orderby", name = "人工顺序", mode = "*:N v:S") //
-		// , @BzFld(property = "desc", name = "调查描述", mode = "c:E e:E *:N v:S",
+		// , @CocField(property = "desc", name = "调查描述", mode = "c:E e:E *:N v:S",
 		// gridField = false) //
 		,
 		@CocField(property = "created", name = "创建时间", mode = "*:N v:S", pattern = "yyyy-MM-dd HH:mm", gridField = false) //

@@ -3,9 +3,9 @@ package com.kmetop.demsy.orm;
 import java.util.Collections;
 import java.util.List;
 
-import com.jiongsoft.cocit.corm.expr.CndExpr;
-import com.jiongsoft.cocit.corm.expr.Expr;
-import com.jiongsoft.cocit.corm.expr.PagerExpr;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
+import com.jiongsoft.cocit.orm.expr.Expr;
+import com.jiongsoft.cocit.orm.expr.PagerExpr;
 
 /**
  * 查询分页器

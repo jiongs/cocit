@@ -33,10 +33,10 @@ public class Dataset extends JsonField<Dataset> {
 	@CocField(name = "继承选项", order = 1, options = "0:不继承,1:继承数据", desc = "是否继承上级板块数据源查询结果集")
 	private boolean inherit;
 
-	@CocField(name = "数据模块", refrenceTable = BIZSYS_ADMIN_MODULE, order = 2, options = "['type eq 2']")
+	@CocField(name = "数据模块", fkTable = BIZSYS_ADMIN_MODULE, order = 2, options = "['type eq 2']")
 	private String moduleGuid;// 功能模块
 
-	// @BzFld(name = "业务模块", refrenceSystem = BIZSYS_SOFT_MODULE, order = 1,
+	// @CocField(name = "业务模块", refrenceSystem = BIZSYS_SOFT_MODULE, order = 1,
 	// options = "['type eq 2']")
 	// private String moduleGuid;// 功能模块
 

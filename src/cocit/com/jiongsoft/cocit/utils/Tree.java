@@ -1,3 +1,4 @@
+// $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.obeyEqualsContract.obeyGeneralContractOfEquals, unnecessaryCast
 package com.jiongsoft.cocit.utils;
 
 import java.util.ArrayList;
@@ -106,6 +107,7 @@ public class Tree {
 		try {
 			return (T) StringUtil.castTo(value, valueType);
 		} catch (Throwable e) {
+			Log.warn("", e);
 		}
 
 		return defaultReturn;
@@ -255,6 +257,7 @@ public class Tree {
 			try {
 				return (T) StringUtil.castTo(value, valueType);
 			} catch (Throwable e) {
+				Log.warn("", e);
 			}
 
 			return defaultReturn;
@@ -343,16 +346,16 @@ public class Tree {
 
 		@Override
 		public boolean equals(Object that) {
+
 			if (that == null)
 				return false;
 
-			if (!Node.class.isAssignableFrom(that.getClass())) {
+			if (!that.getClass().equals(this.getClass()))
 				return false;
-			}
 
 			Node thatEntity = (Node) that;
 			if (id == null || thatEntity.id == null) {
-				return this == that;
+				return super.equals(that);
 			}
 
 			return thatEntity.id.equals(id);

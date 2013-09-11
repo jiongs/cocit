@@ -8,9 +8,9 @@ import static com.kmetop.demsy.comlib.LibConst.ORDER_SYSADMIN_USER;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
+import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.entity.base.BaseUser;
 import com.kmetop.demsy.comlib.security.IAdminUser;
@@ -35,15 +35,15 @@ import com.kmetop.demsy.comlib.security.IAdminUser;
 		, @CocField(name = "密码答案", property = "pwdAnswer", gridField = false) //
 		, @CocField(name = "用户图片", property = "image", gridField = false, uploadType = "*.jpg;*.gif;*.png") //
 		, @CocField(name = "用户徽标", property = "logo", gridField = false, uploadType = "*.jpg;*.gif;*.png") //
-		// , @BzFld(name = "权限有效期自", property = "permissionExpiredFrom") //
-		// , @BzFld(name = "权限有效期至", property = "permissionExpiredTo") // /
-		// , @BzFld(name = "最近登录地址", property = "lastedRemoteAddr", mode =
+		// , @CocField(name = "权限有效期自", property = "permissionExpiredFrom") //
+		// , @CocField(name = "权限有效期至", property = "permissionExpiredTo") // /
+		// , @CocField(name = "最近登录地址", property = "lastedRemoteAddr", mode =
 		// "*:P") //
-		// , @BzFld(name = "最近登录时间", property = "lastedLoginDate", mode =
+		// , @CocField(name = "最近登录时间", property = "lastedLoginDate", mode =
 		// "v:S *:N")
 		// //
 		, @CocField(name = "用户描述", property = "desc") //
-		// , @BzFld(name = "登录次数", property = "loginedCount", mode = "v:S *:N")
+		// , @CocField(name = "登录次数", property = "loginedCount", mode = "v:S *:N")
 		// //
 		, @CocField(name = "创建时间", property = "created", mode = "v:S *:N", pattern = "yyyy-MM-dd HH:mm:ss") //
 		, @CocField(name = "更新时间", property = "updated", mode = "v:S *:N", pattern = "yyyy-MM-dd HH:mm:ss") //

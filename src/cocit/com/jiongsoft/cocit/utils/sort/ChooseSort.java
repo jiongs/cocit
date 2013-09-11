@@ -1,5 +1,7 @@
 package com.jiongsoft.cocit.utils.sort;
 
+import com.jiongsoft.cocit.utils.Log;
+
 /**
  * 利用选择排序法对数组排序，数组中元素必须实现了Comparable接口。
  */
@@ -21,6 +23,7 @@ public class ChooseSort extends AbstractSort {
 			try {
 				valueTmp = getValue(tmp, field);
 			} catch (Throwable ex) {
+				Log.warn("", ex);
 				continue;
 			}
 			for (int j = i + 1; j < obj.length; j++) {
@@ -29,6 +32,7 @@ public class ChooseSort extends AbstractSort {
 				try {
 					value = getValue(obj[j], field);
 				} catch (Throwable ex) {
+					Log.warn("", ex);
 					continue;
 				}
 				try {
@@ -37,6 +41,7 @@ public class ChooseSort extends AbstractSort {
 						index = j;
 					}
 				} catch (Throwable ex) {
+					Log.warn("", ex);
 				}
 			}
 			// 将最小的元素交换到前面

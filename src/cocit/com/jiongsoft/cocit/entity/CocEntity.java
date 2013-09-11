@@ -11,8 +11,7 @@ import com.jiongsoft.cocit.utils.StringUtil;
  * <LI>实体ID：对应主键字段，有系统自动生成，通常不作为业务数据参与业务逻辑的处理，数据导入导出过程中，该字段会发生改变；
  * <LI>实体GUID：是一个全球唯一标识符，用作数据的导入导出，数据导入导出过程中该字段值不会改变，也常用来表示业务数据之间的引用关系；
  * <LI>实体SoftID：表示实体数据所属的软件；应为CoC平台可以同时运行多套软件，软件之间可以将会数据库表，因此用SoftID表示数据所属的软件；
- * <LI>扩展属性：通过{@link #get(String, Object)}和{@link #set(String, String)}方法获取和设置实体对象的扩展属性，扩展属性以文本形式存储，需要的时候将自动转换成指定的类型。
- * 类型包括：String/Long/Integer/Short/Byte/Double/Float/Boolean/Date/Number，如果值类型不属于上面的任何类型，则将扩展字段的文本当作一个JSON文本，并试图将其转换成指定类型的Java对象。更多类型可以参见{@link StringUtil#castTo(String, Class)}
+ * <LI>扩展属性：通过{@link #get(String, Object)}和{@link #set(String, String)}方法获取和设置实体对象的扩展属性，扩展属性以文本形式存储，需要的时候将自动转换成指定的类型。 类型包括：String/Long/Integer/Short/Byte/Double/Float/Boolean/Date/Number，如果值类型不属于上面的任何类型，则将扩展字段的文本当作一个JSON文本，并试图将其转换成指定类型的Java对象。更多类型可以参见{@link StringUtil#castTo(String, Class)}
  * </UL>
  * 
  * @author jiongsoft

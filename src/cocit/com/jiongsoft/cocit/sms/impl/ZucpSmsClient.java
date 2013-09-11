@@ -20,8 +20,8 @@ import java.util.regex.Pattern;
 
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.CocitHttpContext;
-import com.jiongsoft.cocit.cocsoft.CocSoft;
-import com.jiongsoft.cocit.cocsoft.CocSoftConfig;
+import com.jiongsoft.cocit.service.CocConfigService;
+import com.jiongsoft.cocit.service.CocSoftService;
 import com.jiongsoft.cocit.sms.SmsClient;
 import com.jiongsoft.cocit.utils.Log;
 
@@ -72,14 +72,14 @@ public class ZucpSmsClient implements SmsClient {
 	public ZucpSmsClient() {
 
 		CocitHttpContext ctx = Cocit.getHttpContext();
-		CocSoft soft = ctx.getSoft();
+		CocSoftService soft = ctx.getSoft();
 
-		this.proxyHost = soft.getConfig(CocSoftConfig.CFG_PROXY_HOST, "");
-		this.proxyPort = soft.getConfig(CocSoftConfig.CFG_PROXY_PORT, 80);
+		this.proxyHost = soft.getConfig(CocConfigService.CFG_PROXY_HOST, "");
+		this.proxyPort = soft.getConfig(CocConfigService.CFG_PROXY_PORT, 80);
 
-		this.serviceURL = soft.getConfig(CocSoftConfig.CFG_URL, "http://sdk2.zucp.net:8060/webservice.asmx");
-		this.sn = soft.getConfig(CocSoftConfig.CFG_UID, "");
-		this.password = soft.getConfig(CocSoftConfig.CFG_PWD, "");
+		this.serviceURL = soft.getConfig(CocConfigService.CFG_URL, "http://sdk2.zucp.net:8060/webservice.asmx");
+		this.sn = soft.getConfig(CocConfigService.CFG_UID, "");
+		this.password = soft.getConfig(CocConfigService.CFG_PWD, "");
 		this.pwdMD5 = this.getMD5(sn + password);
 
 		Log.info("ZucpSmsClient.new: {serviceURL:%s, sn:%s, password:%s, pwdMD5:%s, proxyHost=%s, proxyPort}", serviceURL, sn, password, pwdMD5, proxyHost, proxyPort);
@@ -405,6 +405,7 @@ public class ZucpSmsClient implements SmsClient {
 		try {
 			connection = url.openConnection();
 		} catch (Throwable e) {
+			Log.warn("", e);
 			if (this.proxyHost != null && proxyHost.trim().length() > 0) {
 				SocketAddress proxyAddress = new InetSocketAddress(this.proxyHost, this.proxyPort);
 				Proxy typeProxy = new Proxy(Proxy.Type.HTTP, proxyAddress);
