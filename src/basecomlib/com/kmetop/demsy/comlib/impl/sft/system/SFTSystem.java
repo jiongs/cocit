@@ -30,7 +30,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 , groups = { @CocGroup(name = "基本信息", code = "basic"//
 , fields = { @CocField(name = "系统名称", property = "name", mode = "c:M e:M")//
 		, @CocField(name = "系统编号", property = "code") //
-		, @CocField(name = "路径前缀", property = "actionPathPrefix", gridField = true) //
+		, @CocField(name = "路径前缀", property = "pathPrefix", gridField = true) //
 		, @CocField(name = "人工顺序", property = "orderby") //
 		, @CocField(name = "系统分类", property = "catalog", groupBy = true, fkTable = BIZSYS_BZUDF_CATALOG) //
 }), @CocGroup(name = "扩展信息", code = "ext"//

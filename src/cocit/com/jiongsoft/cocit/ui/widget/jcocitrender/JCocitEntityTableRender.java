@@ -11,7 +11,7 @@ import com.jiongsoft.cocit.ui.widget.SearchBoxWidgetModel;
 import com.jiongsoft.cocit.ui.widget.TreeWidgetModel;
 import com.jiongsoft.cocit.ui.widget.WidgetRender;
 
-class JCocitEntityTableRender extends WidgetRender<EntityTableWidgetModel> {
+public class JCocitEntityTableRender extends WidgetRender<EntityTableWidgetModel> {
 
 	@Override
 	public void render(Writer out, EntityTableWidgetModel model) throws Throwable {

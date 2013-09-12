@@ -12,7 +12,7 @@ import com.jiongsoft.cocit.utils.StringUtil;
 import com.kmetop.demsy.comlib.biz.field.Upload;
 import com.kmetop.demsy.comlib.impl.base.security.Module;
 
-class DemsyEntityModuleService implements CocEntityModuleService {
+public class DemsyEntityModuleService implements CocEntityModuleService {
 	private Module entity;
 
 	private CocEntityTableService mainDataTable;

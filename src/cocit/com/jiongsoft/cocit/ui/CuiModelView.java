@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.nutz.mvc.View;
+import org.nutz.mvc.view.JspView;
 
+import com.jiongsoft.cocit.ui.model.JSPModel;
 import com.jiongsoft.cocit.utils.Log;
 
 /**
@@ -38,6 +40,14 @@ public class CuiModelView implements View {
 		resp.setHeader("Pragma", "no-cache");
 		resp.setHeader("Cache-Control", "no-cache");
 		resp.setDateHeader("Expires", -1);
+
+		if (obj instanceof JSPModel) {
+			JSPModel jsp = (JSPModel) obj;
+
+			new JspView(jsp.getJsp()).render(req, resp, obj);
+
+			return;
+		}
 
 		PrintWriter out = null;
 

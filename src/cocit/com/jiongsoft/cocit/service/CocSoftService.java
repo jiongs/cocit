@@ -1,5 +1,6 @@
 package com.jiongsoft.cocit.service;
 
+import com.jiongsoft.cocit.orm.Corm;
 import com.jiongsoft.cocit.sms.SmsClient;
 
 /**
@@ -16,6 +17,8 @@ import com.jiongsoft.cocit.sms.SmsClient;
  * 
  */
 public interface CocSoftService extends CocService {
+
+	public String getCode();
 
 	/**
 	 * 获取短信客户端API接口，用于收发短信。
@@ -34,4 +37,6 @@ public interface CocSoftService extends CocService {
 	 * @return 配置项数据，如果指定的配置项不存在，则返回指定默认值。
 	 */
 	public <T> T getConfig(String configKey, T defaultReturn);
+
+	public Corm getOrm();
 }

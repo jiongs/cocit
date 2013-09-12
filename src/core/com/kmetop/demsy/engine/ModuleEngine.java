@@ -315,13 +315,13 @@ public abstract class ModuleEngine implements IModuleEngine {
 
 		node.setName(module.getName());
 
-		String actionPathPrefix = module.getPathPrefix();
+		String pathPrefix = module.getPathPrefix();
 
 		switch (module.getType()) {
 		case IModule.TYPE_FOLDER:
 			break;
 		case IModule.TYPE_BIZ:
-			if (ActionUtil.ACTION_PATH_PREFIX.equals(actionPathPrefix)) {
+			if (ActionUtil.ACTION_PATH_PREFIX.equals(pathPrefix)) {
 				node.setParams(MvcUtil.contextPath(ActionUtil.GET_ENTITY_MODULE_UI, ActionUtil.encodeArgs(module.getId())));
 			} else {
 				node.setParams(MvcUtil.contextPath(MvcConst.URL_BZMAIN, module.getId()));

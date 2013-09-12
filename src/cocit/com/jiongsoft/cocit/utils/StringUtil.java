@@ -172,4 +172,17 @@ public abstract class StringUtil {
 
 		return Json.fromJson(valueType, text);
 	}
+
+	public static String join(String[] arr, String sep, boolean ignoreNil) {
+		StringBuffer sb = new StringBuffer();
+
+		for (String str : arr) {
+			if (ignoreNil && isNil(str))
+				continue;
+
+			sb.append(sep).append(str);
+		}
+
+		return sb.length() > 0 ? sb.substring(1) : "";
+	}
 }

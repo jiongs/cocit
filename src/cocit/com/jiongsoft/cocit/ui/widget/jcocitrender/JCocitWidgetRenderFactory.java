@@ -15,7 +15,7 @@ import com.jiongsoft.cocit.ui.widget.MenuWidgetModel;
 import com.jiongsoft.cocit.ui.widget.SearchBoxWidgetModel;
 import com.jiongsoft.cocit.ui.widget.TreeWidgetModel;
 import com.jiongsoft.cocit.ui.widget.TreeWidgetData;
-import com.jiongsoft.cocit.ui.widget.WidgetRenderFactory;
+import com.jiongsoft.cocit.ui.widget.CuiWidgetRenderFactory;
 import com.jiongsoft.cocit.utils.Log;
 
 /**
@@ -24,7 +24,7 @@ import com.jiongsoft.cocit.utils.Log;
  * @author yongshan.ji
  * 
  */
-public class JCocitWidgetRenderFactory implements WidgetRenderFactory {
+public class JCocitWidgetRenderFactory implements CuiWidgetRenderFactory {
 	private Map<Class, CuiRender> renders;
 
 	public JCocitWidgetRenderFactory() {

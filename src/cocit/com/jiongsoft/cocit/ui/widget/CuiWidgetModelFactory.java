@@ -10,12 +10,12 @@ import com.jiongsoft.cocit.service.CocEntityTableService;
  * @author jiongs753
  * 
  */
-public interface WidgetModelFactory {
+public interface CuiWidgetModelFactory {
 
 	/**
 	 * 获取“数据模块”界面模型
 	 * 
-	 * @param entityModule
+	 * @param moduleService
 	 * @return
 	 */
 	EntityModuleWidgetModel getEntytyModuleUI(CocEntityModuleService entityModule);
@@ -23,7 +23,7 @@ public interface WidgetModelFactory {
 	/**
 	 * 获取数据表主界面窗体模型
 	 * 
-	 * @param entityModule
+	 * @param moduleService
 	 * @return
 	 */
 	EntityTableWidgetModel getEntityTableUI(CocEntityModuleService entityModule, CocEntityTableService entityTable);
@@ -31,7 +31,7 @@ public interface WidgetModelFactory {
 	/**
 	 * 获取数据表Grid模型
 	 * 
-	 * @param entityModule
+	 * @param moduleService
 	 * @return
 	 */
 	GridWidgetModel getGridUI(CocEntityModuleService entityModule, CocEntityTableService entityTable);
@@ -39,7 +39,7 @@ public interface WidgetModelFactory {
 	/**
 	 * 获取数据表搜索框模型
 	 * 
-	 * @param entityModule
+	 * @param moduleService
 	 * @return
 	 */
 	SearchBoxWidgetModel getSearchBoxUI(CocEntityModuleService entityModule, CocEntityTableService entityTable);
@@ -47,7 +47,7 @@ public interface WidgetModelFactory {
 	/**
 	 * 获取数据表操作菜单模型
 	 * 
-	 * @param entityModule
+	 * @param moduleService
 	 * @return
 	 */
 	MenuWidgetModel getOperationMenuUI(CocEntityModuleService entityModule, CocEntityTableService entityTable);
@@ -55,7 +55,7 @@ public interface WidgetModelFactory {
 	/**
 	 * 获取数据表导航树模型
 	 * 
-	 * @param entityModule
+	 * @param moduleService
 	 * @return
 	 */
 	TreeWidgetModel getEntityNaviUI(CocEntityModuleService entityModule, CocEntityTableService entityTable);

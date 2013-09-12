@@ -24,7 +24,7 @@ public class CocWorkflowAction {
 	 *            BASE64加密后的模块参数
 	 * @return 模块主界面UI模型
 	 */
-	@At("/coc/workflow/entityModule/*")
+	@At("/coc/workflow/moduleService/*")
 	public CuiModel getModuleModel(String moduleArgs) {
 
 		return null;

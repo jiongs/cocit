@@ -27,7 +27,7 @@ import com.jiongsoft.cocit.utils.Log;
 import com.jiongsoft.cocit.utils.StringUtil;
 
 /**
- * 实体数据管理Action：负责接收管理实体数据的请求并处理这些请求，包括“增加、删除、查询、修改、导入、导出”等操作。
+ * 实体Action：即用来管理实体数据的Action，负责接收管理实体数据的请求并处理这些请求，包括“增加、删除、查询、修改、导入、导出”等操作。
  * 
  * @author jiongs753
  * 
@@ -41,14 +41,14 @@ public class CocEntityAction {
 	 * 获取“数据模块”界面模型，用于输出数据模块的界面。
 	 * 
 	 * @param args
-	 *            Hex加密后的调用参数，参数组成“entityModuleID”
+	 *            Hex加密后的调用参数，参数组成“moduleID”
 	 * @return
 	 */
 	@At(ActionUtil.GET_ENTITY_MODULE_UI)
 	public EntityModuleWidgetModel getEntityModuleUI(String args) {
 		CocEntityActionService service = CocEntityActionService.make(args, null, null);
 
-		EntityModuleWidgetModel moduleModel = service.modelFactory.getEntytyModuleUI(service.entityModule);
+		EntityModuleWidgetModel moduleModel = service.widgetFactory.getEntytyModuleUI(service.moduleService);
 
 		Log.debug("CocEntityAction.getEntityModuleUI: moduleModel = %s", moduleModel);
 
@@ -59,15 +59,15 @@ public class CocEntityAction {
 	/**
 	 * 获取“数据表”界面模型，用于输出数据表界面。
 	 * 
-	 * @param pathArgs
-	 *            Hex加密后的调用参数，参数组成“entityModuleID:entityTableID”
+	 * @param opArgs
+	 *            Hex加密后的调用参数，参数组成“moduleID:tableID”
 	 * @return
 	 */
 	@At(ActionUtil.GET_ENTITY_TABLE_UI)
 	public EntityTableWidgetModel getEntityTableUI(String args) {
 		CocEntityActionService service = CocEntityActionService.make(args, null, null);
 
-		EntityTableWidgetModel tableModel = service.modelFactory.getEntityTableUI(service.entityModule, service.entityTable);
+		EntityTableWidgetModel tableModel = service.widgetFactory.getEntityTableUI(service.moduleService, service.tableService);
 
 		Log.debug("CocEntityAction.getEntityTableUI: tableModel = %s", tableModel);
 
@@ -78,15 +78,15 @@ public class CocEntityAction {
 	/**
 	 * 获取“数据表GRID”数据模型，用于输出数据表GRID所需要的JSON数据。
 	 * 
-	 * @param pathArgs
-	 *            加密后的调用参数，参数组成“entityModuleID:entityTableID”
+	 * @param opArgs
+	 *            加密后的调用参数，参数组成“moduleID:tableID”
 	 * @return
 	 */
 	@At(ActionUtil.GET_ENTITY_GRID_DATA)
 	public GridWidgetData getEntityGridData(String args) {
 		CocEntityActionService service = CocEntityActionService.make(args, null, null);
 
-		GridWidgetModel tableModel = service.modelFactory.getGridUI(service.entityModule, service.entityTable);
+		GridWidgetModel tableModel = service.widgetFactory.getGridUI(service.moduleService, service.tableService);
 
 		/*
 		 * 构造Grid数据模型
@@ -97,8 +97,8 @@ public class CocEntityAction {
 		// 构造查询条件
 		CndExpr expr = service.makeExpr();
 		try {
-			List data = service.entityManager.query(expr, null);
-			int total = service.entityManager.count(expr, null);
+			List data = service.manager.query(expr, null);
+			int total = service.manager.count(expr, null);
 
 			ret.setData(data);
 			ret.setTotal(total);
@@ -114,15 +114,15 @@ public class CocEntityAction {
 	/**
 	 * 获取“获取数据表导航树”数据模型，用于输出树所需要的JSON数据。
 	 * 
-	 * @param pathArgs
-	 *            加密后的调用参数，参数组成“entityModuleID:entityTableID”
+	 * @param opArgs
+	 *            加密后的调用参数，参数组成“moduleID:tableID”
 	 * @return
 	 */
 	@At(ActionUtil.GET_ENTITY_NAVI_DATA)
 	public TreeWidgetData getEntityNaviData(String args) {
 		CocEntityActionService service = CocEntityActionService.make(args, null, null);
 
-		TreeWidgetData treeModel = service.modelFactory.getEntityNaviData(service.entityModule, service.entityTable);
+		TreeWidgetData treeModel = service.widgetFactory.getEntityNaviData(service.moduleService, service.tableService);
 
 		return treeModel;
 	}
@@ -131,8 +131,8 @@ public class CocEntityAction {
 	 * 
 	 * 获取业务数据表单模型
 	 * 
-	 * @param pathArgs
-	 *            调用参数，参数组成“entityModuleID:entityTableID:entityOperationID”
+	 * @param opArgs
+	 *            调用参数，参数组成“moduleID:tableID:operationID”
 	 * @param argDataID
 	 *            dataID
 	 * @param dataNode
@@ -142,7 +142,7 @@ public class CocEntityAction {
 	public EntityFormWidgetModel getEntityFormUI(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
 		CocEntityActionService service = CocEntityActionService.make(args, argDataID, dataNode);
 
-		EntityFormWidgetModel formModel = service.modelFactory.getEntityFormUI(service.entityModule, service.entityTable, service.entityOperation, service.entity);
+		EntityFormWidgetModel formModel = service.widgetFactory.getEntityFormUI(service.moduleService, service.tableService, service.operationService, service.entity);
 
 		formModel.setData(service.entity);
 
@@ -156,8 +156,8 @@ public class CocEntityAction {
 	 * 
 	 * 保存业务数据
 	 * 
-	 * @param pathArgs
-	 *            调用参数，参数组成“entityModuleID:entityTableID:entityOperationID”
+	 * @param opArgs
+	 *            调用参数，参数组成“moduleID:tableID:operationID”
 	 * @param argDataID
 	 *            dataID
 	 * @param dataNode
@@ -167,14 +167,14 @@ public class CocEntityAction {
 	public EntityFormWidgetData saveEntityFormData(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
 		CocEntityActionService service = CocEntityActionService.make(args, argDataID, dataNode);
 
-		EntityFormWidgetModel formModel = service.modelFactory.getEntityFormUI(service.entityModule, service.entityTable, service.entityOperation, service.entity);
+		EntityFormWidgetModel formModel = service.widgetFactory.getEntityFormUI(service.moduleService, service.tableService, service.operationService, service.entity);
 
 		EntityFormWidgetData ret = new EntityFormWidgetData();
 		ret.setModel(formModel);
 		ret.setData(service.entity);
 
 		try {
-			service.entityManager.save(service.entity, service.entityOperationMode);
+			service.manager.save(service.entity, service.operationMode);
 		} catch (Throwable e) {
 			ret.setException(e);
 		}
@@ -186,7 +186,7 @@ public class CocEntityAction {
 	public EntityFormWidgetData deleteEntityData(String args, String dataID) {
 		CocEntityActionService service = CocEntityActionService.make(args, dataID, null);
 
-		EntityFormWidgetModel formModel = service.modelFactory.getEntityFormUI(service.entityModule, service.entityTable, service.entityOperation, service.entity);
+		EntityFormWidgetModel formModel = service.widgetFactory.getEntityFormUI(service.moduleService, service.tableService, service.operationService, service.entity);
 
 		EntityFormWidgetData ret = new EntityFormWidgetData();
 		ret.setModel(formModel);
@@ -198,7 +198,7 @@ public class CocEntityAction {
 			for (int i = 0; i < array.length; i++) {
 				idArray[i] = Long.parseLong(array[i]);
 			}
-			service.entityManager.delete(idArray, service.entityOperationMode);
+			service.manager.delete(idArray, service.operationMode);
 		} catch (Throwable e) {
 			ret.setException(e);
 		}
@@ -211,7 +211,7 @@ public class CocEntityAction {
 		CocEntityActionService service = CocEntityActionService.make(args, entityID, dataNode);
 
 		try {
-			String result = service.entityManager.execTask(service, service.entityOperationMode);
+			String result = service.manager.execTask(service, service.operationMode);
 
 			return AlertsModel.make(200, result);
 		} catch (Throwable e) {
@@ -224,7 +224,7 @@ public class CocEntityAction {
 		CocEntityActionService service = CocEntityActionService.make(args, entityID, dataNode);
 
 		try {
-			String result = service.entityManager.execAsynTask(service, service.entityOperationMode);
+			String result = service.manager.execAsynTask(service, service.operationMode);
 
 			return AlertsModel.make(200, result);
 		} catch (Throwable e) {

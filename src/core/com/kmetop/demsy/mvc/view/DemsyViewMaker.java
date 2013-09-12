@@ -3,15 +3,18 @@ package com.kmetop.demsy.mvc.view;
 import org.nutz.ioc.Ioc;
 import org.nutz.mvc.View;
 import org.nutz.mvc.ViewMaker;
+import org.nutz.mvc.view.DefaultViewMaker;
 
 import com.jiongsoft.cocit.ui.CuiModelView;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.mvc.MvcConst;
 
-public class DemsyViewMaker implements ViewMaker, MvcConst {
+public class DemsyViewMaker extends DefaultViewMaker implements ViewMaker, MvcConst {
 
 	@Override
-	public View make(Ioc ioc, String type, String value) {
+	public View make(Ioc ioc, String t, String v) {
+		String value = v;
+		String type = t;
 		if (Str.isEmpty(value)) {
 			int idx = type.indexOf('.');
 			if (idx > -1) {
@@ -28,6 +31,6 @@ public class DemsyViewMaker implements ViewMaker, MvcConst {
 			return CuiModelView.make();
 		}
 
-		return null;
+		return super.make(ioc, t, v);
 	}
 }

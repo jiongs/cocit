@@ -9,7 +9,7 @@ import com.jiongsoft.cocit.ui.CuiRender;
  * @author yongshan.ji
  * 
  */
-public interface WidgetRenderFactory {
+public interface CuiWidgetRenderFactory {
 
 	CuiRender getRender(Class<? extends CuiModel> model);
 }

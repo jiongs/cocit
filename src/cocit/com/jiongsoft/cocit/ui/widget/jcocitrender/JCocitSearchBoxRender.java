@@ -9,7 +9,7 @@ import com.jiongsoft.cocit.ui.widget.WidgetRender;
 import com.jiongsoft.cocit.utils.KeyValue;
 import com.jiongsoft.cocit.utils.Lang;
 
-class JCocitSearchBoxRender extends WidgetRender<SearchBoxWidgetModel> {
+public class JCocitSearchBoxRender extends WidgetRender<SearchBoxWidgetModel> {
 
 	@Override
 	public void render(Writer out, SearchBoxWidgetModel model) throws Throwable {

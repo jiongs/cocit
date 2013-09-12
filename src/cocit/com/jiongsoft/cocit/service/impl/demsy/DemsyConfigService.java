@@ -3,7 +3,7 @@ package com.jiongsoft.cocit.service.impl.demsy;
 import com.jiongsoft.cocit.service.impl.BaseConfigService;
 import com.kmetop.demsy.config.SoftConfigManager;
 
-class DemsyConfigService extends BaseConfigService {
+public class DemsyConfigService extends BaseConfigService {
 	private SoftConfigManager demsyConfigManager;
 
 	DemsyConfigService(SoftConfigManager manager) {

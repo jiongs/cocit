@@ -15,7 +15,7 @@ import java.util.List;
  * <p>
  * <CODE>
  * {
- * entityTable: 1,
+ * tableService: 1,
  * operations:[1, 2, 3],
  * groups:[1, 2, 3],
  * fields:[1, 2, 3],
@@ -25,7 +25,7 @@ import java.util.List;
  * }
  * </CODE>
  * <UL>
- * <LI>entityTable: 表示绑定的数据表ID；
+ * <LI>tableService: 表示绑定的数据表ID；
  * <LI>operations: 表示绑定后的数据操作，是一个数组，数组中的每个元素为数据操作ID；
  * <LI>groups: 表示绑定后的数据组，是一个数组，数组中的每个元素为数据组ID；
  * <LI>fields: 表示绑定后的数据字段，是一个数组，数组中的每个元素为数据字段ID；

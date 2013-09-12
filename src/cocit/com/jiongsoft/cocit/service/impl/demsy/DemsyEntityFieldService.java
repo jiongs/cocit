@@ -26,7 +26,7 @@ import com.kmetop.demsy.comlib.impl.sft.system.AbstractSystemData;
 import com.kmetop.demsy.comlib.impl.sft.system.SFTSystem;
 import com.kmetop.demsy.engine.BizEngine;
 
-class DemsyEntityFieldService implements CocEntityFieldService {
+public class DemsyEntityFieldService implements CocEntityFieldService {
 	private AbstractSystemData entity;
 
 	private KeyValue[] dicOptions;

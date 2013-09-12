@@ -33,7 +33,7 @@ import com.kmetop.demsy.engine.BizEngine;
 import com.kmetop.demsy.lang.Obj;
 import com.kmetop.demsy.orm.IOrm;
 
-class DemsyEntityTableService implements CocEntityTableService {
+public class DemsyEntityTableService implements CocEntityTableService {
 	private BizEngine bizEngine;
 
 	private SFTSystem entity;

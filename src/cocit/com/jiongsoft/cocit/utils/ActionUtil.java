@@ -11,7 +11,7 @@ public abstract class ActionUtil {
 	/**
 	 * 编码路径参数
 	 * 
-	 * @param pathArgs
+	 * @param opArgs
 	 * @return
 	 */
 	public static String encodeArgs(Object... args) {
@@ -31,15 +31,26 @@ public abstract class ActionUtil {
 	/**
 	 * 解码路径参数
 	 * 
-	 * @param pathArgs
+	 * @param opArgs
 	 * @return
 	 */
 	public static String[] decodeArgs(String args) {
 		String str = args;
 
-		// String str = StringUtil.decodeHex(pathArgs);
+		// String str = StringUtil.decodeHex(opArgs);
 
 		return StringUtil.toArray(str, ":");
+	}
+
+	/**
+	 * 将JSP路径参数转换成以“/”开头的相对路径
+	 * 
+	 * @param jspPathArgs
+	 *            JSP页面路径，有子目录的用冒号分隔，如: /visit/index 路径为： visit:index
+	 * @return 返回 /visit/index
+	 */
+	public static String makeJspPath(String jspPathArgs) {
+		return "/" + jspPathArgs.replace(':', '/');
 	}
 
 	/*
@@ -60,35 +71,35 @@ public abstract class ActionUtil {
 	/**
 	 * “业务模块”访问路径之模块界面，模块界面可以包括一个主表界面和多个从表界面组成的Tabs界面。
 	 * <p>
-	 * 参数：entityModuleID
+	 * 参数：moduleID
 	 */
 	public static final String GET_ENTITY_MODULE_UI = ACTION_PATH_PREFIX + "/getEntityModuleUI/*";
 
 	/**
 	 * “业务模块”访问路径之数据表管理界面，数据表管理界面包括左边导航树、顶部操作菜单、GRID；不包括子表。
 	 * <p>
-	 * 参数：entityModuleID:entityTableID
+	 * 参数：moduleID:tableID
 	 */
 	public static final String GET_ENTITY_TABLE_UI = ACTION_PATH_PREFIX + "/getEntityTableUI/*";
 
 	/**
 	 * “业务模块”访问路径之Grid数据，数据格式通常为JSON或XML格式。
 	 * <p>
-	 * 参数：entityModuleID:entityTableID
+	 * 参数：moduleID:tableID
 	 */
 	public static final String GET_ENTITY_GRID_DATA = ACTION_PATH_PREFIX + "/getEntityGridData/*";
 
 	/**
 	 * “业务模块”访问路径之导航树数据，数据格式通常为JSON或XML格式。
 	 * <p>
-	 * 参数：entityModuleID:entityTableID
+	 * 参数：moduleID:tableID
 	 */
 	public static final String GET_ENTITY_NAVI_DATA = ACTION_PATH_PREFIX + "/getEntityNaviData/*";
 
 	/**
 	 * “业务模块”访问路径之加载业务表单
 	 * <p>
-	 * 参数：entityModuleID:entityTableID:entityOperationID
+	 * 参数：moduleID:tableID:operationID
 	 */
 	public static final String GET_ENTITY_FORM_UI = ACTION_PATH_PREFIX + "/getEntityFormUI/*";
 
@@ -100,7 +111,7 @@ public abstract class ActionUtil {
 	/**
 	 * “业务模块”访问路径之删除业务数据
 	 * <p>
-	 * 参数：entityModuleID:entityTableID:entityOperationID
+	 * 参数：moduleID:tableID:operationID
 	 */
 	public static final String DELETE_ENTITY_DATA = ACTION_PATH_PREFIX + "/deleteEntityData/*";
 
@@ -135,5 +146,10 @@ public abstract class ActionUtil {
 	/*
 	 * 以下是访问网站页面的相关路径
 	 */
+	/**
+	 * 获取JSP页面
+	 */
+	public static final String GET_JSP_MODEL = "/jsp/*";
+
 	// TODO:
 }

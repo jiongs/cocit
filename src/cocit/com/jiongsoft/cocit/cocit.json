@@ -10,10 +10,10 @@
 	cocServiceFactory: {
 		type: "com.jiongsoft.cocit.service.impl.demsy.DemsyServiceFactory"
 	},
-	widgetModelFactory: {
+	cuiWidgetModelFactory: {
 		type:"com.jiongsoft.cocit.ui.widget.impl.WidgetModelFactoryImpl"
 	},
-	widgetRenderFactory: {
+	cuiWidgetRenderFactory: {
 		type:"com.jiongsoft.cocit.ui.widget.jcocitrender.JCocitWidgetRenderFactory"
 	},
 	cocEntityManagerFactory: {

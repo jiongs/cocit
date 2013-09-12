@@ -12,9 +12,9 @@ import com.jiongsoft.cocit.utils.Lang;
 import com.jiongsoft.cocit.utils.Tree;
 import com.jiongsoft.cocit.utils.Tree.Node;
 
-abstract class JCocitTreeRenders {
+public abstract class JCocitTreeRenders {
 
-	static class ModelRender extends WidgetRender<TreeWidgetModel> {
+	public static class ModelRender extends WidgetRender<TreeWidgetModel> {
 
 		@Override
 		public void render(Writer out, TreeWidgetModel model) throws Throwable {
@@ -54,7 +54,7 @@ abstract class JCocitTreeRenders {
 		}
 	}
 
-	static class DataRender extends WidgetRender<TreeWidgetData> {
+	public static class DataRender extends WidgetRender<TreeWidgetData> {
 
 		@Override
 		public void render(Writer out, TreeWidgetData model) throws Throwable {

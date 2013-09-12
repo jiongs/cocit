@@ -14,7 +14,7 @@ import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.impl.sft.system.SystemDataGroup;
 import com.kmetop.demsy.engine.BizEngine;
 
-class DemsyEntityGroupService implements CocEntityGroupService {
+public class DemsyEntityGroupService implements CocEntityGroupService {
 	private SystemDataGroup entity;
 	private List<CocEntityFieldService> dataFields;
 

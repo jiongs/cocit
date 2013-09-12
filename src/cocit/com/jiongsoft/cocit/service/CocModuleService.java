@@ -4,7 +4,7 @@ package com.jiongsoft.cocit.service;
  * CocModuleService：组件化自定义软件模块，也称“组件化自定义模块/自定义模块/模块”等。
  * <UL>
  * <LI>代表一个运行时的自定义模块，通常由定义在数据库中的数据实体解析而来；
- * <LI>“Componentization of custom entityModule[it]”，“it = entityModule”；
+ * <LI>“Componentization of custom moduleService[it]”，“it = moduleService”；
  * <LI>Module是在Cocit平台上定制出来的软件模块；
  * <LI>全称“组件化自定义软件模块”；简称“CocModuleService”、“CoC模块”、“软件功能模块”、“软件模块”、“模块”等；
  * <LI>软件模块：可以在功能菜单树上显示的节点；

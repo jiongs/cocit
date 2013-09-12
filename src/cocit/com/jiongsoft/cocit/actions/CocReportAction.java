@@ -24,7 +24,7 @@ public class CocReportAction {
 	 *            BASE64加密后的模块参数
 	 * @return 模块主界面UI模型
 	 */
-	@At("/coc/report/entityModule/*")
+	@At("/coc/report/moduleService/*")
 	public CuiModel getModuleModel(String moduleArgs) {
 
 		return null;

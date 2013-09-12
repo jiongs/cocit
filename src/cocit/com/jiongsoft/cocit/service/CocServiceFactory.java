@@ -19,7 +19,7 @@ public interface CocServiceFactory {
 	/**
 	 * 根据模块ID获取数据模块。
 	 * 
-	 * @param entityModuleID
+	 * @param moduleID
 	 *            模块ID
 	 * @return CoC数据模块对象
 	 */
@@ -28,9 +28,9 @@ public interface CocServiceFactory {
 	/**
 	 * 获取与模块相关的数据表，如果模块ID为0，则直接获取数据表。该方法获取到的数据表对象不应包含子数据表对象。
 	 * 
-	 * @param entityModuleID
+	 * @param moduleID
 	 *            模块ID
-	 * @param entityTableID
+	 * @param tableID
 	 *            数据表ID
 	 * @return CoC数据表对象
 	 */

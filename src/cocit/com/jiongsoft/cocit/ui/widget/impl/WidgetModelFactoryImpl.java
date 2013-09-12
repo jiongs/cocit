@@ -17,7 +17,7 @@ import com.jiongsoft.cocit.ui.widget.MenuWidgetModel;
 import com.jiongsoft.cocit.ui.widget.SearchBoxWidgetModel;
 import com.jiongsoft.cocit.ui.widget.TreeWidgetModel;
 import com.jiongsoft.cocit.ui.widget.TreeWidgetData;
-import com.jiongsoft.cocit.ui.widget.WidgetModelFactory;
+import com.jiongsoft.cocit.ui.widget.CuiWidgetModelFactory;
 import com.jiongsoft.cocit.ui.widget.EntityFormWidgetModel.FormField;
 import com.jiongsoft.cocit.ui.widget.GridWidgetModel.GridColumn;
 import com.jiongsoft.cocit.utils.ActionUtil;
@@ -27,7 +27,7 @@ import com.jiongsoft.cocit.utils.StringUtil;
 import com.jiongsoft.cocit.utils.Tree;
 import com.jiongsoft.cocit.utils.Tree.Node;
 
-public class WidgetModelFactoryImpl implements WidgetModelFactory {
+public class WidgetModelFactoryImpl implements CuiWidgetModelFactory {
 
 	@Override
 	public EntityModuleWidgetModel getEntytyModuleUI(CocEntityModuleService entityModule) {
@@ -70,7 +70,7 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 		model.setGridModel(this.getGridUI(entityModule, entityTable));
 
 		// 将搜索框放在左边导航树顶部
-		// model.setSearchBoxModel(this.getSearchBoxModel(entityModule, entityTable));
+		// model.setSearchBoxModel(this.getSearchBoxModel(moduleService, tableService));
 
 		return model;
 	}
@@ -184,8 +184,8 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 
 				String pathArgs = ActionUtil.encodeArgs(entityModule.getID(), entityTable.getID(), op.getID());
 
-				// pathArgs = entityModuleID:entityTableID:entityOperationID
-				child.set("pathArgs", pathArgs);
+				// opArgs = moduleID:tableID:operationID
+				child.set("opArgs", pathArgs);
 				child.set("operationCode", op.getOperationCode());
 				child.set("operationMode", op.getOperationMode());
 				child.setSequence(op.getSequence());
@@ -216,7 +216,7 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 		model.setDataLoadUrl(ActionUtil.GET_ENTITY_NAVI_DATA.replace("*", ActionUtil.encodeArgs(entityModule.getID(), entityTable.getID())));
 
 		// 获取树数据
-		// Tree entity = entityTable.getNaviTree();
+		// Tree entity = tableService.getNaviTree();
 		// model.setData(entity);
 
 		// 返回

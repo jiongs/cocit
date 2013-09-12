@@ -10,9 +10,9 @@ import com.jiongsoft.cocit.ui.widget.GridWidgetModel.GridColumn;
 import com.jiongsoft.cocit.utils.Json;
 import com.jiongsoft.cocit.utils.Lang;
 
-abstract class JCocitGridRenders {
+public abstract class JCocitGridRenders {
 
-	static class ModelRender extends WidgetRender<GridWidgetModel> {
+	public static class ModelRender extends WidgetRender<GridWidgetModel> {
 
 		@Override
 		public void render(Writer out, GridWidgetModel model) throws Throwable {
@@ -81,7 +81,7 @@ abstract class JCocitGridRenders {
 		}
 	}
 
-	static class DataRender extends WidgetRender<GridWidgetData> {
+	public static class DataRender extends WidgetRender<GridWidgetData> {
 
 		@Override
 		public void render(Writer out, GridWidgetData model) throws Throwable {

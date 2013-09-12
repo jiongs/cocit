@@ -40,7 +40,7 @@ import com.kmetop.demsy.comlib.security.IModule;
 //
 		@CocField(name = "模块名称", property = "name", mode = "c:M e:M")//
 		, @CocField(name = "模块编号", property = "code") //
-		, @CocField(name = "路径前缀", property = "actionPathPrefix") //
+		, @CocField(name = "路径前缀", property = "pathPrefix") //
 		, @CocField(name = "模块类型", property = "type", disabledNavi = true, mode = "c:M e:M", options = "[" + //
 				"{value:'90',text:'文件夹'}\n" + //
 				",{value:'1',text:'静态模块'}\n" + //

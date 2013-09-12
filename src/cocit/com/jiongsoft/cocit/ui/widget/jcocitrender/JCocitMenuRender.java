@@ -13,7 +13,7 @@ import com.jiongsoft.cocit.utils.Tree;
 import com.jiongsoft.cocit.utils.Tree.Node;
 
 @SuppressWarnings("unused")
-class JCocitMenuRender extends WidgetRender<MenuWidgetModel> {
+public class JCocitMenuRender extends WidgetRender<MenuWidgetModel> {
 
 	@Override
 	public void render(Writer out, MenuWidgetModel model) throws Throwable {
@@ -51,10 +51,10 @@ class JCocitMenuRender extends WidgetRender<MenuWidgetModel> {
 				if (!StringUtil.isNil(str))
 					print(out, ", token: '%s'", str);// 菜单通过该令牌获取DataGrid对象
 
-				// pathArgs = entityModuleID:entityTableID:entityOperationID
-				str = node.get("pathArgs", "");
+				// opArgs = moduleID:tableID:operationID
+				str = node.get("opArgs", "");
 				if (!StringUtil.isNil(str))
-					print(out, ", pathArgs: '%s'", str);
+					print(out, ", opArgs: '%s'", str);
 
 				str = node.get("operationMode", "");
 				if (!StringUtil.isNil(str))
@@ -110,10 +110,10 @@ class JCocitMenuRender extends WidgetRender<MenuWidgetModel> {
 			print(out, "<div data-options=\"", child.getId());
 			print(out, "name:'%s'", node.getName());
 
-			// pathArgs = entityModuleID:entityTableID:entityOperationID
-			String str = node.get("pathArgs", "");
+			// opArgs = moduleID:tableID:operationID
+			String str = node.get("opArgs", "");
 			if (!StringUtil.isNil(str))
-				print(out, ", pathArgs: '%s'", str);
+				print(out, ", opArgs: '%s'", str);
 
 			str = model.get("token", "");
 			if (!StringUtil.isNil(str))
@@ -162,15 +162,15 @@ class JCocitMenuRender extends WidgetRender<MenuWidgetModel> {
 				}
 
 				print(out, "{text: '%s', opID: '%s'", node.getName(), node.getId());
-				String value = node.get("entityModuleID", "");
+				String value = node.get("moduleID", "");
 				if (!StringUtil.isNil(value))
-					print(out, ", entityModuleID: %s", value);
+					print(out, ", moduleID: %s", value);
 
-				value = node.get("entityTableID", "");
+				value = node.get("tableID", "");
 				if (!StringUtil.isNil(value))
-					print(out, ", entityTableID: %s", value);
+					print(out, ", tableID: %s", value);
 
-				value = node.get("entityOperationMode", "");
+				value = node.get("operationMode", "");
 				if (!StringUtil.isNil(value))
 					print(out, ", opMode: '%s'", value);
 

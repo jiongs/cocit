@@ -27,6 +27,8 @@ public class DemsyEntityManager implements CocEntityManager {
 			module = cocmodule.getEntity();
 
 		SFTSystem system = coctable.getEntity();
+		if (system == null && module != null)
+			system = (SFTSystem) Demsy.moduleEngine.getSystem(module);
 
 		bizManager = Demsy.bizManagerFactory.getManager(module, system);
 	}

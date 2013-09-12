@@ -9,7 +9,7 @@ import com.jiongsoft.cocit.utils.StringUtil;
 import com.kmetop.demsy.comlib.biz.field.Upload;
 import com.kmetop.demsy.comlib.impl.base.security.Module;
 
-class DemsyModuleService implements CocModuleService {
+public class DemsyModuleService implements CocModuleService {
 
 	private Module entity;
 

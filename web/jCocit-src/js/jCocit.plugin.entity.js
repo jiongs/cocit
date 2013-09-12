@@ -202,7 +202,7 @@
 					arr.push(val);
 				}
 			}
-			queryParams["queryNaviTreeJsonExpr"] = $.toJsonString(naviTreeExpr);
+			queryParams["query.filterExpr"] = $.toJsonString(naviTreeExpr);
 		}
 
 		/*
@@ -215,9 +215,9 @@
 			if (searchBoxField != null && searchBoxField.trim().length > 0) {
 				var searchBoxExpr = {};
 				searchBoxExpr[searchBoxField] = searchBoxValue;
-				queryParams["querySearchBoxJsonExpr"] = $.toJsonString(searchBoxExpr);
+				queryParams["query.keywords"] = $.toJsonString(searchBoxExpr);
 			} else {
-				queryParams["querySearchBoxJsonExpr"] = "";
+				queryParams["query.keywords"] = "";
 			}
 		}
 
@@ -251,9 +251,9 @@
 					// 创建父Grid过滤表达式
 					if (idArray.length > 0) {
 						parentGridExpr[gridTabOptions.fkfield] = idArray;
-						queryParams["queryParentGridJsonExpr"] = $.toJsonString(parentGridExpr);
+						queryParams["query.parentExpr"] = $.toJsonString(parentGridExpr);
 					} else {
-						queryParams["queryParentGridJsonExpr"] = "";
+						queryParams["query.parentExpr"] = "";
 					}
 				}
 			}

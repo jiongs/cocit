@@ -11,7 +11,7 @@ import com.jiongsoft.cocit.ui.widget.EntityTableWidgetModel;
 import com.jiongsoft.cocit.ui.widget.WidgetRender;
 import com.jiongsoft.cocit.utils.Lang;
 
-class JCocitEntityModuleRender extends WidgetRender<EntityModuleWidgetModel> {
+public class JCocitEntityModuleRender extends WidgetRender<EntityModuleWidgetModel> {
 
 	@Override
 	public void render(Writer writer, EntityModuleWidgetModel model) throws Throwable {

@@ -9,7 +9,7 @@ import com.jiongsoft.cocit.utils.Log;
 import com.jiongsoft.cocit.utils.StringUtil;
 import com.kmetop.demsy.comlib.impl.base.biz.BizAction;
 
-class DemsyEntityOperationService implements CocEntityOperationService {
+public class DemsyEntityOperationService implements CocEntityOperationService {
 
 	private BizAction entity;
 
