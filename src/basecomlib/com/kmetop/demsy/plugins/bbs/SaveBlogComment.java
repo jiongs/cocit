@@ -2,16 +2,16 @@ package com.kmetop.demsy.plugins.bbs;
 
 import java.util.Date;
 
-import com.jiongsoft.cocit.entity.CocEntityEvent;
-import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.entity.ActionEvent;
+import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.impl.sft.lybbs.LyblogComment;
 import com.kmetop.demsy.orm.IOrm;
 
-public class SaveBlogComment extends BaseEntityPlugin {
+public class SaveBlogComment extends BaseActionPlugin {
 
 	@Override
-	public void before(CocEntityEvent event) {
+	public void before(ActionEvent event) {
 		LyblogComment obj = (LyblogComment) event.getEntity();
 
 		// 回复
@@ -28,12 +28,12 @@ public class SaveBlogComment extends BaseEntityPlugin {
 	}
 
 	@Override
-	public void after(CocEntityEvent event) {
+	public void after(ActionEvent event) {
 
 	}
 
 	@Override
-	public void loaded(CocEntityEvent event) {
+	public void loaded(ActionEvent event) {
 
 	}
 

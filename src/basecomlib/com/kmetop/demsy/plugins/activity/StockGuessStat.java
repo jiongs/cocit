@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.jiongsoft.cocit.entity.CocEntityEvent;
-import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.entity.ActionEvent;
+import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.comlib.impl.sft.activity.ActivityCatalog;
 import com.kmetop.demsy.comlib.impl.sft.activity.StockActivity;
@@ -21,10 +21,10 @@ import com.kmetop.demsy.util.sort.SortUtils;
  * @author yongshan.ji
  * 
  */
-public class StockGuessStat extends BaseEntityPlugin {
+public class StockGuessStat extends BaseActionPlugin {
 
 	@Override
-	public void before(CocEntityEvent event) {
+	public void before(ActionEvent event) {
 		ActivityCatalog activity = (ActivityCatalog) event.getEntity();
 		Byte type = activity.getType();
 		if (type == null || !type.equals(IActivity.TYPE_STOCK)) {
@@ -83,12 +83,12 @@ public class StockGuessStat extends BaseEntityPlugin {
 	}
 
 	@Override
-	public void after(CocEntityEvent event) {
+	public void after(ActionEvent event) {
 
 	}
 
 	@Override
-	public void loaded(CocEntityEvent event) {
+	public void loaded(ActionEvent event) {
 
 	}
 

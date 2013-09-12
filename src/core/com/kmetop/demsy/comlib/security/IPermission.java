@@ -18,7 +18,19 @@ public interface IPermission {
 
 	Date getExpiredTo();
 
+	/**
+	 * 使用表达式指定待授权的用户，即：对满足条件的所有用户授权访问特定的模块{@link #getDatas()}
+	 * 
+	 * @return
+	 */
 	Dataset getUsers();
 
+	/**
+	 * 使用表达式指定被授权的模块，即：将满足条件的所有模块授权给特定的用户{@link #getUsers()}
+	 * 
+	 * @return
+	 */
 	Dataset getDatas();
+	
+	
 }

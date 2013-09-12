@@ -8,8 +8,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import org.nutz.trans.Atom;
 import org.nutz.trans.Trans;
 
-import com.jiongsoft.cocit.entity.CocEntityEvent;
-import com.jiongsoft.cocit.entity.CocEntityPlugin;
+import com.jiongsoft.cocit.entity.ActionEvent;
+import com.jiongsoft.cocit.entity.ActionPlugin;
 import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.orm.expr.NullCndExpr;
 import com.kmetop.demsy.Demsy;
@@ -69,40 +69,40 @@ public class BizSessionImpl implements IBizSession {
 		return Demsy.orm();
 	}
 
-	protected CocEntityEvent createEvent() {
-		CocEntityEvent e = new CocEntityEvent();
+	protected ActionEvent createEvent() {
+		ActionEvent e = new ActionEvent();
 		e.setOrm(orm());
 
 		return e;
 	}
 
-	private void fireLoadEvent(CocEntityPlugin[] plugins, CocEntityEvent event) {
+	private void fireLoadEvent(ActionPlugin[] plugins, ActionEvent event) {
 		if (plugins != null) {
-			for (CocEntityPlugin l : plugins) {
+			for (ActionPlugin l : plugins) {
 				l.load(event);
 			}
 		}
 	}
 
-	private void fireLoadedEvent(CocEntityPlugin[] plugins, CocEntityEvent event) {
+	private void fireLoadedEvent(ActionPlugin[] plugins, ActionEvent event) {
 		if (plugins != null) {
-			for (CocEntityPlugin l : plugins) {
+			for (ActionPlugin l : plugins) {
 				l.loaded(event);
 			}
 		}
 	}
 
-	private void fireBeforeEvent(CocEntityPlugin[] plugins, CocEntityEvent event) {
+	private void fireBeforeEvent(ActionPlugin[] plugins, ActionEvent event) {
 		if (plugins != null) {
-			for (CocEntityPlugin l : plugins) {
+			for (ActionPlugin l : plugins) {
 				l.before(event);
 			}
 		}
 	}
 
-	private void fireAfterEvent(CocEntityPlugin[] plugins, CocEntityEvent event) {
+	private void fireAfterEvent(ActionPlugin[] plugins, ActionEvent event) {
 		if (plugins != null) {
-			for (CocEntityPlugin l : plugins) {
+			for (ActionPlugin l : plugins) {
 				l.after(event);
 			}
 		}
@@ -113,13 +113,13 @@ public class BizSessionImpl implements IBizSession {
 	// ========================================================================
 
 	@Override
-	public int save(Object obj, CocEntityPlugin... plugins) {
+	public int save(Object obj, ActionPlugin... plugins) {
 		return save(obj, null, plugins);
 	}
 
 	@Override
-	public int save(final Object obj, final CndExpr fieldRexpr, final CocEntityPlugin... plugins) {
-		final CocEntityEvent event = createEvent();
+	public int save(final Object obj, final CndExpr fieldRexpr, final ActionPlugin... plugins) {
+		final ActionEvent event = createEvent();
 		Trans.exec(new Atom() {
 			public void run() {
 				event.setEntity(obj);
@@ -136,8 +136,8 @@ public class BizSessionImpl implements IBizSession {
 	}
 
 	@Override
-	public int updateMore(final Object obj, final CndExpr expr, final CocEntityPlugin... plugins) {
-		final CocEntityEvent event = createEvent();
+	public int updateMore(final Object obj, final CndExpr expr, final ActionPlugin... plugins) {
+		final ActionEvent event = createEvent();
 		Trans.exec(new Atom() {
 			public void run() {
 				event.setEntity(obj);
@@ -154,8 +154,8 @@ public class BizSessionImpl implements IBizSession {
 	}
 
 	@Override
-	public int delete(final Object entity, final CocEntityPlugin... plugins) {
-		final CocEntityEvent event = createEvent();
+	public int delete(final Object entity, final ActionPlugin... plugins) {
+		final ActionEvent event = createEvent();
 		Trans.exec(new Atom() {
 			public void run() {
 				event.setEntity(entity);
@@ -171,8 +171,8 @@ public class BizSessionImpl implements IBizSession {
 	}
 
 	@Override
-	public int delete(final Class klass, final Long id, final CocEntityPlugin... plugins) {
-		final CocEntityEvent event = createEvent();
+	public int delete(final Class klass, final Long id, final ActionPlugin... plugins) {
+		final ActionEvent event = createEvent();
 		Trans.exec(new Atom() {
 			public void run() {
 				event.setEntityType(klass);
@@ -189,8 +189,8 @@ public class BizSessionImpl implements IBizSession {
 	}
 
 	@Override
-	public int deleteMore(final Class klass, final CndExpr expr, final CocEntityPlugin... plugins) {
-		final CocEntityEvent event = createEvent();
+	public int deleteMore(final Class klass, final CndExpr expr, final ActionPlugin... plugins) {
+		final ActionEvent event = createEvent();
 		Trans.exec(new Atom() {
 			public void run() {
 				event.setEntityType(klass);
@@ -207,13 +207,13 @@ public class BizSessionImpl implements IBizSession {
 	}
 
 	@Override
-	public Object load(Class klass, Long id, CocEntityPlugin... plugins) {
+	public Object load(Class klass, Long id, ActionPlugin... plugins) {
 		return this.load(klass, id, null, plugins);
 	}
 
 	@Override
-	public Object load(final Class klass, final Long id, final CndExpr fieldRexpr, final CocEntityPlugin... plugins) {
-		final CocEntityEvent event = createEvent();
+	public Object load(final Class klass, final Long id, final CndExpr fieldRexpr, final ActionPlugin... plugins) {
+		final ActionEvent event = createEvent();
 		Trans.exec(new Atom() {
 			public void run() {
 				event.setEntityType(klass);
@@ -231,8 +231,8 @@ public class BizSessionImpl implements IBizSession {
 	}
 
 	@Override
-	public Object load(final Class klass, final CndExpr expr, final CocEntityPlugin... plugins) {
-		final CocEntityEvent event = createEvent();
+	public Object load(final Class klass, final CndExpr expr, final ActionPlugin... plugins) {
+		final ActionEvent event = createEvent();
 		Trans.exec(new Atom() {
 			public void run() {
 				event.setExpr(expr);
@@ -249,8 +249,8 @@ public class BizSessionImpl implements IBizSession {
 	}
 
 	@Override
-	public int count(final Class klass, final CndExpr expr, final CocEntityPlugin... plugins) {
-		final CocEntityEvent event = createEvent();
+	public int count(final Class klass, final CndExpr expr, final ActionPlugin... plugins) {
+		final ActionEvent event = createEvent();
 		Trans.exec(new Atom() {
 			public void run() {
 				event.setExpr(expr);
@@ -267,8 +267,8 @@ public class BizSessionImpl implements IBizSession {
 	}
 
 	@Override
-	public List query(final Class klass, final CndExpr expr, final CocEntityPlugin... plugins) {
-		final CocEntityEvent event = createEvent();
+	public List query(final Class klass, final CndExpr expr, final ActionPlugin... plugins) {
+		final ActionEvent event = createEvent();
 		Trans.exec(new Atom() {
 			public void run() {
 				event.setEntityType(klass);
@@ -285,8 +285,8 @@ public class BizSessionImpl implements IBizSession {
 	}
 
 	@Override
-	public List query(final Pager pager, final CocEntityPlugin... plugins) {
-		final CocEntityEvent event = createEvent();
+	public List query(final Pager pager, final ActionPlugin... plugins) {
+		final ActionEvent event = createEvent();
 		Trans.exec(new Atom() {
 			public void run() {
 				event.setEntity(pager);
@@ -302,8 +302,8 @@ public class BizSessionImpl implements IBizSession {
 	}
 
 	@Override
-	public Object run(final Object obj, final CndExpr expr, final CocEntityPlugin... plugins) {
-		final CocEntityEvent event = createEvent();
+	public Object run(final Object obj, final CndExpr expr, final ActionPlugin... plugins) {
+		final ActionEvent event = createEvent();
 		Trans.exec(new Atom() {
 			public void run() {
 				event.setEntity(obj);
@@ -339,8 +339,8 @@ public class BizSessionImpl implements IBizSession {
 	}
 
 	@Override
-	public Object asynRun(Object obj, CndExpr fieldRexpr, CocEntityPlugin... plugins) {
-		CocEntityEvent event = createEvent();
+	public Object asynRun(Object obj, CndExpr fieldRexpr, ActionPlugin... plugins) {
+		ActionEvent event = createEvent();
 		event.setEntity(obj);
 		event.setExpr(fieldRexpr);
 		put(new DelayAction(ActionType.run, event, plugins));
@@ -353,46 +353,46 @@ public class BizSessionImpl implements IBizSession {
 	// ========================================================================
 
 	@Override
-	public void asynSave(Object obj, CocEntityPlugin... plugins) {
-		CocEntityEvent event = createEvent();
+	public void asynSave(Object obj, ActionPlugin... plugins) {
+		ActionEvent event = createEvent();
 		event.setEntity(obj);
 		put(new DelayAction(ActionType.save, event, plugins));
 	}
 
 	@Override
-	public void asynSave(Object obj, CndExpr fieldRexpr, CocEntityPlugin... plugins) {
-		CocEntityEvent event = createEvent();
+	public void asynSave(Object obj, CndExpr fieldRexpr, ActionPlugin... plugins) {
+		ActionEvent event = createEvent();
 		event.setEntity(obj);
 		event.setExpr(fieldRexpr);
 		put(new DelayAction(ActionType.save, event, plugins));
 	}
 
 	@Override
-	public void asynUpdateMore(Object obj, CndExpr expr, CocEntityPlugin... plugins) {
-		CocEntityEvent event = createEvent();
+	public void asynUpdateMore(Object obj, CndExpr expr, ActionPlugin... plugins) {
+		ActionEvent event = createEvent();
 		event.setEntity(obj);
 		event.setExpr(expr);
 		put(new DelayAction(ActionType.updateMore, event, plugins));
 	}
 
 	@Override
-	public void asynDelete(Object obj, CocEntityPlugin... plugins) {
-		CocEntityEvent event = createEvent();
+	public void asynDelete(Object obj, ActionPlugin... plugins) {
+		ActionEvent event = createEvent();
 		event.setEntity(obj);
 		put(new DelayAction(ActionType.delete, event, plugins));
 	}
 
 	@Override
-	public void asynDeleteMore(Class klass, CndExpr expr, CocEntityPlugin... plugins) {
-		CocEntityEvent event = createEvent();
+	public void asynDeleteMore(Class klass, CndExpr expr, ActionPlugin... plugins) {
+		ActionEvent event = createEvent();
 		event.setEntityType(klass);
 		event.setExpr(expr);
 		put(new DelayAction(ActionType.deleteMore, event, plugins));
 	}
 
 	@Override
-	public void asynQuery(Pager pager, CocEntityPlugin... plugins) {
-		CocEntityEvent event = createEvent();
+	public void asynQuery(Pager pager, ActionPlugin... plugins) {
+		ActionEvent event = createEvent();
 		event.setEntity(pager);
 		put(new DelayAction(ActionType.query, event, plugins));
 	}
@@ -417,11 +417,11 @@ public class BizSessionImpl implements IBizSession {
 	private static class DelayAction {
 		ActionType type;
 
-		CocEntityEvent event;
+		ActionEvent event;
 
-		CocEntityPlugin[] plugins;
+		ActionPlugin[] plugins;
 
-		private DelayAction(ActionType type, CocEntityEvent event, CocEntityPlugin... plugins) {
+		private DelayAction(ActionType type, ActionEvent event, ActionPlugin... plugins) {
 			this.type = type;
 			this.event = event;
 			this.plugins = plugins;
@@ -437,7 +437,7 @@ public class BizSessionImpl implements IBizSession {
 		}
 
 		protected void execute(DelayAction action) throws Exception {
-			CocEntityEvent event = action.event;
+			ActionEvent event = action.event;
 			if (action.type == ActionType.save) {
 				if (event.getEntity() instanceof RunningLog) {
 					RunningLogDao.me().save((RunningLog) event.getEntity());

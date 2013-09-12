@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jiongsoft.cocit.Cocit;
-import com.jiongsoft.cocit.CocitHttpContext;
-import com.jiongsoft.cocit.service.CocConfigService;
-import com.jiongsoft.cocit.service.CocSoftService;
+import com.jiongsoft.cocit.ActionContext;
+import com.jiongsoft.cocit.service.ConfigService;
+import com.jiongsoft.cocit.service.SoftService;
 import com.jiongsoft.cocit.sms.SmsClient;
-import com.jiongsoft.cocit.utils.Log;
+import com.jiongsoft.cocit.util.Log;
 
 /**
  * 亿美嵌入型短信接口：http://www.emay.cn
@@ -61,17 +61,17 @@ public class EmayHttpSmsClient implements SmsClient {
 	private String key;// 序列号
 
 	public EmayHttpSmsClient() {
-		CocitHttpContext ctx = Cocit.getHttpContext();
+		ActionContext ctx = Cocit.getActionContext();
 
 		if (ctx != null) {
-			CocSoftService soft = ctx.getSoftService();
+			SoftService soft = ctx.getSoftService();
 
-			this.proxyHost = soft.getConfig(CocConfigService.CFG_PROXY_HOST, "");
-			this.proxyPort = soft.getConfig(CocConfigService.CFG_PROXY_PORT, 80);
+			this.proxyHost = soft.getConfig(ConfigService.CFG_PROXY_HOST, "");
+			this.proxyPort = soft.getConfig(ConfigService.CFG_PROXY_PORT, 80);
 
-			this.url = soft.getConfig(CocConfigService.CFG_URL, "http://sdkhttp.eucp.b2m.cn");
-			this.uid = soft.getConfig(CocConfigService.CFG_UID, "");
-			this.pwd = soft.getConfig(CocConfigService.CFG_PWD, "");
+			this.url = soft.getConfig(ConfigService.CFG_URL, "http://sdkhttp.eucp.b2m.cn");
+			this.uid = soft.getConfig(ConfigService.CFG_UID, "");
+			this.pwd = soft.getConfig(ConfigService.CFG_PWD, "");
 			this.key = soft.getConfig("sms.key", "");
 
 			this.register();

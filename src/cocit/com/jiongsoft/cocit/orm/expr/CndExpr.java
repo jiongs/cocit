@@ -6,8 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.jiongsoft.cocit.utils.Json;
-import com.jiongsoft.cocit.utils.StringUtil;
+import com.jiongsoft.cocit.util.Json;
+import com.jiongsoft.cocit.util.StringUtil;
 
 /**
  * 条件表达式： 用于描述SQL查询语句的where条件部分

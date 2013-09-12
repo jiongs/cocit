@@ -2,11 +2,11 @@ package com.jiongsoft.ynby.plugins;
 
 import java.util.Date;
 
-import com.jiongsoft.cocit.entity.CocEntityEvent;
-import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
-import com.jiongsoft.cocit.utils.CocException;
-import com.jiongsoft.cocit.utils.DateUtil;
-import com.jiongsoft.cocit.utils.VerificationCodeUtil;
+import com.jiongsoft.cocit.entity.ActionEvent;
+import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
+import com.jiongsoft.cocit.util.CocException;
+import com.jiongsoft.cocit.util.DateUtil;
+import com.jiongsoft.cocit.util.HttpUtil;
 import com.jiongsoft.ynby.entity.VisitActivity;
 import com.jiongsoft.ynby.entity.VisitActivityRegister;
 import com.kmetop.demsy.Demsy;
@@ -19,9 +19,9 @@ public class VisitActivityPlugins {
 	 * @author JiongSoft
 	 * 
 	 */
-	public static class SaveActivity extends BaseEntityPlugin<VisitActivity> {
+	public static class SaveActivity extends BaseActionPlugin<VisitActivity> {
 		@Override
-		public void before(CocEntityEvent<VisitActivity> event) {
+		public void before(ActionEvent<VisitActivity> event) {
 			VisitActivity entity = event.getEntity();
 
 			Date date = entity.getPlanDate();
@@ -52,15 +52,15 @@ public class VisitActivityPlugins {
 	 * @author JiongSoft
 	 * 
 	 */
-	public static class SaveRegister extends BaseEntityPlugin<VisitActivityRegister> {
+	public static class SaveRegister extends BaseActionPlugin<VisitActivityRegister> {
 		@Override
-		public synchronized void before(CocEntityEvent<VisitActivityRegister> event) {
+		public synchronized void before(ActionEvent<VisitActivityRegister> event) {
 			VisitActivityRegister entity = event.getEntity();
 			VisitActivity activity = entity.getActivity();
 
 			// 检查短信验证码
 			String code = entity.getVerificationCode();
-			VerificationCodeUtil.checkVerificationCode(Demsy.me().request(), code, "手机验证码非法！");
+			HttpUtil.checkVerificationCode(Demsy.me().request(), code, "手机验证码非法！");
 
 			// 检查报名有效期
 			if (activity.isExpired()) {

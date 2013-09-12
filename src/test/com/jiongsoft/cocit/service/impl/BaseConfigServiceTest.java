@@ -15,8 +15,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.jiongsoft.cocit.service.impl.BaseConfigService;
-import com.jiongsoft.cocit.utils.DateUtil;
-import com.jiongsoft.cocit.utils.StringUtil;
+import com.jiongsoft.cocit.util.DateUtil;
+import com.jiongsoft.cocit.util.StringUtil;
 import com.jiongsoft.cocit.utils.TestBean;
 
 public class BaseConfigServiceTest {
@@ -88,7 +88,6 @@ public class BaseConfigServiceTest {
 		assertTrue(3.5f == f);
 		Date date = assist.get("date", new Date());
 		assertEquals("2013/08/28", DateUtil.formatDate(date, "yyyy/MM/dd"));
-		assertEquals(StringUtil.class, assist.get("class", Class.class));
 		Object obj = assist.get("defaultReturnIsNull", null);
 		assertEquals("string", obj);
 		TestBean case1 = (TestBean) assist.get("testcase", new TestBean());

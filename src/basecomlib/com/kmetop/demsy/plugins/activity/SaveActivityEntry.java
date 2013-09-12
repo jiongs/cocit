@@ -2,8 +2,8 @@ package com.kmetop.demsy.plugins.activity;
 
 import java.util.Date;
 
-import com.jiongsoft.cocit.entity.CocEntityEvent;
-import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.entity.ActionEvent;
+import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
 import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
@@ -14,10 +14,10 @@ import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.orm.IOrm;
 
-public class SaveActivityEntry extends BaseEntityPlugin {
+public class SaveActivityEntry extends BaseActionPlugin {
 
 	@Override
-	public void before(CocEntityEvent event) {
+	public void before(ActionEvent event) {
 		IActivityEntry entry = (IActivityEntry) event.getEntity();
 		IActivity catalog = entry.getCatalog();
 
@@ -57,13 +57,13 @@ public class SaveActivityEntry extends BaseEntityPlugin {
 	}
 
 	@Override
-	public void after(CocEntityEvent event) {
+	public void after(ActionEvent event) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void loaded(CocEntityEvent event) {
+	public void loaded(ActionEvent event) {
 		// TODO Auto-generated method stub
 
 	}

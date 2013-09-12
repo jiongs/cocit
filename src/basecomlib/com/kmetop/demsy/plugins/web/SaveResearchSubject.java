@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.nutz.json.Json;
 
-import com.jiongsoft.cocit.entity.CocEntityEvent;
+import com.jiongsoft.cocit.entity.ActionEvent;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.web.IResearchOption;
@@ -21,7 +21,7 @@ import com.kmetop.demsy.orm.IOrm;
 public class SaveResearchSubject extends LoadResearchSubject {
 
 	@Override
-	public void before(CocEntityEvent event) {
+	public void before(ActionEvent event) {
 		IOrm orm = (IOrm) event.getOrm();
 
 		Class questionType = Demsy.bizEngine.getType(IResearchQuestion.SYS_CODE);

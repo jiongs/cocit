@@ -1,6 +1,6 @@
 package com.jiongsoft.cocit.ui.model;
 
-import com.jiongsoft.cocit.utils.Json;
+import com.jiongsoft.cocit.util.Json;
 
 /**
  * Alerts模型：用于产生客户端AJAX所需要的JSON对象，通常用于提示框。

@@ -1,7 +1,7 @@
 package com.kmetop.demsy.plugins.web;
 
-import com.jiongsoft.cocit.entity.CocEntityEvent;
-import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.entity.ActionEvent;
+import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.LibConst;
@@ -9,10 +9,10 @@ import com.kmetop.demsy.comlib.impl.base.web.UiCatalogStyle;
 import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.orm.IOrm;
 
-public class SaveCatalogStyle extends BaseEntityPlugin {
+public class SaveCatalogStyle extends BaseActionPlugin {
 
 	@Override
-	public void before(CocEntityEvent event) {
+	public void before(ActionEvent event) {
 		UiCatalogStyle style = (UiCatalogStyle) event.getEntity();
 		String name = style.getName();
 		IOrm orm = (IOrm) event.getOrm();
@@ -27,12 +27,12 @@ public class SaveCatalogStyle extends BaseEntityPlugin {
 	}
 
 	@Override
-	public void after(CocEntityEvent event) {
+	public void after(ActionEvent event) {
 
 	}
 
 	@Override
-	public void loaded(CocEntityEvent event) {
+	public void loaded(ActionEvent event) {
 
 	}
 

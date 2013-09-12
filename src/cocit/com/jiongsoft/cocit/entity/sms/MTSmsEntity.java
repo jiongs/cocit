@@ -10,7 +10,7 @@ import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.jiongsoft.cocit.entity.impl.BaseEntity;
-import com.jiongsoft.cocit.utils.ActionUtil;
+import com.jiongsoft.cocit.util.ActionUtil;
 
 /**
  * MT(Mobile Terminated)短信：即下行短信，发送到终端的短信。这里的终端通常指手机。

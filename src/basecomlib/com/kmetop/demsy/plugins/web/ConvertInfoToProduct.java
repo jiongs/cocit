@@ -2,26 +2,26 @@ package com.kmetop.demsy.plugins.web;
 
 import java.util.List;
 
-import com.jiongsoft.cocit.entity.CocEntityEvent;
-import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.entity.ActionEvent;
+import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.impl.base.ebusiness.product.Product;
 import com.kmetop.demsy.comlib.impl.sft.web.content.WebContent;
 import com.kmetop.demsy.orm.IOrm;
 
-public class ConvertInfoToProduct extends BaseEntityPlugin {
+public class ConvertInfoToProduct extends BaseActionPlugin {
 
 	@Override
-	public void before(CocEntityEvent event) {
+	public void before(ActionEvent event) {
 	}
 
 	@Override
-	public void after(CocEntityEvent event) {
+	public void after(ActionEvent event) {
 	}
 
 	@Override
-	public void loaded(CocEntityEvent event) {
+	public void loaded(ActionEvent event) {
 		IOrm orm = Demsy.orm();
 
 		List<WebContent> list = (List<WebContent>) event.getReturnValue();

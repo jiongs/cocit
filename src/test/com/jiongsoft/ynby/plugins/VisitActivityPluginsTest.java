@@ -8,8 +8,8 @@ import org.junit.Test;
 import org.junit.runner.JUnitCore;
 
 import com.jiongsoft.TestAll;
-import com.jiongsoft.cocit.entity.CocEntityEvent;
-import com.jiongsoft.cocit.utils.CocException;
+import com.jiongsoft.cocit.entity.ActionEvent;
+import com.jiongsoft.cocit.util.CocException;
 import com.jiongsoft.ynby.entity.VisitActivity;
 import com.jiongsoft.ynby.plugins.VisitActivityPlugins.SaveActivity;
 
@@ -26,7 +26,7 @@ public class VisitActivityPluginsTest {
 	public void testSaveActivity1() {
 		SaveActivity plugin = new SaveActivity();
 
-		CocEntityEvent<VisitActivity> event = new CocEntityEvent();
+		ActionEvent<VisitActivity> event = new ActionEvent();
 		VisitActivity entity = new VisitActivity();
 
 		event.setEntity(entity);
@@ -38,7 +38,7 @@ public class VisitActivityPluginsTest {
 	public void testSaveActivity2() {
 		SaveActivity plugin = new SaveActivity();
 
-		CocEntityEvent<VisitActivity> event = new CocEntityEvent();
+		ActionEvent<VisitActivity> event = new ActionEvent();
 		VisitActivity entity = new VisitActivity();
 		entity.setPlanDate(new Date(2013 - 1900, 10 - 1, 27));
 
@@ -56,7 +56,7 @@ public class VisitActivityPluginsTest {
 	public void testSaveActivity3() {
 		SaveActivity plugin = new SaveActivity();
 
-		CocEntityEvent<VisitActivity> event = new CocEntityEvent();
+		ActionEvent<VisitActivity> event = new ActionEvent();
 		VisitActivity entity = new VisitActivity();
 		entity.setPlanDate(new Date(2013 - 1900, 10 - 1, 27));
 
@@ -75,7 +75,7 @@ public class VisitActivityPluginsTest {
 	public void testSaveActivity4() {
 		SaveActivity plugin = new SaveActivity();
 
-		CocEntityEvent<VisitActivity> event = new CocEntityEvent();
+		ActionEvent<VisitActivity> event = new ActionEvent();
 		VisitActivity entity = new VisitActivity();
 		entity.setPlanDate(new Date(2013 - 1900, 10 - 1, 27));
 		entity.setExpiredFrom(new Date(2013 - 1900, 10 - 1, 22));
@@ -93,7 +93,7 @@ public class VisitActivityPluginsTest {
 	public void testSaveActivity5() {
 		SaveActivity plugin = new SaveActivity();
 
-		CocEntityEvent<VisitActivity> event = new CocEntityEvent();
+		ActionEvent<VisitActivity> event = new ActionEvent();
 		VisitActivity entity = new VisitActivity();
 		entity.setPlanDate(new Date(2013 - 1900, 10 - 1, 27));
 		entity.setExpiredFrom(new Date(2013 - 1900, 10 - 1, 22));

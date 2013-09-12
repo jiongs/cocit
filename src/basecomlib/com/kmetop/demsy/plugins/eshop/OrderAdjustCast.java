@@ -3,8 +3,8 @@ package com.kmetop.demsy.plugins.eshop;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.jiongsoft.cocit.entity.CocEntityEvent;
-import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.entity.ActionEvent;
+import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.LibConst;
@@ -20,7 +20,7 @@ import com.kmetop.demsy.orm.IOrm;
  * @author yongshan.ji
  * 
  */
-public class OrderAdjustCast extends BaseEntityPlugin {
+public class OrderAdjustCast extends BaseActionPlugin {
 
 	protected void evalCast(IOrder order) {
 		if (order.getStatus() != IOrder.STATUS_WAIT_BUYER_PAY) {
@@ -70,7 +70,7 @@ public class OrderAdjustCast extends BaseEntityPlugin {
 	}
 
 	@Override
-	public void before(CocEntityEvent event) {
+	public void before(ActionEvent event) {
 		Object data = event.getEntity();
 		if (data instanceof List) {
 			List list = (List) data;
@@ -89,7 +89,7 @@ public class OrderAdjustCast extends BaseEntityPlugin {
 	}
 
 	@Override
-	public void after(CocEntityEvent event) {
+	public void after(ActionEvent event) {
 		Class ordertype = null;
 		Class itemtype = null;
 
@@ -142,7 +142,7 @@ public class OrderAdjustCast extends BaseEntityPlugin {
 	}
 
 	@Override
-	public void loaded(CocEntityEvent event) {
+	public void loaded(ActionEvent event) {
 
 	}
 

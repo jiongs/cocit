@@ -3,8 +3,8 @@ package com.kmetop.demsy.plugins.activity;
 import java.util.Date;
 import java.util.List;
 
-import com.jiongsoft.cocit.entity.CocEntityEvent;
-import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.entity.ActionEvent;
+import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
 import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.comlib.impl.base.ebusiness.order.Order;
@@ -19,10 +19,10 @@ import com.kmetop.demsy.orm.IOrm;
  * @author yongshan.ji
  * 
  */
-public class StockGuessPrize extends BaseEntityPlugin {
+public class StockGuessPrize extends BaseActionPlugin {
 
 	@Override
-	public void before(CocEntityEvent event) {
+	public void before(ActionEvent event) {
 		IOrm orm = (IOrm) event.getOrm();
 		List<StockActivity> list = (List<StockActivity>) event.getEntity();
 		for (StockActivity one : list) {
@@ -89,12 +89,12 @@ public class StockGuessPrize extends BaseEntityPlugin {
 	}
 
 	@Override
-	public void after(CocEntityEvent event) {
+	public void after(ActionEvent event) {
 
 	}
 
 	@Override
-	public void loaded(CocEntityEvent event) {
+	public void loaded(ActionEvent event) {
 
 	}
 

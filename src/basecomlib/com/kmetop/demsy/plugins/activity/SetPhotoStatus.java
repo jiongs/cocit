@@ -2,17 +2,17 @@ package com.kmetop.demsy.plugins.activity;
 
 import java.util.List;
 
-import com.jiongsoft.cocit.entity.CocEntityEvent;
-import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.entity.ActionEvent;
+import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.comlib.impl.sft.activity.ActivityCatalog;
 import com.kmetop.demsy.comlib.impl.sft.activity.PhotoActivity;
 import com.kmetop.demsy.orm.IOrm;
 
-public class SetPhotoStatus extends BaseEntityPlugin {
+public class SetPhotoStatus extends BaseActionPlugin {
 
 	@Override
-	public synchronized void before(CocEntityEvent event) {
+	public synchronized void before(ActionEvent event) {
 		IOrm orm = (IOrm) event.getOrm();
 		Object obj = event.getEntity();
 		if (obj instanceof List) {
@@ -33,13 +33,13 @@ public class SetPhotoStatus extends BaseEntityPlugin {
 	}
 
 	@Override
-	public void after(CocEntityEvent event) {
+	public void after(ActionEvent event) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void loaded(CocEntityEvent event) {
+	public void loaded(ActionEvent event) {
 		// TODO Auto-generated method stub
 
 	}

@@ -6,24 +6,24 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
-import com.jiongsoft.cocit.service.CocEntityFieldService;
-import com.jiongsoft.cocit.service.CocEntityGroupService;
-import com.jiongsoft.cocit.utils.Log;
-import com.jiongsoft.cocit.utils.StringUtil;
+import com.jiongsoft.cocit.service.EntityFieldService;
+import com.jiongsoft.cocit.service.EntityGroupService;
+import com.jiongsoft.cocit.util.Log;
+import com.jiongsoft.cocit.util.StringUtil;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.impl.sft.system.SystemDataGroup;
 import com.kmetop.demsy.engine.BizEngine;
 
-public class DemsyEntityGroupService implements CocEntityGroupService {
+public class DemsyEntityGroupService implements EntityGroupService {
 	private SystemDataGroup entity;
-	private List<CocEntityFieldService> dataFields;
+	private List<EntityFieldService> dataFields;
 
 	DemsyEntityGroupService(SystemDataGroup e) {
 		this.entity = e;
 		dataFields = new ArrayList();
 	}
 
-	void addField(CocEntityFieldService f) {
+	void addField(EntityFieldService f) {
 		this.dataFields.add(f);
 	}
 
@@ -100,7 +100,7 @@ public class DemsyEntityGroupService implements CocEntityGroupService {
 	}
 
 	// @Override
-	// public CocEntityTableService getDataTable() {
+	// public EntityTableService getDataTable() {
 	// IBizSystem g = entity.getSystem();
 	// if (g == null)
 	// return null;
@@ -109,7 +109,7 @@ public class DemsyEntityGroupService implements CocEntityGroupService {
 	// }
 
 	@Override
-	public List<CocEntityFieldService> getEntityFields() {
+	public List<EntityFieldService> getEntityFields() {
 		return this.dataFields;
 	}
 

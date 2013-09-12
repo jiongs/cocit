@@ -1,20 +1,27 @@
+// $codepro.audit.disable unnecessaryCast
 package com.jiongsoft.cocit.service.impl.demsy;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
-import com.jiongsoft.cocit.service.CocModuleService;
-import com.jiongsoft.cocit.utils.Log;
-import com.jiongsoft.cocit.utils.StringUtil;
+import com.jiongsoft.cocit.service.ModuleService;
+import com.jiongsoft.cocit.service.EntityTableService;
+import com.jiongsoft.cocit.util.Log;
+import com.jiongsoft.cocit.util.StringUtil;
 import com.kmetop.demsy.comlib.biz.field.Upload;
 import com.kmetop.demsy.comlib.impl.base.security.Module;
 
-public class DemsyModuleService implements CocModuleService {
-
+public class DemsyModuleService implements ModuleService {
 	private Module entity;
 
-	DemsyModuleService(Module e) {
+	private EntityTableService mainDataTable;
+
+	private List<EntityTableService> childrenDataTables;
+
+	DemsyModuleService(Module e, EntityTableService refrencedDataTable) {
 		this.entity = e;
+		this.mainDataTable = refrencedDataTable;
 	}
 
 	@Override
@@ -35,6 +42,12 @@ public class DemsyModuleService implements CocModuleService {
 	@Override
 	public int getSequence() {
 		return entity.getOrderby();
+	}
+
+	@Override
+	public String getLogo() {
+		Upload u = entity.getLogo();
+		return u == null ? null : u.toString();
 	}
 
 	@Override
@@ -87,19 +100,31 @@ public class DemsyModuleService implements CocModuleService {
 		return defaultReturn;
 	}
 
-	// @Override
-	// public CocFolderModuleService getParent() {
-	// // TODO Auto-generated method stub
-	// return null;
-	// }
+	@Override
+	public EntityTableService getEntityTable() {
+		return mainDataTable;
+	}
+
+	public List<EntityTableService> getChildrenEntityTables() {
+		return childrenDataTables;
+	}
+
+	public void setChildrenDataTables(List<EntityTableService> childrenDataTables) {
+		this.childrenDataTables = childrenDataTables;
+	}
+
+	public Module getEntity() {
+		return entity;
+	}
 
 	@Override
-	public String getLogo() {
-		Upload u = entity.getLogo();
-		if (u == null)
-			return null;
+	public List<ModuleService> getChildrenModules() {
+		return null;
+	}
 
-		return u.toString();
+	@Override
+	public int getType() {
+		return entity.getType();
 	}
 
 }

@@ -18,11 +18,11 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.jiongsoft.cocit.Cocit;
-import com.jiongsoft.cocit.CocitBeanFactory;
-import com.jiongsoft.cocit.CocitHttpContext;
-import com.jiongsoft.cocit.service.CocConfigService;
+import com.jiongsoft.cocit.BeanFactory;
+import com.jiongsoft.cocit.ActionContext;
+import com.jiongsoft.cocit.service.ConfigService;
 import com.jiongsoft.cocit.sms.impl.ZrSmsClient;
-import com.jiongsoft.cocit.utils.Json;
+import com.jiongsoft.cocit.util.Json;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.impl.base.lib.DemsySoft;
 import com.kmetop.demsy.config.SoftConfigManager;
@@ -53,7 +53,7 @@ public class CocitTest {
 			assertTrue(true);
 		}
 
-		assertNull(Cocit.getHttpContext());
+		assertNull(Cocit.getActionContext());
 	}
 
 	@Test
@@ -93,16 +93,15 @@ public class CocitTest {
 		json = Cocit.getBean("json");
 		assertNull(json);
 
-		CocitBeanFactory beanFactory = Cocit.getBean(CocitBeanFactory.class);
+		BeanFactory beanFactory = Cocit.getBean(BeanFactory.class);
 		assertNotNull(beanFactory);
 
-		beanFactory = Cocit.getBean("cocitBeanFactory");
+		beanFactory = Cocit.getBean("beanFactory");
 		assertNotNull(beanFactory);
 
 		assertNotNull(Cocit.getServiceFactory());
 		assertNotNull(Cocit.getWidgetModelFactory());
 		assertNotNull(Cocit.getWidgetRenderFactory());
-		assertNotNull(Cocit.getEntityManagerFactory());
 		assertNull(Cocit.getOrmFactory());
 
 	}
@@ -114,10 +113,13 @@ public class CocitTest {
 		new Expectations(Demsy.class, SoftConfigManager.class) {
 			@Mocked
 			DemsySoft mockDemsySoft;
+
 			@Mocked
 			BizEngine bizEngine;
+
 			@Mocked
 			ModuleEngine moduleEngine;
+
 			@Mocked
 			SoftConfigManager mockDemsyConfig;
 			{
@@ -129,23 +131,23 @@ public class CocitTest {
 				result = mockDemsyConfig;
 				mockDemsyConfig.get("sms.type", "");
 				result = "zr";
-				mockDemsyConfig.get(CocConfigService.CFG_PROXY_HOST, "");
+				mockDemsyConfig.get(ConfigService.CFG_PROXY_HOST, "");
 				result = "192.168.128.3";
-				mockDemsyConfig.get(CocConfigService.CFG_PROXY_PORT, "");
+				mockDemsyConfig.get(ConfigService.CFG_PROXY_PORT, "");
 				result = "80";
-				mockDemsyConfig.get(CocConfigService.CFG_URL, "");
+				mockDemsyConfig.get(ConfigService.CFG_URL, "");
 				result = "http://oa.zrsms.com";
-				mockDemsyConfig.get(CocConfigService.CFG_UID, "");
+				mockDemsyConfig.get(ConfigService.CFG_UID, "");
 				result = "zlsandi";
-				mockDemsyConfig.get(CocConfigService.CFG_PWD, "");
+				mockDemsyConfig.get(ConfigService.CFG_PWD, "");
 				result = "zlsandi";
 			}
 		};
 
-		CocitHttpContext ctx = Cocit.initHttpContext(req, res);
+		ActionContext ctx = Cocit.initActionContext(req, res);
 		assertNotNull(ctx);
 
-		ctx = Cocit.getHttpContext();
+		ctx = Cocit.getActionContext();
 		assertNotNull(ctx);
 
 		assertNotNull(ctx.getSoftService());

@@ -17,8 +17,8 @@ import org.nutz.mvc.annotation.Ok;
 
 import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.orm.expr.Expr;
-import com.jiongsoft.cocit.utils.HttpUtil;
-import com.jiongsoft.cocit.utils.Json;
+import com.jiongsoft.cocit.util.HttpUtil;
+import com.jiongsoft.cocit.util.Json;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.BizConst;
 import com.kmetop.demsy.comlib.LibConst;

@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.TableGenerator;
 
-import com.jiongsoft.cocit.entity.CocEntity;
+import com.jiongsoft.cocit.entity.CoEntity;
 
 /**
  * 组件化自定义实体基类：该类不支持扩展属性。
@@ -17,7 +17,7 @@ import com.jiongsoft.cocit.entity.CocEntity;
  * 
  * @author yongshan.ji
  */
-public abstract class BaseEntity implements CocEntity {
+public abstract class BaseEntity implements CoEntity {
 	@Id
 	@Column(name = "_id")
 	@GeneratedValue(generator = "SftIdGen", strategy = GenerationType.TABLE)

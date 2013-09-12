@@ -2,8 +2,8 @@ package com.kmetop.demsy.plugins.web;
 
 import java.util.List;
 
-import com.jiongsoft.cocit.entity.CocEntityEvent;
-import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.entity.ActionEvent;
+import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.web.IResearchOption;
@@ -11,10 +11,10 @@ import com.kmetop.demsy.comlib.web.IResearchQuestion;
 import com.kmetop.demsy.comlib.web.IResearchSubject;
 import com.kmetop.demsy.orm.IOrm;
 
-public class LoadResearchSubject extends BaseEntityPlugin {
+public class LoadResearchSubject extends BaseActionPlugin {
 
 	@Override
-	public void loaded(CocEntityEvent event) {
+	public void loaded(ActionEvent event) {
 		IOrm orm = (IOrm) event.getOrm();
 
 		IResearchSubject subject = (IResearchSubject) event.getReturnValue();

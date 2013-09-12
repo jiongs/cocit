@@ -2,7 +2,7 @@ package com.jiongsoft.cocit.ui.model;
 
 import java.io.Writer;
 
-import com.jiongsoft.cocit.ui.CuiModel;
+import com.jiongsoft.cocit.ui.UIModel;
 
 /**
  * 输出HTML/TEXT文本。
@@ -10,7 +10,7 @@ import com.jiongsoft.cocit.ui.CuiModel;
  * @author jiongsoft
  * 
  */
-public class HTMLModel implements CuiModel {
+public class HTMLModel implements UIModel {
 	/**
 	 * 提示信息
 	 */

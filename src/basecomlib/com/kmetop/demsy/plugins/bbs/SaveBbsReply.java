@@ -2,8 +2,8 @@ package com.kmetop.demsy.plugins.bbs;
 
 import java.util.Date;
 
-import com.jiongsoft.cocit.entity.CocEntityEvent;
-import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.entity.ActionEvent;
+import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.impl.sft.lybbs.LybbsDb;
 import com.kmetop.demsy.comlib.impl.sft.lybbs.LybbsPostreply;
@@ -11,10 +11,10 @@ import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.orm.IOrm;
 
-public class SaveBbsReply extends BaseEntityPlugin {
+public class SaveBbsReply extends BaseActionPlugin {
 
 	@Override
-	public void before(CocEntityEvent event) {
+	public void before(ActionEvent event) {
 		LybbsPostreply obj = (LybbsPostreply) event.getEntity();
 
 		// 回复
@@ -59,12 +59,12 @@ public class SaveBbsReply extends BaseEntityPlugin {
 	}
 
 	@Override
-	public void after(CocEntityEvent event) {
+	public void after(ActionEvent event) {
 
 	}
 
 	@Override
-	public void loaded(CocEntityEvent event) {
+	public void loaded(ActionEvent event) {
 
 	}
 

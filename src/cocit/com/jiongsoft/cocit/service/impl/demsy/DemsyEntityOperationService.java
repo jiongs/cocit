@@ -4,12 +4,12 @@ package com.jiongsoft.cocit.service.impl.demsy;
 import java.util.Date;
 import java.util.Properties;
 
-import com.jiongsoft.cocit.service.CocEntityOperationService;
-import com.jiongsoft.cocit.utils.Log;
-import com.jiongsoft.cocit.utils.StringUtil;
+import com.jiongsoft.cocit.service.EntityOperationService;
+import com.jiongsoft.cocit.util.Log;
+import com.jiongsoft.cocit.util.StringUtil;
 import com.kmetop.demsy.comlib.impl.base.biz.BizAction;
 
-public class DemsyEntityOperationService implements CocEntityOperationService {
+public class DemsyEntityOperationService implements EntityOperationService {
 
 	private BizAction entity;
 
@@ -96,11 +96,11 @@ public class DemsyEntityOperationService implements CocEntityOperationService {
 	}
 
 	// @Override
-	// public List<CocEntityOperationService> getChildrenBizOperations() {
+	// public List<EntityOperationService> getChildrenBizOperations() {
 	// if (childrenBizActions == null)
 	// return null;
 	//
-	// List<CocEntityOperationService> ret = new ArrayList();
+	// List<EntityOperationService> ret = new ArrayList();
 	//
 	// for (BizAction action : childrenBizActions) {
 	// ret.add(new DemsyEntityOperationService(action));

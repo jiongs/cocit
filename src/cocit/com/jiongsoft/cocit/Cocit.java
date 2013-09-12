@@ -4,14 +4,13 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.jiongsoft.cocit.orm.CormFactory;
-import com.jiongsoft.cocit.service.CocServiceFactory;
-import com.jiongsoft.cocit.service.CocSoftService;
-import com.jiongsoft.cocit.service.CocEntityManagerFactory;
+import com.jiongsoft.cocit.orm.OrmFactory;
+import com.jiongsoft.cocit.service.ServiceFactory;
+import com.jiongsoft.cocit.service.SoftService;
 import com.jiongsoft.cocit.sms.SmsClient;
-import com.jiongsoft.cocit.ui.widget.CuiWidgetModelFactory;
-import com.jiongsoft.cocit.ui.widget.CuiWidgetRenderFactory;
-import com.jiongsoft.cocit.utils.Log;
+import com.jiongsoft.cocit.ui.model.widget.WidgetModelFactory;
+import com.jiongsoft.cocit.ui.render.WidgetRenderFactory;
+import com.jiongsoft.cocit.util.Log;
 
 /**
  * Cocit：组件化自定义平台，也称“CoC平台”。
@@ -43,9 +42,9 @@ public abstract class Cocit {
 
 	private static String contextPath;
 
-	private static ThreadLocal<CocitHttpContext> httpContext;
+	private static ThreadLocal<ActionContext> actionContext;
 
-	private static CocitBeanFactory beanFactory;
+	private static BeanFactory beanFactory;
 
 	/**
 	 * 初始化CoC平台
@@ -64,11 +63,11 @@ public abstract class Cocit {
 			contextPath = "/" + contextPath;
 		}
 
-		// init httpContext
-		httpContext = new ThreadLocal<CocitHttpContext>();
+		// init actionContext
+		actionContext = new ThreadLocal<ActionContext>();
 
 		// init beanAssist
-		beanFactory = CocitBeanFactory.make(context);
+		beanFactory = BeanFactory.make(context);
 
 		Log.info("Cocit.init: end! {contextPath: %s, beanFactory: %s}", contextPath, beanFactory);
 	}
@@ -83,7 +82,7 @@ public abstract class Cocit {
 
 		contextPath = null;
 		beanFactory = null;
-		httpContext = null;
+		actionContext = null;
 	}
 
 	/**
@@ -102,14 +101,14 @@ public abstract class Cocit {
 	 * @param res
 	 * @return
 	 */
-	public static CocitHttpContext initHttpContext(HttpServletRequest req, HttpServletResponse res) {
-		CocitHttpContext ret = beanFactory.makeHttpContext(req, res);
+	public static ActionContext initActionContext(HttpServletRequest req, HttpServletResponse res) {
+		ActionContext ret = beanFactory.makeHttpContext(req, res);
 
-		if (httpContext == null)
+		if (actionContext == null)
 			return ret;
 
-		httpContext.remove();
-		httpContext.set(ret);
+		actionContext.remove();
+		actionContext.set(ret);
 
 		Log.debug("Cocit.initHttpContext: ret = %s", ret);
 
@@ -117,15 +116,15 @@ public abstract class Cocit {
 	}
 
 	/**
-	 * 获取当前请求的HTTP环境。该方法只有在调用过{@link #initHttpContext(HttpServletRequest, HttpServletResponse)}之后才会有返回值，否则返回null。
+	 * 获取当前请求的HTTP环境。该方法只有在调用过{@link #initActionContext(HttpServletRequest, HttpServletResponse)}之后才会有返回值，否则返回null。
 	 * 
 	 * @return
 	 */
-	public static CocitHttpContext getHttpContext() {
-		if (httpContext == null)
+	public static ActionContext getActionContext() {
+		if (actionContext == null)
 			return null;
 
-		return httpContext.get();
+		return actionContext.get();
 	}
 
 	/**
@@ -151,7 +150,7 @@ public abstract class Cocit {
 	}
 
 	/**
-	 * 根据指定的类型创建一个短信客户端接口对象，该方法被通常被{@link CocSoftService}调用，且每个{@link CocSoftService}对象只会调用该方法一次来创建短信第三方接口对象，之后将缓存在{@link CocSoftService}对象中。
+	 * 根据指定的类型创建一个短信客户端接口对象，该方法被通常被{@link SoftService}调用，且每个{@link SoftService}对象只会调用该方法一次来创建短信第三方接口对象，之后将缓存在{@link SoftService}对象中。
 	 * 
 	 * @param type
 	 * @return 返回一个新建的短信客户端接口。
@@ -165,7 +164,7 @@ public abstract class Cocit {
 	// * <p>
 	// * 通常供CocitHttpContext构造函数调用，用来构造一个软件对象。
 	// */
-	// public static CocSoftService makeSoft() {
+	// public static SoftService makeSoft() {
 	// return beanFactory.makeSoft();
 	// }
 	//
@@ -174,43 +173,39 @@ public abstract class Cocit {
 	// *
 	// * @return 返回一个全新的CoC软件配置助手实例对象
 	// */
-	// public static CocConfigService makeSoftConfig() {
+	// public static ConfigService makeSoftConfig() {
 	// return beanFactory.makeSoftConfig();
 	// }
 
 	/**
 	 * 获取CoC组工厂。
 	 * 
-	 * @return 返回已被缓存的CoC组件库{@link CocServiceFactory}的单例对象。
+	 * @return 返回已被缓存的CoC组件库{@link ServiceFactory}的单例对象。
 	 */
-	public static CocServiceFactory getServiceFactory() {
-		return beanFactory.getBean(CocServiceFactory.class);
+	public static ServiceFactory getServiceFactory() {
+		return beanFactory.getBean(ServiceFactory.class);
 	}
 
 	/**
 	 * 获取CoC UI模型工厂
 	 * 
-	 * @return 返回已被缓存的CoC UI模型工厂{@link CuiWidgetModelFactory}的单例对象。
+	 * @return 返回已被缓存的CoC UI模型工厂{@link WidgetModelFactory}的单例对象。
 	 */
-	public static CuiWidgetModelFactory getWidgetModelFactory() {
-		return beanFactory.getBean(CuiWidgetModelFactory.class);
+	public static WidgetModelFactory getWidgetModelFactory() {
+		return beanFactory.getBean(WidgetModelFactory.class);
 	}
 
 	/**
 	 * 获取CoC UIRender 工厂
 	 * 
-	 * @return 返回已被缓存的CoC UI Render工厂{@link CuiWidgetRenderFactory}的单例对象。
+	 * @return 返回已被缓存的CoC UI Render工厂{@link WidgetRenderFactory}的单例对象。
 	 */
-	public static CuiWidgetRenderFactory getWidgetRenderFactory() {
-		return beanFactory.getBean(CuiWidgetRenderFactory.class);
+	public static WidgetRenderFactory getWidgetRenderFactory() {
+		return beanFactory.getBean(WidgetRenderFactory.class);
 	}
 
-	public static CormFactory getOrmFactory() {
-		return beanFactory.getBean(CormFactory.class);
-	}
-
-	public static CocEntityManagerFactory getEntityManagerFactory() {
-		return beanFactory.getBean(CocEntityManagerFactory.class);
+	public static OrmFactory getOrmFactory() {
+		return beanFactory.getBean(OrmFactory.class);
 	}
 
 }

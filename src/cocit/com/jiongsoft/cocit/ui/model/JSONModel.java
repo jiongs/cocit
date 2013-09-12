@@ -2,9 +2,9 @@ package com.jiongsoft.cocit.ui.model;
 
 import java.io.Writer;
 
-import com.jiongsoft.cocit.ui.CuiModel;
+import com.jiongsoft.cocit.ui.UIModel;
 
-public class JSONModel implements CuiModel {
+public class JSONModel implements UIModel {
 
 	String content;
 

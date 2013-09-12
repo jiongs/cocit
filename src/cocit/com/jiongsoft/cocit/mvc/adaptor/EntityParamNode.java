@@ -14,8 +14,8 @@ import org.nutz.lang.inject.Injecting;
 import org.nutz.mvc.adaptor.ParamConvertor;
 import org.nutz.mvc.adaptor.Params;
 
-import com.jiongsoft.cocit.utils.ClassUtil;
-import com.jiongsoft.cocit.utils.Log;
+import com.jiongsoft.cocit.util.ClassUtil;
+import com.jiongsoft.cocit.util.Log;
 
 public class EntityParamNode {
 	private static final char separator = '.';

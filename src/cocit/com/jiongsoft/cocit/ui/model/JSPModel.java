@@ -4,25 +4,34 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.jiongsoft.cocit.service.CocEntityActionService;
-import com.jiongsoft.cocit.ui.CuiModel;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.nutz.mvc.view.JspView;
+
+import com.jiongsoft.cocit.action.ActionHelper;
+import com.jiongsoft.cocit.ui.UIModel;
 
 /**
  * JSP模型： 环境context中可以包含
  * <UL>
- * <LI>actionService: {@link CocEntityActionService}对象
+ * <LI>actionService: {@link ActionHelper}对象
  * </UL>
  * 
  * @author yongshan.ji
  * 
  */
-public class JSPModel implements CuiModel {
+public class JSPModel implements UIModel {
 
 	private String contextPath;
 
 	private String jsp;
 
 	private Map<String, Object> context;
+
+	private HttpServletRequest req;
+
+	private HttpServletResponse resp;
 
 	/**
 	 * 
@@ -38,22 +47,23 @@ public class JSPModel implements CuiModel {
 	 *            JSP相对路径
 	 * @return
 	 */
-	public static JSPModel make(String contextPath, String jspPath) {
-		JSPModel ret = new JSPModel();
-
-		ret.contextPath = contextPath;
-		ret.jsp = contextPath + jspPath;
+	public static JSPModel make(HttpServletRequest req, HttpServletResponse resp, String contextPath, String jspPath) {
+		JSPModel ret = new JSPModel(req, resp, contextPath, jspPath);
 
 		return ret;
 	}
 
-	protected JSPModel() {
+	protected JSPModel(HttpServletRequest req, HttpServletResponse resp, String contextPath, String jspPath) {
 		context = new HashMap();
+		this.req = req;
+		this.resp = resp;
+		this.contextPath = contextPath;
+		this.jsp = contextPath + jspPath;
 	}
 
 	@Override
 	public void render(Writer out) throws Throwable {
-
+		new JspView(jsp).render(req, resp, this);
 	}
 
 	@Override

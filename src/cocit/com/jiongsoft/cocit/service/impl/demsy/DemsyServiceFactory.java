@@ -5,11 +5,12 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import com.jiongsoft.cocit.service.CocEntityModuleService;
-import com.jiongsoft.cocit.service.CocEntityOperationService;
-import com.jiongsoft.cocit.service.CocEntityTableService;
-import com.jiongsoft.cocit.service.CocServiceFactory;
-import com.jiongsoft.cocit.service.CocSoftService;
+import com.jiongsoft.cocit.service.EntityOperationService;
+import com.jiongsoft.cocit.service.EntityManager;
+import com.jiongsoft.cocit.service.EntityTableService;
+import com.jiongsoft.cocit.service.ModuleService;
+import com.jiongsoft.cocit.service.ServiceFactory;
+import com.jiongsoft.cocit.service.SoftService;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.biz.IBizField;
 import com.kmetop.demsy.comlib.impl.base.biz.BizAction;
@@ -24,11 +25,13 @@ import com.kmetop.demsy.engine.ModuleEngine;
  * @author jiongs753
  * 
  */
-public class DemsyServiceFactory implements CocServiceFactory {
+public class DemsyServiceFactory implements ServiceFactory {
 
 	private BizEngine bizEngine;
+
 	private ModuleEngine moduleEngine;
-	private Map<String, CocSoftService> cacheSoft;
+
+	private Map<String, SoftService> cacheSoft;
 
 	public DemsyServiceFactory() {
 		moduleEngine = (ModuleEngine) Demsy.moduleEngine;
@@ -37,9 +40,9 @@ public class DemsyServiceFactory implements CocServiceFactory {
 	}
 
 	@Override
-	public CocSoftService getSoftService(String domain) {
+	public SoftService getSoftService(String domain) {
 		synchronized (cacheSoft) {
-			CocSoftService ret = cacheSoft.get(domain);
+			SoftService ret = cacheSoft.get(domain);
 			if (ret == null) {
 				DemsySoft ds = (DemsySoft) moduleEngine.getSoft(domain);
 				if (ds != null) {
@@ -60,7 +63,7 @@ public class DemsyServiceFactory implements CocServiceFactory {
 	}
 
 	@Override
-	public CocEntityModuleService getEntityModuleService(Long moduleID) {
+	public ModuleService getModule(Long moduleID) {
 		Module module = (Module) moduleEngine.getModule(moduleID);
 		if (module == null)
 			return null;
@@ -68,11 +71,11 @@ public class DemsyServiceFactory implements CocServiceFactory {
 		SFTSystem mainSystem = (SFTSystem) moduleEngine.getSystem(module);
 
 		//
-		CocEntityTableService mainDataTable = this.makeBizTable(module, mainSystem);
-		DemsyEntityModuleService ret = new DemsyEntityModuleService(module, mainDataTable);
+		EntityTableService mainDataTable = this.makeBizTable(module, mainSystem);
+		DemsyModuleService ret = new DemsyModuleService(module, mainDataTable);
 
 		//
-		List<CocEntityTableService> childrenDataTables = new ArrayList();
+		List<EntityTableService> childrenDataTables = new ArrayList();
 		List<IBizField> fkFields = bizEngine.getFieldsOfSlave(mainSystem);
 		for (IBizField fkField : fkFields) {
 			SFTSystem fkSystem = (SFTSystem) fkField.getSystem();
@@ -93,7 +96,7 @@ public class DemsyServiceFactory implements CocServiceFactory {
 	}
 
 	@Override
-	public CocEntityTableService getEntityTableService(Long moduleID, Long tableID) {
+	public EntityTableService getEntityTable(Long moduleID, Long tableID) {
 		Module module = (Module) moduleEngine.getModule(moduleID);
 		SFTSystem system = (SFTSystem) bizEngine.getSystem(tableID);
 
@@ -103,15 +106,19 @@ public class DemsyServiceFactory implements CocServiceFactory {
 	}
 
 	@Override
-	public CocEntityOperationService getEntityOperationService(Long moduleID, Long tableID, Long operationID) {
-		if (operationID == null)
+	public EntityOperationService getEntityOperation(Long moduleID, Long tableID, String opMode) {
+		if (opMode == null)
 			return null;
 
-		BizAction action = (BizAction) bizEngine.getAction(tableID, operationID);
+		BizAction action = (BizAction) bizEngine.getAction(tableID, opMode);
 		if (action == null)
 			return null;
 
 		return new DemsyEntityOperationService(action);
 	}
 
+	@Override
+	public EntityManager getEntityManager(ModuleService module, EntityTableService table) {
+		return new DemsyEntityManager(module, table);
+	}
 }

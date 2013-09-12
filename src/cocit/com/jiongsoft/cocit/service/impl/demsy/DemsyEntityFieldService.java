@@ -12,12 +12,12 @@ import java.util.Properties;
 
 import org.nutz.json.Json;
 
-import com.jiongsoft.cocit.service.CocEntityFieldService;
-import com.jiongsoft.cocit.service.CocEntityTableService;
-import com.jiongsoft.cocit.utils.KeyValue;
-import com.jiongsoft.cocit.utils.Lang;
-import com.jiongsoft.cocit.utils.Log;
-import com.jiongsoft.cocit.utils.StringUtil;
+import com.jiongsoft.cocit.service.EntityFieldService;
+import com.jiongsoft.cocit.service.EntityTableService;
+import com.jiongsoft.cocit.util.KeyValue;
+import com.jiongsoft.cocit.util.ObjectUtil;
+import com.jiongsoft.cocit.util.Log;
+import com.jiongsoft.cocit.util.StringUtil;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.entity.ISoftConfig;
 import com.kmetop.demsy.comlib.impl.sft.dic.Dic;
@@ -26,7 +26,7 @@ import com.kmetop.demsy.comlib.impl.sft.system.AbstractSystemData;
 import com.kmetop.demsy.comlib.impl.sft.system.SFTSystem;
 import com.kmetop.demsy.engine.BizEngine;
 
-public class DemsyEntityFieldService implements CocEntityFieldService {
+public class DemsyEntityFieldService implements EntityFieldService {
 	private AbstractSystemData entity;
 
 	private KeyValue[] dicOptions;
@@ -268,7 +268,7 @@ public class DemsyEntityFieldService implements CocEntityFieldService {
 	}
 
 	@Override
-	public CocEntityTableService getFkEntityTable() {
+	public EntityTableService getFkEntityTable() {
 		SFTSystem sys = entity.getRefrenceSystem();
 		if (sys == null)
 			return null;
@@ -351,7 +351,7 @@ public class DemsyEntityFieldService implements CocEntityFieldService {
 			value = value.toString();
 		}
 
-		return Lang.format(value, getPattern());
+		return ObjectUtil.format(value, getPattern());
 	}
 
 	private String parseMode(String actionMode) {

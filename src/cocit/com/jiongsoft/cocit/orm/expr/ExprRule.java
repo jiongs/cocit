@@ -2,7 +2,7 @@ package com.jiongsoft.cocit.orm.expr;
 
 import java.util.List;
 
-import com.jiongsoft.cocit.utils.StringUtil;
+import com.jiongsoft.cocit.util.StringUtil;
 
 /**
  * <UL>

@@ -15,11 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jiongsoft.cocit.Cocit;
-import com.jiongsoft.cocit.CocitHttpContext;
-import com.jiongsoft.cocit.service.CocConfigService;
-import com.jiongsoft.cocit.service.CocSoftService;
+import com.jiongsoft.cocit.ActionContext;
+import com.jiongsoft.cocit.service.ConfigService;
+import com.jiongsoft.cocit.service.SoftService;
 import com.jiongsoft.cocit.sms.SmsClient;
-import com.jiongsoft.cocit.utils.Log;
+import com.jiongsoft.cocit.util.Log;
 
 /**
  * 展信通。http://www.zrsms.com
@@ -44,15 +44,15 @@ public class ZrSmsClient implements SmsClient {
 
 	public ZrSmsClient() {
 
-		CocitHttpContext ctx = Cocit.getHttpContext();
-		CocSoftService soft = ctx.getSoftService();
+		ActionContext ctx = Cocit.getActionContext();
+		SoftService soft = ctx.getSoftService();
 
-		this.proxyHost = soft.getConfig(CocConfigService.CFG_PROXY_HOST, "");
-		this.proxyPort = soft.getConfig(CocConfigService.CFG_PROXY_PORT, 80);
+		this.proxyHost = soft.getConfig(ConfigService.CFG_PROXY_HOST, "");
+		this.proxyPort = soft.getConfig(ConfigService.CFG_PROXY_PORT, 80);
 
-		this.url = soft.getConfig(CocConfigService.CFG_URL, "http://oa.zrsms.com");
-		this.uid = soft.getConfig(CocConfigService.CFG_UID, "");
-		this.pwd = soft.getConfig(CocConfigService.CFG_PWD, "");
+		this.url = soft.getConfig(ConfigService.CFG_URL, "http://oa.zrsms.com");
+		this.uid = soft.getConfig(ConfigService.CFG_UID, "");
+		this.pwd = soft.getConfig(ConfigService.CFG_PWD, "");
 		this.pwdMD5 = this.getMD5(pwd);
 
 		Log.info("SmsClientZucpImpl.new: {url:%s, sn:%s, pwd:%s, pwdMD5:%s, proxyHost:%s, proxyPort:%s}", url, uid, pwd, pwdMD5, proxyHost, proxyPort);

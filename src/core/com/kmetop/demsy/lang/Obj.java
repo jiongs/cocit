@@ -706,12 +706,12 @@ public abstract class Obj {
 
 	public static boolean checkGuid(Object obj, String guid) {
 		if (Str.isEmpty(guid)) {
-			// throw new DemsyException("GUID不能为空! %s", Lang.toJson(obj));
+			// throw new DemsyException("GUID不能为空! %s", ObjectUtil.toJson(obj));
 			return false;
 		}
 		Object old = Demsy.orm().load(obj.getClass(), Expr.eq(F_GUID, guid));
 		if (old != null && !old.equals(obj)) {
-			// throw new DemsyException("GUID已经存在! %s", Lang.toJson(obj));
+			// throw new DemsyException("GUID已经存在! %s", ObjectUtil.toJson(obj));
 			return false;
 		}
 

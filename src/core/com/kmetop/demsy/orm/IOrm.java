@@ -3,7 +3,7 @@ package com.kmetop.demsy.orm;
 import java.io.Serializable;
 import java.util.List;
 
-import com.jiongsoft.cocit.orm.Corm;
+import com.jiongsoft.cocit.orm.Orm;
 import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.orm.expr.NullCndExpr;
 import com.kmetop.demsy.orm.dialect.Dialect;
@@ -23,7 +23,7 @@ import com.kmetop.demsy.orm.mapping.EnMapping;
  * @author yongshan.ji
  * @param <T>
  */
-public interface IOrm  extends Corm{
+public interface IOrm  extends Orm{
 	public IMetaDao getMetaDao();
 
 	/**

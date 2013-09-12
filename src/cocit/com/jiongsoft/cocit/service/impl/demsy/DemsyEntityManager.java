@@ -3,23 +3,23 @@ package com.jiongsoft.cocit.service.impl.demsy;
 import java.util.List;
 
 import com.jiongsoft.cocit.orm.expr.CndExpr;
-import com.jiongsoft.cocit.service.CocEntityManager;
-import com.jiongsoft.cocit.service.CocEntityModuleService;
-import com.jiongsoft.cocit.service.CocEntityTableService;
+import com.jiongsoft.cocit.service.EntityManager;
+import com.jiongsoft.cocit.service.ModuleService;
+import com.jiongsoft.cocit.service.EntityTableService;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.IBizManager;
 import com.kmetop.demsy.comlib.impl.base.security.Module;
 import com.kmetop.demsy.comlib.impl.sft.system.SFTSystem;
 
-public class DemsyEntityManager implements CocEntityManager {
+public class DemsyEntityManager implements EntityManager {
 	private IBizManager bizManager;
 
-	private DemsyEntityModuleService cocmodule;
+	private DemsyModuleService cocmodule;
 
 	private DemsyEntityTableService coctable;
 
-	DemsyEntityManager(CocEntityModuleService m, CocEntityTableService t) {
-		cocmodule = (DemsyEntityModuleService) m;
+	DemsyEntityManager(ModuleService m, EntityTableService t) {
+		cocmodule = (DemsyModuleService) m;
 		coctable = (DemsyEntityTableService) t;
 
 		Module module = null;

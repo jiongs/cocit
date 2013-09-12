@@ -1,17 +1,17 @@
 package com.kmetop.demsy.plugins.web;
 
-import com.jiongsoft.cocit.entity.CocEntityEvent;
-import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.entity.ActionEvent;
+import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.impl.sft.web.content.Comment;
 import com.kmetop.demsy.comlib.security.IUser;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.orm.IOrm;
 
-public class SaveComment extends BaseEntityPlugin {
+public class SaveComment extends BaseActionPlugin {
 
 	@Override
-	public void before(CocEntityEvent event) {
+	public void before(ActionEvent event) {
 		Comment comment = (Comment) event.getEntity();
 
 		// 回复
@@ -35,12 +35,12 @@ public class SaveComment extends BaseEntityPlugin {
 	}
 
 	@Override
-	public void after(CocEntityEvent event) {
+	public void after(ActionEvent event) {
 
 	}
 
 	@Override
-	public void loaded(CocEntityEvent event) {
+	public void loaded(ActionEvent event) {
 
 	}
 

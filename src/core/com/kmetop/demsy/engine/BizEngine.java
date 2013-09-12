@@ -1168,8 +1168,8 @@ public abstract class BizEngine implements IBizEngine {
 		return biz(systemID).get();
 	}
 
-	public IAction getAction(Long systemID, Long actionID) {
-		return biz(systemID).action(actionID);
+	public IAction getAction(Long systemID, String opMode) {
+		return biz(systemID).action(opMode);
 	}
 
 	// @Override
@@ -1594,8 +1594,7 @@ public abstract class BizEngine implements IBizEngine {
 	}
 
 	// 解析自身树节点
-	public Node mountToSelf(Nodes maker, Object obj, String rootID, String group, String selfTree, String groupTree, String groupParam, String paramPrefix, String prefix, boolean selectable,
-			String idField, List selfList) {
+	public Node mountToSelf(Nodes maker, Object obj, String rootID, String group, String selfTree, String groupTree, String groupParam, String paramPrefix, String prefix, boolean selectable, String idField, List selfList) {
 		boolean isSelfTree = !Str.isEmpty(selfTree);
 
 		if (isSelfTree) {// 自身树

@@ -2,8 +2,8 @@ package com.kmetop.demsy.plugins.eshop;
 
 import java.util.List;
 
-import com.jiongsoft.cocit.entity.CocEntityEvent;
-import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.entity.ActionEvent;
+import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
 import com.kmetop.demsy.actions.OrderActions;
 import com.kmetop.demsy.comlib.eshop.IOrder;
 import com.kmetop.demsy.lang.DemsyException;
@@ -17,7 +17,7 @@ import com.kmetop.demsy.orm.IOrm;
  * @author yongshan.ji
  * 
  */
-public class OrderRefund extends BaseEntityPlugin {
+public class OrderRefund extends BaseActionPlugin {
 	protected static Log log = Logs.get();
 
 	protected void process(IOrm orm, IOrder order) {
@@ -30,7 +30,7 @@ public class OrderRefund extends BaseEntityPlugin {
 	}
 
 	@Override
-	public void before(CocEntityEvent event) {
+	public void before(ActionEvent event) {
 		IOrm orm = (IOrm) event.getOrm();
 		Object data = event.getEntity();
 		if (data instanceof List) {
@@ -44,12 +44,12 @@ public class OrderRefund extends BaseEntityPlugin {
 	}
 
 	@Override
-	public void after(CocEntityEvent event) {
+	public void after(ActionEvent event) {
 
 	}
 
 	@Override
-	public void loaded(CocEntityEvent event) {
+	public void loaded(ActionEvent event) {
 
 	}
 

@@ -10,7 +10,7 @@ import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
-import com.jiongsoft.cocit.utils.ActionUtil;
+import com.jiongsoft.cocit.util.ActionUtil;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 
 /**

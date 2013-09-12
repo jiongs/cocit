@@ -33,8 +33,9 @@ public class Dataset extends JsonField<Dataset> {
 	@CocField(name = "继承选项", order = 1, options = "0:不继承,1:继承数据", desc = "是否继承上级板块数据源查询结果集")
 	private boolean inherit;
 
+	// 实体表管理模块 字典数据来自模块实体表
 	@CocField(name = "数据模块", fkTable = BIZSYS_ADMIN_MODULE, order = 2, options = "['type eq 2']")
-	private String moduleGuid;// 功能模块
+	private String moduleGuid;
 
 	// @CocField(name = "业务模块", refrenceSystem = BIZSYS_SOFT_MODULE, order = 1,
 	// options = "['type eq 2']")
@@ -80,8 +81,7 @@ public class Dataset extends JsonField<Dataset> {
 	private String cnds;
 
 	/**
-	 * 逗号分隔的动态查询条件：即请求参数中的关键字(...&_k=XXX&...)将替换动态条件中的%s部分，如果动态条件是逗号分隔的多条件子句，
-	 * 则请求参数中的参数对也将是多个，如：...?_k=v&_k1=v1&_k2=v2&...
+	 * 逗号分隔的动态查询条件：即请求参数中的关键字(...&_k=XXX&...)将替换动态条件中的%s部分，如果动态条件是逗号分隔的多条件子句， 则请求参数中的参数对也将是多个，如：...?_k=v&_k1=v1&_k2=v2&...
 	 * <p>
 	 * 语法：keywords like %s, field1 eq %s, ...
 	 */

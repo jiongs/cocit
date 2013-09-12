@@ -1,22 +1,22 @@
 package com.jiongsoft.cocit.service.impl;
 
 import com.jiongsoft.cocit.Cocit;
-import com.jiongsoft.cocit.service.CocConfigService;
-import com.jiongsoft.cocit.service.CocSoftService;
+import com.jiongsoft.cocit.service.ConfigService;
+import com.jiongsoft.cocit.service.SoftService;
 import com.jiongsoft.cocit.sms.SmsClient;
 
-public abstract class BaseSoftService implements CocSoftService {
+public abstract class BaseSoftService implements SoftService {
 
 	/*
 	 * lazy load the following properties
 	 */
-	protected CocConfigService config;
+	protected ConfigService config;
 	protected SmsClient smsClient;
 
 	@Override
 	public SmsClient getSmsClient() {
 		if (smsClient == null) {
-			String type = getConfig(CocConfigService.CFG_TYPE, "");
+			String type = getConfig(ConfigService.CFG_TYPE, "");
 			smsClient = Cocit.makeSmsClient(type);
 		}
 
@@ -32,5 +32,5 @@ public abstract class BaseSoftService implements CocSoftService {
 		return config.get(configKey, defaultReturn);
 	}
 
-	protected abstract CocConfigService getSoftConfig();
+	protected abstract ConfigService getSoftConfig();
 }

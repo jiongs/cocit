@@ -5,7 +5,7 @@ import org.nutz.mvc.View;
 import org.nutz.mvc.ViewMaker;
 import org.nutz.mvc.view.DefaultViewMaker;
 
-import com.jiongsoft.cocit.ui.CuiModelView;
+import com.jiongsoft.cocit.ui.UIModelView;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.mvc.MvcConst;
 
@@ -27,8 +27,8 @@ public class DemsyViewMaker extends DefaultViewMaker implements ViewMaker, MvcCo
 			return new BizView();
 		if (type.equals("st"))
 			return new SmartyView(value);
-		if (type.equals(CuiModelView.VIEW_TYPE)) {
-			return CuiModelView.make();
+		if (type.equals(UIModelView.VIEW_TYPE)) {
+			return UIModelView.make();
 		}
 
 		return super.make(ioc, t, v);

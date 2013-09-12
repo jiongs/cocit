@@ -9,19 +9,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import com.jiongsoft.cocit.service.CocEntityFieldService;
-import com.jiongsoft.cocit.service.CocEntityGroupService;
-import com.jiongsoft.cocit.service.CocEntityOperationService;
-import com.jiongsoft.cocit.service.CocEntityTableService;
-import com.jiongsoft.cocit.utils.ClassUtil;
-import com.jiongsoft.cocit.utils.CocException;
-import com.jiongsoft.cocit.utils.KeyValue;
-import com.jiongsoft.cocit.utils.Lang;
-import com.jiongsoft.cocit.utils.Log;
-import com.jiongsoft.cocit.utils.SortUtil;
-import com.jiongsoft.cocit.utils.StringUtil;
-import com.jiongsoft.cocit.utils.Tree;
-import com.jiongsoft.cocit.utils.Tree.Node;
+import com.jiongsoft.cocit.service.EntityFieldService;
+import com.jiongsoft.cocit.service.EntityGroupService;
+import com.jiongsoft.cocit.service.EntityOperationService;
+import com.jiongsoft.cocit.service.EntityTableService;
+import com.jiongsoft.cocit.util.ClassUtil;
+import com.jiongsoft.cocit.util.CocException;
+import com.jiongsoft.cocit.util.KeyValue;
+import com.jiongsoft.cocit.util.ObjectUtil;
+import com.jiongsoft.cocit.util.Log;
+import com.jiongsoft.cocit.util.SortUtil;
+import com.jiongsoft.cocit.util.StringUtil;
+import com.jiongsoft.cocit.util.Tree;
+import com.jiongsoft.cocit.util.Tree.Node;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.biz.IBizField;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
@@ -33,16 +33,16 @@ import com.kmetop.demsy.engine.BizEngine;
 import com.kmetop.demsy.lang.Obj;
 import com.kmetop.demsy.orm.IOrm;
 
-public class DemsyEntityTableService implements CocEntityTableService {
+public class DemsyEntityTableService implements EntityTableService {
 	private BizEngine bizEngine;
 
 	private SFTSystem entity;
 
-	private List<CocEntityGroupService> bizGroups;
+	private List<EntityGroupService> bizGroups;
 
-	private List<CocEntityFieldService> bizFields;
+	private List<EntityFieldService> bizFields;
 
-	private List<CocEntityOperationService> bizOperations;
+	private List<EntityOperationService> bizOperations;
 
 	private Properties extProps;
 
@@ -135,26 +135,26 @@ public class DemsyEntityTableService implements CocEntityTableService {
 	}
 
 	@Override
-	public List<CocEntityGroupService> getEntityGroups() {
+	public List<EntityGroupService> getEntityGroups() {
 		return bizGroups;
 	}
 
 	@Override
-	public List<CocEntityFieldService> getEntityFields() {
+	public List<EntityFieldService> getEntityFields() {
 
 		return bizFields;
 	}
 
 	@Override
-	public List<CocEntityOperationService> getEntityOperations() {
+	public List<EntityOperationService> getEntityOperations() {
 		return bizOperations;
 	}
 
 	@Override
-	public List<CocEntityFieldService> getEntityFieldsForNaviTree() {
-		List<CocEntityFieldService> ret = new ArrayList();
+	public List<EntityFieldService> getEntityFieldsForNaviTree() {
+		List<EntityFieldService> ret = new ArrayList();
 
-		for (CocEntityFieldService f : this.bizFields) {
+		for (EntityFieldService f : this.bizFields) {
 			DemsyEntityFieldService field = (DemsyEntityFieldService) f;
 			AbstractSystemData data = field.getEntity();
 
@@ -171,10 +171,10 @@ public class DemsyEntityTableService implements CocEntityTableService {
 	}
 
 	@Override
-	public List<CocEntityFieldService> getEntityFieldsForGrid() {
+	public List<EntityFieldService> getEntityFieldsForGrid() {
 		List ret = new ArrayList();
 
-		for (CocEntityFieldService f : this.bizFields) {
+		for (EntityFieldService f : this.bizFields) {
 			DemsyEntityFieldService field = (DemsyEntityFieldService) f;
 			AbstractSystemData data = field.getEntity();
 
@@ -210,15 +210,15 @@ public class DemsyEntityTableService implements CocEntityTableService {
 				bizGroups.add(bizGroup);
 			}
 
-			CocEntityFieldService bizField = new DemsyEntityFieldService(systemData);
+			EntityFieldService bizField = new DemsyEntityFieldService(systemData);
 			this.bizFields.add(bizField);
 			bizGroup.addField(bizField);
 		}
 	}
 
-	public Map<String, CocEntityFieldService> getBizFieldsMapByPropName() {
-		Map<String, CocEntityFieldService> map = new HashMap();
-		for (CocEntityFieldService f : this.bizFields) {
+	public Map<String, EntityFieldService> getBizFieldsMapByPropName() {
+		Map<String, EntityFieldService> map = new HashMap();
+		for (EntityFieldService f : this.bizFields) {
 			map.put(f.getPropName(), f);
 		}
 
@@ -239,7 +239,7 @@ public class DemsyEntityTableService implements CocEntityTableService {
 
 		Tree tree = Tree.make();
 
-		for (CocEntityFieldService fld : this.getEntityFieldsForNaviTree()) {
+		for (EntityFieldService fld : this.getEntityFieldsForNaviTree()) {
 			DemsyEntityFieldService demsyFld = (DemsyEntityFieldService) fld;
 			Node node = tree.addNode(null, fld.getPropName()).setName(fld.getName());
 			node.set("open", "true");
@@ -289,7 +289,7 @@ public class DemsyEntityTableService implements CocEntityTableService {
 			for (Object record : fkSystemRecords) {
 				// 计算上级节点ID
 				if (!StringUtil.isNil(selfTreeProp)) {
-					Object parentObj = Lang.getValue(record, selfTreeProp);
+					Object parentObj = ObjectUtil.getValue(record, selfTreeProp);
 					if (parentObj != null)
 						parentNodeID = parentObj.toString();
 				}
@@ -297,7 +297,7 @@ public class DemsyEntityTableService implements CocEntityTableService {
 				// 计算节点ID
 				String nodeID = null;
 				if (ClassUtil.hasField(fkSystemType, "id")) {
-					nodeID = "" + Lang.getValue(record, "id");
+					nodeID = "" + ObjectUtil.getValue(record, "id");
 				} else {
 					nodeID = "" + record.hashCode();
 				}
@@ -310,7 +310,7 @@ public class DemsyEntityTableService implements CocEntityTableService {
 
 				// 计算节点顺序
 				if (ClassUtil.hasField(fkSystemType, "orderby")) {
-					Integer seq = Lang.getValue(record, "orderby");
+					Integer seq = ObjectUtil.getValue(record, "orderby");
 					if (seq != null)
 						childNode.setSequence(seq);
 				}
@@ -334,9 +334,9 @@ public class DemsyEntityTableService implements CocEntityTableService {
 	}
 
 	private Map<String, String> getFieldsModeMap(String opMode, Object data) {
-		List<CocEntityFieldService> fields = getEntityFields();
+		List<EntityFieldService> fields = getEntityFields();
 		Map<String, String> fieldMode = new HashMap();
-		for (CocEntityFieldService f : fields) {
+		for (EntityFieldService f : fields) {
 			DemsyEntityFieldService field = (DemsyEntityFieldService) f;
 
 			String mode = field.getMode(opMode);
@@ -361,7 +361,7 @@ public class DemsyEntityTableService implements CocEntityTableService {
 			String field = keys.next();
 			String mode = fieldsMode.get(field);
 			if (mode != null && mode.indexOf("M") > -1) {
-				Object v = Lang.getValue(data, field);
+				Object v = ObjectUtil.getValue(data, field);
 				if (v == null) {
 					requiredFields.add(field);
 				} else if (v instanceof String) {
@@ -375,7 +375,7 @@ public class DemsyEntityTableService implements CocEntityTableService {
 		}
 
 		if (requiredFields.size() > 0) {
-			Map<String, CocEntityFieldService> fields = getBizFieldsMapByPropName();
+			Map<String, EntityFieldService> fields = getBizFieldsMapByPropName();
 			StringBuffer sb = new StringBuffer();
 			for (String prop : requiredFields) {
 				sb.append(',').append(fields.get(prop).getName());

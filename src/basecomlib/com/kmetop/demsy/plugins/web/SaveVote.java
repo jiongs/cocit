@@ -1,16 +1,16 @@
 package com.kmetop.demsy.plugins.web;
 
-import com.jiongsoft.cocit.entity.CocEntityEvent;
-import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.entity.ActionEvent;
+import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.impl.base.web.Vote;
 import com.kmetop.demsy.comlib.security.IModule;
 import com.kmetop.demsy.orm.IOrm;
 
-public class SaveVote extends BaseEntityPlugin {
+public class SaveVote extends BaseActionPlugin {
 
 	@Override
-	public void before(CocEntityEvent event) {
+	public void before(ActionEvent event) {
 		Vote vote = (Vote) event.getEntity();
 
 		// 回复
@@ -32,12 +32,12 @@ public class SaveVote extends BaseEntityPlugin {
 	}
 
 	@Override
-	public void after(CocEntityEvent event) {
+	public void after(ActionEvent event) {
 
 	}
 
 	@Override
-	public void loaded(CocEntityEvent event) {
+	public void loaded(ActionEvent event) {
 
 	}
 

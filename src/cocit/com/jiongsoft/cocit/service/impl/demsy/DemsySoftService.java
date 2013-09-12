@@ -3,11 +3,11 @@ package com.jiongsoft.cocit.service.impl.demsy;
 import java.util.Date;
 import java.util.Properties;
 
-import com.jiongsoft.cocit.orm.Corm;
-import com.jiongsoft.cocit.service.CocConfigService;
+import com.jiongsoft.cocit.orm.Orm;
+import com.jiongsoft.cocit.service.ConfigService;
 import com.jiongsoft.cocit.service.impl.BaseSoftService;
-import com.jiongsoft.cocit.utils.Log;
-import com.jiongsoft.cocit.utils.StringUtil;
+import com.jiongsoft.cocit.util.Log;
+import com.jiongsoft.cocit.util.StringUtil;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.impl.base.lib.DemsySoft;
 import com.kmetop.demsy.config.SoftConfigManager;
@@ -28,7 +28,7 @@ public class DemsySoftService extends BaseSoftService {
 	}
 
 	@Override
-	protected CocConfigService getSoftConfig() {
+	protected ConfigService getSoftConfig() {
 		return config;
 	}
 
@@ -103,7 +103,7 @@ public class DemsySoftService extends BaseSoftService {
 	}
 
 	@Override
-	public Corm getOrm() {
+	public Orm getOrm() {
 		return Demsy.orm();
 	}
 

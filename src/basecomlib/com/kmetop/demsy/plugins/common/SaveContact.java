@@ -1,15 +1,15 @@
 package com.kmetop.demsy.plugins.common;
 
-import com.jiongsoft.cocit.entity.CocEntityEvent;
-import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.entity.ActionEvent;
+import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
 import com.kmetop.demsy.comlib.impl.base.common.Contact;
 import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.Str;
 
-public class SaveContact extends BaseEntityPlugin {
+public class SaveContact extends BaseActionPlugin {
 
 	@Override
-	public void before(CocEntityEvent event) {
+	public void before(ActionEvent event) {
 		StringBuffer error = new StringBuffer();
 		Contact c = (Contact) event.getEntity();
 		if (Str.isEmpty(c.getProvince()))
@@ -37,12 +37,12 @@ public class SaveContact extends BaseEntityPlugin {
 	}
 
 	@Override
-	public void after(CocEntityEvent event) {
+	public void after(ActionEvent event) {
 
 	}
 
 	@Override
-	public void loaded(CocEntityEvent event) {
+	public void loaded(ActionEvent event) {
 
 	}
 

@@ -13,7 +13,7 @@ import org.nutz.mvc.adaptor.ParamInjector;
 import org.nutz.mvc.adaptor.Params;
 
 import com.jiongsoft.cocit.orm.expr.ExprRule;
-import com.jiongsoft.cocit.utils.StringUtil;
+import com.jiongsoft.cocit.util.StringUtil;
 
 public class EntityParamInjector implements ParamInjector {
 

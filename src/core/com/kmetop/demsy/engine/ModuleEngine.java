@@ -25,9 +25,9 @@ import java.util.Map;
 import org.nutz.dao.Sqls;
 import org.nutz.lang.Mirror;
 
-import com.jiongsoft.cocit.entity.CocEntityPlugin;
+import com.jiongsoft.cocit.entity.ActionPlugin;
 import com.jiongsoft.cocit.orm.expr.CndExpr;
-import com.jiongsoft.cocit.utils.ActionUtil;
+import com.jiongsoft.cocit.util.ActionUtil;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.IModuleEngine;
 import com.kmetop.demsy.comlib.LibConst;
@@ -75,7 +75,7 @@ public abstract class ModuleEngine implements IModuleEngine {
 
 	protected Map<Long, IDataSource> dataSourceCache;
 
-	protected Map<Long, CocEntityPlugin[]> actionPlugins;
+	protected Map<Long, ActionPlugin[]> actionPlugins;
 
 	public ModuleEngine() {
 		corpCache = new HashMap();
@@ -86,23 +86,23 @@ public abstract class ModuleEngine implements IModuleEngine {
 	}
 
 	@Override
-	public CocEntityPlugin[] getPlugins(IAction action) {
-		CocEntityPlugin[] ret = actionPlugins.get(action.getId());
+	public ActionPlugin[] getPlugins(IAction action) {
+		ActionPlugin[] ret = actionPlugins.get(action.getId());
 		if (ret != null)
 			return ret;
 
 		String[] pluginArray = Str.toArray(action.getPlugin(), ",");
-		List<CocEntityPlugin> plugins = new ArrayList(pluginArray.length);
+		List<ActionPlugin> plugins = new ArrayList(pluginArray.length);
 		for (String pstr : pluginArray) {
 			try {
-				CocEntityPlugin plugin = (CocEntityPlugin) Mirror.me(Cls.forName(pstr)).born();
+				ActionPlugin plugin = (ActionPlugin) Mirror.me(Cls.forName(pstr)).born();
 				plugins.add(plugin);
 			} catch (Throwable e) {
 				log.errorf("加载业务插件出错! [action=%s] %s", action, e);
 			}
 		}
 
-		ret = new CocEntityPlugin[plugins.size()];
+		ret = new ActionPlugin[plugins.size()];
 		plugins.toArray(ret);
 
 		return ret;

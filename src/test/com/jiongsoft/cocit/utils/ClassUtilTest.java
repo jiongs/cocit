@@ -19,8 +19,9 @@ import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import com.jiongsoft.cocit.utils.ClassUtil;
-import com.jiongsoft.cocit.utils.StringUtil;
+import com.jiongsoft.cocit.util.ClassUtil;
+import com.jiongsoft.cocit.util.CocException;
+import com.jiongsoft.cocit.util.StringUtil;
 
 public class ClassUtilTest {
 

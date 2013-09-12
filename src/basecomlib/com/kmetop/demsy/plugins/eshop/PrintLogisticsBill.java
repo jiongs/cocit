@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.jiongsoft.cocit.entity.CocEntityEvent;
-import com.jiongsoft.cocit.entity.impl.BaseEntityPlugin;
+import com.jiongsoft.cocit.entity.ActionEvent;
+import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.actions.OrderActions;
@@ -22,10 +22,10 @@ import com.kmetop.demsy.orm.IOrm;
  * @author yongshan.ji
  * 
  */
-public class PrintLogisticsBill extends BaseEntityPlugin {
+public class PrintLogisticsBill extends BaseActionPlugin {
 
 	@Override
-	public void before(CocEntityEvent event) {
+	public void before(ActionEvent event) {
 		Logistics en = (Logistics) event.getEntity();
 		en.setPrintNum(en.getPrintNum() + 1);
 		en.setPrintDate(new Date());

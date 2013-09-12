@@ -10,7 +10,7 @@ import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.jiongsoft.cocit.entity.impl.BaseEntity;
-import com.jiongsoft.cocit.utils.ActionUtil;
+import com.jiongsoft.cocit.util.ActionUtil;
 
 /**
  * MO(Mobile Originate)短信：即上行短信，有终端手机设备发送来的短信。

@@ -330,7 +330,7 @@ public class BizActions extends ModuleActions implements BizConst, MvcConst {
 	//
 	// public TabsDataModel slave(String moduleParam) throws DemsyException {
 	// return (TabsDataModel) buildModel(moduleParam, new WidgetBuilder() {
-	// public DataModel build(IBizManager manager, IModule mdl, String pageID,
+	// public DataModel build(IBizManager entityManager, IModule mdl, String pageID,
 	// boolean ajaxData) throws DemsyException {
 	// TabsDataModel dataModel =
 	// uiEngine.getSlaveUI(mdl).setDacorator(pageID).setAjaxData(ajaxData);
@@ -803,7 +803,7 @@ public class BizActions extends ModuleActions implements BizConst, MvcConst {
 					Map<String, IBizField> fieldMap = bizEngine.getFieldsMap(manager.getSystem());
 					Demsy ctx = Demsy.me();
 					String filename = Demsy.appconfig.getTempDir() + File.separator + "exportToXls" + File.separator
-					// + manager.getSystem().getName() + "("
+					// + entityManager.getSystem().getName() + "("
 							+ Dates.formatDate(new Date(), "yyyyMMdd-HHmmss")
 							// + ")"
 							+ ".xls";

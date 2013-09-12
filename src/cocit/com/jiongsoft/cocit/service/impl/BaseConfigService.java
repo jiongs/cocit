@@ -1,11 +1,11 @@
 // $codepro.audit.disable unnecessaryCast
 package com.jiongsoft.cocit.service.impl;
 
-import com.jiongsoft.cocit.service.CocConfigService;
-import com.jiongsoft.cocit.utils.Log;
-import com.jiongsoft.cocit.utils.StringUtil;
+import com.jiongsoft.cocit.service.ConfigService;
+import com.jiongsoft.cocit.util.Log;
+import com.jiongsoft.cocit.util.StringUtil;
 
-public abstract class BaseConfigService implements CocConfigService {
+public abstract class BaseConfigService implements ConfigService {
 
 	protected abstract String getStr(String key);
 
@@ -15,7 +15,7 @@ public abstract class BaseConfigService implements CocConfigService {
 		if (value == null)
 			return defaultReturn;
 		if (defaultReturn == null)
-			return (T) value;
+			return null;
 
 		Class valueType = defaultReturn.getClass();
 

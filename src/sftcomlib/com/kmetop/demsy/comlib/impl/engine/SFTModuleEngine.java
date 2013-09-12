@@ -177,10 +177,10 @@ public class SFTModuleEngine extends ModuleEngine {
 	// + "_"))) {
 	// try {
 	// orm.delete(obj);
-	// log.warnf("安装平台时删除数据成功! %s", Lang.toJson(obj));
+	// log.warnf("安装平台时删除数据成功! %s", ObjectUtil.toJson(obj));
 	// } catch (Throwable e) {
 	// if (warn)
-	// log.warnf("安装平台时删除数据失败! [%s] %s", Lang.toJson(obj), e);
+	// log.warnf("安装平台时删除数据失败! [%s] %s", ObjectUtil.toJson(obj), e);
 	// }
 	// }
 	// }
