@@ -49,7 +49,7 @@ public class BizManagerFactory implements IBizManagerFactory {
 
 		IBizSystem system = moduleEngine.getSystem(module);
 
-		if (!security.visit(module, false)) {
+		if (!security.allowVisitModule(module, false)) {
 			throw new DemsyException("无权执行该操作!");
 		}
 
@@ -71,7 +71,7 @@ public class BizManagerFactory implements IBizManagerFactory {
 			return new BizManagerImpl(bizSession, module, system);
 		}
 
-		if (!security.visit(module, false)) {
+		if (!security.allowVisitModule(module, false)) {
 			throw new DemsyException("无权执行该操作!");
 		}
 

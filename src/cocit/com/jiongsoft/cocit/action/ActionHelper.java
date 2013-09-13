@@ -96,18 +96,17 @@ public class ActionHelper {
 
 		this.opArgs = opArgs;
 		try {
-			softService = Cocit.getActionContext().getSoftService();
-			orm = softService.getOrm();
 
 			widgetFactory = Cocit.getWidgetModelFactory();
 
+			// 解析操作参数
 			parseOpArgs(opArgs);
 
-			/*
-			 * 初始化实体管理器
-			 */
-			ServiceFactory entityManagerFactory = Cocit.getServiceFactory();
-			entityManager = entityManagerFactory.getEntityManager(module, table);
+			// 获取软件服务对象
+			softService = Cocit.getActionContext().getSoftService();
+			orm = softService.getOrm();
+			// 初始化实体管理器
+			entityManager = softService.getEntityManager(module, table);
 
 			parseEntityArgs(entityArgs);
 

@@ -5,7 +5,7 @@ import java.util.List;
 import com.jiongsoft.cocit.orm.expr.CndExpr;
 
 /**
- * CoC平台实体管理器：实体就是数据表记录在JAVA中对应的对象。实体管理器就是用来管理（增加、删除、修改、查询）数据表记录的。
+ * 实体管理器：每个软件实体拥有一个实体管理器。
  * <p>
  * <UL>
  * <LI>执行相关操作前将会进行数据校验；

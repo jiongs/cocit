@@ -38,9 +38,4 @@ public interface ServiceFactory {
 
 	EntityOperationService getEntityOperation(Long moduleID, Long tableID, String opMode);
 
-	/*
-	 * Manager类：Manager不同于Service
-	 */
-
-	public EntityManager getEntityManager(ModuleService module, EntityTableService table);
 }

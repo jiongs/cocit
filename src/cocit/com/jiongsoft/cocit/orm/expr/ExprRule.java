@@ -29,6 +29,12 @@ import com.jiongsoft.cocit.util.StringUtil;
  */
 public class ExprRule {
 
+	private String field;
+
+	private String op;
+
+	private Object data;
+
 	public SimpleCndExpr toExpr() {
 
 		if (op.equals("eq") || op.equals("="))
@@ -88,12 +94,6 @@ public class ExprRule {
 
 		return null;
 	}
-
-	private String field;
-
-	private String op;
-
-	private Object data;
 
 	public ExprRule() {
 	}

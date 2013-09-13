@@ -38,5 +38,14 @@ public interface SoftService extends BaseService {
 	 */
 	public <T> T getConfig(String configKey, T defaultReturn);
 
+	/**
+	 * 获取实体管理器
+	 * 
+	 * @param module
+	 * @param table
+	 * @return
+	 */
+	public EntityManager getEntityManager(ModuleService module, EntityTableService table);
+
 	public Orm getOrm();
 }

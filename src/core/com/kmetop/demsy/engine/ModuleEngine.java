@@ -269,7 +269,7 @@ public abstract class ModuleEngine implements IModuleEngine {
 			if (module.isDisabled() || module.isHidden())
 				continue;
 
-			if (!security.visit(module, true))
+			if (!security.allowVisitModule(module, true))
 				continue;
 
 			makeNode(root, module);
@@ -475,7 +475,7 @@ public abstract class ModuleEngine implements IModuleEngine {
 
 					IBizSystem subsys = f.getSystem();
 					IModule submdl = this.getModule(softID, subsys);
-					if (submdl == null || !security.visit(submdl, true)) {
+					if (submdl == null || !security.allowVisitModule(submdl, true)) {
 						log.warnf("业务模块不存在! [system=%s]", subsys);
 						continue;
 					}

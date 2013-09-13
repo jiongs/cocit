@@ -236,7 +236,7 @@ public class BizManagerImpl implements IBizManager {
 		// }
 		// return expr.and(softEq);
 
-		CndExpr fkExpr = security.getPermissionExpr(bizModule);
+		CndExpr fkExpr = security.getDataFilter(bizModule);
 		if (fkExpr != null) {
 			if (expr == null)
 				expr = fkExpr;

@@ -28,7 +28,6 @@ import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.comlib.biz.field.Dataset;
 import com.kmetop.demsy.comlib.entity.IDemsySoft;
 import com.kmetop.demsy.comlib.entity.IEncryption;
-import com.kmetop.demsy.comlib.security.IAdminUser;
 import com.kmetop.demsy.comlib.security.IModule;
 import com.kmetop.demsy.comlib.security.IPermission;
 import com.kmetop.demsy.comlib.security.IRealm;
@@ -54,17 +53,20 @@ public class Security implements ISecurity {
 	// 依赖注入
 	private IPasswordEncoder defaultPasswordEncoder;
 
-	private IRootUserFactory rootusers = new RootUserFactory();
+	private IRootUserFactory rootUserFactory = new RootUserFactory();
 
 	// <softID,<moduleID, PermissionEntry>>
-	private Map<Long, Map<Long, List<PermissionEntry>>> permissionItems = new HashMap();
+	private Map<Long, Map<Long, List<PermissionEntry>>> allPermissions = new HashMap();
 
-	private Map<Long, Map<String, PermissionEntry>> dynamicPermissionItems = new HashMap();
+	private Map<Long, Map<String, PermissionEntry>> dynamicPermissions = new HashMap();
 
 	private IOrm orm() {
 		return Demsy.orm();
 	}
 
+	// ===============================================================================================================
+	// 登录相关的API实现
+	// ===============================================================================================================
 	public IPasswordEncoder getPwdEncoder(Long encoder, IPasswordEncoder defaultPE) {
 		if (encoder == null || encoder <= 0) {
 			return defaultPE;
@@ -73,9 +75,7 @@ public class Security implements ISecurity {
 			IPasswordEncoder pwdEncoder = null;
 			Class<IPasswordEncoder> encoderClass = null;
 			try {
-				IEncryption strategy = (IEncryption) Demsy.orm().load(
-						bizEngine.getStaticType(BIZSYS_DEMSY_LIB_ENCODER),
-						Expr.eq(F_CODE, "" + encoder).or(Expr.eq(LibConst.F_ID, encoder)));
+				IEncryption strategy = (IEncryption) Demsy.orm().load(bizEngine.getStaticType(BIZSYS_DEMSY_LIB_ENCODER), Expr.eq(F_CODE, "" + encoder).or(Expr.eq(LibConst.F_ID, encoder)));
 				if (strategy != null) {
 					encoderClass = Cls.forName(strategy.getEncodeClass());
 				}
@@ -106,10 +106,9 @@ public class Security implements ISecurity {
 	}
 
 	@Override
-	public ILogin login(HttpServletRequest request, IDemsySoft app, String realm, String username, String password)
-			throws SecurityException {
+	public ILogin login(HttpServletRequest request, IDemsySoft app, String realm, String username, String password) throws SecurityException {
 		HttpSession session = request.getSession();
-		LoginImpl login = new LoginImpl(request, app, realm, username, password);
+		LoginImpl login = new LoginImpl(this, request, app, realm, username, password);
 		session.setAttribute(genLoginKey(app), login);
 		if (login.getRoleType() > 0) {
 			session.setAttribute(ILogin.SESSION_KEY_USER_ROLE, "" + login.getRoleType());
@@ -134,7 +133,7 @@ public class Security implements ISecurity {
 	}
 
 	public IUser getRootUser(String username) {
-		return rootusers.getUser(username);
+		return rootUserFactory.getUser(username);
 	}
 
 	@Override
@@ -197,53 +196,8 @@ public class Security implements ISecurity {
 	}
 
 	public boolean isRootUser(String username) {
-		return this.rootusers.getUser(username) != null;
+		return this.rootUserFactory.getUser(username) != null;
 	}
-
-	// protected Object permitOne(Object obj) {
-	// if (obj == null)
-	// return null;
-	//
-	// // TODO: 检查权限许可
-	//
-	// return obj;
-	// }
-
-	// protected List permitList(List list) {
-	// List ret = new LinkedList();
-	// for (Object res : list) {
-	// res = permitOne(res);
-	// if (res != null) {
-	// ret.add(res);
-	// }
-	// }
-	//
-	// return ret;
-	// }
-	//
-	// protected Map permitMap(Map map) {
-	// Map ret = new HashMap();
-	// Iterator keys = map.keySet().iterator();
-	// while (keys.hasNext()) {
-	// Object key = keys.next();
-	// Object value = map.get(key);
-	// if (value != null) {
-	// ret.put(key, value);
-	// }
-	// }
-	//
-	// return ret;
-	// }
-
-	// @Override
-	// public <T> T checkPermission(T obj) {
-	// if (obj instanceof List)
-	// return (T) permitList((List) obj);
-	// if (obj instanceof Map)
-	// return (T) permitMap((Map) obj);
-	//
-	// return (T) this.permitOne(obj);
-	// }
 
 	@Override
 	public void checkLogin(byte roleType) throws SecurityException {
@@ -258,171 +212,91 @@ public class Security implements ISecurity {
 	}
 
 	public IRootUserFactory getRootUserFactory() {
-		return rootusers;
+		return rootUserFactory;
 	}
 
-	protected class LoginImpl implements ILogin {
-		private Map<String, Object> cachedData = new HashMap();
+	// =========================================================================================================
+	// 以上为登录相关的API实现
+	// ==========================================================================================================
 
-		private IUser user;
+	// =========================================================================================================
+	// 授权管理系统相关API的实现
+	// ==========================================================================================================
+	/**
+	 * 检查当前登录用户是否有权访问指定的模块。
+	 */
+	public boolean allowVisitModule(IModule module, boolean igloreDynamic) {
+		Demsy me = Demsy.me();
 
-		private IDemsySoft soft;
-
-		private long module;
-
-		private String realm;
-
-		private String username;
-
-		private byte roleType;
-
-		private double clientWidth = 1024.0;
-
-		private double clientHeight = 768.0;
-
-		LoginImpl(HttpServletRequest request, IDemsySoft app, String realm, String username, String password)
-				throws SecurityException {
-			log.debug("创建登录信息对象......");
-
-			this.soft = app;
-			this.realm = realm;
-			this.username = username;
-
-			if (!Str.isEmpty(realm)) {
-				IRealm realmObj = moduleEngine.getRealm(soft, realm);
-				if (realmObj != null && realmObj.getUserModule() != null)
-					this.module = realmObj.getUserModule().getId();
+		ILogin login = me.login();
+		if (login != null) {
+			if (login.getRoleType() >= IUserRole.ROLE_ADMIN_ROOT) {
+				return true;
 			}
+		}
+		boolean allow = false;
+		boolean denied = false;
 
-			if (Str.isEmpty(username)) {
-				throw new SecurityException("检查登录用户失败! 未指定登录帐号.");
-			} else {
-				user = checkUser(soft, realm, username, password);
-
-				this.initRole();
-
-				log.debug("创建登录信息对象: 成功.");
-			}
-
-			//
-			String sClientWidth = request.getParameter(PARAM_CLIENT_WIDTH);
-			String sClientHeight = request.getParameter(PARAM_CLIENT_HEIGHT);
-			if (!Str.isEmpty(sClientWidth)) {
-				try {
-					clientWidth = Double.parseDouble(sClientWidth);
-				} catch (Throwable e) {
-
-				}
-			}
-			if (!Str.isEmpty(sClientHeight)) {
-				try {
-					clientHeight = Double.parseDouble(sClientHeight);
-				} catch (Throwable e) {
-
+		// 动态内存授权
+		if (!igloreDynamic) {
+			Map dynitems = this.dynamicPermissions.get(me.getSoft().getId());
+			if (dynitems != null) {
+				Iterator<PermissionEntry> it = dynitems.values().iterator();
+				while (it.hasNext()) {
+					PermissionEntry p = it.next();
+					if (module.getId().equals(p.dataModule) && match(login, p)) {
+						return true;
+					}
 				}
 			}
 		}
 
-		public LoginImpl(IDemsySoft app, IUser user) {
-			this.soft = app;
-			this.username = user.getUsername();
+		// 数据库授权
+		List<PermissionEntry> items = this.getModulePermissions(me.getSoft().getId(), module.getId());
+		if (items != null) {
+			for (PermissionEntry p : items) {
+				long now = new Date().getTime();
+				if (p.expiredFrom != null && now < p.expiredFrom.getTime())
+					continue;
+				if (p.expiredTo != null && now > p.expiredTo.getTime())
+					continue;
+				if (me.login().getModule() != p.userModule)
+					continue;
 
-			this.user = user;
-			this.initRole();
-		}
-
-		private void initRole() {
-			if (isRootUser(username)) {
-				roleType = IUserRole.ROLE_DEVELOPER;
-			} else if (user instanceof IAdminUser) {
-				IAdminUser admin = (IAdminUser) user;
-				if (admin.getRole() != null)
-					roleType = admin.getRole().getType();
+				if (!match(login, p)) {
+					continue;
+				}
+				if (p.denied)
+					denied = true;
 				else
-					roleType = IUserRole.ROLE_ADMIN_USER;
-			} else if (user instanceof IDemsySoft) {
-				roleType = IUserRole.ROLE_ADMIN_ROOT;
+					allow = true;
 			}
 		}
 
-		public IUser getUser() {
-			return user;
-		}
-
-		public IDemsySoft getApp() {
-			return soft;
-		}
-
-		public String getRealm() {
-			return realm;
-		}
-
-		public String getUsername() {
-			return username;
-		}
-
-		@Override
-		public Object get(String key) {
-			return cachedData.get(key);
-		}
-
-		@Override
-		public ILogin set(String key, Object value) {
-			cachedData.put(key, value);
-			return this;
-		}
-
-		public byte getRoleType() {
-			return roleType;
-		}
-
-		public long getModule() {
-			return module;
-		}
-
-		@Override
-		public void setUser(IUser user) {
-			this.user = user;
-		}
-
-		@Override
-		public double getClientWidth() {
-			return clientWidth;
-		}
-
-		@Override
-		public double getClientHeight() {
-			return clientHeight;
-		}
-
-		@Override
-		public double getBodyWidth() {
-			return clientWidth * 0.8;
-		}
-
+		return allow && !denied;
 	}
 
-	private class PermissionEntry {
-		private long userModule;
+	@Override
+	public void addPermission(String key, byte roleID, long moduleID, String action) {
+		Map<String, PermissionEntry> map = this.dynamicPermissions.get(Demsy.me().getSoft().getId());
+		if (map == null) {
+			map = new HashMap();
+			dynamicPermissions.put(Demsy.me().getSoft().getId(), map);
+		}
+		String key1 = key + "." + action;
+		// if (map.get(key1) != null) {
+		// return;
+		// }
 
-		private CndExpr userExpr;
+		PermissionEntry item = new PermissionEntry();
+		item.roleID = roleID;
+		item.dataModule = moduleID;
+		// item.actions = new String[] { action };
 
-		private byte roleID = -1;
-
-		private long dataModule;
-
-		// private String[] actions;
-
-		private CndExpr dataExpr;
-
-		private Date expiredFrom;
-
-		private Date expiredTo;
-
-		private boolean denied;
+		map.put(key1, item);
 	}
 
-	public CndExpr getPermissionExpr(IModule module) {
+	public CndExpr getDataFilter(IModule module) {
 		Demsy me = Demsy.me();
 		ILogin login = me.login();
 		if (login == null)
@@ -467,7 +341,7 @@ public class Security implements ISecurity {
 		return expr;
 	}
 
-	public CndExpr getPermissionFkExpr(IModule module, String fkField) {
+	public CndExpr getFkDataFilter(IModule module, String fkField) {
 		Demsy me = Demsy.me();
 		ILogin login = me.login();
 		if (login == null)
@@ -491,7 +365,7 @@ public class Security implements ISecurity {
 				if (!match(login, p)) {
 					continue;
 				}
-				addFkExpr(exprs, p.dataExpr, fkField);
+				addFkDataFilter(exprs, p.dataExpr, fkField);
 			}
 		}
 
@@ -508,6 +382,11 @@ public class Security implements ISecurity {
 		return expr;
 	}
 
+	@Override
+	public void clearPermissions() {
+		allPermissions.clear();
+	}
+
 	/**
 	 * 解析权限限制的外键表达式
 	 * 
@@ -515,7 +394,7 @@ public class Security implements ISecurity {
 	 * @param expr
 	 * @param fkField
 	 */
-	private void addFkExpr(List exprs, CndExpr expr, String fkField) {
+	private void addFkDataFilter(List exprs, CndExpr expr, String fkField) {
 		if (expr instanceof SimpleCndExpr) {
 			SimpleCndExpr sexpr = (SimpleCndExpr) expr;
 			if (sexpr != null) {
@@ -533,61 +412,10 @@ public class Security implements ISecurity {
 		} else if (expr instanceof CombCndExpr) {
 			CombCndExpr cexpr = (CombCndExpr) expr;
 			CndExpr expr1 = cexpr.getExpr();
-			addFkExpr(exprs, expr1, fkField);
+			addFkDataFilter(exprs, expr1, fkField);
 			CndExpr expr2 = cexpr.getExpr2();
-			addFkExpr(exprs, expr2, fkField);
+			addFkDataFilter(exprs, expr2, fkField);
 		}
-	}
-
-	public boolean visit(IModule module, boolean igloreDynamic) {
-		Demsy me = Demsy.me();
-
-		ILogin login = me.login();
-		if (login != null) {
-			if (login.getRoleType() >= IUserRole.ROLE_ADMIN_ROOT) {
-				return true;
-			}
-		}
-		boolean allow = false;
-		boolean denied = false;
-
-		// 动态内存授权
-		if (!igloreDynamic) {
-			Map dynitems = this.dynamicPermissionItems.get(me.getSoft().getId());
-			if (dynitems != null) {
-				Iterator<PermissionEntry> it = dynitems.values().iterator();
-				while (it.hasNext()) {
-					PermissionEntry p = it.next();
-					if (module.getId().equals(p.dataModule) && match(login, p)) {
-						return true;
-					}
-				}
-			}
-		}
-
-		// 数据库授权
-		List<PermissionEntry> items = this.getModulePermissions(me.getSoft().getId(), module.getId());
-		if (items != null) {
-			for (PermissionEntry p : items) {
-				long now = new Date().getTime();
-				if (p.expiredFrom != null && now < p.expiredFrom.getTime())
-					continue;
-				if (p.expiredTo != null && now > p.expiredTo.getTime())
-					continue;
-				if (me.login().getModule() != p.userModule)
-					continue;
-
-				if (!match(login, p)) {
-					continue;
-				}
-				if (p.denied)
-					denied = true;
-				else
-					allow = true;
-			}
-		}
-
-		return allow && !denied;
 	}
 
 	private boolean match(ILogin login, PermissionEntry p) {
@@ -607,8 +435,8 @@ public class Security implements ISecurity {
 				return true;
 
 			// 匹配用户表达式
-			if (user != null && p.userExpr instanceof SimpleCndExpr) {
-				SimpleCndExpr expr = (SimpleCndExpr) p.userExpr;
+			if (user != null && p.userFilter instanceof SimpleCndExpr) {
+				SimpleCndExpr expr = (SimpleCndExpr) p.userFilter;
 
 				String prop = expr.getProp();
 				CndType type = expr.getType();
@@ -629,28 +457,39 @@ public class Security implements ISecurity {
 		return false;
 	}
 
+	/**
+	 * 获取软件授权数据，按模块ID进行分组。
+	 * 
+	 * @param softID
+	 * @return
+	 */
+	private Map<Long, List<PermissionEntry>> getSoftPermissions(long softID) {
+		Map<Long, List<PermissionEntry>> softPermissions = allPermissions.get(softID);
+		if (softPermissions == null) {
+			softPermissions = this.loadPermissions(softID);
+			allPermissions.put(softID, softPermissions);
+		}
+		return softPermissions;
+	}
+
+	/**
+	 * 获取模块授权列表
+	 * 
+	 * @param softID
+	 * @param module
+	 * @return
+	 */
 	private List<PermissionEntry> getModulePermissions(long softID, long module) {
-		Map<Long, List<PermissionEntry>> modulePermisstions = getModulePermissions(softID);
-		return modulePermisstions.get(module);
+		Map<Long, List<PermissionEntry>> softPermisstions = getSoftPermissions(softID);
+		return softPermisstions.get(module);
 	}
 
-	private Map<Long, List<PermissionEntry>> getModulePermissions(long softID) {
-		Map<Long, List<PermissionEntry>> modulePermissions = permissionItems.get(softID);
-		if (modulePermissions == null) {
-			modulePermissions = this.loadPermissions(softID);
-		}
-		return modulePermissions;
-	}
-
-	private List<PermissionEntry> getPermissions(Map<Long, List<PermissionEntry>> map, Long module) {
-		List<PermissionEntry> items = map.get(module);
-		if (items == null) {
-			items = new LinkedList();
-			map.put(module, items);
-		}
-		return items;
-	}
-
+	/**
+	 * 从数据库加载软件授权数据，并按模块ID进行分组。
+	 * 
+	 * @param softID
+	 * @return
+	 */
 	private Map<Long, List<PermissionEntry>> loadPermissions(Long softID) {
 		IOrm orm = orm();
 		Demsy me = Demsy.me();
@@ -658,63 +497,46 @@ public class Security implements ISecurity {
 		IBizSystem sys = bizEngine.getSystem(LibConst.BIZSYS_ADMIN_PERMISSION);
 		Class type = bizEngine.getType(sys);
 
-		Map<Long, List<PermissionEntry>> map = this.permissionItems.get(softID);
-		if (map == null) {
-			map = new HashMap();
-			permissionItems.put(softID, map);
-		}
+		Map<Long, List<PermissionEntry>> softPermissions = new HashMap();
 
 		List<IPermission> permissions = orm.query(type, Expr.eq(F_SOFT_ID, me.getSoft()));
 		for (IPermission p : permissions) {
 			if (p.isDisabled())
 				continue;
 
+			// 创建模块许可项
+			PermissionEntry item = new PermissionEntry();
+
 			Dataset users = p.getUsers();
 			Dataset datas = p.getDatas();
-			if (users == null || datas == null)
+			if (users == null || datas == null) {
+				// TODO: 使用 COCIT 授权策略
 				continue;
+			} else {
+				if (users.getModule() != null)
+					item.userModule = users.getModule().getId();
+				if (datas.getModule() != null)
+					item.dataModule = datas.getModule().getId();
+				if (!Str.isEmpty(users.getRules()))
+					item.userFilter = CndExpr.make(users.getRules());
+				if (!Str.isEmpty(datas.getRules()))
+					item.dataExpr = CndExpr.make(datas.getRules());
+			}
 
-			PermissionEntry item = new PermissionEntry();
 			item.expiredFrom = p.getExpiredFrom();
 			item.expiredTo = p.getExpiredTo();
 			item.denied = p.isDenied();
-			if (users.getModule() != null)
-				item.userModule = users.getModule().getId();
-			if (datas.getModule() != null)
-				item.dataModule = datas.getModule().getId();
-			if (!Str.isEmpty(users.getRules()))
-				item.userExpr = CndExpr.make(users.getRules());
-			if (!Str.isEmpty(datas.getRules()))
-				item.dataExpr = CndExpr.make(datas.getRules());
 
-			getPermissions(map, item.dataModule).add(item);
+			// 添加模块许可
+			List<PermissionEntry> modulePermissions = softPermissions.get(item.dataModule);
+			if (modulePermissions == null) {
+				modulePermissions = new LinkedList();
+				softPermissions.put(item.dataModule, modulePermissions);
+			}
+			modulePermissions.add(item);
 		}
 
-		return map;
+		return softPermissions;
 	}
 
-	@Override
-	public void clearPermissions() {
-		permissionItems.clear();
-	}
-
-	@Override
-	public void addPermission(String key, byte roleID, long moduleID, String action) {
-		Map<String, PermissionEntry> map = this.dynamicPermissionItems.get(Demsy.me().getSoft().getId());
-		if (map == null) {
-			map = new HashMap();
-			dynamicPermissionItems.put(Demsy.me().getSoft().getId(), map);
-		}
-		String key1 = key + "." + action;
-		// if (map.get(key1) != null) {
-		// return;
-		// }
-
-		PermissionEntry item = new PermissionEntry();
-		item.roleID = roleID;
-		item.dataModule = moduleID;
-		// item.actions = new String[] { action };
-
-		map.put(key1, item);
-	}
 }

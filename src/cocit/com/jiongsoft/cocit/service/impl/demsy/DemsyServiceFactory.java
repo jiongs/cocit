@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.jiongsoft.cocit.service.EntityOperationService;
-import com.jiongsoft.cocit.service.EntityManager;
 import com.jiongsoft.cocit.service.EntityTableService;
 import com.jiongsoft.cocit.service.ModuleService;
 import com.jiongsoft.cocit.service.ServiceFactory;
@@ -115,10 +114,5 @@ public class DemsyServiceFactory implements ServiceFactory {
 			return null;
 
 		return new DemsyEntityOperationService(action);
-	}
-
-	@Override
-	public EntityManager getEntityManager(ModuleService module, EntityTableService table) {
-		return new DemsyEntityManager(module, table);
 	}
 }

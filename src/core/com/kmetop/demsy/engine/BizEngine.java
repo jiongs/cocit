@@ -1719,7 +1719,7 @@ public abstract class BizEngine implements IBizEngine {
 			String fkField = bizEngine.getPropName(field);
 			Class refType = bizEngine.getType(refSys);
 
-			CndExpr fkExpr = security.getPermissionFkExpr(module, fkField);
+			CndExpr fkExpr = security.getFkDataFilter(module, fkField);
 			if (fkExpr != null) {
 				if (expr == null)
 					expr = fkExpr;

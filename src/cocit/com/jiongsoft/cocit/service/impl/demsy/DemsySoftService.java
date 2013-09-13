@@ -5,6 +5,9 @@ import java.util.Properties;
 
 import com.jiongsoft.cocit.orm.Orm;
 import com.jiongsoft.cocit.service.ConfigService;
+import com.jiongsoft.cocit.service.EntityManager;
+import com.jiongsoft.cocit.service.EntityTableService;
+import com.jiongsoft.cocit.service.ModuleService;
 import com.jiongsoft.cocit.service.impl.BaseSoftService;
 import com.jiongsoft.cocit.util.Log;
 import com.jiongsoft.cocit.util.StringUtil;
@@ -100,6 +103,11 @@ public class DemsySoftService extends BaseSoftService {
 	@Override
 	public String getCode() {
 		return entity.getCode();
+	}
+
+	@Override
+	public EntityManager getEntityManager(ModuleService module, EntityTableService table) {
+		return new DemsyEntityManager(module, table);
 	}
 
 	@Override
