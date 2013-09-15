@@ -6,11 +6,11 @@ import java.util.Map;
 
 import org.nutz.lang.Mirror;
 
+import com.jiongsoft.cocit.service.SecurityManager;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.actions.BizActions;
 import com.kmetop.demsy.comlib.biz.IBizField;
 import com.kmetop.demsy.comlib.security.IModule;
-import com.kmetop.demsy.comlib.security.IUserRole;
 import com.kmetop.demsy.comlib.ui.IPageBlock;
 import com.kmetop.demsy.lang.Obj;
 import com.kmetop.demsy.mvc.MvcConst;
@@ -41,7 +41,7 @@ public class BizRecord extends UiBaseDataSource {
 
 		if (module != null) {
 			Serializable id = Obj.getId(data);
-			Demsy.security.addPermission("block" + block.getId(), IUserRole.ROLE_ANONYMOUS, module.getId(),
+			Demsy.security.addPermission("block" + block.getId(), SecurityManager.ROLE_ANONYMOUS, module.getId(),
 					block.getParams());
 			UIBizFormModel ret = BizActions.buildForm(block.getName(), "" + module.getId(), block.getParams() + ":"
 					+ (id == null ? "" : id), objNode, MvcConst.URL_BZ_SAVE);

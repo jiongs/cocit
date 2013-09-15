@@ -12,18 +12,21 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+import com.jiongsoft.cocit.entity.PermissionEntity;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocField2;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
-import com.jiongsoft.cocit.orm.expr.CndExpr;
+import com.jiongsoft.cocit.util.StringUtil;
+import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.biz.field.Dataset;
 import com.kmetop.demsy.comlib.impl.BizComponent;
+import com.kmetop.demsy.comlib.impl.sft.system.SFTSystem;
 import com.kmetop.demsy.comlib.security.IPermission;
 
 @Entity
-@CocTable(name = "功能模块授权", code = BIZSYS_ADMIN_PERMISSION, catalog = BIZCATA_ADMIN, orderby = ORDER_SYSADMIN_PERMISSION, buildin = false//
+@CocTable(name = "系统权限管理", code = BIZSYS_ADMIN_PERMISSION, catalog = BIZCATA_ADMIN, orderby = ORDER_SYSADMIN_PERMISSION, buildin = false//
 , actions = {
 //
 // @CocOperation(name = "授权", typeCode = TYPE_BZFORM_NEW, mode = "c", pluginName = "com.kmetop.demsy.plugins.security.SavePermission")//
@@ -36,21 +39,21 @@ import com.kmetop.demsy.comlib.security.IPermission;
 @CocGroup(name = "基本信息", code = "basic"//
 , fields = {
 //
-		@CocField(property = "name", name = "标题", mode = "*:N v:S c:M c2:M e:M", gridOrder = 1) //
+		@CocField(property = "name", name = "权限标题", mode = "*:N v:S c:M c2:M e:M", gridOrder = 1) //
 		, @CocField(property = "type", name = "权限类型", mode = "*:N v:S c:M c2:M e:M", options = "1:允许,0:禁止", gridOrder = 2) //
 
 		// COCIT V1 授权规则：
-		, @CocField(property = "userTable", name = "用户类型", mode = "*:N v:S c2:M e:M", gridOrder = 3, desc = "被授权的用户类型，如“后台管理员、网站注册会员”等。语法：用户实体表ID、用户实体表编号、用户实体表GUID") //
-		, @CocField(property = "userFilter", name = "用户列表", mode = "*:N v:S c2:E e:E", gridOrder = 4, desc = "描述被授权的用户，一个JSON条件表达式。如法：条件表达式“{group: [2,30,224], role: [90]}”或用户ID数组“[1,5,9,'test','jiyongshan']”") //
-		, @CocField(property = "opFilter", name = "操作权限", mode = "*:N v:S c2:M e:M", gridOrder = 5, desc = "描述可以对实体表进行哪些操作？语法：由规则条目组成的JSON数组如['1:2:*', '2:*:v', '*:*:e', ..., '1', ':2', '::c']，条目规则“module:table:op”") //
-		, @CocField(property = "dataFilter", name = "数据权限", mode = "*:N v:S c2:E e:E", gridOrder = 6, desc = "实体表GRID数据过滤器，用来过滤被授权的数据。语法：条件表达式“{catalog: [1,2,3], type: 4}”或数据ID数组“[1,2,14,35,123]”") //
-		, @CocField(property = "desc", name = "权限描述", mode = "*:N v:S c:M c2:M e:M", gridOrder = 7, desc = "说明该权限的目的和用途。") //
+		, @CocField(property = "userType", name = "用户类型", mode = "*:N v:S c2:M e:M", gridOrder = 3, options = "_soft_administrator:后台管理员,_WebUser:网站会员", desc = "表示该权限被授予哪种类型的用户？如“网站注册用户、后台管理员”等。") //
+		, @CocField(property = "userRule", name = "用户群体", mode = "*:N v:S c2:E e:E", gridOrder = 4, desc = "表示该权限被授予哪些“用户”？语法规则：可以是“查询表达式”{field_1: [num_1, num_2, ..., num_n], field_2: singleValue, ..., field_n: ['str_1', 'str_2', ..., 'str_n'] }或“用户ID数组”[id-1, id-2, 'user-3', ..., 'user-n']，不填表示所有用户。") //
+		, @CocField(property = "funcRule", name = "功能权限", mode = "*:N v:S c2:M e:M", gridOrder = 5, desc = "表示“用户群体”可以执行模块中的哪些功能？语法规则：['moduleID:tableID:opModes', 'm-1:t-1:op1,op2,op3', ..., 'm-i:t-i:op1,op2,op-i']，语法举例：['1:2:*', '2:*:v,e,bu,d', '*:*:e', ..., '1', ':2', '::c']。") //
+		, @CocField(property = "dataRule", name = "数据权限", mode = "*:N v:S c2:E e:E", gridOrder = 6, desc = "表示“用户群体”可以操作模块中的哪些数据？语法规则：可以是“查询表达式”{field_1: [num_1, num_2, ..., num_n], field_2: singleValue, ..., field_n: ['str_1', 'str_2', ..., 'str_n'] }或“数据ID数组”[id-1, id-2, id-3, ..., id-n]，不填表示所有数据。") //
+		, @CocField(property = "desc", name = "权限描述", mode = "*:N v:S c:M c2:M e:M", gridOrder = 7, desc = "简要描述该权限被授予哪些人，目的和用途是什么？") //
 
 		// COCIT V1/DEMSY V2 公用权限状态
-		, @CocField(name = "权限状态", property = "disabled", mode = "*:N v:S c:E c2:E e:E", options = "0:启用,1:停用", gridOrder = 8) //
+		, @CocField(name = "权限状态", property = "disabled", mode = "*:N v:S c:E c2:E e:E", options = "0:启用,1:停用", gridOrder = 22) //
 		, @CocField(name = "有效期自", property = "expiredFrom", mode = "*:N v:S c:E c2:E e:E", pattern = "yyyy-MM-dd HH:mm:ss", gridOrder = 12) //
 		, @CocField(name = "有效期至", property = "expiredTo", mode = "*:N v:S c:E c2:E e:E", pattern = "yyyy-MM-dd HH:mm:ss", gridOrder = 13) //
-		, @CocField(name = "创建时间", property = "created", mode = "*:N v:S", pattern = "yyyy-MM-dd HH:mm:ss", gridOrder = 20) //
+		, @CocField(name = "创建时间", property = "created", mode = "*:N v:S", pattern = "yyyy-MM-dd HH:mm:ss", gridOrder = 8) //
 		, @CocField(name = "创建者帐号", property = "createdBy", mode = "*:N v:S", gridOrder = 21) //
 //
 }),// end: CocGroup
@@ -67,12 +70,39 @@ import com.kmetop.demsy.comlib.security.IPermission;
 		}), // end: CocGroup
 }// end: groups
 )
-public class Permission extends BizComponent implements IPermission {
+public class Permission extends BizComponent implements IPermission, PermissionEntity {
 	protected Date expiredFrom;
 
 	protected Date expiredTo;
 
 	protected Boolean type;
+
+	/*
+	 * COCIT版本授权表达式
+	 */
+	/**
+	 * @see PermissionEntity#getUserType()
+	 */
+	@Column(length = 64)
+	protected String userType;
+
+	/**
+	 * @see PermissionEntity#getUserRule()
+	 */
+	@Column(length = 512)
+	protected String userRule;
+
+	/**
+	 * @see PermissionEntity#getFuncRule()
+	 */
+	@Column(length = 512)
+	protected String funcRule;
+
+	/**
+	 * @see PermissionEntity#getDataRule()
+	 */
+	@Column(length = 512)
+	protected String dataRule;
 
 	/*
 	 * DEMSY版本授权表达式
@@ -109,68 +139,6 @@ public class Permission extends BizComponent implements IPermission {
 	 * @deprecated COC平台不再使用
 	 */
 	protected String actions;
-
-	/*
-	 * COCIT版本授权表达式
-	 */
-	/**
-	 * 用户实体表：被授权的用户类型。如：后台管理员、网站注册会员等；可以是用户实体表ID、用户实体表编号、用户实体表GUID。
-	 * 
-	 * @since CoC V1
-	 */
-	@Column(length = 64)
-	protected String userTable;
-
-	/**
-	 * 用户过滤器：用来过滤被授权的用户。
-	 * <p>
-	 * <UL>
-	 * <LI>JSON条件表达式：可以被转换成{@link CndExpr}对象，用来查询过滤用户；{group: [2,30,224], role: [90]}
-	 * <LI>JSON用户ID数组：由用户ID或登录帐号组成；如[1,5,9,"test","jiyongshan"]
-	 * <LI>空：表示用户实体表中的所有用户；
-	 * </UL>
-	 * 
-	 * @since CoC V1
-	 */
-	@Column(length = 512)
-	protected String userFilter;
-
-	/**
-	 * 实体表操作过滤器：用来描述被授权的“模块”“实体表”及“操作”。
-	 * <p>
-	 * 规则：有规则条目组成的数组JSON表达式；规则条目：“module:table:op”
-	 * <UL>
-	 * <LI>module：可以是实体表ID、实体表编号、实体表GUID；ID和编号可以是人为指定的；GUID则是系统自动获取的。
-	 * <LI>table：可以是实体表ID，实体表编号，实体表GUID；ID和编号可以是人为指定的；GUID则是系统自动获取的。
-	 * <LI>op：可以是操作ID，操作模式；ID和模式都可以是人为指定的。
-	 * <LI>如：["1:2:*", "2:*:v", "*:*:e", ..., "1", ":2", "::c"]
-	 * <UL>
-	 * <LI>"1:2:*"说明：模块1:实体表2:所有操作
-	 * <LI>"2:*:v"说明：模块2:所有实体表:查看操作
-	 * <LI>"*:*:E"说明：所有模块:所有实体表:编辑操作
-	 * <LI>"1"说明：等于“1:*:*”，模块1
-	 * <LI>":2"说明：等于“*:2”，任何模块中的 实体表2
-	 * <LI>"::c"说明：等于“*:*:c”，所有添加操作
-	 * </UL>
-	 * </LI>
-	 * </UL>
-	 * 
-	 * @since CoC V1
-	 */
-	@Column(length = 512)
-	protected String opFilter;
-
-	/**
-	 * 实体表GRID数据过滤器：用来过滤被授权的数据。
-	 * <UL>
-	 * <LI>JSON条件表达式：可以被转换成{@link CndExpr}对象，用来查询数据；{catalog: [1,2,3], type: 4}，catalog字段在列表中，type等于4。
-	 * <LI>JSON数组：由数据ID组成的数组；如：[1,2,14,35,123]
-	 * </UL>
-	 * 
-	 * @since CoC V1
-	 */
-	@Column(length = 512)
-	protected String dataFilter;
 
 	//
 	// public String getInfo() {
@@ -251,36 +219,56 @@ public class Permission extends BizComponent implements IPermission {
 		this.actions = actions;
 	}
 
-	public String getUserTable() {
-		return userTable;
+	public String getUserType() {
+		if (userType == null && users != null) {
+			String moduleGUID = users.getModuleGuid();
+			if (!StringUtil.isNil(moduleGUID)) {
+				Module module = (Module) Demsy.moduleEngine.getModule(moduleGUID);
+				if (module != null) {
+					SFTSystem sys = module.getRefSystem();
+					userType = sys.getEntityGuid();
+				}
+
+			}
+		}
+		return userType;
 	}
 
-	public void setUserTable(String userTable) {
-		this.userTable = userTable;
+	public void setUserType(String userTable) {
+		this.userType = userTable;
 	}
 
-	public String getUserFilter() {
-		return userFilter;
+	public String getUserRule() {
+		if (userRule == null && users != null) {
+			userRule = users.getRules();
+		}
+		return userRule;
 	}
 
-	public void setUserFilter(String userFilter) {
-		this.userFilter = userFilter;
+	public void setUserRule(String userFilter) {
+		this.userRule = userFilter;
 	}
 
-	public String getOpFilter() {
-		return opFilter;
+	public String getFuncRule() {
+		if (funcRule == null && datas != null) {
+			funcRule = datas.getModuleGuid();
+		}
+		return funcRule;
 	}
 
-	public void setOpFilter(String opFilter) {
-		this.opFilter = opFilter;
+	public void setFuncRule(String opFilter) {
+		this.funcRule = opFilter;
 	}
 
-	public String getDataFilter() {
-		return dataFilter;
+	public String getDataRule() {
+		if (dataRule == null && datas != null) {
+			dataRule = datas.getRules();
+		}
+		return dataRule;
 	}
 
-	public void setDataFilter(String dataFilter) {
-		this.dataFilter = dataFilter;
+	public void setDataRule(String dataFilter) {
+		this.dataRule = dataFilter;
 	}
 
 }

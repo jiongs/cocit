@@ -8,11 +8,11 @@ import java.util.Map;
 
 import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.orm.expr.Expr;
+import com.jiongsoft.cocit.service.SecurityManager;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.impl.sft.web.content.Comment;
 import com.kmetop.demsy.comlib.security.IModule;
-import com.kmetop.demsy.comlib.security.IUserRole;
 import com.kmetop.demsy.comlib.web.IWebContent;
 import com.kmetop.demsy.mvc.MvcConst;
 import com.kmetop.demsy.mvc.MvcConst.MvcUtil;
@@ -34,7 +34,7 @@ public class LoadDetailContent extends UiRecord {
 		context.put("uploadUrl", contextPath(MvcConst.URL_UPLOAD, commentMdl.getId()));
 		if (commentMdl != null) {
 			context.put("commentUrl", MvcUtil.contextPath(MvcConst.URL_BZ_SAVE, commentMdl.getId() + ":", "c", Demsy.me().addToken()));
-			Demsy.security.addPermission("block" + maker.getBlock().getId(), IUserRole.ROLE_ANONYMOUS, commentMdl.getId(), "c");
+			Demsy.security.addPermission("block" + maker.getBlock().getId(), SecurityManager.ROLE_ANONYMOUS, commentMdl.getId(), "c");
 		}
 
 		maker.put("commentMdl", commentMdl);
@@ -52,7 +52,7 @@ public class LoadDetailContent extends UiRecord {
 	protected Object loadRecord(UIBlockContext maker, Map context) {
 		Object info = super.loadRecord(maker, context);
 
-		context.put("module", maker.getModule());
+		context.put("moduleID", maker.getModule());
 		context.put("subject", info);
 
 		IOrm orm = Demsy.orm();
@@ -62,7 +62,7 @@ public class LoadDetailContent extends UiRecord {
 			Pager pager = new Pager(bizEngine.getType(moduleEngine.getSystem(commentMdl)));
 			CndExpr expr = Expr.eq("status", Comment.STATUS_SHOWN);
 			if (info != null) {
-				expr = expr.and(Expr.eq("subjectID", info)).and(Expr.eq("module", maker.getModule()));
+				expr = expr.and(Expr.eq("subjectID", info)).and(Expr.eq("moduleID", maker.getModule()));
 				if (info instanceof IWebContent) {
 					expr = expr.or(Expr.eq("webContent", info));
 				}

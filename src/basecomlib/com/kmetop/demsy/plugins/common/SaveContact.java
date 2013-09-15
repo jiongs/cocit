@@ -1,12 +1,12 @@
 package com.kmetop.demsy.plugins.common;
 
 import com.jiongsoft.cocit.entity.ActionEvent;
-import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
+import com.jiongsoft.cocit.entity.plugin.BasePlugin;
 import com.kmetop.demsy.comlib.impl.base.common.Contact;
 import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.Str;
 
-public class SaveContact extends BaseActionPlugin {
+public class SaveContact extends BasePlugin {
 
 	@Override
 	public void before(ActionEvent event) {

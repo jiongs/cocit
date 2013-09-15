@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.nutz.ioc.impl.NutIoc;
 import org.nutz.ioc.loader.json.JsonLoader;
 
+import com.jiongsoft.cocit.entity.PermissionEntity;
+import com.jiongsoft.cocit.entity.WebCatalogEntity;
+import com.jiongsoft.cocit.entity.WebContentEntity;
 import com.jiongsoft.cocit.sms.SmsClient;
 import com.jiongsoft.cocit.util.ClassUtil;
 import com.jiongsoft.cocit.util.Log;
@@ -24,6 +27,21 @@ public class BeanFactory {
 
 	private static NutIoc beans;
 
+	/*
+	 * 接口实现类全名
+	 */
+	private String actionContext;
+
+	private String smsClient_zucp;
+
+	private String smsClient_zr;
+
+	private Class<? extends PermissionEntity> permissionEntityType;
+
+	private Class<? extends WebCatalogEntity> webCatalogEntityType;
+
+	private Class<? extends WebContentEntity> webContentEntityType;
+
 	static BeanFactory make(ServletContext context) {
 		String config = Cocit.class.getName().replace(".", "/").toLowerCase() + ".json";
 
@@ -34,26 +52,7 @@ public class BeanFactory {
 		return beans.get(BeanFactory.class);
 	}
 
-	// // <softID, SoftService>
-	// private Map<Long, SoftService> softCache;
-
-	/*
-	 * 接口实现类全名
-	 */
-	private String actionContext;
-	private String smsClient_zucp;
-	private String smsClient_zr;
-
-	// private String soft;
-	// private String softConfig;
-	// private String loginUser;
-
-	public BeanFactory() {
-		// this.softCache = new Hashtable();
-	}
-
 	void clear() {
-		// this.softCache.clear();
 	}
 
 	<T> T getBean(String name) {
@@ -88,26 +87,6 @@ public class BeanFactory {
 		return null;
 	}
 
-	// SoftService makeSoft() {
-	// try {
-	// return ClassUtil.newInstance(soft);
-	// } catch (Throwable e) {
-	// Log.error("BeanFactory.makeSoft: 失败! {soft:%s}", soft, e);
-	// }
-	//
-	// return null;
-	// }
-	//
-	// ConfigService makeSoftConfig() {
-	// try {
-	// return ClassUtil.newInstance(softConfig);
-	// } catch (Throwable e) {
-	// Log.error("BeanFactory.makeSoftConfig: 失败! {softConfig:%s}", softConfig, e);
-	// }
-	//
-	// return null;
-	// }
-
 	SmsClient makeSmsClient(String type) {
 
 		try {
@@ -131,33 +110,37 @@ public class BeanFactory {
 		return null;
 	}
 
-	// CocLoginUser makeLoginUser() {
-	// try {
-	// return ClassUtil.newInstance(loginUser);
-	// } catch (Throwable e) {
-	// Log.error("BeanFactory.makeLoginUser: 失败! {loginUser:%s}", loginUser, e);
-	// }
-	//
-	// return null;
-	// }
-
-	String getHttpContext() {
-		return actionContext;
+	/**
+	 * 获取授权实体类型
+	 * 
+	 * @return
+	 */
+	public Class getPermissionEntityType() {
+		return permissionEntityType;
 	}
 
-	String getSmsClient_zucp() {
-		return smsClient_zucp;
+	/**
+	 * 设置权限实体类型：该方法共IOC配置文件注入调用。
+	 * 
+	 * @param entityType
+	 */
+	public void setPermissionEntityType(String entityType) {
+		permissionEntityType = ClassUtil.forName(entityType);
 	}
 
-	String getSmsClient_zr() {
-		return smsClient_zr;
+	public Class getWebCatalogEntityType() {
+		return webCatalogEntityType;
 	}
 
-	// String getSoft() {
-	// return soft;
-	// }
-	//
-	// String getSoftConfig() {
-	// return softConfig;
-	// }
+	public void setWebCatalogEntityType(String entityType) {
+		this.webCatalogEntityType = ClassUtil.forName(entityType);
+	}
+
+	public Class getWebContentEntityType() {
+		return webContentEntityType;
+	}
+
+	public void setWebContentEntityType(String entityType) {
+		this.webContentEntityType = ClassUtil.forName(entityType);
+	}
 }

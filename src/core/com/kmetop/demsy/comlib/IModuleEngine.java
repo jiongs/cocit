@@ -74,7 +74,7 @@ public interface IModuleEngine {
 	/**
 	 * 获取从属模块
 	 * 
-	 * @param module
+	 * @param moduleID
 	 * @return
 	 */
 	List<IModule> getSubModules(IModule module);
@@ -82,7 +82,7 @@ public interface IModuleEngine {
 	/**
 	 * 获取模块操作
 	 * 
-	 * @param module
+	 * @param moduleID
 	 * @param opID
 	 * @return
 	 */
@@ -104,7 +104,7 @@ public interface IModuleEngine {
 	/**
 	 * 创建模块操作菜单
 	 * 
-	 * @param module
+	 * @param moduleID
 	 * @return
 	 */
 	Nodes makeNodesByAction(IModule module);
@@ -112,7 +112,7 @@ public interface IModuleEngine {
 	/**
 	 * 获取模块业务系统
 	 * 
-	 * @param module
+	 * @param moduleID
 	 * @return
 	 */
 	IBizSystem getSystem(IModule module);

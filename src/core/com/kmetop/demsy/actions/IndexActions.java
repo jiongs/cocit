@@ -13,12 +13,12 @@ import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Fail;
 import org.nutz.mvc.annotation.Ok;
 
+import com.jiongsoft.cocit.service.SecurityManager;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.biz.field.Upload;
 import com.kmetop.demsy.comlib.entity.IDemsySoft;
 import com.kmetop.demsy.comlib.security.IAdminUser;
 import com.kmetop.demsy.comlib.security.IUser;
-import com.kmetop.demsy.comlib.security.IUserRole;
 import com.kmetop.demsy.comlib.ui.IPage;
 import com.kmetop.demsy.config.SoftConfigManager;
 import com.kmetop.demsy.lang.ConfigException;
@@ -61,7 +61,7 @@ public class IndexActions extends ModuleActions implements MvcConst {
 	public Map admin() {
 		log.debug("访问后台主页...");
 
-		security.checkLogin(IUserRole.ROLE_ADMIN_USER);
+		security.checkLogin(SecurityManager.ROLE_ADMIN_USER);
 
 		Map context = new HashMap();
 		context.putAll(MvcUtil.globalVariables);
@@ -94,7 +94,7 @@ public class IndexActions extends ModuleActions implements MvcConst {
 	public Map top() throws DemsyException {
 		log.debug("访问后台顶部...");
 
-		security.checkLogin(IUserRole.ROLE_ADMIN_USER);
+		security.checkLogin(SecurityManager.ROLE_ADMIN_USER);
 
 		Map context = new HashMap();
 		context.putAll(MvcUtil.globalVariables);
@@ -128,7 +128,7 @@ public class IndexActions extends ModuleActions implements MvcConst {
 		log.debugf("%s....", title);
 
 		try {
-			security.checkLogin(IUserRole.ROLE_ADMIN_USER);
+			security.checkLogin(SecurityManager.ROLE_ADMIN_USER);
 
 			UIWidgetModel modelUI = uiEngine.makeFunctionMenuView(me().getSoft());
 			modelUI.setDacorator(null);

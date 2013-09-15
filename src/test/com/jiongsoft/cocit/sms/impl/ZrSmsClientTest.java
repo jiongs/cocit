@@ -19,10 +19,10 @@ import org.junit.Test;
 
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.ActionContext;
-import com.jiongsoft.cocit.service.ConfigService;
+import com.jiongsoft.cocit.service.ConfigManager;
 import com.jiongsoft.cocit.service.SoftService;
 import com.jiongsoft.cocit.sms.impl.ZrSmsClient;
-import com.jiongsoft.cocit.util.DateUtil;
+import com.jiongsoft.cocit.util.CoCalendar;
 
 public class ZrSmsClientTest {
 
@@ -39,15 +39,15 @@ public class ZrSmsClientTest {
 				softContext.getSoftService();
 				result = soft;
 
-				soft.getConfig(ConfigService.CFG_PROXY_HOST, "");
+				soft.getConfig(ConfigManager.CFG_PROXY_HOST, "");
 				result = "192.168.128.3";
-				soft.getConfig(ConfigService.CFG_PROXY_PORT, 80);
+				soft.getConfig(ConfigManager.CFG_PROXY_PORT, 80);
 				result = 80;
-				soft.getConfig(ConfigService.CFG_URL, "http://oa.zrsms.com");
+				soft.getConfig(ConfigManager.CFG_URL, "http://oa.zrsms.com");
 				result = "http://oa.zrsms.com";
-				soft.getConfig(ConfigService.CFG_UID, "");
+				soft.getConfig(ConfigManager.CFG_UID, "");
 				result = "zlsandi";
-				soft.getConfig(ConfigService.CFG_PWD, "");
+				soft.getConfig(ConfigManager.CFG_PWD, "");
 				result = "zlsandi";
 			}
 		};
@@ -123,7 +123,7 @@ public class ZrSmsClientTest {
 	public void send_integration() {
 		ZrSmsClient smsClient = new ZrSmsClient();
 
-		String ret = smsClient.send("15911731833", "展仁短信测试" + DateUtil.getCurrentDateTime(), "", "", "");
+		String ret = smsClient.send("15911731833", "展仁短信测试" + CoCalendar.getNowDateTime(), "", "", "");
 		assertNotNull(ret);
 	}
 

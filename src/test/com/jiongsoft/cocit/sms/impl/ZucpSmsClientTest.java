@@ -15,9 +15,9 @@ import org.junit.Test;
 
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.ActionContext;
-import com.jiongsoft.cocit.service.ConfigService;
+import com.jiongsoft.cocit.service.ConfigManager;
 import com.jiongsoft.cocit.service.SoftService;
-import com.jiongsoft.cocit.util.DateUtil;
+import com.jiongsoft.cocit.util.CoCalendar;
 
 public class ZucpSmsClientTest {
 
@@ -36,15 +36,15 @@ public class ZucpSmsClientTest {
 				softContext.getSoftService();
 				result = soft;
 
-				soft.getConfig(ConfigService.CFG_PROXY_HOST, "");
+				soft.getConfig(ConfigManager.CFG_PROXY_HOST, "");
 				result = "192.168.128.3";
-				soft.getConfig(ConfigService.CFG_PROXY_PORT, 80);
+				soft.getConfig(ConfigManager.CFG_PROXY_PORT, 80);
 				result = 80;
-				soft.getConfig(ConfigService.CFG_URL, "http://sdk2.zucp.net:8060/webservice.asmx");
+				soft.getConfig(ConfigManager.CFG_URL, "http://sdk2.zucp.net:8060/webservice.asmx");
 				result = "http://sdk2.zucp.net:8060/webservice.asmx";
-				soft.getConfig(ConfigService.CFG_UID, "");
+				soft.getConfig(ConfigManager.CFG_UID, "");
 				result = "SDK-BBX-010-18027";
-				soft.getConfig(ConfigService.CFG_PWD, "");
+				soft.getConfig(ConfigManager.CFG_PWD, "");
 				result = "0b2D5-7D";
 			}
 		};
@@ -80,7 +80,7 @@ public class ZucpSmsClientTest {
 	public void send() throws UnsupportedEncodingException {
 		ZucpSmsClient smsClient = new ZucpSmsClient();
 		String rrid = "" + System.currentTimeMillis();
-		String ret = smsClient.send("15911731833", "漫道短信测试" + DateUtil.getCurrentDateTime(), "", "", rrid);
+		String ret = smsClient.send("15911731833", "漫道短信测试" + CoCalendar.getNowDateTime(), "", "", rrid);
 		System.out.println("send: ret = " + ret);
 
 		assertNotNull(ret);

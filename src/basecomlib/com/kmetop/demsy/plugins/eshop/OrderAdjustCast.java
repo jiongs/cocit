@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.jiongsoft.cocit.entity.ActionEvent;
-import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
+import com.jiongsoft.cocit.entity.plugin.BasePlugin;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.LibConst;
@@ -20,7 +20,7 @@ import com.kmetop.demsy.orm.IOrm;
  * @author yongshan.ji
  * 
  */
-public class OrderAdjustCast extends BaseActionPlugin {
+public class OrderAdjustCast extends BasePlugin {
 
 	protected void evalCast(IOrder order) {
 		if (order.getStatus() != IOrder.STATUS_WAIT_BUYER_PAY) {

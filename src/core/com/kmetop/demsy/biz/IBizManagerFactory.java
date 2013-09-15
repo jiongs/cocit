@@ -37,7 +37,7 @@ public interface IBizManagerFactory {
 	 * 
 	 * @param <X>
 	 *            被管理的实体类型
-	 * @param module
+	 * @param moduleID
 	 *            业务模块
 	 * @return 业务管理器
 	 * @throws DemsyException

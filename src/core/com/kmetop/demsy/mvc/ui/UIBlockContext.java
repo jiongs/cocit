@@ -381,7 +381,7 @@ public class UIBlockContext {
 		}
 
 		if (log.isTraceEnabled())
-			log.tracef("板块数据集查询规则: [moduleGuid=%s, rules=%s, rules2=%s, ui:%s] module=%s, catalogModule=%s", moduleGuid, datasource.getRules(), datasource.getRules2(), block.getViewType(), module,
+			log.tracef("板块数据集查询规则: [moduleGuid=%s, rules=%s, rules2=%s, ui:%s] moduleID=%s, catalogModule=%s", moduleGuid, datasource.getRules(), datasource.getRules2(), block.getViewType(), module,
 					catalogModule);
 
 		// 解析动态模块

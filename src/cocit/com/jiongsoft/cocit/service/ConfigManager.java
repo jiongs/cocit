@@ -6,7 +6,7 @@ package com.jiongsoft.cocit.service;
  * @author jiongs753
  * 
  */
-public interface ConfigService {
+public interface ConfigManager {
 
 	/**
 	 * 软件配置项KEY：短信服务商类型

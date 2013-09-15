@@ -3,7 +3,7 @@ package com.kmetop.demsy.plugins.bbs;
 import java.util.Date;
 
 import com.jiongsoft.cocit.entity.ActionEvent;
-import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
+import com.jiongsoft.cocit.entity.plugin.BasePlugin;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.impl.sft.lybbs.LybbsDb;
 import com.kmetop.demsy.comlib.impl.sft.lybbs.LybbsPostreply;
@@ -11,7 +11,7 @@ import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.orm.IOrm;
 
-public class SaveBbsReply extends BaseActionPlugin {
+public class SaveBbsReply extends BasePlugin {
 
 	@Override
 	public void before(ActionEvent event) {

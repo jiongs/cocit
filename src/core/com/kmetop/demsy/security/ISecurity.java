@@ -32,7 +32,7 @@ public interface ISecurity {
 	/**
 	 * 判断当前登录用户是否有权访问指定的模块
 	 * 
-	 * @param module
+	 * @param moduleID
 	 * @param igloreDynamic
 	 * @return
 	 */
@@ -123,7 +123,7 @@ public interface ISecurity {
 	/**
 	 * 获取指定模块的外键字典数据过滤器，用来过滤模块外键字段的数据选项。
 	 * 
-	 * @param module
+	 * @param moduleID
 	 * @param fkField
 	 * @return
 	 */
@@ -132,7 +132,7 @@ public interface ISecurity {
 	/**
 	 * 获取模块数据过滤器：用来过滤模块GRID中的数据。即表示当前登录用户只能访问权限范围内的数据。
 	 * 
-	 * @param module
+	 * @param moduleID
 	 * @return
 	 */
 	CndExpr getDataFilter(IModule module);
@@ -140,7 +140,7 @@ public interface ISecurity {
 	/**
 	 * 动态授权指定角色的用户可以访问的哪些模块操作。
 	 * 
-	 * @param roleID
+	 * @param userRole
 	 * @param moduleID
 	 * @param actions
 	 */

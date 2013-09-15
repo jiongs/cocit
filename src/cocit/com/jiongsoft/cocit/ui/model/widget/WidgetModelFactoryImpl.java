@@ -4,10 +4,10 @@ package com.jiongsoft.cocit.ui.model.widget;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.jiongsoft.cocit.service.EntityFieldService;
-import com.jiongsoft.cocit.service.EntityGroupService;
-import com.jiongsoft.cocit.service.EntityOperationService;
-import com.jiongsoft.cocit.service.EntityTableService;
+import com.jiongsoft.cocit.service.FieldService;
+import com.jiongsoft.cocit.service.FieldGroupService;
+import com.jiongsoft.cocit.service.OperationService;
+import com.jiongsoft.cocit.service.TableService;
 import com.jiongsoft.cocit.service.ModuleService;
 import com.jiongsoft.cocit.ui.model.widget.EntityFormWidgetModel.FormField;
 import com.jiongsoft.cocit.ui.model.widget.GridWidgetModel.GridColumn;
@@ -22,17 +22,17 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 
 	@Override
 	public EntityModuleWidgetModel getEntytyModuleUI(ModuleService entityModule) {
-		EntityTableService mainTable = entityModule.getEntityTable();
+		TableService mainTable = entityModule.getTable();
 		EntityTableWidgetModel mainModel = getEntityTableUI(entityModule, mainTable);
 
 		EntityModuleWidgetModel ret = new EntityModuleWidgetModel(mainModel);
 		ret.setId("" + entityModule.getID());
 		ret.setName(entityModule.getName());
 
-		List<EntityTableService> childrenTables = entityModule.getChildrenEntityTables();
+		List<TableService> childrenTables = entityModule.getChildrenTables();
 		if (childrenTables != null) {
 			List<EntityTableWidgetModel> childrenModels = new ArrayList();
-			for (EntityTableService table : childrenTables) {
+			for (TableService table : childrenTables) {
 				EntityTableWidgetModel model = new EntityTableWidgetModel();
 
 				model.setId("" + table.getID());
@@ -50,7 +50,7 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 	}
 
 	@Override
-	public EntityTableWidgetModel getEntityTableUI(ModuleService entityModule, EntityTableService entityTable) {
+	public EntityTableWidgetModel getEntityTableUI(ModuleService entityModule, TableService entityTable) {
 		EntityTableWidgetModel model = new EntityTableWidgetModel();
 
 		model.setId("" + entityTable.getID());
@@ -61,25 +61,25 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 		model.setGridModel(this.getGridUI(entityModule, entityTable));
 
 		// 将搜索框放在左边导航树顶部
-		// model.setSearchBoxModel(this.getSearchBoxModel(module, table));
+		// model.setSearchBoxModel(this.getSearchBoxModel(moduleID, tableID));
 
 		return model;
 	}
 
 	@Override
-	public SearchBoxWidgetModel getSearchBoxUI(ModuleService entityModule, EntityTableService entityTable) {
+	public SearchBoxWidgetModel getSearchBoxUI(ModuleService entityModule, TableService entityTable) {
 
 		SearchBoxWidgetModel ret = new SearchBoxWidgetModel();
 		ret.setId("" + entityTable.getID());
 
 		List<KeyValue> list = new ArrayList();
-		for (EntityFieldService f : entityTable.getEntityFieldsForGrid()) {
+		for (FieldService f : entityTable.getEntityFieldsForGrid()) {
 			int type = f.getType();
 
 			if (f.getDicOptions().length > 0//
-					|| type == EntityFieldService.TYPE_FK//
-					|| type == EntityFieldService.TYPE_BOOL//
-					|| type == EntityFieldService.TYPE_UPLOAD//
+					|| type == FieldService.TYPE_FK//
+					|| type == FieldService.TYPE_BOOL//
+					|| type == FieldService.TYPE_UPLOAD//
 			) {
 				continue;
 			}
@@ -95,7 +95,7 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 	}
 
 	@Override
-	public GridWidgetModel getGridUI(ModuleService entityModule, EntityTableService entityTable) {
+	public GridWidgetModel getGridUI(ModuleService entityModule, TableService entityTable) {
 		GridWidgetModel model = new GridWidgetModel();
 
 		model.setId("" + entityTable.getID());
@@ -106,10 +106,10 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 		model.setDataLoadUrl(ActionUtil.GET_ENTITY_GRID_DATA.replace("*", ActionUtil.encodeArgs(moduleID, entityTable.getID())));
 
 		// 创建Grid字段列
-		List<EntityFieldService> fields = entityTable.getEntityFieldsForGrid();
+		List<FieldService> fields = entityTable.getEntityFieldsForGrid();
 		int count = 0;
 		int columnsTotalWidth = 0;
-		for (EntityFieldService fld : fields) {
+		for (FieldService fld : fields) {
 			GridColumn col = new GridColumn(fld.getPropName(), fld.getName());
 			col.setEntityField(fld);
 
@@ -117,24 +117,24 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 			col.setAlign("left");
 			byte type = fld.getType();
 			switch (type) {
-			case EntityFieldService.TYPE_NUMBER:
+			case FieldService.TYPE_NUMBER:
 				col.setAlign("right");
 				col.setWidth(60);
 				break;
-			case EntityFieldService.TYPE_BOOL:
+			case FieldService.TYPE_BOOL:
 				col.setWidth(60);
 				break;
-			case EntityFieldService.TYPE_DATE:
+			case FieldService.TYPE_DATE:
 				col.setWidth(120);
 				break;
-			case EntityFieldService.TYPE_UPLOAD:
+			case FieldService.TYPE_UPLOAD:
 				col.setWidth(120);
 				break;
-			case EntityFieldService.TYPE_TEXT:
-			case EntityFieldService.TYPE_RICH_TEXT:
+			case FieldService.TYPE_TEXT:
+			case FieldService.TYPE_RICH_TEXT:
 				col.setWidth(200);
 				break;
-			case EntityFieldService.TYPE_FK:
+			case FieldService.TYPE_FK:
 			default:
 				col.setWidth(150);
 			}
@@ -155,15 +155,15 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 	}
 
 	@Override
-	public MenuWidgetModel getOperationMenuUI(ModuleService entityModule, EntityTableService entityTable) {
-		List<EntityOperationService> dataOperations = entityTable.getEntityOperations();
+	public MenuWidgetModel getOperationMenuUI(ModuleService entityModule, TableService entityTable) {
+		List<OperationService> dataOperations = entityTable.getEntityOperations();
 
 		MenuWidgetModel model = new MenuWidgetModel();
 		model.setId("" + entityTable.getID());
 
 		Tree tree = Tree.make();
 		if (!ObjectUtil.isNil(dataOperations)) {
-			for (EntityOperationService op : dataOperations) {
+			for (OperationService op : dataOperations) {
 				String parentNodeID = null;
 				if (op.getParentID() != null) {
 					parentNodeID = "" + op.getParentID();
@@ -173,11 +173,11 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 
 				child.setName(op.getName());
 
-				String pathArgs = ActionUtil.encodeArgs(entityModule.getID(), entityTable.getID(), op.getID());
+				String funcExpr = ActionUtil.encodeArgs(entityModule.getID(), entityTable.getID(), op.getOperationMode());
 
 				// opArgs = moduleID:tableID:operationID
-				child.set("opArgs", pathArgs);
-				child.set("operationCode", op.getOperationCode());
+				child.set("funcExpr", funcExpr);
+				child.set("opCode", op.getOperationCode());
 				child.set("opMode", op.getOperationMode());
 				child.setSequence(op.getSequence());
 
@@ -193,7 +193,7 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 	}
 
 	@Override
-	public TreeWidgetModel getEntityNaviUI(ModuleService entityModule, EntityTableService entityTable) {
+	public TreeWidgetModel getEntityNaviUI(ModuleService entityModule, TableService entityTable) {
 		if (ObjectUtil.isNil(entityTable.getEntityFieldsForNaviTree()))
 			return null;
 
@@ -207,7 +207,7 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 		model.setDataLoadUrl(ActionUtil.GET_ENTITY_NAVI_DATA.replace("*", ActionUtil.encodeArgs(entityModule.getID(), entityTable.getID())));
 
 		// 获取树数据
-		// Tree entity = table.getNaviTree();
+		// Tree entity = tableID.getNaviTree();
 		// model.setData(entity);
 
 		// 返回
@@ -215,7 +215,7 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 	}
 
 	@Override
-	public TreeWidgetData getEntityNaviData(ModuleService entityModule, EntityTableService entityTable) {
+	public TreeWidgetData getEntityNaviData(ModuleService entityModule, TableService entityTable) {
 		if (ObjectUtil.isNil(entityTable.getEntityFieldsForNaviTree()))
 			return null;
 
@@ -236,24 +236,23 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 	}
 
 	@Override
-	public EntityFormWidgetModel getEntityFormUI(ModuleService entityModule, EntityTableService entityTable, EntityOperationService entityOp, Object entityEntity) {
+	public EntityFormWidgetModel getEntityFormUI(ModuleService entityModule, TableService entityTable, String opMode, Object entityEntity) {
 		EntityFormWidgetModel ret = new EntityFormWidgetModel();
 
-		List<EntityGroupService> groups = entityTable.getEntityGroups();
-		for (EntityGroupService group : groups) {
+		List<FieldGroupService> groups = entityTable.getEntityGroups();
+		for (FieldGroupService group : groups) {
 			FormField groupField = new FormField(group.getName());
 
-			List<EntityFieldService> entityfields = group.getEntityFields();
-			if (entityfields != null) {
-				for (EntityFieldService entityfield : entityfields) {
-					if (entityfield.isDisabled())
+			List<FieldService> fieldsServices = group.getEntityFields();
+			if (fieldsServices != null) {
+				for (FieldService fieldService : fieldsServices) {
+					if (fieldService.isDisabled())
 						continue;
 
-					FormField field = new FormField(entityfield.getName());
+					FormField field = new FormField(fieldService.getName());
 
-					String propName = entityfield.getPropName();
-					String opMode = entityOp.getOperationMode();
-					String mode = entityfield.getMode(opMode);
+					String propName = fieldService.getPropName();
+					String mode = fieldService.getMode(opMode);
 
 					// 计算字段展现模式
 					if (StringUtil.isNil(mode)) {
@@ -269,10 +268,10 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 
 					field.setField(propName);
 					field.setMode(mode);
-					field.setType(entityfield.getType());
-					field.setPattern(entityfield.getPattern());
-					field.setProps(entityfield.getExtProps());
-					field.setEntityField(entityfield);
+					field.setType(fieldService.getType());
+					field.setPattern(fieldService.getPattern());
+					field.setProps(fieldService.getExtProps());
+					field.setEntityField(fieldService);
 
 					groupField.addChild(field);
 				}

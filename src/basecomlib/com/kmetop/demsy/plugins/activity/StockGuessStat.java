@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.jiongsoft.cocit.entity.ActionEvent;
-import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
+import com.jiongsoft.cocit.entity.plugin.BasePlugin;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.comlib.impl.sft.activity.ActivityCatalog;
 import com.kmetop.demsy.comlib.impl.sft.activity.StockActivity;
@@ -21,7 +21,7 @@ import com.kmetop.demsy.util.sort.SortUtils;
  * @author yongshan.ji
  * 
  */
-public class StockGuessStat extends BaseActionPlugin {
+public class StockGuessStat extends BasePlugin {
 
 	@Override
 	public void before(ActionEvent event) {

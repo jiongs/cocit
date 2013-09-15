@@ -83,26 +83,16 @@ public interface Orm {
 
 	public int deleteMore(Class classOfEntity);
 
+	public <T> T load(Class<T> classOfEntity, Serializable id);
+
 	/**
-	 * <b>加载实体对象</b>
-	 * <p>
-	 * 1. 加载实体ID与指定ID相等的实体对象；
-	 * <p>
-	 * 2. 只有匹配正则表达式的字段才会被绑定到实体对象中，如果未指定字段表达式，则所有字段都将被绑定到实体对象中；
-	 * <p>
-	 * 3. 多个正则表达式之间按“|”关系处理；
+	 * 获取第一条满足条件的记录
 	 * 
 	 * @param classOfEntity
-	 *            实体类
-	 * @param id
-	 *            实体数据ID
-	 * @param fieldRexpr
-	 *            字段正则表达式(如“id|name”)
-	 * @return 实体对象
+	 * @param expr
+	 * @return
 	 */
-	public Object load(Class classOfEntity, CndExpr fieldRexpr);
-
-	public Object load(Class classOfEntity, Serializable id);
+	public <T> T get(Class<T> classOfEntity, CndExpr expr);
 
 	/**
 	 * <b>查询分页实体集</b>
@@ -119,5 +109,6 @@ public interface Orm {
 	 *            表达式
 	 * @return 分页结果集
 	 */
-	public List query(Class classOfEntity, CndExpr expr);
+	public <T> List<T> query(Class<T> classOfEntity, CndExpr expr);
+
 }

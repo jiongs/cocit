@@ -86,6 +86,10 @@ public class JCocitEntityModuleRender extends WidgetRender<EntityModuleWidgetMod
 			mainTabsHeight = height;
 		}
 
+		// 计算最大高度：匹配20 Grid条记录
+		mainTabsHeight = Math.min(mainTabsHeight, 655);
+		childrenTabsHeight = Math.min(childrenTabsHeight, 655);
+
 		// 模块界面 TABLE
 		// print(out, "<table><tr><td>");
 

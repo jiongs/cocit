@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import org.nutz.dao.Condition;
 
 import com.jiongsoft.cocit.orm.expr.CndExpr;
+import com.jiongsoft.cocit.orm.expr.Expr;
 import com.jiongsoft.cocit.orm.expr.NullCndExpr;
 import com.kmetop.demsy.config.IDataSource;
 import com.kmetop.demsy.lang.Cls;
@@ -244,7 +245,7 @@ public class OrmImpl implements IOrm {
 	@Override
 	public int deleteMore(Class classOfEntity) {
 		if (log.isDebugEnabled()) {
-			log.tracef("批量删除%s......", Cls.getDisplayName(classOfEntity));
+			log.tracef("批量删除%s......{classOfEntity: %s}", Cls.getDisplayName(classOfEntity), classOfEntity);
 
 			int result = dao.clear(classOfEntity);
 
@@ -259,7 +260,7 @@ public class OrmImpl implements IOrm {
 	public int deleteMore(Class klass, CndExpr expr) {
 		Condition cnd = Cnds.toCnd(expr);
 		if (log.isDebugEnabled()) {
-			log.tracef("批量删除%s......[expr: %s]", Cls.getDisplayName(klass), cnd == null ? "" : cnd.toSql(null));
+			log.tracef("批量删除%s......[expr: %s, klass: %s]", Cls.getDisplayName(klass), cnd == null ? "" : cnd.toSql(null), klass);
 
 			int result = dao.clear(klass, cnd);
 
@@ -278,7 +279,7 @@ public class OrmImpl implements IOrm {
 	@Override
 	public Object load(Class klass, Serializable id, CndExpr fieldRexpr) {
 		if (log.isDebugEnabled()) {
-			log.tracef("加载%s......[id: %s, fieldRexpr: %s]", Cls.getDisplayName(klass), id, fieldRexpr);
+			log.tracef("加载%s......[id: %s, fieldRexpr: %s, klass: %s]", Cls.getDisplayName(klass), id, fieldRexpr, klass);
 
 			Object result = dao.fetch(klass, Cnds.fieldRexpr(fieldRexpr), Long.parseLong(id.toString()));
 
@@ -300,7 +301,7 @@ public class OrmImpl implements IOrm {
 	public Object load(Class klass, CndExpr expr) {
 		Condition cnd = Cnds.toCnd(expr);
 		if (log.isDebugEnabled()) {
-			log.tracef("加载%s......[expr: %s]", Cls.getDisplayName(klass), cnd == null ? "" : cnd.toSql(null));
+			log.tracef("加载%s......[expr: %s, klass: %s]", Cls.getDisplayName(klass), cnd == null ? "" : cnd.toSql(null), klass);
 
 			Object result = dao.fetch(klass, cnd);
 
@@ -322,7 +323,7 @@ public class OrmImpl implements IOrm {
 	public List query(Class classOfEntity, CndExpr expr) {
 		Condition cnd = Cnds.toCnd(expr);
 		if (log.isDebugEnabled()) {
-			log.tracef("查询%s......[expr: %s]", Cls.getDisplayName(classOfEntity), cnd == null ? "" : cnd.toSql(null));
+			log.tracef("查询%s......[expr: %s, classOfEntity: %s]", Cls.getDisplayName(classOfEntity), cnd == null ? "" : cnd.toSql(null), classOfEntity);
 
 			List result = dao.query(classOfEntity, Cnds.fieldRexpr(expr), cnd, Cnds.toPager(dao, expr));
 
@@ -363,7 +364,7 @@ public class OrmImpl implements IOrm {
 	public int count(Class classOfEntity, CndExpr expr) {
 		Condition cnd = Cnds.toCnd(expr);
 		if (log.isDebugEnabled()) {
-			log.tracef("统计%s......[expr: %s]", Cls.getDisplayName(classOfEntity), cnd == null ? "" : cnd.toSql(null));
+			log.tracef("统计%s......[expr: %s, classOfEntity: %s]", Cls.getDisplayName(classOfEntity), cnd == null ? "" : cnd.toSql(null), classOfEntity);
 
 			int result = dao.count(classOfEntity, cnd);
 
@@ -398,7 +399,7 @@ public class OrmImpl implements IOrm {
 	@Override
 	public EnMapping getEnMapping(Class classOfT, boolean syncTable, boolean syncRefTable) {
 		if (log.isTraceEnabled())
-			log.tracef("获取%s实体......[syncTable: %s, syncRefTable: %s]", Cls.getDisplayName(classOfT), syncTable, syncRefTable);
+			log.tracef("获取%s实体......[syncTable: %s, syncRefTable: %s, classOfT: %s]", Cls.getDisplayName(classOfT), syncTable, syncRefTable, classOfT);
 
 		return dao.getEnMapping(classOfT, syncTable, syncRefTable);
 	}
@@ -430,5 +431,18 @@ public class OrmImpl implements IOrm {
 	@Override
 	public void clearMapping() {
 		dao.getEntityHolder().clear();
+	}
+
+	@Override
+	public Object get(Class classOfEntity, CndExpr expr) {
+		if (expr == null) {
+			expr = Expr.page(1, 1);
+		} else if (expr.getPagerExpr() == null) {
+			expr = expr.setPager(1, 1);
+		}
+
+		List list = this.query(classOfEntity, expr);
+
+		return (list == null || list.size() == 0) ? null : list.get(0);
 	}
 }

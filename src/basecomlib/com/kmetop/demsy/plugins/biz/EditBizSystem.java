@@ -1,12 +1,12 @@
 package com.kmetop.demsy.plugins.biz;
 
 import com.jiongsoft.cocit.entity.ActionEvent;
-import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
+import com.jiongsoft.cocit.entity.plugin.BasePlugin;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.lang.Cls;
 
-public class EditBizSystem extends BaseActionPlugin {
+public class EditBizSystem extends BasePlugin {
 
 	@Override
 	public void before(ActionEvent event) {

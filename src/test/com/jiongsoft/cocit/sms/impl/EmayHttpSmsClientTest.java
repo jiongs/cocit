@@ -14,10 +14,10 @@ import org.junit.Test;
 
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.ActionContext;
-import com.jiongsoft.cocit.service.ConfigService;
+import com.jiongsoft.cocit.service.ConfigManager;
 import com.jiongsoft.cocit.service.SoftService;
 import com.jiongsoft.cocit.sms.impl.EmayHttpSmsClient;
-import com.jiongsoft.cocit.util.DateUtil;
+import com.jiongsoft.cocit.util.CoCalendar;
 
 public class EmayHttpSmsClientTest {
 	@Test
@@ -50,7 +50,7 @@ public class EmayHttpSmsClientTest {
 	public void testSend_1() throws Exception {
 		EmayHttpSmsClient fixture = new EmayHttpSmsClient();
 		String mobiles = "15911731833";
-		String content = "亿美短信测试" + DateUtil.getCurrentDateTime();
+		String content = "亿美短信测试" + CoCalendar.getNowDateTime();
 		String extCode = "";
 		String time = "";
 		String rrid = "";
@@ -73,11 +73,11 @@ public class EmayHttpSmsClientTest {
 				softContext.getSoftService();
 				result = soft;
 
-				soft.getConfig(ConfigService.CFG_PROXY_HOST, "");
+				soft.getConfig(ConfigManager.CFG_PROXY_HOST, "");
 				result = "192.168.128.3";
-				soft.getConfig(ConfigService.CFG_PROXY_PORT, 80);
+				soft.getConfig(ConfigManager.CFG_PROXY_PORT, 80);
 				result = 80;
-				soft.getConfig(ConfigService.CFG_URL, "http://sdkhttp.eucp.b2m.cn");
+				soft.getConfig(ConfigManager.CFG_URL, "http://sdkhttp.eucp.b2m.cn");
 				result = "http://sdkhttp.eucp.b2m.cn";
 
 				/*
@@ -93,9 +93,9 @@ public class EmayHttpSmsClientTest {
 				/*
 				 * 茶缘帐号
 				 */
-				soft.getConfig(ConfigService.CFG_UID, "");
+				soft.getConfig(ConfigManager.CFG_UID, "");
 				result = "3SDK-KYJ-0130-KJXQL";
-				soft.getConfig(ConfigService.CFG_PWD, "");
+				soft.getConfig(ConfigManager.CFG_PWD, "");
 				result = "356860";
 				soft.getConfig("sms.key", "");
 				result = "147080";

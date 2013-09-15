@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.jiongsoft.cocit.service.ModuleService;
-import com.jiongsoft.cocit.service.EntityTableService;
+import com.jiongsoft.cocit.service.TableService;
 import com.jiongsoft.cocit.util.Log;
 import com.jiongsoft.cocit.util.StringUtil;
 import com.kmetop.demsy.comlib.biz.field.Upload;
@@ -15,11 +15,11 @@ import com.kmetop.demsy.comlib.impl.base.security.Module;
 public class DemsyModuleService implements ModuleService {
 	private Module entity;
 
-	private EntityTableService mainDataTable;
+	private TableService mainDataTable;
 
-	private List<EntityTableService> childrenDataTables;
+	private List<TableService> childrenDataTables;
 
-	DemsyModuleService(Module e, EntityTableService refrencedDataTable) {
+	DemsyModuleService(Module e, TableService refrencedDataTable) {
 		this.entity = e;
 		this.mainDataTable = refrencedDataTable;
 	}
@@ -101,15 +101,15 @@ public class DemsyModuleService implements ModuleService {
 	}
 
 	@Override
-	public EntityTableService getEntityTable() {
+	public TableService getTable() {
 		return mainDataTable;
 	}
 
-	public List<EntityTableService> getChildrenEntityTables() {
+	public List<TableService> getChildrenTables() {
 		return childrenDataTables;
 	}
 
-	public void setChildrenDataTables(List<EntityTableService> childrenDataTables) {
+	public void setChildrenDataTables(List<TableService> childrenDataTables) {
 		this.childrenDataTables = childrenDataTables;
 	}
 

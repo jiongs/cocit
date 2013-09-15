@@ -10,10 +10,12 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.jiongsoft.cocit.entity.WebCatalogEntity;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
+import com.jiongsoft.cocit.entity.plugin.WebPlugins;
 import com.kmetop.demsy.comlib.biz.field.FakeSubSystem;
 import com.kmetop.demsy.comlib.biz.field.Upload;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
@@ -23,7 +25,9 @@ import com.kmetop.demsy.orm.ann.Prop;
 
 @Entity
 @CocTable(name = "网站栏目设置", code = IWebContentCatalog.SYS_CODE, catalog = BIZCATA_WEB, orderby = ORDER_WEB_INFO_CATALOG, buildin = true//
-, actions = { @CocOperation(name = "新增栏目", typeCode = TYPE_BZFORM_NEW, mode = "c")//
+, actions = {
+//
+		@CocOperation(name = "新增栏目", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = WebPlugins.SaveWebCatalog.class)//
 		, @CocOperation(name = "调整上级栏目", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu")//
 		, @CocOperation(jsonData = "CommonBizAction.data.js") //
 }//
@@ -31,8 +35,8 @@ import com.kmetop.demsy.orm.ann.Prop;
 , fields = {
 //
 		@CocField(property = "parent", gridOrder = 3) //
-		, @CocField(name = "栏目名称", property = "name", mode = "c:M e:M", tostring = true, gridOrder = 1)//
-		, @CocField(name = "栏目编码", property = "code", mode = "c:M e:M", gridOrder = 2) //
+		, @CocField(name = "栏目名称", property = "name", mode = "*:N v:S c:M e:M", tostring = true, gridOrder = 1)//
+		, @CocField(name = "栏目编码", property = "code", mode = "*:N v:S c:M e:S", gridOrder = 2, desc = "编码规则：年月加两位序号(yyyyMM-xx)，如：“201309-01,201309-02”") //
 		, @CocField(property = "type", gridOrder = 4) //
 		, @CocField(property = "refrence") //
 		, @CocField(property = "infoType") //
@@ -45,16 +49,17 @@ import com.kmetop.demsy.orm.ann.Prop;
 		, @CocField(property = "customFields") //
 		, @CocField(property = "commentNum") //
 		, @CocField(property = "clickNum") //
+		, @CocField(property = "clickNum") //
+		, @CocField(name = "人工顺序", property = "orderby", mode = "*:N v:P", gridField = false) //
 		, @CocField(name = "创建时间", property = "created", mode = "*:N v:P") //
 		, @CocField(name = "创建帐号", property = "createdBy", mode = "*:N v:P", gridField = false) //
-		, @CocField(name = "人工顺序", property = "orderby", mode = "*:N v:P", gridField = false) //
 		, @CocField(name = "更新时间", property = "updated", mode = "*:N v:P") //
 		, @CocField(name = "更新帐号", property = "updatedBy", mode = "*:N v:P", gridField = false) //
 
 }) //
 }// end groups
 )
-public class WebContentCategory extends SFTBizComponent implements IWebContentCatalog {
+public class WebContentCategory extends SFTBizComponent implements IWebContentCatalog, WebCatalogEntity {
 
 	@ManyToOne
 	@CocField(name = "上级栏目", mode = "bu:E")

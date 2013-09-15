@@ -1,5 +1,6 @@
 package com.jiongsoft.cocit.service;
 
+import com.jiongsoft.cocit.entity.SoftEntity;
 import com.jiongsoft.cocit.orm.Orm;
 import com.jiongsoft.cocit.sms.SmsClient;
 
@@ -16,7 +17,8 @@ import com.jiongsoft.cocit.sms.SmsClient;
  * @author jiongs753
  * 
  */
-public interface SoftService extends BaseService {
+public interface SoftService extends EntityService<SoftEntity> {
+	public Orm getOrm();
 
 	public String getCode();
 
@@ -41,11 +43,11 @@ public interface SoftService extends BaseService {
 	/**
 	 * 获取实体管理器
 	 * 
-	 * @param module
-	 * @param table
+	 * @param moduleID
+	 * @param tableID
 	 * @return
 	 */
-	public EntityManager getEntityManager(ModuleService module, EntityTableService table);
+	public EntityManager getEntityManager(ModuleService module, TableService table);
 
-	public Orm getOrm();
+	public SecurityManager getSecurityManager();
 }

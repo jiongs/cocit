@@ -22,7 +22,17 @@
 				}
 
 				break;
-
+			case 204:// synchronized
+				$.doAjax({
+					type : "POST",
+					dataType : "json",
+					url : "/coc/execEntityTask/" + opts.funcExpr,
+					success : function(json) {
+						alert(json.message);
+						$("#datagrid_" + opts.token).datagrid("reload");
+					}
+				});
+				break;
 			case 299:// delete
 				var gridID = "#datagrid_" + opts.token;
 				var rows = $(gridID).datagrid("getChecked");
@@ -35,21 +45,28 @@
 					Jwarn("请先选中一条或复选多条记录！");
 				} else {
 					Jconfirm("你确定要删除选中的 " + rows.length + " 条记录吗？", "", function(ok) {
-						if (ok) {
-							var ids = new Array();
-							for (i = 0; i < rows.length; i++) {
-								ids[ids.length] = rows[i].id;
-							}
-							doDelete(opts, ids.join(","), null, function() {
-								$("#datagrid_" + opts.token).datagrid("reload");
-							})
+						if (!ok)
+							return;
+
+						var ids = new Array();
+						for (i = 0; i < rows.length; i++) {
+							ids[ids.length] = rows[i].id;
 						}
+
+						$.doAjax({
+							type : "POST",
+							dataType : "json",
+							url : "/coc/deleteEntityData/" + opts.funcExpr + "/" + ids.join(","),
+							success : function() {
+								$("#datagrid_" + opts.token).datagrid("reload");
+							}
+						});
 					});
 				}
 
 				break;
 			default:
-				Jalert("不支持该操作！{opCode: '" + opts.opCode + "', pathArgs: '" + opts.pathArgs + "', token:" + opts.token + "}");
+				Jalert("不支持该操作！{opCode: '" + opts.opCode + "', funcExpr: '" + opts.funcExpr + "', token:" + opts.token + "}");
 			}
 		},
 		doSetting : function(opts) {
@@ -267,21 +284,11 @@
 		if ($grid.length > 0)
 			$grid.datagrid("reload");
 	}
-	function doDelete(opts, dataID, data, callback) {
-		$.doAjax({
-			type : "POST",
-			dataType : "json",
-			url : "/coc/deleteEntityData/" + opts.pathArgs + "/" + dataID,
-			data : data,
-			success : callback
-		});
-
-	}
 	function doSave(opts, dataID, data, callback) {
 		$.doAjax({
 			type : "POST",
 			dataType : "json",
-			url : "/coc/saveEntityFormData/" + opts.pathArgs + "/" + dataID,
+			url : "/coc/saveEntityFormData/" + opts.funcExpr + "/" + dataID,
 			data : data,
 			success : callback
 		});
@@ -345,7 +352,7 @@
 		}
 	}
 	function doView(opts, dataID) {
-		var loadFormUrl = "/coc/getEntityFormUI/" + opts.pathArgs + "/" + dataID + "?_uiWidth=890&_uiHeight=600&";
+		var loadFormUrl = "/coc/getEntityFormUI/" + opts.funcExpr + "/" + dataID + "?_uiWidth=890&_uiHeight=600&";
 		jCocit.dialog.open(loadFormUrl, "dialog_" + opts.token + "_" + opts.opCode, {
 			title : opts.text,
 			width : 900,
@@ -362,7 +369,7 @@
 	function doEdit(opts, dataID) {
 		var data = {};
 		prepareEntityFormUIParams(opts.token, data);
-		var loadFormUrl = "/coc/getEntityFormUI/" + opts.pathArgs + "/" + dataID + "?_uiWidth=890&_uiHeight=600&" + $.param(data);
+		var loadFormUrl = "/coc/getEntityFormUI/" + opts.funcExpr + "/" + dataID + "?_uiWidth=890&_uiHeight=600&" + $.param(data);
 		jCocit.dialog.open(loadFormUrl, "dialog_" + opts.token + "_" + opts.opCode, {
 			title : opts.text,
 			width : 900,

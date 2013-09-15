@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.jiongsoft.cocit.entity.ActionEvent;
-import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
+import com.jiongsoft.cocit.entity.plugin.BasePlugin;
 import com.kmetop.demsy.comlib.eshop.IOrder;
 import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.log.Log;
@@ -17,7 +17,7 @@ import com.kmetop.demsy.orm.IOrm;
  * @author yongshan.ji
  * 
  */
-public class OrderDelete extends BaseActionPlugin {
+public class OrderDelete extends BasePlugin {
 	protected static Log log = Logs.get();
 
 	protected void process(IOrm orm, IOrder order) {

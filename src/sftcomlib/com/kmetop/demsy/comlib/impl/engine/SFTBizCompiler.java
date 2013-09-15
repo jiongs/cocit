@@ -16,7 +16,7 @@ public class SFTBizCompiler extends BizCompiler {
 				.append("\nimport java.util.*;")//
 				.append("\nimport java.math.*;")//
 				.append("\nimport javax.persistence.*;")//
-				.append("\nimport com.kmetop.demsy.comlib.biz.ann.*;")//
+				.append("\nimport com.jiongsoft.cocit.entity.annotation.*;")//
 				.append("\nimport com.kmetop.demsy.comlib.biz.field.*;")//
 				.append("\nimport com.kmetop.demsy.comlib.impl.sft.*;")//
 				.append("\nimport com.kmetop.demsy.comlib.impl.sft.dic.*;")//

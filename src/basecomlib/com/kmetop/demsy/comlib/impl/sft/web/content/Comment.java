@@ -30,7 +30,7 @@ import com.kmetop.demsy.orm.ann.Prop;
 , groups = { @CocGroup(name = "基本信息", code = "basic"//
 , fields = {
 //
-		@CocField(property = "module", gridOrder = 1) //
+		@CocField(property = "moduleID", gridOrder = 1) //
 		, @CocField(property = "name", name = "主题", mode = "*:N v:S", gridOrder = 2) //
 		, @CocField(property = "commenter") //
 		, @CocField(property = "createdIP", gridOrder = 5) //

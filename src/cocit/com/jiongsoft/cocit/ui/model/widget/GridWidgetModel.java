@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.jiongsoft.cocit.service.EntityFieldService;
+import com.jiongsoft.cocit.service.FieldService;
 import com.jiongsoft.cocit.ui.model.WidgetModel;
 import com.jiongsoft.cocit.util.ActionUtil;
 
@@ -103,7 +103,7 @@ public class GridWidgetModel extends WidgetModel {
 		private int width;
 		private String pattern;
 
-		private EntityFieldService entityField;
+		private FieldService entityField;
 
 		private Properties props;
 
@@ -182,11 +182,11 @@ public class GridWidgetModel extends WidgetModel {
 			this.pattern = pattern;
 		}
 
-		public EntityFieldService getEntityField() {
+		public FieldService getEntityField() {
 			return entityField;
 		}
 
-		public void setEntityField(EntityFieldService entityField) {
+		public void setEntityField(FieldService entityField) {
 			this.entityField = entityField;
 		}
 	}

@@ -19,10 +19,10 @@ import org.nutz.mvc.annotation.Fail;
 import org.nutz.mvc.annotation.Ok;
 
 import com.jiongsoft.cocit.orm.expr.Expr;
+import com.jiongsoft.cocit.service.SecurityManager;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.comlib.security.IModule;
-import com.kmetop.demsy.comlib.security.IUserRole;
 import com.kmetop.demsy.comlib.ui.IPageBlock;
 import com.kmetop.demsy.comlib.ui.IStyle;
 import com.kmetop.demsy.comlib.web.IWebContent;
@@ -149,7 +149,7 @@ public class UiActions extends ModuleActions {
 			if (Demsy.appconfig.isProductMode()) {
 				return false;
 			}
-			security.checkLogin(IUserRole.ROLE_ADMIN_ROOT);
+			security.checkLogin(SecurityManager.ROLE_ADMIN_ROOT);
 			return true;
 		} catch (Throwable e) {
 			return false;

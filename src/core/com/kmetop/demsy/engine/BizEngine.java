@@ -52,6 +52,7 @@ import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.jiongsoft.cocit.orm.expr.ExprRule;
+import com.jiongsoft.cocit.service.SecurityManager;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.IBizEngine;
 import com.kmetop.demsy.comlib.LibConst;
@@ -66,7 +67,6 @@ import com.kmetop.demsy.comlib.entity.IDemsySoft;
 import com.kmetop.demsy.comlib.entity.ISoftConfig;
 import com.kmetop.demsy.comlib.security.IAction;
 import com.kmetop.demsy.comlib.security.IModule;
-import com.kmetop.demsy.comlib.security.IUserRole;
 import com.kmetop.demsy.lang.Cls;
 import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.Ex;
@@ -1850,7 +1850,7 @@ public abstract class BizEngine implements IBizEngine {
 			}
 		}
 
-		if (login != null && login.getRoleType() >= IUserRole.ROLE_ADMIN_ROOT && !Str.isEmpty(paramPrefix) && node != null && node.getSize() > 0) {
+		if (login != null && login.getRoleType() >= SecurityManager.ROLE_ADMIN_ROOT && !Str.isEmpty(paramPrefix) && node != null && node.getSize() > 0) {
 			String param = paramPrefix.replace("eq", "ni") + (notInList.length() > 0 ? notInList.substring(1) : "");
 			// String param = paramPrefix.replace("eq", "nu");
 			root.addNode(parentNode, nodePrefix + "nu").setName("---其他---").setParams(param);
@@ -2227,7 +2227,7 @@ public abstract class BizEngine implements IBizEngine {
 
 	@Override
 	public IBizSystem getSystem(String systemCode) {
-		return (IBizSystem) orm().load(this.getStaticType(BIZSYS_BZUDF_SYSTEM), Expr.eq(F_CODE, systemCode));
+		return (IBizSystem) orm().load(this.getStaticType(BIZSYS_BZUDF_SYSTEM), Expr.eq(F_CODE, systemCode).or(Expr.eq(F_GUID, systemCode)));
 	}
 
 	@Override

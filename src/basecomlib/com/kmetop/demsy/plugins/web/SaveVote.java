@@ -1,13 +1,13 @@
 package com.kmetop.demsy.plugins.web;
 
 import com.jiongsoft.cocit.entity.ActionEvent;
-import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
+import com.jiongsoft.cocit.entity.plugin.BasePlugin;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.impl.base.web.Vote;
 import com.kmetop.demsy.comlib.security.IModule;
 import com.kmetop.demsy.orm.IOrm;
 
-public class SaveVote extends BaseActionPlugin {
+public class SaveVote extends BasePlugin {
 
 	@Override
 	public void before(ActionEvent event) {

@@ -2,6 +2,7 @@ package com.jiongsoft.cocit.service;
 
 import java.util.Map;
 
+import com.jiongsoft.cocit.entity.FieldEntity;
 import com.jiongsoft.cocit.util.KeyValue;
 
 /**
@@ -17,7 +18,7 @@ import com.jiongsoft.cocit.util.KeyValue;
  * @author jiongs753
  * 
  */
-public interface EntityFieldService extends BaseService {
+public interface FieldService extends EntityService<FieldEntity> {
 
 	/**
 	 * 字符串字段：长度在255以内为字符串字段，长度超过255的为文本字段。
@@ -179,7 +180,7 @@ public interface EntityFieldService extends BaseService {
 	 * 
 	 * @return
 	 */
-	EntityTableService getFkEntityTable();
+	TableService getFkEntityTable();
 
 	/**
 	 * 判断该外键字段{@link #TYPE_FK}的“主数据表”是否作为“外键数据表”的从属表？

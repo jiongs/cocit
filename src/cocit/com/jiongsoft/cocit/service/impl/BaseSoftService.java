@@ -1,8 +1,10 @@
 package com.jiongsoft.cocit.service.impl;
 
 import com.jiongsoft.cocit.Cocit;
-import com.jiongsoft.cocit.service.ConfigService;
+import com.jiongsoft.cocit.service.ConfigManager;
+import com.jiongsoft.cocit.service.SecurityManager;
 import com.jiongsoft.cocit.service.SoftService;
+import com.jiongsoft.cocit.service.impl.security.SecurityManagerImpl;
 import com.jiongsoft.cocit.sms.SmsClient;
 
 public abstract class BaseSoftService implements SoftService {
@@ -10,13 +12,16 @@ public abstract class BaseSoftService implements SoftService {
 	/*
 	 * lazy load the following properties
 	 */
-	protected ConfigService config;
+	protected ConfigManager config;
+
 	protected SmsClient smsClient;
+
+	protected SecurityManager securityManager;
 
 	@Override
 	public SmsClient getSmsClient() {
 		if (smsClient == null) {
-			String type = getConfig(ConfigService.CFG_TYPE, "");
+			String type = getConfig(ConfigManager.CFG_TYPE, "");
 			smsClient = Cocit.makeSmsClient(type);
 		}
 
@@ -32,5 +37,14 @@ public abstract class BaseSoftService implements SoftService {
 		return config.get(configKey, defaultReturn);
 	}
 
-	protected abstract ConfigService getSoftConfig();
+	protected abstract ConfigManager getSoftConfig();
+
+	@Override
+	public SecurityManager getSecurityManager() {
+		if (securityManager == null) {
+			securityManager = new SecurityManagerImpl(this);
+		}
+
+		return securityManager;
+	}
 }

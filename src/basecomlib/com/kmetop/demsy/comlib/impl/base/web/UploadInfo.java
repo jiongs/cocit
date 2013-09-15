@@ -37,7 +37,7 @@ import com.kmetop.demsy.comlib.web.IUploadInfo;
 		, @CocField(name = "文件路径", property = "path") //
 		, @CocField(name = "文件大小", property = "contentLength", pattern = "#,###") //
 		, @CocField(name = "文件标题", property = "name") //
-		, @CocField(name = "上传模块", property = "module", fkTable = BIZSYS_ADMIN_MODULE) //
+		, @CocField(name = "上传模块", property = "moduleID", fkTable = BIZSYS_ADMIN_MODULE) //
 		, @CocField(name = "上传字段", property = "bzfield", fkTable = BIZSYS_BZUDF_FIELD) //
 		, @CocField(name = "上传时间", property = "created", mode = "*:P") //
 		, @CocField(name = "上传帐号", property = "createdBy", mode = "*:P") //

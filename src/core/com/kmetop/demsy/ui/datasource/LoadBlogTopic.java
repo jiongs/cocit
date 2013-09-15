@@ -8,9 +8,9 @@ import java.util.Map;
 
 import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.orm.expr.Expr;
+import com.jiongsoft.cocit.service.SecurityManager;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.security.IModule;
-import com.kmetop.demsy.comlib.security.IUserRole;
 import com.kmetop.demsy.comlib.web.IBlogPost;
 import com.kmetop.demsy.comlib.web.IBlogPostComment;
 import com.kmetop.demsy.comlib.web.IStatistic;
@@ -34,7 +34,7 @@ public class LoadBlogTopic extends UiRecord {
 		context.put("uploadUrl", contextPath(MvcConst.URL_UPLOAD, commentMdl.getId()));
 		if (commentMdl != null) {
 			context.put("commentUrl", MvcUtil.contextPath(MvcConst.URL_BZ_SAVE, commentMdl.getId() + ":", "c", Demsy.me().addToken()));
-			Demsy.security.addPermission("block" + maker.getBlock().getId(), IUserRole.ROLE_ANONYMOUS, commentMdl.getId(), "c");
+			Demsy.security.addPermission("block" + maker.getBlock().getId(), SecurityManager.ROLE_ANONYMOUS, commentMdl.getId(), "c");
 		}
 
 		maker.put("commentMdl", commentMdl);

@@ -13,6 +13,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+import com.jiongsoft.cocit.entity.FieldEntity;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
@@ -117,7 +118,7 @@ import com.kmetop.demsy.orm.ann.Prop;
 		}) // end groups
 })
 // 为避免多实体一个表的情况，现将SystemData改为AbstractSystemData，从而避免DTYPE字段。
-public class AbstractSystemData extends SFTBizComponent implements IBizField {
+public class AbstractSystemData extends SFTBizComponent implements IBizField, FieldEntity {
 
 	private boolean gridField;
 

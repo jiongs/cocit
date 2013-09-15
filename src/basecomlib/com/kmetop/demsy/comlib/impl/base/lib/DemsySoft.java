@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
+import com.jiongsoft.cocit.entity.SoftEntity;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
@@ -54,7 +55,7 @@ import com.kmetop.demsy.lang.Str;
 		, @CocField(name = "更新帐号", property = "updatedBy", mode = "*:P") //
 }) }// end groups
 )
-public class DemsySoft extends BizComponent implements IDemsySoft {
+public class DemsySoft extends BizComponent implements IDemsySoft, SoftEntity {
 
 	@ManyToOne
 	private DemsyCorp corp;// 软件所属的企业

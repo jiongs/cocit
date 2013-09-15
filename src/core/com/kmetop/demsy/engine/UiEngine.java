@@ -32,6 +32,7 @@ import org.nutz.lang.Mirror;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocField2;
 import com.jiongsoft.cocit.orm.expr.Expr;
+import com.jiongsoft.cocit.service.SecurityManager;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.IUiEngine;
 import com.kmetop.demsy.comlib.LibConst;
@@ -47,7 +48,6 @@ import com.kmetop.demsy.comlib.biz.field.IExtField;
 import com.kmetop.demsy.comlib.entity.IDemsySoft;
 import com.kmetop.demsy.comlib.security.IAction;
 import com.kmetop.demsy.comlib.security.IModule;
-import com.kmetop.demsy.comlib.security.IUserRole;
 import com.kmetop.demsy.comlib.ui.IPage;
 import com.kmetop.demsy.comlib.ui.IPageBlock;
 import com.kmetop.demsy.comlib.ui.IStyle;
@@ -426,7 +426,7 @@ public class UiEngine implements IUiEngine, MvcConst {
 		// 查询模块操作菜单
 		// Nodes data = null;
 		// if (Strings.isEmpty(menu.getDataUrl())) {
-		// data = entityComLib.makeActionNodes(module);
+		// data = entityComLib.makeActionNodes(moduleID);
 		// }
 
 		return new UIBizMenuModel<UIToolbarMenu>(menu, null);
@@ -435,9 +435,9 @@ public class UiEngine implements IUiEngine, MvcConst {
 	@Override
 	public UIBizFormModel makeSystemFormView(IModule module, IAction action, Object data) throws DemsyException {
 		// String key = "BizForm" + (action == null ? "" : action.getId());
-		// BizForm form = cached(key, module.getId());
+		// BizForm form = cached(key, moduleID.getId());
 		// if (form == null) {
-		// form = cache(key, new BizForm(globalVariables, module.getId()));
+		// form = cache(key, new BizForm(globalVariables, moduleID.getId()));
 
 		UIBizForm form = new UIBizForm(globalVariables, module.getId());
 		form.setDataType(MvcConst.DATA_HTML);
@@ -475,7 +475,7 @@ public class UiEngine implements IUiEngine, MvcConst {
 		Map<String, UIBizFld> uiFieldMap = new HashMap();
 		for (IBizFieldGroup bizGroup : bizGroups) {
 			UIGroupFld uiGroup = new UIGroupFld(null, bizGroup.getId());
-			if (sys.getLayout() == 0) {// 0: table 1: tab
+			if (sys.getLayout() == 0) {// 0: table, 1: tab
 				uiGroup.setRowSize(rowSize);
 			}
 			uiGroup.setName(bizGroup.getName());
@@ -1382,7 +1382,7 @@ public class UiEngine implements IUiEngine, MvcConst {
 
 	private void addViewComponent(Nodes root, IModule folder, Node folderNode, IUIViewComponent viewController) {
 		for (Node moduleNode : folderNode.getChildren()) {
-			IModule module = (IModule) moduleNode.get("module");
+			IModule module = (IModule) moduleNode.get("moduleID");
 
 			List<Node> children = moduleNode.getChildren();
 			if (children != null && children.size() > 0) {
@@ -1474,9 +1474,9 @@ public class UiEngine implements IUiEngine, MvcConst {
 				break;
 			}
 		}
-		Nodes moduleNodes = moduleEngine.makeNodesByModule(Demsy.me().getSoft(), IUserRole.ROLE_ADMIN_ROOT);
+		Nodes moduleNodes = moduleEngine.makeNodesByModule(Demsy.me().getSoft(), SecurityManager.ROLE_ADMIN_ROOT);
 		for (Node folderNode : moduleNodes.getChildren()) {
-			IModule folder = (IModule) folderNode.get("module");
+			IModule folder = (IModule) folderNode.get("moduleID");
 			Node bznode = root.addNode(null, "bzmodule" + folder.getId()).setName(folder.getName() + "(数据控制器)");
 			bznode.setType("bzmodules");
 

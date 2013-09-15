@@ -127,8 +127,7 @@ public abstract class BizCompiler {
 	 * @return 源代码片段
 	 */
 	protected String genSrcOfPackage(IBizSystem system) {
-		return new StringBuffer().append("package ").append(engine.getPackageOfAutoSystem(system)).append(";")
-				.toString();
+		return new StringBuffer().append("package ").append(engine.getPackageOfAutoSystem(system)).append(";").toString();
 	}
 
 	/**
@@ -215,8 +214,7 @@ public abstract class BizCompiler {
 				scale = 0;
 			}
 			if (p > 0 && p > scale) {
-				src.append("\n").append(TAB).append("@Column(precision = ").append(p).append(", scale = ")
-						.append(scale).append(")");
+				src.append("\n").append(TAB).append("@Column(precision = ").append(p).append(", scale = ").append(scale).append(")");
 			}
 		} else if (engine.isManyToMany(fld)) {
 			src.append("\n").append(TAB).append("@ManyToMany");
@@ -232,16 +230,13 @@ public abstract class BizCompiler {
 				src.append("\n").append(TAB).append("@Column(length = ").append(p).append(")");
 		}
 
-		src.append("\n").append(TAB)
-				.append("@CocField(")
-				//
-				.append("name = \"").append(fld.getName() == null ? "" : fld.getName().replace("\"", "\\\""))
-				.append("\"")
+		src.append("\n").append(TAB).append("@CocField(")
+		//
+				.append("name = \"").append(fld.getName() == null ? "" : fld.getName().replace("\"", "\\\"")).append("\"")
 				//
 				.append(", id = ").append(fld.getId())
 				//
-				.append(", code = \"").append(fld.getCode() == null ? "" : fld.getCode().replace("\"", "\\\""))
-				.append("\"");
+				.append(", code = \"").append(fld.getCode() == null ? "" : fld.getCode().replace("\"", "\\\"")).append("\"");
 		src.append(")");
 
 		return src.toString();
@@ -310,8 +305,7 @@ public abstract class BizCompiler {
 		if ("String".equals(propType))
 			src.append("\n").append(TAB).append(TAB).append("return ").append(propName).append(";");
 		else
-			src.append("\n").append(TAB).append(TAB).append("return ").append(propName).append("==null?\"\":")
-					.append(propName).append(".toString();");
+			src.append("\n").append(TAB).append(TAB).append("return ").append(propName).append("==null?\"\":").append(propName).append(".toString();");
 		src.append("\n").append(TAB).append("}");
 
 		return src.toString();
@@ -475,11 +469,9 @@ public abstract class BizCompiler {
 		if (log.isInfoEnabled()) {
 			StringBuffer logBuf = new StringBuffer();
 			for (IBizSystem sys : collectedSystems) {
-				logBuf.append(sys).append("(" + sys.getCode() + "," + sys.getId() + ")")
-						.append(engine.getSimpleClassName(sys)).append("\n");
+				logBuf.append(sys).append("(" + sys.getCode() + "," + sys.getId() + ")").append(engine.getSimpleClassName(sys)).append("\n");
 			}
-			log.infof("编译<%s(%s,%s)>业务系统: 计算需要编译的依赖系统: 结束. 共<%s>个系统需编译[\n%s]", system.getName(), system.getCode(),
-					system.getId(), collectedSystems.size(), logBuf);
+			log.infof("编译<%s(%s,%s)>业务系统: 计算需要编译的依赖系统: 结束. 共<%s>个系统需编译[\n%s]", system.getName(), system.getCode(), system.getId(), collectedSystems.size(), logBuf);
 		}
 
 		String tempDir = appconfig.getTempDir() + File.separator + "BIZSRC_" + (times++);
@@ -572,9 +564,7 @@ public abstract class BizCompiler {
 				IBizSystem refSys = fld.getRefrenceSystem();
 				if (!collectedSystems.contains(refSys) && !refSys.isDisabled()) {
 					if (log.isDebugEnabled())
-						log.debugf("系统<%s(%s,%s)>字段<%s(%s,%s)>引用到系统<%s(%s,%s)>", targetSystem.getName(),
-								targetSystem.getCode(), targetSystem.getId(), fld.getName(), fld.getCode(),
-								fld.getId(), refSys.getName(), refSys.getCode(), refSys.getId());
+						log.debugf("系统<%s(%s,%s)>字段<%s(%s,%s)>引用到系统<%s(%s,%s)>", targetSystem.getName(), targetSystem.getCode(), targetSystem.getId(), fld.getName(), fld.getCode(), fld.getId(), refSys.getName(), refSys.getCode(), refSys.getId());
 
 					collectBizSystems(collectedSystems, refSys);
 				}
@@ -610,8 +600,7 @@ public abstract class BizCompiler {
 		List<String> classpath = new LinkedList();
 
 		// java 类路径
-		StringTokenizer token = new StringTokenizer(System.getProperty("java.class.path") + ";"
-				+ System.getProperty("sun.boot.class.path"), ";");
+		StringTokenizer token = new StringTokenizer(System.getProperty("java.class.path") + ";" + System.getProperty("sun.boot.class.path"), ";");
 		while (token.hasMoreElements()) {
 			String path = token.nextToken();
 			File jar = new File(path);
@@ -653,8 +642,7 @@ public abstract class BizCompiler {
 			String srcCode = srcCodes.get(unitCount);
 			javaFile = new File(fileName + ".java");
 
-			units[unitCount] = new SystemCompilationUnit(className.substring(className.lastIndexOf(".") + 1), srcCode,
-					javaFile, null);
+			units[unitCount] = new SystemCompilationUnit(className.substring(className.lastIndexOf(".") + 1), srcCode, javaFile, null);
 
 			unitCount++;
 		}
@@ -710,8 +698,7 @@ public abstract class BizCompiler {
 
 		ICompilationUnit[] compilationUnits = new ICompilationUnit[units.length];
 		for (int i = 0; i < compilationUnits.length; i++) {
-			compilationUnits[i] = new CompilationUnit(units[i].getSrcCode().toCharArray(), units[i].getSourceFile()
-					.getAbsolutePath(), "UTF-8");
+			compilationUnits[i] = new CompilationUnit(units[i].getSrcCode().toCharArray(), units[i].getSourceFile().getAbsolutePath(), "UTF-8");
 		}
 
 		count = 0;
@@ -740,8 +727,7 @@ public abstract class BizCompiler {
 		return null;
 	}
 
-	private ICompilerRequestor getCompilerRequestor(final SystemCompilationUnit[] units,
-			final StringBuffer problemBuffer) {
+	private ICompilerRequestor getCompilerRequestor(final SystemCompilationUnit[] units, final StringBuffer problemBuffer) {
 		return new ICompilerRequestor() {
 			public void acceptResult(CompilationResult result) {
 				String className = new String(((CompilationUnit) result.getCompilationUnit()).mainTypeName);

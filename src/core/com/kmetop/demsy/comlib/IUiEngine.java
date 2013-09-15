@@ -40,7 +40,7 @@ public interface IUiEngine {
 	/**
 	 * 创建模块功能菜单
 	 * 
-	 * @param module
+	 * @param moduleID
 	 * @return
 	 * @throws DemsyException
 	 */
@@ -49,7 +49,7 @@ public interface IUiEngine {
 	/**
 	 * 创建模块主界面
 	 * 
-	 * @param module
+	 * @param moduleID
 	 * @param gridColumns
 	 * @param idField
 	 * @return
@@ -60,7 +60,7 @@ public interface IUiEngine {
 	/**
 	 * 创建系统主界面
 	 * 
-	 * @param module
+	 * @param moduleID
 	 *            业务模块
 	 * @return 业务模块主界面
 	 * @throws DemsyException
@@ -70,7 +70,7 @@ public interface IUiEngine {
 	/**
 	 * 获取系统数据网格
 	 * 
-	 * @param module
+	 * @param moduleID
 	 *            业务模块
 	 * @param gridColumns
 	 *            数据网格字段， 如果该值为一个数字，则表示在网格中显示多少列？否则表示显示在网格中显示哪些字段？
@@ -82,7 +82,7 @@ public interface IUiEngine {
 	/**
 	 * 创建系统数据分类导航菜单
 	 * 
-	 * @param module
+	 * @param moduleID
 	 *            业务模块
 	 * @return 业务模块导航菜单
 	 * @throws DemsyException
@@ -92,7 +92,7 @@ public interface IUiEngine {
 	/**
 	 * 获取系统工具栏操作菜单
 	 * 
-	 * @param module
+	 * @param moduleID
 	 * @return
 	 * @throws DemsyException
 	 */
@@ -101,16 +101,16 @@ public interface IUiEngine {
 	/**
 	 * 获取子模块界面
 	 * 
-	 * @param module
+	 * @param moduleID
 	 * @return
 	 * @throws DemsyException
 	 */
-	// public TabsDataModel getSlaveUI(IModule module) throws DemsyException;
+	// public TabsDataModel getSlaveUI(IModule moduleID) throws DemsyException;
 
 	/**
 	 * 获取模块业务表单
 	 * 
-	 * @param module
+	 * @param moduleID
 	 * @param action
 	 * @return
 	 * @throws DemsyException

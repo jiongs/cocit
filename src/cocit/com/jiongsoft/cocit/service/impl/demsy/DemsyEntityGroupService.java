@@ -6,24 +6,24 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
-import com.jiongsoft.cocit.service.EntityFieldService;
-import com.jiongsoft.cocit.service.EntityGroupService;
+import com.jiongsoft.cocit.service.FieldService;
+import com.jiongsoft.cocit.service.FieldGroupService;
 import com.jiongsoft.cocit.util.Log;
 import com.jiongsoft.cocit.util.StringUtil;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.impl.sft.system.SystemDataGroup;
 import com.kmetop.demsy.engine.BizEngine;
 
-public class DemsyEntityGroupService implements EntityGroupService {
+public class DemsyEntityGroupService implements FieldGroupService {
 	private SystemDataGroup entity;
-	private List<EntityFieldService> dataFields;
+	private List<FieldService> dataFields;
 
 	DemsyEntityGroupService(SystemDataGroup e) {
 		this.entity = e;
 		dataFields = new ArrayList();
 	}
 
-	void addField(EntityFieldService f) {
+	void addField(FieldService f) {
 		this.dataFields.add(f);
 	}
 
@@ -109,7 +109,7 @@ public class DemsyEntityGroupService implements EntityGroupService {
 	// }
 
 	@Override
-	public List<EntityFieldService> getEntityFields() {
+	public List<FieldService> getEntityFields() {
 		return this.dataFields;
 	}
 

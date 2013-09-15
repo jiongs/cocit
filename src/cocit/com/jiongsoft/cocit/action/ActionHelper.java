@@ -6,18 +6,17 @@ import java.util.Map;
 
 import org.nutz.lang.Mirror;
 
-import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.ActionContext;
+import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.mvc.adaptor.EntityParamNode;
 import com.jiongsoft.cocit.orm.Orm;
 import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.jiongsoft.cocit.service.EntityManager;
-import com.jiongsoft.cocit.service.EntityOperationService;
-import com.jiongsoft.cocit.service.EntityTableService;
 import com.jiongsoft.cocit.service.ModuleService;
 import com.jiongsoft.cocit.service.ServiceFactory;
 import com.jiongsoft.cocit.service.SoftService;
+import com.jiongsoft.cocit.service.TableService;
 import com.jiongsoft.cocit.ui.model.widget.WidgetModelFactory;
 import com.jiongsoft.cocit.util.ActionUtil;
 import com.jiongsoft.cocit.util.Json;
@@ -39,9 +38,9 @@ public class ActionHelper {
 	public Throwable exception;
 
 	/*
-	 * 下列属性只有在opArgs存在的情况下才会被创建。
+	 * 下列属性只有在funcExpr存在的情况下才会被创建。
 	 */
-	public String opArgs;
+	public String funcExpr;
 
 	public Long moduleID;
 
@@ -51,9 +50,9 @@ public class ActionHelper {
 
 	public ModuleService module;
 
-	public EntityTableService table;
+	public TableService table;
 
-	public EntityOperationService operation;
+	// public OperationService operation;
 
 	public WidgetModelFactory widgetFactory;
 
@@ -69,17 +68,17 @@ public class ActionHelper {
 	/**
 	 * 构造一个Action Service对象
 	 * 
-	 * @param opArgs
+	 * @param funcExpr
 	 *            参数组成“moduleID:tableID:operationID”
 	 * @return
 	 */
-	public static ActionHelper make(String opArgs) {
-		return new ActionHelper(opArgs, null, null);
+	public static ActionHelper make(String funcExpr) {
+		return new ActionHelper(funcExpr, null, null);
 	}
 
 	/**
 	 * 
-	 * @param opArgs
+	 * @param funcExpr
 	 *            参数组成“moduleID:tableID:operationID”
 	 * @param entityArgs
 	 *            要加载的实体数据
@@ -87,20 +86,20 @@ public class ActionHelper {
 	 *            实体HTTP参数节点
 	 * @return
 	 */
-	public static ActionHelper make(String opArgs, String entityArgs, EntityParamNode entityParamNode) {
-		return new ActionHelper(opArgs, entityArgs, entityParamNode);
+	public static ActionHelper make(String funcExpr, String entityArgs, EntityParamNode entityParamNode) {
+		return new ActionHelper(funcExpr, entityArgs, entityParamNode);
 	}
 
-	private ActionHelper(String opArgs, String entityArgs, EntityParamNode entityParamNode) {
-		Log.debug("ActionHelper... {opArgs:%s, entityArgs:%s, entityParamNode:%s}", opArgs, entityArgs, entityParamNode);
+	private ActionHelper(String funcExpr, String entityArgs, EntityParamNode entityParamNode) {
+		Log.debug("ActionHelper... {funcExpr:%s, entityArgs:%s, entityParamNode:%s}", funcExpr, entityArgs, entityParamNode);
 
-		this.opArgs = opArgs;
+		this.funcExpr = funcExpr;
 		try {
 
 			widgetFactory = Cocit.getWidgetModelFactory();
 
 			// 解析操作参数
-			parseOpArgs(opArgs);
+			parseFuncExpr(funcExpr);
 
 			// 获取软件服务对象
 			softService = Cocit.getActionContext().getSoftService();
@@ -122,17 +121,17 @@ public class ActionHelper {
 		}
 	}
 
-	private void parseOpArgs(String opArgs) {
-		if (StringUtil.isNil(opArgs))
+	private void parseFuncExpr(String funcExpr) {
+		if (StringUtil.isNil(funcExpr))
 			return;
 
-		String[] array = ActionUtil.decodeArgs(opArgs);
+		String[] array = ActionUtil.decodeArgs(funcExpr);
 
 		String argModuleID = array.length > 0 ? array[0] : null;
 		String argTableID = array.length > 1 ? array[1] : null;
-		String argOperationID = array.length > 2 ? array[2] : null;
+		this.opMode = array.length > 2 ? array[2] : null;
 
-		Log.debug("ActionHelper.parseOpArgs: opArgs = %s {moduleID:%s, tableID:%s, operationID:%s}", opArgs, argModuleID, argTableID, argOperationID);
+		Log.debug("ActionHelper.parseOpArgs: funcExpr = %s {moduleID:%s, tableID:%s, opMode:%s}", funcExpr, argModuleID, argTableID, opMode);
 
 		/*
 		 * 获取数据模块和数据表对象
@@ -143,10 +142,10 @@ public class ActionHelper {
 		ServiceFactory softFactory = Cocit.getServiceFactory();
 
 		module = softFactory.getModule(moduleID);
-		table = softFactory.getEntityTable(moduleID, tableID);
-		operation = softFactory.getEntityOperation(moduleID, tableID, opMode);
+		table = softFactory.getTable(tableID);
+		// operation = softFactory.getOperation(table, opMode);
 
-		Log.debug("ActionHelper.parseOpArgs: module = %s, table = %s", module, table);
+		Log.debug("ActionHelper.parseOpArgs: moduleID = %s, tableID = %s", module, table);
 
 	}
 
@@ -317,7 +316,7 @@ public class ActionHelper {
 		/*
 		 * 返回解析结果
 		 */
-		Log.info("查询条件：opArgs = %s, queryExpr = %s", opArgs, logExpr.toString());
+		Log.info("查询条件：funcExpr = %s, queryExpr = %s", funcExpr, logExpr.toString());
 		return retExpr;
 	}
 }

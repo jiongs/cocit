@@ -13,10 +13,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+import com.jiongsoft.cocit.entity.WebContentEntity;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
+import com.jiongsoft.cocit.entity.plugin.WebPlugins;
 import com.kmetop.demsy.comlib.biz.field.RichText;
 import com.kmetop.demsy.comlib.biz.field.Upload;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
@@ -30,20 +32,22 @@ import com.kmetop.demsy.orm.ann.Prop;
 
 @Entity
 @CocTable(name = "网站信息发布", code = IWebContent.SYS_CODE, catalog = BIZCATA_WEB, orderby = ORDER_WEB_INFO, buildin = true//
-, actions = { @CocOperation(name = "录入", typeCode = TYPE_BZFORM_NEW, mode = "c")//
-		// , @CocOperation(name = "转换为产品信息", typeCode = TYPE_BZFORM_EDIT_N, mode =
-		// "bu1", plugin =
-		// "com.kmetop.demsy.plugins.web.ConvertInfoToProduct")//
-		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e") //
+, actions = {
+//
+		@CocOperation(name = "录入", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = WebPlugins.SaveWebContent.class)//
+		// , @CocOperation(name = "转换为产品信息", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu1", plugin ="com.kmetop.demsy.plugins.web.ConvertInfoToProduct")//
+		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", plugin = WebPlugins.SaveWebContent.class) //
 		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d") //
 		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
 		, @CocOperation(name = "审核", typeCode = TYPE_BZFORM_EDIT_N, mode = "status")//
 		, @CocOperation(jsonData = "CommonBizAction_orderby.data.js") //
-		, @CocOperation(name = "录入专题", typeCode = TYPE_BZFORM_NEW, mode = "c1")//
-		, @CocOperation(name = "变更栏目", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu") //
+		, @CocOperation(name = "录入专题", typeCode = TYPE_BZFORM_NEW, mode = "c1", plugin = WebPlugins.SaveWebContent.class)//
+		, @CocOperation(name = "变更栏目", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu", plugin = WebPlugins.SaveWebContentList.class) //
 }//
 , groups = { @CocGroup(name = "基本信息", code = "basic"//
-, fields = { @CocField(property = "catalog", gridOrder = 2), //
+, fields = {
+//
+		@CocField(property = "catalog", gridOrder = 2), //
 		@CocField(name = "文章标题", property = "name", mode = "c:M c1:M e:M *:N v:S", cascadeMode = "catalog.type:99:NM", gridOrder = 1),//
 		@CocField(property = "typeCode"), //
 		@CocField(property = "author"), //
@@ -59,17 +63,20 @@ import com.kmetop.demsy.orm.ann.Prop;
 
 })//
 		, @CocGroup(name = "其他设置", code = "properties"//
-		, fields = { @CocField(name = "评论次数", property = "commentNum", mode = "*:N v:S", gridOrder = 3), //
-				@CocField(name = "浏览次数", property = "clickNum", mode = "*:N v:S", gridOrder = 4), //
-				@CocField(name = "录入时间", property = "created", mode = "*:N v:S", gridOrder = 6, pattern = "yyyy-MM-dd HH:mm"), //
+		, fields = {
+				//
+				@CocField(name = "栏目编码", property = "catalogCode", mode = "*:N", gridOrder = 3), //
+				@CocField(name = "评论次数", property = "commentNum", mode = "*:N v:S", gridOrder = 4), //
+				@CocField(name = "浏览次数", property = "clickNum", mode = "*:N v:S", gridOrder = 6), //
+				@CocField(name = "录入时间", property = "created", mode = "*:N v:S", gridOrder = 7, pattern = "yyyy-MM-dd HH:mm"), //
 				@CocField(name = "录入帐号", property = "createdBy", mode = "*:N v:S"), //
-				@CocField(name = "更新时间", property = "updated", mode = "*:N v:S", gridOrder = 7, pattern = "yyyy-MM-dd HH:mm"), //
+				@CocField(name = "更新时间", property = "updated", mode = "*:N v:S", pattern = "yyyy-MM-dd HH:mm"), //
 				@CocField(name = "更新帐号", property = "updatedBy", mode = "*:N v:S"), //
 				@CocField(name = "人工顺序", property = "orderby", mode = "*:N", gridOrder = 8) //
 		}) //
 }// end groups
 )
-public class WebContent extends SFTBizComponent implements IWebContent, IStatistic {
+public class WebContent extends SFTBizComponent implements IWebContent, IStatistic, WebContentEntity {
 	// public static final int MASK_REDIRECT = 1;// 2^0
 	//
 	// public static final int MASK_IS_HOT = 2;// 2^1
@@ -84,6 +91,12 @@ public class WebContent extends SFTBizComponent implements IWebContent, IStatist
 	@Prop("category")
 	@CocField(name = "所属栏目", groupBy = true, mode = "c:M c1:M e:M bu:E *:N v:S")
 	protected WebContentCategory catalog;
+
+	/**
+	 * 冗余字段: catalog.code
+	 */
+	@Column(length = 64)
+	protected String catalogCode;
 
 	@ManyToOne
 	@CocField(name = "所属专题", disabledNavi = true, mode = "c1:M *:N v:S")
@@ -426,5 +439,22 @@ public class WebContent extends SFTBizComponent implements IWebContent, IStatist
 
 	public void setClickNum(Integer clickNum) {
 		this.clickNum = clickNum;
+	}
+
+	public String getCatalogCode() {
+		return catalogCode;
+	}
+
+	public void setCatalogCode(String catalogCode) {
+		this.catalogCode = catalogCode;
+	}
+
+	@Override
+	public String getContentText() {
+		if (content == null) {
+			return "";
+		}
+
+		return content.toString();
 	}
 }

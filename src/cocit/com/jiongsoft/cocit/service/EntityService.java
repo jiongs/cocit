@@ -3,13 +3,17 @@ package com.jiongsoft.cocit.service;
 import java.util.Date;
 import java.util.Properties;
 
+import com.jiongsoft.cocit.entity.CoEntity;
+
 /**
- * 组件化自定义对象：简称“自定义组件”、“BaseService”、“Com”等
+ * 实体服务类：服务于某个特定的实体对象
  * 
  * @author jiongs753
  * 
  */
-interface BaseService {
+interface EntityService<Entity extends CoEntity> {
+
+	Entity getEntity();
 
 	/**
 	 * 获取自定义对象ID。

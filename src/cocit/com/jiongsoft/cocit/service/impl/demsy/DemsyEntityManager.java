@@ -5,7 +5,7 @@ import java.util.List;
 import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.service.EntityManager;
 import com.jiongsoft.cocit.service.ModuleService;
-import com.jiongsoft.cocit.service.EntityTableService;
+import com.jiongsoft.cocit.service.TableService;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.IBizManager;
 import com.kmetop.demsy.comlib.impl.base.security.Module;
@@ -14,19 +14,25 @@ import com.kmetop.demsy.comlib.impl.sft.system.SFTSystem;
 public class DemsyEntityManager implements EntityManager {
 	private IBizManager bizManager;
 
-	private DemsyModuleService cocmodule;
+	private DemsyModuleService moduleService;
 
-	private DemsyEntityTableService coctable;
+	private DemsyEntityTableService tableService;
 
-	DemsyEntityManager(ModuleService m, EntityTableService t) {
-		cocmodule = (DemsyModuleService) m;
-		coctable = (DemsyEntityTableService) t;
+	DemsyEntityManager(ModuleService m, TableService t) {
+		moduleService = (DemsyModuleService) m;
+		tableService = (DemsyEntityTableService) t;
 
 		Module module = null;
-		if (cocmodule != null)
-			module = cocmodule.getEntity();
+		if (moduleService != null) {
+			module = moduleService.getEntity();
+			if (tableService == null)
+				tableService = (DemsyEntityTableService) moduleService.getTable();
+		}
 
-		SFTSystem system = coctable.getEntity();
+		SFTSystem system = null;
+		if (tableService != null)
+			system = tableService.getEntity();
+
 		if (system == null && module != null)
 			system = (SFTSystem) Demsy.moduleEngine.getSystem(module);
 
@@ -35,7 +41,7 @@ public class DemsyEntityManager implements EntityManager {
 
 	@Override
 	public int save(Object entity, String opMode) {
-		coctable.validate(opMode, entity);
+		tableService.validate(opMode, entity);
 
 		return bizManager.save(entity, opMode);
 	}

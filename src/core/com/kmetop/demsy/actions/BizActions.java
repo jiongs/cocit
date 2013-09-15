@@ -127,7 +127,7 @@ public class BizActions extends ModuleActions implements BizConst, MvcConst {
 
 			UIWidgetModel ret = builder.build(bizManager, bizManager.getModule(), pageID, ajaxData);
 
-			log.debugf("创建业务窗体<%s>结束. [module=%s]", title, bizManager.getModule());
+			log.debugf("创建业务窗体<%s>结束. [moduleID=%s]", title, bizManager.getModule());
 
 			return ret;
 
@@ -135,7 +135,7 @@ public class BizActions extends ModuleActions implements BizConst, MvcConst {
 			throw e;
 		} catch (Throwable e) {
 			String msg = Ex.msg(e);
-			log.debugf("创建业务窗体<%s>出错! %s", title, msg);
+			log.errorf("创建业务窗体<%s>出错! %s", title, msg);
 
 			throw new DemsyException(Ex.msg(e));
 		}
@@ -176,10 +176,10 @@ public class BizActions extends ModuleActions implements BizConst, MvcConst {
 				// entityComLib.getSlaveModules(masterModule);
 				// int len = Math.min(5, slaveModules.size());
 				// for (int i = 0; i < len; i++) {
-				// IModule module = slaveModules.get(i);
+				// IModule moduleID = slaveModules.get(i);
 				// slaveRoot.addNode(null,
-				// module.getId()).setName(module.getName()).setParams(MVCUtil.contextPath(AT_BZMASTER,
-				// module.getId())).set("moduleID", module.getId());
+				// moduleID.getId()).setName(moduleID.getName()).setParams(MVCUtil.contextPath(AT_BZMASTER,
+				// moduleID.getId())).set("moduleID", moduleID.getId());
 				// }
 				// mainUI.getSlave().setData(slaveRoot);
 				// }
@@ -246,9 +246,9 @@ public class BizActions extends ModuleActions implements BizConst, MvcConst {
 	@At(URL_BZSYS_COMB_CATALOG_EXPR)
 	public UIWidgetModel<UIBizSystem, Object> systemCombFkExpr(String moduleParam, final String dataID) throws DemsyException {
 		UIWidgetModel<UIBizSystem, Object> ret = this.systemCombExpr(moduleParam, dataID);
-		
-		//授权模块BUG：注释下面一条代码
-		//ret.set("comboboxType", "c_expr");
+
+		// 授权模块BUG：注释下面一条代码
+		// ret.set("comboboxType", "c_expr");
 
 		return ret;
 	}
@@ -337,10 +337,10 @@ public class BizActions extends ModuleActions implements BizConst, MvcConst {
 	//
 	// Nodes root = Nodes.make();
 	// List<IModule> modules = moduleEngine.getSlaveModules(mdl);
-	// for (IModule module : modules) {
+	// for (IModule moduleID : modules) {
 	// root.addNode(null,
-	// module.getId()).setName(module.getName()).setParams(MVCUtil.contextPath(URL_BZSYS,
-	// module.getId()));
+	// moduleID.getId()).setName(moduleID.getName()).setParams(MVCUtil.contextPath(URL_BZSYS,
+	// moduleID.getId()));
 	// }
 	// dataModel.setData(root);
 	//
@@ -443,7 +443,7 @@ public class BizActions extends ModuleActions implements BizConst, MvcConst {
 	}
 
 	public static UIBizFormModel buildForm(String title, final String moduleParam, final String actionParam, final ObjcetNaviNode dataNode, String submitUrl) throws DemsyException {
-		log.debugf("创建业务表单<%s>...[module=%s, action=%s]", title, moduleParam, actionParam);
+		log.debugf("创建业务表单<%s>...[moduleID=%s, action=%s]", title, moduleParam, actionParam);
 
 		try {
 			// security.checkLogin(IUserRole.ROLE_USER);
@@ -523,7 +523,7 @@ public class BizActions extends ModuleActions implements BizConst, MvcConst {
 			if (dialog)
 				dataModel.set("dialog", "true");
 
-			log.debugf("创建业务表单<%s>成功. [module=%s]", title, mdl);
+			log.debugf("创建业务表单<%s>成功. [moduleID=%s]", title, mdl);
 
 			return dataModel;
 		} catch (ConfigException e) {
@@ -559,7 +559,7 @@ public class BizActions extends ModuleActions implements BizConst, MvcConst {
 	}
 
 	private Status exec(String title, final String moduleParam, final String actionParam, ObjcetNaviNode dataNode, LogicExecutor executor) throws DemsyException {
-		log.debugf("执行业务逻辑<%s>...[module=%s, action=%s]", title, moduleParam, actionParam);
+		log.debugf("执行业务逻辑<%s>...[moduleID=%s, action=%s]", title, moduleParam, actionParam);
 
 		StringBuffer errorInfo = new StringBuffer();
 		try {
@@ -692,7 +692,7 @@ public class BizActions extends ModuleActions implements BizConst, MvcConst {
 				info = "操作成功! ";
 			}
 
-			log.debugf("执行业务逻辑<%s>成功. [module=%s, action=%s]", title, mdl, action);
+			log.debugf("执行业务逻辑<%s>成功. [moduleID=%s, action=%s]", title, mdl, action);
 
 			return new Status(true, info, null, Obj.getId(data));
 		} catch (Throwable e) {
@@ -951,13 +951,13 @@ public class BizActions extends ModuleActions implements BizConst, MvcConst {
 	@At(URL_BZFORM_LOAD)
 	@Ok("json")
 	public Object load(String moduleID, String dataID) {
-		log.debugf("加载业务数据... [module=%s, data=%s]", moduleID, dataID);
+		log.debugf("加载业务数据... [moduleID=%s, data=%s]", moduleID, dataID);
 		try {
 			IBizManager bizManager = getBizManager(moduleID);
 
 			Object ret = bizManager.load(Long.parseLong(dataID), "v");
 
-			log.debugf("加载业务数据成功. [module=%s, data=%s]", bizManager.getModule(), ret);
+			log.debugf("加载业务数据成功. [moduleID=%s, data=%s]", bizManager.getModule(), ret);
 
 			return ret;
 		} catch (Throwable e) {

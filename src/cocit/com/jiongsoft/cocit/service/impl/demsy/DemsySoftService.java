@@ -3,10 +3,11 @@ package com.jiongsoft.cocit.service.impl.demsy;
 import java.util.Date;
 import java.util.Properties;
 
+import com.jiongsoft.cocit.entity.SoftEntity;
 import com.jiongsoft.cocit.orm.Orm;
-import com.jiongsoft.cocit.service.ConfigService;
+import com.jiongsoft.cocit.service.ConfigManager;
 import com.jiongsoft.cocit.service.EntityManager;
-import com.jiongsoft.cocit.service.EntityTableService;
+import com.jiongsoft.cocit.service.TableService;
 import com.jiongsoft.cocit.service.ModuleService;
 import com.jiongsoft.cocit.service.impl.BaseSoftService;
 import com.jiongsoft.cocit.util.Log;
@@ -31,7 +32,7 @@ public class DemsySoftService extends BaseSoftService {
 	}
 
 	@Override
-	protected ConfigService getSoftConfig() {
+	protected ConfigManager getSoftConfig() {
 		return config;
 	}
 
@@ -106,13 +107,21 @@ public class DemsySoftService extends BaseSoftService {
 	}
 
 	@Override
-	public EntityManager getEntityManager(ModuleService module, EntityTableService table) {
+	public EntityManager getEntityManager(ModuleService module, TableService table) {
+		if (module == null && table == null)
+			return null;
+
 		return new DemsyEntityManager(module, table);
 	}
 
 	@Override
 	public Orm getOrm() {
 		return Demsy.orm();
+	}
+
+	@Override
+	public SoftEntity getEntity() {
+		return entity;
 	}
 
 }

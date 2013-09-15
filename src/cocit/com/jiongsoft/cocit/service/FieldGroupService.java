@@ -2,6 +2,8 @@ package com.jiongsoft.cocit.service;
 
 import java.util.List;
 
+import com.jiongsoft.cocit.entity.FieldGroupEntity;
+
 /**
  * 分组服务类：为字段分组提供一对一的服务。
  * 
@@ -14,7 +16,7 @@ import java.util.List;
  * @author jiongs753
  * 
  */
-public interface EntityGroupService extends BaseService {
+public interface FieldGroupService extends EntityService<FieldGroupEntity> {
 
 	/**
 	 * 根据操作码计算数据分组编辑模式：该分组下的所有字段都将继承数据分组的编辑模式。
@@ -39,5 +41,5 @@ public interface EntityGroupService extends BaseService {
 	 * 
 	 * @return
 	 */
-	List<EntityFieldService> getEntityFields();
+	List<FieldService> getEntityFields();
 }

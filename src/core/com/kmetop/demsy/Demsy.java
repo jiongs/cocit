@@ -40,6 +40,7 @@ import com.jiongsoft.cocit.action.EntityAction;
 import com.jiongsoft.cocit.action.UtilAction;
 import com.jiongsoft.cocit.action.WebAction;
 import com.jiongsoft.cocit.orm.expr.Expr;
+import com.jiongsoft.cocit.service.SecurityManager;
 import com.kmetop.demsy.actions.AppActions;
 import com.kmetop.demsy.actions.BizActions;
 import com.kmetop.demsy.actions.ConfigActions;
@@ -56,7 +57,6 @@ import com.kmetop.demsy.comlib.IUiEngine;
 import com.kmetop.demsy.comlib.entity.IDemsySoft;
 import com.kmetop.demsy.comlib.security.IAdminUser;
 import com.kmetop.demsy.comlib.security.IUser;
-import com.kmetop.demsy.comlib.security.IUserRole;
 import com.kmetop.demsy.config.IAppConfig;
 import com.kmetop.demsy.config.IDataSource;
 import com.kmetop.demsy.config.impl.AppConfig;
@@ -865,7 +865,7 @@ public abstract class Demsy implements Const, MvcConst {
 		public boolean existToken(String token) {
 			if (Str.isEmpty(token))
 				try {
-					security.checkLogin(IUserRole.ROLE_ADMIN_ROOT);
+					security.checkLogin(SecurityManager.ROLE_ADMIN_ROOT);
 					return true;
 				} catch (Throwable e) {
 				}

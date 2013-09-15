@@ -229,7 +229,7 @@ public interface LibConst {
 	static final int ORDER_WEB_BLOG_COMMENT = 12;
 
 	/*
-	 * module
+	 * moduleID
 	 */
 	static final String MODULE_OTHER = "_module_other";
 

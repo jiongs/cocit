@@ -321,8 +321,8 @@ public class SFTModuleEngine extends ModuleEngine {
 	// int ret = 0;
 	//
 	// List<Module> modules = orm.query(Module.class, Expr.eq(F_SOFT_ID, soft));
-	// for (Module module : modules) {
-	// ret += clearModule(orm, module);
+	// for (Module moduleID : modules) {
+	// ret += clearModule(orm, moduleID);
 	// }
 	//
 	// return ret;

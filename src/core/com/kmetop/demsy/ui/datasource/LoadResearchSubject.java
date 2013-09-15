@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.jiongsoft.cocit.orm.expr.Expr;
+import com.jiongsoft.cocit.service.SecurityManager;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.security.IModule;
-import com.kmetop.demsy.comlib.security.IUserRole;
 import com.kmetop.demsy.comlib.web.IResearchOption;
 import com.kmetop.demsy.comlib.web.IResearchQuestion;
 import com.kmetop.demsy.comlib.web.IResearchResult;
@@ -48,17 +48,17 @@ public class LoadResearchSubject extends UiBaseDataSource {
 				allowView = true;
 				break;
 			case IResearchSubject.VIEW_POLICY_LOGIN:
-				if (login != null && login.getRoleType() >= IUserRole.ROLE_LOGIN_USER) {
+				if (login != null && login.getRoleType() >= SecurityManager.ROLE_LOGIN_USER) {
 					allowView = true;
 				}
 				break;
 			case IResearchSubject.VIEW_POLICY_ADMIN_USER:
-				if (login != null && login.getRoleType() >= IUserRole.ROLE_ADMIN_USER) {
+				if (login != null && login.getRoleType() >= SecurityManager.ROLE_ADMIN_USER) {
 					allowView = true;
 				}
 				break;
 			case IResearchSubject.VIEW_POLICY_ADMIN_ROOT:
-				if (login != null && login.getRoleType() >= IUserRole.ROLE_ADMIN_ROOT) {
+				if (login != null && login.getRoleType() >= SecurityManager.ROLE_ADMIN_ROOT) {
 					allowView = true;
 				}
 				break;
@@ -96,7 +96,7 @@ public class LoadResearchSubject extends UiBaseDataSource {
 
 			IModule resultMdl = moduleEngine.getModule(Demsy.me().getSoft(), bizEngine.getSystem(IResearchResult.SYS_CODE));
 			ctx.put("saveUrl", MvcUtil.contextPath(MvcConst.URL_BZ_SAVE, resultMdl.getId() + ":", "c_n", Demsy.me().addToken()));
-			Demsy.security.addPermission("block" + maker.getBlock().getId(), IUserRole.ROLE_ANONYMOUS, resultMdl.getId(), "c_n");
+			Demsy.security.addPermission("block" + maker.getBlock().getId(), SecurityManager.ROLE_ANONYMOUS, resultMdl.getId(), "c_n");
 		}
 
 		return ctx;

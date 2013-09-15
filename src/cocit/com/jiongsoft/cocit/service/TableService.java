@@ -2,6 +2,7 @@ package com.jiongsoft.cocit.service;
 
 import java.util.List;
 
+import com.jiongsoft.cocit.entity.TableEntity;
 import com.jiongsoft.cocit.util.CocException;
 import com.jiongsoft.cocit.util.Tree;
 
@@ -20,7 +21,7 @@ import com.jiongsoft.cocit.util.Tree;
  * @author jiongs753
  * 
  */
-public interface EntityTableService extends BaseService {
+public interface TableService extends EntityService<TableEntity> {
 
 	// /**
 	// * 获取该数据表的“子数据表”。
@@ -34,35 +35,35 @@ public interface EntityTableService extends BaseService {
 	 * 
 	 * @return
 	 */
-	List<EntityGroupService> getEntityGroups();
+	List<FieldGroupService> getEntityGroups();
 
 	/**
 	 * 获取该数据表中的所有数据字段。
 	 * 
 	 * @return
 	 */
-	List<EntityFieldService> getEntityFields();
+	List<FieldService> getEntityFields();
 
 	/**
 	 * 获取该数据表中的数据操作，用于生存操作菜单。
 	 * 
 	 * @return
 	 */
-	List<EntityOperationService> getEntityOperations();
+	List<OperationService> getEntityOperations();
 
 	/**
 	 * 获取该数据表中用作导航树的字段。
 	 * 
 	 * @return
 	 */
-	List<EntityFieldService> getEntityFieldsForNaviTree();
+	List<FieldService> getEntityFieldsForNaviTree();
 
 	/**
 	 * 获取该数据表中用作Grid列的字段。
 	 * 
 	 * @return
 	 */
-	List<EntityFieldService> getEntityFieldsForGrid();
+	List<FieldService> getEntityFieldsForGrid();
 
 	Tree getEntityNaviData();
 

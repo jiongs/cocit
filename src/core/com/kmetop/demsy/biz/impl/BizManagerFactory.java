@@ -45,7 +45,7 @@ public class BizManagerFactory implements IBizManagerFactory {
 			return null;
 		}
 		if (module.getType() != IModule.TYPE_BIZ)
-			throw new DemsyException("业务模块不存在! [module=%s]", module);
+			throw new DemsyException("业务模块不存在! [moduleID=%s]", module);
 
 		IBizSystem system = moduleEngine.getSystem(module);
 

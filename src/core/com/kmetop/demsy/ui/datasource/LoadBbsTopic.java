@@ -12,12 +12,12 @@ import java.util.Map;
 
 import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.orm.expr.Expr;
+import com.jiongsoft.cocit.service.SecurityManager;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.comlib.security.IModule;
 import com.kmetop.demsy.comlib.security.IUser;
-import com.kmetop.demsy.comlib.security.IUserRole;
 import com.kmetop.demsy.comlib.web.IBbsForum;
 import com.kmetop.demsy.comlib.web.IBbsReply;
 import com.kmetop.demsy.comlib.web.IBbsTopic;
@@ -64,7 +64,7 @@ public class LoadBbsTopic extends UiRecord {
 			context.put("forumUrl", MvcUtil.contextPath(URL_UI, maker.getBlock().getTitleLink().getId(), forumMdl.getId() + ":" + record.getForum().getId()));
 
 		context.put("commentUrl", MvcUtil.contextPath(MvcConst.URL_BZ_SAVE, commentMdl.getId() + ":", "c", Demsy.me().addToken()));
-		Demsy.security.addPermission("block" + maker.getBlock().getId(), IUserRole.ROLE_ANONYMOUS, commentMdl.getId(), "c");
+		Demsy.security.addPermission("block" + maker.getBlock().getId(), SecurityManager.ROLE_ANONYMOUS, commentMdl.getId(), "c");
 
 		IOrm orm = Demsy.orm();
 		// 查询论坛回帖
@@ -111,7 +111,7 @@ public class LoadBbsTopic extends UiRecord {
 			 */
 			if (login != null //
 					&& (username.equals(topic.getCreatedBy())//
-					|| login.getRoleType() >= IUserRole.ROLE_ADMIN_ROOT//
+					|| login.getRoleType() >= SecurityManager.ROLE_ADMIN_ROOT//
 					)) {
 			} else {
 				// 检查帖子是否需要审核才能显示

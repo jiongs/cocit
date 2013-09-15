@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
+import com.jiongsoft.cocit.entity.TableEntity;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
@@ -49,7 +50,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 		, @CocField(name = "更新帐号", property = "updatedBy", mode = "*:N v:P") //
 }) }// end groups
 )
-public class SFTSystem extends SFTBizComponent implements IBizSystem {
+public class SFTSystem extends SFTBizComponent implements IBizSystem, TableEntity {
 
 	@ManyToOne
 	private BizCatalog catalog;

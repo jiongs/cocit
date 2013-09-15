@@ -35,4 +35,31 @@ public interface IPermission {
 	 */
 	Dataset getDatas();
 
+	/**
+	 * 获取用户类型
+	 * 
+	 * @return
+	 */
+	public String getUserType();
+
+	/**
+	 * 获取用户群体表达式
+	 * 
+	 * @return
+	 */
+	public String getUserRule();
+
+	/**
+	 * 获取功能权限表达式
+	 * 
+	 * @return
+	 */
+	public String getFuncRule();
+
+	/**
+	 * 获取数据权限表达式
+	 * 
+	 * @return
+	 */
+	public String getDataRule();
 }

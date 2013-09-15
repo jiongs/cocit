@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.jiongsoft.cocit.entity.ActionEvent;
-import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
+import com.jiongsoft.cocit.entity.plugin.BasePlugin;
 import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.comlib.impl.base.ebusiness.order.Order;
@@ -19,7 +19,7 @@ import com.kmetop.demsy.orm.IOrm;
  * @author yongshan.ji
  * 
  */
-public class StockGuessPrize extends BaseActionPlugin {
+public class StockGuessPrize extends BasePlugin {
 
 	@Override
 	public void before(ActionEvent event) {

@@ -3,7 +3,7 @@ package com.kmetop.demsy.plugins.eshop;
 import java.util.List;
 
 import com.jiongsoft.cocit.entity.ActionEvent;
-import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
+import com.jiongsoft.cocit.entity.plugin.BasePlugin;
 import com.kmetop.demsy.actions.OrderActions;
 import com.kmetop.demsy.comlib.eshop.IOrder;
 import com.kmetop.demsy.comlib.eshop.IOrderItem;
@@ -18,7 +18,7 @@ import com.kmetop.demsy.orm.IOrm;
  * @author yongshan.ji
  * 
  */
-public class OrderSended extends BaseActionPlugin {
+public class OrderSended extends BasePlugin {
 	protected static Log log = Logs.get();
 
 	protected void setStatus(IOrm orm, IOrder order) {

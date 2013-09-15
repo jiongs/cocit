@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.jiongsoft.cocit.orm.expr.CndExpr;
+import com.jiongsoft.cocit.service.SecurityManager;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.security.IModule;
-import com.kmetop.demsy.comlib.security.IUserRole;
 import com.kmetop.demsy.mvc.MvcConst;
 import com.kmetop.demsy.mvc.MvcConst.MvcUtil;
 import com.kmetop.demsy.mvc.ui.UIBlockContext;
@@ -26,7 +26,7 @@ public class UiDataset extends UiBaseDataSource {
 		if (voteMdl != null) {
 			context.put("voteMdl", MvcUtil.contextPath(MvcConst.URL_BZ_SAVE, voteMdl.getId() + ":", "c"));
 			context.put("voteToken", Demsy.me().addToken());
-			Demsy.security.addPermission("block" + maker.getBlock().getId(), IUserRole.ROLE_ANONYMOUS, voteMdl.getId(), "c");
+			Demsy.security.addPermission("block" + maker.getBlock().getId(), SecurityManager.ROLE_ANONYMOUS, voteMdl.getId(), "c");
 		}
 	}
 

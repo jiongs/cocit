@@ -11,6 +11,7 @@ import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.jiongsoft.cocit.util.ActionUtil;
+import com.jiongsoft.ynby.plugins.VisitActivityPlugins;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 
 /**
@@ -22,8 +23,11 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 @Entity
 @CocTable(name = "活动设置", code = "VisitActivity", catalog = "_ynby_visit", pathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 2//
 // 操作按钮
-, actions = { @CocOperation(name = "添加", typeCode = 101, mode = "c", pluginName = "com.jiongsoft.ynby.plugins.VisitActivityPlugins$SaveActivity")//
-		, @CocOperation(name = "修改", typeCode = 102, mode = "e", pluginName = "com.jiongsoft.ynby.plugins.VisitActivityPlugins$SaveActivity") //
+, actions = {
+//
+		@CocOperation(name = "添加年计划", typeCode = 204, mode = "cy", plugin = VisitActivityPlugins.SaveYearActivity.class)//
+		, @CocOperation(name = "添加", typeCode = 101, mode = "c", plugin = VisitActivityPlugins.SaveActivity.class)//
+		, @CocOperation(name = "修改", typeCode = 102, mode = "e", plugin = VisitActivityPlugins.SaveActivity.class) //
 		, @CocOperation(name = "删除", typeCode = 299, mode = "d") //
 		, @CocOperation(name = "查看", typeCode = 102, mode = "v") //
 }// end: actions

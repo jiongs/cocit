@@ -14,23 +14,22 @@ public interface ILogin {
 	public static final String SESSION_KEY_LOGIN_INFO = "Login";
 
 	/**
-	 * 参数用户类型KEY：用于从HTTP请求中获取参数用户类型(
-	 * {@link com.kmetop.demsy.security.Demsy#realm()})
+	 * 参数用户类型KEY：用于从HTTP请求中获取参数用户类型( {@link com.kmetop.demsy.security.Demsy#realm()})
 	 */
 	public static final String PARAM_REALM = "_loginrealm_";
 
 	/**
-	 * 参数用户帐号KEY：用于从HTTP请求中获取参数用户帐号(
-	 * {@link com.kmetop.demsy.security.Demsy#username()})
+	 * 参数用户帐号KEY：用于从HTTP请求中获取参数用户帐号( {@link com.kmetop.demsy.security.Demsy#username()})
 	 */
 	public static final String PARAM_USER = "_loginuser_";
 
 	/**
-	 * 参数用户密码KEY：用于从HTTP请求中获取参数用户密码(
-	 * {@link com.kmetop.demsy.security.Demsy#password()})
+	 * 参数用户密码KEY：用于从HTTP请求中获取参数用户密码( {@link com.kmetop.demsy.security.Demsy#password()})
 	 */
 	public static final String PARAM_PWD = "_loginpwd_";
+
 	public static final String PARAM_CLIENT_WIDTH = "clientWidth";
+
 	public static final String PARAM_CLIENT_HEIGHT = "clientHeight";
 
 	long getModule();

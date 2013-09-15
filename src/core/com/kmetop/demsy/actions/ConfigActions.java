@@ -26,11 +26,11 @@ import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.Param;
 
 import com.jiongsoft.cocit.orm.expr.Expr;
+import com.jiongsoft.cocit.service.SecurityManager;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.entity.IDemsySoft;
 import com.kmetop.demsy.comlib.security.IModule;
-import com.kmetop.demsy.comlib.security.IUserRole;
 import com.kmetop.demsy.config.IAppConfig;
 import com.kmetop.demsy.config.IConfig;
 import com.kmetop.demsy.config.IDataSource;
@@ -60,9 +60,9 @@ public class ConfigActions implements MvcConst {
 	@Ok("st:admin/config")
 	@Fail("redirect:" + URL_SEC_LOGIN_FORM)
 	public synchronized Map main(String moduleID) {
-		log.debugf("访问系统配置主界面... [module=%s]", moduleID);
+		log.debugf("访问系统配置主界面... [moduleID=%s]", moduleID);
 
-		security.checkLogin(IUserRole.ROLE_DEVELOPER);
+		security.checkLogin(SecurityManager.ROLE_DP_SUPPORT);
 
 		Map ret = new HashMap();
 		ret.putAll(globalVariables);
@@ -115,7 +115,7 @@ public class ConfigActions implements MvcConst {
 		if (dbnode != null && dbnode.size() > 0) {
 			log.debugf("保存数据库配置...");
 			try {
-				security.checkLogin(IUserRole.ROLE_DEVELOPER);
+				security.checkLogin(SecurityManager.ROLE_DP_SUPPORT);
 
 				IConfig tmp = ((IConfig) dataSource).copy();
 				dbnode.inject(Mirror.me(tmp), tmp, null);
@@ -138,7 +138,7 @@ public class ConfigActions implements MvcConst {
 		if (appnode != null && appnode.size() > 0) {
 			log.debugf("保存参数配置...");
 			try {
-				security.checkLogin(IUserRole.ROLE_DEVELOPER);
+				security.checkLogin(SecurityManager.ROLE_DP_SUPPORT);
 
 				IAppConfig tmp = appconfig.copy();
 				appnode.inject(Mirror.me(tmp), tmp, null);
@@ -166,7 +166,7 @@ public class ConfigActions implements MvcConst {
 		if (dbnode != null && dbnode.size() > 0) {
 			log.debugf("测试数据库连接...");
 			try {
-				security.checkLogin(IUserRole.ROLE_DEVELOPER);
+				security.checkLogin(SecurityManager.ROLE_DP_SUPPORT);
 
 				IDataSource tmp = (IDataSource) ((IConfig) dataSource).copy();
 				dbnode.inject(Mirror.me(tmp), tmp, null);
@@ -193,7 +193,7 @@ public class ConfigActions implements MvcConst {
 	public synchronized Status clearCache() {
 		log.debugf("清空缓存...");
 		try {
-			security.checkLogin(IUserRole.ROLE_DEVELOPER);
+			security.checkLogin(SecurityManager.ROLE_DP_SUPPORT);
 
 			uiEngine.clearCache();
 			moduleEngine.clearCache();
@@ -218,7 +218,7 @@ public class ConfigActions implements MvcConst {
 	public synchronized Status clearMapping() throws DemsyException {
 		log.debugf("清空实体映射...");
 		try {
-			security.checkLogin(IUserRole.ROLE_DEVELOPER);
+			security.checkLogin(SecurityManager.ROLE_DP_SUPPORT);
 
 			orm().clearMapping();
 
@@ -253,7 +253,7 @@ public class ConfigActions implements MvcConst {
 	public synchronized Status upgradeModule(String softID) {
 		log.debugf("升级功能菜单...");
 		try {
-			security.checkLogin(IUserRole.ROLE_DEVELOPER);
+			security.checkLogin(SecurityManager.ROLE_DP_SUPPORT);
 
 			moduleEngine.upgradeModules(getSoft(softID));
 
@@ -273,7 +273,7 @@ public class ConfigActions implements MvcConst {
 	public synchronized Status upgradeWebInfo(String softID) {
 		log.debugf("升级网站栏目信息...");
 		try {
-			security.checkLogin(IUserRole.ROLE_DEVELOPER);
+			security.checkLogin(SecurityManager.ROLE_DP_SUPPORT);
 
 			moduleEngine.upgradeWebContent(getSoft(softID));
 
@@ -293,7 +293,7 @@ public class ConfigActions implements MvcConst {
 	public synchronized Status setupDemsy() {
 		log.debugf("安装平台功能模块...");
 		try {
-			security.checkLogin(IUserRole.ROLE_DEVELOPER);
+			security.checkLogin(SecurityManager.ROLE_DP_SUPPORT);
 
 			if (Demsy.appconfig.isProductMode()) {
 				clearCache();
@@ -318,7 +318,7 @@ public class ConfigActions implements MvcConst {
 	public synchronized Status validateSystems(String softID) {
 		log.debugf("验证业务系统...");
 		try {
-			security.checkLogin(IUserRole.ROLE_DEVELOPER);
+			security.checkLogin(SecurityManager.ROLE_DP_SUPPORT);
 
 			bizEngine.validateSystems(getSoft(softID));
 
@@ -341,7 +341,7 @@ public class ConfigActions implements MvcConst {
 		log.debugf("导出业务数据... [softID: %s, date: %s]", softID, dateStr);
 		String folder = null;
 		try {
-			security.checkLogin(IUserRole.ROLE_DEVELOPER);
+			security.checkLogin(SecurityManager.ROLE_DP_SUPPORT);
 
 			// 导出数据到文件夹并压缩成ZIP文件
 			Date date;
@@ -395,7 +395,7 @@ public class ConfigActions implements MvcConst {
 
 		log.debugf("导入业务数据... [softID: %s, importDataFromZip: %s]", softID, importDataFromZip);
 		try {
-			security.checkLogin(IUserRole.ROLE_DEVELOPER);
+			security.checkLogin(SecurityManager.ROLE_DP_SUPPORT);
 
 			// 准备文件夹和ZIP文件
 			String folder = appconfig.getTempDir() + File.separator + "data" + new Date().getTime();
@@ -447,7 +447,7 @@ public class ConfigActions implements MvcConst {
 	public Status patch(@Param("filePath") String filePath) {
 		log.debugf("升级DEMSY平台... [filePath: %s]", filePath);
 		try {
-			security.checkLogin(IUserRole.ROLE_DEVELOPER);
+			security.checkLogin(SecurityManager.ROLE_DP_SUPPORT);
 
 			PatchTask task = null;
 			if (Str.isEmpty(filePath)) {

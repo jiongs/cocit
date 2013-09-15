@@ -7,11 +7,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.jiongsoft.cocit.service.SecurityManager;
 import com.kmetop.demsy.comlib.entity.IDemsySoft;
 import com.kmetop.demsy.comlib.security.IAdminUser;
 import com.kmetop.demsy.comlib.security.IRealm;
 import com.kmetop.demsy.comlib.security.IUser;
-import com.kmetop.demsy.comlib.security.IUserRole;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.log.Log;
 import com.kmetop.demsy.log.Logs;
@@ -95,15 +95,15 @@ public class LoginImpl implements ILogin {
 
 	private void initRole() {
 		if (security.isRootUser(username)) {
-			roleType = IUserRole.ROLE_DEVELOPER;
+			roleType = SecurityManager.ROLE_DP_SUPPORT;
 		} else if (user instanceof IAdminUser) {
 			IAdminUser admin = (IAdminUser) user;
 			if (admin.getRole() != null)
 				roleType = admin.getRole().getType();
 			else
-				roleType = IUserRole.ROLE_ADMIN_USER;
+				roleType = SecurityManager.ROLE_ADMIN_USER;
 		} else if (user instanceof IDemsySoft) {
-			roleType = IUserRole.ROLE_ADMIN_ROOT;
+			roleType = SecurityManager.ROLE_ADMIN_ROOT;
 		}
 	}
 

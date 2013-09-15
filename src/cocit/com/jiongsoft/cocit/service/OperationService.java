@@ -1,5 +1,7 @@
 package com.jiongsoft.cocit.service;
 
+import com.jiongsoft.cocit.entity.OperationEntity;
+
 /**
  * 操作服务类：为每个操作提供一对一的服务。
  * 
@@ -61,7 +63,7 @@ package com.jiongsoft.cocit.service;
  * @author jiongs753
  * 
  */
-public interface EntityOperationService extends BaseService {
+public interface OperationService extends EntityService<OperationEntity> {
 
 	/**
 	 * 获取操作模式：操作模式用于计算执行该操作时，表单字段的显示模式。

@@ -3,12 +3,12 @@ package com.kmetop.demsy.plugins.bbs;
 import java.util.Date;
 
 import com.jiongsoft.cocit.entity.ActionEvent;
-import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
+import com.jiongsoft.cocit.entity.plugin.BasePlugin;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.impl.sft.lybbs.LyblogPosts;
 import com.kmetop.demsy.lang.DemsyException;
 
-public class SaveBlogPost extends BaseActionPlugin {
+public class SaveBlogPost extends BasePlugin {
 
 	@Override
 	public void before(ActionEvent event) {

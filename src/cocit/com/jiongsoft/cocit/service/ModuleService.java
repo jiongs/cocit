@@ -2,6 +2,8 @@ package com.jiongsoft.cocit.service;
 
 import java.util.List;
 
+import com.jiongsoft.cocit.entity.ModuleEntity;
+
 /**
  * 模块服务类：服务对象将为模块提供一对一的服务。
  * 
@@ -39,7 +41,7 @@ import java.util.List;
  * 
  * @param <T>
  */
-public interface ModuleService extends BaseService {
+public interface ModuleService extends EntityService<ModuleEntity> {
 	int getType();
 
 	/**
@@ -56,7 +58,7 @@ public interface ModuleService extends BaseService {
 	 * 
 	 * @return
 	 */
-	EntityTableService getEntityTable();
+	TableService getTable();
 
 	/**
 	 * 获取实体子表，通常可以通过解析数据模块对数据表的“引用表达式”计算出从数据表对象。一个主数据表可以包含多个从数据表，用来描述一主多从结构。
@@ -65,7 +67,7 @@ public interface ModuleService extends BaseService {
 	 * 
 	 * @return
 	 */
-	List<EntityTableService> getChildrenEntityTables();
+	List<TableService> getChildrenTables();
 
 	/**
 	 * 获取子模块，该方法用于Folder模块。
@@ -73,4 +75,6 @@ public interface ModuleService extends BaseService {
 	 * @return
 	 */
 	List<ModuleService> getChildrenModules();
+
+	ModuleEntity getEntity();
 }

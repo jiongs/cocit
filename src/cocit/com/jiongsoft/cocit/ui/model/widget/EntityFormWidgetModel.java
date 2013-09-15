@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.jiongsoft.cocit.service.EntityFieldService;
+import com.jiongsoft.cocit.service.FieldService;
 import com.jiongsoft.cocit.ui.model.WidgetModel;
 
 /**
@@ -47,7 +47,7 @@ public class EntityFormWidgetModel extends WidgetModel {
 		private String mode;
 
 		// 字段关联的对象
-		private EntityFieldService entityField;
+		private FieldService entityField;
 
 		private Properties props;
 
@@ -130,11 +130,11 @@ public class EntityFormWidgetModel extends WidgetModel {
 			this.type = type;
 		}
 
-		public EntityFieldService getEntityField() {
+		public FieldService getEntityField() {
 			return entityField;
 		}
 
-		public void setEntityField(EntityFieldService entityField) {
+		public void setEntityField(FieldService entityField) {
 			this.entityField = entityField;
 		}
 

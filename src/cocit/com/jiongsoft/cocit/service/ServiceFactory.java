@@ -1,5 +1,7 @@
 package com.jiongsoft.cocit.service;
 
+import java.io.Serializable;
+
 /**
  * CoC组件工厂：用来“创建、缓存、管理”自定义组件。自定义组件包括“软件、模块、数据表、数据分组、数据字段、数据操作”等。
  * 
@@ -23,7 +25,7 @@ public interface ServiceFactory {
 	 *            模块ID
 	 * @return CoC数据模块对象
 	 */
-	ModuleService getModule(Long moduleID);
+	ModuleService getModule(Serializable moduleID);
 
 	/**
 	 * 获取与模块相关的数据表，如果模块ID为0，则直接获取数据表。该方法获取到的数据表对象不应包含子数据表对象。
@@ -34,8 +36,10 @@ public interface ServiceFactory {
 	 *            数据表ID
 	 * @return CoC数据表对象
 	 */
-	EntityTableService getEntityTable(Long moduleID, Long tableID);
+	TableService getTable(Serializable tableID);
 
-	EntityOperationService getEntityOperation(Long moduleID, Long tableID, String opMode);
+	OperationService getOperation(TableService table, String opMode);
+
+	OperationService getOperation(ModuleService module, String opMode);
 
 }

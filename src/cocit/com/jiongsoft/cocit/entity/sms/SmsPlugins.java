@@ -2,13 +2,13 @@ package com.jiongsoft.cocit.entity.sms;
 
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.entity.ActionEvent;
-import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
+import com.jiongsoft.cocit.entity.plugin.BasePlugin;
 import com.jiongsoft.cocit.service.SoftService;
 import com.jiongsoft.cocit.sms.SmsClient;
 import com.jiongsoft.cocit.util.CocException;
 
 public abstract class SmsPlugins {
-	public static class SendSMS extends BaseActionPlugin<MTSmsEntity> {
+	public static class SendSMS extends BasePlugin<MTSmsEntity> {
 		@Override
 		public void before(ActionEvent<MTSmsEntity> event) {
 			MTSmsEntity entity = event.getEntity();

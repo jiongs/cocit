@@ -22,6 +22,7 @@ import com.jiongsoft.cocit.orm.expr.CndType;
 import com.jiongsoft.cocit.orm.expr.CombCndExpr;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.jiongsoft.cocit.orm.expr.SimpleCndExpr;
+import com.jiongsoft.cocit.service.SecurityManager;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
@@ -32,7 +33,6 @@ import com.kmetop.demsy.comlib.security.IModule;
 import com.kmetop.demsy.comlib.security.IPermission;
 import com.kmetop.demsy.comlib.security.IRealm;
 import com.kmetop.demsy.comlib.security.IUser;
-import com.kmetop.demsy.comlib.security.IUserRole;
 import com.kmetop.demsy.engine.RootUserFactory;
 import com.kmetop.demsy.lang.Cls;
 import com.kmetop.demsy.lang.Obj;
@@ -55,10 +55,10 @@ public class Security implements ISecurity {
 
 	private IRootUserFactory rootUserFactory = new RootUserFactory();
 
-	// <softID,<moduleID, PermissionEntry>>
-	private Map<Long, Map<Long, List<PermissionEntry>>> allPermissions = new HashMap();
+	// <softID,<moduleID, Permission>>
+	private Map<Long, Map<Long, List<PermissionItem>>> allPermissions = new HashMap();
 
-	private Map<Long, Map<String, PermissionEntry>> dynamicPermissions = new HashMap();
+	private Map<Long, Map<String, PermissionItem>> dynamicPermissions = new HashMap();
 
 	private IOrm orm() {
 		return Demsy.orm();
@@ -230,7 +230,7 @@ public class Security implements ISecurity {
 
 		ILogin login = me.login();
 		if (login != null) {
-			if (login.getRoleType() >= IUserRole.ROLE_ADMIN_ROOT) {
+			if (login.getRoleType() >= SecurityManager.ROLE_ADMIN_ROOT) {
 				return true;
 			}
 		}
@@ -241,10 +241,10 @@ public class Security implements ISecurity {
 		if (!igloreDynamic) {
 			Map dynitems = this.dynamicPermissions.get(me.getSoft().getId());
 			if (dynitems != null) {
-				Iterator<PermissionEntry> it = dynitems.values().iterator();
+				Iterator<PermissionItem> it = dynitems.values().iterator();
 				while (it.hasNext()) {
-					PermissionEntry p = it.next();
-					if (module.getId().equals(p.dataModule) && match(login, p)) {
+					PermissionItem p = it.next();
+					if (module.getId().equals(p.moduleID) && match(login, p)) {
 						return true;
 					}
 				}
@@ -252,15 +252,15 @@ public class Security implements ISecurity {
 		}
 
 		// 数据库授权
-		List<PermissionEntry> items = this.getModulePermissions(me.getSoft().getId(), module.getId());
+		List<PermissionItem> items = this.getModulePermissions(me.getSoft().getId(), module.getId());
 		if (items != null) {
-			for (PermissionEntry p : items) {
+			for (PermissionItem p : items) {
 				long now = new Date().getTime();
 				if (p.expiredFrom != null && now < p.expiredFrom.getTime())
 					continue;
 				if (p.expiredTo != null && now > p.expiredTo.getTime())
 					continue;
-				if (me.login().getModule() != p.userModule)
+				if (me.login().getModule() != p.userModuleID)
 					continue;
 
 				if (!match(login, p)) {
@@ -278,7 +278,7 @@ public class Security implements ISecurity {
 
 	@Override
 	public void addPermission(String key, byte roleID, long moduleID, String action) {
-		Map<String, PermissionEntry> map = this.dynamicPermissions.get(Demsy.me().getSoft().getId());
+		Map<String, PermissionItem> map = this.dynamicPermissions.get(Demsy.me().getSoft().getId());
 		if (map == null) {
 			map = new HashMap();
 			dynamicPermissions.put(Demsy.me().getSoft().getId(), map);
@@ -288,9 +288,9 @@ public class Security implements ISecurity {
 		// return;
 		// }
 
-		PermissionEntry item = new PermissionEntry();
-		item.roleID = roleID;
-		item.dataModule = moduleID;
+		PermissionItem item = new PermissionItem();
+		item.userRole = roleID;
+		item.moduleID = moduleID;
 		// item.actions = new String[] { action };
 
 		map.put(key1, item);
@@ -302,28 +302,28 @@ public class Security implements ISecurity {
 		if (login == null)
 			return null;
 
-		if (login.getRoleType() >= IUserRole.ROLE_ADMIN_ROOT) {
+		if (login.getRoleType() >= SecurityManager.ROLE_ADMIN_ROOT) {
 			return null;
 		}
 
 		List<CndExpr> exprs = new LinkedList();
-		List<PermissionEntry> items = this.getModulePermissions(me.getSoft().getId(), module.getId());
+		List<PermissionItem> items = this.getModulePermissions(me.getSoft().getId(), module.getId());
 		if (items != null) {
-			for (PermissionEntry p : items) {
+			for (PermissionItem p : items) {
 				long now = new Date().getTime();
 				if (p.expiredFrom != null && now < p.expiredFrom.getTime())
 					continue;
 				if (p.expiredTo != null && now > p.expiredTo.getTime())
 					continue;
-				if (me.login().getModule() != p.userModule)
+				if (me.login().getModule() != p.userModuleID)
 					continue;
 				if (!match(login, p)) {
 					continue;
 				}
 
-				if (p.dataExpr != null) {
+				if (p.dataFilter != null) {
 					if (p.denied == false)
-						exprs.add(p.dataExpr);
+						exprs.add(p.dataFilter);
 				}
 			}
 		}
@@ -347,25 +347,25 @@ public class Security implements ISecurity {
 		if (login == null)
 			return null;
 
-		if (login.getRoleType() >= IUserRole.ROLE_ADMIN_ROOT) {
+		if (login.getRoleType() >= SecurityManager.ROLE_ADMIN_ROOT) {
 			return null;
 		}
 
 		List<CndExpr> exprs = new LinkedList();
-		List<PermissionEntry> items = this.getModulePermissions(me.getSoft().getId(), module.getId());
+		List<PermissionItem> items = this.getModulePermissions(me.getSoft().getId(), module.getId());
 		if (items != null) {
-			for (PermissionEntry p : items) {
+			for (PermissionItem p : items) {
 				long now = new Date().getTime();
 				if (p.expiredFrom != null && now < p.expiredFrom.getTime())
 					continue;
 				if (p.expiredTo != null && now > p.expiredTo.getTime())
 					continue;
-				if (me.login().getModule() != p.userModule)
+				if (me.login().getModule() != p.userModuleID)
 					continue;
 				if (!match(login, p)) {
 					continue;
 				}
-				addFkDataFilter(exprs, p.dataExpr, fkField);
+				addFkDataFilter(exprs, p.dataFilter, fkField);
 			}
 		}
 
@@ -418,20 +418,20 @@ public class Security implements ISecurity {
 		}
 	}
 
-	private boolean match(ILogin login, PermissionEntry p) {
-		if (p.roleID == IUserRole.ROLE_ANONYMOUS)
+	private boolean match(ILogin login, PermissionItem p) {
+		if (p.userRole == SecurityManager.ROLE_ANONYMOUS)
 			return true;
 
 		// 授权给匿名用户
 		if (login != null) {
 			IUser user = login.getUser();
 			// 授权给登录用户
-			if (p.roleID == IUserRole.ROLE_LOGIN_USER) {
+			if (p.userRole == SecurityManager.ROLE_LOGIN_USER) {
 				return true;
 			}
 
 			// 授权给用户角色
-			if (p.roleID == login.getRoleType())
+			if (p.userRole == login.getRoleType())
 				return true;
 
 			// 匹配用户表达式
@@ -463,8 +463,8 @@ public class Security implements ISecurity {
 	 * @param softID
 	 * @return
 	 */
-	private Map<Long, List<PermissionEntry>> getSoftPermissions(long softID) {
-		Map<Long, List<PermissionEntry>> softPermissions = allPermissions.get(softID);
+	private Map<Long, List<PermissionItem>> getSoftPermissions(long softID) {
+		Map<Long, List<PermissionItem>> softPermissions = allPermissions.get(softID);
 		if (softPermissions == null) {
 			softPermissions = this.loadPermissions(softID);
 			allPermissions.put(softID, softPermissions);
@@ -476,11 +476,11 @@ public class Security implements ISecurity {
 	 * 获取模块授权列表
 	 * 
 	 * @param softID
-	 * @param module
+	 * @param moduleID
 	 * @return
 	 */
-	private List<PermissionEntry> getModulePermissions(long softID, long module) {
-		Map<Long, List<PermissionEntry>> softPermisstions = getSoftPermissions(softID);
+	private List<PermissionItem> getModulePermissions(long softID, long module) {
+		Map<Long, List<PermissionItem>> softPermisstions = getSoftPermissions(softID);
 		return softPermisstions.get(module);
 	}
 
@@ -490,14 +490,14 @@ public class Security implements ISecurity {
 	 * @param softID
 	 * @return
 	 */
-	private Map<Long, List<PermissionEntry>> loadPermissions(Long softID) {
+	private Map<Long, List<PermissionItem>> loadPermissions(Long softID) {
 		IOrm orm = orm();
 		Demsy me = Demsy.me();
 
 		IBizSystem sys = bizEngine.getSystem(LibConst.BIZSYS_ADMIN_PERMISSION);
 		Class type = bizEngine.getType(sys);
 
-		Map<Long, List<PermissionEntry>> softPermissions = new HashMap();
+		Map<Long, List<PermissionItem>> softPermissions = new HashMap();
 
 		List<IPermission> permissions = orm.query(type, Expr.eq(F_SOFT_ID, me.getSoft()));
 		for (IPermission p : permissions) {
@@ -505,22 +505,23 @@ public class Security implements ISecurity {
 				continue;
 
 			// 创建模块许可项
-			PermissionEntry item = new PermissionEntry();
+			PermissionItem item = new PermissionItem();
 
 			Dataset users = p.getUsers();
 			Dataset datas = p.getDatas();
 			if (users == null || datas == null) {
+
 				// TODO: 使用 COCIT 授权策略
 				continue;
 			} else {
 				if (users.getModule() != null)
-					item.userModule = users.getModule().getId();
+					item.userModuleID = users.getModule().getId();
 				if (datas.getModule() != null)
-					item.dataModule = datas.getModule().getId();
+					item.moduleID = datas.getModule().getId();
 				if (!Str.isEmpty(users.getRules()))
 					item.userFilter = CndExpr.make(users.getRules());
 				if (!Str.isEmpty(datas.getRules()))
-					item.dataExpr = CndExpr.make(datas.getRules());
+					item.dataFilter = CndExpr.make(datas.getRules());
 			}
 
 			item.expiredFrom = p.getExpiredFrom();
@@ -528,10 +529,10 @@ public class Security implements ISecurity {
 			item.denied = p.isDenied();
 
 			// 添加模块许可
-			List<PermissionEntry> modulePermissions = softPermissions.get(item.dataModule);
+			List<PermissionItem> modulePermissions = softPermissions.get(item.moduleID);
 			if (modulePermissions == null) {
 				modulePermissions = new LinkedList();
-				softPermissions.put(item.dataModule, modulePermissions);
+				softPermissions.put(item.moduleID, modulePermissions);
 			}
 			modulePermissions.add(item);
 		}

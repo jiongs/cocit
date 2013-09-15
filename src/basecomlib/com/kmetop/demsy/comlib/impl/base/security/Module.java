@@ -17,6 +17,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.jiongsoft.cocit.entity.ModuleEntity;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
@@ -83,7 +84,7 @@ import com.kmetop.demsy.comlib.security.IModule;
 }// end groups
 , jsonData = "Module.data.js"// end root
 )
-public class Module extends BizComponent implements IModule<Module> {
+public class Module extends BizComponent implements IModule<Module>, ModuleEntity {
 	@ManyToOne
 	protected Module parent;
 

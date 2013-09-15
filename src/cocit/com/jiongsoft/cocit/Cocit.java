@@ -85,6 +85,10 @@ public abstract class Cocit {
 		actionContext = null;
 	}
 
+	public static BeanFactory getBeanFactory() {
+		return beanFactory;
+	}
+
 	/**
 	 * 获取Servlet环境路径，如果路径长度大于1则以/开头，否则路径为空串。
 	 * 
@@ -158,24 +162,6 @@ public abstract class Cocit {
 	public static SmsClient makeSmsClient(String type) {
 		return beanFactory.makeSmsClient(type);
 	}
-
-	// /**
-	// * 创建一个软件对象
-	// * <p>
-	// * 通常供CocitHttpContext构造函数调用，用来构造一个软件对象。
-	// */
-	// public static SoftService makeSoft() {
-	// return beanFactory.makeSoft();
-	// }
-	//
-	// /**
-	// * 创建CoC软件配置助手
-	// *
-	// * @return 返回一个全新的CoC软件配置助手实例对象
-	// */
-	// public static ConfigService makeSoftConfig() {
-	// return beanFactory.makeSoftConfig();
-	// }
 
 	/**
 	 * 获取CoC组工厂。

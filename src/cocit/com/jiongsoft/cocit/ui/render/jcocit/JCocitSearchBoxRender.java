@@ -3,7 +3,7 @@ package com.jiongsoft.cocit.ui.render.jcocit;
 import java.io.Writer;
 import java.util.List;
 
-import com.jiongsoft.cocit.service.EntityFieldService;
+import com.jiongsoft.cocit.service.FieldService;
 import com.jiongsoft.cocit.ui.model.widget.SearchBoxWidgetModel;
 import com.jiongsoft.cocit.ui.render.WidgetRender;
 import com.jiongsoft.cocit.util.KeyValue;
@@ -45,8 +45,8 @@ public class JCocitSearchBoxRender extends WidgetRender<SearchBoxWidgetModel> {
 
 				// 操作符子菜单
 				switch (type) {
-				case EntityFieldService.TYPE_NUMBER:
-				case EntityFieldService.TYPE_DATE:
+				case FieldService.TYPE_NUMBER:
+				case FieldService.TYPE_DATE:
 					print(out, "<div>");
 					print(out, "<div data-options=\"name: '%s eq'\">%s 等于...</div>", value, key);
 					print(out, "<div data-options=\"name: '%s ne'\">%s 不等于...</div>", value, key);
@@ -59,10 +59,10 @@ public class JCocitSearchBoxRender extends WidgetRender<SearchBoxWidgetModel> {
 					print(out, "<div data-options=\"name: '%s gl'\">%s 在...之间</div>", value, key);
 					print(out, "</div>");
 					break;
-				case EntityFieldService.TYPE_RICH_TEXT:
-				case EntityFieldService.TYPE_STRING:
-				case EntityFieldService.TYPE_TEXT:
-				case EntityFieldService.TYPE_UPLOAD:
+				case FieldService.TYPE_RICH_TEXT:
+				case FieldService.TYPE_STRING:
+				case FieldService.TYPE_TEXT:
+				case FieldService.TYPE_UPLOAD:
 					print(out, "<div style=\"width:60px;\">");
 					print(out, "<div data-options=\"name: '%s eq'\">%s 等于...</div>", value, key);
 					print(out, "<div data-options=\"name: '%s ne'\">%s 不等于...</div>", value, key);

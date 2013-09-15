@@ -26,7 +26,7 @@ public class ActionEvent<T> {
 	private Expr expr;
 
 	// 操作返回值
-	private T returnValue;
+	private Object returnValue;
 
 	private Orm orm;
 
@@ -79,7 +79,7 @@ public class ActionEvent<T> {
 		return (X) returnValue;
 	}
 
-	public void setReturnValue(T resultEntity) {
+	public void setReturnValue(Object resultEntity) {
 		this.returnValue = resultEntity;
 	}
 

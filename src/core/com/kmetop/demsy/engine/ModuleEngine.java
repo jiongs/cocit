@@ -27,6 +27,7 @@ import org.nutz.lang.Mirror;
 
 import com.jiongsoft.cocit.entity.ActionPlugin;
 import com.jiongsoft.cocit.orm.expr.CndExpr;
+import com.jiongsoft.cocit.service.SecurityManager;
 import com.jiongsoft.cocit.util.ActionUtil;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.IModuleEngine;
@@ -43,7 +44,6 @@ import com.kmetop.demsy.comlib.entity.ISoftConfig;
 import com.kmetop.demsy.comlib.security.IAction;
 import com.kmetop.demsy.comlib.security.IModule;
 import com.kmetop.demsy.comlib.security.IRealm;
-import com.kmetop.demsy.comlib.security.IUserRole;
 import com.kmetop.demsy.config.IDataSource;
 import com.kmetop.demsy.lang.Assert;
 import com.kmetop.demsy.lang.Cls;
@@ -104,6 +104,7 @@ public abstract class ModuleEngine implements IModuleEngine {
 
 		ret = new ActionPlugin[plugins.size()];
 		plugins.toArray(ret);
+		actionPlugins.put(action.getId(), ret);
 
 		return ret;
 	}
@@ -278,7 +279,7 @@ public abstract class ModuleEngine implements IModuleEngine {
 		SortUtils.sort(root.getChildren(), "order", true);
 
 		// 非超级用户不能访问“平台管理”功能
-		if (role != IUserRole.ROLE_DEVELOPER) {
+		if (role != SecurityManager.ROLE_DP_SUPPORT) {
 			List<Node> list = root.getChildren();
 			for (int i = list.size() - 1; i >= 0; i--) {
 				Node node = list.get(i);
@@ -308,10 +309,10 @@ public abstract class ModuleEngine implements IModuleEngine {
 
 			node = root.addNode(((IBizComponent) module.getParent()).getId(), module.getId());
 		}
-		// node.setParams(module);
+		// node.setParams(moduleID);
 		node.setOrder(module.getOrderby());
 		node.set("code", module.getCode());
-		node.set("module", module);
+		node.set("moduleID", module);
 
 		node.setName(module.getName());
 

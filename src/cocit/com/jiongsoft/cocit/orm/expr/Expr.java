@@ -1,7 +1,7 @@
 package com.jiongsoft.cocit.orm.expr;
 
+import java.util.ArrayList;
 import java.util.List;
-
 
 /**
  * ORM表达式，用于描述数据查询、修改、删除、添加等操作的条件、字段限制、排序、分页等。
@@ -61,6 +61,22 @@ public abstract class Expr {
 
 	public static SimpleCndExpr neProp(String prop, String prop2) {
 		return new SimpleCndExpr(prop, CndType.ne, prop2);
+	}
+
+	public static SimpleCndExpr in(String prop, Long... value) {
+		List list = new ArrayList();
+		for (Long v : value) {
+			list.add(v);
+		}
+		return new SimpleCndExpr(prop, CndType.in, value);
+	}
+
+	public static SimpleCndExpr in(String prop, String... value) {
+		List list = new ArrayList();
+		for (String v : value) {
+			list.add(v);
+		}
+		return new SimpleCndExpr(prop, CndType.in, value);
 	}
 
 	public static SimpleCndExpr in(String prop, List value) {

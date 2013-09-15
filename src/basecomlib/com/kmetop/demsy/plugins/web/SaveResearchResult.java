@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.jiongsoft.cocit.entity.ActionEvent;
-import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
+import com.jiongsoft.cocit.entity.plugin.BasePlugin;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.LibConst;
@@ -23,7 +23,7 @@ import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.Str;
 import com.kmetop.demsy.orm.IOrm;
 
-public class SaveResearchResult extends BaseActionPlugin {
+public class SaveResearchResult extends BasePlugin {
 
 	@Override
 	public void before(ActionEvent event) {

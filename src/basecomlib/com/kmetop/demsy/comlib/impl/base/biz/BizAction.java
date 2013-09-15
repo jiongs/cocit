@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.jiongsoft.cocit.entity.OperationEntity;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
@@ -56,7 +57,7 @@ import com.kmetop.demsy.lang.Str;
 		, @CocField(name = "更新帐号", property = "updatedBy", mode = "*:P") //
 }) }// end groups
 )
-public class BizAction extends BaseAction implements IBizAction {
+public class BizAction extends BaseAction implements IBizAction, OperationEntity {
 	@ManyToOne
 	private BizAction parentAction;
 

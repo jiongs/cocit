@@ -3,14 +3,14 @@ package com.kmetop.demsy.plugins.web;
 import java.util.List;
 
 import com.jiongsoft.cocit.entity.ActionEvent;
-import com.jiongsoft.cocit.entity.impl.BaseActionPlugin;
+import com.jiongsoft.cocit.entity.plugin.BasePlugin;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.impl.base.ebusiness.product.Product;
 import com.kmetop.demsy.comlib.impl.sft.web.content.WebContent;
 import com.kmetop.demsy.orm.IOrm;
 
-public class ConvertInfoToProduct extends BaseActionPlugin {
+public class ConvertInfoToProduct extends BasePlugin {
 
 	@Override
 	public void before(ActionEvent event) {

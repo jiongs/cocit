@@ -41,7 +41,7 @@ public class WebAction {
 
 		JSPModel model = JSPModel.make(actionContext.getRequest(), actionContext.getResponse(), softContextPath, jspPath);
 
-		model.set("actionService", actionHelper);
+		model.set("actionHelper", actionHelper);
 
 		return model;
 	}

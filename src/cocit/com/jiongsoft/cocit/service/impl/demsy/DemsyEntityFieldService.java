@@ -12,8 +12,8 @@ import java.util.Properties;
 
 import org.nutz.json.Json;
 
-import com.jiongsoft.cocit.service.EntityFieldService;
-import com.jiongsoft.cocit.service.EntityTableService;
+import com.jiongsoft.cocit.service.FieldService;
+import com.jiongsoft.cocit.service.TableService;
 import com.jiongsoft.cocit.util.KeyValue;
 import com.jiongsoft.cocit.util.ObjectUtil;
 import com.jiongsoft.cocit.util.Log;
@@ -26,7 +26,7 @@ import com.kmetop.demsy.comlib.impl.sft.system.AbstractSystemData;
 import com.kmetop.demsy.comlib.impl.sft.system.SFTSystem;
 import com.kmetop.demsy.engine.BizEngine;
 
-public class DemsyEntityFieldService implements EntityFieldService {
+public class DemsyEntityFieldService implements FieldService {
 	private AbstractSystemData entity;
 
 	private KeyValue[] dicOptions;
@@ -268,7 +268,7 @@ public class DemsyEntityFieldService implements EntityFieldService {
 	}
 
 	@Override
-	public EntityTableService getFkEntityTable() {
+	public TableService getFkEntityTable() {
 		SFTSystem sys = entity.getRefrenceSystem();
 		if (sys == null)
 			return null;

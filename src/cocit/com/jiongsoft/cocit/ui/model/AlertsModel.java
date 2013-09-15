@@ -26,6 +26,26 @@ import com.jiongsoft.cocit.util.Json;
  * 
  */
 public class AlertsModel extends JSONModel {
+	public static final int STATUS_CODE_SUCCESS = 200;
+
+	public static final int STATUS_CODE_ERROR = 300;
+
+	public static final int STATUS_CODE_ERROR_NO_PERMISSION = 301;
+
+	private AlertsModel() {
+	}
+
+	public static AlertsModel makeSuccess(String message) {
+		return make(STATUS_CODE_SUCCESS, message);
+	}
+
+	public static AlertsModel makeError(String message) {
+		return make(STATUS_CODE_ERROR, message);
+	}
+
+	public static AlertsModel makeNoPermission(String message) {
+		return make(STATUS_CODE_ERROR_NO_PERMISSION, message);
+	}
 
 	/**
 	 * 
@@ -41,7 +61,7 @@ public class AlertsModel extends JSONModel {
 	 * @param statusCode
 	 * @param message
 	 */
-	public static AlertsModel make(int statusCode, String message) {
+	private static AlertsModel make(int statusCode, String message) {
 		AlertsModel model = new AlertsModel();
 
 		StringBuffer sb = new StringBuffer();

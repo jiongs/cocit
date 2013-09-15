@@ -1,12 +1,12 @@
 package com.jiongsoft.cocit.ui.render.jcocit;
 
-import static com.jiongsoft.cocit.service.EntityFieldService.TYPE_BOOL;
-import static com.jiongsoft.cocit.service.EntityFieldService.TYPE_DATE;
-import static com.jiongsoft.cocit.service.EntityFieldService.TYPE_FK;
-import static com.jiongsoft.cocit.service.EntityFieldService.TYPE_NUMBER;
-import static com.jiongsoft.cocit.service.EntityFieldService.TYPE_RICH_TEXT;
-import static com.jiongsoft.cocit.service.EntityFieldService.TYPE_TEXT;
-import static com.jiongsoft.cocit.service.EntityFieldService.TYPE_UPLOAD;
+import static com.jiongsoft.cocit.service.FieldService.TYPE_BOOL;
+import static com.jiongsoft.cocit.service.FieldService.TYPE_DATE;
+import static com.jiongsoft.cocit.service.FieldService.TYPE_FK;
+import static com.jiongsoft.cocit.service.FieldService.TYPE_NUMBER;
+import static com.jiongsoft.cocit.service.FieldService.TYPE_RICH_TEXT;
+import static com.jiongsoft.cocit.service.FieldService.TYPE_TEXT;
+import static com.jiongsoft.cocit.service.FieldService.TYPE_UPLOAD;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -14,8 +14,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.jiongsoft.cocit.Cocit;
-import com.jiongsoft.cocit.service.EntityFieldService;
-import com.jiongsoft.cocit.service.EntityTableService;
+import com.jiongsoft.cocit.service.FieldService;
+import com.jiongsoft.cocit.service.TableService;
 import com.jiongsoft.cocit.ui.model.widget.EntityFormWidgetModel;
 import com.jiongsoft.cocit.ui.model.widget.GridWidgetModel;
 import com.jiongsoft.cocit.ui.model.widget.EntityFormWidgetModel.FormField;
@@ -35,7 +35,7 @@ public class JCocitFormRender extends WidgetRender<EntityFormWidgetModel> {
 		print(sb, "<form class=\"entity-form\">");
 		print(sb, "<input name=\"entity.id\" type=\"hidden\" value=\"%s\">", ObjectUtil.idOrtoString(formData));
 
-		EntityFieldService entityField;
+		FieldService entityField;
 		String propName;
 		Object objFldValue;
 		/*
@@ -140,11 +140,11 @@ public class JCocitFormRender extends WidgetRender<EntityFormWidgetModel> {
 		print(writer, sb.toString());
 	}
 
-	private void printFieldLabel(StringBuffer sb, EntityFormWidgetModel model, EntityFieldService entityField) throws IOException {
+	private void printFieldLabel(StringBuffer sb, EntityFormWidgetModel model, FieldService entityField) throws IOException {
 		print(sb, entityField.getName());
 	}
 
-	private void printEditBox(StringBuffer sb, EntityFormWidgetModel model, EntityFieldService entityField, Object fldvalue) throws IOException {
+	private void printEditBox(StringBuffer sb, EntityFormWidgetModel model, FieldService entityField, Object fldvalue) throws IOException {
 
 		byte type = entityField.getType();
 		switch (type) {
@@ -173,7 +173,7 @@ public class JCocitFormRender extends WidgetRender<EntityFormWidgetModel> {
 		}
 	}
 
-	private boolean printDic(StringBuffer sb, EntityFieldService fieldService, Object fieldValue) {
+	private boolean printDic(StringBuffer sb, FieldService fieldService, Object fieldValue) {
 		KeyValue[] options = fieldService.getDicOptions();
 
 		if (options == null || options.length == 0)
@@ -199,7 +199,7 @@ public class JCocitFormRender extends WidgetRender<EntityFormWidgetModel> {
 		return true;
 	}
 
-	private void printStr(StringBuffer sb, EntityFieldService fieldService, String fieldValue) {
+	private void printStr(StringBuffer sb, FieldService fieldService, String fieldValue) {
 		boolean isDic = this.printDic(sb, fieldService, fieldValue);
 		if (!isDic) {
 			String str = fieldValue == null ? "" : fieldValue.toString();
@@ -207,12 +207,12 @@ public class JCocitFormRender extends WidgetRender<EntityFormWidgetModel> {
 		}
 	}
 
-	private void printText(StringBuffer sb, EntityFieldService fieldService, Object fieldValue) {
+	private void printText(StringBuffer sb, FieldService fieldService, Object fieldValue) {
 		String str = fieldValue == null ? "" : fieldValue.toString();
 		print(sb, "<textarea name=\"entity.%s\" class=\"textarea\">%s</textarea>", fieldService.getPropName(), str);
 	}
 
-	private void printDate(StringBuffer sb, EntityFieldService fieldService, Date fieldValue) {
+	private void printDate(StringBuffer sb, FieldService fieldService, Date fieldValue) {
 		boolean isDic = this.printDic(sb, fieldService, fieldValue);
 		if (!isDic) {
 			String str = ObjectUtil.format(fieldValue, fieldService.getPattern());
@@ -225,7 +225,7 @@ public class JCocitFormRender extends WidgetRender<EntityFormWidgetModel> {
 		}
 	}
 
-	private void printNum(StringBuffer sb, EntityFieldService fieldService, Number fieldValue) {
+	private void printNum(StringBuffer sb, FieldService fieldService, Number fieldValue) {
 		boolean isDic = this.printDic(sb, fieldService, fieldValue);
 		if (!isDic) {
 			String str = ObjectUtil.format(fieldValue, fieldService.getPattern());
@@ -233,8 +233,8 @@ public class JCocitFormRender extends WidgetRender<EntityFormWidgetModel> {
 		}
 	}
 
-	private void printFK(StringBuffer sb, EntityFieldService fieldService, Object fieldValue) {
-		EntityTableService entityTable = fieldService.getFkEntityTable();
+	private void printFK(StringBuffer sb, FieldService fieldService, Object fieldValue) {
+		TableService entityTable = fieldService.getFkEntityTable();
 		GridWidgetModel gridModel = Cocit.getWidgetModelFactory().getGridUI(null, entityTable);
 		List<GridColumn> columns = gridModel.getColumns();
 

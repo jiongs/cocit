@@ -3,7 +3,10 @@ package com.jiongsoft.cocit.entity;
 import com.jiongsoft.cocit.util.StringUtil;
 
 /**
- * 组件化实体：每个实体对象即代表一条数据库记录。Componentization of Entity
+ * 组件化实体类：每个实体类即代表一张数据库表。(Componentization of Entity)
+ * <p>
+ * 组件化实体对象：每个实体对象即代表一条数据表记录。
+ * 
  * <UL>
  * <LI>每个实体类都将有一个数据库表与之对应；
  * <LI>实体类的每个属性通常对应一个数据表字段；

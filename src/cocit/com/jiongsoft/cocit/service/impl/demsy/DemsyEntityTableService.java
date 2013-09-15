@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import com.jiongsoft.cocit.service.EntityFieldService;
-import com.jiongsoft.cocit.service.EntityGroupService;
-import com.jiongsoft.cocit.service.EntityOperationService;
-import com.jiongsoft.cocit.service.EntityTableService;
+import com.jiongsoft.cocit.service.FieldService;
+import com.jiongsoft.cocit.service.FieldGroupService;
+import com.jiongsoft.cocit.service.OperationService;
+import com.jiongsoft.cocit.service.TableService;
 import com.jiongsoft.cocit.util.ClassUtil;
 import com.jiongsoft.cocit.util.CocException;
 import com.jiongsoft.cocit.util.KeyValue;
@@ -33,16 +33,16 @@ import com.kmetop.demsy.engine.BizEngine;
 import com.kmetop.demsy.lang.Obj;
 import com.kmetop.demsy.orm.IOrm;
 
-public class DemsyEntityTableService implements EntityTableService {
+public class DemsyEntityTableService implements TableService {
 	private BizEngine bizEngine;
 
 	private SFTSystem entity;
 
-	private List<EntityGroupService> bizGroups;
+	private List<FieldGroupService> bizGroups;
 
-	private List<EntityFieldService> bizFields;
+	private List<FieldService> bizFields;
 
-	private List<EntityOperationService> bizOperations;
+	private List<OperationService> bizOperations;
 
 	private Properties extProps;
 
@@ -135,26 +135,26 @@ public class DemsyEntityTableService implements EntityTableService {
 	}
 
 	@Override
-	public List<EntityGroupService> getEntityGroups() {
+	public List<FieldGroupService> getEntityGroups() {
 		return bizGroups;
 	}
 
 	@Override
-	public List<EntityFieldService> getEntityFields() {
+	public List<FieldService> getEntityFields() {
 
 		return bizFields;
 	}
 
 	@Override
-	public List<EntityOperationService> getEntityOperations() {
+	public List<OperationService> getEntityOperations() {
 		return bizOperations;
 	}
 
 	@Override
-	public List<EntityFieldService> getEntityFieldsForNaviTree() {
-		List<EntityFieldService> ret = new ArrayList();
+	public List<FieldService> getEntityFieldsForNaviTree() {
+		List<FieldService> ret = new ArrayList();
 
-		for (EntityFieldService f : this.bizFields) {
+		for (FieldService f : this.bizFields) {
 			DemsyEntityFieldService field = (DemsyEntityFieldService) f;
 			AbstractSystemData data = field.getEntity();
 
@@ -171,10 +171,10 @@ public class DemsyEntityTableService implements EntityTableService {
 	}
 
 	@Override
-	public List<EntityFieldService> getEntityFieldsForGrid() {
+	public List<FieldService> getEntityFieldsForGrid() {
 		List ret = new ArrayList();
 
-		for (EntityFieldService f : this.bizFields) {
+		for (FieldService f : this.bizFields) {
 			DemsyEntityFieldService field = (DemsyEntityFieldService) f;
 			AbstractSystemData data = field.getEntity();
 
@@ -210,15 +210,15 @@ public class DemsyEntityTableService implements EntityTableService {
 				bizGroups.add(bizGroup);
 			}
 
-			EntityFieldService bizField = new DemsyEntityFieldService(systemData);
+			FieldService bizField = new DemsyEntityFieldService(systemData);
 			this.bizFields.add(bizField);
 			bizGroup.addField(bizField);
 		}
 	}
 
-	public Map<String, EntityFieldService> getBizFieldsMapByPropName() {
-		Map<String, EntityFieldService> map = new HashMap();
-		for (EntityFieldService f : this.bizFields) {
+	public Map<String, FieldService> getBizFieldsMapByPropName() {
+		Map<String, FieldService> map = new HashMap();
+		for (FieldService f : this.bizFields) {
 			map.put(f.getPropName(), f);
 		}
 
@@ -239,7 +239,7 @@ public class DemsyEntityTableService implements EntityTableService {
 
 		Tree tree = Tree.make();
 
-		for (EntityFieldService fld : this.getEntityFieldsForNaviTree()) {
+		for (FieldService fld : this.getEntityFieldsForNaviTree()) {
 			DemsyEntityFieldService demsyFld = (DemsyEntityFieldService) fld;
 			Node node = tree.addNode(null, fld.getPropName()).setName(fld.getName());
 			node.set("open", "true");
@@ -334,9 +334,9 @@ public class DemsyEntityTableService implements EntityTableService {
 	}
 
 	private Map<String, String> getFieldsModeMap(String opMode, Object data) {
-		List<EntityFieldService> fields = getEntityFields();
+		List<FieldService> fields = getEntityFields();
 		Map<String, String> fieldMode = new HashMap();
-		for (EntityFieldService f : fields) {
+		for (FieldService f : fields) {
 			DemsyEntityFieldService field = (DemsyEntityFieldService) f;
 
 			String mode = field.getMode(opMode);
@@ -375,7 +375,7 @@ public class DemsyEntityTableService implements EntityTableService {
 		}
 
 		if (requiredFields.size() > 0) {
-			Map<String, EntityFieldService> fields = getBizFieldsMapByPropName();
+			Map<String, FieldService> fields = getBizFieldsMapByPropName();
 			StringBuffer sb = new StringBuffer();
 			for (String prop : requiredFields) {
 				sb.append(',').append(fields.get(prop).getName());

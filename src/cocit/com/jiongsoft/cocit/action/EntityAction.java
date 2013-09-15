@@ -45,9 +45,9 @@ public class EntityAction {
 	 */
 	@At(ActionUtil.GET_ENTITY_MODULE_UI)
 	public EntityModuleWidgetModel getEntityModuleUI(String args) {
-		ActionHelper service = ActionHelper.make(args, null, null);
+		ActionHelper helper = ActionHelper.make(args, null, null);
 
-		EntityModuleWidgetModel moduleModel = service.widgetFactory.getEntytyModuleUI(service.module);
+		EntityModuleWidgetModel moduleModel = helper.widgetFactory.getEntytyModuleUI(helper.module);
 
 		Log.debug("EntityAction.getEntityModuleUI: moduleModel = %s", moduleModel);
 
@@ -64,9 +64,9 @@ public class EntityAction {
 	 */
 	@At(ActionUtil.GET_ENTITY_TABLE_UI)
 	public EntityTableWidgetModel getEntityTableUI(String args) {
-		ActionHelper service = ActionHelper.make(args, null, null);
+		ActionHelper helper = ActionHelper.make(args, null, null);
 
-		EntityTableWidgetModel tableModel = service.widgetFactory.getEntityTableUI(service.module, service.table);
+		EntityTableWidgetModel tableModel = helper.widgetFactory.getEntityTableUI(helper.module, helper.table);
 
 		Log.debug("EntityAction.getEntityTableUI: tableModel = %s", tableModel);
 
@@ -83,9 +83,9 @@ public class EntityAction {
 	 */
 	@At(ActionUtil.GET_ENTITY_GRID_DATA)
 	public GridWidgetData getEntityGridData(String args) {
-		ActionHelper service = ActionHelper.make(args, null, null);
+		ActionHelper helper = ActionHelper.make(args, null, null);
 
-		GridWidgetModel tableModel = service.widgetFactory.getGridUI(service.module, service.table);
+		GridWidgetModel tableModel = helper.widgetFactory.getGridUI(helper.module, helper.table);
 
 		/*
 		 * 构造Grid数据模型
@@ -94,10 +94,10 @@ public class EntityAction {
 		ret.setModel(tableModel);
 
 		// 构造查询条件
-		CndExpr expr = service.makeExpr();
+		CndExpr expr = helper.makeExpr();
 		try {
-			List data = service.entityManager.query(expr, null);
-			int total = service.entityManager.count(expr, null);
+			List data = helper.entityManager.query(expr, null);
+			int total = helper.entityManager.count(expr, null);
 
 			ret.setData(data);
 			ret.setTotal(total);
@@ -119,9 +119,9 @@ public class EntityAction {
 	 */
 	@At(ActionUtil.GET_ENTITY_NAVI_DATA)
 	public TreeWidgetData getEntityNaviData(String args) {
-		ActionHelper service = ActionHelper.make(args, null, null);
+		ActionHelper helper = ActionHelper.make(args, null, null);
 
-		TreeWidgetData treeModel = service.widgetFactory.getEntityNaviData(service.module, service.table);
+		TreeWidgetData treeModel = helper.widgetFactory.getEntityNaviData(helper.module, helper.table);
 
 		return treeModel;
 	}
@@ -139,11 +139,11 @@ public class EntityAction {
 	 */
 	@At(ActionUtil.GET_ENTITY_FORM_UI)
 	public EntityFormWidgetModel getEntityFormUI(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
-		ActionHelper service = ActionHelper.make(args, argDataID, dataNode);
+		ActionHelper helper = ActionHelper.make(args, argDataID, dataNode);
 
-		EntityFormWidgetModel formModel = service.widgetFactory.getEntityFormUI(service.module, service.table, service.operation, service.entity);
+		EntityFormWidgetModel formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
 
-		formModel.setData(service.entity);
+		formModel.setData(helper.entity);
 
 		/**
 		 * 返回
@@ -164,16 +164,16 @@ public class EntityAction {
 	 */
 	@At(ActionUtil.SAVE_ENTITY_FORM_DATA)
 	public EntityFormWidgetData saveEntityFormData(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
-		ActionHelper service = ActionHelper.make(args, argDataID, dataNode);
+		ActionHelper helper = ActionHelper.make(args, argDataID, dataNode);
 
-		EntityFormWidgetModel formModel = service.widgetFactory.getEntityFormUI(service.module, service.table, service.operation, service.entity);
+		EntityFormWidgetModel formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
 
 		EntityFormWidgetData ret = new EntityFormWidgetData();
 		ret.setModel(formModel);
-		ret.setData(service.entity);
+		ret.setData(helper.entity);
 
 		try {
-			service.entityManager.save(service.entity, service.opMode);
+			helper.entityManager.save(helper.entity, helper.opMode);
 		} catch (Throwable e) {
 			ret.setException(e);
 		}
@@ -183,13 +183,13 @@ public class EntityAction {
 
 	@At(ActionUtil.DELETE_ENTITY_DATA)
 	public EntityFormWidgetData deleteEntityData(String args, String dataID) {
-		ActionHelper service = ActionHelper.make(args, dataID, null);
+		ActionHelper helper = ActionHelper.make(args, dataID, null);
 
-		EntityFormWidgetModel formModel = service.widgetFactory.getEntityFormUI(service.module, service.table, service.operation, service.entity);
+		EntityFormWidgetModel formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
 
 		EntityFormWidgetData ret = new EntityFormWidgetData();
 		ret.setModel(formModel);
-		ret.setData(service.entity);
+		ret.setData(helper.entity);
 
 		try {
 			String[] array = StringUtil.toArray(dataID);
@@ -197,7 +197,7 @@ public class EntityAction {
 			for (int i = 0; i < array.length; i++) {
 				idArray[i] = Long.parseLong(array[i]);
 			}
-			service.entityManager.delete(idArray, service.opMode);
+			helper.entityManager.delete(idArray, helper.opMode);
 		} catch (Throwable e) {
 			ret.setException(e);
 		}
@@ -207,27 +207,27 @@ public class EntityAction {
 
 	@At(ActionUtil.EXEC_ENTITY_TASK)
 	public AlertsModel execEntityTask(String args, String entityID, @Param("::entity.") EntityParamNode dataNode) {
-		ActionHelper service = ActionHelper.make(args, entityID, dataNode);
+		ActionHelper helper = ActionHelper.make(args, entityID, dataNode);
 
 		try {
-			String result = service.entityManager.execTask(service, service.opMode);
+			String result = helper.entityManager.execTask(helper, helper.opMode);
 
-			return AlertsModel.make(200, result);
+			return AlertsModel.makeSuccess(result);
 		} catch (Throwable e) {
-			return AlertsModel.make(300, e == null ? "" : e.toString());
+			return AlertsModel.makeError(e == null ? "" : e.getMessage());
 		}
 	}
 
 	@At(ActionUtil.EXEC_ENTITY_ASYN_TASK)
 	public AlertsModel execEntityAsynTask(String args, String entityID, @Param("::entity.") EntityParamNode dataNode) {
-		ActionHelper service = ActionHelper.make(args, entityID, dataNode);
+		ActionHelper helper = ActionHelper.make(args, entityID, dataNode);
 
 		try {
-			String result = service.entityManager.execAsynTask(service, service.opMode);
+			String result = helper.entityManager.execAsynTask(helper, helper.opMode);
 
-			return AlertsModel.make(200, result);
+			return AlertsModel.makeSuccess(result);
 		} catch (Throwable e) {
-			return AlertsModel.make(300, e == null ? "" : e.toString());
+			return AlertsModel.makeError(e == null ? "" : e.toString());
 		}
 	}
 }

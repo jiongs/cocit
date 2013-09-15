@@ -5,9 +5,13 @@ import com.jiongsoft.cocit.util.log.Logs;
 
 public abstract class Log {
 	private static ILog log = Logs.getLog(Log.class);
+
 	private static boolean traceDebug = false;
+
 	private static boolean traceInfo = false;
+
 	private static boolean traceWarn = false;
+
 	private static boolean traceError = true;
 
 	/**
@@ -27,14 +31,16 @@ public abstract class Log {
 					log.debug(String.format(message, args), (Throwable) args[args.length - 1]);
 				}
 			} else {
-				Throwable ex;
-				if (args.length == 1) {
-					ex = (Throwable) args[0];
-				} else {
-					ex = (Throwable) args[args.length - 1];
+				if (args.length > 1)
+					message = String.format(message, args);
+
+				Throwable ex = (Throwable) args[args.length - 1];
+				if (ex instanceof NullPointerException)
+					log.debug(message, ex);
+				else {
+					Throwable cause = ex.getCause();
+					log.debug(message + "\n\t" + ex.toString() + "\n\t" + cause);
 				}
-				Throwable cause = ex.getCause();
-				log.debug(message + "\n\t" + ex.toString() + "\n\t" + cause);
 			}
 		} else {
 			log.debugf(message, args);
@@ -58,14 +64,16 @@ public abstract class Log {
 					log.info(String.format(message, args), (Throwable) args[args.length - 1]);
 				}
 			} else {
-				Throwable ex;
-				if (args.length == 1) {
-					ex = (Throwable) args[0];
-				} else {
-					ex = (Throwable) args[args.length - 1];
+				if (args.length > 1)
+					message = String.format(message, args);
+
+				Throwable ex = (Throwable) args[args.length - 1];
+				if (ex instanceof NullPointerException)
+					log.info(message, ex);
+				else {
+					Throwable cause = ex.getCause();
+					log.info(message + "\n\t" + ex.toString() + "\n\t" + cause);
 				}
-				Throwable cause = ex.getCause();
-				log.info(message + "\n\t" + ex.toString() + "\n\t" + cause);
 			}
 		} else {
 			log.infof(message, args);
@@ -89,14 +97,16 @@ public abstract class Log {
 					log.warn(String.format(message, args), (Throwable) args[args.length - 1]);
 				}
 			} else {
-				Throwable ex;
-				if (args.length == 1) {
-					ex = (Throwable) args[0];
-				} else {
-					ex = (Throwable) args[args.length - 1];
+				if (args.length > 1)
+					message = String.format(message, args);
+
+				Throwable ex = (Throwable) args[args.length - 1];
+				if (ex instanceof NullPointerException)
+					log.warn(message, ex);
+				else {
+					Throwable cause = ex.getCause();
+					log.warn(message + "\n\t" + ex.toString() + "\n\t" + cause);
 				}
-				Throwable cause = ex.getCause();
-				log.warn(message + "\n\t" + ex.toString() + "\n\t" + cause);
 			}
 		} else {
 			log.warnf(message, args);
@@ -122,14 +132,16 @@ public abstract class Log {
 					log.error(String.format(message, args), (Throwable) args[args.length - 1]);
 				}
 			} else {
-				Throwable ex;
-				if (args.length == 1) {
-					ex = (Throwable) args[0];
-				} else {
-					ex = (Throwable) args[args.length - 1];
+				if (args.length > 1)
+					message = String.format(message, args);
+
+				Throwable ex = (Throwable) args[args.length - 1];
+				if (ex instanceof NullPointerException)
+					log.error(message, ex);
+				else {
+					Throwable cause = ex.getCause();
+					log.error(message + "\n\t" + ex.toString() + "\n\t" + cause);
 				}
-				Throwable cause = ex.getCause();
-				log.error(message + "\n\t" + ex.toString() + "\n\t" + cause);
 			}
 		} else {
 			log.errorf(message, args);

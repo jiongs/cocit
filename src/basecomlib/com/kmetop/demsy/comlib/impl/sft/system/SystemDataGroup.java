@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+import com.jiongsoft.cocit.entity.FieldGroupEntity;
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
@@ -23,12 +24,9 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 		, @CocOperation(jsonData = "CommonBizAction.data.js") //
 }//
 , groups = { @CocGroup(name = "基本信息", code = "basic"//
-, fields = {
-		@CocField(name = "分组名称", property = "name", mode = "c:M e:M")//
-		,
-		@CocField(name = "分组编号", property = "code") //
-		,
-		@CocField(name = "所属系统", property = "system", fkTable = BIZSYS_BZUDF_SYSTEM, isFkChild = true, mode = "c:M *:S") //
+, fields = { @CocField(name = "分组名称", property = "name", mode = "c:M e:M")//
+		, @CocField(name = "分组编号", property = "code") //
+		, @CocField(name = "所属系统", property = "system", fkTable = BIZSYS_BZUDF_SYSTEM, isFkChild = true, mode = "c:M *:S") //
 		, @CocField(name = "人工顺序", property = "orderby") //
 		, @CocField(name = "字段模式", property = "mode") //
 		, @CocField(name = "表单列数", property = "columns") //
@@ -40,7 +38,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 		, @CocField(name = "更新帐号", property = "updatedBy", mode = "*:P") //
 }) }// end groups
 )
-public class SystemDataGroup extends SFTBizComponent implements IBizFieldGroup {
+public class SystemDataGroup extends SFTBizComponent implements IBizFieldGroup, FieldGroupEntity {
 	// public static final int MASK_HIDDEN = 1;// 2^0
 
 	public static final int MASK_DISABLED = 4;// 2^2

@@ -51,16 +51,16 @@ public class JCocitMenuRender extends WidgetRender<MenuWidgetModel> {
 				if (!StringUtil.isNil(str))
 					print(out, ", token: '%s'", str);// 菜单通过该令牌获取DataGrid对象
 
-				// opArgs = moduleID:tableID:operationID
-				str = node.get("opArgs", "");
+				// funcExpr = moduleID:tableID:operationID
+				str = node.get("funcExpr", "");
 				if (!StringUtil.isNil(str))
-					print(out, ", opArgs: '%s'", str);
+					print(out, ", funcExpr: '%s'", str);
 
 				str = node.get("opMode", "");
 				if (!StringUtil.isNil(str))
 					print(out, ", opMode: '%s'", str);
 
-				str = node.get("operationCode", "");
+				str = node.get("opCode", "");
 				if (!StringUtil.isNil(str)) {
 					print(out, ", opCode: %s", str);
 					print(out, ", iconCls: 'icon-%s'", str);// iconCls 由菜单操作码决定
@@ -110,10 +110,10 @@ public class JCocitMenuRender extends WidgetRender<MenuWidgetModel> {
 			print(out, "<div data-options=\"", child.getId());
 			print(out, "name:'%s'", node.getName());
 
-			// opArgs = moduleID:tableID:operationID
-			String str = node.get("opArgs", "");
+			// funcExpr = moduleID:tableID:operationID
+			String str = node.get("funcExpr", "");
 			if (!StringUtil.isNil(str))
-				print(out, ", opArgs: '%s'", str);
+				print(out, ", funcExpr: '%s'", str);
 
 			str = model.get("token", "");
 			if (!StringUtil.isNil(str))
