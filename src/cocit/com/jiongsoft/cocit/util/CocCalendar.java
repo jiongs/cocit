@@ -5,15 +5,19 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class CoCalendar {
-
-	private Calendar calendar;
+public class CocCalendar {
 
 	public static final String DEFAULT_DATE_PATTERN = "yyyy-MM-dd";
 
 	public static final String DEFAULT_DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
-	private CoCalendar(Date date) {
+	public static final String[] NLS_WEEKS = new String[] { "星期天", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
+
+	public static final String[] NLS_MONTHS = new String[] { "", "一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月" };
+
+	private Calendar calendar;
+
+	private CocCalendar(Date date) {
 		this.calendar = getCalendar(date);
 	}
 
@@ -101,12 +105,12 @@ public class CoCalendar {
 		return new Date(date.getTime() + day * 24 * 60 * 60 * 1000);
 	}
 
-	public static CoCalendar now() {
-		return new CoCalendar(new Date());
+	public static CocCalendar now() {
+		return new CocCalendar(new Date());
 	}
 
-	public static CoCalendar make(Date date) {
-		return new CoCalendar(date);
+	public static CocCalendar make(Date date) {
+		return new CocCalendar(date);
 	}
 
 	public static Date makeDate(int yyyy, int MM, int dd) {
@@ -114,7 +118,7 @@ public class CoCalendar {
 	}
 
 	public static Date makeDate(int yyyy, int MM, int dd, int HH, int mm, int ss) {
-		CoCalendar date = now();
+		CocCalendar date = now();
 
 		date.setYear(yyyy);
 		date.setMonth(MM);
@@ -146,8 +150,9 @@ public class CoCalendar {
 	 * 
 	 * @param value
 	 */
-	public void setYear(int value) {
+	public CocCalendar setYear(int value) {
 		calendar.set(Calendar.YEAR, value);
+		return this;
 	}
 
 	/**
@@ -165,8 +170,9 @@ public class CoCalendar {
 	 * @param value
 	 *            1-12
 	 */
-	public void setMonth(int value) {
+	public CocCalendar setMonth(int value) {
 		calendar.set(Calendar.MONTH, value - 1);
+		return this;
 	}
 
 	/**
@@ -184,8 +190,9 @@ public class CoCalendar {
 	 * @param value
 	 *            1-31
 	 */
-	public void setDay(int value) {
+	public CocCalendar setDay(int value) {
 		calendar.set(Calendar.DATE, value);
+		return this;
 	}
 
 	/**
@@ -203,8 +210,9 @@ public class CoCalendar {
 	 * @param value
 	 *            0-23
 	 */
-	public void setHour(int value) {
+	public CocCalendar setHour(int value) {
 		calendar.set(Calendar.HOUR_OF_DAY, value);
+		return this;
 	}
 
 	/**
@@ -222,8 +230,9 @@ public class CoCalendar {
 	 * @param value
 	 *            0-59
 	 */
-	public void setMinite(int value) {
+	public CocCalendar setMinite(int value) {
 		calendar.set(Calendar.MINUTE, value);
+		return this;
 	}
 
 	/**
@@ -241,8 +250,9 @@ public class CoCalendar {
 	 * @param value
 	 *            0-59
 	 */
-	public void setSecond(int value) {
+	public CocCalendar setSecond(int value) {
 		calendar.set(Calendar.SECOND, value);
+		return this;
 	}
 
 	/**
@@ -259,25 +269,29 @@ public class CoCalendar {
 	 * 
 	 * @param value
 	 */
-	public void setMilliSecond(int value) {
+	public CocCalendar setMilliSecond(int value) {
 		calendar.set(Calendar.MILLISECOND, value);
+		return this;
 	}
 
-	public void setTime(int HH, int mm, int ss, int ms) {
+	public CocCalendar setTime(int HH, int mm, int ss, int ms) {
 		this.setHour(HH);
 		this.setMinite(mm);
 		this.setSecond(ss);
 		this.setMilliSecond(ms);
+		return this;
 	}
 
-	public void setDate(int yyyy, int MM, int dd) {
+	public CocCalendar setDate(int yyyy, int MM, int dd) {
 		this.setYear(yyyy);
 		this.setMonth(MM);
 		this.setDay(dd);
+		return this;
 	}
 
-	public void setDateTime(int yyyy, int MM, int dd, int HH, int mm, int ss, int ms) {
+	public CocCalendar setDateTime(int yyyy, int MM, int dd, int HH, int mm, int ss, int ms) {
 		this.setDate(yyyy, MM, dd);
 		this.setTime(HH, mm, ss, ms);
+		return this;
 	}
 }

@@ -17,7 +17,7 @@ import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.ActionContext;
 import com.jiongsoft.cocit.service.ConfigManager;
 import com.jiongsoft.cocit.service.SoftService;
-import com.jiongsoft.cocit.util.CoCalendar;
+import com.jiongsoft.cocit.util.CocCalendar;
 
 public class ZucpSmsClientTest {
 
@@ -80,7 +80,7 @@ public class ZucpSmsClientTest {
 	public void send() throws UnsupportedEncodingException {
 		ZucpSmsClient smsClient = new ZucpSmsClient();
 		String rrid = "" + System.currentTimeMillis();
-		String ret = smsClient.send("15911731833", "漫道短信测试" + CoCalendar.getNowDateTime(), "", "", rrid);
+		String ret = smsClient.send("15911731833", "漫道短信测试" + CocCalendar.getNowDateTime(), "", "", rrid);
 		System.out.println("send: ret = " + ret);
 
 		assertNotNull(ret);

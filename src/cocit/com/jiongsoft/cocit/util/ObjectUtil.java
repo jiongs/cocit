@@ -65,13 +65,13 @@ public abstract class ObjectUtil {
 		} else if (value instanceof Date) {
 			if (!StringUtil.isNil(pattern)) {
 				try {
-					return CoCalendar.format((Date) value, pattern);
+					return CocCalendar.format((Date) value, pattern);
 				} catch (Throwable e) {
 					Log.warn("", e);
-					return CoCalendar.formatDateTime((Date) value);
+					return CocCalendar.formatDateTime((Date) value);
 				}
 			} else {
-				return CoCalendar.format((Date) value);
+				return CocCalendar.format((Date) value);
 			}
 		} else if (value instanceof Number && !StringUtil.isNil(pattern)) {
 			// if (Strings.isEmpty(pattern)) {

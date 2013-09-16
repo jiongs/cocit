@@ -10,12 +10,17 @@ import com.jiongsoft.cocit.orm.expr.Expr;
 import com.jiongsoft.cocit.util.CocException;
 import com.jiongsoft.cocit.util.StringUtil;
 
+/**
+ * 处理网站栏目和网站信息发布的业务逻辑插件。
+ * 
+ * @author yongshan.ji
+ * 
+ */
 public abstract class WebPlugins {
+	/*
+	 * 保存网站栏目前：检查栏目编号的唯一性
+	 */
 	public static class SaveWebCatalog extends BasePlugin<WebCatalogEntity> {
-		/*
-		 * 检查栏目编号的唯一性
-		 */
-
 		@Override
 		public void before(ActionEvent<WebCatalogEntity> event) {
 			synchronized (SaveWebCatalog.class) {
@@ -36,6 +41,12 @@ public abstract class WebPlugins {
 		}
 	}
 
+	/**
+	 * 信息发布前：设置冗余字段“栏目编码”
+	 * 
+	 * @author yongshan.ji
+	 * 
+	 */
 	public static class SaveWebContent extends BasePlugin<WebContentEntity> {
 
 		@Override
@@ -61,6 +72,12 @@ public abstract class WebPlugins {
 		}
 	}
 
+	/**
+	 * 批量“变更栏目”前：调整网站内容实体的冗余字段“栏目编码”
+	 * 
+	 * @author yongshan.ji
+	 * 
+	 */
 	public static class SaveWebContentList extends BasePlugin<List<WebContentEntity>> {
 
 		@Override

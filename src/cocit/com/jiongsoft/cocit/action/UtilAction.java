@@ -19,14 +19,14 @@ import com.jiongsoft.cocit.util.HttpUtil;
 @Fail(UIModelView.VIEW_TYPE)
 public class UtilAction {
 
-	@At(ActionUtil.GET_IMAGE_VERIFICATION_CODE)
-	public void getImageVerificationCode() {
+	@At(ActionUtil.GET_IMAGE_VERIFY_CODE)
+	public void getImageVerifyCode() {
 		ActionContext ctx = Cocit.getActionContext();
 		HttpUtil.makeImageVerificationCode(ctx.getRequest(), ctx.getResponse());
 	}
 
-	@At(ActionUtil.CHECK_VERIFICATION_CODE)
-	public AlertsModel checkVerificationCode(String code) {
+	@At(ActionUtil.CHECK_VERIFY_CODE)
+	public AlertsModel checkVerifyCode(String code) {
 		String message = "";
 		try {
 			ActionContext ctx = Cocit.getActionContext();
@@ -44,8 +44,8 @@ public class UtilAction {
 
 	}
 
-	@At(ActionUtil.GET_SMS_VERIFICATION_CODE)
-	public AlertsModel getSmsVerificationCode(String tel) {
+	@At(ActionUtil.GET_SMS_VERIFY_CODE)
+	public AlertsModel getSmsVerifyCode(String tel) {
 		String message = "";
 		try {
 			ActionContext ctx = Cocit.getActionContext();

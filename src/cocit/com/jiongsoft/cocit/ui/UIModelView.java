@@ -74,6 +74,8 @@ public class UIModelView implements View {
 				} else
 					Log.error("UIModelRenderView.render: 不支持的输出类型！{type:%s}", obj == null ? "<NULL>" : obj.getClass().getName());
 			}
+		} catch (Throwable e) {
+			Log.error("", e);
 		} finally {
 			resp.flushBuffer();
 			try {

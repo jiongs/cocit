@@ -42,9 +42,9 @@ public class ActionHelper {
 	 */
 	public String funcExpr;
 
-	public Long moduleID;
+	public String moduleID;
 
-	public Long tableID;
+	public String tableID;
 
 	public String opMode;
 
@@ -127,17 +127,11 @@ public class ActionHelper {
 
 		String[] array = ActionUtil.decodeArgs(funcExpr);
 
-		String argModuleID = array.length > 0 ? array[0] : null;
-		String argTableID = array.length > 1 ? array[1] : null;
-		this.opMode = array.length > 2 ? array[2] : null;
+		moduleID = array.length > 0 ? array[0] : null;
+		tableID = array.length > 1 ? array[1] : null;
+		opMode = array.length > 2 ? array[2] : null;
 
-		Log.debug("ActionHelper.parseOpArgs: funcExpr = %s {moduleID:%s, tableID:%s, opMode:%s}", funcExpr, argModuleID, argTableID, opMode);
-
-		/*
-		 * 获取数据模块和数据表对象
-		 */
-		moduleID = StringUtil.castTo(argModuleID, 0L);
-		tableID = StringUtil.castTo(argTableID, 0L);
+		Log.debug("ActionHelper.parseOpArgs: funcExpr = %s {moduleID:%s, tableID:%s, opMode:%s}", funcExpr, moduleID, tableID, opMode);
 
 		ServiceFactory softFactory = Cocit.getServiceFactory();
 

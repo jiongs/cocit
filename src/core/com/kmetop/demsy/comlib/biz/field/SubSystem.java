@@ -22,7 +22,9 @@ public class SubSystem<T> implements IExtField {
 	private static Log log = Logs.get();
 
 	private Class<T> type;
+
 	private String jsonData;
+
 	private List<T> list;
 
 	public SubSystem() {
@@ -91,6 +93,10 @@ public class SubSystem<T> implements IExtField {
 	}
 
 	public String toString() {
+		return jsonData == null ? "" : jsonData;
+	}
+
+	public String toJson() {
 		return jsonData == null ? "" : jsonData;
 	}
 }

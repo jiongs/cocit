@@ -41,7 +41,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 		, @CocField(name = "邮箱地址", mode = "*:N v:S c:E e:E", property = "email", gridOrder = 10) //
 		, @CocField(name = "登录帐号", mode = "*:N v:S", property = "createdBy", gridOrder = 11) //
 		, @CocField(name = "报名时间", mode = "*:N v:S", property = "created", pattern = "yyyy-MM-dd HH:mm:ss", gridOrder = 12) //
-		, @CocField(name = "IP地址", mode = "*:N v:S", property = "personNumber", gridOrder = 13) //
+		, @CocField(name = "IP地址", mode = "*:N v:S", property = "createdIP", gridOrder = 13) //
 }// end: fields
 ) // end: CocGroup
 }// end: groups

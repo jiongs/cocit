@@ -23,7 +23,7 @@ public class JCocitFormDataRender extends WidgetRender<EntityFormWidgetData> {
 		StringBuffer sb = new StringBuffer();
 		sb.append('{');
 		sb.append("\"statusCode\" : " + statusCode);
-		sb.append(", \"content\" : " + Json.toJson(message));
+		sb.append(", \"message\" : " + Json.toJson(message));
 		sb.append(", \"data\": ").append(Json.toJson(model.getData()));
 		sb.append('}');
 		print(writer, sb.toString());

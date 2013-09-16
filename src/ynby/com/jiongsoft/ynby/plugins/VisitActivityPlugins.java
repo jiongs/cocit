@@ -7,7 +7,7 @@ import com.jiongsoft.cocit.entity.ActionEvent;
 import com.jiongsoft.cocit.entity.plugin.BasePlugin;
 import com.jiongsoft.cocit.orm.Orm;
 import com.jiongsoft.cocit.orm.expr.Expr;
-import com.jiongsoft.cocit.util.CoCalendar;
+import com.jiongsoft.cocit.util.CocCalendar;
 import com.jiongsoft.cocit.util.CocException;
 import com.jiongsoft.cocit.util.HttpUtil;
 import com.jiongsoft.cocit.util.Log;
@@ -30,7 +30,7 @@ public class VisitActivityPlugins {
 				throw new CocException("请先设置活动地点！");
 			}
 
-			CoCalendar cal = CoCalendar.now();
+			CocCalendar cal = CocCalendar.now();
 			cal.setTime(0, 0, 0, 0);
 
 			int year = cal.getYear();
@@ -75,7 +75,7 @@ public class VisitActivityPlugins {
 						entity.setAddress(address);
 
 						// 设置活动“报名结束日期”为活动前一天
-						CoCalendar expiredTo = CoCalendar.make(activityDate);
+						CocCalendar expiredTo = CocCalendar.make(activityDate);
 						expiredTo.setDay(expiredTo.getDay() - 1);
 						entity.setExpiredTo(expiredTo.get());
 						try {
@@ -103,16 +103,16 @@ public class VisitActivityPlugins {
 			VisitActivity entity = event.getEntity();
 
 			Date date = entity.getPlanDate();
-			String dateStr = CoCalendar.format(date, "yyyy年MM月dd日 E");
+			String dateStr = CocCalendar.format(date, "yyyy年MM月dd日 E");
 
 			Date to = entity.getExpiredTo();
 			if (to.getTime() >= date.getTime()) {
-				throw new CocException("报名结束时间非法：%s", CoCalendar.formatDateTime(to));
+				throw new CocException("报名结束时间非法：%s", CocCalendar.formatDateTime(to));
 			}
 
 			Date from = entity.getExpiredFrom();
 			if (from != null && from.getTime() >= to.getTime()) {
-				throw new CocException("报名有效期非法：从 %s 到 %s", CoCalendar.formatDateTime(from), CoCalendar.formatDateTime(to));
+				throw new CocException("报名有效期非法：从 %s 到 %s", CocCalendar.formatDateTime(from), CocCalendar.formatDateTime(to));
 			}
 
 			int num = entity.getPlanPersonNumber();
@@ -145,7 +145,7 @@ public class VisitActivityPlugins {
 				Date from = activity.getExpiredFrom();
 				Date to = activity.getExpiredTo();
 
-				throw new CocException("报名有效期从 %s 到 %s！", CoCalendar.formatDateTime(from), CoCalendar.formatDateTime(to));
+				throw new CocException("报名有效期从 %s 到 %s！", CocCalendar.formatDateTime(from), CocCalendar.formatDateTime(to));
 			}
 
 			// 计算已报名人数、计划人数

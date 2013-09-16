@@ -22,7 +22,7 @@ import com.jiongsoft.cocit.ActionContext;
 import com.jiongsoft.cocit.service.ConfigManager;
 import com.jiongsoft.cocit.service.SoftService;
 import com.jiongsoft.cocit.sms.impl.ZrSmsClient;
-import com.jiongsoft.cocit.util.CoCalendar;
+import com.jiongsoft.cocit.util.CocCalendar;
 
 public class ZrSmsClientTest {
 
@@ -123,7 +123,7 @@ public class ZrSmsClientTest {
 	public void send_integration() {
 		ZrSmsClient smsClient = new ZrSmsClient();
 
-		String ret = smsClient.send("15911731833", "展仁短信测试" + CoCalendar.getNowDateTime(), "", "", "");
+		String ret = smsClient.send("15911731833", "展仁短信测试" + CocCalendar.getNowDateTime(), "", "", "");
 		assertNotNull(ret);
 	}
 

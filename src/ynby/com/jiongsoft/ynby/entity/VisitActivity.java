@@ -69,7 +69,7 @@ public class VisitActivity extends SFTBizComponent {
 	@Column(length = 32)
 	String contactTel;
 
-	Integer registerPersonNumber;
+	int registerPersonNumber = 0;
 
 	Integer attendPersonNumber;
 
@@ -136,11 +136,11 @@ public class VisitActivity extends SFTBizComponent {
 		this.contactTel = contactTel;
 	}
 
-	public Integer getRegisterPersonNumber() {
+	public int getRegisterPersonNumber() {
 		return registerPersonNumber;
 	}
 
-	public void setRegisterPersonNumber(Integer registerPersonNumber) {
+	public void setRegisterPersonNumber(int registerPersonNumber) {
 		this.registerPersonNumber = registerPersonNumber;
 	}
 

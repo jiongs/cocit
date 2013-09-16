@@ -15,7 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.jiongsoft.cocit.service.impl.BaseConfigService;
-import com.jiongsoft.cocit.util.CoCalendar;
+import com.jiongsoft.cocit.util.CocCalendar;
 import com.jiongsoft.cocit.util.StringUtil;
 import com.jiongsoft.cocit.utils.TestBean;
 
@@ -87,7 +87,7 @@ public class BaseConfigServiceTest {
 		float f = assist.get("float", 0.0f);
 		assertTrue(3.5f == f);
 		Date date = assist.get("date", new Date());
-		assertEquals("2013/08/28", CoCalendar.format(date, "yyyy/MM/dd"));
+		assertEquals("2013/08/28", CocCalendar.format(date, "yyyy/MM/dd"));
 		Object obj = assist.get("defaultReturnIsNull", null);
 		assertEquals("string", obj);
 		TestBean case1 = (TestBean) assist.get("testcase", new TestBean());

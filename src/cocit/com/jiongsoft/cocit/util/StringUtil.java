@@ -166,7 +166,7 @@ public abstract class StringUtil {
 		if (valueType.equals(Boolean.class))
 			return (T) Boolean.valueOf(text);
 		if (Date.class.isAssignableFrom(valueType))
-			return (T) CoCalendar.parse(text);
+			return (T) CocCalendar.parse(text);
 		if (Number.class.isAssignableFrom(valueType))
 			return ClassUtil.newInstance(valueType, text);
 

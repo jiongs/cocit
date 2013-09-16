@@ -310,7 +310,7 @@
 			// '<tr><th style="text-align:right" valign="top">Response Error:</th><td valign="top">' + responseError + '</td></tr>' + //
 			// '<tr><th style="text-align:right" valign="top">Response Text:</th><td valign="top">' + jqXHR.responseText + '</td></tr>' + //
 			// '</table>');
-			Jerror(jqXHR.responseText);
+			Jerror(responseError);
 		},
 
 		/**
