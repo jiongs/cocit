@@ -26,4 +26,8 @@ public abstract class JsonField<T> implements IExtField {
 		return Json.toJson(this);
 	}
 
+	public String toJson() {
+		return Json.toJson(this);
+	}
+
 }
