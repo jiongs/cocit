@@ -73,9 +73,9 @@ public class EmaySDKSmsClientTest {
 				softContext.getSoftService();
 				result = soft;
 
-				soft.getConfig(ConfigManager.CFG_PROXY_HOST, "");
+				soft.getConfig(ConfigManager.SMS_PROXY_HOST, "");
 				result = "192.168.128.3";
-				soft.getConfig(ConfigManager.CFG_PROXY_PORT, 80);
+				soft.getConfig(ConfigManager.SMS_PROXY_PORT, 80);
 				result = 80;
 
 				/*
@@ -91,9 +91,9 @@ public class EmaySDKSmsClientTest {
 				/*
 				 * 茶缘帐号
 				 */
-				soft.getConfig(ConfigManager.CFG_UID, "");
+				soft.getConfig(ConfigManager.SMS_UID, "");
 				result = "3SDK-KYJ-0130-KJXQL";
-				soft.getConfig(ConfigManager.CFG_PWD, "");
+				soft.getConfig(ConfigManager.SMS_PWD, "");
 				result = "356860";
 				soft.getConfig("sms.key", "");
 				result = "147080";

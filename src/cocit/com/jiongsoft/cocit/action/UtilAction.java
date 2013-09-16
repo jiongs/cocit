@@ -19,18 +19,18 @@ import com.jiongsoft.cocit.util.HttpUtil;
 @Fail(UIModelView.VIEW_TYPE)
 public class UtilAction {
 
-	@At(ActionUtil.GET_IMAGE_VERIFY_CODE)
-	public void getImageVerifyCode() {
+	@At(ActionUtil.GET_IMG_VERIFY_CODE)
+	public void getImgVerifyCode() {
 		ActionContext ctx = Cocit.getActionContext();
-		HttpUtil.makeImageVerificationCode(ctx.getRequest(), ctx.getResponse());
+		HttpUtil.makeImgVerifyCode(ctx.getRequest(), ctx.getResponse());
 	}
 
-	@At(ActionUtil.CHECK_VERIFY_CODE)
-	public AlertsModel checkVerifyCode(String code) {
+	@At(ActionUtil.CHECK_IMG_VERIFY_CODE)
+	public AlertsModel checkImgVerifyCode(String code) {
 		String message = "";
 		try {
 			ActionContext ctx = Cocit.getActionContext();
-			HttpUtil.checkVerificationCode(ctx.getRequest(), code, null);
+			HttpUtil.checkImgVerifyCode(ctx.getRequest(), code, null);
 
 			message = "检查验证码成功！";
 
@@ -41,7 +41,6 @@ public class UtilAction {
 
 			return AlertsModel.makeError(message);
 		}
-
 	}
 
 	@At(ActionUtil.GET_SMS_VERIFY_CODE)
@@ -50,11 +49,11 @@ public class UtilAction {
 		try {
 			ActionContext ctx = Cocit.getActionContext();
 
-			String code = HttpUtil.makeVerificationCode(ctx.getRequest());
+			String code = HttpUtil.makeSmsVerifyCode(ctx.getRequest(), tel);
 
 			SoftService soft = ctx.getSoftService();
 			SmsClient smsClient = soft.getSmsClient();
-			String tpl = soft.getConfig(ConfigManager.CFG_VERIFICATION_CODE_TEMPLATE, "请输入您的验证码 %s");
+			String tpl = soft.getConfig(ConfigManager.SMS_VERIFY_CODE_CONTENT, "请输入您的验证码 %s");
 
 			String content = String.format(tpl, code);
 
@@ -69,6 +68,23 @@ public class UtilAction {
 
 			return AlertsModel.makeError(message);
 		}
+	}
 
+	@At(ActionUtil.CHECK_SMS_VERIFY_CODE)
+	public AlertsModel checkSmsVerifyCode(String tel, String code) {
+		String message = "";
+		try {
+			ActionContext ctx = Cocit.getActionContext();
+			HttpUtil.checkSmsVerifyCode(ctx.getRequest(), tel, code, null);
+
+			message = "检查验证码成功！";
+
+			return AlertsModel.makeSuccess(message);
+		} catch (Throwable e) {
+			Log.warn("", e);
+			message = "验证码非法！";
+
+			return AlertsModel.makeError(message);
+		}
 	}
 }

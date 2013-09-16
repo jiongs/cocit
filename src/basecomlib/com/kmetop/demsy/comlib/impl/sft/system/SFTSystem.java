@@ -44,6 +44,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 		, @CocField(name = "停用状态", property = "disabled", disabledNavi = true, options = "1:停用,0:启用") //
 		, @CocField(name = "内置状态", property = "buildin", disabledNavi = true, mode = "*:N") //
 		, @CocField(name = "父系统", property = "parent", disabledNavi = true, mode = "*:N") //
+		, @CocField(name = "实体GUID", property = "entityGuid", mode = "*:N v:P") //
 		, @CocField(name = "创建时间", property = "created", mode = "*:N v:P") //
 		, @CocField(name = "更新时间", property = "updated", mode = "*:N v:P") //
 		, @CocField(name = "创建帐号", property = "createdBy", mode = "*:N v:P") //

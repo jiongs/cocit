@@ -347,4 +347,6 @@ public interface IBizEngine {
 	 * @return
 	 */
 	List<? extends IBizField> makeFields(IRuntimeConfigable runtimeCustom);
+
+	IAction getAction(Long systemID, String opMode);
 }

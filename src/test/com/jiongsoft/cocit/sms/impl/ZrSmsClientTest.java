@@ -39,15 +39,15 @@ public class ZrSmsClientTest {
 				softContext.getSoftService();
 				result = soft;
 
-				soft.getConfig(ConfigManager.CFG_PROXY_HOST, "");
+				soft.getConfig(ConfigManager.SMS_PROXY_HOST, "");
 				result = "192.168.128.3";
-				soft.getConfig(ConfigManager.CFG_PROXY_PORT, 80);
+				soft.getConfig(ConfigManager.SMS_PROXY_PORT, 80);
 				result = 80;
-				soft.getConfig(ConfigManager.CFG_URL, "http://oa.zrsms.com");
+				soft.getConfig(ConfigManager.SMS_URL, "http://oa.zrsms.com");
 				result = "http://oa.zrsms.com";
-				soft.getConfig(ConfigManager.CFG_UID, "");
+				soft.getConfig(ConfigManager.SMS_UID, "");
 				result = "zlsandi";
-				soft.getConfig(ConfigManager.CFG_PWD, "");
+				soft.getConfig(ConfigManager.SMS_PWD, "");
 				result = "zlsandi";
 			}
 		};

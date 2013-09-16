@@ -1,7 +1,7 @@
 package com.kmetop.demsy.comlib.biz.field;
 
 import com.jiongsoft.cocit.entity.annotation.CocField;
-import com.jiongsoft.cocit.util.StringUtil;
+import com.kmetop.demsy.lang.JSON;
 import com.kmetop.demsy.lang.Str;
 
 @CocField(columnDefinition = "text")
@@ -24,7 +24,6 @@ public class RichText implements IExtField {
 	}
 
 	public String toJson() {
-		return StringUtil.trim(text).length() == 0 ? null : text;
+		return JSON.toJson(text);
 	}
-
 }

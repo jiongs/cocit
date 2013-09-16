@@ -16,31 +16,31 @@ public interface ConfigManager {
 	 * <LI>zucp: 漫道短信
 	 * </UL>
 	 */
-	public static String CFG_TYPE = "sms.type";
+	public static String SMS_TYPE = "sms.type";
 	/**
 	 * 代理服务器主机IP
 	 */
-	public static String CFG_PROXY_HOST = "sms.proxy.host";
+	public static String SMS_PROXY_HOST = "sms.proxy.host";
 	/**
 	 * 代理服务器主机端口
 	 */
-	public static String CFG_PROXY_PORT = "sms.proxy.port";
+	public static String SMS_PROXY_PORT = "sms.proxy.port";
 	/**
 	 * 软件配置项KEY：uid
 	 */
-	public static String CFG_UID = "sms.uid";
+	public static String SMS_UID = "sms.uid";
 	/**
 	 * 软件配置项KEY：密码
 	 */
-	public static String CFG_PWD = "sms.pwd";
+	public static String SMS_PWD = "sms.pwd";
 	/**
 	 * 软件配置项KEY：URL
 	 */
-	public static String CFG_URL = "sms.url";
+	public static String SMS_URL = "sms.url";
 	/**
-	 * 手机短信验证码模版。如：“欢迎走进云南白药，请输入您的验证码 %s”
+	 * 手机短信验证码 短信模版。如：“欢迎走进云南白药，请输入您的验证码 %s”
 	 */
-	public static String CFG_VERIFICATION_CODE_TEMPLATE = "sms.verification_code_tpl";
+	public static String SMS_VERIFY_CODE_CONTENT = "sms.verify_code_content";
 
 	public <T> T get(String configKey, T defaultReturn);
 }

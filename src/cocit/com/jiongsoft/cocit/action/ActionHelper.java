@@ -133,10 +133,17 @@ public class ActionHelper {
 
 		Log.debug("ActionHelper.parseOpArgs: funcExpr = %s {moduleID:%s, tableID:%s, opMode:%s}", funcExpr, moduleID, tableID, opMode);
 
-		ServiceFactory softFactory = Cocit.getServiceFactory();
-
-		module = softFactory.getModule(moduleID);
-		table = softFactory.getTable(tableID);
+		ServiceFactory serviceFactory = Cocit.getServiceFactory();
+		try {
+			module = serviceFactory.getModule(Long.parseLong(moduleID));
+		} catch (NumberFormatException e) {
+			module = serviceFactory.getModule(moduleID);
+		}
+		try {
+			table = serviceFactory.getTable(Long.parseLong(tableID));
+		} catch (NumberFormatException e) {
+			table = serviceFactory.getTable(tableID);
+		}
 		// operation = softFactory.getOperation(table, opMode);
 
 		Log.debug("ActionHelper.parseOpArgs: moduleID = %s, tableID = %s", module, table);

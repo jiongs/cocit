@@ -65,11 +65,11 @@ public class EmaySDKSmsClient implements SmsClient {
 		if (ctx != null) {
 			SoftService soft = ctx.getSoftService();
 
-			this.proxyHost = soft.getConfig(ConfigManager.CFG_PROXY_HOST, "");
-			this.proxyPort = soft.getConfig(ConfigManager.CFG_PROXY_PORT, 80);
+			this.proxyHost = soft.getConfig(ConfigManager.SMS_PROXY_HOST, "");
+			this.proxyPort = soft.getConfig(ConfigManager.SMS_PROXY_PORT, 80);
 
-			this.uid = soft.getConfig(ConfigManager.CFG_UID, "");
-			this.pwd = soft.getConfig(ConfigManager.CFG_PWD, "");
+			this.uid = soft.getConfig(ConfigManager.SMS_UID, "");
+			this.pwd = soft.getConfig(ConfigManager.SMS_PWD, "");
 			this.key = soft.getConfig("sms.key", "");
 
 			try {

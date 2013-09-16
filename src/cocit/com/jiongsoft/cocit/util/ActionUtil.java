@@ -122,7 +122,9 @@ public abstract class ActionUtil {
 	/**
 	 * 获取手机验证码
 	 */
-	public static final String GET_IMAGE_VERIFY_CODE = ACTION_PATH_PREFIX + "/getImageVerifyCode";
+	public static final String GET_IMG_VERIFY_CODE = ACTION_PATH_PREFIX + "/getImgVerifyCode";
+
+	public static final String CHECK_IMG_VERIFY_CODE = ACTION_PATH_PREFIX + "/checkImgVerifyCode/*";
 
 	/**
 	 * 获取短信验证码
@@ -131,7 +133,7 @@ public abstract class ActionUtil {
 	 */
 	public static final String GET_SMS_VERIFY_CODE = ACTION_PATH_PREFIX + "/getSmsVerifyCode/*";
 
-	public static final String CHECK_VERIFY_CODE = ACTION_PATH_PREFIX + "/checkVerifyCode/*";
+	public static final String CHECK_SMS_VERIFY_CODE = ACTION_PATH_PREFIX + "/checkSmsVerifyCode/*";
 
 	/*
 	 * 以下是报表管理模块相关功能的访问路径

@@ -21,7 +21,7 @@ public abstract class BaseSoftService implements SoftService {
 	@Override
 	public SmsClient getSmsClient() {
 		if (smsClient == null) {
-			String type = getConfig(ConfigManager.CFG_TYPE, "");
+			String type = getConfig(ConfigManager.SMS_TYPE, "");
 			smsClient = Cocit.makeSmsClient(type);
 		}
 

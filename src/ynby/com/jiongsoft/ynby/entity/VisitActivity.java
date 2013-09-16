@@ -35,15 +35,15 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 , groups = { //
 @CocGroup(name = "基本信息", code = "basic"//
 // 业务字段
-, fields = { @CocField(name = "活动标题", mode = "*:N v:S", property = "name") //
-		, @CocField(name = "计划日期", mode = "*:N v:S c:M e:M", property = "planDate", pattern = "yyyy-MM-dd")//
-		, @CocField(name = "计划人数", mode = "*:N v:S c:M e:M", property = "planPersonNumber")//
+, fields = { @CocField(name = "活动标题", mode = "*:N v:S", property = "name", gridOrder = 1) //
+		, @CocField(name = "计划日期", mode = "*:N v:S c:M e:M", property = "planDate", pattern = "yyyy-MM-dd", gridOrder = 4)//
+		, @CocField(name = "计划人数", mode = "*:N v:S c:M e:M", property = "planPersonNumber", gridOrder = 2)//
 		, @CocField(name = "计划地点", mode = "*:N v:S c:M e:M", property = "address")//
-		, @CocField(name = "报名起始时间", mode = "*:N v:S c:E e:E", property = "expiredFrom", pattern = "yyyy-MM-dd HH:mm:ss")//
-		, @CocField(name = "报名结束时间", mode = "*:N v:S c:M e:M", property = "expiredTo", pattern = "yyyy-MM-dd HH:mm:ss")//
+		, @CocField(name = "报名起始时间", mode = "*:N v:S c:E e:E", property = "expiredFrom", pattern = "yyyy-MM-dd HH:mm:ss", gridOrder = 5)//
+		, @CocField(name = "报名结束时间", mode = "*:N v:S c:M e:M", property = "expiredTo", pattern = "yyyy-MM-dd HH:mm:ss", gridOrder = 6)//
 		, @CocField(name = "联系人姓名", mode = "*:N v:S c:E e:E", property = "contactPerson") //
 		, @CocField(name = "联系人电话", mode = "*:N v:S c:E e:E", property = "contactTel") //
-		, @CocField(name = "报名人数", mode = "*:N v:S", property = "registerPersonNumber")//
+		, @CocField(name = "报名人数", mode = "*:N v:S", property = "registerPersonNumber", gridOrder = 3)//
 		, @CocField(name = "参加人数", mode = "*:N v:S c:N e:E", property = "attendPersonNumber")//
 		, @CocField(name = "活动描述", mode = "*:N v:S c:E e:E", property = "desc") //
 }// end: fields
@@ -76,14 +76,14 @@ public class VisitActivity extends SFTBizComponent {
 	public boolean isExpired() {
 		Date now = new Date();
 		if (expiredTo != null && expiredFrom != null) {
-			return expiredTo.getTime() > now.getTime() && expiredFrom.getTime() < now.getTime();
+			return expiredTo.getTime() < now.getTime() || expiredFrom.getTime() > now.getTime();
 		}
 
 		if (expiredTo != null)
-			return expiredTo.getTime() > now.getTime();
+			return expiredTo.getTime() < now.getTime();
 
 		if (expiredFrom != null)
-			return expiredFrom.getTime() < now.getTime();
+			return expiredFrom.getTime() > now.getTime();
 
 		return false;
 	}

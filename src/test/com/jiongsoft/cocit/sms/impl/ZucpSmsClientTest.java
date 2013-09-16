@@ -36,15 +36,15 @@ public class ZucpSmsClientTest {
 				softContext.getSoftService();
 				result = soft;
 
-				soft.getConfig(ConfigManager.CFG_PROXY_HOST, "");
+				soft.getConfig(ConfigManager.SMS_PROXY_HOST, "");
 				result = "192.168.128.3";
-				soft.getConfig(ConfigManager.CFG_PROXY_PORT, 80);
+				soft.getConfig(ConfigManager.SMS_PROXY_PORT, 80);
 				result = 80;
-				soft.getConfig(ConfigManager.CFG_URL, "http://sdk2.zucp.net:8060/webservice.asmx");
+				soft.getConfig(ConfigManager.SMS_URL, "http://sdk2.zucp.net:8060/webservice.asmx");
 				result = "http://sdk2.zucp.net:8060/webservice.asmx";
-				soft.getConfig(ConfigManager.CFG_UID, "");
+				soft.getConfig(ConfigManager.SMS_UID, "");
 				result = "SDK-BBX-010-18027";
-				soft.getConfig(ConfigManager.CFG_PWD, "");
+				soft.getConfig(ConfigManager.SMS_PWD, "");
 				result = "0b2D5-7D";
 			}
 		};

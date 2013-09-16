@@ -9,6 +9,7 @@ import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.jiongsoft.cocit.util.ActionUtil;
+import com.jiongsoft.ynby.plugins.VisitActivityPlugins;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 
 /**
@@ -20,7 +21,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 @Entity
 @CocTable(name = "活动报名管理", code = "VisitActivityRegister", catalog = "_ynby_visit", pathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 3//
 // 操作按钮
-, actions = { @CocOperation(name = "报名", typeCode = 101, mode = "c", pluginName = "com.jiongsoft.ynby.plugins.VisitActivityPlugins$SaveRegister")//
+, actions = { @CocOperation(name = "报名", typeCode = 101, mode = "c", plugin = VisitActivityPlugins.SaveRegister.class)//
 		, @CocOperation(name = "删除", typeCode = 299, mode = "d") //
 		, @CocOperation(name = "查看", typeCode = 102, mode = "v") //
 }// end: actions
@@ -31,7 +32,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 , fields = { @CocField(name = "真实姓名", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 1) //
 		, @CocField(name = "性别", mode = "*:N v:S c:E e:E", property = "sex", options = "0:男,1:女", gridOrder = 2) //
 		, @CocField(name = "手机号码", mode = "*:N v:S c:M e:M", property = "tel", gridOrder = 3) //
-		, @CocField(name = "手机验证码", mode = "*:N v:S c:M e:R", property = "verificationCode") //
+		, @CocField(name = "手机验证码", mode = "*:N v:S c:M e:R", property = "telVerifyCode") //
 		, @CocField(name = "身份证号码", mode = "*:N v:S c:M e:M", property = "code", gridOrder = 4) //
 		, @CocField(name = "工作单位", mode = "*:N v:S c:E e:E", property = "unit", gridOrder = 5) //
 		, @CocField(name = "参观时间", mode = "*:N v:S c:M e:M", property = "activity", gridOrder = 6)//
@@ -57,7 +58,10 @@ public class VisitActivityRegister extends SFTBizComponent {
 	String tel;
 
 	@Column(length = 32)
-	String verificationCode;
+	String telVerifyCode;
+
+	// @Column(length = 32)
+	// String verificationCode;
 
 	@Column(length = 32)
 	String qq;
@@ -100,12 +104,12 @@ public class VisitActivityRegister extends SFTBizComponent {
 		this.tel = tel;
 	}
 
-	public String getVerificationCode() {
-		return verificationCode;
+	public String getTelVerifyCode() {
+		return telVerifyCode;
 	}
 
-	public void setVerificationCode(String telValidCode) {
-		this.verificationCode = telValidCode;
+	public void setTelVerifyCode(String telValidCode) {
+		this.telVerifyCode = telValidCode;
 	}
 
 	public String getQq() {

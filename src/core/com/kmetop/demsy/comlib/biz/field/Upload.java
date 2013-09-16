@@ -1,7 +1,7 @@
 package com.kmetop.demsy.comlib.biz.field;
 
 import com.jiongsoft.cocit.entity.annotation.CocField;
-import com.jiongsoft.cocit.util.StringUtil;
+import com.kmetop.demsy.lang.JSON;
 
 @CocField(precision = 255)
 public class Upload implements IExtField {
@@ -28,7 +28,7 @@ public class Upload implements IExtField {
 	}
 
 	public String toJson() {
-		return StringUtil.trim(path).length() == 0 ? null : path;
+		return JSON.toJson(path);
 	}
 
 }

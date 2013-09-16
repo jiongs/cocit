@@ -131,15 +131,15 @@ public class CocitTest {
 				result = mockDemsyConfig;
 				mockDemsyConfig.get("sms.type", "");
 				result = "zr";
-				mockDemsyConfig.get(ConfigManager.CFG_PROXY_HOST, "");
+				mockDemsyConfig.get(ConfigManager.SMS_PROXY_HOST, "");
 				result = "192.168.128.3";
-				mockDemsyConfig.get(ConfigManager.CFG_PROXY_PORT, "");
+				mockDemsyConfig.get(ConfigManager.SMS_PROXY_PORT, "");
 				result = "80";
-				mockDemsyConfig.get(ConfigManager.CFG_URL, "");
+				mockDemsyConfig.get(ConfigManager.SMS_URL, "");
 				result = "http://oa.zrsms.com";
-				mockDemsyConfig.get(ConfigManager.CFG_UID, "");
+				mockDemsyConfig.get(ConfigManager.SMS_UID, "");
 				result = "zlsandi";
-				mockDemsyConfig.get(ConfigManager.CFG_PWD, "");
+				mockDemsyConfig.get(ConfigManager.SMS_PWD, "");
 				result = "zlsandi";
 			}
 		};

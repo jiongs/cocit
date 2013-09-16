@@ -80,6 +80,9 @@ class CacheBiz {
 	}
 
 	IBizAction action(String mode) {
+		if (mode == null)
+			return null;
+		
 		actions();
 		for (IBizAction a : actions) {
 			if (mode.equals(a.getMode())) {

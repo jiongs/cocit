@@ -47,12 +47,12 @@ public class ZrSmsClient implements SmsClient {
 		ActionContext ctx = Cocit.getActionContext();
 		SoftService soft = ctx.getSoftService();
 
-		this.proxyHost = soft.getConfig(ConfigManager.CFG_PROXY_HOST, "");
-		this.proxyPort = soft.getConfig(ConfigManager.CFG_PROXY_PORT, 80);
+		this.proxyHost = soft.getConfig(ConfigManager.SMS_PROXY_HOST, "");
+		this.proxyPort = soft.getConfig(ConfigManager.SMS_PROXY_PORT, 80);
 
-		this.url = soft.getConfig(ConfigManager.CFG_URL, "http://oa.zrsms.com");
-		this.uid = soft.getConfig(ConfigManager.CFG_UID, "");
-		this.pwd = soft.getConfig(ConfigManager.CFG_PWD, "");
+		this.url = soft.getConfig(ConfigManager.SMS_URL, "http://oa.zrsms.com");
+		this.uid = soft.getConfig(ConfigManager.SMS_UID, "");
+		this.pwd = soft.getConfig(ConfigManager.SMS_PWD, "");
 		this.pwdMD5 = this.getMD5(pwd);
 
 		Log.info("SmsClientZucpImpl.new: {url:%s, sn:%s, pwd:%s, pwdMD5:%s, proxyHost:%s, proxyPort:%s}", url, uid, pwd, pwdMD5, proxyHost, proxyPort);

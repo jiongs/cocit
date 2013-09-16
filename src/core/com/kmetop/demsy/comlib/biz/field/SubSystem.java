@@ -3,7 +3,6 @@ package com.kmetop.demsy.comlib.biz.field;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.jiongsoft.cocit.util.StringUtil;
 import com.kmetop.demsy.comlib.entity.IBizComponent;
 import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.JSON;
@@ -98,6 +97,6 @@ public class SubSystem<T> implements IExtField {
 	}
 
 	public String toJson() {
-		return StringUtil.trim(jsonData).length() == 0 ? null : jsonData;
+		return JSON.toJson(jsonData);
 	}
 }

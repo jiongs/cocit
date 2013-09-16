@@ -103,9 +103,9 @@ public abstract class HttpUtil {
 	}
 
 	/**
-	 * 生成随机验证码，验证码被保存在session(key=cocit_verification_code)中，可以通过{@link #checkVerificationCode(String)进行验证 。
+	 * 生成随机验证码，验证码被保存在session(key=cocit_verify_code)中，可以通过{@link #checkVerificationCode(String)进行验证 。
 	 */
-	public static String makeVerificationCode(HttpServletRequest request) {
+	public static String makeSmsVerifyCode(HttpServletRequest request, String mobile) {
 		StringBuffer sb = new StringBuffer();
 
 		char[] ch = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
@@ -118,45 +118,52 @@ public abstract class HttpUtil {
 		}
 
 		HttpSession session = request.getSession(true);
-		session.setAttribute("cocit_verification_code", sb.toString());
+
+		session.setAttribute("cocit_verify_mobile", mobile);
+		session.setAttribute("cocit_verify_code", sb.toString());
 
 		return sb.toString();
 	}
 
 	/**
-	 * 检查客户端提交的验证码是否与session(key=cocit_verification_code)中保存的验证码一致？如果不一致，将抛出异常。
+	 * 检查客户端提交的验证码是否与session(key=cocit_verify_code)中保存的验证码一致？如果不一致，将抛出异常。
 	 * <p>
 	 * 检查时将忽略大小写。
 	 * 
 	 * @param code
 	 * @param exceptionMessage
 	 */
-	public static void checkVerificationCode(HttpServletRequest request, String code, String exceptionMessage) {
+	public static void checkSmsVerifyCode(HttpServletRequest request, String mobile, String code, String exceptionMessage) {
 
 		if (StringUtil.isNil(exceptionMessage))
-			exceptionMessage = "验证码不正确！";
+			exceptionMessage = "验证码或手机号不正确！";
 
 		HttpSession session = request.getSession(true);
-		String validCode = (String) session.getAttribute("cocit_verification_code");
 
-		if (StringUtil.isNil(code) || StringUtil.isNil(validCode))
+		String validMobile = (String) session.getAttribute("cocit_verify_mobile");
+		String validCode = (String) session.getAttribute("cocit_verify_code");
+		
+		if (StringUtil.isNil(code) || StringUtil.isNil(validCode) || StringUtil.isNil(mobile) || StringUtil.isNil(validMobile))
 			throw new CocException(exceptionMessage);
 
-		if (!code.toLowerCase().equals(validCode.toLowerCase()))
+		if (!code.toLowerCase().equals(validCode.toLowerCase()) || !mobile.toLowerCase().equals(validMobile.toLowerCase()))
 			throw new CocException(exceptionMessage);
+
+		session.removeAttribute("cocit_verify_mobile");
+		session.removeAttribute("cocit_verify_code");
 
 	}
 
 	/**
 	 * 生成随机图片验证码，并将图片对象输出到response中
 	 * <p>
-	 * 验证码文本被保存在session(key=cocit_verification_code)中，可以通过{@link #checkVerificationCode(String)}进行验证 。
+	 * 验证码文本被保存在session(key=cocit_verify_code)中，可以通过{@link #checkVerificationCode(String)}进行验证 。
 	 * 
 	 * @param request
 	 * @param response
 	 * @return
 	 */
-	public static String makeImageVerificationCode(HttpServletRequest request, HttpServletResponse response) {
+	public static String makeImgVerifyCode(HttpServletRequest request, HttpServletResponse response) {
 		int width = 60, height = 20;
 		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
@@ -193,7 +200,7 @@ public abstract class HttpUtil {
 		}
 
 		HttpSession session = request.getSession(true);
-		session.setAttribute("cocit_verification_code", sb.toString());
+		session.setAttribute("cocit_verify_code", sb.toString());
 
 		response.setHeader("Pragma", "No-cache");
 		response.setHeader("Cache-Control", "no-cache");
@@ -205,13 +212,13 @@ public abstract class HttpUtil {
 
 			ImageIO.write(image, "JPEG", out);
 		} catch (IOException ex) {
-			Log.error("VerificationCodeUtil.writeVarificationCodeImage: error! ", ex);
+			Log.error("HttpUtil.makeImgVerifyCode: error! ", ex);
 		} finally {
 			if (out != null) {
 				try {
 					out.close();
 				} catch (IOException ex) {
-					Log.error("VerificationCodeUtil.writeVarificationCodeImage: error! ", ex);
+					Log.error("HttpUtil.makeImgVerifyCode: error! ", ex);
 				}
 			}
 		}
@@ -219,4 +226,29 @@ public abstract class HttpUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * 检查客户端提交的验证码是否与session(key=cocit_verify_code)中保存的验证码一致？如果不一致，将抛出异常。
+	 * <p>
+	 * 检查时将忽略大小写。
+	 * 
+	 * @param code
+	 * @param exceptionMessage
+	 */
+	public static void checkImgVerifyCode(HttpServletRequest request, String code, String exceptionMessage) {
+
+		if (StringUtil.isNil(exceptionMessage))
+			exceptionMessage = "验证码不正确！";
+
+		HttpSession session = request.getSession(true);
+		
+		String validCode = (String) session.getAttribute("cocit_verify_code");
+
+		if (StringUtil.isNil(code) || StringUtil.isNil(validCode))
+			throw new CocException(exceptionMessage);
+
+		if (!code.toLowerCase().equals(validCode.toLowerCase()))
+			throw new CocException(exceptionMessage);
+
+		session.removeAttribute("cocit_verify_code");
+	}
 }

@@ -66,12 +66,12 @@ public class EmayHttpSmsClient implements SmsClient {
 		if (ctx != null) {
 			SoftService soft = ctx.getSoftService();
 
-			this.proxyHost = soft.getConfig(ConfigManager.CFG_PROXY_HOST, "");
-			this.proxyPort = soft.getConfig(ConfigManager.CFG_PROXY_PORT, 80);
+			this.proxyHost = soft.getConfig(ConfigManager.SMS_PROXY_HOST, "");
+			this.proxyPort = soft.getConfig(ConfigManager.SMS_PROXY_PORT, 80);
 
-			this.url = soft.getConfig(ConfigManager.CFG_URL, "http://sdkhttp.eucp.b2m.cn");
-			this.uid = soft.getConfig(ConfigManager.CFG_UID, "");
-			this.pwd = soft.getConfig(ConfigManager.CFG_PWD, "");
+			this.url = soft.getConfig(ConfigManager.SMS_URL, "http://sdkhttp.eucp.b2m.cn");
+			this.uid = soft.getConfig(ConfigManager.SMS_UID, "");
+			this.pwd = soft.getConfig(ConfigManager.SMS_PWD, "");
 			this.key = soft.getConfig("sms.key", "");
 
 			this.register();

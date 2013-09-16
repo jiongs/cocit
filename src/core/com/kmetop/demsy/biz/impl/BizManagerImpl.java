@@ -253,7 +253,8 @@ public class BizManagerImpl implements IBizManager {
 	 * @return
 	 */
 	protected ActionPlugin[] loadPlugins(String actionID) {
-		IAction action = Demsy.moduleEngine.getAction(bizModule, actionID);
+		IAction action = Demsy.bizEngine.getAction(this.bizSystem.getId(), actionID);
+
 		if (action == null)
 			return null;
 

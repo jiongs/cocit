@@ -2,11 +2,14 @@ package com.jiongsoft.ynby.plugins;
 
 import java.util.Date;
 
+import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.action.ActionHelper;
 import com.jiongsoft.cocit.entity.ActionEvent;
 import com.jiongsoft.cocit.entity.plugin.BasePlugin;
 import com.jiongsoft.cocit.orm.Orm;
 import com.jiongsoft.cocit.orm.expr.Expr;
+import com.jiongsoft.cocit.service.SoftService;
+import com.jiongsoft.cocit.sms.SmsClient;
 import com.jiongsoft.cocit.util.CocCalendar;
 import com.jiongsoft.cocit.util.CocException;
 import com.jiongsoft.cocit.util.HttpUtil;
@@ -133,12 +136,16 @@ public class VisitActivityPlugins {
 	public static class SaveRegister extends BasePlugin<VisitActivityRegister> {
 		@Override
 		public synchronized void before(ActionEvent<VisitActivityRegister> event) {
+			Orm orm = event.getOrm();
+
 			VisitActivityRegister entity = event.getEntity();
 			VisitActivity activity = entity.getActivity();
+			activity = orm.load(activity.getClass(), activity.getId());
 
 			// 检查短信验证码
-			String code = entity.getVerificationCode();
-			HttpUtil.checkVerificationCode(Demsy.me().request(), code, "手机验证码非法！");
+			String tel = entity.getTel();
+			String code = entity.getTelVerifyCode();
+			HttpUtil.checkSmsVerifyCode(Demsy.me().request(), tel, code, "手机验证码非法！");
 
 			// 检查报名有效期
 			if (activity.isExpired()) {
@@ -165,19 +172,37 @@ public class VisitActivityPlugins {
 
 			// 检查报名人数是否超额
 			if (planNum > 0) {
-				int remainNum = planNum - regNum;
+				int remainNum = planNum - regNum;// - num;
 
 				if (remainNum <= 0) {
-					throw new CocException("[%s]只剩余[%s]个名额！", activity.getName(), remainNum);
+					throw new CocException("[%s]名额已满！", activity.getName());
 				}
 			}
 
 			// 修改计划中的报名人数
 			regNum += num;
 			activity.setRegisterPersonNumber(regNum);
+			entity.setActivity(activity);
 
 			// 保存修改后的活动实体
-			event.getOrm().save(activity);
+			orm.save(activity);
+
+		}
+
+		/**
+		 * 报名成功后发送邀请函和验证码
+		 */
+		public void after(ActionEvent<VisitActivityRegister> event) {
+			SoftService soft = Cocit.getActionContext().getSoftService();
+			SmsClient smsClient = soft.getSmsClient();
+			VisitActivityRegister entity = event.getEntity();
+
+			String tpl = soft.getConfig("sms.invitation", "尊敬的%s！云南白药集团有限公司诚邀您于 %s 来我公司呈贡新区参观！");
+
+			String content = String.format(tpl, entity.getName(), CocCalendar.format(entity.getActivity().getPlanDate(), "yyyy-MM-dd HH 点"));
+
+			smsClient.send(entity.getTel(), content, "", "", "");
+
 		}
 	}
 }
