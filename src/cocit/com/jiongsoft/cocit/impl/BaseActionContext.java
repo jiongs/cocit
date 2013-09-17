@@ -24,7 +24,10 @@ public abstract class BaseActionContext implements ActionContext {
 
 		String domain = request.getServerName();
 
-		this.soft = Cocit.getServiceFactory().getSoftService(domain);
+		soft = Cocit.getServiceFactory().getSoftService(domain);
+		if (soft == null) {
+			soft = Cocit.getServiceFactory().getSoftService("");
+		}
 	}
 
 	/**
