@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import mockit.Expectations;
 import mockit.Mocked;
@@ -13,11 +14,10 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.ActionContext;
+import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.service.ConfigManager;
 import com.jiongsoft.cocit.service.SoftService;
-import com.jiongsoft.cocit.util.CocCalendar;
 
 public class ZucpSmsClientTest {
 
@@ -28,6 +28,7 @@ public class ZucpSmsClientTest {
 
 			@Mocked
 			ActionContext softContext;
+
 			@Mocked
 			SoftService soft;
 			{
@@ -67,12 +68,11 @@ public class ZucpSmsClientTest {
 	public void queryBalance() throws UnsupportedEncodingException {
 
 		ZucpSmsClient smsClient = new ZucpSmsClient();
-		String ret = smsClient.queryBalance();
+		Integer ret = smsClient.getBalance();
 		System.out.println("queryBalance: ret = " + ret);
 
 		assertNotNull(ret);
-		assertTrue(ret.length() > 0);
-		assertTrue(ret.charAt(0) != '-');
+		assertTrue(ret > 0);
 	}
 
 	// @Test
@@ -80,10 +80,23 @@ public class ZucpSmsClientTest {
 	public void send() throws UnsupportedEncodingException {
 		ZucpSmsClient smsClient = new ZucpSmsClient();
 		String rrid = "" + System.currentTimeMillis();
-		String ret = smsClient.send("15911731833", "漫道短信测试" + CocCalendar.getNowDateTime(), "", "", rrid);
+		StringBuffer content = new StringBuffer();
+		for (int i = 0; i < 5; i++) {
+			content.append("烱");
+		}
+		String ret = smsClient.send("15911731833", content.toString(), "", "", rrid);
 		System.out.println("send: ret = " + ret);
 
 		assertNotNull(ret);
 		assertEquals(rrid, ret);
+	}
+	
+	@Test
+	public void receive() {
+
+		ZucpSmsClient smsClient = new ZucpSmsClient();
+		List list = smsClient.receive();
+		
+		System.out.println("receive: list = " + list);
 	}
 }

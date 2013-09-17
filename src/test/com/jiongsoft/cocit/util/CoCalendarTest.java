@@ -19,6 +19,14 @@ public class CoCalendarTest {
 	}
 
 	@Test
+	public void testDateStr() {
+		Date date = CocCalendar.now().get();
+		Integer time = new Long(date.getTime()).intValue();
+		System.out.println(CocCalendar.formatDateTime(date));
+		System.out.println(date.getTime() + ":" + time + ":" + Integer.toHexString(time).toUpperCase());
+	}
+
+	@Test
 	public void makeDate() {
 		Date date = CocCalendar.makeDate(2013, 1, 1);
 

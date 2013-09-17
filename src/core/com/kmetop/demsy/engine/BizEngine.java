@@ -1810,6 +1810,7 @@ public abstract class BizEngine implements IBizEngine {
 
 			for (Object ele : datas) {
 				Node item = this.mountToSelf(root, ele, parentNode, group, selfTree, groupTree, null, paramPrefix, nodePrefix, true, idField, datas);
+
 				if (!result.contains(item)) {
 					result.add(item);
 				}
@@ -1864,10 +1865,12 @@ public abstract class BizEngine implements IBizEngine {
 		Nodes root = Nodes.make();
 
 		List<? extends IBizField> fkFields = this.getFieldsOfNavi(bizSystem);
+		IBizField selfTreeFld = getFieldOfSelfTree(bizSystem);
 
 		for (IBizField fld : fkFields) {
 
 			Node node = root.addNode(null, "fld_" + fld.getId()).setName("按 " + fld.getName());
+
 			String propname = getPropName(fld);
 
 			try {
@@ -1878,6 +1881,12 @@ public abstract class BizEngine implements IBizEngine {
 			if (node.getSize() == 0) {
 				root.getChildren().remove(node);
 			}
+
+			// 自身树导航字段：移除叶子节点，叶子节点不参与导航。
+			if (fld.equals(selfTreeFld)) {
+				node.removeAllLeaf();
+			}
+
 		}
 
 		// 如果导航树节点总数没有超过边框则全部展开

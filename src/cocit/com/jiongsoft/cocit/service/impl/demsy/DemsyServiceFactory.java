@@ -104,6 +104,9 @@ public class DemsyServiceFactory implements ServiceFactory {
 	@Override
 	public TableService getTable(Serializable tableID) {
 		SFTSystem system;
+		if (tableID == null)
+			return null;
+
 		if (tableID instanceof Long)
 			system = (SFTSystem) bizEngine.getSystem((Long) tableID);
 		else

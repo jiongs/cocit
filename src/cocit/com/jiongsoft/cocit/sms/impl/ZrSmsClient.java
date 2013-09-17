@@ -35,14 +35,22 @@ import com.jiongsoft.cocit.util.Log;
 public class ZrSmsClient implements SmsClient {
 
 	private String proxyHost;
+
 	private int proxyPort;
 
 	private String url;// 服务URL
+
 	private String uid;// 序列号
+
 	private String pwd;// 本地明文密码
+
 	private String pwdMD5;// 密码
 
 	public ZrSmsClient() {
+		init();
+	}
+
+	private void init() {
 
 		ActionContext ctx = Cocit.getActionContext();
 		SoftService soft = ctx.getSoftService();
@@ -55,7 +63,7 @@ public class ZrSmsClient implements SmsClient {
 		this.pwd = soft.getConfig(ConfigManager.SMS_PWD, "");
 		this.pwdMD5 = this.getMD5(pwd);
 
-		Log.info("SmsClientZucpImpl.new: {url:%s, sn:%s, pwd:%s, pwdMD5:%s, proxyHost:%s, proxyPort:%s}", url, uid, pwd, pwdMD5, proxyHost, proxyPort);
+		Log.info("ZrSmsClient.init: {url:%s, sn:%s, pwd:%s, pwdMD5:%s, proxyHost:%s, proxyPort:%s}", url, uid, pwd, pwdMD5, proxyHost, proxyPort);
 	}
 
 	private String getMD5(String sourceStr) {
@@ -91,7 +99,9 @@ public class ZrSmsClient implements SmsClient {
 	 * 其中ID和密码可以直接使用您在本系统中的帐号信息。在本系统中，您同样可以查看到调用接口发送的扣费明细，方便对接口的管理。
 	 */
 	@Override
-	public String queryBalance() {
+	public Integer getBalance() {
+		// init();
+
 		String result = null;
 
 		HttpURLConnection httpURLConnection = null;
@@ -105,15 +115,21 @@ public class ZrSmsClient implements SmsClient {
 
 			Log.info("ZrSmsClient.queryBalance: %s {strUrl:%s}", result, strUrl);
 
+			int eqIndex = result.lastIndexOf('=');
+			if (eqIndex > -1) {
+				result = result.substring(eqIndex + 1);
+			}
+			return Integer.parseInt(result);
 		} catch (Throwable e) {
 			Log.error("ZrSmsClient.queryBalance: 失败！{strUrl:%s}", strUrl, e);
+		} finally {
+
+			if (httpURLConnection != null) {
+				httpURLConnection.disconnect();
+			}
 		}
 
-		if (httpURLConnection != null) {
-			httpURLConnection.disconnect();
-		}
-
-		return result;
+		return null;
 	}
 
 	/**
@@ -140,6 +156,8 @@ public class ZrSmsClient implements SmsClient {
 	 */
 	@Override
 	public String send(String mobile, String content, String extCode, String time, String rrid) {
+		// init();
+
 		String result = null;
 		//
 		// // 验证手机号码
@@ -188,6 +206,8 @@ public class ZrSmsClient implements SmsClient {
 	 */
 	@Override
 	public List<String[]> receive() {
+		// init();
+
 		List result = new ArrayList();
 
 		HttpURLConnection httpURLConnection = null;
@@ -247,7 +267,7 @@ public class ZrSmsClient implements SmsClient {
 			while (-1 != (tempByte = (byte) httpIn.read()))
 				byteOut.write(tempByte);
 
-			result = new String(byteOut.toByteArray(), "gb2312");
+			result = new String(byteOut.toByteArray(), "UTF-8");
 		}
 
 		return result;

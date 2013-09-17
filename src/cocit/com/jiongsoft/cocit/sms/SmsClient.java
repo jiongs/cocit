@@ -16,7 +16,7 @@ public interface SmsClient {
 	 * 
 	 * @return 返回剩余多少条短信
 	 */
-	public String queryBalance();
+	public Integer getBalance();
 
 	// public String modifyPassword(String newPwd);
 
@@ -28,8 +28,7 @@ public interface SmsClient {
 	 * @param content
 	 *            短信内容：支持长短信
 	 * @param ext
-	 *            扩展码：扩展码的用法：您发送短信时，有个ext参数，您给它传值并且要保证每次唯一，用于区分给同一个客户发的多条短信。例如： 您给客户A，在10点发了一条短信,使ext=1，在12点又发了一条,使ext=2，15点又发了一条,使ext=3，到了晚上， 客户A给您回复了
-	 *            。可以把当初给ext这个参数传的值带回来。以此来达到区分给同一个客户发的多条短信的目的。该参数和接收短信的方法配合使用
+	 *            扩展码：扩展码的用法：您发送短信时，有个ext参数，您给它传值并且要保证每次唯一，用于区分给同一个客户发的多条短信。例如： 您给客户A，在10点发了一条短信,使ext=1，在12点又发了一条,使ext=2，15点又发了一条,使ext=3，到了晚上， 客户A给您回复了 。可以把当初给ext这个参数传的值带回来。以此来达到区分给同一个客户发的多条短信的目的。该参数和接收短信的方法配合使用
 	 * @param time
 	 *            定时时间：例如：2010-12-29 16:27:03（非定时置空）
 	 * @param rrid

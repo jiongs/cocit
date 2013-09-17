@@ -22,6 +22,9 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 
 	@Override
 	public EntityModuleWidgetModel getEntytyModuleUI(ModuleService entityModule) {
+		if (entityModule == null)
+			return null;
+
 		TableService mainTable = entityModule.getTable();
 		EntityTableWidgetModel mainModel = getEntityTableUI(entityModule, mainTable);
 

@@ -62,14 +62,21 @@ import com.jiongsoft.cocit.util.Log;
 public class ZucpSmsClient implements SmsClient {
 
 	private String proxyHost;
+
 	private int proxyPort;
 
 	private String serviceURL;// 服务URL
+
 	private String sn;// 序列号
+
 	private String password;// 本地明文密码
+
 	private String pwdMD5;// 密码
 
 	public ZucpSmsClient() {
+	}
+
+	private void init() {
 
 		ActionContext ctx = Cocit.getActionContext();
 		SoftService soft = ctx.getSoftService();
@@ -82,7 +89,7 @@ public class ZucpSmsClient implements SmsClient {
 		this.password = soft.getConfig(ConfigManager.SMS_PWD, "");
 		this.pwdMD5 = this.getMD5(sn + password);
 
-		Log.info("ZucpSmsClient.new: {serviceURL:%s, sn:%s, password:%s, pwdMD5:%s, proxyHost=%s, proxyPort}", serviceURL, sn, password, pwdMD5, proxyHost, proxyPort);
+		Log.info("ZucpSmsClient.init: {serviceURL:%s, sn:%s, password:%s, pwdMD5:%s, proxyHost=%s, proxyPort}", serviceURL, sn, password, pwdMD5, proxyHost, proxyPort);
 	}
 
 	private String getMD5(String sourceStr) {
@@ -179,14 +186,15 @@ public class ZucpSmsClient implements SmsClient {
 			in.close();
 			return new String(result.getBytes(), "utf-8");
 		} catch (Exception e) {
-			Log.error("ZucpSmsClient.register: 失败!{province:%s, city:%s, trade:%s, entname:%s, linkman:%s, phone:%s, mobile:%s, email:%s, fax:%s, address:%s, postcode:%s}", province, city, trade,
-					entname, linkman, phone, mobile, email, fax, address, postcode, e);
+			Log.error("ZucpSmsClient.register: 失败!{province:%s, city:%s, trade:%s, entname:%s, linkman:%s, phone:%s, mobile:%s, email:%s, fax:%s, address:%s, postcode:%s}", province, city, trade, entname, linkman, phone, mobile, email, fax, address, postcode, e);
 			return "";
 		}
 	}
 
 	@Override
-	public String queryBalance() {
+	public Integer getBalance() {
+		init();
+
 		String result = "";
 		String soapAction = "http://tempuri.org/balance";
 		String xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
@@ -228,15 +236,17 @@ public class ZucpSmsClient implements SmsClient {
 			}
 			in.close();
 
-			return result;
+			return Integer.parseInt(result);
 		} catch (Exception e) {
 			Log.error("ZucpSmsClient.queryBalance: 失败!", e);
 		}
 
-		return "";
+		return null;
 	}
 
 	public String modifyPassword(String newPwd) {
+		init();
+
 		String result = "";
 		String soapAction = "http://tempuri.org/UDPPwd";
 		String xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
@@ -282,13 +292,15 @@ public class ZucpSmsClient implements SmsClient {
 			return new String(result.getBytes(), "utf-8");
 		} catch (Exception e) {
 			Log.error("ZucpSmsClient.modifyPassword: 失败! {newPwd:%s}", newPwd, e);
-			return "";
 		}
 
+		return "";
 	}
 
 	@Override
 	public String send(String mobile, String content, String extCode, String time, String rrid) {
+		init();
+
 		String result = "";
 		// System.out.print(pwd);
 		String soapAction = "http://tempuri.org/mt";
@@ -346,6 +358,8 @@ public class ZucpSmsClient implements SmsClient {
 
 	@Override
 	public List<String[]> receive() {
+		init();
+
 		List result = new ArrayList();
 
 		String soapAction = "http://tempuri.org/mo";
@@ -387,7 +401,9 @@ public class ZucpSmsClient implements SmsClient {
 			int start = result_before.indexOf("<moResult>");
 			int end = result_before.indexOf("</moResult>");
 
-			result_before.substring(start + 10, end);
+			String strResult = result_before.substring(start + 10, end);
+
+			Log.info("ZucpSmsClient.receive: %s", strResult);
 			// TODO
 
 		} catch (Exception e) {

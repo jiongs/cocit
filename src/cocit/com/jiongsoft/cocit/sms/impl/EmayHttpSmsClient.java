@@ -53,11 +53,15 @@ import com.jiongsoft.cocit.util.Log;
 public class EmayHttpSmsClient implements SmsClient {
 
 	private String proxyHost;
+
 	private int proxyPort;
 
 	private String url;
+
 	private String uid;
+
 	private String pwd;// 本地明文密码
+
 	private String key;// 序列号
 
 	public EmayHttpSmsClient() {
@@ -105,7 +109,7 @@ public class EmayHttpSmsClient implements SmsClient {
 	}
 
 	@Override
-	public String queryBalance() {
+	public Integer getBalance() {
 		String result = null;
 
 		HttpURLConnection httpURLConnection = null;
@@ -127,7 +131,7 @@ public class EmayHttpSmsClient implements SmsClient {
 			httpURLConnection.disconnect();
 		}
 
-		return result;
+		return new Double(Double.parseDouble(result) * 10).intValue();
 	}
 
 	/**

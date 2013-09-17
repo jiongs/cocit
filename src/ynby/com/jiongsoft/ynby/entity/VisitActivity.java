@@ -36,7 +36,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 @CocGroup(name = "基本信息", code = "basic"//
 // 业务字段
 , fields = { @CocField(name = "活动标题", mode = "*:N v:S", property = "name", gridOrder = 1) //
-		, @CocField(name = "计划日期", mode = "*:N v:S c:M e:M", property = "planDate", pattern = "yyyy-MM-dd", gridOrder = 4)//
+		, @CocField(name = "计划日期", mode = "*:N v:S c:M e:M", property = "planDate", pattern = "yyyy-MM-dd HH:mm", gridOrder = 4)//
 		, @CocField(name = "计划人数", mode = "*:N v:S c:M e:M", property = "planPersonNumber", gridOrder = 2)//
 		, @CocField(name = "计划地点", mode = "*:N v:S c:M e:M", property = "address")//
 		, @CocField(name = "报名起始时间", mode = "*:N v:S c:E e:E", property = "expiredFrom", pattern = "yyyy-MM-dd HH:mm:ss", gridOrder = 5)//

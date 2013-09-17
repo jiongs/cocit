@@ -16,10 +16,21 @@ public abstract class SmsPlugins {
 			SmsClient smsClient = softService.getSmsClient();
 
 			if (smsClient == null)
-				throw new CocException("短信客户端接口不可用！");
+				throw new CocException("短信客户端接口不可用，请检查“系统参数设置>>短信参数设置”！");
 
-			String returnValue = smsClient.send(entity.getMobiles(), entity.getContent(), "", "", "");
+			entity.setPreBalance(smsClient.getBalance());
+			String sign = softService.getConfig("sms.signature", "");
+
+			String returnValue = smsClient.send(entity.getMobiles(), sign + entity.getContent(), "", "", "");
 			entity.setResult(returnValue);
+
+			entity.setBalance(smsClient.getBalance());
+
+			Integer pre = entity.getPreBalance();
+			Integer bal = entity.getBalance();
+			if (pre != null && bal != null) {
+				entity.setCost(pre - bal);
+			}
 		}
 	}
 }

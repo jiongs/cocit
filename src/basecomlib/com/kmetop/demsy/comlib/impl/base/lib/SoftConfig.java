@@ -25,23 +25,24 @@ import com.kmetop.demsy.lang.Str;
 @Entity
 @CocTable(name = "系统参数设置", code = BIZSYS_ADMIN_CONFIG, catalog = BIZCATA_ADMIN, orderby = ORDER_SYSADMIN_CONFIG, buildin = true//
 , actions = {
+//
 		@CocOperation(name = "新增", typeCode = TYPE_BZFORM_NEW, mode = "c", pluginName = "com.kmetop.demsy.plugins.lib.ClearSoftConfigCache")//
-		,
-		@CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", pluginName = "com.kmetop.demsy.plugins.lib.ClearSoftConfigCache") //
-		,
-		@CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d", pluginName = "com.kmetop.demsy.plugins.lib.ClearSoftConfigCache") //
+		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", pluginName = "com.kmetop.demsy.plugins.lib.ClearSoftConfigCache") //
+		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d", pluginName = "com.kmetop.demsy.plugins.lib.ClearSoftConfigCache") //
 		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
 }//
 , groups = { @CocGroup(name = "基本信息", code = "basic"//
-, fields = { @CocField(property = "parent", mode = "c:E e:E") //
-		, @CocField(name = "配置项名称", property = "name", mode = "c:M e:M")//
-		, @CocField(name = "配置项编号", property = "code", mode = "c:M e:M") //
-		, @CocField(name = "配置项内容", property = "value", mode = "c:M e:M", privacy = true) //
-		, @CocField(name = "配置项说明", property = "desc") //
-		, @CocField(name = "更新时间", property = "updated", mode = "*:P") //
-		, @CocField(name = "创建时间", property = "created", mode = "*:P") //
-		, @CocField(name = "更新帐号", property = "updatedBy", mode = "*:P") //
-		, @CocField(name = "创建帐号", property = "createdBy", mode = "*:P") //
+, fields = {
+//
+		@CocField(property = "parent", mode = "c:E e:E", gridOrder = 5) //
+		, @CocField(name = "配置项名称", property = "name", mode = "c:M e:M", gridOrder = 1)//
+		, @CocField(name = "配置项编号", property = "code", mode = "c:M e:M", gridOrder = 2) //
+		, @CocField(name = "配置项内容", property = "value", mode = "c:M e:M", privacy = true, gridOrder = 3) //
+		, @CocField(name = "配置项说明", property = "desc", gridOrder = 4) //
+// , @CocField(name = "更新时间", property = "updated", mode = "*:P") //
+// , @CocField(name = "创建时间", property = "created", mode = "*:P") //
+// , @CocField(name = "更新帐号", property = "updatedBy", mode = "*:P") //
+// , @CocField(name = "创建帐号", property = "createdBy", mode = "*:P") //
 }) }// end groups
 , jsonData = "SoftConfig.data.js"//
 )

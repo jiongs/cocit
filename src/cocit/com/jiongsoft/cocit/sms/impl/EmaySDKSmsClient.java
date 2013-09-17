@@ -6,8 +6,8 @@ import java.util.List;
 import cn.emay.sdk.client.api.Client;
 import cn.emay.sdk.client.api.MO;
 
-import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.ActionContext;
+import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.service.ConfigManager;
 import com.jiongsoft.cocit.service.SoftService;
 import com.jiongsoft.cocit.sms.SmsClient;
@@ -60,6 +60,9 @@ public class EmaySDKSmsClient implements SmsClient {
 	private String key;// 序列号
 
 	public EmaySDKSmsClient() {
+	}
+
+	private void register() {
 		ActionContext ctx = Cocit.getActionContext();
 
 		if (ctx != null) {
@@ -77,31 +80,34 @@ public class EmaySDKSmsClient implements SmsClient {
 				emayClient = new Client(uid, key);
 				int registResult = emayClient.registEx(pwd);
 
-				Log.info("EmaySmsClient.new: registResult=%s {uid:%s, pwd:%s, key:%s, proxyHost:%s, proxyPort:%s}", registResult, uid, pwd, key, proxyHost, proxyPort);
+				Log.info("EmaySmsClient.register: registResult=%s {uid:%s, pwd:%s, key:%s, proxyHost:%s, proxyPort:%s}", registResult, uid, pwd, key, proxyHost, proxyPort);
 
 			} catch (Exception e) {
-				Log.error("EmaySmsClient.new: 失败！{uid:%s, pwd:%s, key:%s, proxyHost:%s, proxyPort:%s}", uid, pwd, key, proxyHost, proxyPort, e);
+				Log.error("EmaySmsClient.register: 失败！{uid:%s, pwd:%s, key:%s, proxyHost:%s, proxyPort:%s}", uid, pwd, key, proxyHost, proxyPort, e);
 			}
 		}
 	}
 
 	@Override
-	public String queryBalance() {
+	public Integer getBalance() {
+
+		this.register();
 
 		if (emayClient == null) {
-			Log.error("EmaySmsClient.queryBalance: 失败！{emayClient:null}");
+			Log.error("EmaySmsClient.getBalance: 失败！{emayClient:null}");
 
 			return null;
 		}
 
 		try {
+
 			double ret = this.emayClient.getBalance();
 
-			Log.info("EmaySmsClient.queryBalance: ret=%s", ret);
+			Log.info("EmaySmsClient.getBalance: ret=%s", ret);
 
-			return "" + ret;
+			return new Double(ret * 10).intValue();
 		} catch (Exception e) {
-			Log.error("EmaySmsClient.queryBalance: 失败！", e);
+			Log.error("EmaySmsClient.getBalance: 失败！", e);
 		}
 
 		return null;
@@ -146,21 +152,40 @@ public class EmaySDKSmsClient implements SmsClient {
 	@Override
 	public String send(String mobiles, String content, String extCode, String time, String rrid) {
 
+		this.register();
+
 		if (emayClient == null) {
 			Log.info("EmaySmsClient.send: 失败！{emayClient:null}");
 
 			return null;
 		}
 
-		int ret = this.emayClient.sendSMS(StringUtil.toArray(mobiles, ","), content, 5);
+		content = StringUtil.trim(content);
+
+		/*
+		 * 经过测试：10657可以支持500个字。
+		 */
+		int from = 0;
+		int len = content.length();
+		int to = Math.min(from + 500, len);
+
+		StringBuffer ret = new StringBuffer();
+		while (from < to && to <= len) {
+			String msg = content.substring(from, to);
+			ret.append("," + this.emayClient.sendSMS(StringUtil.toArray(mobiles, ","), msg, 5));
+			from = to + 1;
+			to = Math.min(from + 500, len);
+		}
 
 		Log.info("EmaySmsClient.send: result=%s {mobiles:%s,  content:%s,  extCode:%s,  time:%s,  rrid:%s}", ret, mobiles, content, extCode, time, rrid);
 
-		return "" + ret;
+		return ret.length() > 0 ? ret.substring(1) : "";
 	}
 
 	@Override
 	public List<String[]> receive() {
+
+		this.register();
 
 		if (emayClient == null) {
 			Log.info("EmaySmsClient.receive: 失败！{emayClient:null}");

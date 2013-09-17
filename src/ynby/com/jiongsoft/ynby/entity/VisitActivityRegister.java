@@ -30,19 +30,20 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 @CocGroup(name = "基本信息", code = "basic"//
 // 业务字段
 , fields = { @CocField(name = "真实姓名", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 1) //
-		, @CocField(name = "性别", mode = "*:N v:S c:E e:E", property = "sex", options = "0:男,1:女", gridOrder = 2) //
+		, @CocField(name = "性别", mode = "*:N v:S c:E e:E", property = "sex", options = "0:男,1:女", disabledNavi = true, gridOrder = 2) //
 		, @CocField(name = "手机号码", mode = "*:N v:S c:M e:M", property = "tel", gridOrder = 3) //
 		, @CocField(name = "手机验证码", mode = "*:N v:S c:M e:R", property = "telVerifyCode") //
 		, @CocField(name = "身份证号码", mode = "*:N v:S c:M e:M", property = "code", gridOrder = 4) //
-		, @CocField(name = "工作单位", mode = "*:N v:S c:E e:E", property = "unit", gridOrder = 5) //
-		, @CocField(name = "参观时间", mode = "*:N v:S c:M e:M", property = "activity", gridOrder = 6)//
+		, @CocField(name = "工作单位", mode = "*:N v:S c:E e:E", property = "unit", gridOrder = 9) //
+		, @CocField(name = "参观时间", mode = "*:N v:S c:M e:M", property = "activity", gridOrder = 5)//
+		, @CocField(name = "邀请函验证码", mode = "*:N v:S", property = "verificationCode", gridOrder = 6) //
 		, @CocField(name = "参观人数", mode = "*:N v:S c:E e:E", property = "personNumber", gridOrder = 7) //
 		, @CocField(name = "自驾车牌号", mode = "*:N v:S c:E e:E", property = "carCode", gridOrder = 8) //
-		, @CocField(name = "QQ号码", mode = "*:N v:S c:E e:E", property = "qq", gridOrder = 9) //
-		, @CocField(name = "邮箱地址", mode = "*:N v:S c:E e:E", property = "email", gridOrder = 10) //
-		, @CocField(name = "登录帐号", mode = "*:N v:S", property = "createdBy", gridOrder = 11) //
-		, @CocField(name = "报名时间", mode = "*:N v:S", property = "created", pattern = "yyyy-MM-dd HH:mm:ss", gridOrder = 12) //
-		, @CocField(name = "IP地址", mode = "*:N v:S", property = "createdIP", gridOrder = 13) //
+		, @CocField(name = "QQ号码", mode = "*:N v:S c:E e:E", property = "qq", gridOrder = 10) //
+		, @CocField(name = "邮箱地址", mode = "*:N v:S c:E e:E", property = "email", gridOrder = 11) //
+		, @CocField(name = "登录帐号", mode = "*:N v:S", property = "createdBy", gridOrder = 12) //
+		, @CocField(name = "报名时间", mode = "*:N v:S", property = "created", pattern = "yyyy-MM-dd HH:mm:ss", gridOrder = 13) //
+		, @CocField(name = "IP地址", mode = "*:N v:S", property = "createdIP", gridOrder = 14) //
 }// end: fields
 ) // end: CocGroup
 }// end: groups
@@ -60,8 +61,11 @@ public class VisitActivityRegister extends SFTBizComponent {
 	@Column(length = 32)
 	String telVerifyCode;
 
-	// @Column(length = 32)
-	// String verificationCode;
+	/**
+	 * 当前时间LONG值转换成INT值，然后在to HEX成大写字母，
+	 */
+	@Column(length = 127)
+	String verificationCode;
 
 	@Column(length = 32)
 	String qq;
@@ -158,6 +162,14 @@ public class VisitActivityRegister extends SFTBizComponent {
 
 	public void setCreatedIP(String createdIP) {
 		this.createdIP = createdIP;
+	}
+
+	public String getVerificationCode() {
+		return verificationCode;
+	}
+
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
 	}
 
 }

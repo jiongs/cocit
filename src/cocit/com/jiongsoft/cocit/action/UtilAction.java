@@ -4,16 +4,15 @@ import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Fail;
 import org.nutz.mvc.annotation.Ok;
 
-import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.ActionContext;
-import com.jiongsoft.cocit.service.ConfigManager;
+import com.jiongsoft.cocit.Cocit;
+import com.jiongsoft.cocit.entity.sms.MTSmsEntity;
 import com.jiongsoft.cocit.service.SoftService;
-import com.jiongsoft.cocit.sms.SmsClient;
 import com.jiongsoft.cocit.ui.UIModelView;
 import com.jiongsoft.cocit.ui.model.AlertsModel;
 import com.jiongsoft.cocit.util.ActionUtil;
-import com.jiongsoft.cocit.util.Log;
 import com.jiongsoft.cocit.util.HttpUtil;
+import com.jiongsoft.cocit.util.Log;
 
 @Ok(UIModelView.VIEW_TYPE)
 @Fail(UIModelView.VIEW_TYPE)
@@ -52,12 +51,16 @@ public class UtilAction {
 			String code = HttpUtil.makeSmsVerifyCode(ctx.getRequest(), tel);
 
 			SoftService soft = ctx.getSoftService();
-			SmsClient smsClient = soft.getSmsClient();
-			String tpl = soft.getConfig(ConfigManager.SMS_VERIFY_CODE_CONTENT, "请输入您的验证码 %s");
+			String tpl = soft.getConfig("sms.verify_code_content", "请在网页表单中输入您的验证码：%s");
 
 			String content = String.format(tpl, code);
 
-			smsClient.send(tel, content, "", "", "");
+			/**
+			 * 发送短信
+			 */
+			MTSmsEntity sms = MTSmsEntity.make("手机验证码", tel, content);
+			ActionHelper actionHelper = ActionHelper.make("0:MTSmsEntity:c");
+			actionHelper.entityManager.save(sms, "c");
 
 			message = "获取短信验证码成功！请注意查看您的手机短信。";
 

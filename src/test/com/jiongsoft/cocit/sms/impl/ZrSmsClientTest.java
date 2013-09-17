@@ -3,6 +3,7 @@ package com.jiongsoft.cocit.sms.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -17,11 +18,10 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.ActionContext;
+import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.service.ConfigManager;
 import com.jiongsoft.cocit.service.SoftService;
-import com.jiongsoft.cocit.sms.impl.ZrSmsClient;
 import com.jiongsoft.cocit.util.CocCalendar;
 
 public class ZrSmsClientTest {
@@ -31,6 +31,7 @@ public class ZrSmsClientTest {
 		new Expectations(Cocit.class) {
 			@Mocked
 			ActionContext softContext;
+
 			@Mocked
 			SoftService soft;
 			{
@@ -87,12 +88,12 @@ public class ZrSmsClientTest {
 	public void queryBalance() throws UnsupportedEncodingException {
 		ZrSmsClient smsClient = new ZrSmsClient();
 
-		mockHttpURLConnection(smsClient, "您的余额为100！");
-		String ret = smsClient.queryBalance();
-		assertEquals("您的余额为100！", ret);
+		mockHttpURLConnection(smsClient, "100");
+		Integer ret = smsClient.getBalance();
+		assertTrue(100 == ret);
 
 		this.mockNullConnection(smsClient);
-		ret = smsClient.queryBalance();
+		ret = smsClient.getBalance();
 		assertNull(ret);
 	}
 
@@ -100,7 +101,9 @@ public class ZrSmsClientTest {
 	public void queryBalance_integration() throws UnsupportedEncodingException {
 		ZrSmsClient smsClient = new ZrSmsClient();
 
-		String ret = smsClient.queryBalance();
+		Integer ret = smsClient.getBalance();
+		System.out.println("queryBalance_integration: balance = " + ret);
+
 		assertNotNull(ret);
 	}
 
@@ -123,7 +126,15 @@ public class ZrSmsClientTest {
 	public void send_integration() {
 		ZrSmsClient smsClient = new ZrSmsClient();
 
-		String ret = smsClient.send("15911731833", "展仁短信测试" + CocCalendar.getNowDateTime(), "", "", "");
+		StringBuffer content = new StringBuffer();
+		for (int i = 0; i < 268; i++) {
+			content.append("烱");
+		}
+
+		String ret = smsClient.send("15911731833", content.toString(), "", "", "");
+
+		System.out.println("send_integration: ret = " + ret);
+
 		assertNotNull(ret);
 	}
 

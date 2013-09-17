@@ -6,10 +6,10 @@ import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.action.ActionHelper;
 import com.jiongsoft.cocit.entity.ActionEvent;
 import com.jiongsoft.cocit.entity.plugin.BasePlugin;
+import com.jiongsoft.cocit.entity.sms.MTSmsEntity;
 import com.jiongsoft.cocit.orm.Orm;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.jiongsoft.cocit.service.SoftService;
-import com.jiongsoft.cocit.sms.SmsClient;
 import com.jiongsoft.cocit.util.CocCalendar;
 import com.jiongsoft.cocit.util.CocException;
 import com.jiongsoft.cocit.util.HttpUtil;
@@ -34,7 +34,7 @@ public class VisitActivityPlugins {
 			}
 
 			CocCalendar cal = CocCalendar.now();
-			cal.setTime(0, 0, 0, 0);
+			cal.setTime(14, 0, 0, 0);
 
 			int year = cal.getYear();
 			int month = cal.getMonth();
@@ -184,6 +184,11 @@ public class VisitActivityPlugins {
 			activity.setRegisterPersonNumber(regNum);
 			entity.setActivity(activity);
 
+			// 生成邀请函验证码
+			Date date = CocCalendar.now().get();
+			Integer time = new Long(date.getTime()).intValue();
+			entity.setVerificationCode(Integer.toHexString(time).toUpperCase());
+
 			// 保存修改后的活动实体
 			orm.save(activity);
 
@@ -194,15 +199,17 @@ public class VisitActivityPlugins {
 		 */
 		public void after(ActionEvent<VisitActivityRegister> event) {
 			SoftService soft = Cocit.getActionContext().getSoftService();
-			SmsClient smsClient = soft.getSmsClient();
 			VisitActivityRegister entity = event.getEntity();
 
-			String tpl = soft.getConfig("sms.invitation", "尊敬的%s！云南白药集团有限公司诚邀您于 %s 来我公司呈贡新区参观！");
+			String tpl = soft.getConfig("sms.visit.invitation", "邀请函:尊敬的%s我司诚邀您于%s参加“走进云南白药”活动，欢迎届时光临！验证码：%s");
+			String content = String.format(tpl, entity.getName(), CocCalendar.format(entity.getActivity().getPlanDate(), "MM月dd日HH:mm"), entity.getVerificationCode());
 
-			String content = String.format(tpl, entity.getName(), CocCalendar.format(entity.getActivity().getPlanDate(), "yyyy-MM-dd HH 点"));
-
-			smsClient.send(entity.getTel(), content, "", "", "");
-
+			/**
+			 * 发送短信邀请函
+			 */
+			MTSmsEntity sms = MTSmsEntity.make("“走进云南白药”邀请函", entity.getTel(), content);
+			ActionHelper actionHelper = ActionHelper.make("0:MTSmsEntity:c");
+			actionHelper.entityManager.save(sms, "c");
 		}
 	}
 }

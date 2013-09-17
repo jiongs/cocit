@@ -34,11 +34,12 @@ import com.jiongsoft.cocit.util.ActionUtil;
 , fields = { @CocField(name = "短信主题", mode = "*:N v:S c:M e:M", property = "title", desc = "发送本次短信的主题是什么？")//
 		, @CocField(name = "手机号码", mode = "*:N v:S c:M e:M", property = "mobiles", desc = "多个手机号码之间用“,”逗号分隔")//
 		, @CocField(name = "短信内容", mode = "*:N v:S c:M e:M", property = "content", desc = "最多256个汉字")//
-		, @CocField(name = "定时发送", mode = "*:N v:S c:E e:E", property = "sendTime", pattern = "yyyy-MM-dd HH-mm-ss")//
-		, @CocField(name = "发送结果", mode = "*:N v:S", property = "result", desc = "描述短信发送是否成功！") //
-		, @CocField(name = "上次结余(条)", mode = "*:N v:S", property = "balance", desc = "上次发送完成后剩下多少短信余额(条)") //
+		, @CocField(name = "上次余额(条)", mode = "*:N v:S", property = "preBalance", desc = "上次发送完成后剩下多少短信余额(条)") //
+		, @CocField(name = "本次余额(条)", mode = "*:N v:S", property = "balance", desc = "本次发送完成后剩下多少短信余额(条)") //
 		, @CocField(name = "本次计费(条)", mode = "*:N v:S", property = "cost", desc = "本次发送需要消费多少短信费用(条)") //
+		, @CocField(name = "发送结果", mode = "*:N v:S", property = "result", desc = "描述短信发送是否成功！") //
 		, @CocField(name = "提交时间", mode = "*:N v:S", property = "created", pattern = "yyyy-MM-dd HH-mm-ss") //
+// , @CocField(name = "定时发送", mode = "*:N v:S c:E e:E", property = "sendTime", pattern = "yyyy-MM-dd HH-mm-ss") //
 }// end: fields
 ) // end: CocGroup
 }// end: groups
@@ -56,17 +57,29 @@ public class MTSmsEntity extends BaseEntity {
 
 	Date sendTime;
 
-	@Column(length = 128)
+	@Column(length = 256)
 	String result;
 
 	@Column(updatable = false)
-	int cost;
+	Integer cost;
 
 	@Column(updatable = false)
-	int balance;
+	Integer preBalance;
+
+	@Column(updatable = false)
+	Integer balance;
 
 	@Column(updatable = false)
 	Date created;
+
+	public static MTSmsEntity make(String title, String mobiles, String content) {
+		MTSmsEntity sms = new MTSmsEntity();
+		sms.setTitle(title);
+		sms.setContent(content);
+		sms.setMobiles(mobiles);
+
+		return sms;
+	}
 
 	public String getTitle() {
 		return title;
@@ -108,19 +121,19 @@ public class MTSmsEntity extends BaseEntity {
 		this.result = result;
 	}
 
-	public int getCost() {
+	public Integer getCost() {
 		return cost;
 	}
 
-	public void setCost(int cost) {
+	public void setCost(Integer cost) {
 		this.cost = cost;
 	}
 
-	public int getBalance() {
+	public Integer getBalance() {
 		return balance;
 	}
 
-	public void setBalance(int balance) {
+	public void setBalance(Integer balance) {
 		this.balance = balance;
 	}
 
@@ -130,5 +143,13 @@ public class MTSmsEntity extends BaseEntity {
 
 	public void setCreated(Date created) {
 		this.created = created;
+	}
+
+	public Integer getPreBalance() {
+		return preBalance;
+	}
+
+	public void setPreBalance(Integer preBalance) {
+		this.preBalance = preBalance;
 	}
 }

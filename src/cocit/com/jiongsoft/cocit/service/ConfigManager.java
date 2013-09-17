@@ -14,33 +14,36 @@ public interface ConfigManager {
 	 * 可选值：
 	 * <UL>
 	 * <LI>zucp: 漫道短信
+	 * <LI>emay: 亿美短信
+	 * <LI>zr: 展仁短信
 	 * </UL>
 	 */
 	public static String SMS_TYPE = "sms.type";
+
 	/**
 	 * 代理服务器主机IP
 	 */
 	public static String SMS_PROXY_HOST = "sms.proxy.host";
+
 	/**
 	 * 代理服务器主机端口
 	 */
 	public static String SMS_PROXY_PORT = "sms.proxy.port";
+
 	/**
 	 * 软件配置项KEY：uid
 	 */
 	public static String SMS_UID = "sms.uid";
+
 	/**
 	 * 软件配置项KEY：密码
 	 */
 	public static String SMS_PWD = "sms.pwd";
+
 	/**
 	 * 软件配置项KEY：URL
 	 */
 	public static String SMS_URL = "sms.url";
-	/**
-	 * 手机短信验证码 短信模版。如：“欢迎走进云南白药，请输入您的验证码 %s”
-	 */
-	public static String SMS_VERIFY_CODE_CONTENT = "sms.verify_code_content";
 
 	public <T> T get(String configKey, T defaultReturn);
 }

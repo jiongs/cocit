@@ -32,7 +32,7 @@ public class EmaySDKSmsClientTest {
 	public void testQueryBalance_1() throws Exception {
 		EmaySDKSmsClient fixture = new EmaySDKSmsClient();
 
-		String result = fixture.queryBalance();
+		Integer result = fixture.getBalance();
 
 		assertNotNull(result);
 	}
@@ -50,12 +50,15 @@ public class EmaySDKSmsClientTest {
 	public void testSend_1() throws Exception {
 		EmaySDKSmsClient fixture = new EmaySDKSmsClient();
 		String mobiles = "15911731833";
-		String content = "亿美短信测试" + CocCalendar.getNowDateTime();
+		StringBuffer content = new StringBuffer();
+		for (int i = 0; i < 500; i++) {
+			content.append("烱");
+		}
 		String extCode = "";
 		String time = "";
 		String rrid = "";
 
-		String result = fixture.send(mobiles, content, extCode, time, rrid);
+		String result = fixture.send(mobiles, content.toString(), extCode, time, rrid);
 
 		assertNotNull(result);
 	}
@@ -65,6 +68,7 @@ public class EmaySDKSmsClientTest {
 		new Expectations(Cocit.class) {
 			@Mocked
 			ActionContext softContext;
+
 			@Mocked
 			SoftService soft;
 			{
@@ -81,9 +85,9 @@ public class EmaySDKSmsClientTest {
 				/*
 				 * 员工网帐号
 				 */
-				// soft.getConfig(SmsClient.CFG_UID, "");
+				// soft.getConfig(ConfigManager.SMS_UID, "");
 				// result = "3SDK-KYJ-0130-KJXQT";
-				// soft.getConfig(SmsClient.CFG_PWD, "");
+				// soft.getConfig(ConfigManager.SMS_PWD, "");
 				// result = "257330";
 				// soft.getConfig("sms.key", "");
 				// result = "147088";

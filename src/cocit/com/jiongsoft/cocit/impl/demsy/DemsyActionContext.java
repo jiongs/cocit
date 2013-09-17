@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.jiongsoft.cocit.impl.BaseActionContext;
 import com.jiongsoft.cocit.util.Log;
+import com.jiongsoft.cocit.util.StringUtil;
 import com.kmetop.demsy.Demsy;
 
 public class DemsyActionContext extends BaseActionContext {
@@ -33,10 +34,11 @@ public class DemsyActionContext extends BaseActionContext {
 		String w = this.getConfig("admin.ui.topHeight", "");
 
 		try {
-			if (w.endsWith("%"))
-				ret = browserWidth * Integer.parseInt(w.substring(0, w.length() - 1)) / 100;
-			else
-				ret = Integer.parseInt(w);
+			if (!StringUtil.isNil(w))
+				if (w.endsWith("%"))
+					ret = browserWidth * Integer.parseInt(w.substring(0, w.length() - 1)) / 100;
+				else
+					ret = Integer.parseInt(w);
 		} catch (Throwable e) {
 			Log.warn("", e);
 			ret = 95;
@@ -50,11 +52,13 @@ public class DemsyActionContext extends BaseActionContext {
 		int ret = 0;
 		int browserWidth = getBrowserWidth();
 		String w = this.getConfig("admin.ui.leftWidth", "");
+
 		try {
-			if (w.endsWith("%"))
-				ret = browserWidth * Integer.parseInt(w.substring(0, w.length() - 1)) / 100;
-			else
-				ret = Integer.parseInt(w);
+			if (!StringUtil.isNil(w))
+				if (w.endsWith("%"))
+					ret = browserWidth * Integer.parseInt(w.substring(0, w.length() - 1)) / 100;
+				else
+					ret = Integer.parseInt(w);
 		} catch (Throwable e) {
 			Log.warn("", e);
 			ret = new Double(browserWidth * 0.2).intValue();

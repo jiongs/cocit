@@ -238,6 +238,24 @@ public class Tree {
 			this.extProps = new Properties();
 		}
 
+		public void removeAllLeaf() {
+			if (children == null || children.size() == 0)
+				return;
+
+			removeAllLeaf(children);
+		}
+
+		private static void removeAllLeaf(List<Node> children) {
+			for (int i = children.size() - 1; i >= 0; i--) {
+				Node child = children.get(i);
+				if (child.children == null || child.children.size() == 0) {
+					children.remove(i);
+				} else {
+					removeAllLeaf(child.children);
+				}
+			}
+		}
+
 		/**
 		 * 获取节点扩展属性
 		 * 

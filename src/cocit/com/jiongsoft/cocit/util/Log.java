@@ -10,7 +10,7 @@ public abstract class Log {
 
 	private static boolean traceInfo = false;
 
-	private static boolean traceWarn = false;
+	private static boolean traceWarn = true;
 
 	private static boolean traceError = true;
 

@@ -36,6 +36,8 @@ public class BeanFactory {
 
 	private String smsClient_zr;
 
+	private String smsClient_emay;
+
 	private Class<? extends PermissionEntity> permissionEntityType;
 
 	private Class<? extends WebCatalogEntity> webCatalogEntityType;
@@ -99,6 +101,11 @@ public class BeanFactory {
 				Log.info("BeanFactory.makeSmsClient ... {type:%s, smsClient_zr:%s}", type, smsClient_zr);
 
 				return (SmsClient) ClassUtil.newInstance(smsClient_zr);
+
+			} else if ("emay".equals(type)) {
+				Log.info("BeanFactory.makeSmsClient ... {type:%s, smsClient_emay:%s}", type, smsClient_emay);
+
+				return (SmsClient) ClassUtil.newInstance(smsClient_emay);
 
 			} else {
 				Log.warn("BeanFactory.makeSmsClient: 指定的短信接口类型不存在！{type:%s}", type);

@@ -126,7 +126,9 @@ public abstract class StringUtil {
 		Class valueType = defaultReturn.getClass();
 
 		try {
-			return (T) castTo(text, valueType);
+			T ret = (T) castTo(text, valueType);
+			if (ret != null)
+				return ret;
 		} catch (Throwable e) {
 			Log.error("将文本转换成指定的Java对象失败！text=%s, valueType=%s, defaultReturn=%s", text, valueType, defaultReturn, e);
 		}
@@ -147,6 +149,9 @@ public abstract class StringUtil {
 	 */
 	public static <T> T castTo(String text, Class<T> valueType) {
 		if (text == null || valueType == null)
+			return null;
+
+		if (isNil(text))
 			return null;
 
 		if (valueType.equals(String.class))

@@ -13,4 +13,8 @@ import org.junit.runners.Suite;
 	com.jiongsoft.cocit.utils.TestAll.class,
 })
 public class TestAll {
+
+	public static void main(String[] args) {
+		JUnitCore.runClasses(new Class[] { TestAll.class });
+	}
 }

@@ -468,6 +468,27 @@ public final class Nodes implements IDynamic {
 		public void setOrder(Integer orderby) {
 			this.order = orderby;
 		}
+
+		/**
+		 * 移除所有叶子节点
+		 */
+		public void removeAllLeaf() {
+			removeAllLeaf(children);
+		}
+
+		private static void removeAllLeaf(List<Node> children) {
+			if (children == null || children.size() == 0)
+				return;
+
+			for (int i = children.size() - 1; i >= 0; i--) {
+				Node child = children.get(i);
+				if (child.children == null || child.children.size() == 0) {
+					children.remove(i);
+				} else {
+					removeAllLeaf(child.children);
+				}
+			}
+		}
 	}
 
 	public void order() {

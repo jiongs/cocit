@@ -32,7 +32,7 @@ public class EmayHttpSmsClientTest {
 	public void testQueryBalance_1() throws Exception {
 		EmayHttpSmsClient fixture = new EmayHttpSmsClient();
 
-		String result = fixture.queryBalance();
+		Integer result = fixture.getBalance();
 
 		assertNotNull(result);
 	}
@@ -65,6 +65,7 @@ public class EmayHttpSmsClientTest {
 		new Expectations(Cocit.class) {
 			@Mocked
 			ActionContext softContext;
+
 			@Mocked
 			SoftService soft;
 			{

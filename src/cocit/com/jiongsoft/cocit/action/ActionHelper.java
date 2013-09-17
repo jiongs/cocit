@@ -24,7 +24,9 @@ import com.jiongsoft.cocit.util.Log;
 import com.jiongsoft.cocit.util.StringUtil;
 
 /**
- * 实体Action服务类：通过路径参数即可构造出实体Action Service对象。
+ * 功能助手类：用于将一个指定的功能操作表达式解析成一个操作助手对象。
+ * <p>
+ * 如：1:3:c 表示要对模块1上的数据表3中插入一条数据。
  * 
  * @author yongshan.ji
  * 
@@ -66,10 +68,10 @@ public class ActionHelper {
 	public String[] entityID;
 
 	/**
-	 * 构造一个Action Service对象
+	 * 创建一个“操作助手”对象
 	 * 
 	 * @param funcExpr
-	 *            参数组成“moduleID:tableID:operationID”
+	 *            功能参数：“moduleID:tableID:opMode”
 	 * @return
 	 */
 	public static ActionHelper make(String funcExpr) {
@@ -77,9 +79,10 @@ public class ActionHelper {
 	}
 
 	/**
+	 * 创建一个“操作助手”对象
 	 * 
 	 * @param funcExpr
-	 *            参数组成“moduleID:tableID:operationID”
+	 *            功能参数：“moduleID:tableID:opMode”
 	 * @param entityArgs
 	 *            要加载的实体数据
 	 * @param entityParamNode

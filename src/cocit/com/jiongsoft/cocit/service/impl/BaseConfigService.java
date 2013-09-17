@@ -12,17 +12,10 @@ public abstract class BaseConfigService implements ConfigManager {
 	public <T> T get(String configKey, T defaultReturn) {
 		String value = this.getStr(configKey);
 
-		if (value == null)
-			return defaultReturn;
-		if (defaultReturn == null)
-			return null;
-
-		Class valueType = defaultReturn.getClass();
-
 		try {
-			return (T) StringUtil.castTo(value, valueType);
+			return (T) StringUtil.castTo(value, defaultReturn);
 		} catch (Throwable e) {
-			Log.error("CoudSoftConfigImpl.get: 出错！ {key:%s, defaultReturn:%s, valueType:%s}", configKey, defaultReturn, valueType.getName(), e);
+			Log.error("CoudSoftConfigImpl.get: 出错！ {key:%s, defaultReturn:%s}", configKey, defaultReturn, e);
 		}
 
 		return defaultReturn;
