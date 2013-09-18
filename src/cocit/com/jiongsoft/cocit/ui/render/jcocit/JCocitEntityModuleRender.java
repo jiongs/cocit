@@ -43,7 +43,7 @@ public class JCocitEntityModuleRender extends WidgetRender<EntityModuleWidgetMod
 		/*
 		 * JS
 		 */
-		print(out, "<script src=\"%s/jCocit/jquery.min.js\" type=\"text/javascript\"></script>", contextPath);
+		print(out, "<script src=\"%s/jCocit/common/jquery.min.js\" type=\"text/javascript\"></script>", contextPath);
 		print(out, "<script src=\"%s/jCocit/js/jCocit.src.js\" type=\"text/javascript\"></script>", contextPath);
 		print(out, "<script src=\"%s/jCocit-src/js/jCocit.plugin.entity.js\" type=\"text/javascript\"></script>", contextPath);
 		print(out, "<script src=\"%s/jCocit-src/js/jCocit.nls.zh.js\" type=\"text/javascript\"></script>", contextPath);
