@@ -42,6 +42,8 @@ public abstract class Cocit {
 
 	private static String contextPath;
 
+	private static String contextDir;
+
 	private static ThreadLocal<ActionContext> actionContext;
 
 	private static BeanFactory beanFactory;
@@ -62,6 +64,12 @@ public abstract class Cocit {
 		if (contextPath.length() > 0 && contextPath.charAt(0) != '/') {
 			contextPath = "/" + contextPath;
 		}
+		//
+		contextDir = context.getRealPath("/").replace("\\", "/");
+		if (contextDir.endsWith("/"))
+			contextDir = contextDir.substring(0, contextDir.length() - 1);
+		else if (contextDir.endsWith("/."))
+			contextDir = contextDir.substring(0, contextDir.length() - 2);
 
 		// init actionContext
 		actionContext = new ThreadLocal<ActionContext>();
@@ -96,6 +104,10 @@ public abstract class Cocit {
 	 */
 	public static String getContextPath() {
 		return contextPath;
+	}
+
+	public static String getContextDir() {
+		return contextDir;
 	}
 
 	/**

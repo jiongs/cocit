@@ -42,7 +42,7 @@ public abstract class ObjectUtil {
 				ret = obj.toString();
 			}
 		} catch (NoSuchFieldException e) {
-			Log.warn("", e);
+			// Log.warn("", e);
 			ret = obj.toString();
 		}
 

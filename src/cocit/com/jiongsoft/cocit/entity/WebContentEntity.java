@@ -33,5 +33,7 @@ public interface WebContentEntity extends CoEntity {
 	 * @return
 	 */
 	public String getContentText();
+	
+	public String getImagePath();
 
 }

@@ -457,4 +457,9 @@ public class WebContent extends SFTBizComponent implements IWebContent, IStatist
 
 		return content.toString();
 	}
+
+	@Override
+	public String getImagePath() {
+		return this.image != null ? image.toString() : null;
+	}
 }
