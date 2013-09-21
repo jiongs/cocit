@@ -16,19 +16,19 @@ import java.util.List;
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.service.FieldService;
 import com.jiongsoft.cocit.service.TableService;
-import com.jiongsoft.cocit.ui.model.widget.EntityFormWidgetModel;
+import com.jiongsoft.cocit.ui.model.widget.EntityFormModel;
 import com.jiongsoft.cocit.ui.model.widget.GridWidgetModel;
-import com.jiongsoft.cocit.ui.model.widget.EntityFormWidgetModel.FormField;
+import com.jiongsoft.cocit.ui.model.widget.EntityFormModel.FormField;
 import com.jiongsoft.cocit.ui.model.widget.GridWidgetModel.GridColumn;
 import com.jiongsoft.cocit.ui.render.WidgetRender;
 import com.jiongsoft.cocit.util.KeyValue;
 import com.jiongsoft.cocit.util.ObjectUtil;
 import com.jiongsoft.cocit.util.StringUtil;
 
-public class JCocitFormRender extends WidgetRender<EntityFormWidgetModel> {
+public class JCocitFormRender extends WidgetRender<EntityFormModel> {
 
 	@Override
-	public void render(Writer writer, EntityFormWidgetModel model) throws Throwable {
+	public void render(Writer writer, EntityFormModel model) throws Throwable {
 		StringBuffer sb = new StringBuffer();
 
 		Object formData = model.getData();
@@ -140,11 +140,11 @@ public class JCocitFormRender extends WidgetRender<EntityFormWidgetModel> {
 		print(writer, sb.toString());
 	}
 
-	private void printFieldLabel(StringBuffer sb, EntityFormWidgetModel model, FieldService entityField) throws IOException {
+	private void printFieldLabel(StringBuffer sb, EntityFormModel model, FieldService entityField) throws IOException {
 		print(sb, entityField.getName());
 	}
 
-	private void printEditBox(StringBuffer sb, EntityFormWidgetModel model, FieldService entityField, Object fldvalue) throws IOException {
+	private void printEditBox(StringBuffer sb, EntityFormModel model, FieldService entityField, Object fldvalue) throws IOException {
 
 		byte type = entityField.getType();
 		switch (type) {

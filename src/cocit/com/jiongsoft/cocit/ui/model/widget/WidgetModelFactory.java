@@ -61,6 +61,6 @@ public interface WidgetModelFactory {
 
 	TreeWidgetData getEntityNaviData(ModuleService module, TableService table);
 
-	EntityFormWidgetModel getEntityFormUI(ModuleService module, TableService table, String opMode, Object entity);
+	EntityFormModel getEntityFormUI(ModuleService module, TableService table, String opMode, Object entity);
 
 }

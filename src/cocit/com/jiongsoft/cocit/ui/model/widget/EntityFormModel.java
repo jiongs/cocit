@@ -1,11 +1,17 @@
 package com.jiongsoft.cocit.ui.model.widget;
 
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.nutz.mvc.view.JspView;
+
+import com.jiongsoft.cocit.ActionContext;
+import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.service.FieldService;
 import com.jiongsoft.cocit.ui.model.WidgetModel;
+import com.jiongsoft.cocit.util.StringUtil;
 
 /**
  * 实体表单模型
@@ -13,13 +19,25 @@ import com.jiongsoft.cocit.ui.model.WidgetModel;
  * @author yongshan.ji
  * 
  */
-public class EntityFormWidgetModel extends WidgetModel {
+public class EntityFormModel extends WidgetModel {
+	private String jsp;
+
 	private Object data;
 
 	private List<FormField> groupFields;
 
-	public EntityFormWidgetModel() {
+	public EntityFormModel() {
 		this.groupFields = new ArrayList();
+	}
+
+	@Override
+	public void render(Writer out) throws Throwable {
+		if (StringUtil.isNil(jsp))
+			super.render(out);
+
+		// 用JSP输入表单模型
+		ActionContext ctx = Cocit.getActionContext();
+		new JspView(jsp).render(ctx.getRequest(), ctx.getResponse(), this);
 	}
 
 	public Object getData() {
@@ -41,9 +59,13 @@ public class EntityFormWidgetModel extends WidgetModel {
 	public static class FormField {
 		// 字段类型
 		private byte type;
+
 		private String field;
+
 		private String title;
+
 		private String pattern;
+
 		private String mode;
 
 		// 字段关联的对象
@@ -52,6 +74,7 @@ public class EntityFormWidgetModel extends WidgetModel {
 		private Properties props;
 
 		private List<FormField> children;
+
 		private List<FormField> visibleChildren;
 
 		/**
@@ -161,5 +184,13 @@ public class EntityFormWidgetModel extends WidgetModel {
 
 	public void addGroupField(FormField groupField) {
 		this.groupFields.add(groupField);
+	}
+
+	public String getJsp() {
+		return jsp;
+	}
+
+	public void setJsp(String jsp) {
+		this.jsp = jsp;
 	}
 }

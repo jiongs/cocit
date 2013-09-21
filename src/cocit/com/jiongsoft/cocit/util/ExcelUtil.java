@@ -1,4 +1,4 @@
-package com.kmetop.demsy.lang;
+package com.jiongsoft.cocit.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,14 +14,13 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import com.kmetop.demsy.lang.Dates;
+
 /**
  * Excel 解析工具
  * 
- * @author yongshan.ji
- * 
  */
-@SuppressWarnings("deprecation")
-public abstract class Excel {
+public abstract class ExcelUtil {
 
 	public static void makeExcel(File excelFile, List<String[]> excelResult) throws FileNotFoundException, IOException {
 		HSSFWorkbook workbook = new HSSFWorkbook();

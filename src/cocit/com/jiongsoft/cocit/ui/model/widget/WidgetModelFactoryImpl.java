@@ -9,7 +9,7 @@ import com.jiongsoft.cocit.service.FieldGroupService;
 import com.jiongsoft.cocit.service.OperationService;
 import com.jiongsoft.cocit.service.TableService;
 import com.jiongsoft.cocit.service.ModuleService;
-import com.jiongsoft.cocit.ui.model.widget.EntityFormWidgetModel.FormField;
+import com.jiongsoft.cocit.ui.model.widget.EntityFormModel.FormField;
 import com.jiongsoft.cocit.ui.model.widget.GridWidgetModel.GridColumn;
 import com.jiongsoft.cocit.util.ActionUtil;
 import com.jiongsoft.cocit.util.KeyValue;
@@ -239,8 +239,8 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 	}
 
 	@Override
-	public EntityFormWidgetModel getEntityFormUI(ModuleService entityModule, TableService entityTable, String opMode, Object entityEntity) {
-		EntityFormWidgetModel ret = new EntityFormWidgetModel();
+	public EntityFormModel getEntityFormUI(ModuleService entityModule, TableService entityTable, String opMode, Object entityEntity) {
+		EntityFormModel ret = new EntityFormModel();
 
 		List<FieldGroupService> groups = entityTable.getEntityGroups();
 		for (FieldGroupService group : groups) {

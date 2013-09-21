@@ -9,5 +9,5 @@ import com.jiongsoft.cocit.ui.model.WidgetData;
  * @author yongshan.ji
  * 
  */
-public class EntityFormWidgetData extends WidgetData<EntityFormWidgetModel, Object> {
+public class EntityFormWidgetData extends WidgetData<EntityFormModel, Object> {
 }

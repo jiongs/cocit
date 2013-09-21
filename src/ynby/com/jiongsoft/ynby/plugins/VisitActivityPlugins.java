@@ -137,8 +137,34 @@ public class VisitActivityPlugins {
 		@Override
 		public synchronized void before(ActionEvent<VisitActivityRegister> event) {
 			Orm orm = event.getOrm();
-
 			VisitActivityRegister entity = event.getEntity();
+
+			Long oldID = entity.getId();
+			if (oldID != null && oldID > 0) {
+				/*
+				 * 修改报名：恢复原来的活动报名人数
+				 */
+
+				VisitActivityRegister oldEntity = orm.load(VisitActivityRegister.class, oldID);
+				VisitActivity oldActivity = oldEntity.getActivity();
+				int oldNum = oldEntity.getPersonNumber();
+				int oldRegNum = oldActivity.getRegisterPersonNumber();
+				oldRegNum -= oldNum;
+				oldActivity.setRegisterPersonNumber(oldRegNum);
+
+				orm.save(oldActivity);
+			} else {
+				/*
+				 * 检查该手机号是否已经报过名；且活动时间尚未到来。
+				 */
+
+				String tel = entity.getTel();
+				VisitActivityRegister oldEntity = orm.get(VisitActivityRegister.class, Expr.eq("tel", tel).addDesc("id"));
+				if (oldEntity != null && oldEntity.getActivity().getPlanDate().getTime() > System.currentTimeMillis()) {
+					throw new CocException("该手机号已经报名参加【%s】的活动，不允许重复报名！", oldEntity.getActivity().getName());
+				}
+			}
+
 			VisitActivity activity = entity.getActivity();
 			activity = orm.load(activity.getClass(), activity.getId());
 
@@ -191,7 +217,6 @@ public class VisitActivityPlugins {
 
 			// 保存修改后的活动实体
 			orm.save(activity);
-
 		}
 
 		/**
@@ -201,7 +226,7 @@ public class VisitActivityPlugins {
 			SoftService soft = Cocit.getActionContext().getSoftService();
 			VisitActivityRegister entity = event.getEntity();
 
-			String tpl = soft.getConfig("sms.visit.invitation", "邀请函:尊敬的%s我司诚邀您于%s参加“走进云南白药”活动，欢迎届时光临！验证码：%s");
+			String tpl = soft.getConfig("sms.visit.invitation", "邀请函：尊敬的%s先生/女士：您好，感谢您对云南白药的关注。我们诚邀您参加于%s在云南白药产业园区举办的“走进云南白药”活动，届时欢迎您的到来。验证码：%s");
 			String content = String.format(tpl, entity.getName(), CocCalendar.format(entity.getActivity().getPlanDate(), "MM月dd日HH:mm"), entity.getVerificationCode());
 
 			/**

@@ -119,6 +119,14 @@ public abstract class ActionUtil {
 
 	public static final String EXEC_ENTITY_ASYN_TASK = ACTION_PATH_PREFIX + "/execEntityAsynTask/*";
 
+	public static final String GET_EXPORT_XLS_FORM = ACTION_PATH_PREFIX + "/getExportXlsForm/*";
+
+	public static final String GET_IMPORT_XLS_FORM = ACTION_PATH_PREFIX + "/getImportXlsForm/*";
+
+	public static final String EXPORT_XLS = ACTION_PATH_PREFIX + "/exportXls/*";
+
+	public static final String IMPORT_XLS = ACTION_PATH_PREFIX + "/importXls/*";
+
 	/**
 	 * 获取手机验证码
 	 */

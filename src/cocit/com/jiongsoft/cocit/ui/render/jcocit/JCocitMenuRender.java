@@ -40,7 +40,7 @@ public class JCocitMenuRender extends WidgetRender<MenuWidgetModel> {
 		if (!ObjectUtil.isNil(nodes)) {
 
 			// toolbar
-			print(out, "<div style=\"margin: 1px 0 1px 0\">");
+			print(out, "<div style=\"margin: 1px 0 1px 0; white-space: nowrap;\">");
 
 			for (Node node : nodes) {
 				print(out, "<a href=\"javascript:void(0)\" class=\"jCocit-ui jCocit-toolbar\" data-options=\"");

@@ -6,7 +6,7 @@ import java.util.Map;
 import com.jiongsoft.cocit.ui.UIModel;
 import com.jiongsoft.cocit.ui.UIRender;
 import com.jiongsoft.cocit.ui.model.widget.EntityFormWidgetData;
-import com.jiongsoft.cocit.ui.model.widget.EntityFormWidgetModel;
+import com.jiongsoft.cocit.ui.model.widget.EntityFormModel;
 import com.jiongsoft.cocit.ui.model.widget.EntityModuleWidgetModel;
 import com.jiongsoft.cocit.ui.model.widget.EntityTableWidgetModel;
 import com.jiongsoft.cocit.ui.model.widget.GridWidgetData;
@@ -57,7 +57,7 @@ public class JCocitWidgetRenderFactory implements WidgetRenderFactory {
 		if (modelType.equals(EntityTableWidgetModel.class))
 			return new JCocitEntityTableRender();
 
-		if (modelType.equals(EntityFormWidgetModel.class))
+		if (modelType.equals(EntityFormModel.class))
 			return new JCocitFormRender();
 		if (modelType.equals(EntityFormWidgetData.class))
 			return new JCocitFormDataRender();

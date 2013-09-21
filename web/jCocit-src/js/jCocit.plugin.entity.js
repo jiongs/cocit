@@ -18,7 +18,7 @@
 					else
 						doEdit(opts, row.id);
 				} else {
-					Jwarn("请先选中一条记录！");
+					Jwarn($.fn.entity.defaults.unselectedOne);
 				}
 
 				break;
@@ -42,9 +42,9 @@
 						rows[0] = row;
 				}
 				if (rows.length == 0) {
-					Jwarn("请先选中一条或复选多条记录！");
+					Jwarn($.fn.entity.defaults.unselectedAny);
 				} else {
-					Jconfirm("你确定要删除选中的 " + rows.length + " 条记录吗？", "", function(ok) {
+					Jconfirm($.fn.entity.defaults.deleteWarn.format(rows.length), "", function(ok) {
 						if (!ok)
 							return;
 
@@ -66,11 +66,11 @@
 
 				break;
 			default:
-				Jalert("不支持该操作！{opCode: '" + opts.opCode + "', funcExpr: '" + opts.funcExpr + "', token:" + opts.token + "}");
+				Jalert($.fn.entity.defaults.unsupport + "{opCode: '" + opts.opCode + "', funcExpr: '" + opts.funcExpr + "', token:" + opts.token + "}");
 			}
 		},
 		doSetting : function(opts) {
-			Jalert("不支持该操作！" + opts.title);
+			Jalert($.fn.entity.defaults.unsupport);
 		},
 		/**
 		 * 在SearchBox框上执行查询操作时将调用该方法：刷新token对应的业务表Grid数据
@@ -359,7 +359,7 @@
 			height : 640,
 			logoCls : opts.iconCls || 'icon-logo',
 			buttons : [ {
-				text : '取消',
+				text : $.fn.entity.defaults.cancel,
 				onClick : function(data) {
 					$(this).dialog('close');
 				}
@@ -376,7 +376,7 @@
 			height : 640,
 			logoCls : opts.iconCls || 'icon-logo',
 			buttons : [ {
-				text : '确定',
+				text : $.fn.entity.defaults.confirm,
 				onClick : function(data) {
 					var $form = $("form", this);
 					var $dialog = $(this);
@@ -394,7 +394,7 @@
 			// });
 			// }
 			}, {
-				text : '取消',
+				text : $.fn.entity.defaults.cancel,
 				onClick : function(data) {
 					$(this).dialog('close');
 				}
@@ -426,6 +426,15 @@
 
 	$.fn.entity.parseOptions = function(html) {
 		return $.extend({}, jCocit.parseOptions(html, []));
+	};
+
+	$.fn.entity.defaults = {
+		confirm : "Confirm",
+		cancel : "Cancel",
+		unsupport : "Not Support!",
+		deleteWarn : "Are you sure delete the selected {0} records?",
+		unselectedAny : "Please select one record at least",
+		unselectedOne : "Please first select one record"
 	};
 
 	$.fn.entity.methods = {

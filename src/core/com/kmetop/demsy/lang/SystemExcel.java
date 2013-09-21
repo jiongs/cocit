@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jiongsoft.cocit.orm.expr.Expr;
+import com.jiongsoft.cocit.util.ExcelUtil;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.IBizSession;
 import com.kmetop.demsy.comlib.IBizEngine;
@@ -26,7 +27,7 @@ import com.kmetop.demsy.comlib.security.IAction;
  * @author yongshan.ji
  * 
  */
-public class SystemExcel extends Excel {
+public class SystemExcel extends ExcelUtil {
 	public final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	private IBizEngine bizEngine;
@@ -67,7 +68,7 @@ public class SystemExcel extends Excel {
 		}
 
 		// 处理excel相关信息
-		excelRows = Excel.parseExcel(excel);
+		excelRows = ExcelUtil.parseExcel(excel);
 		if (excelRows != null) {
 			if (log.isInfoEnabled()) {
 				StringBuffer sb = new StringBuffer();

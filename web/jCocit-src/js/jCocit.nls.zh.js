@@ -63,4 +63,14 @@
 			displayMsg : '显示{from}-{to}条 共{total}条'
 		});
 
+	if ($.fn.entity)
+		$e($.fn.entity.defaults, {
+			confirm : "确定",
+			cancel : "取消",
+			unsupport : "不支持该操作！",
+			deleteWarn : "你确定要删除选中的 {0} 条记录吗？",
+			unselectedAny : "请先选中一条或复选多条记录！",
+			unselectedOne : "请先选中一条记录！"
+		});
+
 })(jQuery, jCocit);

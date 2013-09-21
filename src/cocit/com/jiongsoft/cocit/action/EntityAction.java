@@ -14,7 +14,7 @@ import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.ui.UIModelView;
 import com.jiongsoft.cocit.ui.model.AlertsModel;
 import com.jiongsoft.cocit.ui.model.widget.EntityFormWidgetData;
-import com.jiongsoft.cocit.ui.model.widget.EntityFormWidgetModel;
+import com.jiongsoft.cocit.ui.model.widget.EntityFormModel;
 import com.jiongsoft.cocit.ui.model.widget.EntityModuleWidgetModel;
 import com.jiongsoft.cocit.ui.model.widget.EntityTableWidgetModel;
 import com.jiongsoft.cocit.ui.model.widget.GridWidgetData;
@@ -138,10 +138,10 @@ public class EntityAction {
 	 * @return
 	 */
 	@At(ActionUtil.GET_ENTITY_FORM_UI)
-	public EntityFormWidgetModel getEntityFormUI(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
+	public EntityFormModel getEntityFormUI(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
 		ActionHelper helper = ActionHelper.make(args, argDataID, dataNode);
 
-		EntityFormWidgetModel formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
+		EntityFormModel formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
 
 		formModel.setData(helper.entity);
 
@@ -166,7 +166,7 @@ public class EntityAction {
 	public EntityFormWidgetData saveEntityFormData(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
 		ActionHelper helper = ActionHelper.make(args, argDataID, dataNode);
 
-		EntityFormWidgetModel formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
+		EntityFormModel formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
 
 		EntityFormWidgetData ret = new EntityFormWidgetData();
 		ret.setModel(formModel);
@@ -185,7 +185,7 @@ public class EntityAction {
 	public EntityFormWidgetData deleteEntityData(String args, String dataID) {
 		ActionHelper helper = ActionHelper.make(args, dataID, null);
 
-		EntityFormWidgetModel formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
+		EntityFormModel formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
 
 		EntityFormWidgetData ret = new EntityFormWidgetData();
 		ret.setModel(formModel);
@@ -229,5 +229,17 @@ public class EntityAction {
 		} catch (Throwable e) {
 			return AlertsModel.makeError(e == null ? "" : e.toString());
 		}
+	}
+
+	@At(ActionUtil.GET_EXPORT_XLS_FORM)
+	public EntityFormModel getXlsExportFormUI(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
+		ActionHelper helper = ActionHelper.make(args, argDataID, dataNode);
+
+		EntityFormModel formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
+
+		/**
+		 * 返回
+		 */
+		return formModel;
 	}
 }
