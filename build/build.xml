@@ -123,6 +123,7 @@
 		<delete dir="${tmp.dir}/jCocit" />
 		<delete dir="${tmp.dir}/scripts2" />
 		<delete dir="${tmp.dir}/themes2" />
+		<delete dir="${tmp.dir}/www_yunnanbaiyao_com_cn" />
 		<delete file="${tmp.dir}/WEB-INF/lib/nutz-1.jar" />
 
 		<echo message="打包${tmp.dir}目录到${patch.dir}/cocit-web-min-${NOW}.zip ..." />
@@ -147,6 +148,8 @@
 			<zipfileset dir="${proj.dir}" includes="web/WEB-INF/resin-web.xml" />
 			<zipfileset dir="${proj.dir}" includes="web/WEB-INF/config/**/*.*" />
 			<zipfileset dir="${proj.dir}" includes="web/WEB-INF/config-template/**/*.*" />
+			
+			<!-- Project Configuration -->
 			<zipfileset dir="${proj.dir}" includes="web/www_yunnanbaiyao_com_cn/**/*.*" />
 		</zip>
 		<delete file="${proj.dir}/git.zip" />

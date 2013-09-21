@@ -32,8 +32,11 @@ public class EntityFormModel extends WidgetModel {
 
 	@Override
 	public void render(Writer out) throws Throwable {
-		if (StringUtil.isNil(jsp))
+		if (StringUtil.isNil(jsp)){
 			super.render(out);
+			
+			return;
+		}
 
 		// 用JSP输入表单模型
 		ActionContext ctx = Cocit.getActionContext();
