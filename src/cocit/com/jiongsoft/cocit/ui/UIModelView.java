@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.nutz.mvc.View;
 
 import com.jiongsoft.cocit.util.Log;
+import com.jiongsoft.cocit.util.StringUtil;
 
 /**
  * 该类是 Nutz MVC 模型中 View 的实现，用于将 {@link UIModel}的输出工作分派到对应的{@link UIRender}。
@@ -48,7 +49,9 @@ public class UIModelView implements View {
 					resp.setHeader("Cache-Control", "no-cache");
 					resp.setDateHeader("Expires", -1);
 				}
-				resp.setContentType(model.getContentType());
+				if (!StringUtil.isNil(model.getContentType())) {
+					resp.setContentType(model.getContentType());
+				}
 
 				StringWriter str = new StringWriter();
 
