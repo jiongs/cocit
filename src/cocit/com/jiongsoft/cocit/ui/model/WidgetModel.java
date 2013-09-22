@@ -41,6 +41,11 @@ public abstract class WidgetModel implements UIModel {
 		return CONTENT_TYPE_HTML;
 	}
 
+	@Override
+	public boolean isCachable() {
+		return false;
+	}
+
 	/**
 	 * 设置模型扩展属性
 	 * 

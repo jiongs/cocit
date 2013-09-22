@@ -19,7 +19,9 @@ import java.io.Writer;
 public interface UIModel {
 
 	static final String CONTENT_TYPE_HTML = "text/html; charset=UTF-8";
+
 	static final String CONTENT_TYPE_JSON = "text/json; charset=UTF-8";
+
 	static final String CONTENT_TYPE_XML = "text/xml; charset=UTF-8";
 
 	/**
@@ -43,4 +45,11 @@ public interface UIModel {
 	 * @return
 	 */
 	public String getContentType();
+
+	/**
+	 * 判断是否支持浏览器端cache?
+	 * 
+	 * @return
+	 */
+	public boolean isCachable();
 }

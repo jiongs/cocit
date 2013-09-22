@@ -34,4 +34,9 @@ public class JSONModel implements UIModel {
 	public String getContentType() {
 		return CONTENT_TYPE_JSON;
 	}
+
+	@Override
+	public boolean isCachable() {
+		return false;
+	}
 }

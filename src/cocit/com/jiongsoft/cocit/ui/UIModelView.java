@@ -35,10 +35,6 @@ public class UIModelView implements View {
 		if (obj == null)
 			return;
 
-		resp.setHeader("Pragma", "no-cache");
-		resp.setHeader("Cache-Control", "no-cache");
-		resp.setDateHeader("Expires", -1);
-
 		PrintWriter out = null;
 
 		try {
@@ -47,6 +43,11 @@ public class UIModelView implements View {
 			if (obj instanceof UIModel) {
 				UIModel model = (UIModel) obj;
 
+				if (!model.isCachable()) {
+					resp.setHeader("Pragma", "no-cache");
+					resp.setHeader("Cache-Control", "no-cache");
+					resp.setDateHeader("Expires", -1);
+				}
 				resp.setContentType(model.getContentType());
 
 				StringWriter str = new StringWriter();
@@ -65,6 +66,9 @@ public class UIModelView implements View {
 				if (obj instanceof Throwable) {
 					Throwable ex = (Throwable) obj;
 
+					resp.setHeader("Pragma", "no-cache");
+					resp.setHeader("Cache-Control", "no-cache");
+					resp.setDateHeader("Expires", -1);
 					resp.setContentType("text/html; charset=UTF-8");
 
 					Log.error("", ex);

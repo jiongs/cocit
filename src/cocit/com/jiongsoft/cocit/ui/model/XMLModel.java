@@ -37,4 +37,9 @@ public class XMLModel implements UIModel {
 		return CONTENT_TYPE_XML;
 	}
 
+	@Override
+	public boolean isCachable() {
+		return false;
+	}
+
 }

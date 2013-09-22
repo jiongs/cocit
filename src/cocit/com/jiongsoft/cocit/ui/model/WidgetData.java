@@ -40,6 +40,11 @@ public abstract class WidgetData<TModel extends WidgetModel, TData> implements U
 		return CONTENT_TYPE_JSON;
 	}
 
+	@Override
+	public boolean isCachable() {
+		return false;
+	}
+
 	public TModel getModel() {
 		return model;
 	}

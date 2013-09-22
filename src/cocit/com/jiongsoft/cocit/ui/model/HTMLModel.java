@@ -37,4 +37,8 @@ public class HTMLModel implements UIModel {
 		return CONTENT_TYPE_HTML;
 	}
 
+	@Override
+	public boolean isCachable() {
+		return false;
+	}
 }
