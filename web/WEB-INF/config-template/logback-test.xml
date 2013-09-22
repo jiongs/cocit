@@ -94,21 +94,26 @@
     <!-- 日志级别设置 -->
 
 
-    <!-- 必须的 -->
+    <!-- INFO -->
     <logger name="com.kmetop.demsy" level="INFO"></logger>
-    <logger name="com.kmetop.demsy.mvc.DemsyFilterProxy" level="DEBUG"></logger>
+    <logger name="com.kmetop.demsy.actions" level="INFO"></logger>
+    <logger name="com.kmetop.demsy.plugins" level="INFO"></logger>
 
     <!-- TEST -->
-    <logger name="com.kmetop.demsy.orm" level="ERROR"></logger>
-    <logger name="com.kmetop.demsy.mvc" level="ERROR"></logger>
-    <logger name="com.kmetop.demsy.engine" level="ERROR"></logger>
-    <logger name="com.kmetop.demsy.ui.datasource" level="ERROR"></logger>
+    <logger name="com.kmetop.demsy.orm" level="INFO"></logger>
+    <logger name="com.kmetop.demsy.mvc" level="INFO"></logger>
+    <logger name="com.kmetop.demsy.engine" level="INFO"></logger>
+    <logger name="com.kmetop.demsy.ui.datasource" level="INFO"></logger>
 
     <!-- Class -->
-    <logger name="com.kmetop.demsy.orm.nutz.EnMappingMaker" level="ERROR"></logger>
-    <logger name="com.kmetop.demsy.orm.nutz.impl.MetaDaoImpl" level="ERROR"></logger>
-    <logger name="com.kmetop.demsy.orm.nutz.impl.ExtDaoImpl" level="ERROR"></logger>
-    <logger name="com.kmetop.demsy.orm.nutz.impl.OrmImpl" level="ERROR"></logger>
+    <logger name="com.kmetop.demsy.mvc.DemsyFilterProxy" level="DEBUG"></logger>
+    <logger name="com.kmetop.demsy.orm.nutz.EnMappingMaker" level="INFO"></logger>
+    <logger name="com.kmetop.demsy.orm.nutz.impl.MetaDaoImpl" level="INFO"></logger>
+    <logger name="com.kmetop.demsy.orm.nutz.impl.OrmImpl" level="INFO"></logger>
+    
+    <!-- Cocit -->
+    <logger name="com.kmetop.demsy.orm.nutz.impl.ExtDaoImpl" level="INFO"></logger>
+    <logger name="com.jiongsoft" level="ALL"></logger>
 
     <root level="ERROR">
         <appender-ref ref="info.log" />

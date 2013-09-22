@@ -13,6 +13,7 @@ import com.jiongsoft.cocit.mvc.adaptor.EntityParamNode;
 import com.jiongsoft.cocit.ui.UIModelView;
 import com.jiongsoft.cocit.ui.model.JSPModel;
 import com.jiongsoft.cocit.util.ActionUtil;
+import com.jiongsoft.cocit.util.Log;
 
 @Ok(UIModelView.VIEW_TYPE)
 @Fail(UIModelView.VIEW_TYPE)
@@ -33,6 +34,8 @@ public class WebAction {
 	 */
 	@At(ActionUtil.GET_JSP_MODEL)
 	public JSPModel getJspModel(String jspArgs, String opArgs, String entityID, @Param("::entity.") EntityParamNode entityParamNode) {
+		Log.debug("WebAction.getJspModel... jspArgs=%s, opArgs=%s, entityID=%s", jspArgs, opArgs, entityID);
+
 		ActionContext actionContext = Cocit.getActionContext();
 		ActionHelper actionHelper = ActionHelper.make(opArgs, entityID, entityParamNode);
 
@@ -42,6 +45,8 @@ public class WebAction {
 		JSPModel model = JSPModel.make(actionContext.getRequest(), actionContext.getResponse(), softContextPath, jspPath);
 
 		model.set("actionHelper", actionHelper);
+
+		Log.debug("WebAction.getJspModel... model=%s", model);
 
 		return model;
 	}

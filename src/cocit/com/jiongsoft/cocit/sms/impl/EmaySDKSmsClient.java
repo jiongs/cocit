@@ -91,12 +91,12 @@ public class EmaySDKSmsClient implements SmsClient {
 	@Override
 	public Integer getBalance() {
 
-		this.register();
-
 		if (emayClient == null) {
-			Log.error("EmaySmsClient.getBalance: 失败！{emayClient:null}");
-
-			return null;
+			register();
+			//
+			// Log.error("EmaySmsClient.getBalance: 失败！{emayClient:null}");
+			//
+			// return null;
 		}
 
 		try {
@@ -152,45 +152,45 @@ public class EmaySDKSmsClient implements SmsClient {
 	@Override
 	public String send(String mobiles, String content, String extCode, String time, String rrid) {
 
-		this.register();
-
 		if (emayClient == null) {
-			Log.info("EmaySmsClient.send: 失败！{emayClient:null}");
-
-			return null;
+			register();
+			//
+			// Log.info("EmaySmsClient.send: 失败！{emayClient:null}");
+			//
+			// return null;
 		}
+		synchronized (emayClient) {
+			content = StringUtil.trim(content);
 
-		content = StringUtil.trim(content);
+			/*
+			 * 经过测试：10657可以支持500个字。
+			 */
+			int from = 0;
+			int len = content.length();
+			int to = Math.min(from + 500, len);
 
-		/*
-		 * 经过测试：10657可以支持500个字。
-		 */
-		int from = 0;
-		int len = content.length();
-		int to = Math.min(from + 500, len);
+			StringBuffer ret = new StringBuffer();
+			while (from < to && to <= len) {
+				String msg = content.substring(from, to);
+				ret.append("," + this.emayClient.sendSMS(StringUtil.toArray(mobiles, ","), msg, 5));
+				from = to + 1;
+				to = Math.min(from + 500, len);
+			}
 
-		StringBuffer ret = new StringBuffer();
-		while (from < to && to <= len) {
-			String msg = content.substring(from, to);
-			ret.append("," + this.emayClient.sendSMS(StringUtil.toArray(mobiles, ","), msg, 5));
-			from = to + 1;
-			to = Math.min(from + 500, len);
+			Log.info("EmaySmsClient.send: result=%s {mobiles:%s,  content:%s,  extCode:%s,  time:%s,  rrid:%s}", ret, mobiles, content, extCode, time, rrid);
+
+			return ret.length() > 0 ? ret.substring(1) : "";
 		}
-
-		Log.info("EmaySmsClient.send: result=%s {mobiles:%s,  content:%s,  extCode:%s,  time:%s,  rrid:%s}", ret, mobiles, content, extCode, time, rrid);
-
-		return ret.length() > 0 ? ret.substring(1) : "";
 	}
 
 	@Override
 	public List<String[]> receive() {
 
-		this.register();
-
 		if (emayClient == null) {
-			Log.info("EmaySmsClient.receive: 失败！{emayClient:null}");
-
-			return null;
+			register();
+			// Log.info("EmaySmsClient.receive: 失败！{emayClient:null}");
+			//
+			// return null;
 		}
 
 		List result = new ArrayList();

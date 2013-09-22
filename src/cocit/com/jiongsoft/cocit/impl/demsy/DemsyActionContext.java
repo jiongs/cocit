@@ -54,11 +54,14 @@ public class DemsyActionContext extends BaseActionContext {
 		String w = this.getConfig("admin.ui.leftWidth", "");
 
 		try {
-			if (!StringUtil.isNil(w))
+			if (!StringUtil.isNil(w)) {
 				if (w.endsWith("%"))
 					ret = browserWidth * Integer.parseInt(w.substring(0, w.length() - 1)) / 100;
 				else
 					ret = Integer.parseInt(w);
+			} else {
+				ret = new Double(browserWidth * 0.2).intValue();
+			}
 		} catch (Throwable e) {
 			Log.warn("", e);
 			ret = new Double(browserWidth * 0.2).intValue();

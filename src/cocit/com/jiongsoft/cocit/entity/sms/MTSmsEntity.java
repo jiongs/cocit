@@ -34,9 +34,9 @@ import com.jiongsoft.cocit.util.ActionUtil;
 , fields = { @CocField(name = "短信主题", mode = "*:N v:S c:M e:M", property = "title", desc = "发送本次短信的主题是什么？")//
 		, @CocField(name = "手机号码", mode = "*:N v:S c:M e:M", property = "mobiles", desc = "多个手机号码之间用“,”逗号分隔")//
 		, @CocField(name = "短信内容", mode = "*:N v:S c:M e:M", property = "content", desc = "最多256个汉字")//
-		, @CocField(name = "上次余额(条)", mode = "*:N v:S", property = "preBalance", desc = "上次发送完成后剩下多少短信余额(条)") //
-		, @CocField(name = "本次余额(条)", mode = "*:N v:S", property = "balance", desc = "本次发送完成后剩下多少短信余额(条)") //
-		, @CocField(name = "本次计费(条)", mode = "*:N v:S", property = "cost", desc = "本次发送需要消费多少短信费用(条)") //
+		//, @CocField(name = "上次余额(条)", mode = "*:N v:S", property = "preBalance", desc = "上次发送完成后剩下多少短信余额(条)") //
+		//, @CocField(name = "本次余额(条)", mode = "*:N v:S", property = "balance", desc = "本次发送完成后剩下多少短信余额(条)") //
+		//, @CocField(name = "本次计费(条)", mode = "*:N v:S", property = "cost", desc = "本次发送需要消费多少短信费用(条)") //
 		, @CocField(name = "发送结果", mode = "*:N v:S", property = "result", desc = "描述短信发送是否成功！") //
 		, @CocField(name = "提交时间", mode = "*:N v:S", property = "created", pattern = "yyyy-MM-dd HH-mm-ss") //
 // , @CocField(name = "定时发送", mode = "*:N v:S c:E e:E", property = "sendTime", pattern = "yyyy-MM-dd HH-mm-ss") //

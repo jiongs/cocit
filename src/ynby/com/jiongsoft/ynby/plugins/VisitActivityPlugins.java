@@ -135,88 +135,92 @@ public class VisitActivityPlugins {
 	 */
 	public static class SaveRegister extends BasePlugin<VisitActivityRegister> {
 		@Override
-		public synchronized void before(ActionEvent<VisitActivityRegister> event) {
-			Orm orm = event.getOrm();
-			VisitActivityRegister entity = event.getEntity();
+		public void before(ActionEvent<VisitActivityRegister> event) {
+			synchronized (SaveRegister.class) {
+				Orm orm = event.getOrm();
+				VisitActivityRegister entity = event.getEntity();
 
-			Long oldID = entity.getId();
-			if (oldID != null && oldID > 0) {
-				/*
-				 * 修改报名：恢复原来的活动报名人数
-				 */
+				Long oldID = entity.getId();
+				if (oldID != null && oldID > 0) {
+					/*
+					 * 修改报名：恢复原来的活动报名人数
+					 */
 
-				VisitActivityRegister oldEntity = orm.load(VisitActivityRegister.class, oldID);
-				VisitActivity oldActivity = oldEntity.getActivity();
-				int oldNum = oldEntity.getPersonNumber();
-				int oldRegNum = oldActivity.getRegisterPersonNumber();
-				oldRegNum -= oldNum;
-				oldActivity.setRegisterPersonNumber(oldRegNum);
+					VisitActivityRegister oldEntity = orm.load(VisitActivityRegister.class, oldID);
+					VisitActivity oldActivity = oldEntity.getActivity();
+					int oldNum = oldEntity.getPersonNumber();
+					int oldRegNum = oldActivity.getRegisterPersonNumber();
+					oldRegNum -= oldNum;
+					oldActivity.setRegisterPersonNumber(oldRegNum);
 
-				orm.save(oldActivity);
-			} else {
-				/*
-				 * 检查该手机号是否已经报过名；且活动时间尚未到来。
-				 */
+					orm.save(oldActivity);
+				} else {
+					/*
+					 * 检查该手机号是否已经报过名；且活动时间尚未到来。
+					 */
 
-				String tel = entity.getTel();
-				VisitActivityRegister oldEntity = orm.get(VisitActivityRegister.class, Expr.eq("tel", tel).addDesc("id"));
-				if (oldEntity != null && oldEntity.getActivity().getPlanDate().getTime() > System.currentTimeMillis()) {
-					throw new CocException("该手机号已经报名参加【%s】的活动，不允许重复报名！", oldEntity.getActivity().getName());
+					String tel = entity.getTel();
+					VisitActivityRegister oldEntity = orm.get(VisitActivityRegister.class, Expr.eq("tel", tel).addDesc("id"));
+					if (oldEntity != null && oldEntity.getActivity().getPlanDate().getTime() > System.currentTimeMillis()) {
+						throw new CocException("该手机号已经报名参加【%s】的活动，不允许重复报名！", oldEntity.getActivity().getName());
+					}
 				}
-			}
 
-			VisitActivity activity = entity.getActivity();
-			activity = orm.load(activity.getClass(), activity.getId());
+				VisitActivity activity = entity.getActivity();
+				activity = orm.load(activity.getClass(), activity.getId());
 
-			// 检查短信验证码
-			String tel = entity.getTel();
-			String code = entity.getTelVerifyCode();
-			HttpUtil.checkSmsVerifyCode(Demsy.me().request(), tel, code, "手机验证码非法！");
-
-			// 检查报名有效期
-			if (activity.isExpired()) {
-				Date from = activity.getExpiredFrom();
-				Date to = activity.getExpiredTo();
-
-				throw new CocException("报名有效期从 %s 到 %s！", CocCalendar.formatDateTime(from), CocCalendar.formatDateTime(to));
-			}
-
-			// 计算已报名人数、计划人数
-			Integer regNum = activity.getRegisterPersonNumber();
-			if (regNum == null) {
-				regNum = 0;
-			}
-			Integer num = entity.getPersonNumber();
-			if (num < 1) {
-				// num = 1;
-				throw new CocException("报名人数非法！%s", num);
-			}
-
-			Integer planNum = activity.getPlanPersonNumber();
-			if (planNum == null)
-				planNum = 0;
-
-			// 检查报名人数是否超额
-			if (planNum > 0) {
-				int remainNum = planNum - regNum;// - num;
-
-				if (remainNum <= 0) {
-					throw new CocException("[%s]名额已满！", activity.getName());
+				// 检查短信验证码
+				if (oldID == null || oldID == 0) {
+					String tel = entity.getTel();
+					String code = entity.getTelVerifyCode();
+					HttpUtil.checkSmsVerifyCode(Demsy.me().request(), tel, code, "手机验证码非法！");
 				}
+
+				// 检查报名有效期
+				if (activity.isExpired()) {
+					Date from = activity.getExpiredFrom();
+					Date to = activity.getExpiredTo();
+
+					throw new CocException("报名有效期从 %s 到 %s！", CocCalendar.formatDateTime(from), CocCalendar.formatDateTime(to));
+				}
+
+				// 计算已报名人数、计划人数
+				Integer regNum = activity.getRegisterPersonNumber();
+				if (regNum == null) {
+					regNum = 0;
+				}
+				Integer num = entity.getPersonNumber();
+				if (num < 1) {
+					// num = 1;
+					throw new CocException("报名人数非法！%s", num);
+				}
+
+				Integer planNum = activity.getPlanPersonNumber();
+				if (planNum == null)
+					planNum = 0;
+
+				// 检查报名人数是否超额
+				if (planNum > 0) {
+					int remainNum = planNum - regNum;// - num;
+
+					if (remainNum <= 0) {
+						throw new CocException("[%s]名额已满！", activity.getName());
+					}
+				}
+
+				// 修改计划中的报名人数
+				regNum += num;
+				activity.setRegisterPersonNumber(regNum);
+				entity.setActivity(activity);
+
+				// 生成邀请函验证码
+				Date date = CocCalendar.now().get();
+				Integer time = new Long(date.getTime()).intValue();
+				entity.setVerificationCode(Integer.toHexString(time).toUpperCase());
+
+				// 保存修改后的活动实体
+				orm.save(activity);
 			}
-
-			// 修改计划中的报名人数
-			regNum += num;
-			activity.setRegisterPersonNumber(regNum);
-			entity.setActivity(activity);
-
-			// 生成邀请函验证码
-			Date date = CocCalendar.now().get();
-			Integer time = new Long(date.getTime()).intValue();
-			entity.setVerificationCode(Integer.toHexString(time).toUpperCase());
-
-			// 保存修改后的活动实体
-			orm.save(activity);
 		}
 
 		/**
