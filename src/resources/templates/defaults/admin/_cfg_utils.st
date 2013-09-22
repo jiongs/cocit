@@ -1,7 +1,7 @@
 
 <form onsubmit="return false;" method="post" class="bzsys">
 	<fieldset>
-		<input type="submit" class="ajaxSubmit" value="升级(安装)DEMSY平台" onclick='this.form.action="{$contextPath}/config/setupDemsy"' /> <input type="submit" class="ajaxSubmit" value="清空缓存"
+		<input type="submit" class="ajaxSubmit" value="升级(安装)COCIT平台" onclick='this.form.action="{$contextPath}/config/setupDemsy"' /> <input type="submit" class="ajaxSubmit" value="清空缓存"
 			onclick='this.form.action="{$contextPath}/config/clrcache"' /> <input type="submit" class="ajaxSubmit" value="清空实体映射" onclick='this.form.action="{$contextPath}/config/clrmapping"' />
 	</fieldset>
 
