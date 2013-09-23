@@ -26,9 +26,10 @@ import com.jiongsoft.cocit.util.ActionUtil;
 , actions = {
 //
 		@CocOperation(name = "发送短信", typeCode = 101, mode = "c", plugin = SmsPlugins.SendSMS.class)//
-		, @CocOperation(name = "查询余额", typeCode = 204, mode = "q", plugin = SmsPlugins.QueryBalance.class)//
+		, @CocOperation(name = "重新发送", typeCode = 102, mode = "e", plugin = SmsPlugins.SendSMS.class)//
 		, @CocOperation(name = "删除短信", typeCode = 299, mode = "d") //
 		, @CocOperation(name = "查看短信", typeCode = 102, mode = "v") //
+		, @CocOperation(name = "查询余额", typeCode = 204, mode = "q", plugin = SmsPlugins.QueryBalance.class) //
 }// end: actions
 // 业务分组
 , groups = { //
@@ -40,7 +41,7 @@ import com.jiongsoft.cocit.util.ActionUtil;
 		// , @CocField(name = "上次余额(条)", mode = "*:N v:S", property = "preBalance", desc = "上次发送完成后剩下多少短信余额(条)") //
 		// , @CocField(name = "本次余额(条)", mode = "*:N v:S", property = "balance", desc = "本次发送完成后剩下多少短信余额(条)") //
 		// , @CocField(name = "本次计费(条)", mode = "*:N v:S", property = "cost", desc = "本次发送需要消费多少短信费用(条)") //
-		, @CocField(name = "发送结果", mode = "*:N v:S", property = "result", desc = "描述短信发送是否成功！") //
+		, @CocField(name = "发送结果", mode = "*:N v:S", property = "result", desc = "0:发送是否成功,998:网络超时,999:操作频繁,") //
 		, @CocField(name = "提交时间", mode = "*:N v:S", property = "created", pattern = "yyyy-MM-dd HH-mm-ss") //
 // , @CocField(name = "定时发送", mode = "*:N v:S c:E e:E", property = "sendTime", pattern = "yyyy-MM-dd HH-mm-ss") //
 }// end: fields

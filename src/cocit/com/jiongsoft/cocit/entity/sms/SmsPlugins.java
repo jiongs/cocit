@@ -29,6 +29,13 @@ public abstract class SmsPlugins {
 			if (smsClient == null)
 				throw new CocException("短信客户端接口不可用，请检查“系统参数设置>>短信参数设置”！");
 
+			// 重新发送
+			Long id = entity.getId();
+			if (id != null && id > 0) {
+				if ("0".equals(entity.getResult())) {
+					throw new CocException("短信已经发送成功，不允许重复发送！");
+				}
+			}
 			// entity.setPreBalance(smsClient.getBalance());
 			String sign = softService.getConfig("sms.signature", "");
 

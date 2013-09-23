@@ -36,7 +36,7 @@ public class JCocitEntityModuleRender extends WidgetRender<EntityModuleWidgetMod
 		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.searchbox.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.panel.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.window.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
-		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.dialog.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
+		print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.dialog.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.datagrid.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.calendar.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 
@@ -47,7 +47,7 @@ public class JCocitEntityModuleRender extends WidgetRender<EntityModuleWidgetMod
 		print(out, "<script src=\"%s/jCocit/js/jCocit.pack.js\" type=\"text/javascript\"></script>", contextPath);
 
 		// 调试 JS
-		// print(out, "<script src=\"%s/jCocit-src/js/jCocit.plugin.entity.js\" type=\"text/javascript\"></script>", contextPath);
+		 print(out, "<script src=\"%s/jCocit-src/js/jCocit.plugin.entity.js\" type=\"text/javascript\"></script>", contextPath);
 		// print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.menu.js\" type=\"text/javascript\"></script>", contextPath);
 		// print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.searchbox.js\" type=\"text/javascript\"></script>", contextPath);
 		// print(out, "<script src=\"%s/jCocit-src/js/jCocit.utils.js\" type=\"text/javascript\"></script>", contextPath);

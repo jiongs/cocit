@@ -62,7 +62,7 @@ public class LoadDetailContent extends UiRecord {
 			Pager pager = new Pager(bizEngine.getType(moduleEngine.getSystem(commentMdl)));
 			CndExpr expr = Expr.eq("status", Comment.STATUS_SHOWN);
 			if (info != null) {
-				expr = expr.and(Expr.eq("subjectID", info)).and(Expr.eq("moduleID", maker.getModule()));
+				expr = expr.and(Expr.eq("subjectID", info)).and(Expr.eq("module", maker.getModule()));
 				if (info instanceof IWebContent) {
 					expr = expr.or(Expr.eq("webContent", info));
 				}

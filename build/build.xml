@@ -43,6 +43,7 @@
 		<pathelement location="${jars.dir}/nutz-1.jar" />
 	</path>
 
+	<!-- 编译 JAVA 文件，创建 JAR 包 -->
 	<target name="jar">
 
 		<echo message="清空${tmp.dir}目录 ..." />
@@ -82,6 +83,7 @@
 		<jar basedir="${tmp.dir}" destfile="${jars.dir}/${jar.name}.jar" />
 	</target>
 
+	<!-- 打 PATCH，创建 WAR 包 -->
 	<target name="patch" depends="jar">
 		<echo message="清空${tmp.dir}和${patch.dir}目录 ..." />
 		<delete dir="${tmp.dir}" />
@@ -95,9 +97,15 @@
 				<include name="jCocit/**/*.*" />
 				<include name="scripts2/**/*.*" />
 				<include name="themes2/**/*.*" />
+				
+				<!-- 拷贝项目文件到 WAR 中 -->
 				<include name="www_yunnanbaiyao_com_cn/css/**/*.*" />
 				<include name="www_yunnanbaiyao_com_cn/js/**/*.*" />
-				<include name="www_yunnanbaiyao_com_cn/visit/**/*.*" />
+				<include name="www_yunnanbaiyao_com_cn/visit/*.jsp" />
+				<include name="www_yunnanbaiyao_com_cn/visit/css/**/*.*" />
+				<include name="www_yunnanbaiyao_com_cn/visit/js/**/*.*" />
+				<include name="www_yunnanbaiyao_com_cn/visit/images/**/*.*" />
+				<include name="www_yunnanbaiyao_com_cn/visit/images2/**/*.*" />
 			</fileset>
 		</copy>
 		<echo message="拷贝${web.dir}/WEB-INF目录下的配置文件到${tmp.dir}/WEB-INF目录 ..." />
@@ -134,6 +142,7 @@
 		<delete dir="${tmp.dir}" />
 	</target>
 
+	<!-- 备份 -->
 	<target name="backup">
 		<delete file="${proj.dir}/git.zip" />
 		<delete file="${backup.dir}/cocit-${NOW}.zip" />
@@ -149,8 +158,8 @@
 			<zipfileset dir="${proj.dir}" includes="web/WEB-INF/resin-web.xml" />
 			<zipfileset dir="${proj.dir}" includes="web/WEB-INF/config/**/*.*" />
 			<zipfileset dir="${proj.dir}" includes="web/WEB-INF/config-template/**/*.*" />
-			
-			<!-- Backup Projects  -->
+
+			<!-- 备份  项目文件  -->
 			<zipfileset dir="${proj.dir}" includes="web/www_yunnanbaiyao_com_cn/css/**/*.*" />
 			<zipfileset dir="${proj.dir}" includes="web/www_yunnanbaiyao_com_cn/js/**/*.*" />
 			<zipfileset dir="${proj.dir}" includes="web/www_yunnanbaiyao_com_cn/visit/**/*.*" />

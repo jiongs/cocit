@@ -284,13 +284,14 @@
 		if ($grid.length > 0)
 			$grid.datagrid("reload");
 	}
-	function doSave(opts, dataID, data, callback) {
+	function doSave(opts, dataID, data, funcSuccess,funcComplete) {
 		$.doAjax({
 			type : "POST",
 			dataType : "json",
 			url : "/coc/saveEntityFormData/" + opts.funcExpr + "/" + dataID,
 			data : data,
-			success : callback
+			success : funcSuccess,
+			complete: funcComplete
 		});
 
 	}
@@ -380,9 +381,14 @@
 				onClick : function(data) {
 					var $form = $("form", this);
 					var $dialog = $(this);
+
+					var $btn = $(data.target);
+					$btn.attr("disabled", true);
 					doSave(opts, dataID, $form.serialize(), function() {
 						$dialog.dialog('close');
 						$("#datagrid_" + opts.token).datagrid("reload");
+					}, function() {
+						$btn.attr("disabled", false);
 					});
 				}
 			// }, {

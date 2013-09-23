@@ -46,7 +46,7 @@ public class EmaySDKSmsClientTest {
 		assertNotNull(result);
 	}
 
-	@Ignore
+	@Test
 	public void testSend_1() throws Exception {
 		EmaySDKSmsClient fixture = new EmaySDKSmsClient();
 		String mobiles = "15911731833";
@@ -85,22 +85,22 @@ public class EmaySDKSmsClientTest {
 				/*
 				 * 员工网帐号
 				 */
-				// soft.getConfig(ConfigManager.SMS_UID, "");
-				// result = "3SDK-KYJ-0130-KJXQT";
-				// soft.getConfig(ConfigManager.SMS_PWD, "");
-				// result = "257330";
-				// soft.getConfig("sms.key", "");
-				// result = "147088";
+				soft.getConfig(ConfigManager.SMS_UID, "");
+				result = "3SDK-KYJ-0130-KJXQT";
+				soft.getConfig(ConfigManager.SMS_PWD, "");
+				result = "257330";
+				soft.getConfig("sms.key", "");
+				result = "147088";
 
 				/*
 				 * 茶缘帐号
 				 */
-				soft.getConfig(ConfigManager.SMS_UID, "");
-				result = "3SDK-KYJ-0130-KJXQL";
-				soft.getConfig(ConfigManager.SMS_PWD, "");
-				result = "356860";
-				soft.getConfig("sms.key", "");
-				result = "147080";
+				// soft.getConfig(ConfigManager.SMS_UID, "");
+				// result = "3SDK-KYJ-0130-KJXQL";
+				// soft.getConfig(ConfigManager.SMS_PWD, "");
+				// result = "356860";
+				// soft.getConfig("sms.key", "");
+				// result = "147080";
 			}
 		};
 	}
