@@ -1,6 +1,11 @@
 package com.jiongsoft.cocit.action;
 
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.nutz.mvc.annotation.AdaptBy;
 import org.nutz.mvc.annotation.At;
@@ -11,18 +16,21 @@ import org.nutz.mvc.annotation.Param;
 import com.jiongsoft.cocit.mvc.adaptor.EntityParamAdaptor;
 import com.jiongsoft.cocit.mvc.adaptor.EntityParamNode;
 import com.jiongsoft.cocit.orm.expr.CndExpr;
+import com.jiongsoft.cocit.service.FieldService;
 import com.jiongsoft.cocit.ui.UIModelView;
 import com.jiongsoft.cocit.ui.model.AlertsModel;
-import com.jiongsoft.cocit.ui.model.widget.EntityFormWidgetData;
-import com.jiongsoft.cocit.ui.model.widget.EntityFormModel;
-import com.jiongsoft.cocit.ui.model.widget.EntityModuleWidgetModel;
-import com.jiongsoft.cocit.ui.model.widget.EntityTableWidgetModel;
+import com.jiongsoft.cocit.ui.model.widget.EntityForm;
+import com.jiongsoft.cocit.ui.model.widget.EntityFormData;
+import com.jiongsoft.cocit.ui.model.widget.EntityModuleUI;
+import com.jiongsoft.cocit.ui.model.widget.EntityTableUI;
+import com.jiongsoft.cocit.ui.model.widget.GridWidget;
 import com.jiongsoft.cocit.ui.model.widget.GridWidgetData;
-import com.jiongsoft.cocit.ui.model.widget.GridWidgetModel;
 import com.jiongsoft.cocit.ui.model.widget.TreeWidgetData;
 import com.jiongsoft.cocit.util.ActionUtil;
 import com.jiongsoft.cocit.util.CocException;
+import com.jiongsoft.cocit.util.ExcelUtil;
 import com.jiongsoft.cocit.util.Log;
+import com.jiongsoft.cocit.util.ObjectUtil;
 import com.jiongsoft.cocit.util.StringUtil;
 
 /**
@@ -44,10 +52,10 @@ public class EntityAction {
 	 * @return
 	 */
 	@At(ActionUtil.GET_ENTITY_MODULE_UI)
-	public EntityModuleWidgetModel getEntityModuleUI(String args) {
+	public EntityModuleUI getEntityModuleUI(String args) {
 		ActionHelper helper = ActionHelper.make(args, null, null);
 
-		EntityModuleWidgetModel moduleModel = helper.widgetFactory.getEntytyModuleUI(helper.module);
+		EntityModuleUI moduleModel = helper.widgetFactory.getEntytyModuleUI(helper.module);
 
 		Log.debug("EntityAction.getEntityModuleUI: moduleModel = %s", moduleModel);
 
@@ -63,10 +71,10 @@ public class EntityAction {
 	 * @return
 	 */
 	@At(ActionUtil.GET_ENTITY_TABLE_UI)
-	public EntityTableWidgetModel getEntityTableUI(String args) {
+	public EntityTableUI getEntityTableUI(String args) {
 		ActionHelper helper = ActionHelper.make(args, null, null);
 
-		EntityTableWidgetModel tableModel = helper.widgetFactory.getEntityTableUI(helper.module, helper.table);
+		EntityTableUI tableModel = helper.widgetFactory.getEntityTableUI(helper.module, helper.table);
 
 		Log.debug("EntityAction.getEntityTableUI: tableModel = %s", tableModel);
 
@@ -85,7 +93,7 @@ public class EntityAction {
 	public GridWidgetData getEntityGridData(String args) {
 		ActionHelper helper = ActionHelper.make(args, null, null);
 
-		GridWidgetModel tableModel = helper.widgetFactory.getGridUI(helper.module, helper.table);
+		GridWidget tableModel = helper.widgetFactory.getGridUI(helper.module, helper.table);
 
 		/*
 		 * 构造Grid数据模型
@@ -137,11 +145,11 @@ public class EntityAction {
 	 * @param dataNode
 	 * @return
 	 */
-	@At(ActionUtil.GET_ENTITY_FORM_UI)
-	public EntityFormModel getEntityFormUI(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
+	@At(ActionUtil.GET_ENTITY_FORM)
+	public EntityForm getEntityForm(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
 		ActionHelper helper = ActionHelper.make(args, argDataID, dataNode);
 
-		EntityFormModel formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
+		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
 
 		formModel.setData(helper.entity);
 
@@ -163,12 +171,12 @@ public class EntityAction {
 	 * @return
 	 */
 	@At(ActionUtil.SAVE_ENTITY_FORM_DATA)
-	public EntityFormWidgetData saveEntityFormData(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
+	public EntityFormData saveEntityFormData(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
 		ActionHelper helper = ActionHelper.make(args, argDataID, dataNode);
 
-		EntityFormModel formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
+		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
 
-		EntityFormWidgetData ret = new EntityFormWidgetData();
+		EntityFormData ret = new EntityFormData();
 		ret.setModel(formModel);
 		ret.setData(helper.entity);
 
@@ -182,12 +190,12 @@ public class EntityAction {
 	}
 
 	@At(ActionUtil.DELETE_ENTITY_DATA)
-	public EntityFormWidgetData deleteEntityData(String args, String dataID) {
+	public EntityFormData deleteEntityData(String args, String dataID) {
 		ActionHelper helper = ActionHelper.make(args, dataID, null);
 
-		EntityFormModel formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
+		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
 
-		EntityFormWidgetData ret = new EntityFormWidgetData();
+		EntityFormData ret = new EntityFormData();
 		ret.setModel(formModel);
 		ret.setData(helper.entity);
 
@@ -231,15 +239,95 @@ public class EntityAction {
 		}
 	}
 
+	/**
+	 * 对应JSP: {@value ActionUtil#JSP_DIR}/getExportXlsForm.jsp
+	 * 
+	 * @return
+	 */
 	@At(ActionUtil.GET_EXPORT_XLS_FORM)
-	public EntityFormModel getXlsExportFormUI(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
-		ActionHelper helper = ActionHelper.make(args, argDataID, dataNode);
+	public EntityForm getExportXlsForm(String args, String argDataID) {
+		ActionHelper helper = ActionHelper.make(args, argDataID, null);
 
-		EntityFormModel formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
+		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
+		formModel.setJsp(ActionUtil.JSP_DIR + "/getExportXlsForm");
+
+		formModel.setVar("actionHelper", helper);
+		formModel.setVar("query.filterExpr", StringUtil.escapeHTML(helper.actionContext.getParameterValue("query.filterExpr", "")));
+		formModel.setVar("query.parentExpr", StringUtil.escapeHTML(helper.actionContext.getParameterValue("query.parentExpr", "")));
+		formModel.setVar("query.keywords", StringUtil.escapeHTML(helper.actionContext.getParameterValue("query.keywords", "")));
+		formModel.setVar("sortField", StringUtil.escapeHTML(helper.actionContext.getParameterValue("sortField", "")));
+		formModel.setVar("sortOrder", StringUtil.escapeHTML(helper.actionContext.getParameterValue("sortOrder", "")));
 
 		/**
 		 * 返回
 		 */
 		return formModel;
+	}
+
+	/**
+	 * 该方法在执行{@value ActionUtil#JSP_DIR}/getExportXlsForm.jsp中的form.submit()时调用。
+	 * 
+	 * @param args
+	 * @param argDataID
+	 */
+	@At(ActionUtil.EXPORT_XLS)
+	public void exportXls(String args, String argDataID) {
+		ActionHelper helper = ActionHelper.make(args, argDataID, null);
+
+		OutputStream outStream = null;
+		try {
+			List<String[]> excelRows = new ArrayList();
+
+			// 生成Excel表头
+			String[] columns = helper.actionContext.getParameterValues("columns");
+			String[] header = new String[columns.length];
+			Map<String, FieldService> fields = helper.table.getEntityFieldsPropMap();
+			for (int i = 0; i < columns.length; i++) {
+				String col = columns[i];
+				FieldService fld = fields.get(col);
+				header[i] = fld.getName();
+			}
+			excelRows.add(header);
+
+			// 查询数据
+			CndExpr expr = helper.makeExpr();
+			List list = helper.entityManager.query(expr, null);
+
+			// 生成Excel行
+			String[] row;
+			for (Object obj : list) {
+				row = new String[columns.length];
+				for (int i = 0; i < columns.length; i++) {
+					String col = columns[i];
+
+					Object value = ObjectUtil.getValue(obj, col);
+					FieldService fld = fields.get(col);
+					String strValue = fld.format(value);
+
+					row[i] = strValue;
+				}
+				excelRows.add(row);
+			}
+
+			// 发送Excel文件
+			HttpServletResponse response = helper.actionContext.getResponse();
+			String fileName = helper.table.getName();
+			fileName = new String(fileName.getBytes(), "ISO8859-1");
+			response.setHeader("Content-Disposition", "attachement; filename=" + fileName + ".xls");
+			response.setContentType("application/octet-stream");
+			outStream = response.getOutputStream();
+			ExcelUtil.makeExcel(outStream, excelRows);
+
+			Log.debug("EntityAction.exportXls: total = %s", list == null ? 0 : list.size());
+		} catch (Throwable e) {
+			Log.error("EntityAction.exportXls: error! ", e);
+		} finally {
+			if (outStream != null) {
+				try {
+					outStream.close();
+				} catch (Throwable ex) {
+				}
+			}
+		}
 	}
 }

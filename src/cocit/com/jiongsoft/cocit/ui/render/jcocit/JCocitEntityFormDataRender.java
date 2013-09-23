@@ -2,14 +2,14 @@ package com.jiongsoft.cocit.ui.render.jcocit;
 
 import java.io.Writer;
 
-import com.jiongsoft.cocit.ui.model.widget.EntityFormWidgetData;
+import com.jiongsoft.cocit.ui.model.widget.EntityFormData;
 import com.jiongsoft.cocit.ui.render.WidgetRender;
 import com.jiongsoft.cocit.util.Json;
 
-public class JCocitFormDataRender extends WidgetRender<EntityFormWidgetData> {
+public class JCocitEntityFormDataRender extends WidgetRender<EntityFormData> {
 
 	@Override
-	public void render(Writer writer, EntityFormWidgetData model) throws Throwable {
+	public void render(Writer writer, EntityFormData model) throws Throwable {
 
 		String message = "操作成功！";
 		int statusCode = 200;

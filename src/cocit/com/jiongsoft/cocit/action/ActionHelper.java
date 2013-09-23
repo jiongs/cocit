@@ -33,6 +33,8 @@ import com.jiongsoft.cocit.util.StringUtil;
  */
 public class ActionHelper {
 
+	public ActionContext actionContext;
+
 	public SoftService softService;
 
 	public Orm orm;
@@ -43,6 +45,8 @@ public class ActionHelper {
 	 * 下列属性只有在funcExpr存在的情况下才会被创建。
 	 */
 	public String funcExpr;
+
+	public String entityArgs;
 
 	public String moduleID;
 
@@ -96,7 +100,11 @@ public class ActionHelper {
 	private ActionHelper(String funcExpr, String entityArgs, EntityParamNode entityParamNode) {
 		Log.debug("ActionHelper... {funcExpr:%s, entityArgs:%s, entityParamNode:%s}", funcExpr, entityArgs, entityParamNode);
 
+		actionContext = Cocit.getActionContext();
+
 		this.funcExpr = funcExpr;
+		this.entityArgs = entityArgs;
+
 		try {
 
 			widgetFactory = Cocit.getWidgetModelFactory();
@@ -105,7 +113,7 @@ public class ActionHelper {
 			parseFuncExpr(funcExpr);
 
 			// 获取软件服务对象
-			softService = Cocit.getActionContext().getSoftService();
+			softService = actionContext.getSoftService();
 			orm = softService.getOrm();
 			// 初始化实体管理器
 			entityManager = softService.getEntityManager(module, table);
@@ -262,8 +270,6 @@ public class ActionHelper {
 	 */
 	@SuppressWarnings("unused")
 	public CndExpr makeExpr() {
-		ActionContext actionContext = Cocit.getActionContext();
-
 		StringBuffer logExpr = new StringBuffer();
 		CndExpr retExpr = null;
 
@@ -300,27 +306,33 @@ public class ActionHelper {
 		}
 
 		/*
-		 * 解析分页和排序
+		 * 解析排序
 		 */
-		int pageIndex = actionContext.getParameterValue("pageIndex", 1);
-		int pageSize = actionContext.getParameterValue("pageSize", ActionUtil.DEFAULT_PAGE_SIZE);
 		String sortField = actionContext.getParameterValue("sortField", "id");
 		String sortOrder = actionContext.getParameterValue("sortOrder", "desc");
-
-		if (sortOrder.toLowerCase().equals("asc")) {
-			retExpr = retExpr.addAsc(sortField);
-		} else {
-			retExpr = retExpr.addDesc(sortField);
+		if (!StringUtil.isNil(sortField)) {
+			if (sortOrder.toLowerCase().equals("asc")) {
+				retExpr = retExpr.addAsc(sortField);
+			} else {
+				retExpr = retExpr.addDesc(sortField);
+			}
+			logExpr.append("( order by " + sortField + " " + sortOrder + ")");
 		}
-		logExpr.append("( order by " + sortField + " " + sortOrder + ")");
 
-		retExpr = retExpr.setPager(pageIndex, pageSize);
-		logExpr.append("(pageIndex=" + pageIndex + " pageSize=" + pageSize + ")");
+		/*
+		 * 解析分页
+		 */
+		int pageIndex = actionContext.getParameterValue("pageIndex", 0);
+		int pageSize = actionContext.getParameterValue("pageSize", 0);
+		if (pageIndex > 0 && pageSize > 0) {
+			retExpr = retExpr.setPager(pageIndex, pageSize);
+			logExpr.append("(pageIndex=" + pageIndex + " pageSize=" + pageSize + ")");
+		}
 
 		/*
 		 * 返回解析结果
 		 */
-		Log.info("查询条件：funcExpr = %s, queryExpr = %s", funcExpr, logExpr.toString());
+		Log.debug("查询条件：funcExpr = %s, queryExpr = %s", funcExpr, logExpr.toString());
 		return retExpr;
 	}
 }

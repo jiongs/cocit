@@ -3,21 +3,22 @@ package com.jiongsoft.cocit.service.impl.demsy;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import com.jiongsoft.cocit.service.FieldService;
 import com.jiongsoft.cocit.service.FieldGroupService;
+import com.jiongsoft.cocit.service.FieldService;
 import com.jiongsoft.cocit.service.OperationService;
 import com.jiongsoft.cocit.service.TableService;
 import com.jiongsoft.cocit.util.ClassUtil;
 import com.jiongsoft.cocit.util.CocException;
 import com.jiongsoft.cocit.util.KeyValue;
-import com.jiongsoft.cocit.util.ObjectUtil;
 import com.jiongsoft.cocit.util.Log;
+import com.jiongsoft.cocit.util.ObjectUtil;
 import com.jiongsoft.cocit.util.SortUtil;
 import com.jiongsoft.cocit.util.StringUtil;
 import com.jiongsoft.cocit.util.Tree;
@@ -141,7 +142,6 @@ public class DemsyEntityTableService implements TableService {
 
 	@Override
 	public List<FieldService> getEntityFields() {
-
 		return bizFields;
 	}
 
@@ -386,5 +386,15 @@ public class DemsyEntityTableService implements TableService {
 
 	public void set(String key, String value) {
 		this.extProps.put(key, value);
+	}
+
+	@Override
+	public Map<String, FieldService> getEntityFieldsPropMap() {
+		Map<String, FieldService> ret = new Hashtable();
+		for (FieldService f : this.bizFields) {
+			ret.put(f.getPropName(), f);
+		}
+
+		return ret;
 	}
 }

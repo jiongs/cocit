@@ -6,15 +6,15 @@ import java.util.List;
 
 import com.jiongsoft.cocit.ActionContext;
 import com.jiongsoft.cocit.Cocit;
-import com.jiongsoft.cocit.ui.model.widget.EntityModuleWidgetModel;
-import com.jiongsoft.cocit.ui.model.widget.EntityTableWidgetModel;
+import com.jiongsoft.cocit.ui.model.widget.EntityModuleUI;
+import com.jiongsoft.cocit.ui.model.widget.EntityTableUI;
 import com.jiongsoft.cocit.ui.render.WidgetRender;
 import com.jiongsoft.cocit.util.ObjectUtil;
 
-public class JCocitEntityModuleRender extends WidgetRender<EntityModuleWidgetModel> {
+public class JCocitEntityModuleRender extends WidgetRender<EntityModuleUI> {
 
 	@Override
-	public void render(Writer writer, EntityModuleWidgetModel model) throws Throwable {
+	public void render(Writer writer, EntityModuleUI model) throws Throwable {
 		StringWriter out = new StringWriter();
 
 		String contextPath = Cocit.getContextPath();
@@ -36,7 +36,7 @@ public class JCocitEntityModuleRender extends WidgetRender<EntityModuleWidgetMod
 		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.searchbox.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.panel.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.window.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
-		print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.dialog.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
+		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.dialog.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.datagrid.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.calendar.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 
@@ -47,7 +47,7 @@ public class JCocitEntityModuleRender extends WidgetRender<EntityModuleWidgetMod
 		print(out, "<script src=\"%s/jCocit/js/jCocit.pack.js\" type=\"text/javascript\"></script>", contextPath);
 
 		// 调试 JS
-		 print(out, "<script src=\"%s/jCocit-src/js/jCocit.plugin.entity.js\" type=\"text/javascript\"></script>", contextPath);
+		print(out, "<script src=\"%s/jCocit-src/js/jCocit.plugin.entity.js\" type=\"text/javascript\"></script>", contextPath);
 		// print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.menu.js\" type=\"text/javascript\"></script>", contextPath);
 		// print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.searchbox.js\" type=\"text/javascript\"></script>", contextPath);
 		// print(out, "<script src=\"%s/jCocit-src/js/jCocit.utils.js\" type=\"text/javascript\"></script>", contextPath);
@@ -78,11 +78,11 @@ public class JCocitEntityModuleRender extends WidgetRender<EntityModuleWidgetMod
 		int mainTabsHeight = height / 2;
 		int childrenTabsHeight = height - mainTabsHeight - 1;
 
-		EntityTableWidgetModel mainEntityTable = model.getEntityTableModel();
+		EntityTableUI mainEntityTable = model.getEntityTableModel();
 		if (mainEntityTable == null) {
 			childrenTabsHeight = height;
 		}
-		List<EntityTableWidgetModel> childrenEntityTables = model.getChildrenEntityTableModels();
+		List<EntityTableUI> childrenEntityTables = model.getChildrenEntityTableModels();
 		if (ObjectUtil.isNil(childrenEntityTables)) {
 			mainTabsHeight = height;
 		}
@@ -134,7 +134,7 @@ public class JCocitEntityModuleRender extends WidgetRender<EntityModuleWidgetMod
 
 			// fkfield: 表示业务子表将通过哪个外键字段关联到业务主表？
 			String fkfield;
-			for (EntityTableWidgetModel childEntityTable : childrenEntityTables) {
+			for (EntityTableUI childEntityTable : childrenEntityTables) {
 				fkfield = childEntityTable.get("fkfield", "");
 				print(out, "<div title=\"%s\" class=\"jCocit-gridtab\" data-options=\"token:'%s', fkfield: '%s', url: '%s?_uiHeight=%s&_uiWidth=%s',closable: false, cache: true\" style=\"padding:5px\"></div>"//
 						, childEntityTable.getName(), token, fkfield, childEntityTable.getLoadUrl(), childrenTabsHeight, width);

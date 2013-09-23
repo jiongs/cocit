@@ -16,19 +16,19 @@ import java.util.List;
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.service.FieldService;
 import com.jiongsoft.cocit.service.TableService;
-import com.jiongsoft.cocit.ui.model.widget.EntityFormModel;
-import com.jiongsoft.cocit.ui.model.widget.GridWidgetModel;
-import com.jiongsoft.cocit.ui.model.widget.EntityFormModel.FormField;
-import com.jiongsoft.cocit.ui.model.widget.GridWidgetModel.GridColumn;
+import com.jiongsoft.cocit.ui.model.widget.EntityForm;
+import com.jiongsoft.cocit.ui.model.widget.GridWidget;
+import com.jiongsoft.cocit.ui.model.widget.EntityForm.FormField;
+import com.jiongsoft.cocit.ui.model.widget.GridWidget.GridColumn;
 import com.jiongsoft.cocit.ui.render.WidgetRender;
 import com.jiongsoft.cocit.util.KeyValue;
 import com.jiongsoft.cocit.util.ObjectUtil;
 import com.jiongsoft.cocit.util.StringUtil;
 
-public class JCocitFormRender extends WidgetRender<EntityFormModel> {
+public class JCocitEntityFormRender extends WidgetRender<EntityForm> {
 
 	@Override
-	public void render(Writer writer, EntityFormModel model) throws Throwable {
+	public void render(Writer writer, EntityForm model) throws Throwable {
 		StringBuffer sb = new StringBuffer();
 
 		Object formData = model.getData();
@@ -140,11 +140,11 @@ public class JCocitFormRender extends WidgetRender<EntityFormModel> {
 		print(writer, sb.toString());
 	}
 
-	private void printFieldLabel(StringBuffer sb, EntityFormModel model, FieldService entityField) throws IOException {
+	private void printFieldLabel(StringBuffer sb, EntityForm model, FieldService entityField) throws IOException {
 		print(sb, entityField.getName());
 	}
 
-	private void printEditBox(StringBuffer sb, EntityFormModel model, FieldService entityField, Object fldvalue) throws IOException {
+	private void printEditBox(StringBuffer sb, EntityForm model, FieldService entityField, Object fldvalue) throws IOException {
 
 		byte type = entityField.getType();
 		switch (type) {
@@ -235,7 +235,7 @@ public class JCocitFormRender extends WidgetRender<EntityFormModel> {
 
 	private void printFK(StringBuffer sb, FieldService fieldService, Object fieldValue) {
 		TableService entityTable = fieldService.getFkEntityTable();
-		GridWidgetModel gridModel = Cocit.getWidgetModelFactory().getGridUI(null, entityTable);
+		GridWidget gridModel = Cocit.getWidgetModelFactory().getGridUI(null, entityTable);
 		List<GridColumn> columns = gridModel.getColumns();
 
 		String id = ObjectUtil.idOrtoString(fieldValue);

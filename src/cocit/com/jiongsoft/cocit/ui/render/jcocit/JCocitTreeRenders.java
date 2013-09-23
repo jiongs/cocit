@@ -5,7 +5,7 @@ import java.io.Writer;
 import java.util.List;
 
 import com.jiongsoft.cocit.ui.model.widget.TreeWidgetData;
-import com.jiongsoft.cocit.ui.model.widget.TreeWidgetModel;
+import com.jiongsoft.cocit.ui.model.widget.TreeWidget;
 import com.jiongsoft.cocit.ui.render.WidgetRender;
 import com.jiongsoft.cocit.util.Json;
 import com.jiongsoft.cocit.util.ObjectUtil;
@@ -14,10 +14,10 @@ import com.jiongsoft.cocit.util.Tree.Node;
 
 public abstract class JCocitTreeRenders {
 
-	public static class ModelRender extends WidgetRender<TreeWidgetModel> {
+	public static class ModelRender extends WidgetRender<TreeWidget> {
 
 		@Override
-		public void render(Writer out, TreeWidgetModel model) throws Throwable {
+		public void render(Writer out, TreeWidget model) throws Throwable {
 			if (model.getData() != null) {
 				print(out, "<script type=\"text/javascript\">var treedata_%s=", model.get("token", ""));
 				new DataRender().outNodes(out, model.getData().getChildren());

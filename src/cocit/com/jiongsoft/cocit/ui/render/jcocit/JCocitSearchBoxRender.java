@@ -4,15 +4,15 @@ import java.io.Writer;
 import java.util.List;
 
 import com.jiongsoft.cocit.service.FieldService;
-import com.jiongsoft.cocit.ui.model.widget.SearchBoxWidgetModel;
+import com.jiongsoft.cocit.ui.model.widget.SearchBoxWidget;
 import com.jiongsoft.cocit.ui.render.WidgetRender;
 import com.jiongsoft.cocit.util.KeyValue;
 import com.jiongsoft.cocit.util.ObjectUtil;
 
-public class JCocitSearchBoxRender extends WidgetRender<SearchBoxWidgetModel> {
+public class JCocitSearchBoxRender extends WidgetRender<SearchBoxWidget> {
 
 	@Override
-	public void render(Writer out, SearchBoxWidgetModel model) throws Throwable {
+	public void render(Writer out, SearchBoxWidget model) throws Throwable {
 
 		// 下拉菜单：分类查询
 		List<KeyValue> list = model.getData();

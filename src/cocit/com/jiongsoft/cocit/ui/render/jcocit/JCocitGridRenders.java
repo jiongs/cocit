@@ -4,18 +4,18 @@ import java.io.Writer;
 import java.util.List;
 
 import com.jiongsoft.cocit.ui.model.widget.GridWidgetData;
-import com.jiongsoft.cocit.ui.model.widget.GridWidgetModel;
-import com.jiongsoft.cocit.ui.model.widget.GridWidgetModel.GridColumn;
+import com.jiongsoft.cocit.ui.model.widget.GridWidget;
+import com.jiongsoft.cocit.ui.model.widget.GridWidget.GridColumn;
 import com.jiongsoft.cocit.ui.render.WidgetRender;
 import com.jiongsoft.cocit.util.Json;
 import com.jiongsoft.cocit.util.ObjectUtil;
 
 public abstract class JCocitGridRenders {
 
-	public static class ModelRender extends WidgetRender<GridWidgetModel> {
+	public static class ModelRender extends WidgetRender<GridWidget> {
 
 		@Override
-		public void render(Writer out, GridWidgetModel model) throws Throwable {
+		public void render(Writer out, GridWidget model) throws Throwable {
 			String title = "";// model.getName()
 			int height = model.get("height", 353);
 			int colTotalWidth = model.getColumnsTotalWidth();
@@ -87,7 +87,7 @@ public abstract class JCocitGridRenders {
 		public void render(Writer out, GridWidgetData model) throws Throwable {
 			print(out, "{\"total\":%s,\"rows\":[", model.getTotal());
 
-			GridWidgetModel gridModel = model.getModel();
+			GridWidget gridModel = model.getModel();
 			List<GridColumn> columns = gridModel.getColumns();
 			List data = model.getData();
 			if (data != null) {
@@ -108,8 +108,6 @@ public abstract class JCocitGridRenders {
 						String prop = col.getField();
 						Object value = ObjectUtil.getValue(obj, prop);
 						value = col.getEntityField().format(value);
-						if (value == null)
-							value = "";
 
 						sb.append(String.format(",\"%s\":%s", prop, Json.toJson(value)));
 					}

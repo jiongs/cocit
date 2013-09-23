@@ -5,11 +5,10 @@
 		 */
 		doAction : function(opts) {
 			switch (opts.opCode) {
-			case 101:// insert
+			case 101:// insert record
 				doEdit(opts, "");
-
 				break;
-			case 102:// edit
+			case 102:// edit record
 				var gridID = "#datagrid_" + opts.token;
 				var row = $(gridID).datagrid("getSelected");
 				if (row) {
@@ -18,59 +17,24 @@
 					else
 						doEdit(opts, row.id);
 				} else {
-					Jwarn($.fn.entity.defaults.unselectedOne);
+					Jwarn(jCocit.entity.defaults.unselectedOne);
 				}
-
 				break;
-			case 204:// synchronized
-				$.doAjax({
-					type : "POST",
-					dataType : "json",
-					url : "/coc/execEntityTask/" + opts.funcExpr,
-					success : function(json) {
-						alert(json.message);
-						$("#datagrid_" + opts.token).datagrid("reload");
-					}
-				});
+			case 107: // export excel
+				doExportXls(opts);
 				break;
-			case 299:// delete
-				var gridID = "#datagrid_" + opts.token;
-				var rows = $(gridID).datagrid("getChecked");
-				if (rows.length == 0) {
-					var row = $(gridID).datagrid("getSelected");
-					if (row)
-						rows[0] = row;
-				}
-				if (rows.length == 0) {
-					Jwarn($.fn.entity.defaults.unselectedAny);
-				} else {
-					Jconfirm($.fn.entity.defaults.deleteWarn.format(rows.length), "", function(ok) {
-						if (!ok)
-							return;
-
-						var ids = new Array();
-						for (i = 0; i < rows.length; i++) {
-							ids[ids.length] = rows[i].id;
-						}
-
-						$.doAjax({
-							type : "POST",
-							dataType : "json",
-							url : "/coc/deleteEntityData/" + opts.funcExpr + "/" + ids.join(","),
-							success : function() {
-								$("#datagrid_" + opts.token).datagrid("reload");
-							}
-						});
-					});
-				}
-
+			case 204:// synchronized exec task
+				doSyncTask(opts);
+				break;
+			case 299:// delete rows
+				doDelete(opts);
 				break;
 			default:
-				Jalert($.fn.entity.defaults.unsupport + "{opCode: '" + opts.opCode + "', funcExpr: '" + opts.funcExpr + "', token:" + opts.token + "}");
+				Jalert(jCocit.entity.defaults.unsupport + "{opCode: '" + opts.opCode + "', funcExpr: '" + opts.funcExpr + "', token:" + opts.token + "}");
 			}
 		},
 		doSetting : function(opts) {
-			Jalert($.fn.entity.defaults.unsupport);
+			Jalert(jCocit.entity.defaults.unsupport);
 		},
 		/**
 		 * 在SearchBox框上执行查询操作时将调用该方法：刷新token对应的业务表Grid数据
@@ -111,7 +75,7 @@
 		doGridBeforeLoad : function(queryParams) {
 			// 查找当前GRID
 			var gridOptions = $(this).datagrid("options");
-			prepareGridQueryParams(gridOptions.token, queryParams);
+			_prepareGridQueryParams(gridOptions.token, queryParams);
 		},
 		doGridHeaderContextMenu : function(e, field) {
 			var $grid = $(this);
@@ -175,13 +139,72 @@
 	};
 
 	/**
+	 * 准备加载实体表单时的参数。
+	 * <p>
+	 * 执行getEntityForm操作之前将调用该方法准备业务表单数据。
+	 */
+	function _prepareEntityFormParams(token, formData) {
+		// 根据令牌查找导航树、Grid、搜索框对象
+		var $tree = $("#tree_" + token);
+		var $grid = $("#datagrid_" + token);
+
+		/*
+		 * Navi Tree JSON Expression
+		 */
+		// 获取导航树中选中的节点
+		if ($tree.length > 0) {
+			var node = $tree.tree("getSelected");
+			if (node) {
+				var nodeID = node.id;
+				var idx = nodeID.indexOf(":");
+				if (idx > 0) {
+					var fld = nodeID.substring(0, idx);
+					var val = nodeID.substring(idx + 1);
+					if (fld.length > 0 && val.length > 0)
+						formData["entity." + fld] = val;
+					idx = fld.indexOf(".id");
+					if (idx > 0)
+						fld = fld.substring(0, idx);
+					formData["entity." + fld + ".name"] = node.text;
+
+				}
+			}
+		}
+
+		/*
+		 * Main Grid JSON Expression
+		 */
+		// 查找Grid所在的Tab
+		var $gridTab = $grid.closest(".jCocit-gridtab");
+		if ($gridTab.length > 0) {// 找到Grid所在的Tab
+
+			// 获取Tab属性；获取父Grid令牌
+			var gridTabOptions = $gridTab.panel("options");
+			var parentToken = gridTabOptions.token;
+
+			if (parentToken) {
+				// 查找父Grid
+				var $parentGrid = $("#datagrid_" + parentToken);
+				if ($parentGrid.length > 0) {
+					// 获取父Grid中选中的行
+					var row = $parentGrid.datagrid("getSelected");
+					if (row) {
+						formData["entity." + gridTabOptions.fkfield + ".id"] = row.id;
+						formData["entity." + gridTabOptions.fkfield + ".name"] = row.name;
+					}
+
+				}
+			}
+		}
+	}
+	/**
 	 * 准备Grid查询参数。
 	 * <UL>
 	 * <LI>通过token查找Grid、Tree、Searchbox对象；
 	 * <LI>queryParams：即为Grid查询参数JSON对象，查询条件直接放入该对象中；
 	 * </UL>
 	 */
-	function prepareGridQueryParams(token, queryParams) {
+	function _prepareGridQueryParams(token, queryParams) {
 		// 根据令牌查找导航树、Grid、搜索框对象
 		var $tree = $("#tree_" + token);
 		var $grid = $("#datagrid_" + token);
@@ -284,83 +307,25 @@
 		if ($grid.length > 0)
 			$grid.datagrid("reload");
 	}
-	function doSave(opts, dataID, data, funcSuccess,funcComplete) {
+	function doSave(opts, dataID, data, funcSuccess, funcComplete) {
 		$.doAjax({
 			type : "POST",
 			dataType : "json",
 			url : "/coc/saveEntityFormData/" + opts.funcExpr + "/" + dataID,
 			data : data,
 			success : funcSuccess,
-			complete: funcComplete
+			complete : funcComplete
 		});
-
-	}
-	/**
-	 * 执行getEntityFormUI操作之前将调用该方法准备业务表单数据。
-	 */
-	function prepareEntityFormUIParams(token, formData) {
-		// 根据令牌查找导航树、Grid、搜索框对象
-		var $tree = $("#tree_" + token);
-		var $grid = $("#datagrid_" + token);
-
-		/*
-		 * Navi Tree JSON Expression
-		 */
-		// 获取导航树中选中的节点
-		if ($tree.length > 0) {
-			var node = $tree.tree("getSelected");
-			if (node) {
-				var nodeID = node.id;
-				var idx = nodeID.indexOf(":");
-				if (idx > 0) {
-					var fld = nodeID.substring(0, idx);
-					var val = nodeID.substring(idx + 1);
-					if (fld.length > 0 && val.length > 0)
-						formData["entity." + fld] = val;
-					idx = fld.indexOf(".id");
-					if (idx > 0)
-						fld = fld.substring(0, idx);
-					formData["entity." + fld + ".name"] = node.text;
-
-				}
-			}
-		}
-
-		/*
-		 * Main Grid JSON Expression
-		 */
-		// 查找Grid所在的Tab
-		var $gridTab = $grid.closest(".jCocit-gridtab");
-		if ($gridTab.length > 0) {// 找到Grid所在的Tab
-
-			// 获取Tab属性；获取父Grid令牌
-			var gridTabOptions = $gridTab.panel("options");
-			var parentToken = gridTabOptions.token;
-
-			if (parentToken) {
-				// 查找父Grid
-				var $parentGrid = $("#datagrid_" + parentToken);
-				if ($parentGrid.length > 0) {
-					// 获取父Grid中选中的行
-					var row = $parentGrid.datagrid("getSelected");
-					if (row) {
-						formData["entity." + gridTabOptions.fkfield + ".id"] = row.id;
-						formData["entity." + gridTabOptions.fkfield + ".name"] = row.name;
-					}
-
-				}
-			}
-		}
 	}
 	function doView(opts, dataID) {
-		var loadFormUrl = "/coc/getEntityFormUI/" + opts.funcExpr + "/" + dataID + "?_uiWidth=890&_uiHeight=600&";
+		var loadFormUrl = "/coc/getEntityForm/" + opts.funcExpr + "/" + dataID;
 		jCocit.dialog.open(loadFormUrl, "dialog_" + opts.token + "_" + opts.opCode, {
 			title : opts.text,
 			width : 900,
-			height : 640,
+			height : 600,
 			logoCls : opts.iconCls || 'icon-logo',
 			buttons : [ {
-				text : $.fn.entity.defaults.cancel,
+				text : jCocit.entity.defaults.cancel,
 				onClick : function(data) {
 					$(this).dialog('close');
 				}
@@ -369,15 +334,15 @@
 	}
 	function doEdit(opts, dataID) {
 		var data = {};
-		prepareEntityFormUIParams(opts.token, data);
-		var loadFormUrl = "/coc/getEntityFormUI/" + opts.funcExpr + "/" + dataID + "?_uiWidth=890&_uiHeight=600&" + $.param(data);
+		_prepareEntityFormParams(opts.token, data);
+		var loadFormUrl = "/coc/getEntityForm/" + opts.funcExpr + "/" + dataID + "?" + $.param(data);
 		jCocit.dialog.open(loadFormUrl, "dialog_" + opts.token + "_" + opts.opCode, {
 			title : opts.text,
 			width : 900,
-			height : 640,
+			height : 600,
 			logoCls : opts.iconCls || 'icon-logo',
 			buttons : [ {
-				text : $.fn.entity.defaults.confirm,
+				text : jCocit.entity.defaults.confirm,
 				onClick : function(data) {
 					var $form = $("form", this);
 					var $dialog = $(this);
@@ -391,50 +356,133 @@
 						$btn.attr("disabled", false);
 					});
 				}
-			// }, {
-			// text : '应用',
-			// onClick : function(data) {
-			// var $form = $("form", this);
-			// doSave(opts, dataID, $form.serialize(), function() {
-			// $("#datagrid_" + opts.token).datagrid("reload");
-			// });
-			// }
 			}, {
-				text : $.fn.entity.defaults.cancel,
+				text : jCocit.entity.defaults.cancel,
 				onClick : function(data) {
 					$(this).dialog('close');
 				}
 			} ],
 		});
 	}
+	function doExportXls(opts) {
+		var rows = _getSelectedRows(opts);
 
-	function _init(mdlDIV) {
-	}
-	$.fn.entity = function(options, args) {
-		if (typeof options == "string") {
-			var fn = $.fn.entity.methods[options];
-			if (fn)
-				return fn(this, args);
-		}
-		options = options || {};
-		return this.each(function() {
-			var state = $d(this, "entity");
-			if (state) {
-				$.extend(state.options, options);
-			} else {
-				$d(this, "entity", {
-					options : $.extend({}, $.fn.entity.defaults, $.fn.entity.parseOptions(this), options)
-				});
-			}
-			_init(this);
+		var data = {};
+		_prepareGridQueryParams(opts.token, data);
+		var loadFormUrl = "/coc/getExportXlsForm/" + opts.funcExpr + "/" + rows.join(",") + "?" + $.param(data);
+		jCocit.dialog.open(loadFormUrl, "dialog_" + opts.token + "_" + opts.opCode, {
+			title : opts.text,
+			width : 900,
+			height : 600,
+			logoCls : opts.iconCls || 'icon-logo',
+			buttons : [ {
+				text : jCocit.entity.defaults.confirm,
+				onClick : function(data) {
+					var $form = $("form", this);
+					var form = $form[0];
+					form.action = "/coc/exportXls/" + opts.funcExpr + "/" + rows.join(",");
+					form.method = "POST";
+					form.target = "_blank";
+					
+					form.submit();
+					$(this).dialog('close');
+				}
+			}, {
+				text : jCocit.entity.defaults.cancel,
+				onClick : function(data) {
+					$(this).dialog('close');
+				}
+			} ],
 		});
-	};
+	}
+	function doSyncTask(opts) {
+		$.doAjax({
+			type : "POST",
+			dataType : "json",
+			url : "/coc/execEntityTask/" + opts.funcExpr,
+			success : function(json) {
+				alert(json.message);
+				$("#datagrid_" + opts.token).datagrid("reload");
+			}
+		});
+	}
+	/**
+	 * 获取选中(selected/checked)行的ID数组
+	 */
+	function _getSelectedRows(opts) {
+		var gridID = "#datagrid_" + opts.token;
+		var rows = $(gridID).datagrid("getChecked");
+		if (rows.length == 0) {
+			var row = $(gridID).datagrid("getSelected");
+			if (row)
+				rows[0] = row;
+		}
 
-	$.fn.entity.parseOptions = function(html) {
-		return $.extend({}, jCocit.parseOptions(html, []));
-	};
+		var ids = new Array();
+		for (i = 0; i < rows.length; i++) {
+			ids[ids.length] = rows[i].id;
+		}
 
-	$.fn.entity.defaults = {
+		return ids;
+	}
+	/**
+	 * 删除选中(selected/checked)的行
+	 */
+	function doDelete(opts) {
+		var rows = _getSelectedRows(opts);
+
+		if (rows.length == 0) {
+			Jwarn(jCocit.entity.defaults.unselectedAny);
+		} else {
+			Jconfirm(jCocit.entity.defaults.deleteWarn.format(rows.length), "", function(ok) {
+				if (!ok)
+					return;
+
+				$.doAjax({
+					type : "POST",
+					dataType : "json",
+					url : "/coc/deleteEntityData/" + opts.funcExpr + "/" + rows.join(","),
+					success : function() {
+						$("#datagrid_" + opts.token).datagrid("reload");
+					}
+				});
+			});
+		}
+	}
+	//
+	// function _init(mdlDIV) {
+	// }
+	// $.fn.entity = function(options, args) {
+	// if (typeof options == "string") {
+	// var fn = $.fn.entity.methods[options];
+	// if (fn)
+	// return fn(this, args);
+	// }
+	// options = options || {};
+	// return this.each(function() {
+	// var state = $d(this, "entity");
+	// if (state) {
+	// $.extend(state.options, options);
+	// } else {
+	// $d(this, "entity", {
+	// options : $.extend({}, $.fn.entity.defaults, $.fn.entity.parseOptions(this), options)
+	// });
+	// }
+	// _init(this);
+	// });
+	// };
+	//
+	// $.fn.entity.parseOptions = function(html) {
+	// return $.extend({}, jCocit.parseOptions(html, []));
+	// };
+	//
+	// $.fn.entity.methods = {
+	// options : function(jq) {
+	// return $d(jq[0], "entity").options;
+	// }
+	// };
+
+	jCocit.entity.defaults = {
 		confirm : "Confirm",
 		cancel : "Cancel",
 		unsupport : "Not Support!",
@@ -443,11 +491,4 @@
 		unselectedOne : "Please first select one record"
 	};
 
-	$.fn.entity.methods = {
-		options : function(jq) {
-			return $d(jq[0], "entity").options;
-		}
-	};
-
-	$.fn.entity.defaults = {};
 })(jQuery, jCocit);

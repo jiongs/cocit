@@ -2,7 +2,9 @@ package com.jiongsoft.cocit.ui.model.widget;
 
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.nutz.mvc.view.JspView;
@@ -19,22 +21,46 @@ import com.jiongsoft.cocit.util.StringUtil;
  * @author yongshan.ji
  * 
  */
-public class EntityFormModel extends WidgetModel {
-	private String jsp;
+public class EntityForm extends WidgetModel {
 
 	private Object data;
 
 	private List<FormField> groupFields;
 
-	public EntityFormModel() {
-		this.groupFields = new ArrayList();
+	/**
+	 * 使用JSP产生实体表单
+	 */
+	private String jsp;
+
+	/**
+	 * 环境路径
+	 */
+	private String contextPath;
+
+	/**
+	 * 表单所需环境变量
+	 */
+	private Map<String, Object> context;
+
+	public EntityForm() {
+		groupFields = new ArrayList();
+		context = new HashMap();
+		contextPath = Cocit.getContextPath();
+	}
+
+	public <T> T getVar(String key) {
+		return (T) context.get(key);
+	}
+
+	public void setVar(String key, Object value) {
+		context.put(key, value);
 	}
 
 	@Override
 	public void render(Writer out) throws Throwable {
-		if (StringUtil.isNil(jsp)){
+		if (StringUtil.isNil(jsp)) {
 			super.render(out);
-			
+
 			return;
 		}
 
@@ -195,5 +221,9 @@ public class EntityFormModel extends WidgetModel {
 
 	public void setJsp(String jsp) {
 		this.jsp = jsp;
+	}
+
+	public String getContextPath() {
+		return contextPath;
 	}
 }

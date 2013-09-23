@@ -11,6 +11,31 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
 public abstract class StringUtil {
+
+	public static String escapeHTML(String input) {
+		if (input == null) {
+			return "";
+		}
+		String str = input.replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("<[^>]*>", "");
+		str = str.replaceAll("\"", "&quot;");
+		return str;
+	}
+
+	public static String toHtml(String value) {
+		if (value == null) {
+			return "";
+		}
+		return value//
+				.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")//
+				.replace("<script>", "&lt;script&gt;")//
+				.replace("</script>", "&lt;/script&gt;")//
+				.replace("  ", "&nbsp;&nbsp;")//
+				.replace("\r\n", "<br />")//
+				.replace("\n", "<br />")//
+				.replace("\r", "<br />")//
+		;
+	}
+
 	/**
 	 * 判断字符串是否为空或一串空白？
 	 * 

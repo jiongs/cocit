@@ -9,26 +9,26 @@ import com.jiongsoft.cocit.ui.model.WidgetModel;
  * @author yongshan.ji
  * 
  */
-public class EntityTableWidgetModel extends WidgetModel {
+public class EntityTableUI extends WidgetModel {
 
 	private String name;
 
 	private String loadUrl;
 
 	// 导航树
-	private TreeWidgetModel naviTreeModel;
+	private TreeWidget naviTreeModel;
 
 	// 操作菜单
-	private MenuWidgetModel operationMenuModel;
+	private MenuWidget operationMenuModel;
 
 	// 检索框
-	private SearchBoxWidgetModel searchBoxModel;
+	private SearchBoxWidget searchBoxModel;
 
 	// Grid
-	private GridWidgetModel gridModel;
+	private GridWidget gridModel;
 
-	public void setGrid(GridWidgetModel grid) {
-		this.gridModel = grid;
+	public void setGrid(GridWidget gridWidget) {
+		this.gridModel = gridWidget;
 	}
 
 	public String getName() {
@@ -39,35 +39,35 @@ public class EntityTableWidgetModel extends WidgetModel {
 		this.name = name;
 	}
 
-	public TreeWidgetModel getNaviTreeModel() {
+	public TreeWidget getNaviTreeModel() {
 		return naviTreeModel;
 	}
 
-	public void setNaviTreeModel(TreeWidgetModel naviTreeModel) {
+	public void setNaviTreeModel(TreeWidget naviTreeModel) {
 		this.naviTreeModel = naviTreeModel;
 	}
 
-	public MenuWidgetModel getOperationMenuModel() {
+	public MenuWidget getOperationMenuModel() {
 		return operationMenuModel;
 	}
 
-	public void setOperationMenuModel(MenuWidgetModel operationMenuModel) {
+	public void setOperationMenuModel(MenuWidget operationMenuModel) {
 		this.operationMenuModel = operationMenuModel;
 	}
 
-	public SearchBoxWidgetModel getSearchBoxModel() {
+	public SearchBoxWidget getSearchBoxModel() {
 		return searchBoxModel;
 	}
 
-	public void setSearchBoxModel(SearchBoxWidgetModel searchBoxModel) {
+	public void setSearchBoxModel(SearchBoxWidget searchBoxModel) {
 		this.searchBoxModel = searchBoxModel;
 	}
 
-	public GridWidgetModel getGridModel() {
+	public GridWidget getGridModel() {
 		return gridModel;
 	}
 
-	public void setGridModel(GridWidgetModel gridModel) {
+	public void setGridModel(GridWidget gridModel) {
 		this.gridModel = gridModel;
 	}
 

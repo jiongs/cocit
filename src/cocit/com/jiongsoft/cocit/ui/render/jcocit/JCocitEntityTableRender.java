@@ -4,17 +4,17 @@ import java.io.Writer;
 
 import com.jiongsoft.cocit.ActionContext;
 import com.jiongsoft.cocit.Cocit;
-import com.jiongsoft.cocit.ui.model.widget.EntityTableWidgetModel;
-import com.jiongsoft.cocit.ui.model.widget.GridWidgetModel;
-import com.jiongsoft.cocit.ui.model.widget.MenuWidgetModel;
-import com.jiongsoft.cocit.ui.model.widget.SearchBoxWidgetModel;
-import com.jiongsoft.cocit.ui.model.widget.TreeWidgetModel;
+import com.jiongsoft.cocit.ui.model.widget.EntityTableUI;
+import com.jiongsoft.cocit.ui.model.widget.GridWidget;
+import com.jiongsoft.cocit.ui.model.widget.MenuWidget;
+import com.jiongsoft.cocit.ui.model.widget.SearchBoxWidget;
+import com.jiongsoft.cocit.ui.model.widget.TreeWidget;
 import com.jiongsoft.cocit.ui.render.WidgetRender;
 
-public class JCocitEntityTableRender extends WidgetRender<EntityTableWidgetModel> {
+public class JCocitEntityTableRender extends WidgetRender<EntityTableUI> {
 
 	@Override
-	public void render(Writer out, EntityTableWidgetModel model) throws Throwable {
+	public void render(Writer out, EntityTableUI model) throws Throwable {
 		ActionContext ctx = Cocit.getActionContext();
 		int width = model.get("width", ctx.getClientUIWidth());
 		int height = model.get("height", ctx.getClientUIHeight());
@@ -29,10 +29,10 @@ public class JCocitEntityTableRender extends WidgetRender<EntityTableWidgetModel
 		/*
 		 * 工具栏菜单：工具栏菜单ID将被DataGrid引用
 		 */
-		MenuWidgetModel menu = model.getOperationMenuModel();
-		if (menu != null) {
-			menu.set("token", token);
-			menu.render(out);
+		MenuWidget menuWidget = model.getOperationMenuModel();
+		if (menuWidget != null) {
+			menuWidget.set("token", token);
+			menuWidget.render(out);
 		}
 
 		/**
@@ -46,7 +46,7 @@ public class JCocitEntityTableRender extends WidgetRender<EntityTableWidgetModel
 		/*
 		 * 1.左边为导航树
 		 */
-		TreeWidgetModel tree = model.getNaviTreeModel();
+		TreeWidget tree = model.getNaviTreeModel();
 		if (tree != null) {
 
 			tree.set("height", "" + treeHeight);
@@ -54,7 +54,7 @@ public class JCocitEntityTableRender extends WidgetRender<EntityTableWidgetModel
 
 			print(out, "<td valign=\"top\" width=\"%s\" style=\"padding:5px;\">", treeWidth);
 
-			SearchBoxWidgetModel searchModel = model.getSearchBoxModel();
+			SearchBoxWidget searchModel = model.getSearchBoxModel();
 			if (searchModel != null) {
 				searchModel.set("width", "" + treeWidth);
 				searchModel.render(out);
@@ -70,15 +70,15 @@ public class JCocitEntityTableRender extends WidgetRender<EntityTableWidgetModel
 		/*
 		 * 2.右边为DataGrid
 		 */
-		GridWidgetModel grid = model.getGridModel();
-		if (grid != null) {
-			grid.set("width", "" + gridWidth);
-			grid.set("height", "" + gridHeight);
-			grid.set("token", token);
+		GridWidget gridWidget = model.getGridModel();
+		if (gridWidget != null) {
+			gridWidget.set("width", "" + gridWidth);
+			gridWidget.set("height", "" + gridHeight);
+			gridWidget.set("token", token);
 
 			print(out, "<td valign=\"top\" width=\"%s\" style=\"padding:5px;0 5px 5px;\">", gridWidth);
 
-			grid.render(out);
+			gridWidget.render(out);
 
 			print(out, "</td>");
 		}

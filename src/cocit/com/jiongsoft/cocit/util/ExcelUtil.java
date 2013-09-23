@@ -3,8 +3,8 @@ package com.jiongsoft.cocit.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +22,7 @@ import com.kmetop.demsy.lang.Dates;
  */
 public abstract class ExcelUtil {
 
-	public static void makeExcel(File excelFile, List<String[]> excelResult) throws FileNotFoundException, IOException {
+	public static void makeExcel(OutputStream out, List<String[]> excelResult) throws FileNotFoundException, IOException {
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		HSSFSheet sheet = workbook.createSheet();
 		int len = excelResult.size();
@@ -34,7 +34,7 @@ public abstract class ExcelUtil {
 				cell.setCellValue(rowData[j]);
 			}
 		}
-		workbook.write(new FileOutputStream(excelFile));
+		workbook.write(out);
 	}
 
 	/**

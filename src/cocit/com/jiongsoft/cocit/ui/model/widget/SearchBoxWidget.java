@@ -5,7 +5,7 @@ import java.util.List;
 import com.jiongsoft.cocit.ui.model.WidgetModel;
 import com.jiongsoft.cocit.util.KeyValue;
 
-public class SearchBoxWidgetModel extends WidgetModel {
+public class SearchBoxWidget extends WidgetModel {
 	private List<KeyValue> data;
 
 	public List<KeyValue> getData() {

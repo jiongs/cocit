@@ -21,7 +21,7 @@ import com.jiongsoft.cocit.util.ActionUtil;
  * @author yongshan.ji
  * 
  */
-public class GridWidgetModel extends WidgetModel {
+public class GridWidget extends WidgetModel {
 
 	private String name;
 
@@ -39,7 +39,7 @@ public class GridWidgetModel extends WidgetModel {
 	private List<GridColumn> columns;
 	private int columnsTotalWidth;
 
-	public GridWidgetModel() {
+	public GridWidget() {
 		super();
 		columns = new ArrayList();
 	}

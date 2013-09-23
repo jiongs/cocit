@@ -1,6 +1,7 @@
 package com.jiongsoft.cocit.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.jiongsoft.cocit.entity.TableEntity;
 import com.jiongsoft.cocit.util.CocException;
@@ -43,6 +44,8 @@ public interface TableService extends EntityService<TableEntity> {
 	 * @return
 	 */
 	List<FieldService> getEntityFields();
+	
+	Map<String, FieldService> getEntityFieldsPropMap();
 
 	/**
 	 * 获取该数据表中的数据操作，用于生存操作菜单。

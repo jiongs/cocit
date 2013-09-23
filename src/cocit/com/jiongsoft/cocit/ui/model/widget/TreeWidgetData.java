@@ -9,6 +9,6 @@ import com.jiongsoft.cocit.util.Tree;
  * @author jiongsoft
  * 
  */
-public class TreeWidgetData extends WidgetData<TreeWidgetModel, Tree> {
+public class TreeWidgetData extends WidgetData<TreeWidget, Tree> {
 
 }

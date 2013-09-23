@@ -14,7 +14,7 @@ import com.jiongsoft.cocit.util.Tree;
  * @author jiongsoft
  * 
  */
-public class TreeWidgetModel extends WidgetModel {
+public class TreeWidget extends WidgetModel {
 
 	// Tree数据，如果该值为Null，则将通过AJAX方式加载树数据。
 	private Tree data;

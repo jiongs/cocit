@@ -348,7 +348,7 @@ public class DemsyEntityFieldService implements FieldService {
 			return item.getKey();
 		}
 		if (this.getType() == TYPE_FK) {
-			value = value.toString();
+			return value.toString();
 		}
 
 		return ObjectUtil.format(value, getPattern());

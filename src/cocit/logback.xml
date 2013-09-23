@@ -8,10 +8,9 @@
 		</encoder>
 	</appender>
 
-    <logger name="com.kmetop.demsy.mvc.DemsyFilterProxy" level="DEBUG"></logger>
 	<logger name="com.kmetop.demsy" level="INFO"></logger>
     <logger name="com.kmetop.demsy.orm" level="INFO"></logger>
-    <logger name="com.jiongsoft" level="ALL"></logger>
+    <logger name="com.jiongsoft" level="INFO"></logger>
 
 	<root level="ERROR">
 		<appender-ref ref="System.out" />

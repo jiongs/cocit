@@ -5,16 +5,16 @@ import java.util.Map;
 
 import com.jiongsoft.cocit.ui.UIModel;
 import com.jiongsoft.cocit.ui.UIRender;
-import com.jiongsoft.cocit.ui.model.widget.EntityFormWidgetData;
-import com.jiongsoft.cocit.ui.model.widget.EntityFormModel;
-import com.jiongsoft.cocit.ui.model.widget.EntityModuleWidgetModel;
-import com.jiongsoft.cocit.ui.model.widget.EntityTableWidgetModel;
+import com.jiongsoft.cocit.ui.model.widget.EntityFormData;
+import com.jiongsoft.cocit.ui.model.widget.EntityForm;
+import com.jiongsoft.cocit.ui.model.widget.EntityModuleUI;
+import com.jiongsoft.cocit.ui.model.widget.EntityTableUI;
 import com.jiongsoft.cocit.ui.model.widget.GridWidgetData;
-import com.jiongsoft.cocit.ui.model.widget.GridWidgetModel;
-import com.jiongsoft.cocit.ui.model.widget.MenuWidgetModel;
-import com.jiongsoft.cocit.ui.model.widget.SearchBoxWidgetModel;
+import com.jiongsoft.cocit.ui.model.widget.GridWidget;
+import com.jiongsoft.cocit.ui.model.widget.MenuWidget;
+import com.jiongsoft.cocit.ui.model.widget.SearchBoxWidget;
 import com.jiongsoft.cocit.ui.model.widget.TreeWidgetData;
-import com.jiongsoft.cocit.ui.model.widget.TreeWidgetModel;
+import com.jiongsoft.cocit.ui.model.widget.TreeWidget;
 import com.jiongsoft.cocit.ui.render.WidgetRenderFactory;
 import com.jiongsoft.cocit.util.Log;
 
@@ -51,29 +51,29 @@ public class JCocitWidgetRenderFactory implements WidgetRenderFactory {
 		/*
 		 * 创建模型Render
 		 */
-		if (modelType.equals(EntityModuleWidgetModel.class))
+		if (modelType.equals(EntityModuleUI.class))
 			return new JCocitEntityModuleRender();
 
-		if (modelType.equals(EntityTableWidgetModel.class))
+		if (modelType.equals(EntityTableUI.class))
 			return new JCocitEntityTableRender();
 
-		if (modelType.equals(EntityFormModel.class))
-			return new JCocitFormRender();
-		if (modelType.equals(EntityFormWidgetData.class))
-			return new JCocitFormDataRender();
+		if (modelType.equals(EntityForm.class))
+			return new JCocitEntityFormRender();
+		if (modelType.equals(EntityFormData.class))
+			return new JCocitEntityFormDataRender();
 
-		if (modelType.equals(GridWidgetModel.class))
+		if (modelType.equals(GridWidget.class))
 			return new JCocitGridRenders.ModelRender();
 		if (modelType.equals(GridWidgetData.class))
 			return new JCocitGridRenders.DataRender();
 
-		if (modelType.equals(MenuWidgetModel.class))
+		if (modelType.equals(MenuWidget.class))
 			return new JCocitMenuRender();
 
-		if (modelType.equals(SearchBoxWidgetModel.class))
+		if (modelType.equals(SearchBoxWidget.class))
 			return new JCocitSearchBoxRender();
 
-		if (modelType.equals(TreeWidgetModel.class))
+		if (modelType.equals(TreeWidget.class))
 			return new JCocitTreeRenders.ModelRender();
 		if (modelType.equals(TreeWidgetData.class))
 			return new JCocitTreeRenders.DataRender();

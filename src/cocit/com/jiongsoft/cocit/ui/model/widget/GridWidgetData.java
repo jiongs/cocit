@@ -11,7 +11,7 @@ import com.jiongsoft.cocit.ui.model.WidgetData;
  * @author jiongsoft
  * 
  */
-public class GridWidgetData extends WidgetData<GridWidgetModel, List> {
+public class GridWidgetData extends WidgetData<GridWidget, List> {
 	private int total;
 
 	public int getTotal() {

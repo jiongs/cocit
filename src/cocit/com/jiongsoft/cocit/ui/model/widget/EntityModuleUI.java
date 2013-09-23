@@ -12,17 +12,17 @@ import com.jiongsoft.cocit.ui.model.WidgetModel;
  * @author yongshan.ji
  * 
  */
-public class EntityModuleWidgetModel extends WidgetModel {
+public class EntityModuleUI extends WidgetModel {
 	private Long moduleID;
 	private String name;
 
 	// 一个主表界面
-	private EntityTableWidgetModel entityTableModel;
+	private EntityTableUI entityTableModel;
 
 	// 多个从表界面模型
-	private List<EntityTableWidgetModel> childrenEntityTableModels;
+	private List<EntityTableUI> childrenEntityTableModels;
 
-	public EntityModuleWidgetModel(EntityTableWidgetModel mainDataTableModel) {
+	public EntityModuleUI(EntityTableUI mainDataTableModel) {
 		this.entityTableModel = mainDataTableModel;
 	}
 
@@ -34,19 +34,19 @@ public class EntityModuleWidgetModel extends WidgetModel {
 		this.moduleID = moduleID;
 	}
 
-	public EntityTableWidgetModel getEntityTableModel() {
+	public EntityTableUI getEntityTableModel() {
 		return entityTableModel;
 	}
 
-	public void setEntityTableModel(EntityTableWidgetModel dataTableModel) {
+	public void setEntityTableModel(EntityTableUI dataTableModel) {
 		this.entityTableModel = dataTableModel;
 	}
 
-	public List<EntityTableWidgetModel> getChildrenEntityTableModels() {
+	public List<EntityTableUI> getChildrenEntityTableModels() {
 		return childrenEntityTableModels;
 	}
 
-	public void setChildrenEntityTableModels(List<EntityTableWidgetModel> childrenModels) {
+	public void setChildrenEntityTableModels(List<EntityTableUI> childrenModels) {
 		this.childrenEntityTableModels = childrenModels;
 	}
 

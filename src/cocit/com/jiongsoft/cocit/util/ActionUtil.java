@@ -1,5 +1,6 @@
 package com.jiongsoft.cocit.util;
 
+
 /**
  * Action 工具类: 服务于 actions 包下的 XxxAction 类。
  * 
@@ -59,6 +60,11 @@ public abstract class ActionUtil {
 
 	public static final int DEFAULT_PAGE_SIZE = 20;
 
+	/**
+	 * JSP 目录
+	 */
+	public static final String JSP_DIR = "/WEB-INF/jsp/coc";
+
 	/*
 	 * 以下是数据管理模块相关功能的访问路径。
 	 */
@@ -101,7 +107,7 @@ public abstract class ActionUtil {
 	 * <p>
 	 * 参数：moduleID:tableID:operationID
 	 */
-	public static final String GET_ENTITY_FORM_UI = ACTION_PATH_PREFIX + "/getEntityFormUI/*";
+	public static final String GET_ENTITY_FORM = ACTION_PATH_PREFIX + "/getEntityForm/*";
 
 	/**
 	 * “业务模块”访问路径之保存业务表单

@@ -9,6 +9,7 @@ import static com.kmetop.demsy.comlib.LibConst.F_SOFT_ID;
 import static com.kmetop.demsy.mvc.MvcConst.VW_BIZ;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -831,7 +832,7 @@ public class BizActions extends ModuleActions implements BizConst, MvcConst {
 						}
 						excelResult.add(row);
 					}
-					SystemExcel.makeExcel(file, excelResult);
+					SystemExcel.makeExcel(new FileOutputStream(file), excelResult);
 
 					Http.write(file);
 				} catch (Throwable e) {

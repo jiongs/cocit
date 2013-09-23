@@ -63,8 +63,8 @@
 			displayMsg : '显示{from}-{to}条 共{total}条'
 		});
 
-	if ($.fn.entity)
-		$e($.fn.entity.defaults, {
+	if (jCocit.entity)
+		$e(jCocit.entity.defaults, {
 			confirm : "确定",
 			cancel : "取消",
 			unsupport : "不支持该操作！",

@@ -9,9 +9,9 @@ import com.jiongsoft.cocit.util.Tree;
  * @author yongshan.ji
  * 
  */
-public class MenuWidgetModel extends WidgetModel {
+public class MenuWidget extends WidgetModel {
 
-	private SearchBoxWidgetModel searchBoxModel;
+	private SearchBoxWidget searchBoxModel;
 	
 	private Tree data;
 
@@ -23,11 +23,11 @@ public class MenuWidgetModel extends WidgetModel {
 		this.data = menu;
 	}
 
-	public SearchBoxWidgetModel getSearchBoxModel() {
+	public SearchBoxWidget getSearchBoxModel() {
 		return searchBoxModel;
 	}
 
-	public void setSearchBoxModel(SearchBoxWidgetModel searchBoxModel) {
+	public void setSearchBoxModel(SearchBoxWidget searchBoxModel) {
 		this.searchBoxModel = searchBoxModel;
 	}
 
