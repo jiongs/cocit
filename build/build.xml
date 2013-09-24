@@ -117,6 +117,7 @@
 				<include name="config/log4j.properties" />
 				<include name="config/logback.xml" />
 				<include name="config/ioc.js" />
+				<include name="jsp/**/*.*" />
 			</fileset>
 		</copy>
 		<echo message="拷贝${jars.dir}目录下的*.jar文件到${tmp.dir}/WEB-INF/lib目录 ..." />

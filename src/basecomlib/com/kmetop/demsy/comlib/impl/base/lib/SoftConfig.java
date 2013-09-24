@@ -47,7 +47,7 @@ import com.kmetop.demsy.lang.Str;
 , jsonData = "SoftConfig.data.js"//
 )
 public class SoftConfig extends BizComponent implements ISoftConfig {
-	@Column(length = 255)
+	@Column(length = 256)
 	private String value;
 
 	@ManyToOne

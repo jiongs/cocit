@@ -176,14 +176,12 @@
 								overflow : "hidden",
 								height : $cont.outerHeight()
 							});
-							$cont.css({
-								overflow : "auto",
-								float : "left"
+							$cont.css("float", "left").css({
+								overflow : "auto"
 							}).show();
-							$btn.css({
-								overflow : "auto",
-								float : "left"
-							}).eq(c).addClass("tabcur").next(".tabcont").width(f).siblings(".tabcont:visible").width(0).addClass("tabfold")
+							$btn.css("float", "left").css({
+								overflow : "auto"
+							}).eq(c).addClass("tabcur").next(".tabcont").width(f).siblings(".tabcont:visible").width(0).addClass("tabfold");
 						} else {
 							$cont.hide();
 							$btn.eq(c).addClass("tabcur").next(".tabcont").show()
