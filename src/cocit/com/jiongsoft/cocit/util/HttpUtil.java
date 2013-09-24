@@ -106,6 +106,11 @@ public abstract class HttpUtil {
 	 * 生成随机验证码，验证码被保存在session(key=cocit_verify_code)中，可以通过{@link #checkVerificationCode(String)进行验证 。
 	 */
 	public static String makeSmsVerifyCode(HttpServletRequest request, String mobile) {
+
+		if (!StringUtil.isMobile(mobile)) {
+			throw new CocException("非法手机号码！");
+		}
+
 		StringBuffer sb = new StringBuffer();
 
 		char[] ch = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
@@ -142,7 +147,7 @@ public abstract class HttpUtil {
 
 		String validMobile = (String) session.getAttribute("cocit_verify_mobile");
 		String validCode = (String) session.getAttribute("cocit_verify_code");
-		
+
 		if (StringUtil.isNil(code) || StringUtil.isNil(validCode) || StringUtil.isNil(mobile) || StringUtil.isNil(validMobile))
 			throw new CocException(exceptionMessage);
 
@@ -151,7 +156,6 @@ public abstract class HttpUtil {
 
 		session.removeAttribute("cocit_verify_mobile");
 		session.removeAttribute("cocit_verify_code");
-
 	}
 
 	/**
@@ -240,7 +244,7 @@ public abstract class HttpUtil {
 			exceptionMessage = "验证码不正确！";
 
 		HttpSession session = request.getSession(true);
-		
+
 		String validCode = (String) session.getAttribute("cocit_verify_code");
 
 		if (StringUtil.isNil(code) || StringUtil.isNil(validCode))

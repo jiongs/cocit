@@ -42,8 +42,8 @@ import com.jiongsoft.cocit.util.ActionUtil;
 		// , @CocField(name = "本次余额(条)", mode = "*:N v:S", property = "balance", desc = "本次发送完成后剩下多少短信余额(条)") //
 		// , @CocField(name = "本次计费(条)", mode = "*:N v:S", property = "cost", desc = "本次发送需要消费多少短信费用(条)") //
 		, @CocField(name = "发送结果", mode = "*:N v:S", property = "result", desc = "0:发送是否成功,998:网络超时,999:操作频繁,") //
-		, @CocField(name = "提交时间", mode = "*:N v:S", property = "created", pattern = "yyyy-MM-dd HH-mm-ss") //
-// , @CocField(name = "定时发送", mode = "*:N v:S c:E e:E", property = "sendTime", pattern = "yyyy-MM-dd HH-mm-ss") //
+		, @CocField(name = "提交时间", mode = "*:N v:S", property = "created", pattern = "yyyy-MM-dd HH:mm:ss") //
+// , @CocField(name = "定时发送", mode = "*:N v:S c:E e:E", property = "sendTime", pattern = "yyyy-MM-dd HH:mm:ss") //
 }// end: fields
 ) // end: CocGroup
 }// end: groups

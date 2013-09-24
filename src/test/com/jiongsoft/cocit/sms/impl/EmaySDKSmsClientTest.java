@@ -47,7 +47,22 @@ public class EmaySDKSmsClientTest {
 	}
 
 	@Test
-	public void testSend_1() throws Exception {
+	public void testSend_stress() throws Exception {
+		EmaySDKSmsClient fixture = new EmaySDKSmsClient();
+		String mobiles = "15911731833";
+		for (int i = 1; i <= 10; i++) {
+			String extCode = "";
+			String time = "";
+			String rrid = "";
+
+			String result = fixture.send(mobiles, "压力测试 " + i, extCode, time, rrid);
+
+			assertNotNull(result);
+		}
+	}
+
+	@Test
+	public void testSend_contentLength() throws Exception {
 		EmaySDKSmsClient fixture = new EmaySDKSmsClient();
 		String mobiles = "15911731833";
 		StringBuffer content = new StringBuffer();

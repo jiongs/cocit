@@ -170,11 +170,9 @@ public class VisitActivityPlugins {
 				VisitActivity activity = entity.getActivity();
 				activity = orm.load(activity.getClass(), activity.getId());
 
-				// 检查短信验证码
-				if (oldID == null || oldID == 0) {
-					String tel = entity.getTel();
-					String code = entity.getTelVerifyCode();
-					HttpUtil.checkSmsVerifyCode(Demsy.me().request(), tel, code, "手机验证码非法！");
+				// 检查身份证号码
+				if (!StringUtil.isNID(entity.getCode())) {
+					throw new CocException("非法身份证号码！");
 				}
 
 				// 检查报名有效期
@@ -209,6 +207,13 @@ public class VisitActivityPlugins {
 					}
 				}
 
+				// 最后 检查短信验证码
+				if (oldID == null || oldID == 0) {
+					String tel = entity.getTel();
+					String code = entity.getTelVerifyCode();
+					HttpUtil.checkSmsVerifyCode(Demsy.me().request(), tel, code, "手机验证码非法！");
+				}
+
 				// 修改计划中的报名人数
 				regNum += num;
 				activity.setRegisterPersonNumber(regNum);
@@ -240,7 +245,7 @@ public class VisitActivityPlugins {
 			if (StringUtil.isNil(tpl)) {
 				tpl = soft.getConfig("sms.visit.invitation", "邀请函：尊敬的%s先生/女士：您好，感谢您对云南白药的关注。我们诚邀您参加于%s在云南白药产业园区举办的“走进云南白药”活动，届时欢迎您的到来。验证码：%s");
 			}
-			String content = String.format(tpl, entity.getName(), CocCalendar.format(entity.getActivity().getPlanDate(), "MM月dd日HH:mm"), entity.getVerificationCode());
+			String content = String.format(tpl, entity.getName(), CocCalendar.format(entity.getActivity().getPlanDate(), "yyyy年MM月dd日HH:mm"), entity.getVerificationCode());
 
 			/**
 			 * 发送短信邀请函

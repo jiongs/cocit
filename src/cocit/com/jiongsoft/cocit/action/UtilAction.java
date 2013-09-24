@@ -67,7 +67,7 @@ public class UtilAction {
 			return AlertsModel.makeSuccess(message);
 		} catch (Throwable e) {
 			Log.warn("", e);
-			message = "获取短信验证码失败！";
+			message = "获取短信验证码失败！" + e.getMessage();
 
 			return AlertsModel.makeError(message);
 		}

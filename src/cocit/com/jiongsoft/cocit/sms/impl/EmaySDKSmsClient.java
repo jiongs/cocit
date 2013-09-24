@@ -169,10 +169,15 @@ public class EmaySDKSmsClient implements SmsClient {
 			int len = content.length();
 			int to = Math.min(from + 500, len);
 
+			String[] telArray = StringUtil.toArray(mobiles, ",");
+			if (telArray.length == 0) {
+				return "307";
+			}
+
 			StringBuffer ret = new StringBuffer();
 			while (from < to && to <= len) {
 				String msg = content.substring(from, to);
-				ret.append("," + this.emayClient.sendSMS(StringUtil.toArray(mobiles, ","), msg, 5));
+				ret.append("," + this.emayClient.sendSMS(telArray, msg, 5));
 				from = to + 1;
 				to = Math.min(from + 500, len);
 			}
