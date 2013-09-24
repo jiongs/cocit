@@ -14,6 +14,7 @@ import com.jiongsoft.cocit.util.CocCalendar;
 import com.jiongsoft.cocit.util.CocException;
 import com.jiongsoft.cocit.util.HttpUtil;
 import com.jiongsoft.cocit.util.Log;
+import com.jiongsoft.cocit.util.StringUtil;
 import com.jiongsoft.ynby.entity.VisitActivity;
 import com.jiongsoft.ynby.entity.VisitActivityAddress;
 import com.jiongsoft.ynby.entity.VisitActivityRegister;
@@ -159,11 +160,11 @@ public class VisitActivityPlugins {
 					 * 检查该手机号是否已经报过名；且活动时间尚未到来。
 					 */
 
-//					String tel = entity.getTel();
-//					VisitActivityRegister oldEntity = orm.get(VisitActivityRegister.class, Expr.eq("tel", tel).addDesc("id"));
-//					if (oldEntity != null && oldEntity.getActivity().getPlanDate().getTime() > System.currentTimeMillis()) {
-//						throw new CocException("该手机号已经报名参加【%s】的活动，不允许重复报名！", oldEntity.getActivity().getName());
-//					}
+					// String tel = entity.getTel();
+					// VisitActivityRegister oldEntity = orm.get(VisitActivityRegister.class, Expr.eq("tel", tel).addDesc("id"));
+					// if (oldEntity != null && oldEntity.getActivity().getPlanDate().getTime() > System.currentTimeMillis()) {
+					// throw new CocException("该手机号已经报名参加【%s】的活动，不允许重复报名！", oldEntity.getActivity().getName());
+					// }
 				}
 
 				VisitActivity activity = entity.getActivity();
@@ -230,7 +231,15 @@ public class VisitActivityPlugins {
 			SoftService soft = Cocit.getActionContext().getSoftService();
 			VisitActivityRegister entity = event.getEntity();
 
-			String tpl = soft.getConfig("sms.visit.invitation", "邀请函：尊敬的%s先生/女士：您好，感谢您对云南白药的关注。我们诚邀您参加于%s在云南白药产业园区举办的“走进云南白药”活动，届时欢迎您的到来。验证码：%s");
+			String tpl = null;
+			if (entity.getSex() == 0) {
+				tpl = soft.getConfig("sms.visit.invitation0", "");
+			} else if (entity.getSex() == 1) {
+				tpl = soft.getConfig("sms.visit.invitation1", "");
+			}
+			if (StringUtil.isNil(tpl)) {
+				tpl = soft.getConfig("sms.visit.invitation", "邀请函：尊敬的%s先生/女士：您好，感谢您对云南白药的关注。我们诚邀您参加于%s在云南白药产业园区举办的“走进云南白药”活动，届时欢迎您的到来。验证码：%s");
+			}
 			String content = String.format(tpl, entity.getName(), CocCalendar.format(entity.getActivity().getPlanDate(), "MM月dd日HH:mm"), entity.getVerificationCode());
 
 			/**
