@@ -87,7 +87,7 @@
 }
 
 .searchbox-button {
-	background: url('images/ui_searchbox.png') no-repeat center center;
+	background: url('images/entity.png') no-repeat -111px 2px;
 }
 
 .searchbox, .searchbox .searchbox-text{

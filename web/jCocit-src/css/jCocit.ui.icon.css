@@ -1,8 +1,10 @@
-a.l-btn span.l-btn-icon{
-	padding: 1px 5px 3px 5px;
-	margin-right: 5px;
+a.l-btn div.l-btn-icon{
+	position: relative;
+	float: left;
 	height: 16px;
 	width: 16px;
+	margin-top: 1px;
+	margin-right: 3px;
 }
 .icon-logo {
 	background: url('images/icon/setting.png') no-repeat left center;
@@ -16,35 +18,34 @@ a.l-btn span.l-btn-icon{
 .icon-setting {
 	background: url('images/icon/setting.png') no-repeat left center;
 }
+.icon-101,.icon-102,.icon-103,.icon-107,.icon-199,.icon-250,.icon-251,.icon-252,.icon-253,.icon-256,.icon-299 {
+	background-image: url('images/entity.png');
+	background-repeat: no-repeat;
+}
 /* 格式：icon-操作码 */
 /* 添加 */
 .icon-101 {
-	background: url('images/entity.png') no-repeat 0 -16px;
-}
-/* 删除 */
-.icon-299 {
-	width: 16px;
-	height: 16px;
-	padding: 8px;
-	background: url('images/entity.png') no-repeat -16px -16px;
+	background-position: 0 -16px;
 }
 /* 修改 */
 .icon-102 {
-	width: 16px;
-	height: 16px;
-	padding: 8px;
-	background: url('images/entity.png') no-repeat -32px -16px;
+	background-position: -16px -16px;
+}
+/* 删除 */
+.icon-299 {
+	background-position: -32px -16px;
 }
 /* 批量修改 */
 .icon-103 {
-	width: 16px;
-	height: 16px;
-	padding: 8px;
-	background: url('images/entity.png') no-repeat -32px -16px;
+	background-position: -80px -16px;
+}
+/* EXCEL */
+.icon-107 {
+	background-position: -96px -16px;
 }
 /* 详情 */
 .icon-199,.icon-250,.icon-251,.icon-252,.icon-253,.icon-256 {
-	background: url('images/entity.png') no-repeat -80px -16px;
+	background-position: -48px -16px;
 }
 /* 排序 */
 .icon-250 {

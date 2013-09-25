@@ -31,7 +31,7 @@ public class JCocitMenuRender extends WidgetRender<MenuWidget> {
 		/*
 		 * 用一个Table将工具栏容器分成两部分：1.左边为工具栏菜单，2.右边为搜索框。
 		 */
-		print(out, "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%%\"><tr><td width=\"5\" nowrap>");
+		print(out, "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\"><tr><td width=\"5\" nowrap>");
 
 		/*
 		 * 1.左边为工具栏菜单
@@ -90,7 +90,7 @@ public class JCocitMenuRender extends WidgetRender<MenuWidget> {
 		 */
 		SearchBoxWidget searchMode = model.getSearchBoxModel();
 		if (searchMode != null) {
-			print(out, "</td><td align=\"left\" style=\"padding-left: 5px;\">");
+			print(out, "</td><td align=\"right\" style=\"padding-left: 5px;\">");
 
 			searchMode.set("token", model.get("token", ""));
 			searchMode.render(out);

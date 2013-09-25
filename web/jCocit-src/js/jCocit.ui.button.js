@@ -29,7 +29,7 @@
 
 			$button.html(opts.text).wrapInner('<span class="l-btn-left"><span class="l-btn-text"></span></span>');
 			if (opts.iconCls) {
-				$('<span class="l-btn-icon">&nbsp;</span>').addClass(opts.iconCls).prependTo($f(".l-btn-left", $button));
+				$('<div class="l-btn-icon"></div>').addClass(opts.iconCls).prependTo($f(".l-btn-left", $button));
 			}
 		} else {
 			$button.html("&nbsp;").wrapInner('<span class="l-btn-left"><span class="l-btn-text"><span class="l-btn-empty"></span></span></span>');
