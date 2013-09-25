@@ -5,7 +5,7 @@
 	function _init(buttonHTML) {
 		var $button = $(buttonHTML);
 		var opts = $d(buttonHTML, "button").options;
-		
+
 		$button.empty();
 		$ac("l-btn", $button);
 
@@ -22,9 +22,14 @@
 		}
 
 		if (opts.text) {
+			// $button.html(opts.text).wrapInner('<span class="l-btn-left"><span class="l-btn-text"></span></span>');
+			// if (opts.iconCls) {
+			// $ac(opts.iconAlign == "left" ? "l-btn-icon-left" : "l-btn-icon-right", $ac(opts.iconCls, $f(".l-btn-text", $button)));
+			// }
+
 			$button.html(opts.text).wrapInner('<span class="l-btn-left"><span class="l-btn-text"></span></span>');
 			if (opts.iconCls) {
-				$ac(opts.iconAlign == "left" ? "l-btn-icon-left" : "l-btn-icon-right", $ac(opts.iconCls, $f(".l-btn-text", $button)));
+				$('<span class="l-btn-icon">&nbsp;</span>').addClass(opts.iconCls).prependTo($f(".l-btn-left", $button));
 			}
 		} else {
 			$button.html("&nbsp;").wrapInner('<span class="l-btn-left"><span class="l-btn-text"><span class="l-btn-empty"></span></span></span>');

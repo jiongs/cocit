@@ -53,23 +53,23 @@
 }
 
 .pagination-first {
-	background: url('images/ui_pagination.png') no-repeat 0 0;
+	background: url('images/entity.png') no-repeat 0 0;
 }
 
 .pagination-prev {
-	background: url('images/ui_pagination.png') no-repeat -16px 0;
+	background: url('images/entity.png') no-repeat -16px 0;
 }
 
 .pagination-next {
-	background: url('images/ui_pagination.png') no-repeat -32px 0;
+	background: url('images/entity.png') no-repeat -32px 0;
 }
 
 .pagination-last {
-	background: url('images/ui_pagination.png') no-repeat -48px 0;
+	background: url('images/entity.png') no-repeat -48px 0;
 }
 
 .pagination-load {
-	background: url('images/ui_pagination.png') no-repeat -64px 0;
+	background: url('images/entity.png') no-repeat -64px 0;
 }
 
 .pagination-loading {
