@@ -23,7 +23,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 // 操作按钮
 , actions = {
 //
-		@CocOperation(name = "导出Excel", typeCode = 107, mode = "xls")//
+		@CocOperation(name = "导出EXCEL", typeCode = 107, mode = "xls")//
 		, @CocOperation(name = "报名", typeCode = 101, mode = "c", plugin = VisitActivityPlugins.SaveRegister.class)//
 		, @CocOperation(name = "删除", typeCode = 299, mode = "d") //
 		, @CocOperation(name = "查看", typeCode = 102, mode = "v") //
@@ -39,13 +39,13 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 		, @CocField(name = "身份证号码", mode = "*:N v:S c:M e:M xls:S", property = "code", gridOrder = 4) //
 		, @CocField(name = "工作单位", mode = "*:N v:S c:E e:E xls:S", property = "unit", gridOrder = 9) //
 		, @CocField(name = "参观时间", mode = "*:N v:S c:M e:M", property = "activity", gridOrder = 5)//
-		, @CocField(name = "邀请函验证码", mode = "*:N v:S xls:S", property = "verificationCode", gridOrder = 6) //
-		, @CocField(name = "参观人数", mode = "*:N v:S c:E e:E xls:S", property = "personNumber", gridOrder = 7) //
-		, @CocField(name = "自驾车牌号", mode = "*:N v:S c:E e:E xls:S", property = "carCode", gridOrder = 8) //
+		, @CocField(name = "邀请函验证码", mode = "*:N v:S xls:S", property = "verificationCode", gridOrder = 13) //
+		, @CocField(name = "参观人数", mode = "*:N v:S c:E e:E xls:S", property = "personNumber", gridOrder = 6) //
+		, @CocField(name = "自驾车牌号", mode = "*:N v:S c:E e:E xls:S", property = "carCode", gridOrder = 7) //
 		, @CocField(name = "QQ号码", mode = "*:N v:S c:E e:E", property = "qq", gridOrder = 10) //
 		, @CocField(name = "邮箱地址", mode = "*:N v:S c:E e:E", property = "email", gridOrder = 11) //
 		, @CocField(name = "登录帐号", mode = "*:N v:S", property = "createdBy", gridOrder = 12) //
-		, @CocField(name = "报名时间", mode = "*:N v:S", property = "created", pattern = "yyyy-MM-dd HH:mm:ss", gridOrder = 13) //
+		, @CocField(name = "报名时间", mode = "*:N v:S", property = "created", pattern = "yyyy-MM-dd HH:mm:ss", gridOrder = 8) //
 		, @CocField(name = "IP地址", mode = "*:N v:S", property = "createdIP", gridOrder = 14) //
 }// end: fields
 ) // end: CocGroup

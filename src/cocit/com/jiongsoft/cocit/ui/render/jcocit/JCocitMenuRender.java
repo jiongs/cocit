@@ -56,14 +56,14 @@ public class JCocitMenuRender extends WidgetRender<MenuWidget> {
 				if (!StringUtil.isNil(str))
 					print(out, ", funcExpr: '%s'", str);
 
-				str = node.get("opMode", "");
+				String opMode = node.get("opMode", "");
 				if (!StringUtil.isNil(str))
-					print(out, ", opMode: '%s'", str);
+					print(out, ", opMode: '%s'", opMode);
 
 				str = node.get("opCode", "");
 				if (!StringUtil.isNil(str)) {
 					print(out, ", opCode: %s", str);
-					print(out, ", iconCls: 'icon-%s'", str);// iconCls 由菜单操作码决定
+					print(out, ", iconCls: 'icon-%s icon-%s-%s'", str, str, opMode);// iconCls 由菜单操作码决定
 				}
 
 				// 子菜单

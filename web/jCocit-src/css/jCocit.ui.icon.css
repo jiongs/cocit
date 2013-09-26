@@ -18,7 +18,7 @@ a.l-btn div.l-btn-icon{
 .icon-setting {
 	background: url('images/icon/setting.png') no-repeat left center;
 }
-.icon-101,.icon-102,.icon-103,.icon-107,.icon-199,.icon-250,.icon-251,.icon-252,.icon-253,.icon-256,.icon-299 {
+.icon-101,.icon-102,.icon-103,.icon-107,.icon-199,.icon-250,.icon-251,.icon-252,.icon-253,.icon-256,.icon-299,.icon-204 {
 	background-image: url('images/entity.png');
 	background-repeat: no-repeat;
 }
@@ -30,6 +30,9 @@ a.l-btn div.l-btn-icon{
 /* 修改 */
 .icon-102 {
 	background-position: -16px -16px;
+}
+.icon-102-v {
+	background-position: -48px -16px;
 }
 /* 删除 */
 .icon-299 {
@@ -43,9 +46,13 @@ a.l-btn div.l-btn-icon{
 .icon-107 {
 	background-position: -96px -16px;
 }
+/* Synchronized Task */
+.icon-204 {
+	background-position: 0 -32px;
+}
 /* 详情 */
 .icon-199,.icon-250,.icon-251,.icon-252,.icon-253,.icon-256 {
-	background-position: -48px -16px;
+	background-position: -112px -16px;
 }
 /* 排序 */
 .icon-250 {

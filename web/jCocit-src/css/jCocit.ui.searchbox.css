@@ -86,8 +86,10 @@
 	border-radius: 0;
 }
 
-.searchbox-button {
-	background: url('images/entity.png') no-repeat -111px 2px;
+.searchbox-button-icon {
+	height: 16px;
+	width: 16px;
+	background: url('images/entity.png') no-repeat -112px 0;
 }
 
 .searchbox, .searchbox .searchbox-text{

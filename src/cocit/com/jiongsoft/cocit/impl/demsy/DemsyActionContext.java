@@ -19,13 +19,19 @@ public class DemsyActionContext extends BaseActionContext {
 	}
 
 	public int getBrowserWidth() {
-		Double d = demsyContext.login().getClientWidth();
-		return d.intValue();
+		if (demsyContext.login() != null) {
+			Double d = demsyContext.login().getClientWidth();
+			return d.intValue();
+		}
+		return 1920;
 	}
 
 	public int getBrowserHeight() {
-		Double d = demsyContext.login().getClientHeight();
-		return d.intValue();
+		if (demsyContext.login() != null) {
+			Double d = demsyContext.login().getClientHeight();
+			return d.intValue();
+		}
+		return 1000;
 	}
 
 	public int getAdminTopHeight() {
