@@ -103,7 +103,7 @@ public abstract class ActionUtil {
 	public static final String GET_ENTITY_NAVI_DATA = ACTION_PATH_PREFIX + "/getEntityNaviData/*";
 
 	/**
-	 * “业务模块”访问路径之加载业务表单
+	 * “业务模块”访问路径之加载业务表单，添加、修改数据时使用。
 	 * <p>
 	 * 参数：moduleID:tableID:operationID
 	 */

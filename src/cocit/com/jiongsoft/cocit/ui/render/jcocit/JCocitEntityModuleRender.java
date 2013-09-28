@@ -25,31 +25,32 @@ public class JCocitEntityModuleRender extends WidgetRender<EntityModuleUI> {
 		print(out, "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />");
 		print(out, "<title>%s</title>", model.getName());
 
-		/*
-		 * CSS
-		 */
+		// CSS
 		print(out, "<link href=\"%s/jCocit/css/jCocit.min.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 
-		// 调试 CSS
-		 print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.icon.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
+		/*
+		 * 调试 CSS
+		 */
+//		 print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.icon.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.plugin.entity.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
-		 print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.searchbox.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
-		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.panel.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
+//		 print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.searchbox.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
+//		 print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.panel.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
+//		 print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.tabs.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.window.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.dialog.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
-		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.datagrid.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
-		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.pagination.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
+//		 print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.datagrid.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
+//		 print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.button.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 
-		/*
-		 * JS
-		 */
+		// JS
 		print(out, "<script src=\"%s/jCocit/common/jquery.min.js\" type=\"text/javascript\"></script>", contextPath);
 		print(out, "<script src=\"%s/jCocit/js/jCocit.pack.js\" type=\"text/javascript\"></script>", contextPath);
 
-		// 调试 JS
+		/*
+		 * 调试 JS
+		 */
 		// print(out, "<script src=\"%s/jCocit-src/js/jCocit.plugin.entity.js\" type=\"text/javascript\"></script>", contextPath);
 		// print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.button.js\" type=\"text/javascript\"></script>", contextPath);
-		 print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.searchbox.js\" type=\"text/javascript\"></script>", contextPath);
+//		 print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.searchbox.js\" type=\"text/javascript\"></script>", contextPath);
 		// print(out, "<script src=\"%s/jCocit-src/js/jCocit.utils.js\" type=\"text/javascript\"></script>", contextPath);
 		// print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.dialog.js\" type=\"text/javascript\"></script>", contextPath);
 		// print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.tree.js\" type=\"text/javascript\"></script>", contextPath);

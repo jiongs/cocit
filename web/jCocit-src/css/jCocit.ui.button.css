@@ -23,7 +23,6 @@ a.l-btn-plain {
 }
 
 a.l-btn-disabled {
-	color: #ccc;
 	opacity: 0.3;
 	filter: alpha(opacity =   30);
 	cursor: default;
@@ -32,7 +31,7 @@ a.l-btn-disabled {
 a.l-btn span.l-btn-left {
 	display: inline-block;
 	background-position: 0 -48px;
-	padding: 3px 0px 3px 18px;
+	padding: 2px 0px 2px 2px;
 	line-height: 16px;
 	height: 18px;
 }
@@ -90,7 +89,10 @@ a:hover.l-btn-disabled {
 a:hover.l-btn-disabled span.l-btn-left {
 	background-position: 0 -48px;
 }
-
+/* 背景、边框、字体颜色设置 */
+a.l-btn-disabled {
+	color: #ccc;
+}
 a.l-btn .l-btn-focus {
 	outline: #0000FF dotted thin;
 }
@@ -126,10 +128,15 @@ a:hover.l-btn-plain {
 	filter: alpha(opacity = 100);
 	background: #eaf2ff;
 	color: #000000;
-	border: 1px solid #b7d2ff;
+	border: 1px solid #2f9b94;
 	-moz-border-radius: 2px 2px 2px 2px;
 	-webkit-border-radius: 2px 2px 2px 2px;
 	border-radius: 2px 2px 2px 2px;
+	background: -webkit-linear-gradient(top, #ffffff 0, #79c4bf 100%);
+	background: -moz-linear-gradient(top, #ffffff 0, #79c4bf 100%);
+	background: -o-linear-gradient(top, #ffffff 0, #79c4bf 100%);
+	background: linear-gradient(to bottom, #ffffff 0, #79c4bf 100%);
+	filter: progid : DXImageTransform.Microsoft.gradient ( startColorstr = #ffffff, endColorstr = #79c4bf, GradientType = 0 );
 }
 
 a.l-btn-disabled,a:hover.l-btn-disabled {

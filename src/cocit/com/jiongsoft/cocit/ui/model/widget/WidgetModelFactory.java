@@ -1,6 +1,7 @@
 package com.jiongsoft.cocit.ui.model.widget;
 
 import com.jiongsoft.cocit.service.ModuleService;
+import com.jiongsoft.cocit.service.OperationService;
 import com.jiongsoft.cocit.service.TableService;
 
 /**
@@ -27,7 +28,7 @@ public interface WidgetModelFactory {
 	 */
 	EntityTableUI getEntityTableUI(ModuleService module, TableService table);
 
-	EntityForm getEntityFormUI(ModuleService module, TableService table, String opMode, Object entity);
+	EntityForm getEntityFormUI(ModuleService module, TableService table, OperationService op, Object entity);
 
 	/**
 	 * 获取数据表Grid模型

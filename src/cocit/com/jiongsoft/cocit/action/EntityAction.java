@@ -149,7 +149,7 @@ public class EntityAction {
 	public EntityForm getEntityForm(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
 		ActionHelper helper = ActionHelper.make(args, argDataID, dataNode);
 
-		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
+		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.op, helper.entity);
 
 		formModel.setData(helper.entity);
 
@@ -174,7 +174,7 @@ public class EntityAction {
 	public EntityFormData saveEntityFormData(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
 		ActionHelper helper = ActionHelper.make(args, argDataID, dataNode);
 
-		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
+		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.op, helper.entity);
 
 		EntityFormData ret = new EntityFormData();
 		ret.setModel(formModel);
@@ -193,7 +193,7 @@ public class EntityAction {
 	public EntityFormData deleteEntityData(String args, String dataID) {
 		ActionHelper helper = ActionHelper.make(args, dataID, null);
 
-		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
+		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.op, helper.entity);
 
 		EntityFormData ret = new EntityFormData();
 		ret.setModel(formModel);
@@ -248,8 +248,9 @@ public class EntityAction {
 	public EntityForm getExportXlsForm(String args, String argDataID) {
 		ActionHelper helper = ActionHelper.make(args, argDataID, null);
 
-		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.opMode, helper.entity);
-		formModel.setJsp(ActionUtil.JSP_DIR + "/getExportXlsForm");
+		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.op, helper.entity);
+		if (StringUtil.isNil(formModel.getJsp()))
+			formModel.setJsp(ActionUtil.JSP_DIR + "/getExportXlsForm");
 
 		formModel.setVar("actionHelper", helper);
 		formModel.setVar("query.filterExpr", StringUtil.escapeHTML(helper.actionContext.getParameterValue("query.filterExpr", "")));

@@ -70,7 +70,7 @@ public interface OperationService extends EntityService<OperationEntity> {
 	 * 
 	 * @return
 	 */
-	String getOperationMode();
+	String getMode();
 
 	// String getLogo();
 
@@ -79,7 +79,7 @@ public interface OperationService extends EntityService<OperationEntity> {
 	 * 
 	 * @return
 	 */
-	String getOperationCode();
+	String getCode();
 
 	/**
 	 * 获取父操作ID: 用于描述业务操作的菜单树结构
@@ -88,4 +88,8 @@ public interface OperationService extends EntityService<OperationEntity> {
 	 */
 	Long getParentID();
 
+	/**
+	 * 获取界面模版，通常为一个JSP页面。当执行该操作时将自动加载该模版作为操作界面。
+	 */
+	public String getJsp();
 }

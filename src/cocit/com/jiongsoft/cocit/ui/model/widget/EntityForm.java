@@ -28,7 +28,7 @@ public class EntityForm extends WidgetModel {
 	private List<FormField> groupFields;
 
 	/**
-	 * 使用JSP产生实体表单
+	 * 使用JSP 模版产生实体表单
 	 */
 	private String jsp;
 
@@ -48,10 +48,22 @@ public class EntityForm extends WidgetModel {
 		contextPath = Cocit.getContextPath();
 	}
 
+	/**
+	 * 获取环境变脸
+	 * 
+	 * @param key
+	 * @return
+	 */
 	public <T> T getVar(String key) {
 		return (T) context.get(key);
 	}
 
+	/**
+	 * 设置环境变量
+	 * 
+	 * @param key
+	 * @param value
+	 */
 	public void setVar(String key, Object value) {
 		context.put(key, value);
 	}

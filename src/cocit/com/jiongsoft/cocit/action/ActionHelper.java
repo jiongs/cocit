@@ -14,6 +14,7 @@ import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.jiongsoft.cocit.service.EntityManager;
 import com.jiongsoft.cocit.service.ModuleService;
+import com.jiongsoft.cocit.service.OperationService;
 import com.jiongsoft.cocit.service.ServiceFactory;
 import com.jiongsoft.cocit.service.SoftService;
 import com.jiongsoft.cocit.service.TableService;
@@ -58,7 +59,7 @@ public class ActionHelper {
 
 	public TableService table;
 
-	// public OperationService operation;
+	public OperationService op;
 
 	public WidgetModelFactory widgetFactory;
 
@@ -155,7 +156,7 @@ public class ActionHelper {
 		} catch (NumberFormatException e) {
 			table = serviceFactory.getTable(tableID);
 		}
-		// operation = softFactory.getOperation(table, opMode);
+		op = serviceFactory.getOperation(table, opMode);
 
 		Log.debug("ActionHelper.parseOpArgs: moduleID = %s, tableID = %s", module, table);
 

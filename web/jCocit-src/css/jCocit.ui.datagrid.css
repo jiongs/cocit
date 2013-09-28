@@ -248,7 +248,7 @@
 }
 
 .datagrid-toolbar,.datagrid-pager {
-	background:#fafafa; /*#F4F4F4;dfeffc*/
+	background:#f0f4f6; /*#F4F4F4;dfeffc*/
 }
 
 .datagrid-header,.datagrid-toolbar,.datagrid-pager,.datagrid-footer-inner
@@ -265,17 +265,17 @@
 }
 
 .datagrid-row-alt {
-	background: #eaf2ff;
+	background: #f8f9f4;
 }
 
 .datagrid-row-over,.datagrid-header td.datagrid-header-over {
-	background: #ffe6a3;
+	background: #fae3ce;
 	color: #000000;
 	cursor: pointer;
 }
 
 .datagrid-row-selected {
-	background: #ffbe6a;
+	background: #f6cdaf;
 	color: #000000;
 }
 

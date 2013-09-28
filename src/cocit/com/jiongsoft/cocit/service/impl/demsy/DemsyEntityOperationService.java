@@ -52,7 +52,7 @@ public class DemsyEntityOperationService implements OperationService {
 	}
 
 	@Override
-	public String getOperationCode() {
+	public String getCode() {
 		return "" + entity.getTypeCode();
 	}
 
@@ -133,13 +133,18 @@ public class DemsyEntityOperationService implements OperationService {
 	}
 
 	@Override
-	public String getOperationMode() {
+	public String getMode() {
 		return entity.getMode();
 	}
 
 	@Override
 	public OperationEntity getEntity() {
 		return entity;
+	}
+
+	@Override
+	public String getJsp() {
+		return entity.getTemplate();
 	}
 
 }

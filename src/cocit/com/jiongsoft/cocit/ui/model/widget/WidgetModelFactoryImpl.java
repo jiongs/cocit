@@ -176,12 +176,12 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 
 				child.setName(op.getName());
 
-				String funcExpr = ActionUtil.encodeArgs(entityModule.getID(), entityTable.getID(), op.getOperationMode());
+				String funcExpr = ActionUtil.encodeArgs(entityModule.getID(), entityTable.getID(), op.getMode());
 
 				// opArgs = moduleID:tableID:operationID
 				child.set("funcExpr", funcExpr);
-				child.set("opCode", op.getOperationCode());
-				child.set("opMode", op.getOperationMode());
+				child.set("opCode", op.getCode());
+				child.set("opMode", op.getMode());
 				child.setSequence(op.getSequence());
 
 			}
@@ -239,8 +239,12 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 	}
 
 	@Override
-	public EntityForm getEntityFormUI(ModuleService entityModule, TableService entityTable, String opMode, Object entityEntity) {
+	public EntityForm getEntityFormUI(ModuleService entityModule, TableService entityTable, OperationService op, Object entityEntity) {
 		EntityForm ret = new EntityForm();
+
+		ret.setJsp(op.getJsp());
+
+		String opMode = op.getMode();
 
 		List<FieldGroupService> groups = entityTable.getEntityGroups();
 		for (FieldGroupService group : groups) {

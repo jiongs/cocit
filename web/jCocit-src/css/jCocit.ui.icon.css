@@ -3,8 +3,14 @@ a.l-btn div.l-btn-icon{
 	float: left;
 	height: 16px;
 	width: 16px;
-	margin-top: 1px;
-	margin-right: 3px;
+	margin: 1px 3px 0 0;
+	/*
+	border: 1px solid #2f9b94;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	background-color: #79c4bf;
+	*/
 }
 .icon-logo {
 	background: url('images/icon/setting.png') no-repeat left center;

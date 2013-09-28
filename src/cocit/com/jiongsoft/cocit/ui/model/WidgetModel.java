@@ -47,7 +47,7 @@ public abstract class WidgetModel implements UIModel {
 	}
 
 	/**
-	 * 设置模型扩展属性
+	 * 设置扩展属性
 	 * 
 	 * @param propName
 	 * @param propValue
@@ -57,7 +57,7 @@ public abstract class WidgetModel implements UIModel {
 	}
 
 	/**
-	 * 获取模型扩展属性
+	 * 获取扩展属性
 	 * 
 	 * @param propName
 	 * @return
