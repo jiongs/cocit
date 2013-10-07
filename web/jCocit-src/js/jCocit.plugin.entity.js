@@ -135,6 +135,14 @@
 			// 刷新子业务表Grid数据
 			if ($childGrid.length)
 				doGridRefresh($childGrid.datagrid("options").token);
+		},
+		getGridQueryParams: function(token){
+			var ret = {};
+			_prepareGridQueryParams(token, ret);
+			return ret;
+		},
+		getSelectedGridRows: function(token, field){
+			return _getSelectedGridRows(token, field);
 		}
 	};
 
@@ -321,7 +329,7 @@
 		var loadFormUrl = "/coc/getEntityForm/" + opts.funcExpr + "/" + dataID;
 		jCocit.dialog.open(loadFormUrl, "dialog_" + opts.token + "_" + opts.opCode, {
 			title : opts.text,
-			width : 900,
+			width : 800,
 			height : 600,
 			logoCls : opts.iconCls || 'icon-logo',
 			buttons : [ {
@@ -338,7 +346,7 @@
 		var loadFormUrl = "/coc/getEntityForm/" + opts.funcExpr + "/" + dataID + "?" + $.param(data);
 		jCocit.dialog.open(loadFormUrl, "dialog_" + opts.token + "_" + opts.opCode, {
 			title : opts.text,
-			width : 900,
+			width : 800,
 			height : 600,
 			logoCls : opts.iconCls || 'icon-logo',
 			buttons : [ {
@@ -365,14 +373,14 @@
 		});
 	}
 	function doExportXls(opts) {
-		var rows = _getSelectedRows(opts);
+		var rows = _getSelectedGridRows(opts.token);
 
 		var data = {};
 		_prepareGridQueryParams(opts.token, data);
 		var loadFormUrl = "/coc/getExportXlsForm/" + opts.funcExpr + "/" + rows.join(",") + "?" + $.param(data);
 		jCocit.dialog.open(loadFormUrl, "dialog_" + opts.token + "_" + opts.opCode, {
 			title : opts.text,
-			width : 900,
+			width : 800,
 			height : 600,
 			logoCls : opts.iconCls || 'icon-logo',
 			buttons : [ {
@@ -409,18 +417,21 @@
 	/**
 	 * 获取选中(selected/checked)行的ID数组
 	 */
-	function _getSelectedRows(opts) {
-		var gridID = "#datagrid_" + opts.token;
+	function _getSelectedGridRows(token, field) {
+		var gridID = "#datagrid_" + token;
 		var rows = $(gridID).datagrid("getChecked");
 		if (rows.length == 0) {
 			var row = $(gridID).datagrid("getSelected");
 			if (row)
 				rows[0] = row;
 		}
+		
+		if(!field)
+			field = "id";
 
 		var ids = new Array();
 		for (i = 0; i < rows.length; i++) {
-			ids[ids.length] = rows[i].id;
+			ids[ids.length] = rows[i][field];
 		}
 
 		return ids;
@@ -429,7 +440,7 @@
 	 * 删除选中(selected/checked)的行
 	 */
 	function doDelete(opts) {
-		var rows = _getSelectedRows(opts);
+		var rows = _getSelectedGridRows(opts.token);
 
 		if (rows.length == 0) {
 			Jwarn(jCocit.entity.defaults.unselectedAny);

@@ -132,10 +132,22 @@ public abstract class StringUtil {
 	public static List<String> toList(String str, String token) {
 		List<String> list = new ArrayList();
 
-		if (!isNil(str)) {
-			if (isNil(token))
-				token = ";, ";
+		if (isNil(str)) {
+			return list;
+		}
 
+		if (isNil(token))
+			token = ";, ";
+
+		if (token.length() == 1) {
+			int idx = str.indexOf(token);
+			while (idx > -1) {
+				list.add(str.substring(0, idx));
+				str = str.substring(idx + 1);
+				idx = str.indexOf(token);
+			}
+			list.add(str);
+		} else {
 			StringTokenizer st = new StringTokenizer(str, token);
 			while (st.hasMoreElements()) {
 				list.add((String) st.nextElement());

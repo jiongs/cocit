@@ -51,21 +51,19 @@
 	 * 2. Using CSS set header radius border and gradient background
 	 */
 	/* Radius Border */
-	border: 1px solid #95B8E7;
+	border: 1px solid #2f9b94;
 	border-bottom: 0px;
 	-moz-border-radius: 3px 3px 0px 0px;
 	-webkit-border-radius: 3px 3px 0px 0px;
 	border-radius: 3px 3px 0px 0px;
 	
 	/* Header Gradient Background Color */
-	/*
-	background: -webkit-linear-gradient(top, #EFF5FF 0, #E0ECFF 100%);
-	background: -moz-linear-gradient(top, #EFF5FF 0, #E0ECFF 100%);
-	background: -o-linear-gradient(top, #EFF5FF 0, #E0ECFF 100%);
-	background: linear-gradient(to bottom, #EFF5FF 0, #E0ECFF 100%);
+	background: -webkit-linear-gradient(top, #79c4bf 0, #dbf4f0 100%);
+	background: -moz-linear-gradient(top, #79c4bf 0, #dbf4f0 100%);
+	background: -o-linear-gradient(top, #79c4bf 0, #dbf4f0 100%);
+	background: linear-gradient(to bottom, #79c4bf 0, #dbf4f0 100%);
 	background-repeat: repeat-x;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#EFF5FF,endColorstr=#E0ECFF,GradientType=0);
-	*/
+	filter: progid : DXImageTransform.Microsoft.gradient ( startColorstr = #79c4bf, endColorstr = #dbf4f0, GradientType = 0 );
 }
 
 /* Window Header > Panel Header Right */
@@ -100,7 +98,6 @@
 
 /* Window Header > Panel Header Button */
 .WdH .PnHB {
-	
 }
 
 /**
@@ -108,11 +105,11 @@
  */
 .WdB {
 	overflow: hidden;
-	border-color: #95B8E7;
+	border-color: #2f9b94;
 	border-style: solid;
 	padding: 0 1px 0 1px;
 	border-width: 0 1px 0 1px;
-	background-color: #E0ECFF;
+	background-color: #dbf4f0;
 }
 
 /* Window Header Body No Header*/
@@ -122,7 +119,7 @@
 
 /* Window Content */
 .WdB > .PnBC {
-	border: 1px solid #95B8E7;
+	border: 1px solid #79c4bf;
 	margin: 8px;
 	padding: 6px;
 	background-color: #ffffff;
@@ -147,8 +144,8 @@
 	padding-left: 5px;
 	*/
 	height: 2px;
-	background-color: #E0ECFF;
-	border: 1px solid #95B8E7;
+	background-color: #dbf4f0;
+	border: 1px solid #2f9b94;
 	border-top: 0px;
 	-moz-border-radius: 0px 0px 3px 3px;
 	-webkit-border-radius: 0px 0px 3px 3px;

@@ -16,10 +16,10 @@ import java.util.List;
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.service.FieldService;
 import com.jiongsoft.cocit.service.TableService;
+import com.jiongsoft.cocit.ui.model.widget.Column;
 import com.jiongsoft.cocit.ui.model.widget.EntityForm;
-import com.jiongsoft.cocit.ui.model.widget.GridWidget;
 import com.jiongsoft.cocit.ui.model.widget.EntityForm.FormField;
-import com.jiongsoft.cocit.ui.model.widget.GridWidget.GridColumn;
+import com.jiongsoft.cocit.ui.model.widget.GridWidget;
 import com.jiongsoft.cocit.ui.render.WidgetRender;
 import com.jiongsoft.cocit.util.KeyValue;
 import com.jiongsoft.cocit.util.ObjectUtil;
@@ -81,7 +81,7 @@ public class JCocitEntityFormRender extends WidgetRender<EntityForm> {
 			print(sb, "<div class=\"entity-group\"><div class=\"entity-group-header\">%s</div>", group.getTitle());
 
 			// fields table
-			print(sb, "<table valign=\"top\" width=\"100%%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
+			print(sb, "<table valign=\"top\" width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
 
 			for (FormField field : visibleFields) {
 
@@ -236,7 +236,7 @@ public class JCocitEntityFormRender extends WidgetRender<EntityForm> {
 	private void printFK(StringBuffer sb, FieldService fieldService, Object fieldValue) {
 		TableService entityTable = fieldService.getFkEntityTable();
 		GridWidget gridModel = Cocit.getWidgetModelFactory().getGridUI(null, entityTable);
-		List<GridColumn> columns = gridModel.getColumns();
+		List<Column> columns = gridModel.getColumns();
 
 		String id = ObjectUtil.idOrtoString(fieldValue);
 		String text = fieldValue == null ? "" : fieldValue.toString();
@@ -253,7 +253,7 @@ public class JCocitEntityFormRender extends WidgetRender<EntityForm> {
 		print(sb, "{field:'id',title:'ID',width:80,align:'right'},");
 
 		int count = 0;
-		for (GridColumn col : columns) {
+		for (Column col : columns) {
 			print(sb, "{field:'%s',title:'%s',width:%s,sortable:true,align:'%s'},", col.getField(), col.getTitle(), col.getWidth(), col.getAlign());
 			count++;
 			if (count == 4)

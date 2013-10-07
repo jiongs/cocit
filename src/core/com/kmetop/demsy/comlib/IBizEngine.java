@@ -312,7 +312,7 @@ public interface IBizEngine {
 
 	String getMode(IBizFieldGroup group, IAction action);
 
-	Nodes makeNaviNodes(IBizSystem system, String idField);
+	Nodes makeNaviNodes(IBizSystem system, String idField, boolean removeSelfLeaf);
 
 	Nodes makeOptionNodes(IBizField field, String mode, Object data, String idField);
 

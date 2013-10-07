@@ -1859,7 +1859,7 @@ public abstract class BizEngine implements IBizEngine {
 	}
 
 	@Override
-	public Nodes makeNaviNodes(IBizSystem bizSystem, String idField) {
+	public Nodes makeNaviNodes(IBizSystem bizSystem, String idField, boolean removeSelfLeaf) {
 		log.debugf("计算业务系统导航菜单数据......[system=%s]", bizSystem);
 
 		Nodes root = Nodes.make();
@@ -1883,7 +1883,7 @@ public abstract class BizEngine implements IBizEngine {
 			}
 
 			// 自身树导航字段：移除叶子节点，叶子节点不参与导航。
-			if (fld.equals(selfTreeFld)) {
+			if (removeSelfLeaf && fld.equals(selfTreeFld) ) {
 				node.removeAllLeaf();
 			}
 

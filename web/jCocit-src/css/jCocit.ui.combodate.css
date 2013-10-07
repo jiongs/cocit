@@ -35,8 +35,11 @@
 }
 
 .combodate .CbA {
-	background-image: url('images/ui_box_date.png');
-	background-position: center center;
+	margin: 1px 0 0 2px ;
+	height: 14px;
+	width: 16px;
+	background-image: url(images/entity.png);
+	background-position: -96px 0;
 }
 
 .combodate-button {

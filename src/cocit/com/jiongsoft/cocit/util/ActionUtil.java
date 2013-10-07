@@ -1,6 +1,5 @@
 package com.jiongsoft.cocit.util;
 
-
 /**
  * Action 工具类: 服务于 actions 包下的 XxxAction 类。
  * 
@@ -94,6 +93,13 @@ public abstract class ActionUtil {
 	 * 参数：moduleID:tableID
 	 */
 	public static final String GET_ENTITY_GRID_DATA = ACTION_PATH_PREFIX + "/getEntityGridData/*";
+
+	/**
+	 * “业务模块”访问路径之List数据，数据格式通常为JSON或XML格式。
+	 * <p>
+	 * 参数：moduleID:tableID
+	 */
+	public static final String GET_ENTITY_LIST_DATA = ACTION_PATH_PREFIX + "/getEntityListData/*";
 
 	/**
 	 * “业务模块”访问路径之导航树数据，数据格式通常为JSON或XML格式。

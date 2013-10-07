@@ -38,6 +38,13 @@ public interface ServiceFactory {
 	 */
 	TableService getTable(Serializable tableID);
 
+	/**
+	 * 
+	 * @param module
+	 * @return
+	 */
+	TableService getTable(ModuleService module);
+
 	OperationService getOperation(TableService table, String opMode);
 
 	OperationService getOperation(ModuleService module, String opMode);

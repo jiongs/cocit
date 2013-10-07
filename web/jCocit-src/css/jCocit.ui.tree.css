@@ -1,3 +1,9 @@
+.tree_container{
+	 position: relative; 
+	 border:1px solid #79c4bf; 
+	 padding: 2px; 
+	 overflow: hidden;
+}
 /**
  * Tree Global CSS
  */

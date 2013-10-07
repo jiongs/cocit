@@ -65,8 +65,8 @@
 
 	if (jCocit.entity)
 		$e(jCocit.entity.defaults, {
-			confirm : "确定",
-			cancel : "取消",
+			confirm : "确 定",
+			cancel : "取 消",
 			unsupport : "不支持该操作！",
 			deleteWarn : "你确定要删除选中的 {0} 条记录吗？",
 			unselectedAny : "请先选中一条或复选多条记录！",

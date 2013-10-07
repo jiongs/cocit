@@ -18,6 +18,7 @@ import com.jiongsoft.cocit.entity.annotation.CocField2;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
+import com.jiongsoft.cocit.util.ActionUtil;
 import com.jiongsoft.cocit.util.StringUtil;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.biz.field.Dataset;
@@ -26,11 +27,11 @@ import com.kmetop.demsy.comlib.impl.sft.system.SFTSystem;
 import com.kmetop.demsy.comlib.security.IPermission;
 
 @Entity
-@CocTable(name = "系统权限管理", code = BIZSYS_ADMIN_PERMISSION, catalog = BIZCATA_ADMIN, orderby = ORDER_SYSADMIN_PERMISSION, buildin = false//
+@CocTable(name = "系统权限管理", code = BIZSYS_ADMIN_PERMISSION, catalog = BIZCATA_ADMIN, orderby = ORDER_SYSADMIN_PERMISSION, buildin = false, pathPrefix = ActionUtil.ACTION_PATH_PREFIX//
 , actions = {
 //
 // @CocOperation(name = "授权", typeCode = TYPE_BZFORM_NEW, mode = "c", pluginName = "com.kmetop.demsy.plugins.security.SavePermission")//
-		@CocOperation(name = "授权", typeCode = TYPE_BZFORM_NEW, mode = "c2", pluginName = "com.kmetop.demsy.plugins.security.SavePermission")//
+		@CocOperation(name = "授权", typeCode = TYPE_BZFORM_NEW, mode = "c2", pluginName = "com.kmetop.demsy.plugins.security.SavePermission", template = "getPermissionForm")//
 		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", pluginName = "com.kmetop.demsy.plugins.security.SavePermission") //
 		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d", pluginName = "com.kmetop.demsy.plugins.security.SavePermission") //
 		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
@@ -44,7 +45,7 @@ import com.kmetop.demsy.comlib.security.IPermission;
 
 		// COCIT V1 授权规则：
 		, @CocField(property = "userType", name = "用户类型", mode = "*:N v:S c2:M e:M", gridOrder = 3, options = "_soft_administrator:后台管理员,_WebUser:网站会员", desc = "表示该权限被授予哪种类型的用户？如“网站注册用户、后台管理员”等。") //
-		, @CocField(property = "userRule", name = "用户群体", mode = "*:N v:S c2:E e:E", gridOrder = 4, desc = "表示该权限被授予哪些“用户”？语法规则：可以是“查询表达式”{field_1: [num_1, num_2, ..., num_n], field_2: singleValue, ..., field_n: ['str_1', 'str_2', ..., 'str_n'] }或“用户ID数组”[id-1, id-2, 'user-3', ..., 'user-n']，不填表示所有用户。") //
+		, @CocField(property = "userRule", name = "授权用户", mode = "*:N v:S c2:E e:E", gridOrder = 4, desc = "表示该权限被授予哪些“用户”？语法规则：可以是“查询表达式”{field_1: [num_1, num_2, ..., num_n], field_2: singleValue, ..., field_n: ['str_1', 'str_2', ..., 'str_n'] }或“用户ID数组”[id-1, id-2, 'user-3', ..., 'user-n']，不填表示所有用户。") //
 		, @CocField(property = "funcRule", name = "功能权限", mode = "*:N v:S c2:M e:M", gridOrder = 5, desc = "表示“用户群体”可以执行模块中的哪些功能？语法规则：['moduleID:tableID:opModes', 'm-1:t-1:op1,op2,op3', ..., 'm-i:t-i:op1,op2,op-i']，语法举例：['1:2:*', '2:*:v,e,bu,d', '*:*:e', ..., '1', ':2', '::c']。") //
 		, @CocField(property = "dataRule", name = "数据权限", mode = "*:N v:S c2:E e:E", gridOrder = 6, desc = "表示“用户群体”可以操作模块中的哪些数据？语法规则：可以是“查询表达式”{field_1: [num_1, num_2, ..., num_n], field_2: singleValue, ..., field_n: ['str_1', 'str_2', ..., 'str_n'] }或“数据ID数组”[id-1, id-2, id-3, ..., id-n]，不填表示所有数据。") //
 		, @CocField(property = "desc", name = "权限描述", mode = "*:N v:S c:M c2:M e:M", gridOrder = 7, desc = "简要描述该权限被授予哪些人，目的和用途是什么？") //

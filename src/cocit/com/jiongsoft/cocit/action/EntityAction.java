@@ -25,6 +25,8 @@ import com.jiongsoft.cocit.ui.model.widget.EntityModuleUI;
 import com.jiongsoft.cocit.ui.model.widget.EntityTableUI;
 import com.jiongsoft.cocit.ui.model.widget.GridWidget;
 import com.jiongsoft.cocit.ui.model.widget.GridWidgetData;
+import com.jiongsoft.cocit.ui.model.widget.ListWidget;
+import com.jiongsoft.cocit.ui.model.widget.ListWidgetData;
 import com.jiongsoft.cocit.ui.model.widget.TreeWidgetData;
 import com.jiongsoft.cocit.util.ActionUtil;
 import com.jiongsoft.cocit.util.CocException;
@@ -55,7 +57,7 @@ public class EntityAction {
 	public EntityModuleUI getEntityModuleUI(String args) {
 		ActionHelper helper = ActionHelper.make(args, null, null);
 
-		EntityModuleUI moduleModel = helper.widgetFactory.getEntytyModuleUI(helper.module);
+		EntityModuleUI moduleModel = helper.widgetFactory.getEntityModuleUI(helper.module);
 
 		Log.debug("EntityAction.getEntityModuleUI: moduleModel = %s", moduleModel);
 
@@ -93,13 +95,13 @@ public class EntityAction {
 	public GridWidgetData getEntityGridData(String args) {
 		ActionHelper helper = ActionHelper.make(args, null, null);
 
-		GridWidget tableModel = helper.widgetFactory.getGridUI(helper.module, helper.table);
+		GridWidget gridWidget = helper.widgetFactory.getGridUI(helper.module, helper.table);
 
 		/*
 		 * 构造Grid数据模型
 		 */
 		GridWidgetData ret = new GridWidgetData();
-		ret.setModel(tableModel);
+		ret.setModel(gridWidget);
 
 		// 构造查询条件
 		CndExpr expr = helper.makeExpr();
@@ -111,6 +113,35 @@ public class EntityAction {
 			ret.setTotal(total);
 
 			Log.debug("EntityAction.getEntityGridData: total = %s", total);
+		} catch (CocException e) {
+			ret.setException(e);
+		}
+
+		return ret;
+	}
+
+	@At(ActionUtil.GET_ENTITY_LIST_DATA)
+	public ListWidgetData getEntityListData(String args) {
+		ActionHelper helper = ActionHelper.make(args, null, null);
+
+		ListWidget listWidget = helper.widgetFactory.getListUI(helper.module, helper.table);
+
+		/*
+		 * 构造Grid数据模型
+		 */
+		ListWidgetData ret = new ListWidgetData();
+		ret.setModel(listWidget);
+
+		// 构造查询条件
+		CndExpr expr = helper.makeExpr();
+		try {
+
+			List data = helper.entityManager.query(expr, null);
+			// int total = helper.entityManager.count(expr, null);
+
+			ret.setData(data);
+
+			Log.debug("EntityAction.getEntityListData...");
 		} catch (CocException e) {
 			ret.setException(e);
 		}

@@ -4,13 +4,12 @@ package com.jiongsoft.cocit.ui.model.widget;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.jiongsoft.cocit.service.FieldService;
 import com.jiongsoft.cocit.service.FieldGroupService;
+import com.jiongsoft.cocit.service.FieldService;
+import com.jiongsoft.cocit.service.ModuleService;
 import com.jiongsoft.cocit.service.OperationService;
 import com.jiongsoft.cocit.service.TableService;
-import com.jiongsoft.cocit.service.ModuleService;
 import com.jiongsoft.cocit.ui.model.widget.EntityForm.FormField;
-import com.jiongsoft.cocit.ui.model.widget.GridWidget.GridColumn;
 import com.jiongsoft.cocit.util.ActionUtil;
 import com.jiongsoft.cocit.util.KeyValue;
 import com.jiongsoft.cocit.util.ObjectUtil;
@@ -21,7 +20,7 @@ import com.jiongsoft.cocit.util.Tree.Node;
 public class WidgetModelFactoryImpl implements WidgetModelFactory {
 
 	@Override
-	public EntityModuleUI getEntytyModuleUI(ModuleService entityModule) {
+	public EntityModuleUI getEntityModuleUI(ModuleService entityModule) {
 		if (entityModule == null)
 			return null;
 
@@ -113,7 +112,7 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 		int count = 0;
 		int columnsTotalWidth = 0;
 		for (FieldService fld : fields) {
-			GridColumn col = new GridColumn(fld.getPropName(), fld.getName());
+			Column col = new Column(fld.getPropName(), fld.getName());
 			col.setEntityField(fld);
 
 			// 设置Grid列属性
@@ -153,6 +152,20 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 		}
 
 		model.setColumnsTotalWidth(columnsTotalWidth);
+
+		return model;
+	}
+
+	@Override
+	public ListWidget getListUI(ModuleService entityModule, TableService entityTable) {
+		ListWidget model = new ListWidget();
+
+		model.setId("" + entityTable.getID());
+		model.setName(entityTable.getName());
+		Long moduleID = 0L;
+		if (entityModule != null)
+			moduleID = entityModule.getID();
+		model.setDataLoadUrl(ActionUtil.GET_ENTITY_LIST_DATA.replace("*", ActionUtil.encodeArgs(moduleID, entityTable.getID())));
 
 		return model;
 	}
@@ -242,7 +255,8 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 	public EntityForm getEntityFormUI(ModuleService entityModule, TableService entityTable, OperationService op, Object entityEntity) {
 		EntityForm ret = new EntityForm();
 
-		ret.setJsp(op.getJsp());
+		if (!StringUtil.isNil(op.getJsp()))
+			ret.setJsp(ActionUtil.JSP_DIR + "/" + op.getJsp());
 
 		String opMode = op.getMode();
 

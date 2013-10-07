@@ -140,4 +140,13 @@ public class DemsyServiceFactory implements ServiceFactory {
 
 		return new DemsyEntityOperationService(action);
 	}
+
+	@Override
+	public TableService getTable(ModuleService moduleService) {
+		Module module = (Module) moduleService.getEntity();
+
+		SFTSystem system = (SFTSystem) moduleEngine.getSystem(module);
+
+		return this.makeBizTable(system);
+	}
 }

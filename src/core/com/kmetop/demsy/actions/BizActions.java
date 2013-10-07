@@ -160,7 +160,7 @@ public class BizActions extends ModuleActions implements BizConst, MvcConst {
 					mainUI.getMaster().setData(masterRoot);
 				} else {
 					if (mainUI.getNaviMenu() != null) {
-						Nodes naviData = bizEngine.makeNaviNodes(moduleEngine.getSystem(masterModule), idfld);
+						Nodes naviData = bizEngine.makeNaviNodes(moduleEngine.getSystem(masterModule), idfld, false);
 						if (naviData.getSize() > 0) {
 							mainUI.getNaviMenu().setData(naviData);
 						} else {
@@ -212,7 +212,7 @@ public class BizActions extends ModuleActions implements BizConst, MvcConst {
 				grid.setSearch(false);
 				grid.setRowList(null);
 
-				Nodes naviData = bizEngine.makeNaviNodes(moduleEngine.getSystem(mdl), idfld);
+				Nodes naviData = bizEngine.makeNaviNodes(moduleEngine.getSystem(mdl), idfld,false);
 				if (naviData.getSize() > 0) {
 					modelUI.getNaviMenu().setData(naviData);
 				} else {
@@ -267,7 +267,7 @@ public class BizActions extends ModuleActions implements BizConst, MvcConst {
 				grid.setSearch(false);
 				grid.setRowList(null);
 
-				Nodes naviData = bizEngine.makeNaviNodes(moduleEngine.getSystem(mdl), idfld);
+				Nodes naviData = bizEngine.makeNaviNodes(moduleEngine.getSystem(mdl), idfld, false);
 				if (naviData.getSize() > 0) {
 					modelUI.getNaviMenu().setData(naviData);
 				} else {
@@ -309,7 +309,7 @@ public class BizActions extends ModuleActions implements BizConst, MvcConst {
 
 				UIBizSystem modelUI = uiEngine.makeSystemView(mdl, getGridColumns(), idfld);
 
-				Nodes naviData = bizEngine.makeNaviNodes(moduleEngine.getSystem(mdl), idfld);
+				Nodes naviData = bizEngine.makeNaviNodes(moduleEngine.getSystem(mdl), idfld, false);
 				if (naviData.getSize() > 0) {
 					modelUI.getNaviMenu().setData(naviData);
 				} else {
@@ -416,7 +416,7 @@ public class BizActions extends ModuleActions implements BizConst, MvcConst {
 				UIBizNaviModel dataModel = uiEngine.makeSystemNaviView(mdl);
 				if (dataModel != null) {
 					dataModel.setDacorator(pageID).setAjaxData(ajaxData);
-					dataModel.setData(bizEngine.makeNaviNodes(moduleEngine.getSystem(mdl), idfld));
+					dataModel.setData(bizEngine.makeNaviNodes(moduleEngine.getSystem(mdl), idfld, true));
 				}
 
 				return dataModel;

@@ -24,7 +24,7 @@ a.l-btn-plain {
 
 a.l-btn-disabled {
 	opacity: 0.3;
-	filter: alpha(opacity =   30);
+	filter: alpha(opacity =  30);
 	cursor: default;
 }
 
@@ -141,5 +141,5 @@ a:hover.l-btn-plain {
 
 a.l-btn-disabled,a:hover.l-btn-disabled {
 	opacity: 0.2;
-	filter: alpha(opacity =   20);
+	filter: alpha(opacity =  20);
 }

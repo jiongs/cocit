@@ -286,12 +286,13 @@ public class DemsyEntityTableService implements TableService {
 				selfTreeProp = bizEngine.getPropName(selfTreeFld);
 			}
 
+			String parentID = "";
 			for (Object record : fkSystemRecords) {
 				// 计算上级节点ID
 				if (!StringUtil.isNil(selfTreeProp)) {
 					Object parentObj = ObjectUtil.getValue(record, selfTreeProp);
 					if (parentObj != null)
-						parentNodeID = parentObj.toString();
+						parentID = propName + ".id:" + ObjectUtil.getValue(parentObj, "id");
 				}
 
 				// 计算节点ID
@@ -306,7 +307,7 @@ public class DemsyEntityTableService implements TableService {
 				String nodeName = record.toString();
 
 				// 添加节点
-				Node childNode = tree.addNode(parentNodeID, propName + ".id:" + nodeID).setName(nodeName);
+				Node childNode = tree.addNode(StringUtil.isNil(parentID) ? parentNodeID : parentID, propName + ".id:" + nodeID).setName(nodeName);
 
 				// 计算节点顺序
 				if (ClassUtil.hasField(fkSystemType, "orderby")) {

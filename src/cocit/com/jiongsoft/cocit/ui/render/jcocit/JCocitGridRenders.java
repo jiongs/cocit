@@ -3,9 +3,9 @@ package com.jiongsoft.cocit.ui.render.jcocit;
 import java.io.Writer;
 import java.util.List;
 
-import com.jiongsoft.cocit.ui.model.widget.GridWidgetData;
+import com.jiongsoft.cocit.ui.model.widget.Column;
 import com.jiongsoft.cocit.ui.model.widget.GridWidget;
-import com.jiongsoft.cocit.ui.model.widget.GridWidget.GridColumn;
+import com.jiongsoft.cocit.ui.model.widget.GridWidgetData;
 import com.jiongsoft.cocit.ui.render.WidgetRender;
 import com.jiongsoft.cocit.util.Json;
 import com.jiongsoft.cocit.util.ObjectUtil;
@@ -64,11 +64,11 @@ public abstract class JCocitGridRenders {
 			print(out, "<thead>");
 			print(out, "<tr>");
 
-			List<GridColumn> columns = model.getColumns();
+			List<Column> columns = model.getColumns();
 
 			print(out, "<th data-options=\"field: 'id', checkbox:true\"></th>");
 			int colWidth;
-			for (GridColumn col : columns) {
+			for (Column col : columns) {
 				colWidth = col.getWidth();
 				if (fixColRate > 1)
 					colWidth = new Double(colWidth * fixColRate).intValue();
@@ -88,7 +88,7 @@ public abstract class JCocitGridRenders {
 			print(out, "{\"total\":%s,\"rows\":[", model.getTotal());
 
 			GridWidget gridModel = model.getModel();
-			List<GridColumn> columns = gridModel.getColumns();
+			List<Column> columns = gridModel.getColumns();
 			List data = model.getData();
 			if (data != null) {
 
@@ -104,7 +104,7 @@ public abstract class JCocitGridRenders {
 					}
 
 					sb.append(String.format("\"id\":%s", Json.toJson(ObjectUtil.getValue(obj, "id"))));
-					for (GridColumn col : columns) {
+					for (Column col : columns) {
 						String prop = col.getField();
 						Object value = ObjectUtil.getValue(obj, prop);
 						value = col.getEntityField().format(value);

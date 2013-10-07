@@ -22,7 +22,7 @@ public class JCocitEntityTableRender extends WidgetRender<EntityTableUI> {
 		int treeWidth = 240;
 		int gridWidth = width - treeWidth - 30;
 		int treeHeight = height - 56;
-		int gridHeight = height - 50;
+		int gridHeight = height - 51;
 
 		String token = model.get("token", Long.toHexString(System.currentTimeMillis()));
 
@@ -41,7 +41,7 @@ public class JCocitEntityTableRender extends WidgetRender<EntityTableUI> {
 		 * <LI>token: 业务令牌，工具栏操作菜单通过业务令牌与该table相关联；
 		 * </UL>
 		 */
-		print(out, "<table token=\"%s\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr>", token);
+		print(out, "<table class=\"entityTable\" token=\"%s\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr>", token);
 
 		/*
 		 * 1.左边为导航树

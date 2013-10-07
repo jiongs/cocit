@@ -2,7 +2,6 @@ package com.jiongsoft.cocit.ui.model.widget;
 
 import com.jiongsoft.cocit.ui.model.WidgetModel;
 
-
 /**
  * “业务表”窗体界面模型：由“左边导航树、右边顶部操作菜单、右边顶部查询栏、右边下部Grid”组成。
  * 
@@ -11,8 +10,10 @@ import com.jiongsoft.cocit.ui.model.WidgetModel;
  */
 public class EntityTableUI extends WidgetModel {
 
+	// 实体表名称：可用作 TAB 名称
 	private String name;
 
+	// URL: TAB 异步加载
 	private String loadUrl;
 
 	// 导航树

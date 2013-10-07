@@ -108,7 +108,7 @@
 		$combo.ow(opts.width).oh(opts.height);
 		$comboBox.ow(opts.width).oh(opts.height - 1);
 		$comboText.ow($w($combo) - arrowWidth - 1).oh($h($comboBox) - 1);
-		$comboArrow.oh($h($combo));
+		//$comboArrow.oh($h($combo));
 
 		if (state.panel) {
 			var $comboContent = state.panel;
@@ -243,9 +243,13 @@
 		var state = $d(selfHTML, "combo");
 		var opts = state.options;
 		var $combo = state.combo;
-		if (!state.panel) {
+
+		if(opts.onBeforeShowPanel.call(selfHTML) == false)
+			return;
+		
+		if (!state.panel) 
 			_initPanel(selfHTML);
-		}
+		
 		var $comboContent = state.panel;
 
 		if ($.fn.window)
@@ -314,6 +318,7 @@
 				doSize : false,
 				closed : true,
 				border : false,
+				url : opts.panelUrl,
 				styleName : "CbPn",
 				bodyCls : "CbPnB",
 				style : {
@@ -622,6 +627,7 @@
 		panelHeight : null,// this is drop-down panel fixed height
 		panelMaxHeight : 500,// this is drop-down panel max height
 		panelMinHeight : 200,// this is drop-down panel min height
+		panelUrl : null,
 		/**
 		 * drop-down list is inline means that the panel cannot be append to "body".
 		 * <p>
@@ -644,6 +650,7 @@
 		},
 		onInitPanel : $n,
 		onShowPanel : $n,
+		onBeforeShowPanel: $n,
 		onHidePanel : $n,
 		/**
 		 * args: (newValue, oldValue)

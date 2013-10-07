@@ -461,7 +461,8 @@
 			$(this).menubar("destroy");
 		});
 		$f(".s-btn", $panelContent).each(function() {
-			$(this).splitbutton("destroy");
+			if($.fn.splitbutton)
+				$(this).splitbutton("destroy");
 		});
 	}
 
