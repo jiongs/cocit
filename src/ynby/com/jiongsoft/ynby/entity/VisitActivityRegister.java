@@ -32,13 +32,15 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 , groups = { //
 @CocGroup(name = "基本信息", code = "basic"//
 // 业务字段
-, fields = { @CocField(name = "真实姓名", mode = "*:N v:S c:M e:M xls:S", property = "name", gridOrder = 1) //
+, fields = {
+//
+		@CocField(name = "参观时间", mode = "*:N v:S c:M e:M xls:S", property = "activity", gridOrder = 5)//
+		, @CocField(name = "真实姓名", mode = "*:N v:S c:M e:M xls:S", property = "name", gridOrder = 1) //
 		, @CocField(name = "性别", mode = "*:N v:S c:E e:E xls:S", property = "sex", options = "0:男,1:女", disabledNavi = true, gridOrder = 2) //
 		, @CocField(name = "手机号码", mode = "*:N v:S c:M e:M xls:S", property = "tel", gridOrder = 3) //
 		, @CocField(name = "手机验证码", mode = "*:N v:S c:M e:R", property = "telVerifyCode") //
 		, @CocField(name = "身份证号码", mode = "*:N v:S c:M e:M xls:S", property = "code", gridOrder = 4) //
 		, @CocField(name = "工作单位", mode = "*:N v:S c:E e:E xls:S", property = "unit", gridOrder = 9) //
-		, @CocField(name = "参观时间", mode = "*:N v:S c:M e:M", property = "activity", gridOrder = 5)//
 		, @CocField(name = "邀请函验证码", mode = "*:N v:S xls:S", property = "verificationCode", gridOrder = 13) //
 		, @CocField(name = "参观人数", mode = "*:N v:S c:E e:E xls:S", property = "personNumber", gridOrder = 6) //
 		, @CocField(name = "自驾车牌号", mode = "*:N v:S c:E e:E xls:S", property = "carCode", gridOrder = 7) //

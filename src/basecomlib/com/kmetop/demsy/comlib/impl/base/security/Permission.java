@@ -18,7 +18,6 @@ import com.jiongsoft.cocit.entity.annotation.CocField2;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
-import com.jiongsoft.cocit.util.ActionUtil;
 import com.jiongsoft.cocit.util.StringUtil;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.biz.field.Dataset;
@@ -27,11 +26,11 @@ import com.kmetop.demsy.comlib.impl.sft.system.SFTSystem;
 import com.kmetop.demsy.comlib.security.IPermission;
 
 @Entity
-@CocTable(name = "系统权限管理", code = BIZSYS_ADMIN_PERMISSION, catalog = BIZCATA_ADMIN, orderby = ORDER_SYSADMIN_PERMISSION, buildin = false, pathPrefix = ActionUtil.ACTION_PATH_PREFIX//
+@CocTable(name = "系统权限管理", code = BIZSYS_ADMIN_PERMISSION, catalog = BIZCATA_ADMIN, orderby = ORDER_SYSADMIN_PERMISSION, buildin = false// , pathPrefix = ActionUtil.ACTION_PATH_PREFIX//
 , actions = {
 //
-// @CocOperation(name = "授权", typeCode = TYPE_BZFORM_NEW, mode = "c", pluginName = "com.kmetop.demsy.plugins.security.SavePermission")//
-		@CocOperation(name = "授权", typeCode = TYPE_BZFORM_NEW, mode = "c2", pluginName = "com.kmetop.demsy.plugins.security.SavePermission", template = "getPermissionForm")//
+		@CocOperation(name = "授权", typeCode = TYPE_BZFORM_NEW, mode = "c", pluginName = "com.kmetop.demsy.plugins.security.SavePermission")//
+		// @CocOperation(name = "授权", typeCode = TYPE_BZFORM_NEW, mode = "c2", pluginName = "com.kmetop.demsy.plugins.security.SavePermission", template = "getPermissionForm")//
 		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", pluginName = "com.kmetop.demsy.plugins.security.SavePermission") //
 		, @CocOperation(name = "删除", typeCode = TYPE_BZ_DEL, mode = "d", pluginName = "com.kmetop.demsy.plugins.security.SavePermission") //
 		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
@@ -58,7 +57,7 @@ import com.kmetop.demsy.comlib.security.IPermission;
 		, @CocField(name = "创建者帐号", property = "createdBy", mode = "*:N v:S", gridOrder = 21) //
 //
 }),// end: CocGroup
-		@CocGroup(name = "不再使用", code = "other"//
+		@CocGroup(name = "授权规则", code = "other"//
 		, fields = {
 				// DEMSY V2 授权规则：不再使用
 				@CocField(property = "users", mode = "*:N c:E") //

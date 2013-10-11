@@ -280,7 +280,7 @@ public class EntityAction {
 		ActionHelper helper = ActionHelper.make(args, argDataID, null);
 
 		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.op, helper.entity);
-		if (StringUtil.isNil(formModel.getJsp()))
+		//if (StringUtil.isNil(formModel.getJsp()))
 			formModel.setJsp(ActionUtil.JSP_DIR + "/getExportXlsForm");
 
 		formModel.setVar("actionHelper", helper);
