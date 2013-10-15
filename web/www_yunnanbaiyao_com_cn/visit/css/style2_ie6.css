@@ -1,0 +1,189 @@
+img{
+	/* 让IE6支持PNG透明 */
+	_azimuth:expression(this.pngSet?this.pngSet=true:(this.nodeName == "IMG" && this.src.toLowerCase().indexOf('.png')>-1?(this.runtimeStyle.backgroundImage = "none",this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + this.src + "', sizingMethod='image')",this.src = "/www_yunnanbaiyao_com_cn/visit/images/_blank.gif"):(this.origBg = this.origBg? this.origBg :this.currentStyle.backgroundImage.toString().replace('url("','').replace('")',''),this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + this.origBg + "', sizingMethod='crop')",this.runtimeStyle.backgroundImage = "none")),this.pngSet=true);
+	/*
+	behavior: url("/jCocit/common/iepngfix.htc");
+	*/
+}
+
+.body_bg{
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/regf1_top.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+.body_bg_bottom{
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/regf1_foot.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+#top_menu a.btn1 div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/topmenu2_01.png' );
+	background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+#top_menu a.btn1:hover div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/topmenu2_01_hover.png' );
+	background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+
+#top_menu a.btn2 div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/topmenu2_02.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+#top_menu a.btn2:hover div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/topmenu2_02_hover.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+
+#top_menu a.btn3 div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/topmenu2_03.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+#top_menu a.btn3:hover div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/topmenu2_03_hover.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+
+#top_menu a.btn4 div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/topmenu2_04.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+#top_menu a.btn4:hover div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/topmenu2_04_hover.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+
+#top_menu a.btn5 div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/topmenu2_05.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+#top_menu a.btn5:hover div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/topmenu2_05_hover.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+
+#top_menu a.btn6 div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/topmenu2_06.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+#top_menu a.btn6:hover div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/topmenu2_06_hover.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+
+#top_menu a.btn7 div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/topmenu2_07.png' );
+	_background: #5fcffd url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+#top_menu a.btn7:hover div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/topmenu2_07_hover.png' );
+	_background: #5fcffd url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+
+#bottom_menu a.btn1 div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images/btn_1.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+#bottom_menu a.btn1:hover div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images/btn_1_hover.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+
+#bottom_menu a.btn2 div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images/btn_2.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+#bottom_menu a.btn2:hover div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images/btn_2_hover.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+
+#bottom_menu a.btn3 div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images/btn_3.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+#bottom_menu a.btn3:hover div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images/btn_3_hover.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+
+#bottom_menu a.btn4 div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images/btn_4.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+#bottom_menu a.btn4:hover div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images/btn_4_hover.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+
+#bottom_menu a.btn5 div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images/btn_5.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+#bottom_menu a.btn5:hover div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images/btn_5_hover.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+
+#bottom_menu a.btn6 div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images/btn_6.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+#bottom_menu a.btn6:hover div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images/btn_6_hover.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+
+#bottom_menu a.btn7 div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images/btn_7.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+#bottom_menu a.btn7:hover div {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images/btn_7_hover.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+
+/* intro.jsp */
+.intro_body_bg{
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/f1_top.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+.intro_body_bg2{
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/f1_foot.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+.intro_body_bg3{
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/f2_foot.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+.intro_body_bg4{
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/f3_foot.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+.intro_body_bg_bottom{
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/f4_foot.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+.stepbar_dot{
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/reg_dot.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+input.reg_get_verify_code{
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/button_background.png', sizingMethod=crop );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+
+/* info.jsp */
+.navi_buttons a{
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/button_background.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+.navi_buttons a:hover{
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/www_yunnanbaiyao_com_cn/visit/images2/button_background.png' );
+	_background: url(/www_yunnanbaiyao_com_cn/visit/images/blank.gif);
+}
+
+* html .ad-gallery .ad-image-wrapper .ad-image .ad-image-description {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src='/www_yunnanbaiyao_com_cn/css/gallery/bg11.png' );
+	_background: none;
+}
+.ie6-weight-font {
+	font-weight: bold;
+}
