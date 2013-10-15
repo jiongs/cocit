@@ -422,7 +422,7 @@ SELECT,INPUT,img {
 	font-size: 14px;
 }
 .reg_member{
-	margin: 5px;
+	margin: 2px;
 	cursor: pointer;
 }
 .required{

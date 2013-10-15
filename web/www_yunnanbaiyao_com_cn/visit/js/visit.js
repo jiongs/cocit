@@ -139,6 +139,22 @@ function submitRegStep2(btn) {
 	});
 }
 
+function openTeamMember() {
+	$('#teamMemberDialog').show();
+	var form = $("form");
+	var elements = form[0].elements;
+	elements["index"].value = "";
+	elements["name"].value = "";
+	elements["age"].value = "";
+	elements["relationship"].value = "";
+	$(elements["sex"]).attr("checked", false);
+	elements["tel"].value = "";
+	elements["qq"].value = "";
+	elements["email"].value = "";
+	elements["unit"].value = "";
+	elements["carCode"].value = "";
+}
+
 function addTeamMember() {
 	var form = $("form");
 	var elements = form[0].elements;
@@ -164,31 +180,61 @@ function addTeamMember() {
 		elements["relationship"].focus();
 		return;
 	}
+	var teamMembers = elements["entity.teamMembers"].value;
+	var jsonMembers = [];
+	if (teamMembers.trim().length > 0) {
+		jsonMembers = teamMembers.toJson();
+	}
 	var member = {};
+	var index = elements["index"].value;
+	if (index.trim().length == 0) {
+		index = jsonMembers.length;
+	} else {
+		index = ("" + index)._int();
+	}
+	member["index"] = index;
 	member["name"] = name;
 	member["age"] = age;
 	member["relationship"] = relationship;
-	member["sex"] = $(elements["sex"]).val();
+	member["sex"] = $('input[name=sex]:checked').val()._int();
 	member["tel"] = elements["tel"].value;
 	member["qq"] = elements["qq"].value;
 	member["email"] = elements["email"].value;
 	member["unit"] = elements["unit"].value;
 	member["carCode"] = elements["carCode"].value;
-	var teamMembers = elements["entity.teamMembers"].value;
-	var jsonMembers = [];
-	// alert("teamMembers: " + teamMembers);
-	if (teamMembers.trim().length > 0) {
-		jsonMembers = teamMembers.toJson();
-		// alert("jsonMembers: " + jsonMembers);
-	}
-	// alert("jsonMembers.length: " + jsonMembers.length);
-	var index = jsonMembers.length;
 	jsonMembers[index] = member;
 	elements["entity.teamMembers"].value = $.toJsonString(jsonMembers);
-	
-	var one = $("<span class=\"reg_member\" onclick=\"editTeamMember("+index+")\"></span>");
-	one.html(name);
-	$("#teamMembersNames").append("&nbsp;").append(one);
+
+	var $names = $("#teamMembersNames").html("");
+	for ( var i = 0; i < jsonMembers.length; i++) {
+		var mem = jsonMembers[i];
+		var one = $("<span class=\"reg_member\" onclick=\"editTeamMember(" + i + ")\"></span>");
+		one.html(" " + mem["name"] + " ");
+		$names.append(one);
+	}
+	$('#teamMemberDialog').hide();
+}
+
+function editTeamMember(index) {
+	$('#teamMemberDialog').show();
+	var form = $("form");
+	var elements = form[0].elements;
+	var teamMembers = elements["entity.teamMembers"].value;
+	var jsonMembers = [];
+	if (teamMembers.trim().length > 0) {
+		jsonMembers = teamMembers.toJson();
+	}
+	var member = jsonMembers[index];
+	elements["index"].value = "" + index;
+	elements["name"].value = member["name"];
+	elements["age"].value = member["age"];
+	elements["relationship"].value = member["relationship"];
+	$('input:radio[name=sex]')[member["sex"]].checked = true;
+	elements["tel"].value = member["tel"];
+	elements["qq"].value = member["qq"];
+	elements["email"].value = member["email"];
+	elements["unit"].value = member["unit"];
+	elements["carCode"].value = member["carCode"];
 }
 
 function query(btn) {

@@ -135,6 +135,85 @@
 								<td class="reg_input_label">短信验证码：</td>
 								<td class="reg_input_box"><input type="text" name="entity.telVerifyCode" value="" /><span class="required">&nbsp;</span></td>
 							</tr>
+                            <tr>
+                                <td class="reg_input_label" valign="top">团队成员：</td>
+                                <td class="reg_input_box" valign="top">
+                                    <input type="hidden" name="entity.teamMembers" />
+                                    <div id="teamMembersNames" style="border: 1px solid #ccc; width: 280px; position: relative;min-height: 25px;">
+                                    </div>
+                                    <div id="teamMemberDialog" style="background: #fff; border: 1px solid #000; z-index: 999; padding: 5px 3px 10px 3px; margin: 1px 0 0 0; position: absolute; display: none;">
+                                       <input type="hidden" name="index" value="" />
+                                        <table>
+                                            <tr>
+                                                <td class="reg_input_label2">成员姓名：</td>
+                                                <td class="reg_input_box2"><input type="text" name="name" value="" /><span class="required">&nbsp;</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="reg_input_label2">成员性别：</td>
+                                                <td class="reg_input_box2">
+                                                    <input style="width: 16px; height: 16px; border: 0;" type="radio" name="sex" value="0" />&nbsp;男&nbsp;&nbsp;
+                                                    <input style="width: 16px; height: 16px; border: 0;" type="radio" name="sex" value="1" />&nbsp;女
+                                                    <span class="required">&nbsp;</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="reg_input_label2">成员关系：</td>
+                                                <td class="reg_input_box2">
+                                                    <select name="relationship">
+                                                        <option value=""></option>
+                                                        <option value="配偶">配偶</option>
+                                                        <option value="父母">父母</option>
+                                                        <option value="子女">子女</option>
+                                                        <option value="亲戚">亲戚</option>
+                                                        <option value="朋友">朋友</option>
+                                                        <option value="同事">同事</option>
+                                                        <option value="其他">其他</option>
+                                                    </select>
+                                                    <span class="required">&nbsp;</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="reg_input_label2">年龄：</td>
+                                                <td class="reg_input_box2"><input type="text" name="age" value="" />
+                                                <span class="required">&nbsp;</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="reg_input_label2">手机号码：</td>
+                                                <td class="reg_input_box2"><input type="text" name="tel" value="" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="reg_input_label2">QQ号码：</td>
+                                                <td class="reg_input_box2"><input type="text" name="qq" value="" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="reg_input_label2">邮箱地址：</td>
+                                                <td class="reg_input_box2"><input type="text" name="email" value="" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="reg_input_label2">工作单位：</td>
+                                                <td class="reg_input_box2"><input type="text" name="unit" value="" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="reg_input_label2">自驾车牌号：</td>
+                                                <td class="reg_input_box2"><input type="text" name="carCode" value="" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan=2 align="center" valign="top" style="padding: 10px 0 0 0;">
+                                                    <input type="submit" onclick="addTeamMember();" class="reg_btn" value="确定" />
+                                                    <input type="submit" onclick="$('#teamMemberDialog').hide(); return false;" class="reg_btn" value="取消" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div style="font-size: 12px; color: #999; width: 280px;">
+                                        参观人数为2人以上（包括2人）的，请勿必填写团队成员！
+                                    </div>
+                                </td>
+                                <td class="reg_input_box" valign="top">
+                                    <input type="submit" onclick="openTeamMember()" class="reg_btn" value="添加" />
+                                </td>
+                            </tr>
 							<tr>
 								<td class="reg_input_label">QQ号码：</td>
 								<td class="reg_input_box"><input type="text" name="entity.qq" value="" /></td>
@@ -150,84 +229,6 @@
 							<tr>
 								<td class="reg_input_label">自驾车牌号：</td>
 								<td class="reg_input_box"><input type="text" name="entity.carCode" value="" /></td>
-							</tr>
-							<tr>
-								<td class="reg_input_label" valign="top">团队成员：</td>
-								<td class="reg_input_box" valign="top">
-									<input type="hidden" name="entity.teamMembers" />
-									<div id="teamMembersNames" style="border: 1px solid #ccc; width: 280px; position: relative;min-height: 25px;">
-									</div>
-									<div style="font-size: 12px; color: #999; width: 280px;">
-										参观人数为2人以上（包括2人）的，请勿必填写团队成员！
-									</div>
-								</td>
-								<td class="reg_input_box" valign="top">
-									<input type="submit" onclick="$('#teamMemberDialog').show(); return false;" class="reg_btn" value="添加" />
-									<div id="teamMemberDialog" style="background: #fff; border: 1px solid #000; z-index: 999; padding: 5px; margin: -28px 0 0 -22px; position: absolute; display: none;">
-										<table>
-											<tr>
-												<td class="reg_input_label2">成员姓名：</td>
-												<td class="reg_input_box2"><input type="text" name="name" value="" /><span class="required">&nbsp;</span></td>
-											</tr>
-											<tr>
-												<td class="reg_input_label2">成员性别：</td>
-												<td class="reg_input_box2">
-													<input style="width: 16px; height: 16px; border: 0;" type="radio" name="sex" value="0" />&nbsp;男&nbsp;&nbsp;
-													<input style="width: 16px; height: 16px; border: 0;" type="radio" name="sex" value="1" />&nbsp;女
-													<span class="required">&nbsp;</span>
-												</td>
-											</tr>
-											<tr>
-												<td class="reg_input_label2">成员关系：</td>
-												<td class="reg_input_box2">
-													<select name="relationship">
-														<option value=""></option>
-														<option value="配偶">配偶</option>
-														<option value="父母">父母</option>
-														<option value="子女">子女</option>
-														<option value="亲戚">亲戚</option>
-														<option value="朋友">朋友</option>
-														<option value="同事">同事</option>
-														<option value="其他">其他</option>
-													</select>
-													<span class="required">&nbsp;</span>
-												</td>
-											</tr>
-											<tr>
-												<td class="reg_input_label2">年龄：</td>
-												<td class="reg_input_box2"><input type="text" name="age" value="" />
-												<span class="required">&nbsp;</span>
-												</td>
-											</tr>
-											<tr>
-												<td class="reg_input_label2">手机号码：</td>
-												<td class="reg_input_box2"><input type="text" name="tel" value="" /></td>
-											</tr>
-											<tr>
-												<td class="reg_input_label2">QQ号码：</td>
-												<td class="reg_input_box2"><input type="text" name="qq" value="" /></td>
-											</tr>
-											<tr>
-												<td class="reg_input_label2">邮箱地址：</td>
-												<td class="reg_input_box2"><input type="text" name="email" value="" /></td>
-											</tr>
-											<tr>
-												<td class="reg_input_label2">工作单位：</td>
-												<td class="reg_input_box2"><input type="text" name="unit" value="" /></td>
-											</tr>
-											<tr>
-												<td class="reg_input_label2">自驾车牌号：</td>
-												<td class="reg_input_box2"><input type="text" name="carCode" value="" /></td>
-											</tr>
-											<tr>
-												<td colspan=2 align="center" valign="top" style="padding: 10px 0 0 0;">
-													<input type="submit" onclick="addTeamMember();" class="reg_btn" value="确定" />
-													<input type="submit" onclick="$('#teamMemberDialog').hide(); return false;" class="reg_btn" value="取消" />
-												</td>
-											</tr>
-										</table>
-									</div>
-								</td>
 							</tr>
 							<tr>
 								<td class="reg_input_label" valign="top">备注：</td>
