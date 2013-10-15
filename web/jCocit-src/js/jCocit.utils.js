@@ -351,7 +351,7 @@ $.extend(String.prototype, {
 	 * convert HTML string to visible text
 	 */
 	toHtml : function() {
-		var str = this;
+		var str = this.toString();
 		if (str == null)
 			return "";
 		var buf = [];
@@ -388,14 +388,14 @@ $.extend(String.prototype, {
 	 * Parse String to Integer value
 	 */
 	_int : function() {
-		var ret = parseInt(this);
+		var ret = parseInt(this.toString());
 		if (isNaN(ret)) {
 			ret = 0;
 		}
 		return ret;
 	},
 	toJson : function() {
-		return $.parseJSON(str);
+		return $.parseJSON(this.toString());
 	}
 });
 //
@@ -456,7 +456,7 @@ $.toJsonString = function(o) {
 	case 'error':
 	case 'object':
 		for ( var p in o) {
-			s.push(p + ':' + $.toJsonString(o[p]));
+			s.push('"'+p + '":' + $.toJsonString(o[p]));
 		}
 		return '{' + s.join(',') + '}';
 		break;
