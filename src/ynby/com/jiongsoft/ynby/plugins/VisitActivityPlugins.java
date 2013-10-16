@@ -13,12 +13,14 @@ import com.jiongsoft.cocit.service.SoftService;
 import com.jiongsoft.cocit.util.CocCalendar;
 import com.jiongsoft.cocit.util.CocException;
 import com.jiongsoft.cocit.util.HttpUtil;
+import com.jiongsoft.cocit.util.Json;
 import com.jiongsoft.cocit.util.Log;
 import com.jiongsoft.cocit.util.StringUtil;
 import com.jiongsoft.ynby.entity.VisitActivity;
 import com.jiongsoft.ynby.entity.VisitActivityAddress;
 import com.jiongsoft.ynby.entity.VisitActivityRegister;
 import com.kmetop.demsy.Demsy;
+import com.kmetop.demsy.lang.Cls;
 
 public class VisitActivityPlugins {
 
@@ -170,12 +172,16 @@ public class VisitActivityPlugins {
 				VisitActivity activity = entity.getActivity();
 				activity = orm.load(activity.getClass(), activity.getId());
 
-				// 检查身份证号码
+				/*
+				 * 检查身份证号码
+				 */
 				if (!StringUtil.isNID(entity.getCode())) {
 					throw new CocException("非法身份证号码！");
 				}
 
-				// 检查报名有效期
+				/*
+				 * 检查报名有效期
+				 */
 				if (activity.isExpired()) {
 					Date from = activity.getExpiredFrom();
 					Date to = activity.getExpiredTo();
@@ -183,22 +189,19 @@ public class VisitActivityPlugins {
 					throw new CocException("报名有效期从 %s 到 %s！", CocCalendar.formatDateTime(from), CocCalendar.formatDateTime(to));
 				}
 
-				// 计算已报名人数、计划人数
+				/*
+				 * 计算已报名人数、计划人数
+				 */
 				Integer regNum = activity.getRegisterPersonNumber();
-				if (regNum == null) {
+				if (regNum == null)
 					regNum = 0;
-				}
-				Integer num = entity.getPersonNumber();
-				if (num < 1) {
-					// num = 1;
-					throw new CocException("报名人数非法！%s", num);
-				}
-
 				Integer planNum = activity.getPlanPersonNumber();
 				if (planNum == null)
 					planNum = 0;
 
-				// 检查报名人数是否超额
+				/*
+				 * 检查报名人数是否超额
+				 */
 				if (planNum > 0) {
 					int remainNum = planNum - regNum;// - num;
 
@@ -207,24 +210,88 @@ public class VisitActivityPlugins {
 					}
 				}
 
-				// 最后 检查短信验证码
+				/*
+				 * 最后 检查短信验证码
+				 */
 				if (oldID == null || oldID == 0) {
 					String tel = entity.getTel();
 					String code = entity.getTelVerifyCode();
 					HttpUtil.checkSmsVerifyCode(Demsy.me().request(), tel, code, "手机验证码非法！");
 				}
 
-				// 修改计划中的报名人数
-				regNum += num;
-				activity.setRegisterPersonNumber(regNum);
-				entity.setActivity(activity);
+				/*
+				 * 计算报名人数
+				 */
+				if (!StringUtil.isNil(entity.getTeamMembers())) {
+					VisitActivityRegister[] members = null;
+					try {
+						members = Json.fromJson(Cls.forName(VisitActivityRegister.class.getName() + "[]"), entity.getTeamMembers());
+					} catch (Throwable e) {
+						Log.error(e.toString());
+					}
+					int size = members == null ? 1 : (members.length + 1);
+					entity.setPersonNumber(size);
+					if (members != null) {
+						for (VisitActivityRegister member : members) {
+							member.setActivity(activity);
+							member.setTeamID(entity.getTel());
+							member.setOrderby(null);
 
-				// 生成邀请函验证码
+							if (member.getStatus() == 9) {// 9: 取消报名
+								size--;
+								entity.setPersonNumber(size);
+
+								if (member.getId() == null || member.getId() == 0) {
+									continue;
+								}
+							}
+
+							orm.save(member);
+						}
+
+						// 设置member ID
+						StringBuffer json = new StringBuffer("[");
+						int index = 0;
+						for (VisitActivityRegister member : members) {
+							if (index != 0)
+								json.append(",");
+
+							json.append(String.format(
+									"{\"orderby\":%s,\"id\":%s,\"name\":%s,\"age\":%s,\"teamMemberRole\":%s,\"sex\":%s,\"tel\":%s,\"qq\":%s,\"email\":%s,\"unit\":%s,\"carCode\":%s}"//
+									, index, member.getId(), Json.toJson(member.getName()), member.getAge(), Json.toJson(member.getTeamMemberRole()), member.getSex(), Json.toJson(member.getTel()), Json.toJson(member.getQq()),
+									Json.toJson(member.getEmail()), Json.toJson(member.getUnit()), Json.toJson(member.getCarCode())));
+
+							index++;
+						}
+						json.append("]");
+						entity.setTeamMembers(json.toString());
+					}
+				}
+				int num = entity.getPersonNumber();
+				if (num < 1) {
+					num = 1;
+					entity.setPersonNumber(1);
+				}
+
+				/*
+				 * 修改计划中的报名人数
+				 */
+				if (entity.getStatus() != 9) {// 9: 取消报名
+					regNum += num;
+					activity.setRegisterPersonNumber(regNum);
+					entity.setActivity(activity);
+				}
+
+				/*
+				 * 生成邀请函验证码
+				 */
 				Date date = CocCalendar.now().get();
 				Integer time = new Long(date.getTime()).intValue();
 				entity.setVerificationCode(Integer.toHexString(time).toUpperCase());
 
-				// 保存修改后的活动实体
+				/*
+				 * 保存修改后的活动实体
+				 */
 				orm.save(activity);
 			}
 		}

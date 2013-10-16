@@ -142,7 +142,8 @@
                                     <div id="teamMembersNames" style="border: 1px solid #ccc; width: 280px; position: relative;min-height: 25px;">
                                     </div>
                                     <div id="teamMemberDialog" style="background: #fff; border: 1px solid #000; z-index: 999; padding: 5px 3px 10px 3px; margin: 1px 0 0 0; position: absolute; display: none;">
-                                       <input type="hidden" name="index" value="" />
+                                       <input type="hidden" name="orderby" value="" />
+                                       <input type="hidden" name="id" value="" />
                                         <table>
                                             <tr>
                                                 <td class="reg_input_label2">成员姓名：</td>
@@ -159,7 +160,7 @@
                                             <tr>
                                                 <td class="reg_input_label2">成员关系：</td>
                                                 <td class="reg_input_box2">
-                                                    <select name="relationship">
+                                                    <select name="teamMemberRole">
                                                         <option value=""></option>
                                                         <option value="配偶">配偶</option>
                                                         <option value="父母">父母</option>

@@ -30,6 +30,11 @@
 			}
 		} catch (e) {
 		}
+
+		try {
+			makeTeamMemberNames();
+		} catch (e) {
+		}
 	});
 })(jQuery);
 
@@ -143,10 +148,10 @@ function openTeamMember() {
 	$('#teamMemberDialog').show();
 	var form = $("form");
 	var elements = form[0].elements;
-	elements["index"].value = "";
+	elements["orderby"].value = "";
 	elements["name"].value = "";
 	elements["age"].value = "";
-	elements["relationship"].value = "";
+	elements["teamMemberRole"].value = "";
 	$(elements["sex"]).attr("checked", false);
 	elements["tel"].value = "";
 	elements["qq"].value = "";
@@ -160,7 +165,7 @@ function addTeamMember() {
 	var elements = form[0].elements;
 	var name = elements["name"].value;
 	var age = elements["age"].value;
-	var relationship = elements["relationship"].value;
+	var teamMemberRole = elements["teamMemberRole"].value;
 	if (name.trim().length == 0) {
 		alert("姓名必须填写！");
 		elements["name"].focus();
@@ -175,9 +180,9 @@ function addTeamMember() {
 		elements["age"].focus();
 		return;
 	}
-	if (relationship.trim().length == 0) {
+	if (teamMemberRole.trim().length == 0) {
 		alert("成员关系必须填写！");
-		elements["relationship"].focus();
+		elements["teamMemberRole"].focus();
 		return;
 	}
 	var teamMembers = elements["entity.teamMembers"].value;
@@ -186,36 +191,35 @@ function addTeamMember() {
 		jsonMembers = teamMembers.toJson();
 	}
 	var member = {};
-	var index = elements["index"].value;
-	if (index.trim().length == 0) {
-		index = jsonMembers.length;
+	var orderby = elements["orderby"].value;
+	if (orderby.trim().length == 0) {
+		orderby = jsonMembers.length;
 	} else {
-		index = ("" + index)._int();
+		orderby = ("" + orderby)._int();
+		member = jsonMembers[orderby];
 	}
-	member["index"] = index;
+
+	member["orderby"] = orderby;
+	member["id"] = elements["id"].value._int();
 	member["name"] = name;
-	member["age"] = age;
-	member["relationship"] = relationship;
+	member["age"] = age._int();
+	member["teamMemberRole"] = teamMemberRole;
 	member["sex"] = $('input[name=sex]:checked').val()._int();
 	member["tel"] = elements["tel"].value;
 	member["qq"] = elements["qq"].value;
 	member["email"] = elements["email"].value;
 	member["unit"] = elements["unit"].value;
 	member["carCode"] = elements["carCode"].value;
-	jsonMembers[index] = member;
+
+	jsonMembers[orderby] = member;
 	elements["entity.teamMembers"].value = $.toJsonString(jsonMembers);
 
-	var $names = $("#teamMembersNames").html("");
-	for ( var i = 0; i < jsonMembers.length; i++) {
-		var mem = jsonMembers[i];
-		var one = $("<span class=\"reg_member\" onclick=\"editTeamMember(" + i + ")\"></span>");
-		one.html(" " + mem["name"] + " ");
-		$names.append(one);
-	}
+	makeTeamMemberNames();
+
 	$('#teamMemberDialog').hide();
 }
 
-function editTeamMember(index) {
+function editTeamMember(orderby) {
 	$('#teamMemberDialog').show();
 	var form = $("form");
 	var elements = form[0].elements;
@@ -224,17 +228,63 @@ function editTeamMember(index) {
 	if (teamMembers.trim().length > 0) {
 		jsonMembers = teamMembers.toJson();
 	}
-	var member = jsonMembers[index];
-	elements["index"].value = "" + index;
+	var member = jsonMembers[orderby];
+	elements["orderby"].value = "" + orderby;
+	elements["id"].value = member["id"];
 	elements["name"].value = member["name"];
-	elements["age"].value = member["age"];
-	elements["relationship"].value = member["relationship"];
+	elements["age"].value = member["age"]._int();
+	elements["teamMemberRole"].value = member["teamMemberRole"];
 	$('input:radio[name=sex]')[member["sex"]].checked = true;
 	elements["tel"].value = member["tel"];
 	elements["qq"].value = member["qq"];
 	elements["email"].value = member["email"];
 	elements["unit"].value = member["unit"];
 	elements["carCode"].value = member["carCode"];
+}
+
+function deleteTeamMember(orderby) {
+	var form = $("form");
+	var elements = form[0].elements;
+	var teamMembers = elements["entity.teamMembers"].value;
+	var jsonMembers = [];
+	if (teamMembers.trim().length > 0) {
+		jsonMembers = teamMembers.toJson();
+	}
+	var member = jsonMembers[orderby];
+	// if (member["id"] && member["id"].trim().length > 0) {
+	member["status"] = 9;
+	// } else {
+	// jsonMembers.splice(orderby, 1);
+	// }
+
+	elements["entity.teamMembers"].value = $.toJsonString(jsonMembers);
+
+	makeTeamMemberNames();
+}
+function makeTeamMemberNames() {
+	var form = $("form");
+	var elements = form[0].elements;
+	var teamMembers = elements["entity.teamMembers"].value;
+	var jsonMembers = [];
+	if (teamMembers.trim().length > 0) {
+		jsonMembers = teamMembers.toJson();
+	}
+
+	var $names = $("#teamMembersNames").html("");
+	for ( var i = 0; i < jsonMembers.length; i++) {
+		var mem = jsonMembers[i];
+		if (mem["status"] && mem["status"] == 9) {
+			continue;
+		}
+		var one = $("<span class=\"reg_member\"><span onclick=\"editTeamMember(" + i + ")\"> " + mem["name"] + " </span><span onclick=\"deleteTeamMember(" + i
+				+ ")\" class=\"del_member\" style=\"display:none;padding: 0;\">X</span></span>");
+		one.hover(function() {
+			$(".del_member", this).show();
+		}, function() {
+			$(".del_member", this).hide();
+		});
+		$names.append(one);
+	}
 }
 
 function query(btn) {
