@@ -1,6 +1,6 @@
 package com.jiongsoft.ynby.plugins;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 
@@ -14,7 +14,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 
-import com.jiongsoft.TestAll;
 import com.jiongsoft.cocit.entity.ActionEvent;
 import com.jiongsoft.cocit.orm.Orm;
 import com.jiongsoft.cocit.orm.expr.CndExpr;
@@ -179,7 +178,7 @@ public class VisitActivityPluginsTest {
 
 		plugin.before(event);
 
-		assertEquals(entity.getPersonNumber(), 4);
+		assertEquals(entity.getPersonNumber(), (Integer) 4);
 		assertEquals(entity.getStatus(), 0);
 		assertEquals(activity.getRegisterPersonNumber(), 4);
 	}

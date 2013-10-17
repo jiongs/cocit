@@ -29,6 +29,7 @@ import com.jiongsoft.cocit.ui.model.widget.ListWidget;
 import com.jiongsoft.cocit.ui.model.widget.ListWidgetData;
 import com.jiongsoft.cocit.ui.model.widget.TreeWidgetData;
 import com.jiongsoft.cocit.util.ActionUtil;
+import com.jiongsoft.cocit.util.ClassUtil;
 import com.jiongsoft.cocit.util.CocException;
 import com.jiongsoft.cocit.util.ExcelUtil;
 import com.jiongsoft.cocit.util.Log;
@@ -232,11 +233,15 @@ public class EntityAction {
 
 		try {
 			String[] array = StringUtil.toArray(dataID);
-			Long[] idArray = new Long[array.length];
+			// Long[] idArray = new Long[array.length];
+			List list = new ArrayList();
 			for (int i = 0; i < array.length; i++) {
-				idArray[i] = Long.parseLong(array[i]);
+				// idArray[i] = Long.parseLong(array[i]);
+				Object obj = ClassUtil.newInstance(helper.entityManager.getType());
+				ObjectUtil.setValue(obj, "id", Long.parseLong(array[i]));
+				list.add(obj);
 			}
-			helper.entityManager.delete(idArray, helper.opMode);
+			helper.entityManager.delete(list, helper.opMode);
 		} catch (Throwable e) {
 			ret.setException(e);
 		}
@@ -280,8 +285,8 @@ public class EntityAction {
 		ActionHelper helper = ActionHelper.make(args, argDataID, null);
 
 		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.op, helper.entity);
-		//if (StringUtil.isNil(formModel.getJsp()))
-			formModel.setJsp(ActionUtil.JSP_DIR + "/getExportXlsForm");
+		// if (StringUtil.isNil(formModel.getJsp()))
+		formModel.setJsp(ActionUtil.JSP_DIR + "/getExportXlsForm");
 
 		formModel.setVar("actionHelper", helper);
 		formModel.setVar("query.filterExpr", StringUtil.escapeHTML(helper.actionContext.getParameterValue("query.filterExpr", "")));

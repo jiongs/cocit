@@ -147,7 +147,7 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 			model.addColumn(col);
 
 			count++;
-			if (count == 8)
+			if (count == 10)
 				break;
 		}
 

@@ -20,6 +20,14 @@
 			reg = null;
 			error = "没有查询到满足条件的报名记录！";
 		}
+		if(reg.getTeamID()!=null&&reg.getTeamID().trim().length()>0){
+			reg = null;
+			error = "你是团队报名中的成员，无权修改报名信息！";
+		}
+		if(reg.getStatus() != (byte)0){
+			reg = null;
+			error = "你的报名信息可能已被取消，无权修改报名信息！";
+		}
 	} catch (Throwable e) {
 		error = e.getMessage();
 	}
@@ -36,6 +44,7 @@
 <![endif]-->
 
 <script src="/jCocit/common/jquery.min.js" type="text/javascript"></script>
+<script src="/jCocit/js/min/jCocit.utils.js" type="text/javascript"></script>
 <script src="<%=model.getContextPath()%>/visit/js/visit.js" type="text/javascript"></script>
 </head>
 <body>
@@ -156,7 +165,11 @@
                             <tr>
                                 <td class="reg_input_label" valign="top">团队成员：</td>
                                 <td class="reg_input_box" valign="top">
-                                    <input type="hidden" name="entity.teamMembers" />
+                                	<div style="display:none;">
+                                		<textarea name="entity.teamMembers" style="height: 60px;">
+                                		<%=reg.getTeamMembers() %>
+                                		</textarea>
+                                	</div>
                                     <div id="teamMembersNames" style="border: 1px solid #ccc; width: 280px; position: relative;min-height: 25px;">
                                     </div>
                                     <div id="teamMemberDialog" style="background: #fff; border: 1px solid #000; z-index: 999; padding: 5px 3px 10px 3px; margin: 1px 0 0 0; position: absolute; display: none;">
@@ -183,7 +196,7 @@
                                                         <option value="配偶">配偶</option>
                                                         <option value="父母">父母</option>
                                                         <option value="子女">子女</option>
-                                                        <option value="亲戚">亲戚</option>
+                                                        <option value="亲属">亲属</option>
                                                         <option value="朋友">朋友</option>
                                                         <option value="同事">同事</option>
                                                         <option value="其他">其他</option>

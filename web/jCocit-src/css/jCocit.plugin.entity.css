@@ -50,7 +50,7 @@ form.entity-form {
 }
 
 .entity-field-box,.entity-field-box input,.entity-field-box textarea {
-	font-size: 11px;
+	font-size: 12px;
 }
 
 .entity-field-box .CbB {
@@ -70,7 +70,7 @@ form.entity-form {
 	width: 202px;
 	height: 22px;
 	padding: 1px;
-	font-size: 11px;
+	font-size: 12px;
 }
 
 .entity-field-box .select option {

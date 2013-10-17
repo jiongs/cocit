@@ -1,6 +1,7 @@
 package com.jiongsoft.ynby.plugins;
 
 import java.util.Date;
+import java.util.List;
 
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.action.ActionHelper;
@@ -23,6 +24,8 @@ import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.lang.Cls;
 
 public class VisitActivityPlugins {
+	// private static boolean debug = true;
+	private static boolean debug = false;
 
 	public static class SaveYearActivity extends BasePlugin<ActionHelper> {
 
@@ -130,6 +133,86 @@ public class VisitActivityPlugins {
 		}
 	}
 
+	public static class DeleteRegister extends BasePlugin<List> {
+		@Override
+		public void before(ActionEvent<List> event) {
+			Orm orm = event.getOrm();
+			List<VisitActivityRegister> list = event.getEntity();
+
+			for (VisitActivityRegister entity : list) {
+				Long oldID = entity.getId();
+				if (oldID != null && oldID > 0) {
+					VisitActivityRegister oldEntity = orm.load(VisitActivityRegister.class, oldID);
+
+					if (oldEntity.getStatus() != 9) {
+						throw new CocException("只能删除已“取消报名”的数据！");
+					}
+				}
+			}
+		}
+	}
+
+	public static class CancelRegister extends BasePlugin<VisitActivityRegister> {
+
+		@Override
+		public void before(ActionEvent<VisitActivityRegister> event) {
+			synchronized (VisitActivity.class) {
+				VisitActivityRegister entity = event.getEntity();
+				if (entity.getStatus() != 0) {
+					return;
+				}
+
+				Orm orm = event.getOrm();
+
+				Long oldID = entity.getId();
+				if (oldID != null && oldID > 0) {
+
+					entity.setStatus((byte) 9);
+
+					VisitActivityRegister oldEntity = orm.load(VisitActivityRegister.class, oldID);
+					VisitActivity oldActivity = oldEntity.getActivity();
+
+					Integer oldNum = oldEntity.getPersonNumber();
+					if (oldNum == null) {
+						oldNum = 1;
+					}
+
+					/*
+					 * 取消团队成员：同时减少团队人员数量
+					 */
+					String teamID = oldEntity.getTeamID();
+					if (!StringUtil.isNil(teamID)) {
+						VisitActivityRegister team = orm.get(VisitActivityRegister.class, Expr.eq("tel", teamID).and(Expr.eq("activity", oldActivity)));
+						Integer teamNum = team.getPersonNumber() - 1;
+						team.setPersonNumber(teamNum);
+						orm.save(team);
+					} else {
+
+						/*
+						 * 取消团队报名者：同时将取消团队中的所有成员
+						 */
+						teamID = oldEntity.getTel();
+						if (!StringUtil.isNil(teamID)) {
+							List<VisitActivityRegister> teamList = orm.query(VisitActivityRegister.class, Expr.eq("teamID", teamID).and(Expr.eq("activity", oldActivity)));
+							for (VisitActivityRegister m : teamList) {
+								m.setStatus((byte) 9);
+								orm.save(m);
+							}
+						}
+					}
+
+					/*
+					 * 回复活动报名人数
+					 */
+					int oldRegNum = oldActivity.getRegisterPersonNumber();
+					oldRegNum -= oldNum;
+					oldActivity.setRegisterPersonNumber(oldRegNum);
+					orm.save(oldActivity);
+				}
+			}
+		}
+	}
+
 	/**
 	 * 保存（包括新增、修改）活动报名
 	 * 
@@ -139,7 +222,7 @@ public class VisitActivityPlugins {
 	public static class SaveRegister extends BasePlugin<VisitActivityRegister> {
 		@Override
 		public void before(ActionEvent<VisitActivityRegister> event) {
-			synchronized (SaveRegister.class) {
+			synchronized (VisitActivity.class) {
 				Orm orm = event.getOrm();
 				VisitActivityRegister entity = event.getEntity();
 
@@ -164,7 +247,7 @@ public class VisitActivityPlugins {
 
 					String tel = entity.getTel();
 					VisitActivityRegister oldEntity = orm.get(VisitActivityRegister.class, Expr.eq("tel", tel).addDesc("id"));
-					if (oldEntity != null && oldEntity.getActivity().getPlanDate().getTime() > System.currentTimeMillis()) {
+					if (oldEntity != null && oldEntity.getActivity().getPlanDate().getTime() > System.currentTimeMillis() && oldEntity.getStatus() == 0) {
 						throw new CocException("该手机号已经报名参加【%s】的活动，不允许重复报名！", oldEntity.getActivity().getName());
 					}
 				}
@@ -216,7 +299,8 @@ public class VisitActivityPlugins {
 				if (oldID == null || oldID == 0) {
 					String tel = entity.getTel();
 					String code = entity.getTelVerifyCode();
-					HttpUtil.checkSmsVerifyCode(Demsy.me().request(), tel, code, "手机验证码非法！");
+					if (!debug)
+						HttpUtil.checkSmsVerifyCode(Demsy.me().request(), tel, code, "手机验证码非法！");
 				}
 
 				/*
@@ -225,7 +309,7 @@ public class VisitActivityPlugins {
 				if (!StringUtil.isNil(entity.getTeamMembers())) {
 					VisitActivityRegister[] members = null;
 					try {
-						members = Json.fromJson(Cls.forName(VisitActivityRegister.class.getName() + "[]"), entity.getTeamMembers());
+						members = (VisitActivityRegister[]) Json.fromJson(Cls.forName(VisitActivityRegister.class.getName() + "[]"), entity.getTeamMembers());
 					} catch (Throwable e) {
 						Log.error(e.toString());
 					}
@@ -237,11 +321,15 @@ public class VisitActivityPlugins {
 							member.setTeamID(entity.getTel());
 							member.setOrderby(null);
 
+							if (member.getId() == 0) {
+								member.setId(null);
+							}
+
 							if (member.getStatus() == 9) {// 9: 取消报名
 								size--;
 								entity.setPersonNumber(size);
 
-								if (member.getId() == null || member.getId() == 0) {
+								if (member.getId() == null) {
 									continue;
 								}
 							}
@@ -267,8 +355,8 @@ public class VisitActivityPlugins {
 						entity.setTeamMembers(json.toString());
 					}
 				}
-				int num = entity.getPersonNumber();
-				if (num < 1) {
+				Integer num = entity.getPersonNumber();
+				if (num == null || num < 1) {
 					num = 1;
 					entity.setPersonNumber(1);
 				}
@@ -317,9 +405,11 @@ public class VisitActivityPlugins {
 			/**
 			 * 发送短信邀请函
 			 */
-			MTSmsEntity sms = MTSmsEntity.make("“走进云南白药”邀请函", entity.getTel(), content);
-			ActionHelper actionHelper = ActionHelper.make("0:MTSmsEntity:c");
-			actionHelper.entityManager.save(sms, "c");
+			if (!debug) {
+				MTSmsEntity sms = MTSmsEntity.make("“走进云南白药”邀请函", entity.getTel(), content);
+				ActionHelper actionHelper = ActionHelper.make("0:MTSmsEntity:c");
+				actionHelper.entityManager.save(sms, "c");
+			}
 		}
 	}
 }

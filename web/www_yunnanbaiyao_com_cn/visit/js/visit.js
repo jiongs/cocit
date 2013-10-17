@@ -232,7 +232,7 @@ function editTeamMember(orderby) {
 	elements["orderby"].value = "" + orderby;
 	elements["id"].value = member["id"];
 	elements["name"].value = member["name"];
-	elements["age"].value = member["age"]._int();
+	elements["age"].value = member["age"];
 	elements["teamMemberRole"].value = member["teamMemberRole"];
 	$('input:radio[name=sex]')[member["sex"]].checked = true;
 	elements["tel"].value = member["tel"];

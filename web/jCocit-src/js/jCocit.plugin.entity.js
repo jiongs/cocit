@@ -373,10 +373,15 @@
 		});
 	}
 	function doExportXls(opts) {
+		var $grid = $("#datagrid_" + opts.token);
 		var rows = _getSelectedGridRows(opts.token);
-
+		var gridOptions = $grid.datagrid("options");
+		
 		var data = {};
 		_prepareGridQueryParams(opts.token, data);
+		data["sortField"] = gridOptions["sortField"];
+		data["sortOrder"] = gridOptions["sortOrder"];
+		
 		var loadFormUrl = "/coc/getExportXlsForm/" + opts.funcExpr + "/" + rows.join(",") + "?" + $.param(data);
 		jCocit.dialog.open(loadFormUrl, "dialog_" + opts.token + "_" + opts.opCode, {
 			title : opts.text,
