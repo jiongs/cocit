@@ -177,8 +177,8 @@ public class EntityAction {
 	 * @param dataNode
 	 * @return
 	 */
-	@At(UrlAPI.GET_ENTITY_FORM)
-	public EntityForm getEntityForm(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
+	@At(UrlAPI.GET_ENTITY_ROW_FORM)
+	public EntityForm getEntityRowForm(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
 		ActionHelper helper = ActionHelper.make(args, argDataID, dataNode);
 
 		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.op, helper.entity);
@@ -202,8 +202,8 @@ public class EntityAction {
 	 * @param dataNode
 	 * @return
 	 */
-	@At(UrlAPI.SAVE_ENTITY_FORM)
-	public EntityFormData saveEntityForm(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
+	@At(UrlAPI.SAVE_ENTITY_ROW)
+	public EntityFormData saveEntityRow(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
 		ActionHelper helper = ActionHelper.make(args, argDataID, dataNode);
 
 		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.op, helper.entity);
@@ -228,8 +228,8 @@ public class EntityAction {
 	 * @param dataID
 	 * @return
 	 */
-	@At(UrlAPI.DEL_ENTITY_LIST)
-	public EntityFormData delEntityList(String args, String dataID) {
+	@At(UrlAPI.DEL_ENTITY_ROWS)
+	public EntityFormData delEntityRows(String args, String dataID) {
 		ActionHelper helper = ActionHelper.make(args, dataID, null);
 
 		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.op, helper.entity);
@@ -263,8 +263,8 @@ public class EntityAction {
 	 * @param dataID
 	 * @return
 	 */
-	@At(UrlAPI.EXEC_ENTITY_TASK)
-	public AlertsModel execEntityTask(String args, String dataID) {
+	@At(UrlAPI.RUN_ENTITY_ROWS)
+	public AlertsModel runEntityRows(String args, String dataID) {
 		ActionHelper helper = ActionHelper.make(args, dataID, null);
 
 		try {
@@ -276,26 +276,27 @@ public class EntityAction {
 		}
 	}
 
-	/**
-	 * 执行异步任务
-	 * 
-	 * @param args
-	 * @param entityID
-	 * @param dataNode
-	 * @return
-	 */
-	@At(UrlAPI.EXEC_ENTITY_ASYN_TASK)
-	public AlertsModel execEntityAsynTask(String args, String entityID) {
-		ActionHelper helper = ActionHelper.make(args, entityID, null);
-
-		try {
-			String result = helper.entityManager.execAsynTask(helper, helper.opMode);
-
-			return AlertsModel.makeSuccess(result);
-		} catch (Throwable e) {
-			return AlertsModel.makeError(e == null ? "" : e.toString());
-		}
-	}
+	//
+	// /**
+	// * 执行异步任务
+	// *
+	// * @param args
+	// * @param entityID
+	// * @param dataNode
+	// * @return
+	// */
+	// @At(UrlAPI.RUN_ENTITY_ASYN_ROWS)
+	// public AlertsModel runEntityAsynRows(String args, String entityID) {
+	// ActionHelper helper = ActionHelper.make(args, entityID, null);
+	//
+	// try {
+	// String result = helper.entityManager.execAsynTask(helper, helper.opMode);
+	//
+	// return AlertsModel.makeSuccess(result);
+	// } catch (Throwable e) {
+	// return AlertsModel.makeError(e == null ? "" : e.toString());
+	// }
+	// }
 
 	/**
 	 * 对应JSP: {@value UrlAPI#JSP_DIR}/getExportXlsForm.jsp
@@ -329,8 +330,8 @@ public class EntityAction {
 	 * @param args
 	 * @param argDataID
 	 */
-	@At(UrlAPI.DO_EXPORT_XLS_DATA)
-	public void doExportXlsData(String args, String argDataID) {
+	@At(UrlAPI.DO_EXPORT_XLS_ROWS)
+	public void doExportXlsRows(String args, String argDataID) {
 		ActionHelper helper = ActionHelper.make(args, argDataID, null);
 
 		OutputStream outStream = null;

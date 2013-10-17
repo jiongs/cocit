@@ -319,14 +319,14 @@
 		$.doAjax({
 			type : "POST",
 			dataType : "json",
-			url : "/coc/saveEntityForm/" + opts.funcExpr + "/" + dataID,
+			url : "/coc/saveEntityRow/" + opts.funcExpr + "/" + dataID,
 			data : data,
 			success : funcSuccess,
 			complete : funcComplete
 		});
 	}
 	function doView(opts, dataID) {
-		var loadFormUrl = "/coc/getEntityForm/" + opts.funcExpr + "/" + dataID;
+		var loadFormUrl = "/coc/getEntityRowForm/" + opts.funcExpr + "/" + dataID;
 		jCocit.dialog.open(loadFormUrl, "dialog_" + opts.token + "_" + opts.opCode, {
 			title : opts.text,
 			width : 800,
@@ -343,7 +343,7 @@
 	function doEdit(opts, dataID) {
 		var data = {};
 		_prepareEntityFormParams(opts.token, data);
-		var loadFormUrl = "/coc/getEntityForm/" + opts.funcExpr + "/" + dataID + "?" + $.param(data);
+		var loadFormUrl = "/coc/getEntityRowForm/" + opts.funcExpr + "/" + dataID + "?" + $.param(data);
 		jCocit.dialog.open(loadFormUrl, "dialog_" + opts.token + "_" + opts.opCode, {
 			title : opts.text,
 			width : 800,
@@ -393,7 +393,7 @@
 				onClick : function(data) {
 					var $form = $("form", this);
 					var form = $form[0];
-					form.action = "/coc/doExportXlsData/" + opts.funcExpr + "/" + rows.join(",");
+					form.action = "/coc/doExportXlsRows/" + opts.funcExpr + "/" + rows.join(",");
 					form.method = "POST";
 					form.target = "_blank";
 					
@@ -412,7 +412,7 @@
 		$.doAjax({
 			type : "POST",
 			dataType : "json",
-			url : "/coc/execEntityTask/" + opts.funcExpr,
+			url : "/coc/runEntityRows/" + opts.funcExpr,
 			success : function(json) {
 				alert(json.message);
 				$("#datagrid_" + opts.token).datagrid("reload");
@@ -457,7 +457,7 @@
 				$.doAjax({
 					type : "POST",
 					dataType : "json",
-					url : "/coc/delEntityList/" + opts.funcExpr + "/" + rows.join(","),
+					url : "/coc/delEntityRows/" + opts.funcExpr + "/" + rows.join(","),
 					success : function() {
 						$("#datagrid_" + opts.token).datagrid("reload");
 					}

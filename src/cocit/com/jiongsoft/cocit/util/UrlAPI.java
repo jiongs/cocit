@@ -113,36 +113,39 @@ public abstract class UrlAPI {
 	 * <p>
 	 * 参数：moduleID:tableID:operationID
 	 */
-	public static final String GET_ENTITY_FORM = URL_NS + "/getEntityForm/*";
+	public static final String GET_ENTITY_ROW_FORM = URL_NS + "/getEntityRowForm/*";
 
 	/**
-	 * “业务模块”访问路径之保存业务表单
+	 * 保存实体行：
 	 */
-	public static final String SAVE_ENTITY_FORM = URL_NS + "/saveEntityForm/*";
+	public static final String SAVE_ENTITY_ROW = URL_NS + "/saveEntityRow/*";
 
 	/**
-	 * “业务模块”访问路径之删除业务数据列表，即批量删除实体数据。操作码：299
+	 * 删除业务数据行集，即批量删除实体数据。操作码：299
 	 * <p>
 	 * 参数：moduleID:tableID:operationID
 	 */
-	public static final String DEL_ENTITY_LIST = URL_NS + "/delEntityList/*";
-	
-	
+	public static final String DEL_ENTITY_ROWS = URL_NS + "/delEntityRows/*";
 
 	/**
-	 * 执行后台任务。操作码：204
+	 * 立即执行实体行任务：即立即对选中的单条记录执行业务逻辑。
 	 */
-	public static final String EXEC_ENTITY_TASK = URL_NS + "/execEntityTask/*";
+	public static final String RUN_ENTITY_ROW = URL_NS + "/runEntityRow/*";
 
-	public static final String EXEC_ENTITY_ASYN_TASK = URL_NS + "/execEntityAsynTask/*";
+	/**
+	 * 立即执行实体行集任务：即立即对满足条件的记录集合执行业务逻辑。操作码：204
+	 */
+	public static final String RUN_ENTITY_ROWS = URL_NS + "/runEntityRows/*";
+
+	// public static final String RUN_ENTITY_ASYN_ROWS = URL_NS + "/runEntityAsynRows/*";
 
 	public static final String GET_EXPORT_XLS_FORM = URL_NS + "/getExportXlsForm/*";
 
+	public static final String DO_EXPORT_XLS_ROWS = URL_NS + "/doExportXlsRows/*";
+
 	public static final String GET_IMPORT_XLS_FORM = URL_NS + "/getImportXlsForm/*";
 
-	public static final String DO_EXPORT_XLS_DATA = URL_NS + "/doExportXlsData/*";
-
-	public static final String DO_IMPORT_XLS_DATA = URL_NS + "/doImportXlsData/*";
+	public static final String DO_IMPORT_XLS_ROWS = URL_NS + "/doImportXlsRows/*";
 
 	/**
 	 * 获取手机验证码
