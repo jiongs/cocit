@@ -12,7 +12,7 @@ import com.jiongsoft.cocit.mvc.adaptor.EntityParamAdaptor;
 import com.jiongsoft.cocit.mvc.adaptor.EntityParamNode;
 import com.jiongsoft.cocit.ui.UIModelView;
 import com.jiongsoft.cocit.ui.model.JSPModel;
-import com.jiongsoft.cocit.util.ActionUtil;
+import com.jiongsoft.cocit.util.UrlAPI;
 import com.jiongsoft.cocit.util.Log;
 
 @Ok(UIModelView.VIEW_TYPE)
@@ -32,7 +32,7 @@ public class WebAction {
 	 *            实体参数节点：用来接收HTTP中以entity.开头的参数，这些参数将被注入到实体对象中，继续传递到指定的页面。
 	 * @return JSPModel 对象
 	 */
-	@At(ActionUtil.GET_JSP_MODEL)
+	@At(UrlAPI.GET_JSP_MODEL)
 	public JSPModel getJspModel(String jspArgs, String opArgs, String entityID, @Param("::entity.") EntityParamNode entityParamNode) {
 		Log.debug("WebAction.getJspModel... jspArgs=%s, opArgs=%s, entityID=%s", jspArgs, opArgs, entityID);
 
@@ -40,7 +40,7 @@ public class WebAction {
 		ActionHelper actionHelper = ActionHelper.make(opArgs, entityID, entityParamNode);
 
 		String softContextPath = Cocit.getContextPath() + "/" + actionHelper.softService.getCode().replace('.', '_');
-		String jspPath = ActionUtil.makeJspPath(jspArgs);
+		String jspPath = UrlAPI.makeJspPath(jspArgs);
 
 		JSPModel model = JSPModel.make(actionContext.getRequest(), actionContext.getResponse(), softContextPath, jspPath);
 

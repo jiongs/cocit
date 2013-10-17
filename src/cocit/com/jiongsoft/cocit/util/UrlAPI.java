@@ -6,7 +6,7 @@ package com.jiongsoft.cocit.util;
  * @author yongshan.ji
  * 
  */
-public abstract class ActionUtil {
+public abstract class UrlAPI {
 
 	/**
 	 * 编码路径参数
@@ -69,91 +69,96 @@ public abstract class ActionUtil {
 	 */
 
 	/**
-	 * “业务模块”访问路径之路径前缀。
+	 * “业务模块”命名控件：路径前缀。
 	 */
-	public static final String ACTION_PATH_PREFIX = "/coc";
+	public static final String URL_NS = "/coc";
 
 	/**
 	 * “业务模块”访问路径之模块界面，模块界面可以包括一个主表界面和多个从表界面组成的Tabs界面。
 	 * <p>
 	 * 参数：moduleID
 	 */
-	public static final String GET_ENTITY_MODULE_UI = ACTION_PATH_PREFIX + "/getEntityModuleUI/*";
+	public static final String GET_ENTITY_MODULE_UI = URL_NS + "/getEntityModuleUI/*";
 
 	/**
 	 * “业务模块”访问路径之数据表管理界面，数据表管理界面包括左边导航树、顶部操作菜单、GRID；不包括子表。
 	 * <p>
 	 * 参数：moduleID:tableID
 	 */
-	public static final String GET_ENTITY_TABLE_UI = ACTION_PATH_PREFIX + "/getEntityTableUI/*";
+	public static final String GET_ENTITY_TABLE_UI = URL_NS + "/getEntityTableUI/*";
 
 	/**
 	 * “业务模块”访问路径之Grid数据，数据格式通常为JSON或XML格式。
 	 * <p>
 	 * 参数：moduleID:tableID
 	 */
-	public static final String GET_ENTITY_GRID_DATA = ACTION_PATH_PREFIX + "/getEntityGridData/*";
+	public static final String GET_ENTITY_GRID_DATA = URL_NS + "/getEntityGridData/*";
 
 	/**
-	 * “业务模块”访问路径之List数据，数据格式通常为JSON或XML格式。
+	 * “业务模块”访问路径之List数据，数据格式通常为JSON或XML格式，List数据主要用于Combobox下拉列表。
 	 * <p>
 	 * 参数：moduleID:tableID
 	 */
-	public static final String GET_ENTITY_LIST_DATA = ACTION_PATH_PREFIX + "/getEntityListData/*";
+	public static final String GET_ENTITY_LIST_DATA = URL_NS + "/getEntityListData/*";
 
 	/**
 	 * “业务模块”访问路径之导航树数据，数据格式通常为JSON或XML格式。
 	 * <p>
 	 * 参数：moduleID:tableID
 	 */
-	public static final String GET_ENTITY_NAVI_DATA = ACTION_PATH_PREFIX + "/getEntityNaviData/*";
+	public static final String GET_ENTITY_NAVI_DATA = URL_NS + "/getEntityNaviData/*";
 
 	/**
 	 * “业务模块”访问路径之加载业务表单，添加、修改数据时使用。
 	 * <p>
 	 * 参数：moduleID:tableID:operationID
 	 */
-	public static final String GET_ENTITY_FORM = ACTION_PATH_PREFIX + "/getEntityForm/*";
+	public static final String GET_ENTITY_FORM = URL_NS + "/getEntityForm/*";
 
 	/**
 	 * “业务模块”访问路径之保存业务表单
 	 */
-	public static final String SAVE_ENTITY_FORM_DATA = ACTION_PATH_PREFIX + "/saveEntityFormData/*";
+	public static final String SAVE_ENTITY_FORM = URL_NS + "/saveEntityForm/*";
 
 	/**
-	 * “业务模块”访问路径之删除业务数据
+	 * “业务模块”访问路径之删除业务数据列表，即批量删除实体数据。操作码：299
 	 * <p>
 	 * 参数：moduleID:tableID:operationID
 	 */
-	public static final String DELETE_ENTITY_DATA = ACTION_PATH_PREFIX + "/deleteEntityData/*";
+	public static final String DEL_ENTITY_LIST = URL_NS + "/delEntityList/*";
+	
+	
 
-	public static final String EXEC_ENTITY_TASK = ACTION_PATH_PREFIX + "/execEntityTask/*";
+	/**
+	 * 执行后台任务。操作码：204
+	 */
+	public static final String EXEC_ENTITY_TASK = URL_NS + "/execEntityTask/*";
 
-	public static final String EXEC_ENTITY_ASYN_TASK = ACTION_PATH_PREFIX + "/execEntityAsynTask/*";
+	public static final String EXEC_ENTITY_ASYN_TASK = URL_NS + "/execEntityAsynTask/*";
 
-	public static final String GET_EXPORT_XLS_FORM = ACTION_PATH_PREFIX + "/getExportXlsForm/*";
+	public static final String GET_EXPORT_XLS_FORM = URL_NS + "/getExportXlsForm/*";
 
-	public static final String GET_IMPORT_XLS_FORM = ACTION_PATH_PREFIX + "/getImportXlsForm/*";
+	public static final String GET_IMPORT_XLS_FORM = URL_NS + "/getImportXlsForm/*";
 
-	public static final String EXPORT_XLS = ACTION_PATH_PREFIX + "/exportXls/*";
+	public static final String DO_EXPORT_XLS_DATA = URL_NS + "/doExportXlsData/*";
 
-	public static final String IMPORT_XLS = ACTION_PATH_PREFIX + "/importXls/*";
+	public static final String DO_IMPORT_XLS_DATA = URL_NS + "/doImportXlsData/*";
 
 	/**
 	 * 获取手机验证码
 	 */
-	public static final String GET_IMG_VERIFY_CODE = ACTION_PATH_PREFIX + "/getImgVerifyCode";
+	public static final String GET_IMG_VERIFY_CODE = URL_NS + "/getImgVerifyCode";
 
-	public static final String CHECK_IMG_VERIFY_CODE = ACTION_PATH_PREFIX + "/checkImgVerifyCode/*";
+	public static final String CHK_IMG_VERIFY_CODE = URL_NS + "/chkImgVerifyCode/*";
 
 	/**
 	 * 获取短信验证码
 	 * <p>
 	 * 参数：手机号码
 	 */
-	public static final String GET_SMS_VERIFY_CODE = ACTION_PATH_PREFIX + "/getSmsVerifyCode/*";
+	public static final String GET_SMS_VERIFY_CODE = URL_NS + "/getSmsVerifyCode/*";
 
-	public static final String CHECK_SMS_VERIFY_CODE = ACTION_PATH_PREFIX + "/checkSmsVerifyCode/*";
+	public static final String CHK_SMS_VERIFY_CODE = URL_NS + "/chkSmsVerifyCode/*";
 
 	/*
 	 * 以下是报表管理模块相关功能的访问路径

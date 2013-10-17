@@ -10,7 +10,7 @@ import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.jiongsoft.cocit.entity.impl.BaseEntity;
-import com.jiongsoft.cocit.util.ActionUtil;
+import com.jiongsoft.cocit.util.UrlAPI;
 
 /**
  * MT(Mobile Terminated)短信：即下行短信，发送到终端的短信。这里的终端通常指手机。
@@ -21,7 +21,7 @@ import com.jiongsoft.cocit.util.ActionUtil;
  * 
  */
 @Entity
-@CocTable(name = "短信发送管理", code = "MTSmsEntity", pathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 1//
+@CocTable(name = "短信发送管理", code = "MTSmsEntity", pathPrefix = UrlAPI.URL_NS, orderby = 1//
 // 操作按钮
 , actions = {
 //

@@ -10,7 +10,7 @@ import com.jiongsoft.cocit.entity.sms.MTSmsEntity;
 import com.jiongsoft.cocit.service.SoftService;
 import com.jiongsoft.cocit.ui.UIModelView;
 import com.jiongsoft.cocit.ui.model.AlertsModel;
-import com.jiongsoft.cocit.util.ActionUtil;
+import com.jiongsoft.cocit.util.UrlAPI;
 import com.jiongsoft.cocit.util.HttpUtil;
 import com.jiongsoft.cocit.util.Log;
 
@@ -18,14 +18,14 @@ import com.jiongsoft.cocit.util.Log;
 @Fail(UIModelView.VIEW_TYPE)
 public class UtilAction {
 
-	@At(ActionUtil.GET_IMG_VERIFY_CODE)
+	@At(UrlAPI.GET_IMG_VERIFY_CODE)
 	public void getImgVerifyCode() {
 		ActionContext ctx = Cocit.getActionContext();
 		HttpUtil.makeImgVerifyCode(ctx.getRequest(), ctx.getResponse());
 	}
 
-	@At(ActionUtil.CHECK_IMG_VERIFY_CODE)
-	public AlertsModel checkImgVerifyCode(String code) {
+	@At(UrlAPI.CHK_IMG_VERIFY_CODE)
+	public AlertsModel chkImgVerifyCode(String code) {
 		String message = "";
 		try {
 			ActionContext ctx = Cocit.getActionContext();
@@ -42,7 +42,7 @@ public class UtilAction {
 		}
 	}
 
-	@At(ActionUtil.GET_SMS_VERIFY_CODE)
+	@At(UrlAPI.GET_SMS_VERIFY_CODE)
 	public AlertsModel getSmsVerifyCode(String tel) {
 		String message = "";
 		try {
@@ -73,8 +73,8 @@ public class UtilAction {
 		}
 	}
 
-	@At(ActionUtil.CHECK_SMS_VERIFY_CODE)
-	public AlertsModel checkSmsVerifyCode(String tel, String code) {
+	@At(UrlAPI.CHK_SMS_VERIFY_CODE)
+	public AlertsModel chkSmsVerifyCode(String tel, String code) {
 		String message = "";
 		try {
 			ActionContext ctx = Cocit.getActionContext();

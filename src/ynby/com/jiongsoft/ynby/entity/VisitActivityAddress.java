@@ -6,7 +6,7 @@ import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
-import com.jiongsoft.cocit.util.ActionUtil;
+import com.jiongsoft.cocit.util.UrlAPI;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 
 /**
@@ -17,7 +17,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
  * 
  */
 @Entity
-@CocTable(name = "活动地点设置", code = "VisitActivityAddress", catalog = "_ynby_visit", pathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 1//
+@CocTable(name = "活动地点设置", code = "VisitActivityAddress", catalog = "_ynby_visit", pathPrefix = UrlAPI.URL_NS, orderby = 1//
 // 操作按钮
 , actions = { @CocOperation(name = "添加", typeCode = 101, mode = "c")//
 		, @CocOperation(name = "修改", typeCode = 102, mode = "e") //

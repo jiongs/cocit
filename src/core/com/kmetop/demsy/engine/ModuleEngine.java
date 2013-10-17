@@ -28,7 +28,7 @@ import org.nutz.lang.Mirror;
 import com.jiongsoft.cocit.entity.ActionPlugin;
 import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.service.SecurityManager;
-import com.jiongsoft.cocit.util.ActionUtil;
+import com.jiongsoft.cocit.util.UrlAPI;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.IModuleEngine;
 import com.kmetop.demsy.comlib.LibConst;
@@ -322,8 +322,8 @@ public abstract class ModuleEngine implements IModuleEngine {
 		case IModule.TYPE_FOLDER:
 			break;
 		case IModule.TYPE_BIZ:
-			if (ActionUtil.ACTION_PATH_PREFIX.equals(pathPrefix)) {
-				node.setParams(MvcUtil.contextPath(ActionUtil.GET_ENTITY_MODULE_UI, ActionUtil.encodeArgs(module.getId())));
+			if (UrlAPI.URL_NS.equals(pathPrefix)) {
+				node.setParams(MvcUtil.contextPath(UrlAPI.GET_ENTITY_MODULE_UI, UrlAPI.encodeArgs(module.getId())));
 			} else {
 				node.setParams(MvcUtil.contextPath(MvcConst.URL_BZMAIN, module.getId()));
 			}

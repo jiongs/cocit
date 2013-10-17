@@ -10,7 +10,7 @@ import com.jiongsoft.cocit.service.ModuleService;
 import com.jiongsoft.cocit.service.OperationService;
 import com.jiongsoft.cocit.service.TableService;
 import com.jiongsoft.cocit.ui.model.widget.EntityForm.FormField;
-import com.jiongsoft.cocit.util.ActionUtil;
+import com.jiongsoft.cocit.util.UrlAPI;
 import com.jiongsoft.cocit.util.KeyValue;
 import com.jiongsoft.cocit.util.ObjectUtil;
 import com.jiongsoft.cocit.util.StringUtil;
@@ -41,7 +41,7 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 				model.setName(table.getName());
 				model.set("fkfield", table.get("fkfield", ""));
 
-				model.setLoadUrl(ActionUtil.GET_ENTITY_TABLE_UI.replace("*", ActionUtil.encodeArgs(entityModule.getID(), table.getID())));
+				model.setLoadUrl(UrlAPI.GET_ENTITY_TABLE_UI.replace("*", UrlAPI.encodeArgs(entityModule.getID(), table.getID())));
 
 				childrenModels.add(model);
 			}
@@ -105,7 +105,7 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 		Long moduleID = 0L;
 		if (entityModule != null)
 			moduleID = entityModule.getID();
-		model.setDataLoadUrl(ActionUtil.GET_ENTITY_GRID_DATA.replace("*", ActionUtil.encodeArgs(moduleID, entityTable.getID())));
+		model.setDataLoadUrl(UrlAPI.GET_ENTITY_GRID_DATA.replace("*", UrlAPI.encodeArgs(moduleID, entityTable.getID())));
 
 		// 创建Grid字段列
 		List<FieldService> fields = entityTable.getEntityFieldsForGrid();
@@ -165,7 +165,7 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 		Long moduleID = 0L;
 		if (entityModule != null)
 			moduleID = entityModule.getID();
-		model.setDataLoadUrl(ActionUtil.GET_ENTITY_LIST_DATA.replace("*", ActionUtil.encodeArgs(moduleID, entityTable.getID())));
+		model.setDataLoadUrl(UrlAPI.GET_ENTITY_LIST_DATA.replace("*", UrlAPI.encodeArgs(moduleID, entityTable.getID())));
 
 		return model;
 	}
@@ -189,7 +189,7 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 
 				child.setName(op.getName());
 
-				String funcExpr = ActionUtil.encodeArgs(entityModule.getID(), entityTable.getID(), op.getMode());
+				String funcExpr = UrlAPI.encodeArgs(entityModule.getID(), entityTable.getID(), op.getMode());
 
 				// opArgs = moduleID:tableID:operationID
 				child.set("funcExpr", funcExpr);
@@ -220,7 +220,7 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 		// model.set("onlyLeafValue", "true");
 
 		// 设置异步加载数据的 URL 地址
-		model.setDataLoadUrl(ActionUtil.GET_ENTITY_NAVI_DATA.replace("*", ActionUtil.encodeArgs(entityModule.getID(), entityTable.getID())));
+		model.setDataLoadUrl(UrlAPI.GET_ENTITY_NAVI_DATA.replace("*", UrlAPI.encodeArgs(entityModule.getID(), entityTable.getID())));
 
 		// 获取树数据
 		// Tree entity = tableID.getNaviTree();
@@ -256,7 +256,7 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 		EntityForm ret = new EntityForm();
 
 		if (!StringUtil.isNil(op.getJsp()))
-			ret.setJsp(ActionUtil.JSP_DIR + "/" + op.getJsp());
+			ret.setJsp(UrlAPI.JSP_DIR + "/" + op.getJsp());
 
 		String opMode = op.getMode();
 

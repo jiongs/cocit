@@ -26,7 +26,7 @@ import com.kmetop.demsy.comlib.impl.sft.system.SFTSystem;
 import com.kmetop.demsy.comlib.security.IPermission;
 
 @Entity
-@CocTable(name = "系统权限管理", code = BIZSYS_ADMIN_PERMISSION, catalog = BIZCATA_ADMIN, orderby = ORDER_SYSADMIN_PERMISSION, buildin = false// , pathPrefix = ActionUtil.ACTION_PATH_PREFIX//
+@CocTable(name = "系统权限管理", code = BIZSYS_ADMIN_PERMISSION, catalog = BIZCATA_ADMIN, orderby = ORDER_SYSADMIN_PERMISSION, buildin = false// , pathPrefix = UrlAPI.URL_NS//
 , actions = {
 //
 		@CocOperation(name = "授权", typeCode = TYPE_BZFORM_NEW, mode = "c", pluginName = "com.kmetop.demsy.plugins.security.SavePermission")//

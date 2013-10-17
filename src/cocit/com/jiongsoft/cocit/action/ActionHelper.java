@@ -19,7 +19,7 @@ import com.jiongsoft.cocit.service.ServiceFactory;
 import com.jiongsoft.cocit.service.SoftService;
 import com.jiongsoft.cocit.service.TableService;
 import com.jiongsoft.cocit.ui.model.widget.WidgetModelFactory;
-import com.jiongsoft.cocit.util.ActionUtil;
+import com.jiongsoft.cocit.util.UrlAPI;
 import com.jiongsoft.cocit.util.Json;
 import com.jiongsoft.cocit.util.Log;
 import com.jiongsoft.cocit.util.StringUtil;
@@ -137,7 +137,7 @@ public class ActionHelper {
 		if (StringUtil.isNil(funcExpr))
 			return;
 
-		String[] array = ActionUtil.decodeArgs(funcExpr);
+		String[] array = UrlAPI.decodeArgs(funcExpr);
 
 		moduleID = array.length > 0 ? array[0] : null;
 		tableID = array.length > 1 ? array[1] : null;

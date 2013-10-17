@@ -319,7 +319,7 @@
 		$.doAjax({
 			type : "POST",
 			dataType : "json",
-			url : "/coc/saveEntityFormData/" + opts.funcExpr + "/" + dataID,
+			url : "/coc/saveEntityForm/" + opts.funcExpr + "/" + dataID,
 			data : data,
 			success : funcSuccess,
 			complete : funcComplete
@@ -393,7 +393,7 @@
 				onClick : function(data) {
 					var $form = $("form", this);
 					var form = $form[0];
-					form.action = "/coc/exportXls/" + opts.funcExpr + "/" + rows.join(",");
+					form.action = "/coc/doExportXlsData/" + opts.funcExpr + "/" + rows.join(",");
 					form.method = "POST";
 					form.target = "_blank";
 					
@@ -457,7 +457,7 @@
 				$.doAjax({
 					type : "POST",
 					dataType : "json",
-					url : "/coc/deleteEntityData/" + opts.funcExpr + "/" + rows.join(","),
+					url : "/coc/delEntityList/" + opts.funcExpr + "/" + rows.join(","),
 					success : function() {
 						$("#datagrid_" + opts.token).datagrid("reload");
 					}

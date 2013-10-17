@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jiongsoft.cocit.ui.model.WidgetModel;
-import com.jiongsoft.cocit.util.ActionUtil;
+import com.jiongsoft.cocit.util.UrlAPI;
 
 /**
  * 数据表Grid窗体界面模型：由多个Grid列和数据组成，如果数据不存在则表示将异步获取Grid数据。
@@ -25,7 +25,7 @@ public class GridWidget extends WidgetModel {
 
 	// Grid数据，如果该值为Null，则将通过AJAX方式加载Grid数据。
 	private List data;
-	private int pageSize = ActionUtil.DEFAULT_PAGE_SIZE;
+	private int pageSize = UrlAPI.DEFAULT_PAGE_SIZE;
 
 	// Grid数据“增、删、查、改”操作的URL地址
 	private String dataLoadUrl;

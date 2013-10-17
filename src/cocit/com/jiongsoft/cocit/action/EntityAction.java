@@ -28,7 +28,7 @@ import com.jiongsoft.cocit.ui.model.widget.GridWidgetData;
 import com.jiongsoft.cocit.ui.model.widget.ListWidget;
 import com.jiongsoft.cocit.ui.model.widget.ListWidgetData;
 import com.jiongsoft.cocit.ui.model.widget.TreeWidgetData;
-import com.jiongsoft.cocit.util.ActionUtil;
+import com.jiongsoft.cocit.util.UrlAPI;
 import com.jiongsoft.cocit.util.ClassUtil;
 import com.jiongsoft.cocit.util.CocException;
 import com.jiongsoft.cocit.util.ExcelUtil;
@@ -54,7 +54,7 @@ public class EntityAction {
 	 *            Hex加密后的调用参数，参数组成“moduleID”
 	 * @return
 	 */
-	@At(ActionUtil.GET_ENTITY_MODULE_UI)
+	@At(UrlAPI.GET_ENTITY_MODULE_UI)
 	public EntityModuleUI getEntityModuleUI(String args) {
 		ActionHelper helper = ActionHelper.make(args, null, null);
 
@@ -73,7 +73,7 @@ public class EntityAction {
 	 *            Hex加密后的调用参数，参数组成“moduleID:tableID”
 	 * @return
 	 */
-	@At(ActionUtil.GET_ENTITY_TABLE_UI)
+	@At(UrlAPI.GET_ENTITY_TABLE_UI)
 	public EntityTableUI getEntityTableUI(String args) {
 		ActionHelper helper = ActionHelper.make(args, null, null);
 
@@ -92,7 +92,7 @@ public class EntityAction {
 	 *            加密后的调用参数，参数组成“moduleID:tableID”
 	 * @return
 	 */
-	@At(ActionUtil.GET_ENTITY_GRID_DATA)
+	@At(UrlAPI.GET_ENTITY_GRID_DATA)
 	public GridWidgetData getEntityGridData(String args) {
 		ActionHelper helper = ActionHelper.make(args, null, null);
 
@@ -121,7 +121,7 @@ public class EntityAction {
 		return ret;
 	}
 
-	@At(ActionUtil.GET_ENTITY_LIST_DATA)
+	@At(UrlAPI.GET_ENTITY_LIST_DATA)
 	public ListWidgetData getEntityListData(String args) {
 		ActionHelper helper = ActionHelper.make(args, null, null);
 
@@ -157,7 +157,7 @@ public class EntityAction {
 	 *            加密后的调用参数，参数组成“moduleID:tableID”
 	 * @return
 	 */
-	@At(ActionUtil.GET_ENTITY_NAVI_DATA)
+	@At(UrlAPI.GET_ENTITY_NAVI_DATA)
 	public TreeWidgetData getEntityNaviData(String args) {
 		ActionHelper helper = ActionHelper.make(args, null, null);
 
@@ -177,7 +177,7 @@ public class EntityAction {
 	 * @param dataNode
 	 * @return
 	 */
-	@At(ActionUtil.GET_ENTITY_FORM)
+	@At(UrlAPI.GET_ENTITY_FORM)
 	public EntityForm getEntityForm(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
 		ActionHelper helper = ActionHelper.make(args, argDataID, dataNode);
 
@@ -202,8 +202,8 @@ public class EntityAction {
 	 * @param dataNode
 	 * @return
 	 */
-	@At(ActionUtil.SAVE_ENTITY_FORM_DATA)
-	public EntityFormData saveEntityFormData(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
+	@At(UrlAPI.SAVE_ENTITY_FORM)
+	public EntityFormData saveEntityForm(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
 		ActionHelper helper = ActionHelper.make(args, argDataID, dataNode);
 
 		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.op, helper.entity);
@@ -221,8 +221,15 @@ public class EntityAction {
 		return ret;
 	}
 
-	@At(ActionUtil.DELETE_ENTITY_DATA)
-	public EntityFormData deleteEntityData(String args, String dataID) {
+	/**
+	 * 删除实体列表数据：即批量删除实体记录
+	 * 
+	 * @param args
+	 * @param dataID
+	 * @return
+	 */
+	@At(UrlAPI.DEL_ENTITY_LIST)
+	public EntityFormData delEntityList(String args, String dataID) {
 		ActionHelper helper = ActionHelper.make(args, dataID, null);
 
 		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.op, helper.entity);
@@ -249,9 +256,16 @@ public class EntityAction {
 		return ret;
 	}
 
-	@At(ActionUtil.EXEC_ENTITY_TASK)
-	public AlertsModel execEntityTask(String args, String entityID, @Param("::entity.") EntityParamNode dataNode) {
-		ActionHelper helper = ActionHelper.make(args, entityID, dataNode);
+	/**
+	 * 执行同步任务
+	 * 
+	 * @param args
+	 * @param dataID
+	 * @return
+	 */
+	@At(UrlAPI.EXEC_ENTITY_TASK)
+	public AlertsModel execEntityTask(String args, String dataID) {
+		ActionHelper helper = ActionHelper.make(args, dataID, null);
 
 		try {
 			String result = helper.entityManager.execTask(helper, helper.opMode);
@@ -262,9 +276,17 @@ public class EntityAction {
 		}
 	}
 
-	@At(ActionUtil.EXEC_ENTITY_ASYN_TASK)
-	public AlertsModel execEntityAsynTask(String args, String entityID, @Param("::entity.") EntityParamNode dataNode) {
-		ActionHelper helper = ActionHelper.make(args, entityID, dataNode);
+	/**
+	 * 执行异步任务
+	 * 
+	 * @param args
+	 * @param entityID
+	 * @param dataNode
+	 * @return
+	 */
+	@At(UrlAPI.EXEC_ENTITY_ASYN_TASK)
+	public AlertsModel execEntityAsynTask(String args, String entityID) {
+		ActionHelper helper = ActionHelper.make(args, entityID, null);
 
 		try {
 			String result = helper.entityManager.execAsynTask(helper, helper.opMode);
@@ -276,17 +298,17 @@ public class EntityAction {
 	}
 
 	/**
-	 * 对应JSP: {@value ActionUtil#JSP_DIR}/getExportXlsForm.jsp
+	 * 对应JSP: {@value UrlAPI#JSP_DIR}/getExportXlsForm.jsp
 	 * 
 	 * @return
 	 */
-	@At(ActionUtil.GET_EXPORT_XLS_FORM)
+	@At(UrlAPI.GET_EXPORT_XLS_FORM)
 	public EntityForm getExportXlsForm(String args, String argDataID) {
 		ActionHelper helper = ActionHelper.make(args, argDataID, null);
 
 		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.op, helper.entity);
 		// if (StringUtil.isNil(formModel.getJsp()))
-		formModel.setJsp(ActionUtil.JSP_DIR + "/getExportXlsForm");
+		formModel.setJsp(UrlAPI.JSP_DIR + "/getExportXlsForm");
 
 		formModel.setVar("actionHelper", helper);
 		formModel.setVar("query.filterExpr", StringUtil.escapeHTML(helper.actionContext.getParameterValue("query.filterExpr", "")));
@@ -302,13 +324,13 @@ public class EntityAction {
 	}
 
 	/**
-	 * 该方法在执行{@value ActionUtil#JSP_DIR}/getExportXlsForm.jsp中的form.submit()时调用。
+	 * 该方法在执行{@value UrlAPI#JSP_DIR}/getExportXlsForm.jsp中的form.submit()时调用。
 	 * 
 	 * @param args
 	 * @param argDataID
 	 */
-	@At(ActionUtil.EXPORT_XLS)
-	public void exportXls(String args, String argDataID) {
+	@At(UrlAPI.DO_EXPORT_XLS_DATA)
+	public void doExportXlsData(String args, String argDataID) {
 		ActionHelper helper = ActionHelper.make(args, argDataID, null);
 
 		OutputStream outStream = null;

@@ -10,7 +10,7 @@ import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.jiongsoft.cocit.entity.impl.BaseEntity;
-import com.jiongsoft.cocit.util.ActionUtil;
+import com.jiongsoft.cocit.util.UrlAPI;
 
 /**
  * MO(Mobile Originate)短信：即上行短信，有终端手机设备发送来的短信。
@@ -21,7 +21,7 @@ import com.jiongsoft.cocit.util.ActionUtil;
  * 
  */
 @Entity
-@CocTable(name = "短信回复管理", code = "MOSmsEntity", pathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 2//
+@CocTable(name = "短信回复管理", code = "MOSmsEntity", pathPrefix = UrlAPI.URL_NS, orderby = 2//
 // 操作按钮
 , actions = {
 // @CocOperation(name = "回复短信", typeCode = 101, mode = "c")//

@@ -22,6 +22,7 @@ import com.kmetop.demsy.lang.Dates;
  */
 public abstract class ExcelUtil {
 
+	@SuppressWarnings("deprecation")
 	public static void makeExcel(OutputStream out, List<String[]> excelResult) throws FileNotFoundException, IOException {
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		HSSFSheet sheet = workbook.createSheet();

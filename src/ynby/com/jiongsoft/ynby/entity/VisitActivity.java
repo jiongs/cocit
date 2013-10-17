@@ -10,7 +10,7 @@ import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
-import com.jiongsoft.cocit.util.ActionUtil;
+import com.jiongsoft.cocit.util.UrlAPI;
 import com.jiongsoft.ynby.plugins.VisitActivityPlugins;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 
@@ -21,7 +21,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
  * 
  */
 @Entity
-@CocTable(name = "活动设置", code = "VisitActivity", catalog = "_ynby_visit", pathPrefix = ActionUtil.ACTION_PATH_PREFIX, orderby = 2//
+@CocTable(name = "活动设置", code = "VisitActivity", catalog = "_ynby_visit", pathPrefix = UrlAPI.URL_NS, orderby = 2//
 // 操作按钮
 , actions = {
 //
