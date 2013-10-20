@@ -393,7 +393,7 @@
 				onClick : function(data) {
 					var $form = $("form", this);
 					var form = $form[0];
-					form.action = "/coc/doExportXlsRows/" + opts.funcExpr + "/" + rows.join(",");
+					form.action = "/coc/doExportXlsResult/" + opts.funcExpr + "/" + rows.join(",");
 					form.method = "POST";
 					form.target = "_blank";
 					
@@ -412,7 +412,7 @@
 		$.doAjax({
 			type : "POST",
 			dataType : "json",
-			url : "/coc/runEntityRows/" + opts.funcExpr,
+			url : "/coc/runOnEntityResult/" + opts.funcExpr,
 			success : function(json) {
 				alert(json.message);
 				$("#datagrid_" + opts.token).datagrid("reload");

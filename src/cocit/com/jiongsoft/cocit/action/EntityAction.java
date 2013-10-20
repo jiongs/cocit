@@ -50,13 +50,13 @@ public class EntityAction {
 	/**
 	 * 获取“数据模块”界面模型，用于输出数据模块的界面。
 	 * 
-	 * @param args
+	 * @param funcExpr
 	 *            Hex加密后的调用参数，参数组成“moduleID”
 	 * @return
 	 */
 	@At(UrlAPI.GET_ENTITY_MODULE_UI)
-	public EntityModuleUI getEntityModuleUI(String args) {
-		ActionHelper helper = ActionHelper.make(args, null, null);
+	public EntityModuleUI getEntityModuleUI(String funcExpr) {
+		ActionHelper helper = ActionHelper.make(funcExpr, null, null);
 
 		EntityModuleUI moduleModel = helper.widgetFactory.getEntityModuleUI(helper.module);
 
@@ -74,8 +74,8 @@ public class EntityAction {
 	 * @return
 	 */
 	@At(UrlAPI.GET_ENTITY_TABLE_UI)
-	public EntityTableUI getEntityTableUI(String args) {
-		ActionHelper helper = ActionHelper.make(args, null, null);
+	public EntityTableUI getEntityTableUI(String funcExpr) {
+		ActionHelper helper = ActionHelper.make(funcExpr, null, null);
 
 		EntityTableUI tableModel = helper.widgetFactory.getEntityTableUI(helper.module, helper.table);
 
@@ -93,8 +93,8 @@ public class EntityAction {
 	 * @return
 	 */
 	@At(UrlAPI.GET_ENTITY_GRID_DATA)
-	public GridWidgetData getEntityGridData(String args) {
-		ActionHelper helper = ActionHelper.make(args, null, null);
+	public GridWidgetData getEntityGridData(String funcExpr) {
+		ActionHelper helper = ActionHelper.make(funcExpr, null, null);
 
 		GridWidget gridWidget = helper.widgetFactory.getGridUI(helper.module, helper.table);
 
@@ -122,8 +122,8 @@ public class EntityAction {
 	}
 
 	@At(UrlAPI.GET_ENTITY_LIST_DATA)
-	public ListWidgetData getEntityListData(String args) {
-		ActionHelper helper = ActionHelper.make(args, null, null);
+	public ListWidgetData getEntityListData(String funcExpr) {
+		ActionHelper helper = ActionHelper.make(funcExpr, null, null);
 
 		ListWidget listWidget = helper.widgetFactory.getListUI(helper.module, helper.table);
 
@@ -158,8 +158,8 @@ public class EntityAction {
 	 * @return
 	 */
 	@At(UrlAPI.GET_ENTITY_NAVI_DATA)
-	public TreeWidgetData getEntityNaviData(String args) {
-		ActionHelper helper = ActionHelper.make(args, null, null);
+	public TreeWidgetData getEntityNaviData(String funcExpr) {
+		ActionHelper helper = ActionHelper.make(funcExpr, null, null);
 
 		TreeWidgetData treeModel = helper.widgetFactory.getEntityNaviData(helper.module, helper.table);
 
@@ -172,14 +172,15 @@ public class EntityAction {
 	 * 
 	 * @param opArgs
 	 *            调用参数，参数组成“moduleID:tableID:operationID”
-	 * @param argDataID
-	 *            dataID
-	 * @param dataNode
+	 * @param rowID
+	 *            实体数据ID
+	 * @param rowNode
+	 *            实体数据行参数节点
 	 * @return
 	 */
 	@At(UrlAPI.GET_ENTITY_ROW_FORM)
-	public EntityForm getEntityRowForm(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
-		ActionHelper helper = ActionHelper.make(args, argDataID, dataNode);
+	public EntityForm getEntityRowForm(String funcExpr, String rowID, @Param("::entity.") EntityParamNode rowNode) {
+		ActionHelper helper = ActionHelper.make(funcExpr, rowID, rowNode);
 
 		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.op, helper.entity);
 
@@ -197,14 +198,15 @@ public class EntityAction {
 	 * 
 	 * @param opArgs
 	 *            调用参数，参数组成“moduleID:tableID:operationID”
-	 * @param argDataID
-	 *            dataID
-	 * @param dataNode
+	 * @param rowID
+	 *            实体数据ID
+	 * @param rowNode
+	 *            实体数据行参数节点
 	 * @return
 	 */
 	@At(UrlAPI.SAVE_ENTITY_ROW)
-	public EntityFormData saveEntityRow(String args, String argDataID, @Param("::entity.") EntityParamNode dataNode) {
-		ActionHelper helper = ActionHelper.make(args, argDataID, dataNode);
+	public EntityFormData saveEntityRow(String funcExpr, String rowID, @Param("::entity.") EntityParamNode rowNode) {
+		ActionHelper helper = ActionHelper.make(funcExpr, rowID, rowNode);
 
 		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.op, helper.entity);
 
@@ -224,13 +226,14 @@ public class EntityAction {
 	/**
 	 * 删除实体列表数据：即批量删除实体记录
 	 * 
-	 * @param args
-	 * @param dataID
+	 * @param funcExpr
+	 * @param rows
+	 *            逗号分隔的实体数据行ID列表
 	 * @return
 	 */
 	@At(UrlAPI.DEL_ENTITY_ROWS)
-	public EntityFormData delEntityRows(String args, String dataID) {
-		ActionHelper helper = ActionHelper.make(args, dataID, null);
+	public EntityFormData delEntityRows(String funcExpr, String rows) {
+		ActionHelper helper = ActionHelper.make(funcExpr, rows, null);
 
 		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.op, helper.entity);
 
@@ -239,7 +242,7 @@ public class EntityAction {
 		ret.setData(helper.entity);
 
 		try {
-			String[] array = StringUtil.toArray(dataID);
+			String[] array = StringUtil.toArray(rows);
 			// Long[] idArray = new Long[array.length];
 			List list = new ArrayList();
 			for (int i = 0; i < array.length; i++) {
@@ -257,15 +260,14 @@ public class EntityAction {
 	}
 
 	/**
-	 * 执行同步任务
 	 * 
-	 * @param args
+	 * @param funcExpr
 	 * @param dataID
 	 * @return
 	 */
-	@At(UrlAPI.RUN_ENTITY_ROWS)
-	public AlertsModel runEntityRows(String args, String dataID) {
-		ActionHelper helper = ActionHelper.make(args, dataID, null);
+	@At(UrlAPI.RUN_ON_ENTITY_RESULT)
+	public AlertsModel runOnEntityResult(String funcExpr, String dataID) {
+		ActionHelper helper = ActionHelper.make(funcExpr, dataID, null);
 
 		try {
 			String result = helper.entityManager.execTask(helper, helper.opMode);
@@ -330,8 +332,8 @@ public class EntityAction {
 	 * @param args
 	 * @param argDataID
 	 */
-	@At(UrlAPI.DO_EXPORT_XLS_ROWS)
-	public void doExportXlsRows(String args, String argDataID) {
+	@At(UrlAPI.DO_EXPORT_XLS_RESULT)
+	public void doExportXlsResult(String args, String argDataID) {
 		ActionHelper helper = ActionHelper.make(args, argDataID, null);
 
 		OutputStream outStream = null;

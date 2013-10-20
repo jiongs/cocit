@@ -69,7 +69,7 @@ public abstract class UrlAPI {
 	 */
 
 	/**
-	 * “业务模块”命名控件：路径前缀。
+	 * “业务模块”命名空间（URL Namespace）：路径前缀。
 	 */
 	public static final String URL_NS = "/coc";
 
@@ -116,36 +116,68 @@ public abstract class UrlAPI {
 	public static final String GET_ENTITY_ROW_FORM = URL_NS + "/getEntityRowForm/*";
 
 	/**
-	 * 保存实体行：
+	 * 保存实体数据行：将实体数据行保存到数据库中，保存的可能是表单数据。
 	 */
 	public static final String SAVE_ENTITY_ROW = URL_NS + "/saveEntityRow/*";
 
 	/**
-	 * 删除业务数据行集，即批量删除实体数据。操作码：299
+	 * 删除“数据行集”：即批量删除“数据行集”指定的实体数据。操作码：299
 	 * <p>
-	 * 参数：moduleID:tableID:operationID
+	 * 参数1：moduleID:tableID:operationID
+	 * <p>
+	 * 参数2：rows：逗号分隔的实体数据ID列表
 	 */
 	public static final String DEL_ENTITY_ROWS = URL_NS + "/delEntityRows/*";
 
 	/**
-	 * 立即执行实体行任务：即立即对选中的单条记录执行业务逻辑。
+	 * 删除“查询结果”：即批量删除满足“查询条件”的所有实体数据集合。
+	 * <p>
+	 * 参数1：moduleID:tableID:operationID
+	 * <p>
+	 * 参数2：rows：逗号分隔的实体数据ID列表
 	 */
-	public static final String RUN_ENTITY_ROW = URL_NS + "/runEntityRow/*";
+	public static final String DEL_ENTITY_RESULT = URL_NS + "/delEntityResult/*";
 
 	/**
-	 * 立即执行实体行集任务：即立即对满足条件的记录集合执行业务逻辑。操作码：204
+	 * 基于“单行数据”执行业务逻辑。
+	 * <p>
+	 * “单行数据”：指一条数据的数据ID。如：/runOnEntityRow/1:2:c/3
+	 * <p>
+	 * 3——即为单行数据ID
 	 */
-	public static final String RUN_ENTITY_ROWS = URL_NS + "/runEntityRows/*";
+	public static final String RUN_ON_ENTITY_ROW = URL_NS + "/runOnEntityRow/*";
 
-	// public static final String RUN_ENTITY_ASYN_ROWS = URL_NS + "/runEntityAsynRows/*";
+	/**
+	 * 基于“数据行集”执行业务逻辑。
+	 * <p>
+	 * “数据行集”：指由多条数据ID组成的数组。如：“/runOnEntityRow/1:2:c1/1,2,3,5,7,89,567”
+	 * <p>
+	 * 1,2,3,5,7,89,567——即为“数据行集”ID数组
+	 */
+	public static final String RUN_ON_ENTITY_ROWS = URL_NS + "/runOnEntityRows/*";
 
+	/**
+	 * 基于“查询结果”执行业务逻辑。操作码：204
+	 * <p>
+	 * “查询结果”：值满足查询条件所有记录。
+	 */
+	public static final String RUN_ON_ENTITY_RESULT = URL_NS + "/runOnEntityResult/*";
+
+	/**
+	 * 导出“查询结果”到Excel文件，之前先获取导出表单，以便设置要导出的Excel字段。
+	 */
 	public static final String GET_EXPORT_XLS_FORM = URL_NS + "/getExportXlsForm/*";
 
-	public static final String DO_EXPORT_XLS_ROWS = URL_NS + "/doExportXlsRows/*";
+	/**
+	 * 导出“查询结果”到Excel文件。
+	 * <p>
+	 * “查询结果”与“行集”：“行集”是由实体ID组成的数组；而“查询结果”则是满足查询条件的所有记录。
+	 */
+	public static final String DO_EXPORT_XLS_RESULT = URL_NS + "/doExportXlsResult/*";
 
 	public static final String GET_IMPORT_XLS_FORM = URL_NS + "/getImportXlsForm/*";
 
-	public static final String DO_IMPORT_XLS_ROWS = URL_NS + "/doImportXlsRows/*";
+	public static final String DO_IMPORT_XLS_RESULT = URL_NS + "/doImportXlsResult/*";
 
 	/**
 	 * 获取手机验证码

@@ -55,7 +55,7 @@ public abstract class StringUtil {
 	 * @return
 	 */
 	public static boolean isMobile(String tel) {
-		Pattern pattern = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
+		Pattern pattern = Pattern.compile("\\d{11}$");//Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
 
 		Matcher matcher = pattern.matcher(tel);
 

@@ -27,7 +27,7 @@ public class StringUtilTest {
 	public void testMobile() {
 		assertTrue(StringUtil.isMobile("15911731833"));
 
-		assertFalse(StringUtil.isMobile("08714562314"));
+		assertTrue(StringUtil.isMobile("08714562314"));
 		assertFalse(StringUtil.isMobile("159117318301"));
 		assertFalse(StringUtil.isMobile("1591173183a"));
 	}

@@ -124,7 +124,7 @@ function submitRegStep2(btn) {
 	var $btn = $(btn).attr("disabled", true).addClass("disabled_button");
 	$.ajax({
 		type : 'POST',
-		url : "/coc/saveEntityFormData/0:VisitActivityRegister:c/" + id,
+		url : "/coc/saveEntityRow/0:VisitActivityRegister:c/" + id,
 		async : false,
 		data : $(form).serialize(),
 		dataType : "json",
