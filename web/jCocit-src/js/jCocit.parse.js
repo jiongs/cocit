@@ -83,54 +83,7 @@
 		 * <B>Return:</B> JSON object. these attributes of HTML element specified by the parameter "props" will be regard as the properties of JSON object.
 		 */
 		parseOptions : function(sourceHTML, props) {
-			var $target = $(sourceHTML);
-			var opts = {};
-			var s = $.trim($target.attr("data-options"));
-			if (s) {
-				var flag = s.substring(0, 1);
-				var _a = s.substring(s.length - 1, 1);
-				if (flag != "{") {
-					s = "{" + s;
-				}
-				if (_a != "}") {
-					s = s + "}";
-				}
-				opts = $fn(s);
-			}
-			if (props) {
-				var options = {};
-				for ( var i = 0; i < props.length; i++) {
-					var pp = props[i];
-					if (typeof pp == "string") {
-						if (pp == "width" || pp == "height" || pp == "left" || pp == "top") {
-							options[pp] = parseInt(sourceHTML.style[pp]) || undefined;
-						} else {
-							options[pp] = $target.attr(pp);
-						}
-					} else {
-						for ( var name in pp) {
-							var type = pp[name];
-							var value = $target.attr(name);
-							if (typeof value != "undefined" && ("" + value).trim().length > 0) {
-								if (type == "b") {
-									if (value == "true" || value == true)
-										options[name] = true;
-									else if (value == "false" || value == false)
-										options[name] = false
-								} else if (type == "n") {
-									options[name] = parseFloat(value);
-									// } else if (type == "json") {
-									// options[name] = jCocit.toJson(value);
-									// } else if (type == "function") {
-									// options[name] = $fn(value);
-								}
-							}
-						}
-					}
-				}
-				$.extend(opts, options);
-			}
-			return opts;
+			return $.parseOptions(sourceHTML, props);
 		}
 	});
 })(jQuery, jCocit);

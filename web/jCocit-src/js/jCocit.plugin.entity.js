@@ -24,7 +24,7 @@
 				doExportXls(opts);
 				break;
 			case 204:// synchronized exec task
-				doSyncTask(opts);
+				runPluginOnExpr(opts);
 				break;
 			case 299:// delete rows
 				doDelete(opts);
@@ -393,7 +393,7 @@
 				onClick : function(data) {
 					var $form = $("form", this);
 					var form = $form[0];
-					form.action = "/coc/doExportXlsResult/" + opts.funcExpr + "/" + rows.join(",");
+					form.action = "/coc/doExportXlsOnExpr/" + opts.funcExpr + "/" + rows.join(",");
 					form.method = "POST";
 					form.target = "_blank";
 					
@@ -408,11 +408,11 @@
 			} ],
 		});
 	}
-	function doSyncTask(opts) {
+	function runPluginOnExpr(opts) {
 		$.doAjax({
 			type : "POST",
 			dataType : "json",
-			url : "/coc/runOnEntityResult/" + opts.funcExpr,
+			url : "/coc/runPluginOnExpr/" + opts.funcExpr,
 			success : function(json) {
 				alert(json.message);
 				$("#datagrid_" + opts.token).datagrid("reload");

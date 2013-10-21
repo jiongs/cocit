@@ -74,44 +74,46 @@ public abstract class UrlAPI {
 	public static final String URL_NS = "/coc";
 
 	/**
-	 * “业务模块”访问路径之模块界面，模块界面可以包括一个主表界面和多个从表界面组成的Tabs界面。
+	 * 获取实体模块管理界面：模块界面可以包括一个主表界面和多个从表界面组成的Tabs界面。
 	 * <p>
 	 * 参数：moduleID
 	 */
 	public static final String GET_ENTITY_MODULE_UI = URL_NS + "/getEntityModuleUI/*";
 
 	/**
-	 * “业务模块”访问路径之数据表管理界面，数据表管理界面包括左边导航树、顶部操作菜单、GRID；不包括子表。
+	 * 获取实体数据表管理界面：数据表管理界面包括左边导航树、顶部操作菜单、GRID；不包括子表。
 	 * <p>
 	 * 参数：moduleID:tableID
 	 */
 	public static final String GET_ENTITY_TABLE_UI = URL_NS + "/getEntityTableUI/*";
 
 	/**
-	 * “业务模块”访问路径之Grid数据，数据格式通常为JSON或XML格式。
+	 * 获取实体表Grid数据：数据格式通常为JSON或XML格式。
 	 * <p>
 	 * 参数：moduleID:tableID
 	 */
 	public static final String GET_ENTITY_GRID_DATA = URL_NS + "/getEntityGridData/*";
 
 	/**
-	 * “业务模块”访问路径之List数据，数据格式通常为JSON或XML格式，List数据主要用于Combobox下拉列表。
+	 * 获取实体表列表数据：用于生成Combobox下拉列表。
 	 * <p>
 	 * 参数：moduleID:tableID
 	 */
 	public static final String GET_ENTITY_LIST_DATA = URL_NS + "/getEntityListData/*";
 
 	/**
-	 * “业务模块”访问路径之导航树数据，数据格式通常为JSON或XML格式。
+	 * 获取实体导航数据：用于生成实体管理模块中的左边导航树。
 	 * <p>
 	 * 参数：moduleID:tableID
 	 */
 	public static final String GET_ENTITY_NAVI_DATA = URL_NS + "/getEntityNaviData/*";
 
 	/**
-	 * “业务模块”访问路径之加载业务表单，添加、修改数据时使用。
+	 * 获取实体数据行表单：用于添加、修改数据。
 	 * <p>
-	 * 参数：moduleID:tableID:operationID
+	 * 参数1：moduleID:tableID:opMode
+	 * <p>
+	 * 参数2：rowID
 	 */
 	public static final String GET_ENTITY_ROW_FORM = URL_NS + "/getEntityRowForm/*";
 
@@ -123,45 +125,45 @@ public abstract class UrlAPI {
 	/**
 	 * 删除“数据行集”：即批量删除“数据行集”指定的实体数据。操作码：299
 	 * <p>
-	 * 参数1：moduleID:tableID:operationID
+	 * 参数1：moduleID:tableID:opMode
 	 * <p>
-	 * 参数2：rows：逗号分隔的实体数据ID列表
+	 * 参数2：rows：逗号分隔的实体数据ID列表，rows是必需的。
 	 */
 	public static final String DEL_ENTITY_ROWS = URL_NS + "/delEntityRows/*";
 
 	/**
-	 * 删除“查询结果”：即批量删除满足“查询条件”的所有实体数据集合。
+	 * 按“查询条件”执行删除操作：即批量删除满足“查询条件”的所有实体数据集合。
 	 * <p>
-	 * 参数1：moduleID:tableID:operationID
+	 * 参数1：moduleID:tableID:opMode
 	 * <p>
-	 * 参数2：rows：逗号分隔的实体数据ID列表
+	 * 参数2：rows：逗号分隔的实体数据ID列表，如果rows存在则，查询条件失效。
 	 */
-	public static final String DEL_ENTITY_RESULT = URL_NS + "/delEntityResult/*";
+	public static final String DEL_ENTITY_ON_EXPR = URL_NS + "/delEntityOnExpr/*";
 
 	/**
 	 * 基于“单行数据”执行业务逻辑。
 	 * <p>
-	 * “单行数据”：指一条数据的数据ID。如：/runOnEntityRow/1:2:c/3
+	 * “单行数据”：指一条数据的数据ID。如：/runPluginOnRow/1:2:c/3
 	 * <p>
 	 * 3——即为单行数据ID
 	 */
-	public static final String RUN_ON_ENTITY_ROW = URL_NS + "/runOnEntityRow/*";
+	public static final String RUN_PLUGIN_ON_ROW = URL_NS + "/runPluginOnRow/*";
 
 	/**
 	 * 基于“数据行集”执行业务逻辑。
 	 * <p>
-	 * “数据行集”：指由多条数据ID组成的数组。如：“/runOnEntityRow/1:2:c1/1,2,3,5,7,89,567”
+	 * “数据行集”：指由多条数据ID组成的数组。如：“/runPluginOnRows/1:2:c1/1,2,3,5,7,89,567”
 	 * <p>
 	 * 1,2,3,5,7,89,567——即为“数据行集”ID数组
 	 */
-	public static final String RUN_ON_ENTITY_ROWS = URL_NS + "/runOnEntityRows/*";
+	public static final String RUN_PLUGIN_ON_ROWS = URL_NS + "/runPluginOnRows/*";
 
 	/**
-	 * 基于“查询结果”执行业务逻辑。操作码：204
+	 * 基于“查询条件”执行业务逻辑。操作码：204
 	 * <p>
-	 * “查询结果”：值满足查询条件所有记录。
+	 * “查询结果”：满足查询条件所有记录。
 	 */
-	public static final String RUN_ON_ENTITY_RESULT = URL_NS + "/runOnEntityResult/*";
+	public static final String RUN_PLUGIN_ON_EXPR = URL_NS + "/runPluginOnExpr/*";
 
 	/**
 	 * 导出“查询结果”到Excel文件，之前先获取导出表单，以便设置要导出的Excel字段。
@@ -169,15 +171,15 @@ public abstract class UrlAPI {
 	public static final String GET_EXPORT_XLS_FORM = URL_NS + "/getExportXlsForm/*";
 
 	/**
-	 * 导出“查询结果”到Excel文件。
+	 * 基于“查询条件”导出“查询结果”到Excel文件。
 	 * <p>
 	 * “查询结果”与“行集”：“行集”是由实体ID组成的数组；而“查询结果”则是满足查询条件的所有记录。
 	 */
-	public static final String DO_EXPORT_XLS_RESULT = URL_NS + "/doExportXlsResult/*";
+	public static final String DO_EXPORT_XLS_ON_EXPR = URL_NS + "/doExportXlsOnExpr/*";
 
-	public static final String GET_IMPORT_XLS_FORM = URL_NS + "/getImportXlsForm/*";
-
-	public static final String DO_IMPORT_XLS_RESULT = URL_NS + "/doImportXlsResult/*";
+	// public static final String GET_IMPORT_XLS_FORM = URL_NS + "/getImportXlsForm/*";
+	//
+	// public static final String DO_IMPORT_XLS_ON_EXPR = URL_NS + "/doImportXlsOnExpr/*";
 
 	/**
 	 * 获取手机验证码

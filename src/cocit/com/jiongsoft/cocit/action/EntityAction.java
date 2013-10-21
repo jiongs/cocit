@@ -265,8 +265,8 @@ public class EntityAction {
 	 * @param dataID
 	 * @return
 	 */
-	@At(UrlAPI.RUN_ON_ENTITY_RESULT)
-	public AlertsModel runOnEntityResult(String funcExpr, String dataID) {
+	@At(UrlAPI.RUN_PLUGIN_ON_EXPR)
+	public AlertsModel runPluginOnExpr(String funcExpr, String dataID) {
 		ActionHelper helper = ActionHelper.make(funcExpr, dataID, null);
 
 		try {
@@ -332,8 +332,8 @@ public class EntityAction {
 	 * @param args
 	 * @param argDataID
 	 */
-	@At(UrlAPI.DO_EXPORT_XLS_RESULT)
-	public void doExportXlsResult(String args, String argDataID) {
+	@At(UrlAPI.DO_EXPORT_XLS_ON_EXPR)
+	public void doExportXlsOnExpr(String args, String argDataID) {
 		ActionHelper helper = ActionHelper.make(args, argDataID, null);
 
 		OutputStream outStream = null;

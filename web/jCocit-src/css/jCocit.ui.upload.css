@@ -1,3 +1,9 @@
+/*
+Uploadify
+Copyright (c) 2012 Reactive Apps, Ronnie Garcia
+Released under the MIT License <http://www.opensource.org/licenses/mit-license.php> 
+*/
+
 .uploadify {
 	position: relative;
 	margin-bottom: 1em;
@@ -65,13 +71,11 @@
 	background-color: #FDE5DD !important;
 }
 .uploadify-queue-item .cancel a {
-	background: url('images/ui_uploadify.png') 0 0 no-repeat;
+	background: url('images/ui_upload_cancel.png') 0 0 no-repeat;
 	float: right;
 	height:	16px;
 	text-indent: -9999px;
 	width: 16px;
-	padding: 0;
-	margin: 0;
 }
 .uploadify-queue-item.completed {
 	background-color: #E5E5E5;
