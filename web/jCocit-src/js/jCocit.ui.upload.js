@@ -226,6 +226,33 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 					// Add the data object to the wrapper 
 					$wrapper.data('uploadify', swfuploadify);
 
+					/*
+					 * COCIT: Overwrite.
+					 */
+					$combo = $('<div class="Cb"><div class="CbB"></div><div class="upload-text"><input type="text" value="" class="CbT" /></div></div>');
+					$(".CbB", $combo).css({
+						height      : settings.comboHeight + 'px',
+						width       : settings.comboWidth + 'px'
+					});
+					var $field = $(".CbT", $combo).css({
+						height      : (settings.comboHeight - 3) + 'px',
+						width       : (settings.comboWidth - 20) + 'px',
+					}).attr("name", this.name);
+					if(settings.readonly){
+						$field.attr("readonly", true);
+					}
+					$(".upload-text", $combo).css({
+						height      : (settings.comboHeight - 3) + 'px',
+						width       : (settings.comboWidth - 20) + 'px',
+						position : 'relative',
+						top : '-20px',
+						left : '1px'
+					});
+					$wrapper.wrap($combo);
+					/*
+					 * END: COCIT!
+					 */
+					
 					// Create the button
 					var $button = $('<div />', {
 						'id'    : settings.id + '-button',
@@ -287,10 +314,9 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 					swfuploadify.wrapper  = $wrapper;
 					swfuploadify.button   = $button;
 					swfuploadify.queue    = $queue;
-
+					
 					// Call the user-defined init event handler
 					if (settings.onInit) settings.onInit.call($this, swfuploadify);
-
 				} else {
 
 					// Call the fallback function
@@ -1011,9 +1037,35 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 	};
 
 	$.fn.upload.defaults = {
+		buttonText : 'Browse',
+		buttonImage : '/jCocit/css/images/ui_upload.gif',
 		swf : '/jCocit/css/images/ui_upload_uploadify.swf',
-		uploader : 'uploadify.html',
-		buttonText : 'Select File'
+		uploader : '/ul',
+		itemTemplate : '<div id="${fileID}" class="uploadify-queue-item">\
+			<div class="cancel" onclick="$(\'#${instanceID}\').uploadify(\'cancel\', \'${fileID}\')">\
+			</div>\
+			<div class="uploadify-progress">\
+				<div class="uploadify-progress-bar"></div>\
+			</div>\
+		</div>',
+		removeCompleted : true,
+		removeTimeout : 1,
+		comboWidth : 200,
+		comboHeight : 20,
+		width : 16,
+		height : 16,
+		readonly : true,
+		fileObjName : "upload",
+		onUploadSuccess : function(file, data, response) {
+			var json = window["eval"]("(" + data + ")");
+			if (json.success) {
+				var text = $(".CbT",this.wrapper.parent().parent());
+				text.val(json.fileUrl);
+			} else {
+				alert(json.customMsg);
+			}
+			return true;
+		}
 	};
 
 })(jQuery);
