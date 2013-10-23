@@ -675,7 +675,6 @@ Uploadify v3.2.1
 Copyright (c) 2012 Reactive Apps, Ronnie Garcia
 Released under the MIT License <http://www.opensource.org/licenses/mit-license.php> 
 */
-
 (function($) {
 
 	// These methods can be called by adding them as the first argument in the uploadify plugin call
@@ -1278,15 +1277,15 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 
 			// Create the file item template
 			if (settings.itemTemplate == false) {
-				settings.itemTemplate = '<div id="${fileID}" class="uploadify-queue-item">\
-					<div class="cancel">\
-						<a href="javascript:$(\'#${instanceID}\').uploadify(\'cancel\', \'${fileID}\')">X</a>\
-					</div>\
-					<span class="fileName">${fileName} (${fileSize})</span><span class="data"></span>\
-					<div class="uploadify-progress">\
-						<div class="uploadify-progress-bar"><!--Progress Bar--></div>\
-					</div>\
-				</div>';
+				settings.itemTemplate = '<div id="${fileID}" class="uploadify-queue-item">'+
+					'<div class="cancel">'+
+					'<a href="javascript:$(\'#${instanceID}\').uploadify(\'cancel\', \'${fileID}\')">X</a>'+
+					'</div>'+
+					'<span class="fileName">${fileName} (${fileSize})</span><span class="data"></span>'+
+					'<div class="uploadify-progress">'+
+					'<div class="uploadify-progress-bar"><!--Progress Bar--></div>'+
+					'</div>'+
+					'</div>';
 			}
 
 			// Run the default event handler
@@ -1607,6 +1606,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 	}
 
 })($);
+
 /**
  * COCIT: extends
  */
@@ -1638,13 +1638,10 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 		buttonImage : '/jCocit/css/images/ui_upload.gif',
 		swf : '/jCocit/css/images/ui_upload_uploadify.swf',
 		uploader : '/ul',
-		itemTemplate : '<div id="${fileID}" class="uploadify-queue-item">\
-			<div class="cancel" onclick="$(\'#${instanceID}\').uploadify(\'cancel\', \'${fileID}\')">\
-			</div>\
-			<div class="uploadify-progress">\
-				<div class="uploadify-progress-bar"></div>\
-			</div>\
-		</div>',
+		itemTemplate : '<div id="${fileID}" class="uploadify-queue-item">'
+			+'<div class="cancel" onclick="$(\'#${instanceID}\').uploadify(\'cancel\', \'${fileID}\')"></div>'
+			+'<div class="uploadify-progress"><div class="uploadify-progress-bar"></div></div>'
+			+'</div>',
 		removeCompleted : true,
 		removeTimeout : 1,
 		comboWidth : 200,
@@ -1659,9 +1656,9 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 			if (json.success) {
 				var $combo = this.wrapper.parent().parent();
 				var $text = $(".CbT",$combo);
-				var $value = $(".CbT",$combo);
-				$value.val(json.fileUrl);
+				var $value = $(".CbV",$combo);
 				$text.val(json.fileName);
+				$value.val(json.fileUrl);
 			} else {
 				alert(json.customMsg);
 			}

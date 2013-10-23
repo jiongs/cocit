@@ -39,12 +39,15 @@
 
 <title>走进云南白药</title>
 <link href="<%=model.getContextPath()%>/visit/css/style2.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="/jCocit/css/min/jCocit.ui.combo.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="/jCocit/css/min/jCocit.ui.upload.css" rel="stylesheet" type="text/css" media="screen" />
 <!--[if lt IE 7]>
         <link href="<%=model.getContextPath()%>/visit/css/style2_ie6.css" rel="stylesheet" type="text/css" media="screen" />
 <![endif]-->
 
 <script src="/jCocit/common/jquery.min.js" type="text/javascript"></script>
 <script src="/jCocit/js/min/jCocit.utils.js" type="text/javascript"></script>
+<script src="/jCocit/js/min/jCocit.ui.upload.js" type="text/javascript"></script>
 <script src="<%=model.getContextPath()%>/visit/js/visit.js" type="text/javascript"></script>
 </head>
 <body>
@@ -162,17 +165,49 @@
 									<input type="text" name="entity.tel" value="<%=reg.getTel() %>" readonly />	
 								</td>
 							</tr>
+							<tr>
+								<td class="reg_input_label">QQ号码：</td>
+								<td class="reg_input_box"><input type="text" name="entity.qq" value="<%=reg.getQq() %>" /></td>
+							</tr>
+							<tr>
+								<td class="reg_input_label">邮箱地址：</td>
+								<td class="reg_input_box"><input type="text" name="entity.email" value="<%=reg.getEmail() %>" /></td>
+							</tr>
+							<tr>
+								<td class="reg_input_label">工作单位：</td>
+								<td class="reg_input_box"><input type="text" name="entity.unit" value="<%=reg.getUnit() %>" /></td>
+							</tr>
+							<tr>
+								<td class="reg_input_label">自驾车牌号：</td>
+								<td class="reg_input_box"><input type="text" name="entity.carCode" value="<%=reg.getCarCode() %>" /></td>
+							</tr>
+                            <tr>
+                                <td class="reg_input_label">团队报名：</td>
+                                <td class="reg_input_box">
+                                    <input style="width: 16px; height: 16px; border: 0;" type="radio" name="entity.teamRegType" onclick="switchTeamRegType(1)" value="1" <%= reg.getTeamRegType()==1?"checked":"" %> />&nbsp;上传团队名单
+                                    <input style="width: 16px; height: 16px; border: 0;" type="radio" name="entity.teamRegType" onclick="switchTeamRegType(2)" value="2" <%= reg.getTeamRegType()==2?"checked":"" %> />&nbsp;在线填写名单
+                                </td>
+                            </tr>
+                            <tr class="excelImportTeam">
+                                <td class="reg_input_label"></td>
+                                <td class="reg_input_box"><input type="file" id="entity_teamXlsFile" name="entity.teamXlsFile" value="" data-options="
+                                    fileTypeExts : '*.xls; *.xlsx',
+                                    fileTypeDesc : '团队报名Excel文件！',
+                                    comboWidth : 280,
+                                    comboHeight : 26
+                                " /></td>
+                                <td class="reg_input_box" valign="top" style="padding-top: 8px;">
+                                    <a href="/www_yunnanbaiyao_com_cn/visit/TeamMembers.xls" class="reg_btn">下载模版</a>
+                                </td>
+                            </tr>
                             <tr class="onlineEditTeam">
-                                <td class="reg_input_label" valign="top">团队成员：</td>
+                                <td class="reg_input_label" valign="top"><div style="margin-top: 3px;"></div></td>
                                 <td class="reg_input_box" valign="top">
-                                	<div style="display:none;">
-                                		<textarea name="entity.teamMembers" style="height: 60px;">
-                                		<%=reg.getTeamMembers() %>
-                                		</textarea>
-                                	</div>
-                                    <div id="teamMembersNames" style="border: 1px solid #ccc; width: 280px; position: relative;min-height: 25px;">
+                                    <div style="display:none;">
+                                        <textarea name="entity.teamMembers"><%=reg.getTeamMembers() %></textarea>
                                     </div>
-                                    <div id="teamMemberDialog" style="background: #fff; border: 1px solid #000; z-index: 999; padding: 5px 3px 10px 3px; margin: 1px 0 0 0; position: absolute; display: none;">
+                                    <div id="teamMembersNames" style="border: 1px solid #ccc; width: 280px; position: relative; min-height: 25px;margin-top: 2px;"></div>
+                                    <div id="teamMemberDialog" style="background: #fff; border: 1px solid #000; z-index: 999; padding: 5px 5px 10px 5px; margin: 0 0 0 0; position: absolute; display: none;">
                                        <input type="hidden" name="orderby" value="" />
                                        <input type="hidden" name="id" value="" />
                                         <table>
@@ -241,22 +276,6 @@
                                     <input type="submit" onclick="openTeamMember()" class="reg_btn" value="添加" />
                                 </td>
                             </tr>
-							<tr>
-								<td class="reg_input_label">QQ号码：</td>
-								<td class="reg_input_box"><input type="text" name="entity.qq" value="<%=reg.getQq() %>" /></td>
-							</tr>
-							<tr>
-								<td class="reg_input_label">邮箱地址：</td>
-								<td class="reg_input_box"><input type="text" name="entity.email" value="<%=reg.getEmail() %>" /></td>
-							</tr>
-							<tr>
-								<td class="reg_input_label">工作单位：</td>
-								<td class="reg_input_box"><input type="text" name="entity.unit" value="<%=reg.getUnit() %>" /></td>
-							</tr>
-							<tr>
-								<td class="reg_input_label">自驾车牌号：</td>
-								<td class="reg_input_box"><input type="text" name="entity.carCode" value="<%=reg.getCarCode() %>" /></td>
-							</tr>
 							<tr>
 								<td class="reg_input_label" valign="top">备注：</td>
 								<td class="reg_input_box"><textarea name="entity.desc" style="height: 60px;"><%=reg.getDesc() %></textarea></td>
