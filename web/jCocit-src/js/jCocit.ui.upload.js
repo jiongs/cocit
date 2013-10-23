@@ -229,10 +229,24 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 					/*
 					 * COCIT: Overwrite.
 					 */
-					$combo = $('<div class="Cb"><div class="CbB"></div></div>');
+					$combo = $('<div class="Cb"><div class="CbB"></div><div class="upload-text"><input type="text" value="" class="CbT" /></div></div>');
 					$(".CbB", $combo).css({
-						'height'      : settings.comboHeight + 'px',
-						'width'       : settings.comboWidth + 'px'
+						height      : settings.comboHeight + 'px',
+						width       : settings.comboWidth + 'px'
+					});
+					var $field = $(".CbT", $combo).css({
+						height      : (settings.comboHeight - 3) + 'px',
+						width       : (settings.comboWidth - 20) + 'px',
+					}).attr("name", this.name);
+					if(settings.readonly){
+						$field.attr("readonly", true);
+					}
+					$(".upload-text", $combo).css({
+						height      : (settings.comboHeight - 3) + 'px',
+						width       : (settings.comboWidth - 20) + 'px',
+						position : 'relative',
+						top : '-20px',
+						left : '1px'
 					});
 					$wrapper.wrap($combo);
 					/*
@@ -1023,8 +1037,10 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 	};
 
 	$.fn.upload.defaults = {
+		buttonText : 'Browse',
+		buttonImage : '/jCocit/css/images/ui_upload.gif',
 		swf : '/jCocit/css/images/ui_upload_uploadify.swf',
-		uploader : 'uploadify.html',
+		uploader : '/ul',
 		itemTemplate : '<div id="${fileID}" class="uploadify-queue-item">\
 			<div class="cancel" onclick="$(\'#${instanceID}\').uploadify(\'cancel\', \'${fileID}\')">\
 			</div>\
@@ -1038,8 +1054,18 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 		comboHeight : 20,
 		width : 16,
 		height : 16,
-		buttonText : 'Browse',
-		buttonImage : '/jCocit/css/images/ui_upload.gif'
+		readonly : true,
+		fileObjName : "upload",
+		onUploadSuccess : function(file, data, response) {
+			var json = window["eval"]("(" + data + ")");
+			if (json.success) {
+				var text = $(".CbT",this.wrapper.parent().parent());
+				text.val(json.fileUrl);
+			} else {
+				alert(json.customMsg);
+			}
+			return true;
+		}
 	};
 
 })(jQuery);
