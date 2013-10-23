@@ -27,8 +27,8 @@
 	<!-- 设置UI模块 -->
 	<property name="JS.MODULES" value="utils,core,nls,cookie,parse,alerts,ui.draggable,ui.droppable,ui.resizable,ui.panel,ui.window,ui.dialog,ui.tree,ui.combo,ui.combotree,ui.treedialog,plugin.login,plugin.entity" />
 	<property name="CSS.MODULES" value="alerts,ui.panel,ui.window,ui.dialog,ui.tree,ui.combo,plugin.login,ui.icon,plugin.entity" />
-	<property name="JS.MODULES-UI" value="button,menu,validatebox,numberbox,spinner,spinnernumber,spinnertime,accordion,pagination,calendar,datagrid,datagrid.crud,combobox,combodate,combodatetime,combogrid,combodialog,menubar,toolbar,searchbox,slider,tabs,treegrid,propertygrid,tree.crud" />
-	<property name="CSS.MODULES-UI" value="button,menu,validatebox,spinner,accordion,pagination,calendar,datagrid,combobox,combodate,menubar,toolbar,searchbox,slider,tabs,propertygrid" />
+	<property name="JS.MODULES-UI" value="button,menu,validatebox,numberbox,spinner,spinnernumber,spinnertime,accordion,pagination,calendar,datagrid,datagrid.crud,combobox,combodate,combodatetime,combogrid,combodialog,menubar,toolbar,searchbox,slider,tabs,treegrid,propertygrid,tree.crud,upload" />
+	<property name="CSS.MODULES-UI" value="button,menu,validatebox,spinner,accordion,pagination,calendar,datagrid,combobox,combodate,menubar,toolbar,searchbox,slider,tabs,propertygrid,upload" />
 	<property name="JS.MODULES-WEB" value="web.KandyTabs,web.ad-gallery-v,web.ad-gallery" />
 	<property name="CSS.MODULES-WEB" value="web.KandyTabs,web.ad-gallery-v,web.ad-gallery" />
 	

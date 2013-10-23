@@ -188,8 +188,8 @@ public class UploadActions implements MvcConst {
 			} else {
 				fileName = localName;
 			}
-			// fileName = Integer.toHexString(fileName.hashCode()) + "." + ext;
-			fileName = fileName + "." + ext;
+			fileName = Integer.toHexString(fileName.hashCode()) + "." + ext;
+			// fileName = fileName + "." + ext;
 			file = new File(realFolder + "/" + fileName);
 			if (file.exists()) {
 				count++;
@@ -214,7 +214,7 @@ public class UploadActions implements MvcConst {
 			info.setExtName("UPLOADER");
 			info.setLocalName(meta.getFileLocalName());
 			info.setContentLength(file.length());
-			info.setPath(new Upload(basePath + "/" + Str.encodeUri(fileName)));
+			info.setPath(new Upload(basePath + "/" + fileName));
 
 			if (!Str.isEmpty(moduleId))
 				try {

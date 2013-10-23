@@ -345,8 +345,8 @@ public class VisitActivityPlugins {
 								json.append(",");
 
 							json.append(String.format(
-									"{\"orderby\":%s,\"id\":%s,\"name\":%s,\"age\":%s,\"teamMemberRole\":%s,\"sex\":%s,\"tel\":%s,\"qq\":%s,\"email\":%s,\"unit\":%s,\"carCode\":%s}"//
-									, index, member.getId(), Json.toJson(member.getName()), member.getAge(), Json.toJson(member.getTeamMemberRole()), member.getSex(), Json.toJson(member.getTel()), Json.toJson(member.getQq()),
+									"{\"orderby\":%s,\"id\":%s,\"name\":%s,\"code\":%s,\"sex\":%s,\"tel\":%s,\"qq\":%s,\"email\":%s,\"unit\":%s,\"carCode\":%s}"//
+									, index, member.getId(), Json.toJson(member.getName()), member.getCode(), member.getSex(), Json.toJson(member.getTel()), Json.toJson(member.getQq()),
 									Json.toJson(member.getEmail()), Json.toJson(member.getUnit()), Json.toJson(member.getCarCode())));
 
 							index++;

@@ -23,12 +23,15 @@
 
 <title>走进云南白药</title>
 <link href="<%=model.getContextPath()%>/visit/css/style2.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="/jCocit/css/min/jCocit.ui.combo.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="/jCocit/css/min/jCocit.ui.upload.css" rel="stylesheet" type="text/css" media="screen" />
 <!--[if lt IE 7]>
         <link href="<%=model.getContextPath()%>/visit/css/style2_ie6.css" rel="stylesheet" type="text/css" media="screen" />
 <![endif]-->
 
 <script src="/jCocit/common/jquery.min.js" type="text/javascript"></script>
 <script src="/jCocit/js/min/jCocit.utils.js" type="text/javascript"></script>
+<script src="/jCocit/js/min/jCocit.ui.upload.js" type="text/javascript"></script>
 <script src="<%=model.getContextPath()%>/visit/js/visit.js" type="text/javascript"></script>
 </head>
 <body>
@@ -106,7 +109,7 @@
 			<div style="background: #fff; padding: 0px 20px 20px 55px;">
 				<div style="font-size: 24px; color: #01b0f0;" class="ie6-weight-font">个人信息：</div>
 				<div style="margin-top: 30px;">
-					<form onsubmit="return false;" method="post">
+					<form onsubmit="return false;" method="post" class="reg_form">
 						<table align="center">
 							<tr>
 								<td class="reg_input_label">姓名：</td>
@@ -135,16 +138,50 @@
 								<td class="reg_input_label">短信验证码：</td>
 								<td class="reg_input_box"><input type="text" name="entity.telVerifyCode" value="" /><span class="required">&nbsp;</span></td>
 							</tr>
-                            <tr>
-                                <td class="reg_input_label" valign="top">团队成员：</td>
+							<tr>
+								<td class="reg_input_label">QQ号码：</td>
+								<td class="reg_input_box"><input type="text" name="entity.qq" value="" /></td>
+							</tr>
+							<tr>
+								<td class="reg_input_label">邮箱地址：</td>
+								<td class="reg_input_box"><input type="text" name="entity.email" value="" /></td>
+							</tr>
+							<tr>
+								<td class="reg_input_label">工作单位：</td>
+								<td class="reg_input_box"><input type="text" name="entity.unit" value="" /></td>
+							</tr>
+							<tr>
+								<td class="reg_input_label">自驾车牌号：</td>
+								<td class="reg_input_box"><input type="text" name="entity.carCode" value="" /></td>
+							</tr>
+							<tr>
+								<td class="reg_input_label">团队报名：</td>
+								<td class="reg_input_box">
+									<input style="width: 16px; height: 16px; border: 0;" type="radio" name="entity.teamRegType" onclick="switchTeamRegType(1)" value="1" />&nbsp;上传团队名单
+									<input style="width: 16px; height: 16px; border: 0;" type="radio" name="entity.teamRegType" onclick="switchTeamRegType(2)" value="2" />&nbsp;在线填写名单
+								</td>
+							</tr>
+							<tr class="excelImportTeam">
+								<td class="reg_input_label"></td>
+								<td class="reg_input_box"><input type="file" id="entity_teamXlsFile" name="entity.teamXlsFile" value="" data-options="
+									fileTypeExts : '*.xls; *.xlsx',
+									fileTypeDesc : '团队报名Excel文件！',
+									comboWidth : 280,
+									comboHeight : 26
+								" /></td>
+                                <td class="reg_input_box" valign="top" style="padding-top: 8px;">
+                                    <a href="/www_yunnanbaiyao_com_cn/visit/TeamMembers.xls" class="reg_btn">下载模版</a>
+                                </td>
+							</tr>
+                            <tr class="onlineEditTeam">
+                                <td class="reg_input_label" valign="top"><div style="margin-top: 3px;"></div></td>
                                 <td class="reg_input_box" valign="top">
                                 	<div style="display:none;">
-                                		<textarea name="entity.teamMembers" style="height: 60px;">
+                                		<textarea name="entity.teamMembers">
                                 		</textarea>
                                 	</div>
-                                    <div id="teamMembersNames" style="border: 1px solid #ccc; width: 280px; position: relative;min-height: 25px;">
-                                    </div>
-                                    <div id="teamMemberDialog" style="background: #fff; border: 1px solid #000; z-index: 999; padding: 5px 3px 10px 3px; margin: 1px 0 0 0; position: absolute; display: none;">
+                                    <div id="teamMembersNames" style="border: 1px solid #ccc; width: 280px; position: relative; min-height: 25px;margin-top: 2px;"></div>
+                                    <div id="teamMemberDialog" style="background: #fff; border: 1px solid #000; z-index: 999; padding: 5px 5px 10px 5px; margin: 0 0 0 0; position: absolute; display: none;">
                                        <input type="hidden" name="orderby" value="" />
                                        <input type="hidden" name="id" value="" />
                                         <table>
@@ -160,7 +197,7 @@
                                                     <span class="required">&nbsp;</span>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr style="display:none;">
                                                 <td class="reg_input_label2">成员关系：</td>
                                                 <td class="reg_input_box2">
                                                     <select name="teamMemberRole">
@@ -177,14 +214,12 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="reg_input_label2">年龄：</td>
-                                                <td class="reg_input_box2"><input type="text" name="age" value="" />
-                                                <span class="required">&nbsp;</span>
-                                                </td>
+                                                <td class="reg_input_label2">身份证号：</td>
+                                                <td class="reg_input_box2"><input type="text" name="code" value="" /><span class="required">&nbsp;</span></td>
                                             </tr>
                                             <tr>
                                                 <td class="reg_input_label2">手机号码：</td>
-                                                <td class="reg_input_box2"><input type="text" name="tel" value="" /></td>
+                                                <td class="reg_input_box2"><input type="text" name="tel" value="" /><span class="required">&nbsp;</span></td>
                                             </tr>
                                             <tr>
                                                 <td class="reg_input_label2">QQ号码：</td>
@@ -210,30 +245,11 @@
                                             </tr>
                                         </table>
                                     </div>
-                                    <div style="font-size: 12px; color: #999; width: 280px;">
-                                        参观人数为2人以上（包括2人）的，请勿必填写团队成员！
-                                    </div>
                                 </td>
                                 <td class="reg_input_box" valign="top">
                                     <input type="submit" onclick="openTeamMember()" class="reg_btn" value="添加" />
                                 </td>
                             </tr>
-							<tr>
-								<td class="reg_input_label">QQ号码：</td>
-								<td class="reg_input_box"><input type="text" name="entity.qq" value="" /></td>
-							</tr>
-							<tr>
-								<td class="reg_input_label">邮箱地址：</td>
-								<td class="reg_input_box"><input type="text" name="entity.email" value="" /></td>
-							</tr>
-							<tr>
-								<td class="reg_input_label">工作单位：</td>
-								<td class="reg_input_box"><input type="text" name="entity.unit" value="" /></td>
-							</tr>
-							<tr>
-								<td class="reg_input_label">自驾车牌号：</td>
-								<td class="reg_input_box"><input type="text" name="entity.carCode" value="" /></td>
-							</tr>
 							<tr>
 								<td class="reg_input_label" valign="top">备注：</td>
 								<td class="reg_input_box"><textarea name="entity.desc" style="height: 60px;"></textarea></td>

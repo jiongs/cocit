@@ -162,7 +162,7 @@
 									<input type="text" name="entity.tel" value="<%=reg.getTel() %>" readonly />	
 								</td>
 							</tr>
-                            <tr>
+                            <tr class="onlineEditTeam">
                                 <td class="reg_input_label" valign="top">团队成员：</td>
                                 <td class="reg_input_box" valign="top">
                                 	<div style="display:none;">
@@ -188,7 +188,7 @@
                                                     <span class="required">&nbsp;</span>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr style="display:none;">
                                                 <td class="reg_input_label2">成员关系：</td>
                                                 <td class="reg_input_box2">
                                                     <select name="teamMemberRole">
@@ -205,14 +205,12 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="reg_input_label2">年龄：</td>
-                                                <td class="reg_input_box2"><input type="text" name="age" value="" />
-                                                <span class="required">&nbsp;</span>
-                                                </td>
+                                                <td class="reg_input_label2">身份证号：</td>
+                                                <td class="reg_input_box2"><input type="text" name="code" value="" /><span class="required">&nbsp;</span></td>
                                             </tr>
                                             <tr>
                                                 <td class="reg_input_label2">手机号码：</td>
-                                                <td class="reg_input_box2"><input type="text" name="tel" value="" /></td>
+                                                <td class="reg_input_box2"><input type="text" name="tel" value="" /><span class="required">&nbsp;</span></td>
                                             </tr>
                                             <tr>
                                                 <td class="reg_input_label2">QQ号码：</td>
@@ -237,9 +235,6 @@
                                                 </td>
                                             </tr>
                                         </table>
-                                    </div>
-                                    <div style="font-size: 12px; color: #999; width: 280px;">
-                                        参观人数为2人以上（包括2人）的，请勿必填写团队成员！
                                     </div>
                                 </td>
                                 <td class="reg_input_box" valign="top">

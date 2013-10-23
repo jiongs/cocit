@@ -36,14 +36,14 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 , fields = {
 //
 		@CocField(name = "参观时间", mode = "*:N v:S e1:S c:M e:M xls:S", property = "activity", gridOrder = 10)//
-		, @CocField(name = "真实姓名", mode = "*:N v:S e1:S c:M e:M xls:S", property = "name", gridOrder = 1) //
+		, @CocField(name = "姓名", mode = "*:N v:S e1:S c:M e:M xls:S", property = "name", gridOrder = 1) //
 		, @CocField(name = "性别", mode = "*:N v:S e1:S c:E e:E xls:S", property = "sex", options = "0:男,1:女", disabledNavi = true, gridOrder = 2) //
-		, @CocField(name = "年龄", mode = "*:N v:S e1:S c:E e:E xls:S", property = "age", gridOrder = 3) //
-		, @CocField(name = "身份证号码", mode = "*:N v:S e1:S c:M e:M xls:S", property = "code", gridOrder = 4) //
+		// , @CocField(name = "年龄", mode = "*:N v:S e1:S c:E e:E xls:S", property = "age", gridOrder = 3) //
+		, @CocField(name = "身份证号", mode = "*:N v:S e1:S c:M e:M xls:S", property = "code", gridOrder = 4) //
 		, @CocField(name = "手机号码", mode = "*:N v:S e1:S c:M e:M xls:S", property = "tel", gridOrder = 5) //
 		, @CocField(name = "手机验证码", mode = "*:N v:S e1:S c:M e:R", property = "telVerifyCode") //
 		, @CocField(name = "团队ID", mode = "*:N v:S e1:S c:E e:E xls:S", property = "teamID", gridOrder = 6) //
-		, @CocField(name = "成员关系", mode = "*:N v:S e1:S c:E e:E xls:S", property = "teamMemberRole") //
+		// , @CocField(name = "成员关系", mode = "*:N v:S e1:S c:E e:E xls:S", property = "teamMemberRole") //
 		, @CocField(name = "参观人数", mode = "*:N v:S e1:S c:E e:E xls:S", property = "personNumber", gridOrder = 7) //
 		, @CocField(name = "工作单位", mode = "*:N v:S e1:S c:E e:E xls:S", property = "unit", gridOrder = 8) //
 		, @CocField(name = "邀请函验证码", mode = "*:N v:S e1:S xls:S", property = "verificationCode") //
@@ -51,6 +51,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 		, @CocField(name = "状态", mode = "*:N v:S e1:S c:E e:E xls:S", property = "status", gridOrder = 9, options = "0:已报名,1:已参与,2:没有参与,9:取消报名") //
 		, @CocField(name = "QQ号码", mode = "*:N v:S e1:S c:E e:E", property = "qq") //
 		, @CocField(name = "邮箱地址", mode = "*:N v:S e1:S c:E e:E", property = "email") //
+		, @CocField(name = "备注", mode = "*:N v:S e1:S c:E e:E", property = "desc") //
 		, @CocField(name = "登录帐号", mode = "*:N v:S", property = "createdBy") //
 		, @CocField(name = "报名时间", mode = "*:N v:S", property = "created", pattern = "yyyy-MM-dd HH:mm:ss") //
 		, @CocField(name = "IP地址", mode = "*:N v:S", property = "createdIP") //
@@ -120,7 +121,22 @@ public class VisitActivityRegister extends SFTBizComponent {
 	@Column(length = 32)
 	String teamMemberRole;
 
-	// 团队成员 JSON 数组
+	/**
+	 * 1: 上传EXCEL名单
+	 * <p>
+	 * 2: 在线填写名单
+	 */
+	byte teamRegType;
+
+	/**
+	 * 1: 上传EXCEL名单
+	 */
+	@Column(length = 128)
+	String teamXlsFile;
+	
+	/**
+	 * 2： 在线填写的团队名单：JSON 数组
+	 */
 	@Column(columnDefinition = "text")
 	String teamMembers;
 
@@ -250,6 +266,22 @@ public class VisitActivityRegister extends SFTBizComponent {
 
 	public void setTeamMemberRole(String teamMemberRole) {
 		this.teamMemberRole = teamMemberRole;
+	}
+
+	public String getTeamXlsFile() {
+		return teamXlsFile;
+	}
+
+	public void setTeamXlsFile(String teamXlsFile) {
+		this.teamXlsFile = teamXlsFile;
+	}
+
+	public byte getTeamRegType() {
+		return teamRegType;
+	}
+
+	public void setTeamRegType(byte teamRegType) {
+		this.teamRegType = teamRegType;
 	}
 
 }

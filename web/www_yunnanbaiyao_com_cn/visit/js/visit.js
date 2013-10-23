@@ -32,6 +32,8 @@
 		}
 
 		try {
+			$("#entity_teamXlsFile").upload();
+			switchTeamRegType();
 			makeTeamMemberNames();
 		} catch (e) {
 		}
@@ -143,15 +145,28 @@ function submitRegStep2(btn) {
 		}
 	});
 }
-
+function switchTeamRegType(flag){
+	var form = $("form");
+	var elements = form[0].elements;
+	if(typeof flag == "undefined"){
+		flag = $('input[name=entity.teamRegType]:checked').val()._int()
+	}
+	if(flag == 1){//上传excel团队名单
+		$(".excelImportTeam").show();
+		$(".onlineEditTeam").hide();
+	}else{//在线填写团队名单
+		$(".excelImportTeam").hide();
+		$(".onlineEditTeam").show();
+	}
+}
 function openTeamMember() {
 	$('#teamMemberDialog').show();
 	var form = $("form");
 	var elements = form[0].elements;
 	elements["orderby"].value = "";
 	elements["name"].value = "";
-	elements["age"].value = "";
-	elements["teamMemberRole"].value = "";
+	elements["code"].value = "";
+//	elements["teamMemberRole"].value = "";
 	$(elements["sex"]).attr("checked", false);
 	elements["tel"].value = "";
 	elements["qq"].value = "";
@@ -164,8 +179,9 @@ function addTeamMember() {
 	var form = $("form");
 	var elements = form[0].elements;
 	var name = elements["name"].value;
-	var age = elements["age"].value;
-	var teamMemberRole = elements["teamMemberRole"].value;
+	var code = elements["code"].value;
+	var tel = elements["tel"].value;
+//	var teamMemberRole = elements["teamMemberRole"].value;
 	if (name.trim().length == 0) {
 		alert("姓名必须填写！");
 		elements["name"].focus();
@@ -175,16 +191,22 @@ function addTeamMember() {
 		alert("性别必须填写！");
 		return;
 	}
-	if (age.trim().length == 0) {
-		alert("年龄必须填写！");
-		elements["age"].focus();
+	if (code.trim().length == 0) {
+		alert("身份证号必须填写！");
+		elements["code"].focus();
 		return;
 	}
-	if (teamMemberRole.trim().length == 0) {
-		alert("成员关系必须填写！");
-		elements["teamMemberRole"].focus();
+	if (tel.trim().length == 0) {
+		alert("手机号码必须填写！");
+		elements["tel"].focus();
 		return;
 	}
+//	if (teamMemberRole.trim().length == 0) {
+//		alert("成员关系必须填写！");
+//		elements["teamMemberRole"].focus();
+//		return;
+//	}
+	
 	var teamMembers = elements["entity.teamMembers"].value;
 	var jsonMembers = [];
 	if (teamMembers.trim().length > 0) {
@@ -202,8 +224,8 @@ function addTeamMember() {
 	member["orderby"] = orderby;
 	member["id"] = elements["id"].value._int();
 	member["name"] = name;
-	member["age"] = age._int();
-	member["teamMemberRole"] = teamMemberRole;
+	member["code"] = code;
+//	member["teamMemberRole"] = teamMemberRole;
 	member["sex"] = $('input[name=sex]:checked').val()._int();
 	member["tel"] = elements["tel"].value;
 	member["qq"] = elements["qq"].value;
@@ -223,6 +245,7 @@ function editTeamMember(orderby) {
 	$('#teamMemberDialog').show();
 	var form = $("form");
 	var elements = form[0].elements;
+	
 	var teamMembers = elements["entity.teamMembers"].value;
 	var jsonMembers = [];
 	if (teamMembers.trim().length > 0) {
@@ -232,8 +255,8 @@ function editTeamMember(orderby) {
 	elements["orderby"].value = "" + orderby;
 	elements["id"].value = member["id"];
 	elements["name"].value = member["name"];
-	elements["age"].value = member["age"];
-	elements["teamMemberRole"].value = member["teamMemberRole"];
+	elements["code"].value = member["code"];
+//	elements["teamMemberRole"].value = member["teamMemberRole"];
 	$('input:radio[name=sex]')[member["sex"]].checked = true;
 	elements["tel"].value = member["tel"];
 	elements["qq"].value = member["qq"];

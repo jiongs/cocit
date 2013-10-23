@@ -399,6 +399,9 @@ SELECT,INPUT,img {
 .reg_input_box option{
 	font-size: 16px;
 }
+.reg_input_box a.reg_btn{
+	padding: 3px 26px 3px 26px;
+}
 .reg_input_label2{
 	text-align: right;
 }
@@ -425,6 +428,17 @@ SELECT,INPUT,img {
 	margin: 2px;
 	cursor: pointer;
 }
+.reg_form .CbB{
+	border: 0;
+	left: 1px;
+	top: 8px;
+}
+.excelImportTeam{
+	display:none;
+}
+.onlineEditTeam{
+	display:none;
+}
 .del_member{
 	font-size: 12px;
 	color: red;
@@ -433,7 +447,10 @@ SELECT,INPUT,img {
 	padding: 8px;
 	background: url(../images2/required.gif) no-repeat center center;
 }
-input.reg_get_verify_code, input.reg_btn{
+.reg_form .uploadify-queue-item .cancel {
+	background: url('/jCocit/css/images/cancel.png') 0 0 no-repeat;
+}
+input.reg_get_verify_code, input.reg_btn, a.reg_btn{
 	border: 0;
 	height: 28px;
 	width: 115px;
