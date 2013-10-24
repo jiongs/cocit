@@ -330,7 +330,7 @@ public class VisitActivityPlugins {
 							member.setActivity(activity);
 							member.setTeamID(entity.getTel());
 							member.setOrderby(null);
-							
+
 							if (member.getId() == 0) {
 								member.setId(null);
 							}
@@ -362,7 +362,9 @@ public class VisitActivityPlugins {
 								}
 							}
 
-							size++;
+							if (member.getStatus() == 0) {
+								size++;
+							}
 							orm.save(member);
 						}
 
@@ -569,7 +571,20 @@ public class VisitActivityPlugins {
 				MTSmsEntity sms = MTSmsEntity.make("“走进云南白药”邀请函", entity.getTel(), content);
 				ActionHelper actionHelper = ActionHelper.make("0:MTSmsEntity:c");
 				actionHelper.entityManager.save(sms, "c");
+
+				Orm orm = event.getOrm();
+				List<VisitActivityRegister> members = orm.query(VisitActivityRegister.class, Expr.eq("teamID", entity.getTel()).and(Expr.eq("status", (byte) 0)).and(Expr.eq("activity", entity.getActivity())));
+				if (members != null && members.size() > 0) {
+					tpl = soft.getConfig("sms.visit.invitation3", "尊敬的%s：您好，您报名参加由%s组织的于%s在云南白药产业园区举办的“走进云南白药”活动，已经确认，届时欢迎您的到来。身份验证码：%s");
+					for (VisitActivityRegister member : members) {
+						content = String.format(tpl, member.getName(), entity.getName(), CocCalendar.format(entity.getActivity().getPlanDate(), "yyyy年MM月dd日HH:mm"), entity.getVerificationCode());
+
+						sms = MTSmsEntity.make("“走进云南白药”队员邀请函", member.getTel(), content);
+						actionHelper.entityManager.save(sms, "c");
+					}
+				}
 			}
+
 		}
 	}
 }
