@@ -31,12 +31,9 @@
 		} catch (e) {
 		}
 
-		try {
 			$("#entity_teamXlsFile").upload();
 			switchTeamRegType();
 			makeTeamMemberNames();
-		} catch (e) {
-		}
 	});
 })(jQuery);
 
@@ -149,7 +146,7 @@ function switchTeamRegType(flag){
 	var form = $("form");
 	var elements = form[0].elements;
 	if(typeof flag == "undefined"){
-		flag = $('input[name=entity.teamRegType]:checked').val()._int()
+		flag = $('input[name="entity.teamRegType"]:checked').val()._int()
 	}
 	if(flag == 1){//上传excel团队名单
 		$(".excelImportTeam").show();
@@ -294,20 +291,31 @@ function makeTeamMemberNames() {
 	}
 
 	var $names = $("#teamMembersNames").html("");
+	var $table = $("<table width=\"100%\"></table>").appendTo($names);
+	var count = 0;
+	var $tr;
 	for ( var i = 0; i < jsonMembers.length; i++) {
 		var mem = jsonMembers[i];
 		if (mem["status"] && mem["status"] == 9) {
 			continue;
 		}
-		var one = $("<span class=\"reg_member\"><span onclick=\"editTeamMember(" + i + ")\"> " + mem["name"] + " </span><span onclick=\"deleteTeamMember(" + i
+		if(count % 3 ==0){
+			$tr=$("<tr></tr>").appendTo($table);
+		}
+		count++;
+		
+		var one = $("<span class=\"reg_member\"><span onclick=\"editTeamMember(" + i + ")\"> " + mem["name"] + " </span>&nbsp;<span onclick=\"deleteTeamMember(" + i
 				+ ")\" class=\"del_member\" style=\"display:none;padding: 0;\">X</span></span>");
-		one.hover(function() {
+
+		var $td=$("<td width=\"33%\"></td>").appendTo($tr);
+		$td.hover(function() {
 			$(".del_member", this).show();
 		}, function() {
 			$(".del_member", this).hide();
 		});
-		$names.append(one);
+		$td.append(one);
 	}
+
 }
 
 function query(btn) {

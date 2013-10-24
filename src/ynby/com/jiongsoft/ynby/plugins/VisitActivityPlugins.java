@@ -3,7 +3,9 @@ package com.jiongsoft.ynby.plugins;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.action.ActionHelper;
@@ -316,26 +318,41 @@ public class VisitActivityPlugins {
 					} catch (Throwable e) {
 						Log.error(e.toString());
 					}
-					int size = members == null ? 1 : (members.length + 1);
-					entity.setPersonNumber(size);
+
 					if (members != null) {
+						int size = 0;
+
+						List<String> telCache = new ArrayList();
+						List<String> codeCache = new ArrayList();
+						telCache.add(entity.getTel().trim());
+						codeCache.add(entity.getCode().trim());
 						for (VisitActivityRegister member : members) {
 							member.setActivity(activity);
 							member.setTeamID(entity.getTel());
 							member.setOrderby(null);
-
+							
 							if (member.getId() == 0) {
 								member.setId(null);
 							}
 
 							if (member.getStatus() == 9) {// 9: 取消报名
-								size--;
-								entity.setPersonNumber(size);
-
 								if (member.getId() == null) {
 									continue;
 								}
 							} else {
+
+								// 检查手机号码、身份证号码不能重复
+								if (codeCache.contains(member.getCode().trim())) {
+									throw new CocException(member.getName() + " 身份证号码重复！");
+								} else {
+									codeCache.add(member.getCode().trim());
+								}
+								if (telCache.contains(member.getTel().trim())) {
+									throw new CocException(member.getName() + " 手机号码重复！");
+								} else {
+									telCache.add(member.getTel().trim());
+								}
+
 								// 验证身份证号码和手机号码
 								if (!StringUtil.isNID(member.getCode())) {
 									throw new CocException(member.getName() + " 的身份证号码非法！");
@@ -345,110 +362,153 @@ public class VisitActivityPlugins {
 								}
 							}
 
+							size++;
 							orm.save(member);
 						}
 
-						// 设置member ID
-						StringBuffer json = new StringBuffer("[");
-						int index = 0;
-						for (VisitActivityRegister member : members) {
-							if (index != 0)
-								json.append(",");
-
-							json.append(String.format("{\"orderby\":%s,\"id\":%s,\"name\":%s,\"code\":%s,\"sex\":%s,\"tel\":%s,\"qq\":%s,\"email\":%s,\"unit\":%s,\"carCode\":%s}"//
-							                , index, member.getId(), Json.toJson(member.getName()), member.getCode(), member.getSex(), Json.toJson(member.getTel()), Json.toJson(member.getQq()), Json.toJson(member.getEmail()), Json.toJson(member.getUnit()), Json.toJson(member.getCarCode())));
-
-							index++;
-						}
-						json.append("]");
-						entity.setTeamMembers(json.toString());
+						entity.setPersonNumber(size + 1);
 					}
 				}
 				/*
 				 * 处理Excel上传团队名单
 				 */
 				else if (entity.getTeamRegType() == 1 && !StringUtil.isNil(entity.getTeamXlsFile())) {
-					String filePath = Demsy.contextDir + entity.getTeamXlsFile();
+					List<String[]> xlsRows = null;
 					try {
-						List<String[]> list = ExcelUtil.parseExcel(new File(filePath));
-						if (list != null && list.size() > 0) {
-							int size = 0;
+						xlsRows = ExcelUtil.parseExcel(new File(Demsy.contextDir + entity.getTeamXlsFile()));
+					} catch (Throwable e) {
+						Log.error(e.toString());
+					}
 
-							List<String> telList = new ArrayList();
-							List<String> codeList = new ArrayList();
-							for (int i = 2; i < list.size(); i++) {
-								String[] row = list.get(i);
-								int rowID = i + 1;
+					if (xlsRows != null) {
 
-								VisitActivityRegister obj = new VisitActivityRegister();
+						// 获取已经存在的报名名单
+						List<VisitActivityRegister> members = orm.query(VisitActivityRegister.class, Expr.eq("teamID", entity.getTel()).and(Expr.eq("activity", activity)));
+						Map<String, VisitActivityRegister> telMap = new HashMap();
+						for (VisitActivityRegister m : members) {
+							telMap.put(m.getTel().trim(), m);
+						}
 
-								// 检查“姓名、性别、身份证号码、手机号码”必填
-								if (StringUtil.isNil(row[0])) {
-									continue;
-								}
-								if (StringUtil.isNil(row[1])) {
-									throw new CocException("第 " + rowID + " 行性别必须填写！");
-								}
-								if (StringUtil.isNil(row[2])) {
-									throw new CocException("第 " + rowID + " 行身份证号码必须填写！");
-								}
-								if (StringUtil.isNil(row[3])) {
-									throw new CocException("第 " + rowID + " 行手机号码必须填写！");
-								}
+						// 计数当前报名人数
+						int size = 0;
 
-								// 检查手机号码、身份证号码不能重复
-								if (codeList.contains(row[2].trim())) {
-									throw new CocException("第 " + rowID + " 行身份证号码重复！");
-								} else {
-									codeList.add(row[2].trim());
-								}
-								if (telList.contains(row[3].trim())) {
-									throw new CocException("第 " + rowID + " 行手机号码重复！");
-								} else {
-									telList.add(row[3].trim());
-								}
+						// 解析Excel名单
+						List<String> telCache = new ArrayList();
+						List<String> codeCache = new ArrayList();
+						for (int i = 2; i < xlsRows.size(); i++) {
+							String[] row = xlsRows.get(i);
+							int rowID = i + 1;
 
-								// 设置字段值
-								obj.setName(row[0].trim());
-								if (row[1].trim().equals("女"))
-									obj.setSex((byte) 1);
-								else if (row[1].trim().equals("男"))
-									obj.setSex((byte) 0);
-								else
-									throw new CocException("第 " + rowID + " 行性别非法！性别只能是‘男’或‘女’");
-								obj.setCode(row[2].trim());
-								obj.setTel(row[3].trim());
-								obj.setQq(row[4]);
+							// 检查“姓名、性别、身份证号码、手机号码”必填
+							if (StringUtil.isNil(row[0])) {
+								continue;
+							}
+							if (StringUtil.isNil(row[1])) {
+								throw new CocException("第 " + rowID + " 行性别必须填写！");
+							}
+							if (StringUtil.isNil(row[2])) {
+								throw new CocException("第 " + rowID + " 行身份证号码必须填写！");
+							} else if (row[2].startsWith("'")) {
+								row[2] = row[2].substring(1);
+							}
+							if (StringUtil.isNil(row[3])) {
+								throw new CocException("第 " + rowID + " 行手机号码必须填写！");
+							} else if (row[3].startsWith("'")) {
+								row[3] = row[3].substring(1);
+							}
+
+							// 检查手机号码、身份证号码不能重复
+							if (codeCache.contains(row[2].trim())) {
+								throw new CocException("第 " + rowID + " 行身份证号码重复！");
+							} else {
+								codeCache.add(row[2].trim());
+							}
+							if (telCache.contains(row[3].trim())) {
+								throw new CocException("第 " + rowID + " 行手机号码重复！");
+							} else {
+								telCache.add(row[3].trim());
+							}
+
+							// 修改或创建报名对象
+							VisitActivityRegister obj = telMap.get(row[3].trim());
+							if (obj == null) {
+								obj = new VisitActivityRegister();
+							} else {
+								obj.setStatus((byte) 0);
+							}
+
+							// 设置报名对象字段值
+							obj.setName(row[0].trim());
+							if (row[1].trim().equals("女"))
+								obj.setSex((byte) 1);
+							else if (row[1].trim().equals("男"))
+								obj.setSex((byte) 0);
+							else
+								throw new CocException("第 " + rowID + " 行性别非法！性别只能是‘男’或‘女’");
+							obj.setCode(row[2].trim());
+							obj.setTel(row[3].trim());
+							obj.setQq(row[4]);
+							if (row.length > 5)
 								obj.setEmail(row[5]);
+							if (row.length > 6)
 								obj.setUnit(row[6]);
+							if (row.length > 7)
 								obj.setCarCode(row[7]);
 
-								obj.setActivity(activity);
-								obj.setTeamID(entity.getTel());
+							obj.setActivity(activity);
+							obj.setTeamID(entity.getTel());
 
-								// 忽略报名者所在的 excel 行
-								if (obj.getName().equals(entity.getName()) && obj.getCode().equalsIgnoreCase(entity.getCode()) && obj.getTel().equals(entity.getTel())) {
-									continue;
-								}
-
-								// 验证身份证号码和手机号码
-								if (!StringUtil.isNID(obj.getCode())) {
-									throw new CocException(obj.getName() + " 的身份证号码非法！");
-								}
-								if (!StringUtil.isMobile(obj.getTel())) {
-									throw new CocException(obj.getName() + " 的电话号码非法！");
-								}
-
-								size++;
-
-								orm.save(obj);
+							// 忽略报名者所在的 excel 行
+							if (obj.getCode().trim().equalsIgnoreCase(entity.getCode().trim()) || obj.getTel().trim().equals(entity.getTel().trim())) {
+								continue;
 							}
-							entity.setPersonNumber(size + 1);
+
+							// 验证身份证号码和手机号码
+							if (!StringUtil.isNID(obj.getCode())) {
+								throw new CocException(obj.getName() + " 的身份证号码非法！");
+							}
+							if (!StringUtil.isMobile(obj.getTel())) {
+								throw new CocException(obj.getName() + " 的电话号码非法！");
+							}
+
+							size++;
+							orm.save(obj);
 						}
-					} catch (Throwable e) {
-						throw new CocException(e.getMessage());
+
+						entity.setPersonNumber(size + 1);
+
+						// 原来的报名对象不在当前Excel中则取消
+						for (VisitActivityRegister m : members) {
+							if (!telCache.contains(m.getTel())) {
+								if (m.getStatus() != (byte) 9) {
+									m.setStatus((byte) 9);
+									orm.save(m);
+								}
+							}
+						}
 					}
 				}
+
+				/*
+				 * 将团队名单JSON对象保存到字段中
+				 */
+				List<VisitActivityRegister> members = orm.query(VisitActivityRegister.class, Expr.eq("teamID", entity.getTel()).and(Expr.eq("activity", activity)));
+				StringBuffer json = new StringBuffer("[");
+				int index = 0;
+				for (VisitActivityRegister member : members) {
+					if (index != 0)
+						json.append(",");
+					json.append(String.format("{\"orderby\":%s,\"id\":%s,\"name\":%s,\"code\":%s,\"sex\":%s,\"tel\":%s,\"qq\":%s,\"email\":%s,\"unit\":%s,\"carCode\":%s,\"status\":%s}"//
+							, index, member.getId(), Json.toJson(member.getName()), Json.toJson(StringUtil.trim(member.getCode())),//
+							member.getSex(), Json.toJson(StringUtil.trim(member.getTel())), Json.toJson(StringUtil.trim(member.getQq())), //
+							Json.toJson(StringUtil.trim(member.getEmail())), Json.toJson(StringUtil.trim(member.getUnit())),//
+							Json.toJson(StringUtil.trim(member.getCarCode())), member.getStatus()));
+
+					index++;
+				}
+				json.append("]");
+				System.out.println(json);
+				entity.setTeamMembers(json.toString());
 
 				/*
 				 * 计算报名人数
@@ -487,7 +547,7 @@ public class VisitActivityPlugins {
 		 */
 		public void after(ActionEvent<VisitActivityRegister> event) {
 			boolean debug = Demsy.me().isLocal();
-			
+
 			SoftService soft = Cocit.getActionContext().getSoftService();
 			VisitActivityRegister entity = event.getEntity();
 

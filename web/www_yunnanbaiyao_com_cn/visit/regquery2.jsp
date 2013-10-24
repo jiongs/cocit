@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ page import="java.util.*,com.jiongsoft.cocit.*,com.jiongsoft.cocit.util.*,com.jiongsoft.ynby.entity.*,com.jiongsoft.cocit.orm.*,com.jiongsoft.cocit.orm.expr.*,com.jiongsoft.cocit.entity.*,com.jiongsoft.cocit.ui.model.*,com.jiongsoft.cocit.action.*"%>
+<%@ page import="java.util.*,com.kmetop.demsy.*,com.jiongsoft.cocit.*,com.jiongsoft.cocit.util.*,com.jiongsoft.ynby.entity.*,com.jiongsoft.cocit.orm.*,com.jiongsoft.cocit.orm.expr.*,com.jiongsoft.cocit.entity.*,com.jiongsoft.cocit.ui.model.*,com.jiongsoft.cocit.action.*"%>
 <%
 	JSPModel model = (JSPModel) request.getAttribute("obj");
 	ActionHelper actionHelper = model.get("actionHelper");
@@ -14,22 +14,23 @@
 	VisitActivityRegister reg = null;
 	String error = null;
 	try {
-		HttpUtil.checkSmsVerifyCode(request, tel, telVerifyCode, null);
-		reg = orm.get(VisitActivityRegister.class, Expr.eq("tel", tel).addDesc("id"));
+	    if(!Demsy.me().isLocal()){
+			HttpUtil.checkSmsVerifyCode(request, tel, telVerifyCode, null);
+	    }
+	    
+		reg = orm.get(VisitActivityRegister.class, Expr.eq("tel", tel).and(Expr.isNull("teamID")).addDesc("id"));
 		if(reg.getActivity().getPlanDate().getTime() <= System.currentTimeMillis()){
 			reg = null;
 			error = "没有查询到满足条件的报名记录！";
-		}
-		if(reg.getTeamID()!=null&&reg.getTeamID().trim().length()>0){
+		}else if(reg.getTeamID() != null && reg.getTeamID().trim().length()>0){
 			reg = null;
 			error = "你是团队报名中的成员，无权修改报名信息！";
-		}
-		if(reg.getStatus() != (byte)0){
+		}else if(reg.getStatus() != (byte)0){
 			reg = null;
 			error = "你的报名信息可能已被取消，无权修改报名信息！";
 		}
 	} catch (Throwable e) {
-		error = e.getMessage();
+		error = "查询失败！"+e.getMessage();
 	}
 %>
 <head>
@@ -126,7 +127,7 @@
 			<div style="background: #fff; padding: 0px 20px 20px 55px;">
 				<div style="font-size: 24px; color: #01b0f0;" class="ie6-weight-font">个人信息：</div>
 				<div style="margin-top: 30px;">
-					<form onsubmit="return false;" method="post">
+					<form onsubmit="return false;" method="post" class="reg_form">
 						<table align="center">
 							<tr>
 								<td class="reg_input_label">参观时间</td>
@@ -184,15 +185,15 @@
                             <tr>
                                 <td class="reg_input_label">团队报名：</td>
                                 <td class="reg_input_box">
-                                    <input style="width: 16px; height: 16px; border: 0;" type="radio" name="entity.teamRegType" onclick="switchTeamRegType(1)" value="1" <%= reg.getTeamRegType()==1?"checked":"" %> />&nbsp;上传团队名单
-                                    <input style="width: 16px; height: 16px; border: 0;" type="radio" name="entity.teamRegType" onclick="switchTeamRegType(2)" value="2" <%= reg.getTeamRegType()==2?"checked":"" %> />&nbsp;在线填写名单
+                                    <input style="width: 16px; height: 16px; border: 0;" type="radio" name="entity.teamRegType" onclick="switchTeamRegType(1)" value="1" />&nbsp;上传团队名单
+                                    <input style="width: 16px; height: 16px; border: 0;" type="radio" name="entity.teamRegType" onclick="switchTeamRegType(2)" value="2" checked />&nbsp;在线填写名单
                                 </td>
                             </tr>
                             <tr class="excelImportTeam">
                                 <td class="reg_input_label"></td>
                                 <td class="reg_input_box"><input type="file" id="entity_teamXlsFile" name="entity.teamXlsFile" value="" data-options="
                                     fileTypeExts : '*.xls; *.xlsx',
-                                    fileTypeDesc : '团队报名Excel文件！',
+                                    fileTypeDesc : '选择‘走进云南白药活动’Excel团队报名名单文件！',
                                     comboWidth : 280,
                                     comboHeight : 26
                                 " /></td>
