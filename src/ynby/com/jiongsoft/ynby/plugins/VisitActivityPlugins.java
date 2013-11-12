@@ -449,7 +449,8 @@ public class VisitActivityPlugins {
 								throw new CocException("第 " + rowID + " 行性别非法！性别只能是‘男’或‘女’");
 							obj.setCode(row[2].trim());
 							obj.setTel(row[3].trim());
-							obj.setQq(row[4]);
+							if (row.length > 4)
+								obj.setQq(row[4]);
 							if (row.length > 5)
 								obj.setEmail(row[5]);
 							if (row.length > 6)
@@ -509,7 +510,7 @@ public class VisitActivityPlugins {
 					index++;
 				}
 				json.append("]");
-				System.out.println(json);
+				// System.out.println(json);
 				entity.setTeamMembers(json.toString());
 
 				/*

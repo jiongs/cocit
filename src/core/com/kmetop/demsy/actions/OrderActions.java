@@ -28,8 +28,12 @@ import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Fail;
 import org.nutz.mvc.annotation.Ok;
 
+import com.jiongsoft.cocit.Cocit;
+import com.jiongsoft.cocit.action.ActionHelper;
+import com.jiongsoft.cocit.entity.sms.MTSmsEntity;
 import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.orm.expr.Expr;
+import com.jiongsoft.cocit.service.SoftService;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.BizConst;
 import com.kmetop.demsy.comlib.LibConst;
@@ -121,8 +125,7 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 					// 该判断表示买家已在支付宝交易管理中产生了交易记录且付款成功，但卖家没有发货
 
 					if (order != null) {
-						log.infof("支付宝通知：处理订单... 订单号(%s),交易号(%s),交易状态(%s),订单当前状态(%s),订单下一状态(%s)", order_no, trade_no, trade_status, STATUS_TITLES[order.getStatus()],
-								STATUS_TITLES[STATUS_WAIT_SELLER_SEND_GOODS]);
+						log.infof("支付宝通知：处理订单... 订单号(%s),交易号(%s),交易状态(%s),订单当前状态(%s),订单下一状态(%s)", order_no, trade_no, trade_status, STATUS_TITLES[order.getStatus()], STATUS_TITLES[STATUS_WAIT_SELLER_SEND_GOODS]);
 						processOrder(order, trade_no, STATUS_WAIT_SELLER_SEND_GOODS);
 					}
 
@@ -137,8 +140,7 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 							nextStatus = STATUS_WAIT_SELLER_SEND_GOODS;
 						}
 
-						log.infof("支付宝通知：处理订单... 订单号(%s),交易号(%s),交易状态(%s),支付类型(%s),订单当前状态(%s),订单下一状态(%s)", order_no, trade_no, trade_status, service, STATUS_TITLES[order.getStatus()],
-								STATUS_TITLES[nextStatus]);
+						log.infof("支付宝通知：处理订单... 订单号(%s),交易号(%s),交易状态(%s),支付类型(%s),订单当前状态(%s),订单下一状态(%s)", order_no, trade_no, trade_status, service, STATUS_TITLES[order.getStatus()], STATUS_TITLES[nextStatus]);
 						processOrder(order, trade_no, nextStatus);
 					}
 
@@ -148,8 +150,7 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 					// 该判断表示卖家已经发了货，但买家还没有做确认收货的操作
 
 					if (order != null) {
-						log.infof("支付宝通知：处理订单...订单号(%s),交易号(%s),交易状态(%s),订单当前状态(%s),订单下一状态(%s)", order_no, trade_no, trade_status, STATUS_TITLES[order.getStatus()],
-								STATUS_TITLES[STATUS_WAIT_BUYER_CONFIRM_GOODS]);
+						log.infof("支付宝通知：处理订单...订单号(%s),交易号(%s),交易状态(%s),订单当前状态(%s),订单下一状态(%s)", order_no, trade_no, trade_status, STATUS_TITLES[order.getStatus()], STATUS_TITLES[STATUS_WAIT_BUYER_CONFIRM_GOODS]);
 						processOrder(order, trade_no, STATUS_WAIT_BUYER_CONFIRM_GOODS);
 					}
 
@@ -158,8 +159,7 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 					// 该判断表示买家已经确认收货，这笔交易完成
 
 					if (order != null) {
-						log.infof("支付宝通知：处理订单... 订单号(%s),交易号(%s),交易状态(%s),订单当前状态(%s),订单下一状态(%s)", order_no, trade_no, trade_status, STATUS_TITLES[order.getStatus()],
-								STATUS_TITLES[STATUS_TRADE_SUCCESS]);
+						log.infof("支付宝通知：处理订单... 订单号(%s),交易号(%s),交易状态(%s),订单当前状态(%s),订单下一状态(%s)", order_no, trade_no, trade_status, STATUS_TITLES[order.getStatus()], STATUS_TITLES[STATUS_TRADE_SUCCESS]);
 						processOrder(order, trade_no, STATUS_TRADE_FINISHED);
 					}
 
@@ -313,10 +313,26 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 		log.infof("处理订单...  [订单号(%s),交易号(%s),订单原状态(%s),订单新状态(%s)]", order.getOrderID(), trade_no, STATUS_TITLES[order.getStatus()], STATUS_TITLES[orderNewStatus]);
 
 		IDemsySoft soft = Demsy.me().getSoft();
+		SoftService softService = Cocit.getActionContext().getSoftService();
 
 		// 已付款（等待卖家发货）
 		if (orderNewStatus == STATUS_WAIT_SELLER_SEND_GOODS) {
-			// 生成物流单
+			/*
+			 * 短信通知买家，下单成功！
+			 */
+			try {
+				String tpl = softService.getConfig("eshop.order1", "尊敬的%s：欢迎您光临云南白药门户网站，您购买的产品已确认下单成功，订单号%s，我们将会在24小时内发货。");
+				String content = String.format(tpl, order.getPersonName(), order.getOrderID());
+				MTSmsEntity sms = MTSmsEntity.make("“电子商务”通知买家下单成功", order.getTelcode(), content);
+				ActionHelper actionHelper = ActionHelper.make("0:MTSmsEntity:c");
+				actionHelper.entityManager.save(sms, "c");
+			} catch (Throwable e) {
+				log.errorf("付款成功，发送短信失败！", e);
+			}
+
+			/*
+			 * 生成物流单
+			 */
 			if (order.getStatus() == STATUS_WAIT_BUYER_PAY || (order.getStatus() == STATUS_WAIT_SELLER_SEND_GOODS && order.getLogisticsNum() <= 0)) {
 
 				Class operatorClass = bizEngine.getSystemClass(IProductOperator.SYS_CODE);
@@ -459,8 +475,10 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 				log.infof("处理订单状态：忽略！订单号(%s),交易号(%s),订单状态(%s),新状态(%s)", order.getOrderID(), trade_no, STATUS_TITLES[order.getStatus()], STATUS_TITLES[orderNewStatus]);
 			}
 		} else
+
 		// 已发货（等待买家确认收货）
 		if (STATUS_WAIT_BUYER_CONFIRM_GOODS == orderNewStatus) {
+
 			// 如果是担保交易、关联物流单发货完毕，则通知支付宝——已经发货
 
 			// 物流单数量
@@ -519,6 +537,18 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 				) {
 					order.setStatus(orderNewStatus);
 				}
+			}
+			/*
+			 * 短信通知买家：你买的产品已发货，请注意查收！
+			 */
+			try {
+				String tpl = softService.getConfig("eshop.order2", "尊敬的%s：您在云南白药网站购买的商品已经发货，物流单号%s%s，请注意查收！");
+				String content = String.format(tpl, order.getPersonName(), order.getLogisticsName(), order.getLogisticsID());
+				MTSmsEntity sms = MTSmsEntity.make("“电子商务”通知买家已经发货", order.getTelcode(), content);
+				ActionHelper actionHelper = ActionHelper.make("0:MTSmsEntity:c");
+				actionHelper.entityManager.save(sms, "c");
+			} catch (Throwable e) {
+				log.errorf("发货成功，发送短信失败！", e);
 			}
 		} else if (STATUS_WAIT_BUYER_CONFIRM_REFUND == orderNewStatus) {
 			List<Logistics> lOrders = orm.query(Logistics.class, Expr.beginWith("orderID", order.getOrderID()));
