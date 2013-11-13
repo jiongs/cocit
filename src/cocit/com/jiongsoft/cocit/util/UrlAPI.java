@@ -195,6 +195,8 @@ public abstract class UrlAPI {
 	 */
 	public static final String GET_SMS_VERIFY_CODE = URL_NS + "/getSmsVerifyCode/*";
 
+	public static final String GET_SMS_VERIFY_CODE2 = URL_NS + "/getSmsVerifyCode2/*";
+
 	public static final String CHK_SMS_VERIFY_CODE = URL_NS + "/chkSmsVerifyCode/*";
 
 	/*

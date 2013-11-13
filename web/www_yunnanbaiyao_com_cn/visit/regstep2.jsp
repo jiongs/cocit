@@ -137,6 +137,9 @@
 							<tr>
 								<td class="reg_input_label">短信验证码：</td>
 								<td class="reg_input_box"><input type="text" name="entity.telVerifyCode" value="" /><span class="required">&nbsp;</span></td>
+								<td class="reg_input_box">
+									<input type="submit" onclick="getSmsVerifyCode2();" class="reg_get_verify_code" value="没收到短信" />
+								</td>
 							</tr>
 							<tr>
 								<td class="reg_input_label">QQ号码：</td>

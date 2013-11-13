@@ -84,6 +84,36 @@ function getSmsVerifyCode() {
 
 	return false;
 }
+function getSmsVerifyCode2() {
+	var form = $("form");
+	var tel = form[0].elements["entity.tel"].value;
+	if (tel.length == 0) {
+		alert("请先填写手机号码！");
+		form[0].elements["entity.tel"].focus();
+		return false;
+	}
+
+	var btn = $(".reg_get_verify_code").attr("disabled", true).addClass("disabled_button");
+
+	$.ajax({
+		type : 'POST',
+		url : "/coc/getSmsVerifyCode2/" + tel,
+		async : false,
+		data : "",
+		dataType : "json",
+		success : function(json) {
+			alert(json.message);
+		},
+		error : function(jqXHR, statusText, responseError) {
+			alert(responseError);
+		},
+		complete : function() {
+			btn.attr("disabled", false).removeClass("disabled_button");
+		}
+	});
+
+	return false;
+}
 function submitRegStep2(btn) {
 	var form = $("form");
 	var id = form[0].elements["entity.id"].value;

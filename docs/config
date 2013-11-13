@@ -1,0 +1,12 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	logallrefupdates = true
+	autocrlf = false
+[remote "github.com"]
+	url = https://jiongs@github.com/jiongs/coudit.git
+	fetch = +refs/heads/*:refs/remotes/github.com/*
+	push = +refs/heads/master:refs/heads/master
+[branch "master"]
+	remote = github.com
+	merge = refs/heads/master
