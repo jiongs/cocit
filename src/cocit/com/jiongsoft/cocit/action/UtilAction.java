@@ -62,7 +62,8 @@ public class UtilAction {
 			ActionHelper actionHelper = ActionHelper.make("0:MTSmsEntity:c");
 			actionHelper.entityManager.save(sms, "c");
 
-			message = "获取短信验证码成功！请注意查看您的手机短信。";
+			message = "获取短信验证码成功，请注意查看您的手机短信！";
+			message = "短信通道异常，请输入验证码：" + code;
 
 			return AlertsModel.makeSuccess(message);
 		} catch (Throwable e) {
