@@ -810,6 +810,8 @@ public class EnMappingMaker implements EntityMaker {
 	 * 对于每个类一个表和使用连接表的情况有待实现。
 	 */
 	private Class<?> evalTableNameClass(Class type) {
+		if(type==null)
+			return null;
 		Class<?> me = type;
 		// 代理类
 		if (Cls.isAgent(me)) {

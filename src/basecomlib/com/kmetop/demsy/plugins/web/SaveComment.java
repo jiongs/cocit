@@ -3,6 +3,7 @@ package com.kmetop.demsy.plugins.web;
 import com.jiongsoft.cocit.entity.ActionEvent;
 import com.jiongsoft.cocit.entity.plugin.BasePlugin;
 import com.kmetop.demsy.Demsy;
+import com.kmetop.demsy.comlib.impl.base.security.Module;
 import com.kmetop.demsy.comlib.impl.sft.web.content.Comment;
 import com.kmetop.demsy.comlib.security.IUser;
 import com.kmetop.demsy.lang.Str;
@@ -19,8 +20,10 @@ public class SaveComment extends BasePlugin {
 
 		} else {// 评论
 			IOrm orm = (IOrm) event.getOrm();
-
-			Object subject = orm.load(Demsy.bizEngine.getType(Demsy.moduleEngine.getSystem(comment.getModule())), comment.getSubjectID());
+			Module m = comment.getModule();
+			m = orm.load(m.getClass(), m.getId());
+			Class type = Demsy.bizEngine.getType(Demsy.moduleEngine.getSystem(m));
+			Object subject = orm.load(type, comment.getSubjectID());
 			comment.setName(subject.toString());
 			IUser user = Demsy.me().loginUser();
 			if (user != null) {

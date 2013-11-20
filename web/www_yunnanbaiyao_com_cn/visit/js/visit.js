@@ -30,10 +30,18 @@
 			}
 		} catch (e) {
 		}
-
+		try {
 			$("#entity_teamXlsFile").upload();
+		} catch (e) {
+		}
+		try {
 			switchTeamRegType();
+		} catch (e) {
+		}
+		try {
 			makeTeamMemberNames();
+		} catch (e) {
+		}
 	});
 })(jQuery);
 
@@ -172,16 +180,16 @@ function submitRegStep2(btn) {
 		}
 	});
 }
-function switchTeamRegType(flag){
+function switchTeamRegType(flag) {
 	var form = $("form");
 	var elements = form[0].elements;
-	if(typeof flag == "undefined"){
+	if (typeof flag == "undefined") {
 		flag = $('input[name="entity.teamRegType"]:checked').val()._int()
 	}
-	if(flag == 1){//上传excel团队名单
+	if (flag == 1) {// 上传excel团队名单
 		$(".excelImportTeam").show();
 		$(".onlineEditTeam").hide();
-	}else{//在线填写团队名单
+	} else {// 在线填写团队名单
 		$(".excelImportTeam").hide();
 		$(".onlineEditTeam").show();
 	}
@@ -193,7 +201,7 @@ function openTeamMember() {
 	elements["orderby"].value = "";
 	elements["name"].value = "";
 	elements["code"].value = "";
-//	elements["teamMemberRole"].value = "";
+	// elements["teamMemberRole"].value = "";
 	$(elements["sex"]).attr("checked", false);
 	elements["tel"].value = "";
 	elements["qq"].value = "";
@@ -208,7 +216,7 @@ function addTeamMember() {
 	var name = elements["name"].value;
 	var code = elements["code"].value;
 	var tel = elements["tel"].value;
-//	var teamMemberRole = elements["teamMemberRole"].value;
+	// var teamMemberRole = elements["teamMemberRole"].value;
 	if (name.trim().length == 0) {
 		alert("姓名必须填写！");
 		elements["name"].focus();
@@ -228,12 +236,12 @@ function addTeamMember() {
 		elements["tel"].focus();
 		return;
 	}
-//	if (teamMemberRole.trim().length == 0) {
-//		alert("成员关系必须填写！");
-//		elements["teamMemberRole"].focus();
-//		return;
-//	}
-	
+	// if (teamMemberRole.trim().length == 0) {
+	// alert("成员关系必须填写！");
+	// elements["teamMemberRole"].focus();
+	// return;
+	// }
+
 	var teamMembers = elements["entity.teamMembers"].value;
 	var jsonMembers = [];
 	if (teamMembers.trim().length > 0) {
@@ -252,7 +260,7 @@ function addTeamMember() {
 	member["id"] = elements["id"].value._int();
 	member["name"] = name;
 	member["code"] = code;
-//	member["teamMemberRole"] = teamMemberRole;
+	// member["teamMemberRole"] = teamMemberRole;
 	member["sex"] = $('input[name=sex]:checked').val()._int();
 	member["tel"] = elements["tel"].value;
 	member["qq"] = elements["qq"].value;
@@ -272,7 +280,7 @@ function editTeamMember(orderby) {
 	$('#teamMemberDialog').show();
 	var form = $("form");
 	var elements = form[0].elements;
-	
+
 	var teamMembers = elements["entity.teamMembers"].value;
 	var jsonMembers = [];
 	if (teamMembers.trim().length > 0) {
@@ -283,7 +291,7 @@ function editTeamMember(orderby) {
 	elements["id"].value = member["id"];
 	elements["name"].value = member["name"];
 	elements["code"].value = member["code"];
-//	elements["teamMemberRole"].value = member["teamMemberRole"];
+	// elements["teamMemberRole"].value = member["teamMemberRole"];
 	$('input:radio[name=sex]')[member["sex"]].checked = true;
 	elements["tel"].value = member["tel"];
 	elements["qq"].value = member["qq"];
@@ -329,15 +337,15 @@ function makeTeamMemberNames() {
 		if (mem["status"] && mem["status"] == 9) {
 			continue;
 		}
-		if(count % 3 ==0){
-			$tr=$("<tr></tr>").appendTo($table);
+		if (count % 3 == 0) {
+			$tr = $("<tr></tr>").appendTo($table);
 		}
 		count++;
-		
+
 		var one = $("<span class=\"reg_member\"><span onclick=\"editTeamMember(" + i + ")\"> " + mem["name"] + " </span>&nbsp;<span onclick=\"deleteTeamMember(" + i
 				+ ")\" class=\"del_member\" style=\"display:none;padding: 0;\">X</span></span>");
 
-		var $td=$("<td width=\"33%\"></td>").appendTo($tr);
+		var $td = $("<td width=\"33%\"></td>").appendTo($tr);
 		$td.hover(function() {
 			$(".del_member", this).show();
 		}, function() {

@@ -52,7 +52,7 @@ public class LoadDetailContent extends UiRecord {
 	protected Object loadRecord(UIBlockContext maker, Map context) {
 		Object info = super.loadRecord(maker, context);
 
-		context.put("moduleID", maker.getModule());
+		context.put("module", maker.getModule());
 		context.put("subject", info);
 
 		IOrm orm = Demsy.orm();

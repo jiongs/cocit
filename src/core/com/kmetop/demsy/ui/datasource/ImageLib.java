@@ -109,7 +109,7 @@ public class ImageLib extends UiRecord {
 			context.put("datalist", nodelist);
 		}
 
-		context.put("moduleID", maker.getModule());
+		context.put("module", maker.getModule());
 		context.put("subject", catalog);
 
 		IOrm orm = Demsy.orm();
@@ -119,7 +119,7 @@ public class ImageLib extends UiRecord {
 			Pager pager = new Pager(bizEngine.getType(moduleEngine.getSystem(commentMdl)));
 			CndExpr expr = Expr.eq("status", Comment.STATUS_SHOWN);
 			if (catalog != null) {
-				expr = expr.and(Expr.eq("subjectID", catalog)).and(Expr.eq("moduleID", maker.getModule()));
+				expr = expr.and(Expr.eq("subjectID", catalog)).and(Expr.eq("module", maker.getModule()));
 				expr.addAsc(LibConst.F_CREATED);
 				expr = expr.setPager(cpage, maker.getPageSize());
 				pager.setQueryExpr(expr);

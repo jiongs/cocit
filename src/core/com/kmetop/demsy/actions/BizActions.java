@@ -697,6 +697,8 @@ public class BizActions extends ModuleActions implements BizConst, MvcConst {
 
 			return new Status(true, info, null, Obj.getId(data));
 		} catch (Throwable e) {
+			e.printStackTrace();
+			
 			String msg = Ex.msg(e);
 
 			log.debugf("执行业务逻辑<%s>失败! %s", title, msg);
