@@ -70,6 +70,47 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 
 	public static final String SESSION_KEY_CART_SELECTED = "Order.Cart.Selected";
 
+	/**
+	 * 修改订单留言
+	 * 
+	 * @param orderID
+	 */
+	@At(URL_PREFIX_BZ + "order/updateOrderNote/*")
+	public Map updateOrderNote(String orderID) {
+		HttpServletRequest request = Demsy.me().request();
+
+		Map ret = new HashMap();
+		String note = request.getParameter("note");
+		String tel = request.getParameter("tel");
+		String id = request.getParameter("id");
+		if (note == null || note.trim().length() == 0) {
+			ret.put("msg", "修改订单留言失败！留言不能为空。");
+		} else {
+
+			// 查询订单
+			Class ordClass = bizEngine.getSystemClass(IOrder.SYS_CODE);
+			IOrm orm = Demsy.orm();
+			IDemsySoft soft = Demsy.me().getSoft();
+			IOrder order = (IOrder) orm.load(ordClass, Expr.eq(LibConst.F_TIME_ID, orderID).and(Expr.eq(LibConst.F_SOFT_ID, soft.getId())));
+
+			if (order == null) {
+				ret.put("msg", "修改订单留言失败！订单不存在。");
+			} else {
+				String orderTel = order.getTelcode();
+				String dataID = "" + order.getId();
+				if (!orderTel.equals(tel) || !dataID.equals(id)) {
+					ret.put("msg", "你无权修改订单留言。");
+				} else {
+					order.setNote(note);
+					orm.save(order);
+					ret.put("msg", "修改订单留言成功。");
+				}
+			}
+		}
+
+		return ret;
+	}
+
 	@At(URL_BZ_ORDER_ALIPAYNOTIFY)
 	@Ok("void")
 	public void alipaynotify() {

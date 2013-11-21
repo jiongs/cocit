@@ -309,7 +309,7 @@ public class UiEngine implements IUiEngine, MvcConst {
 			// contentWidth += 280;
 			// }
 			// int gridColSize = new Double(contentWidth / 120).intValue();
-			int gridColSize = 8;
+			int gridColSize = 10;
 
 			for (IBizField fld : flds) {
 				if (!fld.isGridField()) {

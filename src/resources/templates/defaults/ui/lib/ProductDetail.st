@@ -57,8 +57,8 @@
                         <tr>
                             <td class="topLbl">数&nbsp;&nbsp;&nbsp;&nbsp;量：</td>
                             <td>{if $obj.nowPrice != null}<input id="p_buy_amount" name="amount" type="text" class="amount input spinner" style="width:60px;" value="1" />{/if}</td>
-                            <td class="topLbl">部&nbsp;&nbsp;&nbsp;&nbsp;门：</td>
-                            <td>{tostring bean=$obj.operator prop="name"}</td>
+							<td class="topLbl">属&nbsp;&nbsp;&nbsp;&nbsp;性：</td>
+                            <td>{if $obj.otcDrug == 0}非处方药{else}处方药{/if}</td>
                         </tr>
                         <tr>
                             <td colspan=4>
@@ -184,6 +184,9 @@
             </td>
         </tr>
     </table>
+    {if $obj.otcDrug == 1}
+    <div style="color: red;padding: 0px 30px 15px 30px;display:none;">药监部门提示：如发现本网站有任何直接或变相销售处方药行为，请保留证据，拨打12331举报，举报查实给予奖励。<div>
+    {/if}
     <dl class="tabs">
         <dt>
             <div>商品详情</div>

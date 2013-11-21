@@ -15,6 +15,15 @@
 <input type="reset" style="cursor:pointer;" onclick="this.form.elements['orderTelcode'].value='';this.form.elements['orderPerson'].value='';this.form.elements['orderStatus'].value='';return false;" value="重置查询条件" />
 </form>
 </div>
+<script>
+function updateOrderNote(orderID, id, tel){
+	var note = $("#note_"+id).val();
+	
+	$.post("/bz/order/updateOrderNote/"+orderID, "id="+id+"&tel="+tel+"&note="+note, function(json) {
+    	alert(json.msg);
+	}, "json");
+}
+</script>
 <div class="d">
     <form id="orderform_{$ui.uiid}" action="" onsubmit="return false;">
         <table width=100% class="cart">
@@ -46,6 +55,16 @@
                             {if $orderPerson == null}{tostring bean=$order.obj prop="buyerHideInfo"}{else}{tostring bean=$order.obj prop="buyerInfo"}{/if}
                         </td>
                         <td class="fld">邮政编码：</td><td>{tostring bean=$order.obj prop="postcode"}</td>
+                        </tr>
+                        <tr>
+                        <td class="fld" valign="top" style="padding-top: 5px;">订单留言：</td><td colspan=2>
+                        	{if $order.obj.logisticsName == null}
+                            <textarea id='note_{tostring bean=$order.obj prop="id"}' style="width:360px; height: 30px;font-size: 12px;">{tostring bean=$order.obj prop="note"}</textarea>
+                            {else}
+                            {tostring bean=$order.obj prop="note"}
+                            {/if}
+                        </td>
+                        <td valign="top">{if $order.obj.logisticsName == null}<input value="修改留言" type="button" onclick="updateOrderNote('{tostring bean=$order.obj prop="timeID"}','{tostring bean=$order.obj prop="id"}','{tostring bean=$order.obj prop="code"}'); return false;"></input>{/if}</td>
                         </tr>
                         </table>
                     </td>

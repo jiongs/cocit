@@ -28,7 +28,7 @@ actions = {
 //
 		@CocOperation(name = "添加产品", typeCode = TYPE_BZFORM_NEW, mode = "c"),//
 		@CocOperation(name = "调整分类", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu"),//
-		@CocOperation(name = "批量推荐", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu2"),//
+		@CocOperation(name = "批量修改处方标志", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu5"),//
 		// @CocOperation(name = "调整销售数据", typeCode = TYPE_BZFORM_EDIT, mode = "e1"),//
 		// @CocOperation(name = "批量调整运营商", typeCode = TYPE_BZFORM_EDIT_N, mode =
 		// "bu1"),//
@@ -38,40 +38,58 @@ actions = {
 		// "bu4"),//
 		@CocOperation(jsonData = "CommonBizAction.data.js") //
 },//
-groups = { @CocGroup(name = "基本信息", code = "basic",//
-fields = { @CocField(property = "catalog", gridOrder = 1)//
-		, @CocField(name = "产品名称", property = "name", mode = "c:M e:M v:S *:N", gridOrder = 2)//
-		, @CocField(name = "产品编码", property = "code", mode = "c:E e:E v:S *:N")//
-		, @CocField(property = "operator")//
-		, @CocField(property = "storage")//
-		, @CocField(property = "image")//
-		, @CocField(property = "spec") //
-		, @CocField(property = "recommend") //
-		, @CocField(property = "onlineDate") //
-		, @CocField(property = "oldPrice", gridOrder = 4)//
-		, @CocField(property = "price", gridOrder = 5)//
-		, @CocField(property = "allowBuy", gridOrder = 3)//
-		, @CocField(property = "saleNum", gridOrder = 6)//
-		, @CocField(property = "stockNum", gridOrder = 7) //
-		, @CocField(property = "keywords") //
-		, @CocField(name = "产品说明", property = "desc", mode = "c:E e:E v:S *:N") //
-		, @CocField(name = "人工顺序", property = "orderby", uiTemplate = "ui.widget.field.Spinner", mode = "v:S *:N", gridOrder = 8) //
-}), @CocGroup(name = "产品详情", code = "content",//
-fields = { @CocField(property = "content") //
-}), @CocGroup(name = "产品特征", code = "attributes",//
-fields = { @CocField(property = "attributes") //
-}), @CocGroup(name = "产品型号", code = "models",//
-fields = { @CocField(property = "models") //
-}), @CocGroup(name = "产品图库", code = "images",//
-fields = { @CocField(property = "images") //
-}), @CocGroup(name = "其他属性", code = "other",//
-fields = { @CocField(property = "clickNum", gridOrder = 8)//
-		, @CocField(property = "commentNum")//
-		, @CocField(name = "创建时间", property = "created", mode = "*:N v:S") //
-		, @CocField(name = "更新时间", property = "updated", mode = "*:N v:S") //
-		, @CocField(name = "创建帐号", property = "createdBy", mode = "*:N v:S") //
-		, @CocField(name = "更新帐号", property = "updatedBy", mode = "*:N v:S") //
-}) // @CocGroup
+groups = {
+//
+		@CocGroup(name = "基本信息", code = "basic",//
+		fields = {
+				//
+				@CocField(name = "产品名称", property = "name", mode = "c:M e:M v:S *:N", gridOrder = 1)//
+				, @CocField(name = "产品编码", property = "code", mode = "c:E e:E v:S *:N")//
+				, @CocField(property = "spec", gridOrder = 2) //
+				, @CocField(property = "catalog")//
+				, @CocField(property = "operator")//
+				, @CocField(property = "storage")//
+				, @CocField(property = "recommend", gridOrder = 3) //
+				, @CocField(property = "otcDrug", gridOrder = 4)//
+				, @CocField(property = "allowBuy", gridOrder = 5) //
+				, @CocField(property = "image") //
+		})//
+		, @CocGroup(name = "销售信息", code = "saleinfo",//
+		fields = {
+				//
+				@CocField(property = "onlineDate") //
+				, @CocField(property = "oldPrice", gridOrder = 6)//
+				, @CocField(property = "price", gridOrder = 7)//
+				, @CocField(property = "saleNum", gridOrder = 8)//
+				, @CocField(property = "stockNum", gridOrder = 9) //
+				, @CocField(property = "keywords") //
+		// , @CocField(name = "产品说明", property = "desc", mode = "c:E e:E v:S *:N") //
+		})//
+		, @CocGroup(name = "产品详情", code = "content",//
+		fields = {
+		//
+		@CocField(property = "content") //
+		// })//
+		// , @CocGroup(name = "自定义特征", code = "attributes",//
+		// fields = { @CocField(property = "attributes") //
+		// })//
+		// , @CocGroup(name = "产品型号", code = "models",//
+		// fields = { @CocField(property = "models") //
+		// })//
+		// , @CocGroup(name = "产品图库", code = "images",//
+		// fields = { @CocField(property = "images") //
+		})//
+		, @CocGroup(name = "其他属性", code = "other",//
+		fields = {
+				//
+				@CocField(property = "clickNum", gridOrder = 10)//
+				, @CocField(property = "commentNum")//
+				, @CocField(name = "人工顺序", property = "orderby", uiTemplate = "ui.widget.field.Spinner", mode = "v:S *:N") //
+				, @CocField(name = "创建时间", property = "created", mode = "*:N v:S") //
+				, @CocField(name = "更新时间", property = "updated", mode = "*:N v:S") //
+				, @CocField(name = "创建帐号", property = "createdBy", mode = "*:N v:S") //
+				, @CocField(name = "更新帐号", property = "updatedBy", mode = "*:N v:S") //
+		}) // @CocGroup
 }// end groups
 )
 public class Product extends BizComponent implements IProduct {
@@ -95,8 +113,8 @@ public class Product extends BizComponent implements IProduct {
 	@CocField(name = "运营商", mode = "c:E e:E bu1:E v:S *:N", disabledNavi = true)
 	protected ProductOperator operator;
 
-	@CocField(name = "推荐标志", options = "1:推荐,0:取消推荐", mode = "c:E e:E bu2:E v:S *:N")
-	protected Boolean recommend;
+	@CocField(name = "推荐标志", options = "0:未推荐,1:推荐", mode = "c:E e:E bu2:E v:S *:N")
+	protected byte recommend;
 
 	@CocField(name = "产品图片", uploadType = "*.jpg;*.gif;*.png;*.bmp", mode = "c:E e:E v:S *:N")
 	protected Upload image;
@@ -126,8 +144,11 @@ public class Product extends BizComponent implements IProduct {
 	@CocField(name = "产品现价", mode = "c:E e:E e1:E v:S *:N", pattern = "#,##0.00")
 	protected Double price;
 
-	@CocField(name = "产品状态", mode = "c:E e:E e1:E bu4:E v:S *:N", options = "1:允许网购,0:禁止网购,2:已下架")
+	@CocField(name = "产品状态", mode = "c:E e:E e1:E bu4:E v:S *:N", options = "0:上架展示,1:上架销售,2:已下架")
 	protected byte allowBuy;
+
+	@CocField(name = "产品属性", mode = "c:E e:E e1:E bu5:E v:S *:N", options = "0:无,1:处方药,2:非处方药,3:保健养生,4:日化用品,99:其他")
+	protected byte otcDrug;
 
 	@CocField(name = "库存数量", mode = "c:E e:E e1:E v:S *:N")
 	protected Integer stockNum;
@@ -251,11 +272,11 @@ public class Product extends BizComponent implements IProduct {
 		this.commentNum = commentNum;
 	}
 
-	public Boolean getRecommend() {
+	public byte getRecommend() {
 		return recommend;
 	}
 
-	public void setRecommend(Boolean recommend) {
+	public void setRecommend(byte recommend) {
 		this.recommend = recommend;
 	}
 
@@ -354,5 +375,13 @@ public class Product extends BizComponent implements IProduct {
 
 	public void setModels(SubSystem<ProductModel> models) {
 		this.models = models;
+	}
+
+	public byte getOtcDrug() {
+		return otcDrug;
+	}
+
+	public void setOtcDrug(byte otcDrug) {
+		this.otcDrug = otcDrug;
 	}
 }
