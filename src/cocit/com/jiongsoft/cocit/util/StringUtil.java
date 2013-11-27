@@ -13,6 +13,29 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
 public abstract class StringUtil {
+
+	/**
+	 * 验证护照
+	 * <p>
+	 * 因私普通护照号码格式有:14/15+7位数,G+8位数；
+	 * <p>
+	 * 因公普通的是:P.+7位数；
+	 * <p>
+	 * 公务的是：S.+7位数 或者 S+8位数；
+	 * <p>
+	 * 以D开头的是外交护照.D=diplomatic
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public static boolean isPassport(String id) {
+		String pattern = "(P\\d{7})|(G\\d{8})";
+		Pattern p = Pattern.compile(pattern);
+		Matcher m = p.matcher(id);
+
+		return m.matches();
+	}
+
 	/**
 	 * 检查身份证号码
 	 * 
@@ -55,7 +78,7 @@ public abstract class StringUtil {
 	 * @return
 	 */
 	public static boolean isMobile(String tel) {
-		Pattern pattern = Pattern.compile("\\d{11}$");//Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
+		Pattern pattern = Pattern.compile("\\d{11}$");// Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
 
 		Matcher matcher = pattern.matcher(tel);
 
