@@ -40,7 +40,7 @@ public class Search extends UiBaseDataSource {
 			String[] links = Str.toArray(parser.getBlock().getParams());
 
 			List<WebContentCategory> clist = Demsy.orm().query(WebContentCategory.class, Expr.eq(LibConst.F_SOFT_ID, Demsy.me().getSoft().getId()).and(Expr.eq("infoEnabledSearch", 1)));
-			CndExpr expr = Expr.in("catalog", clist).and(Expr.isNull("refrence")).and(Expr.eq(LibConst.F_SOFT_ID, Demsy.me().getSoft().getId()));
+			CndExpr expr = Expr.in("catalog", clist).and(Expr.isNull("refrence")).and(Expr.eq(LibConst.F_SOFT_ID, Demsy.me().getSoft().getId())).and(Expr.eq("status", 1));
 
 			Pager pager = new Pager(null);
 			pager.setPageIndex(page);

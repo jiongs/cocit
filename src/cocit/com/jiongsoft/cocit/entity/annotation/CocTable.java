@@ -21,6 +21,8 @@ public @interface CocTable {
 
 	public String code() default "";
 
+	public String sortExpr() default "";
+
 	public String desc() default "";
 
 	public String template() default "";

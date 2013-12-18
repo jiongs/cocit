@@ -21,7 +21,9 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
  * 
  */
 @Entity
-@CocTable(name = "活动设置", code = "VisitActivity", catalog = "_ynby_visit", pathPrefix = UrlAPI.URL_NS, orderby = 2//
+@CocTable(name = "活动设置", code = "VisitActivity", catalog = "_ynby_visit", pathPrefix = UrlAPI.URL_NS, orderby = 2
+//
+, sortExpr = "grid:name desc, tree:name desc"
 // 操作按钮
 , actions = {
 //

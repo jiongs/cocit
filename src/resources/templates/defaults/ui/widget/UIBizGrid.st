@@ -14,7 +14,7 @@ bizmodule.addGrid({
 	,colModel:[{ 
 		  name:'{$ui.idField}',index:'{$ui.idField}',width:50,align:'left',hidden: {if $comboboxID == null}false{else}true{/if}
 		}{foreach from=$ui.fields item="fld"},{ 
-		  name:'{$fld.name}',index:'{$fld.propName}',width:{$fld.width},align:'{$fld.align}'
+		  name:'{$fld.name}',index:'{$fld.propName}',width:{$fld.width},align:'{$fld.align}',searchtype:'{$fld.searchType}'
 		  	{if $fld.hidden}
 				,hidden:{$fld.hidden},
 		  		searchoptions:{

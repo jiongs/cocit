@@ -19,15 +19,17 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
  * 
  */
 @Entity
-@CocTable(name = "活动报名管理", code = "VisitActivityRegister", catalog = "_ynby_visit", pathPrefix = UrlAPI.URL_NS, orderby = 3//
+@CocTable(name = "活动报名管理", code = "VisitActivityRegister", catalog = "_ynby_visit", pathPrefix = UrlAPI.URL_NS, orderby = 3
 // 操作按钮
 , actions = {
 //
-                @CocOperation(name = "导出EXCEL", typeCode = 107, mode = "xls")//
-                , @CocOperation(name = "报名", typeCode = 101, mode = "c", plugin = VisitActivityPlugins.SaveRegister.class)//
-                , @CocOperation(name = "取消报名", typeCode = 102, mode = "e1", plugin = VisitActivityPlugins.CancelRegister.class)//
-                , @CocOperation(name = "删除", typeCode = 299, mode = "d", plugin = VisitActivityPlugins.DeleteRegister.class) //
-                , @CocOperation(name = "查看", typeCode = 102, mode = "v") //
+		@CocOperation(name = "导出EXCEL", typeCode = 107, mode = "xls")//
+		, @CocOperation(name = "添加", typeCode = 101, mode = "c1", plugin = VisitActivityPlugins.AdminSaveRegister.class)//
+		, @CocOperation(name = "修改", typeCode = 102, mode = "e2", plugin = VisitActivityPlugins.AdminSaveRegister.class)//
+		, @CocOperation(name = "取消", typeCode = 102, mode = "e1", plugin = VisitActivityPlugins.CancelRegister.class)//
+		, @CocOperation(name = "删除", typeCode = 299, mode = "d", plugin = VisitActivityPlugins.DeleteRegister.class) //
+		, @CocOperation(name = "查看", typeCode = 102, mode = "v") //
+		, @CocOperation(name = "前台报名", typeCode = 101, mode = "c", plugin = VisitActivityPlugins.SaveRegister.class) //
 }// end: actions
 // 业务分组
 , groups = { //
@@ -35,28 +37,28 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 // 业务字段
 , fields = {
 //
-                @CocField(name = "参观时间", mode = "*:N v:S e1:S c:M e:M xls:S", property = "activity", gridOrder = 10)//
-                , @CocField(name = "姓名", mode = "*:N v:S e1:S c:M e:M xls:S", property = "name", gridOrder = 1) //
-                , @CocField(name = "性别", mode = "*:N v:S e1:S c:E e:E xls:S", property = "sex", options = "0:男,1:女", disabledNavi = true, gridOrder = 2) //
-                // , @CocField(name = "年龄", mode = "*:N v:S e1:S c:E e:E xls:S", property = "age", gridOrder = 3) //
-                , @CocField(name = "身份证号", mode = "*:N v:S e1:S c:M e:M xls:S", property = "code", gridOrder = 4) //
-                , @CocField(name = "手机号码", mode = "*:N v:S e1:S c:M e:M xls:S", property = "tel", gridOrder = 5) //
-                , @CocField(name = "手机验证码", mode = "*:N v:S e1:S c:M e:R", property = "telVerifyCode") //
-                , @CocField(name = "团队ID", mode = "*:N v:S e1:S c:E e:E xls:S", property = "teamID", gridOrder = 6) //
-                // , @CocField(name = "成员关系", mode = "*:N v:S e1:S c:E e:E xls:S", property = "teamMemberRole") //
-                , @CocField(name = "参观人数", mode = "*:N v:S e1:S c:E e:E xls:S", property = "personNumber", gridOrder = 7) //
-                , @CocField(name = "工作单位", mode = "*:N v:S e1:S c:E e:E xls:S", property = "unit", gridOrder = 8) //
-                , @CocField(name = "邀请函验证码", mode = "*:N v:S e1:S xls:S", property = "verificationCode") //
-                , @CocField(name = "自驾车牌号", mode = "*:N v:S e1:S c:E e:E xls:S", property = "carCode") //
-                , @CocField(name = "状态", mode = "*:N v:S e1:S c:E e:E xls:S", property = "status", gridOrder = 9, options = "0:已报名,1:已参与,2:没有参与,9:取消报名") //
-                , @CocField(name = "QQ号码", mode = "*:N v:S e1:S c:E e:E", property = "qq") //
-                , @CocField(name = "邮箱地址", mode = "*:N v:S e1:S c:E e:E", property = "email") //
-                , @CocField(name = "备注", mode = "*:N v:S e1:S c:E e:E", property = "desc") //
-                , @CocField(name = "登录帐号", mode = "*:N v:S", property = "createdBy") //
-                , @CocField(name = "团队报名方式", mode = "*:N v:S", property = "teamRegType") //
-                , @CocField(name = "团队名单", mode = "*:N v:S", property = "teamXlsFile") //
-                , @CocField(name = "报名时间", mode = "*:N v:S", property = "created", pattern = "yyyy-MM-dd HH:mm:ss", gridOrder = 10) //
-                , @CocField(name = "IP地址", mode = "*:N v:S", property = "createdIP") //
+		@CocField(name = "参观时间", mode = "*:N v:S e1:S c:M e:M xls:S c1:M e2:M", property = "activity", gridOrder = 10)//
+		, @CocField(name = "姓名", mode = "*:N v:S e1:S c:M e:M xls:S c1:M e2:M", property = "name", gridOrder = 1) //
+		, @CocField(name = "性别", mode = "*:N v:S e1:S c:E e:E xls:S c1:M e2:M", property = "sex", options = "0:男,1:女", disabledNavi = true, gridOrder = 2) //
+		// , @CocField(name = "年龄", mode = "*:N v:S e1:S c:E e:E xls:S", property = "age", gridOrder = 3) //
+		, @CocField(name = "身份证号", mode = "*:N v:S e1:S c:M e:M xls:S c1:M e2:M", property = "code", gridOrder = 4) //
+		, @CocField(name = "手机号码", mode = "*:N v:S e1:S c:M e:M xls:S c1:M e2:M", property = "tel", gridOrder = 5) //
+		, @CocField(name = "手机验证码", mode = "*:N v:S e1:S c:M e:R", property = "telVerifyCode") //
+		, @CocField(name = "团队ID", mode = "*:N v:S e1:S c:E e:E", property = "teamID", gridOrder = 6) //
+		// , @CocField(name = "成员关系", mode = "*:N v:S e1:S c:E e:E xls:S", property = "teamMemberRole") //
+		, @CocField(name = "参观人数", mode = "*:N v:S e1:S c:E e:E xls:S c1:E e2:E", property = "personNumber", gridOrder = 7) //
+		, @CocField(name = "工作单位", mode = "*:N v:S e1:S c:E e:E xls:S c1:E e2:E", property = "unit", gridOrder = 8) //
+		, @CocField(name = "邀请函验证码", mode = "*:N v:S e1:S", property = "verificationCode") //
+		, @CocField(name = "自驾车牌号", mode = "*:N v:S e1:S c:E e:E xls:S c1:E e2:E", property = "carCode") //
+		, @CocField(name = "状态", mode = "*:N v:S e1:S c:E e:E xls:S", property = "status", gridOrder = 9, options = "0:已报名,1:已参与,2:没有参与,9:取消报名") //
+		, @CocField(name = "QQ号码", mode = "*:N v:S e1:S c:E e:E c1:E e2:E", property = "qq") //
+		, @CocField(name = "邮箱地址", mode = "*:N v:S e1:S c:E e:E c1:E e2:E", property = "email") //
+		, @CocField(name = "备注", mode = "*:N v:S e1:S c:E e:E c1:E e2:E", property = "desc") //
+		, @CocField(name = "登录帐号", mode = "*:N v:S", property = "createdBy") //
+		, @CocField(name = "团队报名方式", mode = "*:N v:S", property = "teamRegType") //
+		, @CocField(name = "团队名单", mode = "*:N v:S", property = "teamXlsFile") //
+		, @CocField(name = "报名时间", mode = "*:N v:S", property = "created", pattern = "yyyy-MM-dd HH:mm:ss", gridOrder = 10) //
+		, @CocField(name = "IP地址", mode = "*:N v:S", property = "createdIP") //
 }// end: fields
 ) // end: CocGroup
 }// end: groups

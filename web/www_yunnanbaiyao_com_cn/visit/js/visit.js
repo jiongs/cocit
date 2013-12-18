@@ -154,7 +154,7 @@ function submitRegStep2(btn) {
 		return;
 	}
 	if (!$(form[0].elements["agree"]).is(':checked')) {
-		alert("不同意活动声明，不能报名！");
+		alert("请先点击“阅读活动声明”并选中“同意活动声明”，否则不能报名！");
 		return;
 	}
 

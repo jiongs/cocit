@@ -263,7 +263,15 @@
 									<input type="hidden" name="entity.activity.id" value="<%=activityID == null ? "" : activityID%>" />
 								</td>
 								<td style="padding-top: 20px;">
-									<div style="padding-left: 40px;"><input id="checkbox_agree" style="width: 16px; height: 16px; border: 0;" type="checkbox" name="agree" value="1" /><label for="checkbox_agree"><a href="/jsp/visit:info?guid=B17F355B-0906-4E6B-A1A2-BCF85F7661D7" target="_blank">我已阅读并同意活动申明</a></label></div>
+									<div onclick="$('#hdsm').show();" style="padding-left: 40px;cursor: pointer;" >阅读活动声明</div>
+									<div id="hdsm" style="display:none; position: absolute; left: 50%; margin-left:-300px; bottom: 30px;width: 600px;height: 600px;background: #ffffff;border: 1px solid #000000;">
+										<div onclick="$('#hdsm').hide();" style="cursor: pointer;text-align: right;padding: 2px 5px;font-size: 14px">X</div>
+										<%
+											entity = orm.get(contentType, Expr.eq("entityGuid", "B17F355B-0906-4E6B-A1A2-BCF85F7661D7"));
+										%>
+										<div style="margin-top: 5px; font-size: 16px; color: #333; line-height: 35px; padding: 10px;height:520px;overflow:auto;"><%=entity == null ? "" : entity.getContentText()%></div>
+										<div style="text-align: center;bottom:5px;"><input id="checkbox_agree" style="width: 16px; height: 16px; border: 0;" onclick="$('#hdsm').hide();" type="checkbox" name="agree" value="1" style="cursor:pointer;" /><label style="cursor:pointer;" for="checkbox_agree">同意活动申明</label></div>
+									</div>
 									<div>
 										<br/>
 										<a href="javascript: submitRegStep2(this)"><img class="reg_submit" src="<%=model.getContextPath()%>/visit/images2/button_submit.png" /></a>&nbsp;&nbsp;&nbsp;&nbsp; 

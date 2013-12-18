@@ -86,9 +86,12 @@ public class VisitActivityPlugins {
 						entity.setPlanPersonNumber(60);
 						entity.setAddress(address);
 
-						// 设置活动“报名结束日期”为活动前一天
+						// 设置活动“报名结束日期”为周二
 						CocCalendar expiredTo = CocCalendar.make(activityDate);
-						expiredTo.setDay(expiredTo.getDay() - 1);
+						if (week == 5)
+							expiredTo.setDay(expiredTo.getDay() - 3);
+						else
+							expiredTo.setDay(expiredTo.getDay() - 2);
 						entity.setExpiredTo(expiredTo.get());
 						try {
 							helper.entityManager.save(entity, "c");
@@ -115,7 +118,7 @@ public class VisitActivityPlugins {
 			VisitActivity entity = event.getEntity();
 
 			Date date = entity.getPlanDate();
-			String dateStr = CocCalendar.format(date, "yyyy年MM月dd日 E");
+			String dateStr = CocCalendar.format(date, "yyyy年MM月dd日");
 
 			Date to = entity.getExpiredTo();
 			if (to.getTime() >= date.getTime()) {
@@ -225,367 +228,393 @@ public class VisitActivityPlugins {
 	public static class SaveRegister extends BasePlugin<VisitActivityRegister> {
 		@Override
 		public void before(ActionEvent<VisitActivityRegister> event) {
-			boolean debug = Demsy.me().isLocal();
+			beforeSaveRegister(event, false);
+		}
 
-			synchronized (VisitActivity.class) {
-				Orm orm = event.getOrm();
-				VisitActivityRegister entity = event.getEntity();
+		public void after(ActionEvent<VisitActivityRegister> event) {
+			afterSaveRegister(event, false);
+		}
+	}
 
-				Long oldID = entity.getId();
-				if (oldID != null && oldID > 0) {
-					/*
-					 * 修改报名：恢复原来的活动报名人数
-					 */
+	public static class AdminSaveRegister extends BasePlugin<VisitActivityRegister> {
+		@Override
+		public void before(ActionEvent<VisitActivityRegister> event) {
+			beforeSaveRegister(event, true);
+		}
 
-					VisitActivityRegister oldEntity = orm.load(VisitActivityRegister.class, oldID);
-					VisitActivity oldActivity = oldEntity.getActivity();
-					int oldNum = oldEntity.getPersonNumber();
-					int oldRegNum = oldActivity.getRegisterPersonNumber();
-					oldRegNum -= oldNum;
-					oldActivity.setRegisterPersonNumber(oldRegNum);
+		public void after(ActionEvent<VisitActivityRegister> event) {
+			afterSaveRegister(event, true);
+		}
+	}
 
-					orm.save(oldActivity);
-				} else {
-					/*
-					 * 检查该手机号是否已经报过名；且活动时间尚未到来。
-					 */
+	/**
+	 * 报名成功后发送邀请函和验证码
+	 */
+	public static void afterSaveRegister(ActionEvent<VisitActivityRegister> event, boolean isAdmin) {
 
-					String tel = entity.getTel();
-					VisitActivityRegister oldEntity = orm.get(VisitActivityRegister.class, Expr.eq("tel", tel).addDesc("id"));
+		boolean debug = Demsy.me().isLocal();
+
+		SoftService soft = Cocit.getActionContext().getSoftService();
+		VisitActivityRegister entity = event.getEntity();
+
+		String tpl = null;
+		if (entity.getSex() == 0) {
+			tpl = soft.getConfig("sms.visit.invitation0", "");
+		} else if (entity.getSex() == 1) {
+			tpl = soft.getConfig("sms.visit.invitation1", "");
+		}
+		if (StringUtil.isNil(tpl)) {
+			tpl = soft.getConfig("sms.visit.invitation", "邀请函：尊敬的%s先生/女士：您好，感谢您对云南白药的关注。我们诚邀您参加于%s在云南白药产业园区举办的“走进云南白药”活动，届时欢迎您的到来。验证码：%s");
+		}
+		String content = String.format(tpl, entity.getName(), CocCalendar.format(entity.getActivity().getPlanDate(), "yyyy年MM月dd日HH:mm"), entity.getVerificationCode());
+
+		/**
+		 * 发送短信邀请函
+		 */
+		if (!debug) {
+			MTSmsEntity sms = MTSmsEntity.make("“走进云南白药”邀请函", entity.getTel(), content);
+			ActionHelper actionHelper = ActionHelper.make("0:MTSmsEntity:c");
+			actionHelper.entityManager.save(sms, "c");
+
+			Orm orm = event.getOrm();
+			List<VisitActivityRegister> members = orm.query(VisitActivityRegister.class, Expr.eq("teamID", entity.getTel()).and(Expr.eq("status", (byte) 0)).and(Expr.eq("activity", entity.getActivity())));
+			if (members != null && members.size() > 0) {
+				tpl = soft.getConfig("sms.visit.invitation3", "尊敬的%s：您好，您报名参加由%s组织的于%s在云南白药产业园区举办的“走进云南白药”活动，已经确认，届时欢迎您的到来。身份验证码：%s");
+				for (VisitActivityRegister member : members) {
+					content = String.format(tpl, member.getName(), entity.getName(), CocCalendar.format(entity.getActivity().getPlanDate(), "yyyy年MM月dd日HH:mm"), entity.getVerificationCode());
+
+					sms = MTSmsEntity.make("“走进云南白药”队员邀请函", member.getTel(), content);
+					actionHelper.entityManager.save(sms, "c");
+				}
+			}
+		}
+
+	}
+
+	public static void beforeSaveRegister(ActionEvent<VisitActivityRegister> event, boolean isAdmin) {
+		boolean debug = Demsy.me().isLocal();
+
+		synchronized (VisitActivity.class) {
+			Orm orm = event.getOrm();
+			VisitActivityRegister entity = event.getEntity();
+
+			Long oldID = entity.getId();
+			if (oldID != null && oldID > 0) {
+				/*
+				 * 修改报名：恢复原来的活动报名人数
+				 */
+
+				VisitActivityRegister oldEntity = orm.load(VisitActivityRegister.class, oldID);
+				VisitActivity oldActivity = oldEntity.getActivity();
+				int oldNum = oldEntity.getPersonNumber();
+				int oldRegNum = oldActivity.getRegisterPersonNumber();
+				oldRegNum -= oldNum;
+				oldActivity.setRegisterPersonNumber(oldRegNum);
+
+				orm.save(oldActivity);
+			} else {
+				/*
+				 * 检查该手机号是否已经报过名；且活动时间尚未到来。
+				 */
+
+				String tel = entity.getTel();
+				VisitActivityRegister oldEntity = orm.get(VisitActivityRegister.class, Expr.eq("tel", tel).addDesc("id"));
+				if (!isAdmin) {
 					if (oldEntity != null && oldEntity.getActivity().getPlanDate().getTime() > System.currentTimeMillis() && oldEntity.getStatus() == 0) {
 						throw new CocException("该手机号已经报名参加【%s】的活动，不允许重复报名！", oldEntity.getActivity().getName());
 					}
 				}
+			}
 
-				VisitActivity activity = entity.getActivity();
-				activity = orm.load(activity.getClass(), activity.getId());
+			VisitActivity activity = entity.getActivity();
+			activity = orm.load(activity.getClass(), activity.getId());
 
-				/*
-				 * 检查身份证号码
-				 */
-				if (!StringUtil.isNID(entity.getCode())) {
-					throw new CocException("非法身份证号码！");
+			/*
+			 * 检查身份证号码
+			 */
+			if (!StringUtil.isNID(entity.getCode()) && !StringUtil.isOtherNID(entity.getCode())) {
+				throw new CocException("非法身份证号码！");
+			}
+
+			/*
+			 * 检查报名有效期
+			 */
+			if (!isAdmin && activity.isExpired()) {
+				Date from = activity.getExpiredFrom();
+				Date to = activity.getExpiredTo();
+
+				throw new CocException("报名有效期从 %s 到 %s！", CocCalendar.formatDateTime(from), CocCalendar.formatDateTime(to));
+			}
+
+			/*
+			 * 计算已报名人数、计划人数
+			 */
+			Integer regNum = activity.getRegisterPersonNumber();
+			if (regNum == null)
+				regNum = 0;
+			Integer planNum = activity.getPlanPersonNumber();
+			if (planNum == null)
+				planNum = 0;
+
+			/*
+			 * 检查报名人数是否超额
+			 */
+			if (planNum > 0) {
+				int remainNum = planNum - regNum;// - num;
+
+				if (!isAdmin && remainNum <= 0) {
+					throw new CocException("[%s]名额已满！", activity.getName());
+				}
+			}
+
+			/*
+			 * 最后 检查短信验证码
+			 */
+			if (oldID == null || oldID == 0) {
+				String tel = entity.getTel();
+				String telVerifyCode = entity.getTelVerifyCode();
+				if (!isAdmin && !debug)
+					HttpUtil.checkSmsVerifyCode(Demsy.me().request(), tel, telVerifyCode, "手机验证码非法！");
+				else if (!StringUtil.isMobile(tel)) {
+					throw new CocException(tel + " 电话号码非法！");
 				}
 
-				/*
-				 * 检查报名有效期
-				 */
-				if (activity.isExpired()) {
-					Date from = activity.getExpiredFrom();
-					Date to = activity.getExpiredTo();
+			}
 
-					throw new CocException("报名有效期从 %s 到 %s！", CocCalendar.formatDateTime(from), CocCalendar.formatDateTime(to));
+			/*
+			 * 处理在线团队报名
+			 */
+			if (entity.getTeamRegType() == 2 && !StringUtil.isNil(entity.getTeamMembers())) {
+				VisitActivityRegister[] members = null;
+				try {
+					members = (VisitActivityRegister[]) Json.fromJson(Cls.forName(VisitActivityRegister.class.getName() + "[]"), entity.getTeamMembers());
+				} catch (Throwable e) {
+					Log.error(e.toString());
 				}
 
-				/*
-				 * 计算已报名人数、计划人数
-				 */
-				Integer regNum = activity.getRegisterPersonNumber();
-				if (regNum == null)
-					regNum = 0;
-				Integer planNum = activity.getPlanPersonNumber();
-				if (planNum == null)
-					planNum = 0;
+				if (members != null) {
+					int size = 0;
 
-				/*
-				 * 检查报名人数是否超额
-				 */
-				if (planNum > 0) {
-					int remainNum = planNum - regNum;// - num;
+					List<String> telCache = new ArrayList();
+					List<String> codeCache = new ArrayList();
+					telCache.add(entity.getTel().trim());
+					codeCache.add(entity.getCode().trim());
+					for (VisitActivityRegister member : members) {
+						member.setActivity(activity);
+						member.setTeamID(entity.getTel());
+						member.setOrderby(null);
 
-					if (remainNum <= 0) {
-						throw new CocException("[%s]名额已满！", activity.getName());
-					}
-				}
-
-				/*
-				 * 最后 检查短信验证码
-				 */
-				if (oldID == null || oldID == 0) {
-					String tel = entity.getTel();
-					String code = entity.getTelVerifyCode();
-					if (!debug)
-						HttpUtil.checkSmsVerifyCode(Demsy.me().request(), tel, code, "手机验证码非法！");
-				}
-
-				/*
-				 * 处理在线团队报名
-				 */
-				if (entity.getTeamRegType() == 2 && !StringUtil.isNil(entity.getTeamMembers())) {
-					VisitActivityRegister[] members = null;
-					try {
-						members = (VisitActivityRegister[]) Json.fromJson(Cls.forName(VisitActivityRegister.class.getName() + "[]"), entity.getTeamMembers());
-					} catch (Throwable e) {
-						Log.error(e.toString());
-					}
-
-					if (members != null) {
-						int size = 0;
-
-						List<String> telCache = new ArrayList();
-						List<String> codeCache = new ArrayList();
-						telCache.add(entity.getTel().trim());
-						codeCache.add(entity.getCode().trim());
-						for (VisitActivityRegister member : members) {
-							member.setActivity(activity);
-							member.setTeamID(entity.getTel());
-							member.setOrderby(null);
-
-							if (member.getId() == 0) {
-								member.setId(null);
-							}
-
-							if (member.getStatus() == 9) {// 9: 取消报名
-								if (member.getId() == null) {
-									continue;
-								}
-							} else {
-
-								// 检查手机号码、身份证号码不能重复
-								if (codeCache.contains(member.getCode().trim())) {
-									throw new CocException(member.getName() + " 身份证号码重复！");
-								} else {
-									codeCache.add(member.getCode().trim());
-								}
-								if (telCache.contains(member.getTel().trim())) {
-									throw new CocException(member.getName() + " 手机号码重复！");
-								} else {
-									telCache.add(member.getTel().trim());
-								}
-
-								// 验证身份证号码和手机号码
-								if (!StringUtil.isNID(member.getCode())) {
-									throw new CocException(member.getName() + " 的身份证号码非法！");
-								}
-								if (!StringUtil.isMobile(member.getTel())) {
-									throw new CocException(member.getName() + " 的电话号码非法！");
-								}
-							}
-
-							if (member.getStatus() == 0) {
-								size++;
-							}
-							orm.save(member);
+						if (member.getId() == 0) {
+							member.setId(null);
 						}
 
-						entity.setPersonNumber(size + 1);
-					}
-				}
-				/*
-				 * 处理Excel上传团队名单
-				 */
-				else if (entity.getTeamRegType() == 1 && !StringUtil.isNil(entity.getTeamXlsFile())) {
-					List<String[]> xlsRows = null;
-					try {
-						xlsRows = ExcelUtil.parseExcel(new File(Demsy.contextDir + entity.getTeamXlsFile()));
-					} catch (Throwable e) {
-						Log.error(e.toString());
-					}
-
-					if (xlsRows != null) {
-
-						// 获取已经存在的报名名单
-						List<VisitActivityRegister> members = orm.query(VisitActivityRegister.class, Expr.eq("teamID", entity.getTel()).and(Expr.eq("activity", activity)));
-						Map<String, VisitActivityRegister> telMap = new HashMap();
-						for (VisitActivityRegister m : members) {
-							telMap.put(m.getTel().trim(), m);
-						}
-
-						// 计数当前报名人数
-						int size = 0;
-
-						// 解析Excel名单
-						List<String> telCache = new ArrayList();
-						List<String> codeCache = new ArrayList();
-						for (int i = 2; i < xlsRows.size(); i++) {
-							String[] row = xlsRows.get(i);
-							int rowID = i + 1;
-
-							// 检查“姓名、性别、身份证号码、手机号码”必填
-							if (StringUtil.isNil(row[0])) {
+						if (member.getStatus() == 9) {// 9: 取消报名
+							if (member.getId() == null) {
 								continue;
 							}
-							if (StringUtil.isNil(row[1])) {
-								throw new CocException("第 " + rowID + " 行性别必须填写！");
-							}
-							if (StringUtil.isNil(row[2])) {
-								throw new CocException("第 " + rowID + " 行身份证号码必须填写！");
-							} else if (row[2].startsWith("'")) {
-								row[2] = row[2].substring(1);
-							}
-							if (StringUtil.isNil(row[3])) {
-								throw new CocException("第 " + rowID + " 行手机号码必须填写！");
-							} else if (row[3].startsWith("'")) {
-								row[3] = row[3].substring(1);
-							}
+						} else {
 
 							// 检查手机号码、身份证号码不能重复
-							if (codeCache.contains(row[2].trim())) {
-								throw new CocException("第 " + rowID + " 行身份证号码重复！");
+							if (codeCache.contains(member.getCode().trim())) {
+								throw new CocException(member.getName() + " 身份证号码重复！");
 							} else {
-								codeCache.add(row[2].trim());
+								codeCache.add(member.getCode().trim());
 							}
-							if (telCache.contains(row[3].trim())) {
-								throw new CocException("第 " + rowID + " 行手机号码重复！");
+							if (telCache.contains(member.getTel().trim())) {
+								throw new CocException(member.getName() + " 手机号码重复！");
 							} else {
-								telCache.add(row[3].trim());
-							}
-
-							// 修改或创建报名对象
-							VisitActivityRegister obj = telMap.get(row[3].trim());
-							if (obj == null) {
-								obj = new VisitActivityRegister();
-							} else {
-								obj.setStatus((byte) 0);
-							}
-
-							// 设置报名对象字段值
-							obj.setName(row[0].trim());
-							if (row[1].trim().equals("女"))
-								obj.setSex((byte) 1);
-							else if (row[1].trim().equals("男"))
-								obj.setSex((byte) 0);
-							else
-								throw new CocException("第 " + rowID + " 行性别非法！性别只能是‘男’或‘女’");
-							obj.setCode(row[2].trim());
-							obj.setTel(row[3].trim());
-							if (row.length > 4)
-								obj.setQq(row[4]);
-							if (row.length > 5)
-								obj.setEmail(row[5]);
-							if (row.length > 6)
-								obj.setUnit(row[6]);
-							if (row.length > 7)
-								obj.setCarCode(row[7]);
-
-							obj.setActivity(activity);
-							obj.setTeamID(entity.getTel());
-
-							// 忽略报名者所在的 excel 行
-							if (obj.getCode().trim().equalsIgnoreCase(entity.getCode().trim()) || obj.getTel().trim().equals(entity.getTel().trim())) {
-								continue;
+								telCache.add(member.getTel().trim());
 							}
 
 							// 验证身份证号码和手机号码
-							if (!StringUtil.isNID(obj.getCode())) {
-								throw new CocException(obj.getName() + " 的身份证号码非法！");
+							if (!StringUtil.isNID(member.getCode()) && !StringUtil.isOtherNID(member.getCode())) {
+								throw new CocException(member.getName() + " 的身份证号码非法！");
 							}
-							if (!StringUtil.isMobile(obj.getTel())) {
-								throw new CocException(obj.getName() + " 的电话号码非法！");
+							if (!StringUtil.isMobile(member.getTel())) {
+								throw new CocException(member.getName() + " 的电话号码非法！");
 							}
+						}
 
+						if (member.getStatus() == 0) {
 							size++;
-							orm.save(obj);
+						}
+						orm.save(member);
+					}
+
+					entity.setPersonNumber(size + 1);
+				}
+			}
+			/*
+			 * 处理Excel上传团队名单
+			 */
+			else if (entity.getTeamRegType() == 1 && !StringUtil.isNil(entity.getTeamXlsFile())) {
+				List<String[]> xlsRows = null;
+				try {
+					xlsRows = ExcelUtil.parseExcel(new File(Demsy.contextDir + entity.getTeamXlsFile()));
+				} catch (Throwable e) {
+					Log.error(e.toString());
+				}
+
+				if (xlsRows != null) {
+
+					// 获取已经存在的报名名单
+					List<VisitActivityRegister> members = orm.query(VisitActivityRegister.class, Expr.eq("teamID", entity.getTel()).and(Expr.eq("activity", activity)));
+					Map<String, VisitActivityRegister> telMap = new HashMap();
+					for (VisitActivityRegister m : members) {
+						telMap.put(m.getTel().trim(), m);
+					}
+
+					// 计数当前报名人数
+					int size = 0;
+
+					// 解析Excel名单
+					List<String> telCache = new ArrayList();
+					List<String> codeCache = new ArrayList();
+					for (int i = 2; i < xlsRows.size(); i++) {
+						String[] row = xlsRows.get(i);
+						int rowID = i + 1;
+
+						// 检查“姓名、性别、身份证号码、手机号码”必填
+						if (StringUtil.isNil(row[0])) {
+							continue;
+						}
+						if (StringUtil.isNil(row[1])) {
+							throw new CocException("第 " + rowID + " 行性别必须填写！");
+						}
+						if (StringUtil.isNil(row[2])) {
+							throw new CocException("第 " + rowID + " 行身份证号码必须填写！");
+						} else if (row[2].startsWith("'")) {
+							row[2] = row[2].substring(1);
+						}
+						if (StringUtil.isNil(row[3])) {
+							throw new CocException("第 " + rowID + " 行手机号码必须填写！");
+						} else if (row[3].startsWith("'")) {
+							row[3] = row[3].substring(1);
 						}
 
-						entity.setPersonNumber(size + 1);
+						// 检查手机号码、身份证号码不能重复
+						if (codeCache.contains(row[2].trim())) {
+							throw new CocException("第 " + rowID + " 行身份证号码重复！");
+						} else {
+							codeCache.add(row[2].trim());
+						}
+						if (telCache.contains(row[3].trim())) {
+							throw new CocException("第 " + rowID + " 行手机号码重复！");
+						} else {
+							telCache.add(row[3].trim());
+						}
 
-						// 原来的报名对象不在当前Excel中则取消
-						for (VisitActivityRegister m : members) {
-							if (!telCache.contains(m.getTel())) {
-								if (m.getStatus() != (byte) 9) {
-									m.setStatus((byte) 9);
-									orm.save(m);
-								}
+						// 修改或创建报名对象
+						VisitActivityRegister obj = telMap.get(row[3].trim());
+						if (obj == null) {
+							obj = new VisitActivityRegister();
+						} else {
+							obj.setStatus((byte) 0);
+						}
+
+						// 设置报名对象字段值
+						obj.setName(row[0].trim());
+						if (row[1].trim().equals("女"))
+							obj.setSex((byte) 1);
+						else if (row[1].trim().equals("男"))
+							obj.setSex((byte) 0);
+						else
+							throw new CocException("第 " + rowID + " 行性别非法！性别只能是‘男’或‘女’");
+						obj.setCode(row[2].trim());
+						obj.setTel(row[3].trim());
+						if (row.length > 4)
+							obj.setQq(row[4]);
+						if (row.length > 5)
+							obj.setEmail(row[5]);
+						if (row.length > 6)
+							obj.setUnit(row[6]);
+						if (row.length > 7)
+							obj.setCarCode(row[7]);
+
+						obj.setActivity(activity);
+						obj.setTeamID(entity.getTel());
+
+						// 忽略报名者所在的 excel 行
+						if (obj.getCode().trim().equalsIgnoreCase(entity.getCode().trim()) || obj.getTel().trim().equals(entity.getTel().trim())) {
+							continue;
+						}
+
+						// 验证身份证号码和手机号码
+						if (!StringUtil.isNID(obj.getCode()) && !StringUtil.isOtherNID(obj.getCode())) {
+							throw new CocException(obj.getName() + " 的身份证号码非法！");
+						}
+						if (!StringUtil.isMobile(obj.getTel())) {
+							throw new CocException(obj.getName() + " 的电话号码非法！");
+						}
+
+						size++;
+						orm.save(obj);
+					}
+
+					entity.setPersonNumber(size + 1);
+
+					// 原来的报名对象不在当前Excel中则取消
+					for (VisitActivityRegister m : members) {
+						if (!telCache.contains(m.getTel())) {
+							if (m.getStatus() != (byte) 9) {
+								m.setStatus((byte) 9);
+								orm.save(m);
 							}
 						}
 					}
 				}
-
-				/*
-				 * 将团队名单JSON对象保存到字段中
-				 */
-				List<VisitActivityRegister> members = orm.query(VisitActivityRegister.class, Expr.eq("teamID", entity.getTel()).and(Expr.eq("activity", activity)));
-				StringBuffer json = new StringBuffer("[");
-				int index = 0;
-				for (VisitActivityRegister member : members) {
-					if (index != 0)
-						json.append(",");
-					json.append(String.format("{\"orderby\":%s,\"id\":%s,\"name\":%s,\"code\":%s,\"sex\":%s,\"tel\":%s,\"qq\":%s,\"email\":%s,\"unit\":%s,\"carCode\":%s,\"status\":%s}"//
-							, index, member.getId(), Json.toJson(member.getName()), Json.toJson(StringUtil.trim(member.getCode())),//
-							member.getSex(), Json.toJson(StringUtil.trim(member.getTel())), Json.toJson(StringUtil.trim(member.getQq())), //
-							Json.toJson(StringUtil.trim(member.getEmail())), Json.toJson(StringUtil.trim(member.getUnit())),//
-							Json.toJson(StringUtil.trim(member.getCarCode())), member.getStatus()));
-
-					index++;
-				}
-				json.append("]");
-				// System.out.println(json);
-				entity.setTeamMembers(json.toString());
-
-				/*
-				 * 计算报名人数
-				 */
-				Integer num = entity.getPersonNumber();
-				if (num == null || num < 1) {
-					num = 1;
-					entity.setPersonNumber(1);
-				}
-
-				/*
-				 * 修改计划中的报名人数
-				 */
-				if (entity.getStatus() != 9) {// 9: 取消报名
-					regNum += num;
-					activity.setRegisterPersonNumber(regNum);
-					entity.setActivity(activity);
-				}
-
-				/*
-				 * 生成邀请函验证码
-				 */
-				Date date = CocCalendar.now().get();
-				Integer time = new Long(date.getTime()).intValue();
-				entity.setVerificationCode(Integer.toHexString(time).toUpperCase());
-
-				/*
-				 * 保存修改后的活动实体
-				 */
-				orm.save(activity);
 			}
-		}
 
-		/**
-		 * 报名成功后发送邀请函和验证码
-		 */
-		public void after(ActionEvent<VisitActivityRegister> event) {
-			boolean debug = Demsy.me().isLocal();
-
-			SoftService soft = Cocit.getActionContext().getSoftService();
-			VisitActivityRegister entity = event.getEntity();
-
-			String tpl = null;
-			if (entity.getSex() == 0) {
-				tpl = soft.getConfig("sms.visit.invitation0", "");
-			} else if (entity.getSex() == 1) {
-				tpl = soft.getConfig("sms.visit.invitation1", "");
-			}
-			if (StringUtil.isNil(tpl)) {
-				tpl = soft.getConfig("sms.visit.invitation", "邀请函：尊敬的%s先生/女士：您好，感谢您对云南白药的关注。我们诚邀您参加于%s在云南白药产业园区举办的“走进云南白药”活动，届时欢迎您的到来。验证码：%s");
-			}
-			String content = String.format(tpl, entity.getName(), CocCalendar.format(entity.getActivity().getPlanDate(), "yyyy年MM月dd日HH:mm"), entity.getVerificationCode());
-
-			/**
-			 * 发送短信邀请函
+			/*
+			 * 将团队名单JSON对象保存到字段中
 			 */
-			if (!debug) {
-				MTSmsEntity sms = MTSmsEntity.make("“走进云南白药”邀请函", entity.getTel(), content);
-				ActionHelper actionHelper = ActionHelper.make("0:MTSmsEntity:c");
-				actionHelper.entityManager.save(sms, "c");
+			List<VisitActivityRegister> members = orm.query(VisitActivityRegister.class, Expr.eq("teamID", entity.getTel()).and(Expr.eq("activity", activity)));
+			StringBuffer json = new StringBuffer("[");
+			int index = 0;
+			for (VisitActivityRegister member : members) {
+				if (index != 0)
+					json.append(",");
+				json.append(String.format("{\"orderby\":%s,\"id\":%s,\"name\":%s,\"code\":%s,\"sex\":%s,\"tel\":%s,\"qq\":%s,\"email\":%s,\"unit\":%s,\"carCode\":%s,\"status\":%s}"//
+						, index, member.getId(), Json.toJson(member.getName()), Json.toJson(StringUtil.trim(member.getCode())),//
+						member.getSex(), Json.toJson(StringUtil.trim(member.getTel())), Json.toJson(StringUtil.trim(member.getQq())), //
+						Json.toJson(StringUtil.trim(member.getEmail())), Json.toJson(StringUtil.trim(member.getUnit())),//
+						Json.toJson(StringUtil.trim(member.getCarCode())), member.getStatus()));
 
-				Orm orm = event.getOrm();
-				List<VisitActivityRegister> members = orm.query(VisitActivityRegister.class, Expr.eq("teamID", entity.getTel()).and(Expr.eq("status", (byte) 0)).and(Expr.eq("activity", entity.getActivity())));
-				if (members != null && members.size() > 0) {
-					tpl = soft.getConfig("sms.visit.invitation3", "尊敬的%s：您好，您报名参加由%s组织的于%s在云南白药产业园区举办的“走进云南白药”活动，已经确认，届时欢迎您的到来。身份验证码：%s");
-					for (VisitActivityRegister member : members) {
-						content = String.format(tpl, member.getName(), entity.getName(), CocCalendar.format(entity.getActivity().getPlanDate(), "yyyy年MM月dd日HH:mm"), entity.getVerificationCode());
+				index++;
+			}
+			json.append("]");
+			// System.out.println(json);
+			entity.setTeamMembers(json.toString());
 
-						sms = MTSmsEntity.make("“走进云南白药”队员邀请函", member.getTel(), content);
-						actionHelper.entityManager.save(sms, "c");
-					}
-				}
+			/*
+			 * 计算报名人数
+			 */
+			Integer num = entity.getPersonNumber();
+			if (num == null || num < 1) {
+				num = 1;
+				entity.setPersonNumber(1);
 			}
 
+			/*
+			 * 修改计划中的报名人数
+			 */
+			if (entity.getStatus() != 9) {// 9: 取消报名
+				regNum += num;
+				activity.setRegisterPersonNumber(regNum);
+				entity.setActivity(activity);
+			}
+
+			/*
+			 * 生成邀请函验证码
+			 */
+			Date date = CocCalendar.now().get();
+			Integer time = new Long(date.getTime()).intValue();
+			entity.setVerificationCode(Integer.toHexString(time).toUpperCase());
+
+			/*
+			 * 保存修改后的活动实体
+			 */
+			orm.save(activity);
 		}
 	}
 }

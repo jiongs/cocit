@@ -32,13 +32,14 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 , fields = { @CocField(name = "系统名称", property = "name", mode = "c:M e:M")//
 		, @CocField(name = "系统编号", property = "code") //
 		, @CocField(name = "路径前缀", property = "pathPrefix", gridField = true) //
-		, @CocField(name = "人工顺序", property = "orderby") //
+		, @CocField(name = "显示顺序", property = "orderby") //
 		, @CocField(name = "系统分类", property = "catalog", groupBy = true, fkTable = BIZSYS_BZUDF_CATALOG) //
 }), @CocGroup(name = "扩展信息", code = "ext"//
 , fields = { @CocField(name = "窗体模版", property = "template", gridField = false) //
 		, @CocField(name = "映射实体类", property = "mappingClass", gridField = false, mode = "*:P") //
 		, @CocField(name = "实体类扩展", property = "extendClass", gridField = false) //
 		, @CocField(name = "映射数据表", property = "mappingTable", gridField = false, mode = "*:P") //
+		, @CocField(name = "排序表达式", property = "sortExpr") //
 		, @CocField(name = "系统描述", property = "desc") //
 		, @CocField(property = "layout") //
 		, @CocField(name = "停用状态", property = "disabled", disabledNavi = true, options = "1:停用,0:启用") //
@@ -61,6 +62,10 @@ public class SFTSystem extends SFTBizComponent implements IBizSystem, TableEntit
 
 	@CocField(name = "表单布局", options = "0:列表结构,1:纵向TAB结构")
 	protected byte layout;
+
+	@Column(length = 512)
+	@CocField(name = "排序表达式", desc = "【grid:updated desc, tree:name asc】表示在GRID中默认按updated倒排序，在导航树中按name正排序。")
+	protected String sortExpr;
 
 	/*
 	 * 老系统字段
@@ -156,6 +161,14 @@ public class SFTSystem extends SFTBizComponent implements IBizSystem, TableEntit
 
 	public void setPathPrefix(String pathPrefix) {
 		this.set("pathPrefix", pathPrefix);
+	}
+
+	public String getSortExpr() {
+		return sortExpr;
+	}
+
+	public void setSortExpr(String orderFields) {
+		this.sortExpr = orderFields;
 	}
 
 }

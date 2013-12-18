@@ -31,7 +31,7 @@ public class JCocitEntityModuleRender extends WidgetRender<EntityModuleUI> {
 		/*
 		 * 调试 CSS
 		 */
-		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.icon.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
+		 print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.icon.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.searchbox.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.panel.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 		// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.tree.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);

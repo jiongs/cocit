@@ -35,18 +35,17 @@
 <!--[if lt IE 7]>
         <link href="<%=model.getContextPath()%>/visit/css/style2_ie6.css" rel="stylesheet" type="text/css" media="screen" />
 <![endif]-->
-
 <script src="/jCocit/common/jquery.min.js" type="text/javascript"></script>
 <script src="/jCocit/js/src/jCocit.web.KandyTabs.js" type="text/javascript"></script>
 <script src="<%=model.getContextPath()%>/visit/js/visit.js" type="text/javascript"></script>
-<style type="">
-#slideimgs { clear: both; margin: 0 0 20px!important;}
-#slideimgs .tabtitle { display: block;}
-#slideimgs .tabcont { position:relative; zoom:1 }
-#slideimgs .tabcont p { padding: 10px; position:absolute; bottom:0; left:0; width:100%; background:#000; color:#FFF; text-indent:10px; font-size:14px }
-
+<style rel="stylesheet" type="text/css" media="screen">
+#slideimgs.kandySlide { clear: both; margin: 0 0 20px!important;}
+#slideimgs.kandySlide .tabtitle { position: absolute; display: block; bottom: 2px;right:2px;}
+#slideimgs.kandySlide .tabcont { position: absolute; text-valign:top; left:0;top:0;}
+#slideimgs.kandySlide .tabcont img{valign: top;vertical-align: top;padding: 0; margin: 0;top:0;left:0;}
+#slideimgs.kandySlide .tabcont div{padding: 5px 0 0 2px;font-weight: bold;background:#ffffff; color:#000; text-indent:10px; font-size:14px}
 </style>
-	<script type="">
+	<script type="text/javascript">
 $(document).ready(function(){
 
 	$("#slideimgs").KandyTabs({
@@ -156,9 +155,9 @@ $(document).ready(function(){
 						<td valign="top">
 
 							<div style="margin-top: 5px; background: #c8ebff; border: 0px solid #cccccc; width: 714px; color: #01b0f0; font-size: 18px; padding:  2px 0 2px 10px;"><%=catalog.getName() %></div>
-							<div style="border: 2px solid #cccccc; width: 720px; height: 480px;">
+							<div style="border: 2px solid #cccccc; width: 720px; height: 480px;padding:0;margin:0;">
 
-											<ol id="slideimgs">
+											<ol id="slideimgs" style="padding:0;margin:0;">
 					                        	<%
 					                        		String contextDir = Cocit.getContextDir();
 					                        		String srcPic="", bigPic="", href="", detailImg="", thumbPic="", id="", title="",longdesc="";
@@ -168,7 +167,7 @@ $(document).ready(function(){
 					                        			bigPic = ImageUtil.makeThumbImage(contextDir, srcPic, 720, 480);
 					                        			title = obj.getName();
 					                        	%>
-	                        					<li><img width="720" height="480" src="<%=bigPic %>" /><p><%=title %></p></li>
+	                        					<li style="padding:0;margin:0;"><img width="720" height="480" src="<%=bigPic %>" /><div><%=title %></div></li>
 	                            				<% }// end: for %>
 											</ol>
 

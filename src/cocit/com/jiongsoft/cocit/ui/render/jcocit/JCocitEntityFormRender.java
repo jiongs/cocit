@@ -124,7 +124,7 @@ public class JCocitEntityFormRender extends WidgetRender<EntityForm> {
 
 					// M：字段必填
 					if (mode.equals("M")) {
-						print(sb, "<span class=\"icon-mode-%s\">&nbsp;&nbsp;&nbsp;&nbsp;</span>", mode);
+						print(sb, "<span class=\"icon-mode-%s\">&nbsp;&nbsp;</span>", mode);
 					}
 				}
 

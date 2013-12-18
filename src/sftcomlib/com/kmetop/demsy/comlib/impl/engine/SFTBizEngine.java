@@ -305,6 +305,7 @@ public class SFTBizEngine extends BizEngine {
 		system.setName(sysann.name());
 
 		system.setCode(code);
+		system.setSortExpr(sysann.sortExpr());
 		system.setDesc(sysann.desc());
 		system.setLayout(sysann.layout());
 		system.setOrderby(sysOrder);

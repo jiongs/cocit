@@ -185,7 +185,7 @@
         </tr>
     </table>
     {if $obj.otcDrug == 1}
-    <div style="color: red;padding: 0px 30px 15px 30px;display:none;">药监部门提示：如发现本网站有任何直接或变相销售处方药行为，请保留证据，拨打12331举报，举报查实给予奖励。<div>
+    <div style="color: red;padding: 0px 30px 15px 30px;display:none;">药监部门提示：如发现本网站有任何直接或变相销售处方药行为，请保留证据，拨打12331举报，举报查实给予奖励。</div>
     {/if}
     <dl class="tabs">
         <dt>

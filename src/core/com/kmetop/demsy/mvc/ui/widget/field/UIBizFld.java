@@ -71,6 +71,8 @@ public abstract class UIBizFld extends UIWidget {
 	private String comboboxUrl;
 
 	private String keyProp = "id";
+	
+	private String searchType="text";
 
 	public UIBizFld(Map ctx, Serializable id) {
 		super(ctx, id);
@@ -280,5 +282,13 @@ public abstract class UIBizFld extends UIWidget {
 
 	public void setKeyProp(String keyProp) {
 		this.keyProp = keyProp;
+	}
+
+	public String getSearchType() {
+		return searchType;
+	}
+
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
 	}
 }

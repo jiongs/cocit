@@ -115,6 +115,7 @@ public class UiEngine implements IUiEngine, MvcConst {
 	protected Map<Long, IStyle> styleCache;
 
 	protected List<IUIViewComponent> viewComponentList;
+
 	protected Map<Long, IUIViewComponent> viewTypeIdCache;
 
 	protected Map<String, IUIViewController> controllerCache;
@@ -352,8 +353,11 @@ public class UiEngine implements IUiEngine, MvcConst {
 
 				if (bizEngine.isNumber(field) && options.length == 0) {
 					col.setAlign(Align.RIGHT);
+					col.setSearchType("number");
 				} else if (bizEngine.isBoolean(field)) {
 					col.setAlign(Align.CENTER);
+				} else if (bizEngine.isDate(field)) {
+					col.setSearchType("date");
 				}
 
 				// 计算字段宽度
@@ -612,8 +616,7 @@ public class UiEngine implements IUiEngine, MvcConst {
 		if (bizEngine.isBoolean(bzField)) {// boolean
 			uiField = new UIBoolFld(null, bzField.getId()).setOptionNode(bizEngine.makeOptionNodes(bzField, mode, data, idField));
 		} else if (bizEngine.isUpload(bzField)) {// upload
-			uiField = new UIUploadFld(null, bzField.getId()).setUploadUrl(contextPath(URL_UPLOAD, module.getId(), bzField.getId())).setUploadType(bzField.getUploadType())
-					.setContext(form.getContext());
+			uiField = new UIUploadFld(null, bzField.getId()).setUploadUrl(contextPath(URL_UPLOAD, module.getId(), bzField.getId())).setUploadType(bzField.getUploadType()).setContext(form.getContext());
 			isUpload = true;
 		} else if (bizEngine.isRichText(bzField)) {// richtext
 			uiField = new UIRichTextFld(null, bzField.getId());
@@ -690,8 +693,7 @@ public class UiEngine implements IUiEngine, MvcConst {
 		} else if (bizEngine.isFieldRef(bzField)) {// iglore field refrence
 			return null;
 		} else if (bizEngine.isSubSystem(bzField)) {
-			uiField = new UISubSystemFld(null, bzField.getId()).setUploadUrl(contextPath(URL_UPLOAD, module.getId(), bzField.getId())).setUploadType(bzField.getUploadType())
-					.setContext(form.getContext());
+			uiField = new UISubSystemFld(null, bzField.getId()).setUploadUrl(contextPath(URL_UPLOAD, module.getId(), bzField.getId())).setUploadType(bzField.getUploadType()).setContext(form.getContext());
 			UISubSystemFld uiSubSysFld = (UISubSystemFld) uiField;
 
 			IBizSystem refSystem = bzField.getRefrenceSystem();
@@ -1105,8 +1107,8 @@ public class UiEngine implements IUiEngine, MvcConst {
 		return this.makeBlockViewWithChilren(cachedBlockViews, cachedBlocks, null, pageBlock, dynamicModuleID, dynamicDataID, pathModule, pathData);
 	}
 
-	private UIBlockViewModel makeBlockViewWithChilren(Map<Long, UIBlockViewModel> cachedBlockViews, Map<Long, IPageBlock> cachedBlocks, IPageBlock defaultParentBlock, IPageBlock pageBlock,
-			Long dynamicModuleID, Long dynamicDataID, IModule pathModule, Object pathData) {
+	private UIBlockViewModel makeBlockViewWithChilren(Map<Long, UIBlockViewModel> cachedBlockViews, Map<Long, IPageBlock> cachedBlocks, IPageBlock defaultParentBlock, IPageBlock pageBlock, Long dynamicModuleID, Long dynamicDataID,
+			IModule pathModule, Object pathData) {
 
 		UIBlockViewModel ret = this.makeBlockViewWithParent(null, cachedBlockViews, cachedBlocks, null, pageBlock, dynamicModuleID, dynamicDataID, pathModule, pathData);
 
@@ -1132,8 +1134,7 @@ public class UiEngine implements IUiEngine, MvcConst {
 	 * @param cachedBlocks
 	 *            板块CACHE，解析的板块及上级板块必须在板块缓存中存在。
 	 * @param defaultParentBlock
-	 *            默认上级视图，通常情况下上级视图是通过block.getParent自动获取的；但对于页面引用型板块而言，
-	 *            上级视图的默认视图是引用板块；对于非页面引用型板块而言，默认视图都将是null。
+	 *            默认上级视图，通常情况下上级视图是通过block.getParent自动获取的；但对于页面引用型板块而言， 上级视图的默认视图是引用板块；对于非页面引用型板块而言，默认视图都将是null。
 	 * @param block
 	 *            带解析的板块
 	 * @param dynamicModuleID
@@ -1146,8 +1147,8 @@ public class UiEngine implements IUiEngine, MvcConst {
 	 *            URL路径中指定的数据对象
 	 * @return
 	 */
-	private UIBlockViewModel makeBlockViewWithParent(UIPageView pageView, Map<Long, UIBlockViewModel> cachedBlockViews, Map<Long, IPageBlock> cachedBlocks, IPageBlock defaultParentBlock,
-			IPageBlock block, Long dynamicModuleID, Long dynamicDataID, IModule pathModule, Object pathData) {
+	private UIBlockViewModel makeBlockViewWithParent(UIPageView pageView, Map<Long, UIBlockViewModel> cachedBlockViews, Map<Long, IPageBlock> cachedBlocks, IPageBlock defaultParentBlock, IPageBlock block, Long dynamicModuleID, Long dynamicDataID,
+			IModule pathModule, Object pathData) {
 
 		UIBlockViewModel blockView = cachedBlockViews.get(block.getId());
 

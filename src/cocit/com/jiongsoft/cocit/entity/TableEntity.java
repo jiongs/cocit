@@ -7,5 +7,14 @@ package com.jiongsoft.cocit.entity;
  * 
  */
 public interface TableEntity extends CoEntity {
-
+	/**
+	 * 获取排序字段。数据格式：
+	 * <p>
+	 * grid:updated desc, tree:name asc
+	 * <p>
+	 * 含义：在GRID中默认按updated倒排序，在导航树中按name正排序。
+	 * 
+	 * @return
+	 */
+	public String getSortExpr();
 }

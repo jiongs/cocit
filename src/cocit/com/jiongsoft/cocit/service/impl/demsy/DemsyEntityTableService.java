@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import com.jiongsoft.cocit.entity.TableEntity;
+import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.service.FieldGroupService;
 import com.jiongsoft.cocit.service.FieldService;
 import com.jiongsoft.cocit.service.OperationService;
@@ -258,6 +260,36 @@ public class DemsyEntityTableService implements TableService {
 		return tree;
 	}
 
+	private CndExpr makeSortExpr(TableEntity table, String type) {
+		CndExpr ret = null;
+
+		String sortExpr = table.getSortExpr();
+		String[] exprs = StringUtil.toArray(sortExpr, ",;，；\t\r\n");
+
+		for (String expr : exprs) {
+			String[] arr = StringUtil.toArray(expr, ":");
+			if (arr.length > 1) {
+				if (!type.equalsIgnoreCase(arr[0].trim()))
+					continue;
+
+				String treeExpr = arr[1];
+				int idx = treeExpr.indexOf(" ");
+				if (idx > -1) {
+					String sortFld = treeExpr.substring(0, idx);
+					String sortType = treeExpr.substring(idx + 1);
+					if ("DESC".equalsIgnoreCase(sortType.trim()))
+						ret = CndExpr.desc(sortFld.trim());
+					else
+						ret = CndExpr.asc(sortFld.trim());
+				} else {
+					ret = CndExpr.asc(treeExpr.trim());
+				}
+			}
+		}
+
+		return ret;
+	}
+
 	private boolean makeNodes(Tree tree, Node node, AbstractSystemData field) {
 		BizEngine bizEngine = (BizEngine) Demsy.bizEngine;
 
@@ -277,7 +309,7 @@ public class DemsyEntityTableService implements TableService {
 			// if (orm.count(fkSystemType) > 50) {
 			// return false;
 			// }
-			List fkSystemRecords = orm.query(fkSystemType);
+			List fkSystemRecords = orm.query(fkSystemType, makeSortExpr((TableEntity) fkSystem, "tree"));
 
 			// 数据自身树
 			String selfTreeProp = null;

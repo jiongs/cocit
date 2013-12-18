@@ -36,7 +36,7 @@ import com.kmetop.demsy.orm.ann.Prop;
 //
 		@CocField(property = "parent", gridOrder = 3) //
 		, @CocField(name = "栏目名称", property = "name", mode = "*:N v:S c:M e:M", tostring = true, gridOrder = 1)//
-		, @CocField(name = "栏目编码", property = "code", mode = "*:N v:S c:E", gridOrder = 2, desc = "编码规则：年月加两位序号(yyyyMM-xx)，如：“201309-01,201309-02”") //
+		, @CocField(name = "栏目编码", property = "code", mode = "*:N v:S c:M", gridOrder = 2, desc = "编码规则：年月加两位序号(yyyyMM-xx)，如：“201309-01,201309-02”") //
 		, @CocField(property = "type", gridOrder = 4) //
 		, @CocField(property = "refrence") //
 		, @CocField(property = "infoType") //

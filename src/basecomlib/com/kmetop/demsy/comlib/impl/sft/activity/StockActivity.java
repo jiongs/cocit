@@ -38,6 +38,7 @@ import com.kmetop.demsy.comlib.web.IActivityEntry;
 		, @CocField(property = "tel", privacy = true, gridOrder = 2) //
 		, @CocField(property = "postcode") //
 		, @CocField(property = "address", gridOrder = 3) //
+		, @CocField(name = "备注", property = "desc", gridOrder = 4, mode = "c:E v:S *:N") //
 }), @CocGroup(name = "兑奖信息", code = "prize"//
 , fields = { @CocField(property = "resultOrder", gridOrder = 5) //
 		, @CocField(property = "guessOffset") //

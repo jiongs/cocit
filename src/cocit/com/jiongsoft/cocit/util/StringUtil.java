@@ -37,6 +37,35 @@ public abstract class StringUtil {
 	}
 
 	/**
+	 * 检查其他身份ID
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public static boolean isOtherNID(String id) {
+		if (isNil(id))
+			return false;
+
+		int len = id.trim().length();
+
+		// 护照号码
+		if (len >= 7 && len <= 10) {
+//			char ch = id.trim().toUpperCase().charAt(0);
+//			if (ch >= 'A' && ch <= 'Z') {
+//				if (len <= 8)
+//					return true;
+//			} else {
+//				if (len == 10)
+//					return true;
+//			}
+			
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * 检查身份证号码
 	 * 
 	 * @param id_number
