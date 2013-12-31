@@ -177,9 +177,9 @@ public abstract class UrlAPI {
 	 */
 	public static final String DO_EXPORT_XLS_ON_EXPR = URL_NS + "/doExportXlsOnExpr/*";
 
-	// public static final String GET_IMPORT_XLS_FORM = URL_NS + "/getImportXlsForm/*";
-	//
-	// public static final String DO_IMPORT_XLS_ON_EXPR = URL_NS + "/doImportXlsOnExpr/*";
+	public static final String GET_IMPORT_XLS_FORM = URL_NS + "/getImportXlsForm/*";
+
+	public static final String DO_IMPORT_XLS_ON_EXPR = URL_NS + "/doImportXlsOnExpr/*";
 
 	/**
 	 * 获取手机验证码

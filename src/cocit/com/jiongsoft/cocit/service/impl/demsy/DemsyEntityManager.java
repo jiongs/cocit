@@ -41,7 +41,7 @@ public class DemsyEntityManager implements EntityManager {
 
 	@Override
 	public int save(Object entity, String opMode) {
-		tableService.validate(opMode, entity);
+		tableService.validateEntityData(opMode, entity);
 
 		return bizManager.save(entity, opMode);
 	}

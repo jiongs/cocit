@@ -23,6 +23,9 @@
 			case 107: // export excel
 				doExportXls(opts);
 				break;
+			case 108: // import excel
+				doImportXls(opts);
+				break;
 			case 204:// synchronized exec task
 				runPluginOnExpr(opts);
 				break;
@@ -399,6 +402,47 @@
 					
 					form.submit();
 					$(this).dialog('close');
+				}
+			}, {
+				text : jCocit.entity.defaults.cancel,
+				onClick : function(data) {
+					$(this).dialog('close');
+				}
+			} ],
+		});
+	}
+	function doImportXls(opts) {
+		var $grid = $("#datagrid_" + opts.token);
+		var rows = _getSelectedGridRows(opts.token);
+		var gridOptions = $grid.datagrid("options");
+		
+		var data = {};
+		_prepareGridQueryParams(opts.token, data);
+		
+		var loadFormUrl = "/coc/getImportXlsForm/" + opts.funcExpr + "/" + rows.join(",") + "?" + $.param(data);
+		jCocit.dialog.open(loadFormUrl, "dialog_" + opts.token + "_" + opts.opCode, {
+			title : opts.text,
+			width : 800,
+			height : 600,
+			logoCls : opts.iconCls || 'icon-logo',
+			buttons : [ {
+				text : jCocit.entity.defaults.confirm,
+				onClick : function(data) {
+					var $form = $("form", this);
+					var $btn = $(this);
+					$.doAjax({
+						type : "POST",
+						dataType : "json",
+						data : $form.serialize(),
+						url : "/coc/doImportXlsOnExpr/" + opts.funcExpr + "/" + rows.join(","),
+						success : function(json) {
+							alert(json.message);
+							if(json.success){
+								$grid.datagrid("reload");
+								$btn.dialog('close');
+							}
+						}
+					});
 				}
 			}, {
 				text : jCocit.entity.defaults.cancel,

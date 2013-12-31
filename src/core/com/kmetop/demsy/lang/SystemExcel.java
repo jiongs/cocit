@@ -27,19 +27,20 @@ import com.kmetop.demsy.comlib.security.IAction;
  * @author yongshan.ji
  * 
  */
-public class SystemExcel extends ExcelUtil {
+public class SystemExcel {
 	public final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	private IBizEngine bizEngine;
 
 	private Class systemClass;
+
 	private Map<String, IBizField> fields = new HashMap();// <字段名称, 字段>
 
 	private String[] excelHeads;
+
 	private List<String[]> excelRows;
 
-	public SystemExcel(IBizSystem system, IAction action, File excel) throws FileNotFoundException, IOException,
-			DemsyException {
+	public SystemExcel(IBizSystem system, IAction action, File excel) throws FileNotFoundException, IOException, DemsyException {
 		this.bizEngine = Demsy.bizEngine;
 		systemClass = bizEngine.getType(system);
 
@@ -103,8 +104,7 @@ public class SystemExcel extends ExcelUtil {
 			for (int i = 0; i < len; i++) {
 				String[] row = excelRows.get(i);
 				if (row == null || row.length <= 1) {
-					throw new DemsyException(" Excel数据校验出错：数据表至少需要 2 列！但第 " + (i + 2) + " 行只有 "
-							+ (row == null ? 0 : row.length) + " 列");
+					throw new DemsyException(" Excel数据校验出错：数据表至少需要 2 列！但第 " + (i + 2) + " 行只有 " + (row == null ? 0 : row.length) + " 列");
 				}
 				if (row[0] == null || row[0].trim().length() == 0) {
 					throw new DemsyException(" Excel数据校验出错：数据表的第一列不允许为空！第 " + (i + 2) + " 行第一列非法");
@@ -117,7 +117,7 @@ public class SystemExcel extends ExcelUtil {
 		}
 	}
 
-	public int save() throws InstantiationException, IllegalAccessException, DemsyException {
+	public List getDataRows() throws InstantiationException, IllegalAccessException {
 		IBizSession session = Demsy.bizSession;
 		Long softID = Demsy.me().getSoft().getId();
 
@@ -158,15 +158,13 @@ public class SystemExcel extends ExcelUtil {
 							fksystem = fld.getRefrenceField().getSystem();
 						}
 						if (fksystem == null) {
-							throw new DemsyException("Excel表中的第 " + colIndex + " 列【" + fld.getName()
-									+ "】是外键字段，但引用的系统不存在！");
+							throw new DemsyException("Excel表中的第 " + colIndex + " 列【" + fld.getName() + "】是外键字段，但引用的系统不存在！");
 						}
 						Object fkvalue = null;
 						if (!Str.isEmpty(propvalue)) {
 							fkvalue = session.load(bizEngine.getType(fksystem), Expr.eq(nextprop, propvalue));
 							if (fkvalue == null) {
-								throw new DemsyException("Excel表中的第 " + colIndex + " 列【" + fld.getName() + "】是外键字段，但第 "
-										+ rowIndex + " 行【" + propvalue + "】在【" + fksystem.getName() + "】模块中不存在！");
+								throw new DemsyException("Excel表中的第 " + colIndex + " 列【" + fld.getName() + "】是外键字段，但第 " + rowIndex + " 行【" + propvalue + "】在【" + fksystem.getName() + "】模块中不存在！");
 							}
 						}
 						Obj.setValue(data, propname, fkvalue);
@@ -184,8 +182,13 @@ public class SystemExcel extends ExcelUtil {
 			list.add(data);
 		}
 
+		return list;
+	}
+
+	public int save() throws InstantiationException, IllegalAccessException, DemsyException {
+		IBizSession session = Demsy.bizSession;
 		try {
-			session.save(list);
+			session.save(this.getDataRows());
 		} catch (Throwable e) {
 			log.error(Ex.msg(e));
 			throw new DemsyException(e);

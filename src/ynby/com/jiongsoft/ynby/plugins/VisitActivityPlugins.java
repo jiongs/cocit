@@ -247,6 +247,44 @@ public class VisitActivityPlugins {
 		}
 	}
 
+	public static class ImportRegister extends BasePlugin<List<VisitActivityRegister>> {
+		@Override
+		public void before(ActionEvent<List<VisitActivityRegister>> event) {
+			Orm orm = event.getOrm();
+			Map<String, VisitActivity> activityMap = new HashMap();
+			List<VisitActivityRegister> list = event.getEntity();
+			for (VisitActivityRegister reg : list) {
+
+				VisitActivity activity = reg.getActivity();
+				String activityName = activity.getName();
+
+				VisitActivity existActivity = activityMap.get(activityName);
+
+				// 查询已经存在的活动
+				if (existActivity == null) {
+
+					existActivity = orm.get(VisitActivity.class, Expr.beginWith("name", activityName));
+
+					// 创建新的活动
+					if (existActivity == null) {
+						existActivity = new VisitActivity();
+						existActivity.setName(activityName);
+						existActivity.setExpiredTo(new Date());
+						orm.save(existActivity);
+					}
+
+					// 缓存活动
+					activityMap.put(activityName, existActivity);
+				}
+
+				reg.setActivity(existActivity);
+			}
+		}
+
+		public void after(ActionEvent<List<VisitActivityRegister>> event) {
+		}
+	}
+
 	/**
 	 * 报名成功后发送邀请函和验证码
 	 */

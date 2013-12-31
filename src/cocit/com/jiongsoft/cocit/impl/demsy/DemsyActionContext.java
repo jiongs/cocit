@@ -93,4 +93,9 @@ public class DemsyActionContext extends BaseActionContext {
 
 		return ret;
 	}
+
+	@Override
+	public boolean isLocalHost() {
+		return demsyContext.isLocal();
+	}
 }

@@ -24,6 +24,7 @@ import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
 , actions = {
 //
 		@CocOperation(name = "导出EXCEL", typeCode = 107, mode = "xls")//
+		, @CocOperation(name = "导入EXCEL", typeCode = 108, mode = "import", plugin = VisitActivityPlugins.ImportRegister.class)//
 		, @CocOperation(name = "添加", typeCode = 101, mode = "c1", plugin = VisitActivityPlugins.AdminSaveRegister.class)//
 		, @CocOperation(name = "修改", typeCode = 102, mode = "e2", plugin = VisitActivityPlugins.AdminSaveRegister.class)//
 		, @CocOperation(name = "取消", typeCode = 102, mode = "e1", plugin = VisitActivityPlugins.CancelRegister.class)//

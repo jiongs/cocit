@@ -26,6 +26,7 @@ import org.nutz.mvc.upload.TempFile;
 
 import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.orm.expr.Expr;
+import com.jiongsoft.cocit.util.ExcelUtil;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.BizConst;
 import com.kmetop.demsy.biz.IBizManager;
@@ -834,7 +835,7 @@ public class BizActions extends ModuleActions implements BizConst, MvcConst {
 						}
 						excelResult.add(row);
 					}
-					SystemExcel.makeExcel(new FileOutputStream(file), excelResult);
+					ExcelUtil.makeExcel(new FileOutputStream(file), excelResult);
 
 					Http.write(file);
 				} catch (Throwable e) {
