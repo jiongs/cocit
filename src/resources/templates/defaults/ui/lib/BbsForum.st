@@ -2,7 +2,7 @@
 <div class="t"></div>
 <div class="d">
     <div class="buttons">
-        <span class="forumName">【 {$data.name}】</span> <a href="#bottom" style="align: right;"><img src='{$contextPath}/themes2/images/bbs/images/newthread.gif' /></a>
+        <span class="forumName">当前位置：【 {$data.name}】</span> <a href="#bottom" style="align: right;"><img src='{$contextPath}/themes2/images/bbs/images/newthread.gif' /></a>
     </div>
     <table width='100%' align=center cellpadding=0 cellspacing=0 border=0>
         <tr class='header'>
