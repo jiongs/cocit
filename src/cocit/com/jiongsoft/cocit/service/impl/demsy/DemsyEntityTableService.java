@@ -1,8 +1,6 @@
 package com.jiongsoft.cocit.service.impl.demsy;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -36,7 +34,6 @@ import com.kmetop.demsy.comlib.impl.sft.system.AbstractSystemData;
 import com.kmetop.demsy.comlib.impl.sft.system.SFTSystem;
 import com.kmetop.demsy.comlib.impl.sft.system.SystemDataGroup;
 import com.kmetop.demsy.engine.BizEngine;
-import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.Obj;
 import com.kmetop.demsy.lang.SystemExcel;
 import com.kmetop.demsy.orm.IOrm;
@@ -437,12 +434,12 @@ public class DemsyEntityTableService implements TableService {
 	}
 
 	@Override
-	public List parseEntityDataFrom(File excel, OperationService op) {
+	public List parseEntityDataFrom(File excel) {
 		try {
-			SystemExcel systemExcel = new SystemExcel(entity, (BizAction) op.getEntity(), excel);
-			return systemExcel.getDataRows();
+			SystemExcel systemExcel = new SystemExcel(entity, excel);
+			return systemExcel.getRows();
 		} catch (Throwable e) {
-			throw new CocException("解析EXCEL数据出错！", e);
+			throw new CocException(e.getMessage());
 		}
 
 	}

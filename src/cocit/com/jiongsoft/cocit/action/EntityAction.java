@@ -435,7 +435,7 @@ public class EntityAction {
 		try {
 			String excelFilePath = helper.actionContext.getParameterValue("excelFilePath", "");
 			File excelFile = new File(Cocit.getContextDir() + excelFilePath);
-			List dataRows = helper.table.parseEntityDataFrom(excelFile, helper.op);
+			List dataRows = helper.table.parseEntityDataFrom(excelFile);
 
 			helper.entityManager.save(dataRows, helper.opMode);
 

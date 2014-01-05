@@ -117,7 +117,135 @@ public class SystemExcel {
 		}
 	}
 
-	public List getDataRows() throws InstantiationException, IllegalAccessException {
+	public SystemExcel(IBizSystem system, File excel) throws FileNotFoundException, IOException, DemsyException {
+		this.bizEngine = Demsy.bizEngine;
+		systemClass = bizEngine.getType(system);
+
+		// 处理自定义系统相关信息
+		List<IBizField> datas = (List<IBizField>) bizEngine.getFieldsOfEnabled(system);
+		for (IBizField data : datas) {
+			String name = data.getName();
+
+			fields.put(name, data);
+		}
+		if (log.isInfoEnabled()) {
+			StringBuffer sb = new StringBuffer();
+			sb.append("系统(" + system.getName() + ")字段：\n");
+			for (IBizField fld : datas) {
+				if (fields.get(fld.getName()) == null) {
+					continue;
+				}
+				sb.append(fld.getName()).append("：").append(bizEngine.getPropName(fld));
+				sb.append("\n");
+			}
+			log.info(sb.toString());
+		}
+
+		// 处理excel相关信息
+		excelRows = ExcelUtil.parseExcel(excel);
+		if (excelRows != null) {
+			if (log.isInfoEnabled()) {
+				StringBuffer sb = new StringBuffer();
+				sb.append("Excel数据:\n");
+				for (String[] row : excelRows) {
+					for (String cell : row) {
+						sb.append(cell).append(", ");
+					}
+					sb.append("\n");
+				}
+				log.info(sb.toString());
+			}
+			if (excelRows.size() > 0) {
+				excelHeads = excelRows.get(0);
+				excelRows.remove(0);
+			}
+		}
+	}
+
+	public List getRows() throws InstantiationException, IllegalAccessException {
+		IBizSession session = Demsy.bizSession;
+		Long softID = Demsy.me().getSoft().getId();
+
+		final List<IBizEntity> retList = new ArrayList();
+		int excelRowIndex = 1;
+		int excelColIndex = 0;
+		for (String[] row : excelRows) {
+			excelRowIndex++;
+			IBizEntity data = (IBizEntity) systemClass.newInstance();
+			for (int i = 0; i < row.length; i++) {
+				excelColIndex = i + 1;
+				try {
+					IBizField fld = fields.get(excelHeads[i]);
+					String propName = bizEngine.getPropName(fld);
+					String propValue = row[i];
+
+					IBizSystem fkSystem = fld.getRefrenceSystem();
+					if (fkSystem != null) {
+						int dot = propName.indexOf(".");
+						if (dot < 0) {
+							propName = propName + ".name";
+						}
+					}
+					int dot = propName.indexOf(".");
+
+					/*
+					 * 解析外键字段
+					 */
+					if (dot > 0) {
+						log.debug(propName);
+
+						String nextProp = propName.substring(dot + 1);
+						propName = propName.substring(0, dot);
+
+						if (fkSystem == null && fld.getRefrenceField() != null) {
+							fkSystem = fld.getRefrenceField().getSystem();
+						}
+						if (fkSystem == null) {
+							throw new DemsyException("Excel表中的第 " + excelColIndex + " 列【" + fld.getName() + "】是外键字段，但引用的系统不存在！");
+						}
+						Object fkValue = null;
+						if (!Str.isEmpty(propValue)) {
+							Class fkClass = bizEngine.getType(fkSystem);
+							fkValue = session.load(fkClass, Expr.eq(nextProp, propValue));
+							if (fkValue == null) {
+								// throw new DemsyException("Excel表中的第 " + colIndex + " 列【" + fld.getName() + "】是外键字段，但第 " + rowIndex + " 行【" + propValue + "】在【" + fkSystem.getName() + "】模块中不存在！");
+								fkValue = fkClass.newInstance();
+								Obj.setValue(fkValue, nextProp, propValue);
+							}
+						}
+						Obj.setValue(data, propName, fkValue);
+					} else {
+						/*
+						 * 解析字典字段
+						 */
+						Option[] options = bizEngine.getOptions(fld);
+						if (options != null && options.length > 0) {
+							for (Option option : options) {
+								if (option.getText().equals(propValue)) {
+									propValue = option.getValue();
+									break;
+								}
+							}
+						}
+
+						//
+						Obj.setValue(data, propName, propValue);
+					}
+				} catch (Throwable e) {
+					throw new DemsyException("导入Excel中的第 " + excelRowIndex + " 行第 " + excelColIndex + " 列时出错！" + e.getMessage());
+				}
+			}
+
+			//
+			data.setSoftID(softID);
+
+			retList.add(data);
+		}
+
+		return retList;
+	}
+
+	private List getDataRows() throws InstantiationException, IllegalAccessException {
 		IBizSession session = Demsy.bizSession;
 		Long softID = Demsy.me().getSoft().getId();
 

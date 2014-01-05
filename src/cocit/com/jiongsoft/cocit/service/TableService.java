@@ -86,5 +86,5 @@ public interface TableService extends EntityService<TableEntity> {
 	 * @param excel
 	 * @return
 	 */
-	List parseEntityDataFrom(File excel, OperationService op);
+	List parseEntityDataFrom(File excel);
 }

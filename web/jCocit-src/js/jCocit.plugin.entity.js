@@ -139,12 +139,12 @@
 			if ($childGrid.length)
 				doGridRefresh($childGrid.datagrid("options").token);
 		},
-		getGridQueryParams: function(token){
+		getGridQueryParams : function(token) {
 			var ret = {};
 			_prepareGridQueryParams(token, ret);
 			return ret;
 		},
-		getSelectedGridRows: function(token, field){
+		getSelectedGridRows : function(token, field) {
 			return _getSelectedGridRows(token, field);
 		}
 	};
@@ -379,12 +379,12 @@
 		var $grid = $("#datagrid_" + opts.token);
 		var rows = _getSelectedGridRows(opts.token);
 		var gridOptions = $grid.datagrid("options");
-		
+
 		var data = {};
 		_prepareGridQueryParams(opts.token, data);
 		data["sortField"] = gridOptions["sortField"];
 		data["sortOrder"] = gridOptions["sortOrder"];
-		
+
 		var loadFormUrl = "/coc/getExportXlsForm/" + opts.funcExpr + "/" + rows.join(",") + "?" + $.param(data);
 		jCocit.dialog.open(loadFormUrl, "dialog_" + opts.token + "_" + opts.opCode, {
 			title : opts.text,
@@ -399,7 +399,7 @@
 					form.action = "/coc/doExportXlsOnExpr/" + opts.funcExpr + "/" + rows.join(",");
 					form.method = "POST";
 					form.target = "_blank";
-					
+
 					form.submit();
 					$(this).dialog('close');
 				}
@@ -415,10 +415,10 @@
 		var $grid = $("#datagrid_" + opts.token);
 		var rows = _getSelectedGridRows(opts.token);
 		var gridOptions = $grid.datagrid("options");
-		
+
 		var data = {};
 		_prepareGridQueryParams(opts.token, data);
-		
+
 		var loadFormUrl = "/coc/getImportXlsForm/" + opts.funcExpr + "/" + rows.join(",") + "?" + $.param(data);
 		jCocit.dialog.open(loadFormUrl, "dialog_" + opts.token + "_" + opts.opCode, {
 			title : opts.text,
@@ -437,7 +437,7 @@
 						url : "/coc/doImportXlsOnExpr/" + opts.funcExpr + "/" + rows.join(","),
 						success : function(json) {
 							alert(json.message);
-							if(json.success){
+							if (json.statusCode == 200) {
 								$grid.datagrid("reload");
 								$btn.dialog('close');
 							}
@@ -474,8 +474,8 @@
 			if (row)
 				rows[0] = row;
 		}
-		
-		if(!field)
+
+		if (!field)
 			field = "id";
 
 		var ids = new Array();
