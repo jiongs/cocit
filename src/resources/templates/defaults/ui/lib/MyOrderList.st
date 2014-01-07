@@ -47,7 +47,7 @@ function updateOrderNote(orderID, id, tel){
                         <td class="fld">付款时间：</td><td>{tostring bean=$order.obj prop="payTime" pattern="yyyy-MM-dd HH:mm"}</td>
                         </tr>
                         <tr>
-                        <td class="fld">物流单号：</td><td width="300px">{tostring bean=$order.obj prop="logisticsID"}{if $order.obj.logisticsName != null}({tostring bean=$order.obj prop="logisticsName"}){/if}</td>
+                        <td class="fld">物流单号：</td><td width="300px"><a target="kuaidi100" href="http://api.kuaidi100.com/api?id=ec165848d047ce78&valicode=&show=2&com=kuaijiesudi&nu={tostring bean=$order.obj prop="logisticsID"}">{tostring bean=$order.obj prop="logisticsID"}{if $order.obj.logisticsName != null}({tostring bean=$order.obj prop="logisticsName"}){/if}</a></td>
                         <td class="fld">发货时间：</td><td>{tostring bean=$order.obj prop="logisticsTime" pattern="yyyy-MM-dd HH:mm"}</td>
                         </tr>
                         <tr>
