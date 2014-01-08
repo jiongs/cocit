@@ -47,7 +47,7 @@ function updateOrderNote(orderID, id, tel){
                         <td class="fld">付款时间：</td><td>{tostring bean=$order.obj prop="payTime" pattern="yyyy-MM-dd HH:mm"}</td>
                         </tr>
                         <tr>
-                        <td class="fld">物流单号：</td><td width="300px"><a target="kuaidi100" href="http://api.kuaidi100.com/api?id=ec165848d047ce78&valicode=&show=2&com=kuaijiesudi&nu={tostring bean=$order.obj prop="logisticsID"}">{tostring bean=$order.obj prop="logisticsID"}{if $order.obj.logisticsName != null}({tostring bean=$order.obj prop="logisticsName"}){/if}</a></td>
+                        <td class="fld">物流单号：</td><td width="300px"><a href="#" onclick="query_kuaidi(this, 'kuaijiesudi', '{tostring bean=$order.obj prop="logisticsID"}');">{tostring bean=$order.obj prop="logisticsID"}{if $order.obj.logisticsName != null}({tostring bean=$order.obj prop="logisticsName"}){/if}</a></td>
                         <td class="fld">发货时间：</td><td>{tostring bean=$order.obj prop="logisticsTime" pattern="yyyy-MM-dd HH:mm"}</td>
                         </tr>
                         <tr>
@@ -66,15 +66,18 @@ function updateOrderNote(orderID, id, tel){
                         </td>
                         <td valign="top">{if $order.obj.logisticsName == null}<input value="修改留言" type="button" onclick="updateOrderNote('{tostring bean=$order.obj prop="timeID"}','{tostring bean=$order.obj prop="id"}','{tostring bean=$order.obj prop="code"}'); return false;"></input>{/if}</td>
                         </tr>
+                        <tr class="kuaidi100_msg" style="display:none;">
+                        <td colspan="4"><iframe style="border: 0px; width: 600px; height: 200px"></iframe></td>
+                        </tr>
                         </table>
                     </td>
-                    <td>
+                    <td valign="top">
                         {tostring bean=$order.obj prop="itemsAmount"}
                     </td>
-                    <td width="150px" align="center" nowrap>
+                    <td width="150px" align="center" nowrap valign="top">
                         <span class="totalprice">{tostring bean=$order.obj prop="totalCost" pattern="#,##0.00"}</span>
                     </td>
-                    <td width="60px" align="right">
+                    <td width="60px" align="right" valign="top">
                         <span class="status">
                             {if $order.obj.status==0}<a class="btn" href="{$contextPath}/ui/{$block.titleLink.id}/{$orderModule.id}:{$order.obj.id}">付款</a>
                             {elseif $order.obj.status==1}已付款
@@ -106,4 +109,14 @@ function updateOrderNote(orderID, id, tel){
 </div>
 <div class="b"></div>
 <script language="javascript">
+
+function query_kuaidi(ele, com, nu){
+    var url = "http://api.kuaidi100.com/api?id=ec165848d047ce78&show=2&com="+com+"&nu="+nu;
+    var $table = $(ele).closest("table");
+    var $tr = $(".kuaidi100_msg", $table);
+    $tr.show();
+    var $iframe = $("iframe", $tr);
+    $iframe.attr("src", url);
+}
+
 </script>
