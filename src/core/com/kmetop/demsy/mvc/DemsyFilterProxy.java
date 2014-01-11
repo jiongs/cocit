@@ -149,7 +149,7 @@ public class DemsyFilterProxy implements Filter, Const, MvcConst {
 		String uri = MvcUtil.requestPath(req);
 		String url = null;
 		if (log.isDebugEnabled())
-			url = MvcUtil.requestURL(req);
+			url = MvcUtil.requestURL(req) + "-------" + req.getRemoteAddr();
 
 		if (!this.doStaticFilters(req, resp, chain, uri, url)) {
 
@@ -310,8 +310,7 @@ public class DemsyFilterProxy implements Filter, Const, MvcConst {
 		filterPattern.put("Struts2", new String[] { "/**/*.action", "/**/*.do" });
 		filterPattern.put("Security", new String[] { "/sft/admin/**", "/demsy/admin/**" });
 		filterPattern.put("URL", new String[] { "/**/*.html_demsy", "/**/*.html", "/blog/**", "/bbs/blog/**" });
-		filterPattern.put("Servlet", new String[] { "/**/*.nut", "/dwr/**", "/servlet/lybbs_displayChart", "/servlet/lybbs_drawRand", "/servlet/bfapp/**", "/servlet/lybbs_rss",
-				"/fckeditor/editor/filemanager/connectors/**", "/**/*.do" });
+		filterPattern.put("Servlet", new String[] { "/**/*.nut", "/dwr/**", "/servlet/lybbs_displayChart", "/servlet/lybbs_drawRand", "/servlet/bfapp/**", "/servlet/lybbs_rss", "/fckeditor/editor/filemanager/connectors/**", "/**/*.do" });
 	}
 
 	private Filter loadSFTFilter(String className) {
