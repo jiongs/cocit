@@ -58,15 +58,7 @@
                             <td class="topLbl">数&nbsp;&nbsp;&nbsp;&nbsp;量：</td>
                             <td>{if $obj.nowPrice != null}<input id="p_buy_amount" name="amount" type="text" class="amount input spinner" style="width:60px;" value="1" />{/if}</td>
 							<td class="topLbl">属&nbsp;&nbsp;&nbsp;&nbsp;性：</td>
-                            <td>
-                            	{if $obj.otcDrug == 0}
-                            	{else}{if $obj.otcDrug == 1}处方药
-                            	{else}{if $obj.otcDrug == 2}非处方药
-                            	{else}{if $obj.otcDrug == 3}保健养生
-                            	{else}{if $obj.otcDrug == 4}日化用品
-                            	{else}{if $obj.otcDrug == 99}其他
-                            	{/if}{/if}{/if}{/if}{/if}{/if}
-                            </td>
+                            <td>{$obj.otcDrugName}</td>
                         </tr>
                         <tr>
                             <td colspan=4>

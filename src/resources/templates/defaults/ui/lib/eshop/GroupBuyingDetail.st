@@ -36,7 +36,7 @@
                             <td class="topLbl">数&nbsp;&nbsp;&nbsp;&nbsp;量:</td>
                             <td>{if $obj.price != null}<input id="p_buy_amount" name="amount" type="text" class="input spinner" style="width: 50px;" value="1" />{/if}</td>
                             <td class="topLbl">属&nbsp;&nbsp;&nbsp;&nbsp;性:</td>
-                            <td>{if $obj.otcDrug == 0}非处方药{else}处方药{/if}</td>
+                            <td>{$obj.otcDrugName}</td>
                         </tr>
                         <tr>
                             <td colspan=4>

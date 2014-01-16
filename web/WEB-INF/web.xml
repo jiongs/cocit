@@ -112,7 +112,7 @@
 
 	<!-- 会话时长 -->
 	<session-config>
-		<session-timeout>50</session-timeout>
+		<session-timeout>5</session-timeout>
 	</session-config>
 
 	<!-- 扩展MIME类型 -->
