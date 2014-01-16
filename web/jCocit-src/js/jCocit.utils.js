@@ -456,7 +456,7 @@ $.toJsonString = function(o) {
 	case 'error':
 	case 'object':
 		for ( var p in o) {
-			s.push('"'+p + '":' + $.toJsonString(o[p]));
+			s.push('"' + p + '":' + $.toJsonString(o[p]));
 		}
 		return '{' + s.join(',') + '}';
 		break;
@@ -515,3 +515,19 @@ $.parseOptions = function(sourceHTML, props) {
 	}
 	return opts;
 };
+
+function checkHeartbeat_coc() {
+	$.ajax({
+		type : 'POST',
+		url : "/coc/chkHeartbeat/" + new Date().getTime(),
+		async : true,
+		data : "",
+		dataType : "json",
+		success : function(json) {
+			_sto(checkHeartbeat, 10800000);//3*60*60*1000
+		},
+		error : function(jqXHR, statusText, responseError) {
+			alert("访问服务器出错！"+responseError);
+		}
+	});
+}

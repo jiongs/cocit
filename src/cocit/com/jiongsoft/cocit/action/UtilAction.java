@@ -1,5 +1,7 @@
 package com.jiongsoft.cocit.action;
 
+import java.util.Date;
+
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Fail;
 import org.nutz.mvc.annotation.Ok;
@@ -10,13 +12,28 @@ import com.jiongsoft.cocit.entity.sms.MTSmsEntity;
 import com.jiongsoft.cocit.service.SoftService;
 import com.jiongsoft.cocit.ui.UIModelView;
 import com.jiongsoft.cocit.ui.model.AlertsModel;
-import com.jiongsoft.cocit.util.UrlAPI;
+import com.jiongsoft.cocit.util.CocCalendar;
 import com.jiongsoft.cocit.util.HttpUtil;
 import com.jiongsoft.cocit.util.Log;
+import com.jiongsoft.cocit.util.UrlAPI;
 
 @Ok(UIModelView.VIEW_TYPE)
 @Fail(UIModelView.VIEW_TYPE)
 public class UtilAction {
+
+	@At(UrlAPI.CHK_HEARTBEAT)
+	public AlertsModel chkHeartbeat(String timestamp) {
+		try {
+			ActionContext ctx = Cocit.getActionContext();
+			Date date = new Date(Long.parseLong(timestamp));
+			String strDate = CocCalendar.format(date, CocCalendar.DEFAULT_DATE_TIME_PATTERN);
+			Log.debug("应用程序心跳检测：id:%s, time:%s", ctx.getRequest().getRemoteAddr(), strDate);
+
+			return AlertsModel.makeSuccess(strDate);
+		} catch (Throwable e) {
+			return AlertsModel.makeError(e.getMessage());
+		}
+	}
 
 	@At(UrlAPI.GET_IMG_VERIFY_CODE)
 	public void getImgVerifyCode() {
