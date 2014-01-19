@@ -63,10 +63,10 @@ public class DemsyFilterProxy implements Filter, Const, MvcConst {
 		Demsy me = null;
 		try {
 			me = initMe(req, resp);
-			log.debugf(">>>>>>BEGIN>>>>>> %s", url);
+//			log.debugf("MVC>>doDemsyFilter: 处理URL...[%s]", url);
 
 			if (me.actionInvoker() != null && actionHandler.execute(req, resp)) {
-				log.debugf("===END=== %s", url);
+//				log.debugf("MVC>>doDemsyFilter: 处理URL结束.[%s]", url);
 
 				return true;
 			}
@@ -148,8 +148,10 @@ public class DemsyFilterProxy implements Filter, Const, MvcConst {
 
 		String uri = MvcUtil.requestPath(req);
 		String url = null;
-		if (log.isDebugEnabled())
+		if (log.isDebugEnabled()) {
 			url = MvcUtil.requestURL(req) + "-------" + req.getRemoteAddr();
+			log.debugf("MVC>>doFilter: 处理URL...[%s]", url);
+		}
 
 		if (!this.doStaticFilters(req, resp, chain, uri, url)) {
 
@@ -168,6 +170,7 @@ public class DemsyFilterProxy implements Filter, Const, MvcConst {
 			}
 		}
 
+		log.debugf("MVC>>doFilter: 处理URL结束.[%s]", url);
 	}
 
 	public void init(FilterConfig filterConfig) throws ServletException {

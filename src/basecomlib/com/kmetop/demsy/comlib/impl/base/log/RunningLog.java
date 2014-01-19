@@ -20,24 +20,27 @@ import com.jiongsoft.cocit.entity.annotation.CocTable;
 @CocTable(name = "系统日志管理", code = "RunningLog", catalog = BIZCATA_DEMSY_ADMIN, orderby = ORDER_DEMSY_LOG//
 , actions = {
 //
-		@CocOperation(name = "清空", typeCode = TYPE_BZ_CLEAR, mode = "clr") //
-		, @CocOperation(name = "详情", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
+                @CocOperation(name = "清空", typeCode = TYPE_BZ_CLEAR, mode = "clr") //
+                , @CocOperation(name = "详情", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
 }//
 , groups = { @CocGroup(name = "基本信息", code = "basic"//
-, fields = { @CocField(property = "datetime")//
-		, @CocField(property = "locationinfo") //
-		, @CocField(property = "content") //
-		, @CocField(property = "remoteIp")//
-		, @CocField(property = "remoteUri")//
-		, @CocField(property = "eslipse")//
-		, @CocField(property = "memEslipse")//
-		, @CocField(property = "level") //
-		, @CocField(property = "monitor")//
-		, @CocField(property = "threadname") //
-		, @CocField(property = "loginuser")//
-		, @CocField(property = "remoteUrl")//
-		, @CocField(property = "loggername") //
-		, @CocField(property = "stacktrace") //
+, fields = {
+//
+                @CocField(property = "message") //
+                , @CocField(property = "remoteUri")//
+                , @CocField(property = "remoteIp")//
+                , @CocField(property = "remoteAddress")//
+                , @CocField(property = "datetime")//
+                , @CocField(property = "eslipse")//
+                , @CocField(property = "memEslipse")//
+                , @CocField(property = "level") //
+                , @CocField(property = "monitor")//
+                , @CocField(property = "threadname") //
+                , @CocField(property = "loginuser")//
+                , @CocField(property = "remoteUrl")//
+                , @CocField(property = "loggername") //
+                , @CocField(property = "locationinfo") //
+                , @CocField(property = "stacktrace") //
 }) }// end groups
 )
 public class RunningLog {
@@ -86,6 +89,10 @@ public class RunningLog {
 	@Column(length = 64)
 	@CocField(name = "远程IP")
 	protected String remoteIp;
+
+	@Column(length = 64)
+	@CocField(name = "远程地址")
+	protected String remoteAddress;
 
 	@CocField(name = "内存消耗")
 	protected long memEslipse;
@@ -238,5 +245,13 @@ public class RunningLog {
 
 	public void setDatetime(Date datetime) {
 		this.datetime = datetime;
+	}
+
+	public String getRemoteAddress() {
+		return remoteAddress;
+	}
+
+	public void setRemoteAddress(String remoteAddress) {
+		this.remoteAddress = remoteAddress;
 	}
 }

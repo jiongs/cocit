@@ -41,13 +41,13 @@ import com.kmetop.demsy.orm.nutz.EnMappingImpl;
 public class MetaDaoImpl implements IMetaDao {
 	protected static Log log = Logs.getLog(MetaDaoImpl.class);
 
-	protected ExtDaoImpl extDao;
+	protected MetaDemsyDaoImpl extDao;
 
 	protected Dialect dialect;
 
 	protected EnMappingHolder mappingHolder;
 
-	MetaDaoImpl(ExtDaoImpl dao) {
+	MetaDaoImpl(MetaDemsyDaoImpl dao) {
 		extDao = dao;
 		dialect = extDao.getDialect();
 		mappingHolder = extDao.getEntityHolder();

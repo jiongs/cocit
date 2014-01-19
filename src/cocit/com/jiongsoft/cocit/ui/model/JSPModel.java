@@ -73,7 +73,7 @@ public class JSPModel implements UIModel {
 
 	@Override
 	public boolean isCachable() {
-		return true;
+		return false;
 	}
 
 	public String getJsp() {

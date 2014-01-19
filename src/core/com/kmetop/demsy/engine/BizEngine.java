@@ -237,6 +237,11 @@ public abstract class BizEngine implements IBizEngine {
 		if (staticSystemTypes.size() == 0) {
 			initStaticSystems();
 		}
+		Class cls = this.staticSystemTypes.get(system);
+		if (cls == null) {
+			initStaticSystems();
+		}
+
 		return this.staticSystemTypes.get(system);
 	}
 
@@ -1883,7 +1888,7 @@ public abstract class BizEngine implements IBizEngine {
 			}
 
 			// 自身树导航字段：移除叶子节点，叶子节点不参与导航。
-			if (removeSelfLeaf && fld.equals(selfTreeFld) ) {
+			if (removeSelfLeaf && fld.equals(selfTreeFld)) {
 				node.removeAllLeaf();
 			}
 

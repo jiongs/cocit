@@ -16,6 +16,8 @@ import com.kmetop.demsy.orm.generator.INamingStrategy;
 
 public class RunningLogDao {
 
+	private boolean dblogHasError = false;
+
 	private static RunningLogDao me;
 
 	private IOrm orm;
@@ -37,9 +39,14 @@ public class RunningLogDao {
 	}
 
 	public synchronized void save(final RunningLog log) throws SQLException {
+		if (dblogHasError) {
+			return;
+		}
+
 		if (orm != null)
 			orm.run(new NoTransConnCallback() {
 				public Object invoke(Connection conn) throws Exception {
+
 					Dialect dialect = orm.getDialect();
 					INamingStrategy naming = orm.getNamingStrategy();
 					String pk = naming.columnName("_id");
@@ -56,7 +63,8 @@ public class RunningLogDao {
 						if (rs.next())
 							maxId = rs.getLong(1);
 					} catch (SQLException e) {
-						//System.err.println("执行SQL<" + maxIdSql + ">出错! 错误信息： " + e);
+						System.err.println("执行SQL<" + maxIdSql + ">出错! 错误信息： " + e);
+						dblogHasError = true;
 					} finally {
 						if (null != stat)
 							try {
@@ -88,10 +96,12 @@ public class RunningLogDao {
 						stmt.setLong(15, log.getMemEslipse());
 						stmt.setLong(16, log.getEslipse());
 						stmt.setString(17, log.getMonitor());
+						stmt.setString(18, log.getRemoteAddress());
 
 						return stmt.execute();
 					} catch (SQLException sqle) {
-						//System.err.println("执行SQL<" + insertSql + ">出错! 错误信息： " + sqle);
+						System.err.println("执行SQL<" + insertSql + ">出错! 错误信息： " + sqle);
+						dblogHasError = true;
 						return null;
 					} finally {
 						if (null != stmt)
@@ -112,7 +122,7 @@ public class RunningLogDao {
 		sb.append(",").append(naming.propertyToColumnName("loggername"));
 		sb.append(",").append(naming.propertyToColumnName("datetime"));
 		sb.append(",").append(naming.propertyToColumnName("level"));
-		sb.append(",").append(naming.propertyToColumnName("content"));
+		sb.append(",").append(naming.propertyToColumnName("message"));
 		sb.append(",").append(naming.propertyToColumnName("threadname"));
 		sb.append(",").append(naming.propertyToColumnName("stacktrace"));
 		sb.append(",").append(naming.propertyToColumnName("ndc"));
@@ -123,7 +133,8 @@ public class RunningLogDao {
 		sb.append(",").append(naming.propertyToColumnName("memEslipse"));
 		sb.append(",").append(naming.propertyToColumnName("eslipse"));
 		sb.append(",").append(naming.propertyToColumnName("monitor"));
-		sb.append(") values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+		sb.append(",").append(naming.propertyToColumnName("remoteAddress"));
+		sb.append(") values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
 		return sb.toString();
 	}

@@ -40,7 +40,7 @@ public class OrmImpl implements IOrm {
 
 	public OrmImpl(IDataSource config, EnMappingHolder holder, EnMappingMaker maker, EntityListeners listeners) {
 		try {
-			dao = new ExtDaoImpl(getComboPooledDataSource(config), holder, maker, listeners);
+			dao = new MetaDemsyDaoImpl(getComboPooledDataSource(config), holder, maker, listeners);
 		} catch (Throwable e) {
 			throw new ConfigException(Ex.msg(e));
 		}

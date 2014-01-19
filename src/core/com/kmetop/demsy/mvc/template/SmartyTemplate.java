@@ -17,8 +17,12 @@ import org.lilystudio.smarty4j.TemplateException;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.lang.Files;
 import com.kmetop.demsy.lang.Str;
+import com.kmetop.demsy.log.Log;
+import com.kmetop.demsy.log.Logs;
 
 public class SmartyTemplate extends AbstractTemplate {
+	private static Log log = Logs.getLog(SmartyTemplate.class);
+
 	private Map<String, Engine> engineMap;
 
 	public SmartyTemplate() {
@@ -77,7 +81,24 @@ public class SmartyTemplate extends AbstractTemplate {
 
 	private static class DemsyEngine extends Engine {
 
+		private boolean supportCached = false;
+
 		private Map<String, Template> classTemplates = new HashMap<String, Template>(256);
+
+		private Template get(String name) {
+			if (!supportCached)
+				return null;
+
+			return classTemplates.get(name);
+		}
+
+		private void cache(String name, Template t) {
+
+			if (!supportCached)
+				return;
+
+			classTemplates.put(name, t);
+		}
 
 		public DemsyEngine() {
 			super();
@@ -85,6 +106,8 @@ public class SmartyTemplate extends AbstractTemplate {
 
 		@Override
 		public Template getTemplate(String name) throws IOException, TemplateException {
+			log.debugf("MVC>>getTemplate: 获取模版对象... [%s]", name);
+
 			String path = this.getTemplatePath() + name;
 			int idx = path.indexOf("/../");
 			if (idx > -1) {
@@ -120,7 +143,7 @@ public class SmartyTemplate extends AbstractTemplate {
 				}
 			}
 
-			Template template = classTemplates.get(name);
+			Template template = get(name);
 
 			if (template != null) {
 				return template;
@@ -135,7 +158,7 @@ public class SmartyTemplate extends AbstractTemplate {
 				}
 				isr = new InputStreamReader(is, getEncoding());
 				template = new DemsyTemplate(this, isr, name);
-				classTemplates.put(name, template);
+				cache(name, template);
 			} finally {
 				if (isr != null)
 					try {
