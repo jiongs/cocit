@@ -71,8 +71,8 @@ public abstract class UIBizFld extends UIWidget {
 	private String comboboxUrl;
 
 	private String keyProp = "id";
-	
-	private String searchType="text";
+
+	private String searchType;
 
 	public UIBizFld(Map ctx, Serializable id) {
 		super(ctx, id);

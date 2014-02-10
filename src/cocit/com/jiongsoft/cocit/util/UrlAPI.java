@@ -177,9 +177,9 @@ public abstract class UrlAPI {
 	 */
 	public static final String DO_EXPORT_XLS_ON_EXPR = URL_NS + "/doExportXlsOnExpr/*";
 
-	// public static final String GET_IMPORT_XLS_FORM = URL_NS + "/getImportXlsForm/*";
-	//
-	// public static final String DO_IMPORT_XLS_ON_EXPR = URL_NS + "/doImportXlsOnExpr/*";
+	public static final String GET_IMPORT_XLS_FORM = URL_NS + "/getImportXlsForm/*";
+
+	public static final String DO_IMPORT_XLS_ON_EXPR = URL_NS + "/doImportXlsOnExpr/*";
 
 	/**
 	 * 获取手机验证码
@@ -198,6 +198,11 @@ public abstract class UrlAPI {
 	public static final String GET_SMS_VERIFY_CODE2 = URL_NS + "/getSmsVerifyCode2/*";
 
 	public static final String CHK_SMS_VERIFY_CODE = URL_NS + "/chkSmsVerifyCode/*";
+	
+	/**
+	 * 心跳监测程序，用来保证浏览器客户端用不过期。
+	 */
+	public static final String CHK_HEARTBEAT = URL_NS + "/chkHeartbeat/*";
 
 	/*
 	 * 以下是报表管理模块相关功能的访问路径

@@ -110,4 +110,11 @@ public interface ActionContext {
 	 */
 	int getClientUIWidth();
 
+	/**
+	 * 判断当前浏览器客户端是否是本机？
+	 * 
+	 * @return
+	 */
+	boolean isLocalHost();
+
 }

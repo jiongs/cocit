@@ -32,11 +32,14 @@ public class UiAdvertRecord extends UiBaseDataSource {
 		if (orm != null) {
 			Class type = maker.getType();
 
-			int size = orm.count(type);
+			int size = orm.count(type, maker.getExpr());
 			int page = new java.util.Random().nextInt(size);
 
 			Pager pager = new Pager(type);
-			pager.setQueryExpr(Expr.page(page, 1));
+			if (maker.getExpr() != null)
+				pager.setQueryExpr(maker.getExpr().setPager(page, 1));
+			else
+				pager.setQueryExpr(Expr.page(page, 1));
 
 			return orm.query(pager);
 		}

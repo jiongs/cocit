@@ -384,4 +384,22 @@ public class Product extends BizComponent implements IProduct {
 	public void setOtcDrug(byte otcDrug) {
 		this.otcDrug = otcDrug;
 	}
+
+	public String getOtcDrugName() {
+		switch (otcDrug) {
+		case 0:
+			return "无";
+		case 1:
+			return "处方药";
+		case 2:
+			return "非处方药";
+		case 3:
+			return "保健养生";
+		case 4:
+			return "日化用品";
+		default:
+			return "其他";
+		}
+
+	}
 }

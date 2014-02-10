@@ -20,7 +20,7 @@ import org.nutz.dao.DatabaseMeta;
 import org.nutz.dao.FieldFilter;
 import org.nutz.dao.entity.Entity;
 import org.nutz.dao.entity.Link;
-import org.nutz.dao.impl.BaseNutzDao;
+import org.nutz.dao.impl.DemsyNutzDao;
 import org.nutz.dao.impl.DemsyLinks;
 import org.nutz.dao.pager.Pager;
 import org.nutz.dao.sql.Sql;
@@ -56,8 +56,8 @@ import com.kmetop.demsy.orm.nutz.SaveManyManyInvoker;
 import com.kmetop.demsy.orm.nutz.intercepter.ManyFieldGetterIntercepter;
 import com.kmetop.demsy.orm.nutz.intercepter.OneFieldGetterIntercepter;
 
-public class ExtDaoImpl extends BaseNutzDao implements IExtDao {
-	private static final Log log = Logs.getLog(ExtDaoImpl.class);
+public class MetaDemsyDaoImpl extends DemsyNutzDao implements IExtDao {
+	private static final Log log = Logs.getLog(MetaDemsyDaoImpl.class);
 
 	// 实体映射持有者
 	private EnMappingHolder entityHolder;
@@ -73,7 +73,7 @@ public class ExtDaoImpl extends BaseNutzDao implements IExtDao {
 
 	private INamingStrategy namingStrategy;
 
-	ExtDaoImpl(DataSource dataSource, EnMappingHolder holder, EnMappingMaker maker, EntityListeners listeners) {
+	MetaDemsyDaoImpl(DataSource dataSource, EnMappingHolder holder, EnMappingMaker maker, EntityListeners listeners) {
 		super();
 
 		this.setDataSource(dataSource);

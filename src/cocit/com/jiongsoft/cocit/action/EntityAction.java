@@ -1,5 +1,6 @@
 package com.jiongsoft.cocit.action;
 
+import java.io.File;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.nutz.mvc.annotation.Fail;
 import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.Param;
 
+import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.mvc.adaptor.EntityParamAdaptor;
 import com.jiongsoft.cocit.mvc.adaptor.EntityParamNode;
 import com.jiongsoft.cocit.orm.expr.CndExpr;
@@ -28,13 +30,13 @@ import com.jiongsoft.cocit.ui.model.widget.GridWidgetData;
 import com.jiongsoft.cocit.ui.model.widget.ListWidget;
 import com.jiongsoft.cocit.ui.model.widget.ListWidgetData;
 import com.jiongsoft.cocit.ui.model.widget.TreeWidgetData;
-import com.jiongsoft.cocit.util.UrlAPI;
 import com.jiongsoft.cocit.util.ClassUtil;
 import com.jiongsoft.cocit.util.CocException;
 import com.jiongsoft.cocit.util.ExcelUtil;
 import com.jiongsoft.cocit.util.Log;
 import com.jiongsoft.cocit.util.ObjectUtil;
 import com.jiongsoft.cocit.util.StringUtil;
+import com.jiongsoft.cocit.util.UrlAPI;
 
 /**
  * 实体Action：即用来管理实体数据的Action，负责接收管理实体数据的请求并处理这些请求，包括“增加、删除、查询、修改、导入、导出”等操作。
@@ -383,6 +385,65 @@ public class EntityAction {
 			Log.debug("EntityAction.exportXls: total = %s", list == null ? 0 : list.size());
 		} catch (Throwable e) {
 			Log.error("EntityAction.exportXls: error! ", e);
+		} finally {
+			if (outStream != null) {
+				try {
+					outStream.close();
+				} catch (Throwable ex) {
+				}
+			}
+		}
+	}
+
+	/**
+	 * 对应JSP: {@value UrlAPI#JSP_DIR}/getImportXlsForm.jsp
+	 * 
+	 * @return
+	 */
+	@At(UrlAPI.GET_IMPORT_XLS_FORM)
+	public EntityForm getImportXlsForm(String args, String argDataID) {
+		ActionHelper helper = ActionHelper.make(args, argDataID, null);
+
+		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.op, helper.entity);
+		// if (StringUtil.isNil(formModel.getJsp()))
+		formModel.setJsp(UrlAPI.JSP_DIR + "/getImportXlsForm");
+
+		formModel.setVar("actionHelper", helper);
+		formModel.setVar("query.filterExpr", StringUtil.escapeHTML(helper.actionContext.getParameterValue("query.filterExpr", "")));
+		formModel.setVar("query.parentExpr", StringUtil.escapeHTML(helper.actionContext.getParameterValue("query.parentExpr", "")));
+		formModel.setVar("query.keywords", StringUtil.escapeHTML(helper.actionContext.getParameterValue("query.keywords", "")));
+		formModel.setVar("sortField", StringUtil.escapeHTML(helper.actionContext.getParameterValue("sortField", "")));
+		formModel.setVar("sortOrder", StringUtil.escapeHTML(helper.actionContext.getParameterValue("sortOrder", "")));
+
+		/**
+		 * 返回
+		 */
+		return formModel;
+	}
+
+	/**
+	 * 该方法在执行{@value UrlAPI#JSP_DIR}/getImportXlsForm.jsp中的form.submit()时调用。
+	 * 
+	 * @param args
+	 * @param argDataID
+	 */
+	@At(UrlAPI.DO_IMPORT_XLS_ON_EXPR)
+	public AlertsModel doImportXlsOnExpr(String args, String argDataID) {
+		ActionHelper helper = ActionHelper.make(args, argDataID, null);
+
+		OutputStream outStream = null;
+		try {
+			String excelFilePath = helper.actionContext.getParameterValue("excelFilePath", "");
+			File excelFile = new File(Cocit.getContextDir() + excelFilePath);
+			List dataRows = helper.table.parseEntityDataFrom(excelFile);
+
+			helper.entityManager.save(dataRows, helper.opMode);
+
+			Log.debug("EntityAction.importXls: total = %s", dataRows == null ? 0 : dataRows.size());
+			return AlertsModel.makeSuccess("共导入了 " + (dataRows == null ? 0 : dataRows.size()) + " 条数据！");
+		} catch (Throwable e) {
+			Log.error("EntityAction.importXls: error! ", e);
+			return AlertsModel.makeError("导入数据出错: " + (e == null ? "" : e.getMessage()));
 		} finally {
 			if (outStream != null) {
 				try {

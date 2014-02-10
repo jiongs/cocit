@@ -1,5 +1,6 @@
 package com.jiongsoft.cocit.service;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -44,7 +45,7 @@ public interface TableService extends EntityService<TableEntity> {
 	 * @return
 	 */
 	List<FieldService> getEntityFields();
-	
+
 	Map<String, FieldService> getEntityFieldsPropMap();
 
 	/**
@@ -77,5 +78,13 @@ public interface TableService extends EntityService<TableEntity> {
 	 * @param entity
 	 * @throws CocException
 	 */
-	void validate(String opMode, Object entityData) throws CocException;
+	void validateEntityData(String opMode, Object entityData) throws CocException;
+
+	/**
+	 * 将excel数据解析成实体数据列表。
+	 * 
+	 * @param excel
+	 * @return
+	 */
+	List parseEntityDataFrom(File excel);
 }

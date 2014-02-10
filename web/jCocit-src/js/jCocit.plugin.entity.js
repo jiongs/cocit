@@ -23,6 +23,9 @@
 			case 107: // export excel
 				doExportXls(opts);
 				break;
+			case 108: // import excel
+				doImportXls(opts);
+				break;
 			case 204:// synchronized exec task
 				runPluginOnExpr(opts);
 				break;
@@ -136,12 +139,12 @@
 			if ($childGrid.length)
 				doGridRefresh($childGrid.datagrid("options").token);
 		},
-		getGridQueryParams: function(token){
+		getGridQueryParams : function(token) {
 			var ret = {};
 			_prepareGridQueryParams(token, ret);
 			return ret;
 		},
-		getSelectedGridRows: function(token, field){
+		getSelectedGridRows : function(token, field) {
 			return _getSelectedGridRows(token, field);
 		}
 	};
@@ -376,12 +379,12 @@
 		var $grid = $("#datagrid_" + opts.token);
 		var rows = _getSelectedGridRows(opts.token);
 		var gridOptions = $grid.datagrid("options");
-		
+
 		var data = {};
 		_prepareGridQueryParams(opts.token, data);
 		data["sortField"] = gridOptions["sortField"];
 		data["sortOrder"] = gridOptions["sortOrder"];
-		
+
 		var loadFormUrl = "/coc/getExportXlsForm/" + opts.funcExpr + "/" + rows.join(",") + "?" + $.param(data);
 		jCocit.dialog.open(loadFormUrl, "dialog_" + opts.token + "_" + opts.opCode, {
 			title : opts.text,
@@ -396,9 +399,50 @@
 					form.action = "/coc/doExportXlsOnExpr/" + opts.funcExpr + "/" + rows.join(",");
 					form.method = "POST";
 					form.target = "_blank";
-					
+
 					form.submit();
 					$(this).dialog('close');
+				}
+			}, {
+				text : jCocit.entity.defaults.cancel,
+				onClick : function(data) {
+					$(this).dialog('close');
+				}
+			} ],
+		});
+	}
+	function doImportXls(opts) {
+		var $grid = $("#datagrid_" + opts.token);
+		var rows = _getSelectedGridRows(opts.token);
+		var gridOptions = $grid.datagrid("options");
+
+		var data = {};
+		_prepareGridQueryParams(opts.token, data);
+
+		var loadFormUrl = "/coc/getImportXlsForm/" + opts.funcExpr + "/" + rows.join(",") + "?" + $.param(data);
+		jCocit.dialog.open(loadFormUrl, "dialog_" + opts.token + "_" + opts.opCode, {
+			title : opts.text,
+			width : 800,
+			height : 600,
+			logoCls : opts.iconCls || 'icon-logo',
+			buttons : [ {
+				text : jCocit.entity.defaults.confirm,
+				onClick : function(data) {
+					var $form = $("form", this);
+					var $btn = $(this);
+					$.doAjax({
+						type : "POST",
+						dataType : "json",
+						data : $form.serialize(),
+						url : "/coc/doImportXlsOnExpr/" + opts.funcExpr + "/" + rows.join(","),
+						success : function(json) {
+							alert(json.message);
+							if (json.statusCode == 200) {
+								$grid.datagrid("reload");
+								$btn.dialog('close');
+							}
+						}
+					});
 				}
 			}, {
 				text : jCocit.entity.defaults.cancel,
@@ -430,8 +474,8 @@
 			if (row)
 				rows[0] = row;
 		}
-		
-		if(!field)
+
+		if (!field)
 			field = "id";
 
 		var ids = new Array();

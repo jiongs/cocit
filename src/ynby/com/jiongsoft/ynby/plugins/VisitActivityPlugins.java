@@ -247,6 +247,52 @@ public class VisitActivityPlugins {
 		}
 	}
 
+	public static class ImportRegister extends BasePlugin<List<VisitActivityRegister>> {
+		@Override
+		public void before(ActionEvent<List<VisitActivityRegister>> event) {
+			Orm orm = event.getOrm();
+			Map<String, VisitActivity> activityMap = new HashMap();
+			List<VisitActivityRegister> list = event.getEntity();
+
+			for (int i = list.size() - 1; i >= 0; i--) {
+				VisitActivityRegister reg = list.get(i);
+
+				VisitActivity activity = reg.getActivity();
+				String activityName = activity.getName();
+
+				VisitActivity existActivity = activityMap.get(activityName);
+
+				// 查询已经存在的活动
+				if (existActivity == null) {
+
+					existActivity = orm.get(VisitActivity.class, Expr.beginWith("name", activityName));
+
+					// 创建新的活动
+					if (existActivity == null) {
+						existActivity = new VisitActivity();
+						existActivity.setName(activityName);
+						existActivity.setExpiredTo(new Date());
+						orm.save(existActivity);
+					}
+
+					// 缓存活动
+					activityMap.put(activityName, existActivity);
+				}
+
+				reg.setActivity(existActivity);
+
+				// 检查数据是否已经存在
+				VisitActivityRegister old = orm.get(VisitActivityRegister.class, Expr.eq("activity", activity).and(Expr.eq("tel", reg.getTel())));
+				if (old != null) {
+					reg.setId(old.getId());
+				}
+			}
+		}
+
+		public void after(ActionEvent<List<VisitActivityRegister>> event) {
+		}
+	}
+
 	/**
 	 * 报名成功后发送邀请函和验证码
 	 */
@@ -575,10 +621,10 @@ public class VisitActivityPlugins {
 				if (index != 0)
 					json.append(",");
 				json.append(String.format("{\"orderby\":%s,\"id\":%s,\"name\":%s,\"code\":%s,\"sex\":%s,\"tel\":%s,\"qq\":%s,\"email\":%s,\"unit\":%s,\"carCode\":%s,\"status\":%s}"//
-						, index, member.getId(), Json.toJson(member.getName()), Json.toJson(StringUtil.trim(member.getCode())),//
-						member.getSex(), Json.toJson(StringUtil.trim(member.getTel())), Json.toJson(StringUtil.trim(member.getQq())), //
-						Json.toJson(StringUtil.trim(member.getEmail())), Json.toJson(StringUtil.trim(member.getUnit())),//
-						Json.toJson(StringUtil.trim(member.getCarCode())), member.getStatus()));
+				                , index, member.getId(), Json.toJson(member.getName()), Json.toJson(StringUtil.trim(member.getCode())),//
+				                member.getSex(), Json.toJson(StringUtil.trim(member.getTel())), Json.toJson(StringUtil.trim(member.getQq())), //
+				                Json.toJson(StringUtil.trim(member.getEmail())), Json.toJson(StringUtil.trim(member.getUnit())),//
+				                Json.toJson(StringUtil.trim(member.getCarCode())), member.getStatus()));
 
 				index++;
 			}

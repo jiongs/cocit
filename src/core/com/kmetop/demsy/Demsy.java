@@ -321,7 +321,7 @@ public abstract class Demsy implements Const, MvcConst {
 			tempDir = appconfig.getTempDir();
 		}
 
-		// 安装事物
+		// 安装事务
 		Trans.setup(DemsyTransaction.class);
 
 		// 加载日志配置

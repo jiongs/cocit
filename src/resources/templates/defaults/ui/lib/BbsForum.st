@@ -2,12 +2,12 @@
 <div class="t"></div>
 <div class="d">
     <div class="buttons">
-        <a href="#bottom" style="align: right;"><img src='{$contextPath}/themes2/images/bbs/images/newthread.gif' /></a>
+        <span class="forumName">当前位置：【 {$data.name}】</span> <a href="#bottom" style="align: right;"><img src='{$contextPath}/themes2/images/bbs/images/newthread.gif' /></a>
     </div>
     <table width='100%' align=center cellpadding=0 cellspacing=0 border=0>
         <tr class='header'>
             <th colspan=2>状态</th>
-            <th>【{$data.name}】标题</th>
+            <th>标题</th>
             <th>网友</th>
             <th>时间</th>
             <th>回复/点击</th>

@@ -8,9 +8,13 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.nutz.lang.ComboException;
+import org.nutz.log.Log;
+import org.nutz.log.Logs;
 import org.nutz.trans.Transaction;
 
 public class DemsyTransaction extends Transaction {
+
+	private Log log = Logs.getLog(DemsyTransaction.class);
 
 	private static int ID = 0;
 
@@ -38,6 +42,7 @@ public class DemsyTransaction extends Transaction {
 
 	@Override
 	protected void commit() {
+		log.debugf("DAO>>Transaction: 提交事务...");
 		ComboException ce = new ComboException();
 		for (Pair p : list) {
 			try {
@@ -58,6 +63,7 @@ public class DemsyTransaction extends Transaction {
 
 	@Override
 	public Connection getConnection(DataSource dataSource) throws SQLException {
+		log.debugf("DAO>>Transaction: 获取事务连接...");
 		for (Pair p : list)
 			if (p.ds == dataSource)
 				return p.conn;
@@ -79,6 +85,7 @@ public class DemsyTransaction extends Transaction {
 
 	@Override
 	public void close() {
+		log.debugf("DAO>>Transaction: 关闭事务连接...");
 		ComboException ce = new ComboException();
 		for (Pair p : list) {
 			try {
@@ -101,6 +108,7 @@ public class DemsyTransaction extends Transaction {
 
 	@Override
 	protected void rollback() {
+		log.debugf("DAO>>Transaction: 回滚事务...");
 		for (Pair p : list) {
 			try {
 				p.conn.rollback();

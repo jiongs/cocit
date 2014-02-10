@@ -1,5 +1,7 @@
 <div id="media{$ui.id}"></div>
+{import file="a.st" href=$data.href target=$data.target title=$data.title img=$data.img}
 <script>
+/*
 $(document).ready(function(){
     $('#media{$ui.id}').flash(
     	{
@@ -11,4 +13,5 @@ $(document).ready(function(){
         }
     );
 });
+*/
 </script>

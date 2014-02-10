@@ -54,7 +54,7 @@ import com.kmetop.demsy.comlib.biz.field.SubSystem;
  * @author wendal(wendal1985@gmail.com)
  * 
  */
-public class BaseNutzDao extends NutDao {
+public class DemsyNutzDao extends NutDao {
 
 	protected static final Log log = Logs.get();
 
@@ -77,19 +77,19 @@ public class BaseNutzDao extends NutDao {
 	protected DaoExecutor execurtor;
 
 	/* ========================================================== */
-	public BaseNutzDao() {
+	public DemsyNutzDao() {
 		this.sqlMaker = new SqlMaker();
 		this.pagerMaker = new DefaultPagerMaker();
-		this.runner = new DefaultDaoRunner();
-		this.execurtor = new DefaultDaoExecutor();
+		this.runner = new DemsyDaoRunner();
+		this.execurtor = new DemsyDaoExecutor();
 	}
 
-	public BaseNutzDao(DataSource dataSource) {
+	public DemsyNutzDao(DataSource dataSource) {
 		this();
 		this.setDataSource(dataSource);
 	}
 
-	public BaseNutzDao(DataSource dataSource, SqlManager sqlManager) {
+	public DemsyNutzDao(DataSource dataSource, SqlManager sqlManager) {
 		this();
 		this.setDataSource(dataSource);
 		this.setSqlManager(sqlManager);

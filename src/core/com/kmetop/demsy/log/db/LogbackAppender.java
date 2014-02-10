@@ -15,6 +15,7 @@ import ch.qos.logback.core.CoreConstants;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.Demsy.Monitor;
 import com.kmetop.demsy.comlib.impl.base.log.RunningLog;
+import com.kmetop.demsy.lang.Str;
 
 public class LogbackAppender extends AppenderBase<ILoggingEvent> {
 	private final static String NA = "?";
@@ -36,6 +37,7 @@ public class LogbackAppender extends AppenderBase<ILoggingEvent> {
 				HttpServletRequest req = me.request();
 				if (req != null) {
 					log.setRemoteIp(req.getRemoteAddr());
+					log.setRemoteAddress(Str.ipToName(log.getRemoteIp()));
 					log.setRemoteUri(req.getRequestURI());
 					log.setRemoteUrl(req.getRequestURL().toString());
 				}
@@ -82,7 +84,7 @@ public class LogbackAppender extends AppenderBase<ILoggingEvent> {
 
 			execute(log);
 		} catch (Throwable e) {
-//			System.err.println("保存运行日志到数据库失败! 错误信息： " + e);
+			// System.err.println("保存运行日志到数据库失败! 错误信息： " + e);
 		}
 	}
 

@@ -1,5 +1,6 @@
 package com.jiongsoft.cocit.service.impl.demsy;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -34,6 +35,7 @@ import com.kmetop.demsy.comlib.impl.sft.system.SFTSystem;
 import com.kmetop.demsy.comlib.impl.sft.system.SystemDataGroup;
 import com.kmetop.demsy.engine.BizEngine;
 import com.kmetop.demsy.lang.Obj;
+import com.kmetop.demsy.lang.SystemExcel;
 import com.kmetop.demsy.orm.IOrm;
 
 public class DemsyEntityTableService implements TableService {
@@ -385,7 +387,7 @@ public class DemsyEntityTableService implements TableService {
 		return fieldMode;
 	}
 
-	public void validate(String opMode, Object data) throws CocException {
+	public void validateEntityData(String opMode, Object data) throws CocException {
 		Map<String, String> fieldsMode = this.getFieldsModeMap(opMode, data);
 
 		Iterator<String> keys = fieldsMode.keySet().iterator();
@@ -429,5 +431,16 @@ public class DemsyEntityTableService implements TableService {
 		}
 
 		return ret;
+	}
+
+	@Override
+	public List parseEntityDataFrom(File excel) {
+		try {
+			SystemExcel systemExcel = new SystemExcel(entity, excel);
+			return systemExcel.getRows();
+		} catch (Throwable e) {
+			throw new CocException(e.getMessage());
+		}
+
 	}
 }

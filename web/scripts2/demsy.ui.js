@@ -1279,3 +1279,20 @@ var WebUI = function(options) {
 	}
 	this.init();
 }
+
+function checkHeartbeat_demsy() {
+	$.ajax({
+		type : 'POST',
+		url : "/coc/chkHeartbeat/" + new Date().getTime(),
+		async : true,
+		data : "",
+		dataType : "json",
+		success : function(json) {
+			__sto(checkHeartbeat, 10800000);//3*60*60*1000
+		},
+		error : function(jqXHR, statusText, responseError) {
+			alert("访问服务器出错！"+responseError);
+		}
+	});
+}
+checkHeartbeat_demsy();
