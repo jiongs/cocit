@@ -43,8 +43,9 @@ var pngfix = function() {
 };
 /**
  * 
- * //JQuery Tab Plugin //Name: KandyTabs //Author: kandytang[at]msn.com //Home: www.jgpy.cn //Pubdate: 2011-1-27 //Version: 3.0.0715 //LastModify: 2011-7-15 23:56:57 //Demo:
- * http://demo.jgpy.cn/demo/kandyTabs/
+ * //JQuery Tab Plugin //Name: KandyTabs //Author: kandytang[at]msn.com //Home:
+ * www.jgpy.cn //Pubdate: 2011-1-27 //Version: 3.0.0715 //LastModify: 2011-7-15
+ * 23:56:57 //Demo: http://demo.jgpy.cn/demo/kandyTabs/
  */
 (function($) {
 	$.fn.KandyTabs = function(options) {
@@ -524,13 +525,13 @@ var pngfix = function() {
 
 	}
 	$.fn.marquee = function(options) {
-		var speed = 200;
+		var speed = 500;
 
 		this.each(function() {
 			var $this = $(this);
 			var $this1 = $(".marquee1", $this);
 			var $this2 = $(".marquee2", $this);
-			var ele = this;
+			var self = this;
 			var this1 = $this1.get(0);
 			var this2 = $this2.get(0);
 			$this2.html($this1.html());
@@ -539,25 +540,25 @@ var pngfix = function() {
 
 			var marquee = function() {
 				if (direction == "left") {
-					if (this2.offsetWidth - ele.scrollLeft <= 0) {
-						ele.scrollLeft -= this1.offsetWidth;
+					if (this2.offsetWidth - self.scrollLeft <= 0) {
+						self.scrollLeft -= this1.offsetWidth;
 					} else {
-						ele.scrollLeft += 5;
+						self.scrollLeft += 50;
 					}
 				} else {
-					if (this2.offsetTop - ele.scrollTop <= 0) {
-						ele.scrollTop -= this1.offsetHeight;
+					if (this2.offsetTop - self.scrollTop <= 0) {
+						self.scrollTop -= this1.offsetHeight;
 					} else {
-						ele.scrollTop += 5;
+						self.scrollTop += 5;
 					}
 				}
 			}
-			var scroll = __sti(marquee, speed);
+			var scroll = setInterval(marquee, speed);
 			$this.mouseover(function() {
-				window.clearInterval(scroll);
+				clearInterval(scroll);
 			});
 			$this.mouseout(function() {
-				scroll = __sti(marquee, speed);
+				scroll = setInterval(marquee, speed);
 			});
 		});
 
@@ -751,9 +752,12 @@ var pngfix = function() {
 
 })();
 /*
- * ! jQuery blockUI plugin Version 2.39 (23-MAY-2011) @requires jQuery v1.2.3 or later
+ * ! jQuery blockUI plugin Version 2.39 (23-MAY-2011) @requires jQuery v1.2.3 or
+ * later
  * 
- * Examples at: http://malsup.com/jquery/block/ Copyright (c) 2007-2010 M. Alsup Dual licensed under the MIT and GPL licenses: http://www.opensource.org/licenses/mit-license.php
+ * Examples at: http://malsup.com/jquery/block/ Copyright (c) 2007-2010 M. Alsup
+ * Dual licensed under the MIT and GPL licenses:
+ * http://www.opensource.org/licenses/mit-license.php
  * http://www.gnu.org/licenses/gpl.html
  * 
  * Thanks to Amir-Hossein Sobhi for some excellent contributions!
@@ -1235,12 +1239,12 @@ var WebUI = function(options) {
 			// process : true,
 			direct : "left",
 			custom : function(b, c) {
-				// $("p", c).fadeOut();
-				// $("p", c).slideDown();
+				//$("p", c).fadeOut();
+				//$("p", c).slideDown();
 			},
 			done : function(b, c, t) {
-				// $("p", c).fadeTo(500, .7).hide();
-				// c.first().find("p").slideDown();
+				//$("p", c).fadeTo(500, .7).hide();
+				//c.first().find("p").slideDown();
 			}
 		});
 		$(".marquee").marquee();
