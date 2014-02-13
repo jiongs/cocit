@@ -106,7 +106,7 @@ public class SmartyTemplate extends AbstractTemplate {
 
 		@Override
 		public Template getTemplate(String name) throws IOException, TemplateException {
-			log.debugf("MVC>>getTemplate: 获取模版对象... [%s]", name);
+			log.infof("MVC>>getTemplate: 获取模版对象... [%s]", name);
 
 			String path = this.getTemplatePath() + name;
 			int idx = path.indexOf("/../");
