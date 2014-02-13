@@ -1288,7 +1288,7 @@ function checkHeartbeat_demsy() {
 		data : "",
 		dataType : "json",
 		success : function(json) {
-			__sto(checkHeartbeat, 10800000);//3*60*60*1000
+			__sto(checkHeartbeat_demsy, 180000);//3*60*1000
 		},
 		error : function(jqXHR, statusText, responseError) {
 			alert("访问服务器出错！"+responseError);

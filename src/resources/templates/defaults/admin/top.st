@@ -6,7 +6,7 @@
 <script src="{$scriptPath}/jquery.js" type="text/javascript"></script>
 <script src="{$scriptPath}/demsy.utils.js" type="text/javascript"></script>
 <script type="text/javascript">
-checkHeartbeat_demsy();
+checkHeartbeat_demsy("{$jsessionid}");
 try {
 	var doc=window.parent.document;
 	var INDEX_MIDDLE_COLS = doc.getElementById("middle").cols;

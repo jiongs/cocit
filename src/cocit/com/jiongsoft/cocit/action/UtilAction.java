@@ -27,7 +27,7 @@ public class UtilAction {
 			ActionContext ctx = Cocit.getActionContext();
 			Date date = new Date(Long.parseLong(timestamp));
 			String strDate = CocCalendar.format(date, CocCalendar.DEFAULT_DATE_TIME_PATTERN);
-			Log.debug("应用程序心跳检测：id:%s, time:%s", ctx.getRequest().getRemoteAddr(), strDate);
+			Log.debug("应用程序心跳检测......{IP:%s, referer:%s, jsessionid:%s}", ctx.getRequest().getRemoteAddr(), ctx.getRequest().getHeader("referer"), ctx.getRequest().getRequestedSessionId());
 
 			return AlertsModel.makeSuccess(strDate);
 		} catch (Throwable e) {

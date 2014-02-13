@@ -117,6 +117,8 @@ public class IndexActions extends ModuleActions implements MvcConst {
 		context.put("topHeight", config.get(SoftConfigManager.ADMIN_UI_TOP_HEIGHT, "95"));
 
 		context.put("user", me().loginUser());
+		String sessionID = me().request().getRequestedSessionId();
+		context.put("jsessionid", sessionID);
 
 		log.debug("访问后台顶部成功.");
 		return context;
