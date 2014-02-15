@@ -309,7 +309,7 @@ var pngfix = function() {
 						});
 						setTimeout(function() {
 							_slifade(_current);
-						}, 100);
+						}, 200);
 					}
 					;
 					var _actions = function(index) {

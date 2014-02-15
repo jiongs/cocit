@@ -1,7 +1,7 @@
 <script src="{$scriptPath}/demsy.xheditor.js" type="text/javascript"></script>
 <div class="t"></div>
 <div class="d">
-	<div class="name">{$obj.name}</div>
+	<div class="name">{tostring bean=$obj prop="name"}</div>
 	<div class="info">
 		{if $obj.infoOrigin!=null}<span>来源：{$obj.infoOrigin}</span>&nbsp;&nbsp;{/if} 
 		{if $obj.infoAuthor!=null}<span>作者：{$obj.infoAuthor}</span>&nbsp;&nbsp;{/if}
@@ -23,7 +23,9 @@
     <div style="margin-top: 20px; text-align: right;" class="info2">
         {if $obj.createdBy!=null}<span>编辑：{$obj.createdBy}</span>&nbsp;&nbsp;<span>浏览：{$obj.clickNum} 次</span>{/if}
     </div>
+    <div class="share">
     {import file="_share.st"}
+    </div>
     </div>
 	<div class="cmt">
 		<table class="cmtinfo" style="text-align: left;">

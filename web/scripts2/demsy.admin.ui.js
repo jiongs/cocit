@@ -157,7 +157,7 @@ var DemsyUIManager = function() {
 				stop : function(event, ui) {
 					var p = ui.position;
 					me.block();
-					$.get(self.options.saveUrl + me.attr("dataID"), "data.position.left=" + p.left + "&data.position.top=" + p.top, function(jsonObj) {
+					$.get(self.options.saveUrl + me.attr("dataID"), "data.position.left=" + parseInt(p.left) + "&data.position.top=" + parseInt(p.top), function(jsonObj) {
 						self.evalPageHeight();
 					}, "json");
 					me.removeClass("selectedBlock");
@@ -169,7 +169,7 @@ var DemsyUIManager = function() {
 				stop : function(event, ui) {
 					var size = ui.size;
 					me.block();
-					$.get(self.options.saveUrl + me.attr("dataID"), "data.position.width=" + size.width + "&data.position.height=" + size.height, function(jsonObj) {
+					$.get(self.options.saveUrl + me.attr("dataID"), "data.position.width=" + parseInt(size.width) + "&data.position.height=" + parseInt(size.height), function(jsonObj) {
 						self.evalPageHeight();
 					}, "json");
 					me.removeClass("selectedBlock");
