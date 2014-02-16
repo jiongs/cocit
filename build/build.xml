@@ -99,6 +99,7 @@
 				<include name="themes2/**/*.*" />
 				
 				<!-- 拷贝项目文件到 WAR 中 -->
+				<!--
 				<include name="www_yunnanbaiyao_com_cn/css/**/*.*" />
 				<include name="www_yunnanbaiyao_com_cn/js/**/*.*" />
 				<include name="www_yunnanbaiyao_com_cn/visit/*.jsp" />
@@ -106,6 +107,7 @@
 				<include name="www_yunnanbaiyao_com_cn/visit/js/**/*.*" />
 				<include name="www_yunnanbaiyao_com_cn/visit/images/**/*.*" />
 				<include name="www_yunnanbaiyao_com_cn/visit/images2/**/*.*" />
+				 -->
 			</fileset>
 		</copy>
 		<echo message="拷贝${web.dir}/WEB-INF目录下的配置文件到${tmp.dir}/WEB-INF目录 ..." />
