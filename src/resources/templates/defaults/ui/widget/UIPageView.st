@@ -42,7 +42,6 @@
 <script src="{$scriptPath}/demsy.grid-zh-CN.js" type="text/javascript"></script>
 <script src="{$scriptPath}/jquery.jqgrid.js" type="text/javascript"></script>
 <script src="{$scriptPath}/demsy.tree.js" type="text/javascript"></script>
-<script src="{$scriptPath}/jquery.ui.accordion.js" type="text/javascript"></script>
 <script src="{$scriptPath}/demsy.bizmodule.js" type="text/javascript"></script>
 
 <style>

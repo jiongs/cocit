@@ -60,18 +60,18 @@ public class CssBackground extends JsonField<CssBackground> {
 		if (!Str.isEmpty(positionY))
 			sb.append(" ").append(positionY);
 		sb.append(";");
-
-		if (image != null && !Str.isEmpty(image.toString()) && image.toString().toLowerCase().endsWith(".png")) {
-			sb.append("filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true,");
-			if (repeat != null && !"no-repeat".equals(repeat)) {
-				sb.append("sizingMethod=scale,");
-			}else{
-				sb.append("sizingMethod=image,");//corp,image
-			}
-			sb.append("src='");
-			sb.append(MvcUtil.contextPath(image.toString().trim()));
-			sb.append("');_background:none;");
-		}
+//
+//		if (image != null && !Str.isEmpty(image.toString()) && image.toString().toLowerCase().endsWith(".png")) {
+//			sb.append("filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true,");
+//			if (repeat != null && !"no-repeat".equals(repeat)) {
+//				sb.append("sizingMethod=scale,");
+//			}else{
+//				sb.append("sizingMethod=image,");//corp,image
+//			}
+//			sb.append("src='");
+//			sb.append(MvcUtil.contextPath(image.toString().trim()));
+//			sb.append("');_background:none;");
+//		}
 
 		return sb.toString();
 	}
