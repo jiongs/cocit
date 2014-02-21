@@ -1,3 +1,5 @@
+
+<script src="{$scriptPath}/jquery.ui.accordion.js" type="text/javascript"></script>
 <div id="{$ui.uiid}" style="display:none; position: relative; top: -1px;">{foreach from=$data.children item="item"}
 	<h3>
 		<a hideFocus href="javascript:void(0);">{$item.name}</a>
