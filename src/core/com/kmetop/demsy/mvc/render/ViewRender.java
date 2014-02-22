@@ -30,6 +30,14 @@ public class ViewRender extends TemplateRender {
 			tpl = ui.getClass().getName().replace("com.kmetop.demsy.mvc.", "");
 		}
 
+		if (tpl.startsWith("/")) {
+			if (tpl.endsWith(".st")) {
+				return tpl;
+			} else {
+				return tpl + ".st";
+			}
+		}
+
 		return (Demsy.appconfig.getTplPackage() + "." + tpl).replace(".", "/") + (Str.isEmpty(ui.getTemplateType()) ? ".st" : ui.getTemplateType());
 	}
 

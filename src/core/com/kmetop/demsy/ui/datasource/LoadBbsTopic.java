@@ -6,6 +6,7 @@ import static com.kmetop.demsy.mvc.MvcConst.URL_UI;
 import static com.kmetop.demsy.mvc.MvcConst.MvcUtil.contextPath;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import java.util.Map;
 import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.jiongsoft.cocit.service.SecurityManager;
+import com.jiongsoft.cocit.util.CocCalendar;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
@@ -157,6 +159,15 @@ public class LoadBbsTopic extends UiRecord {
 		}
 
 		Demsy.uiEngine.addClickNum(orm, (IStatistic) record);
+
+		Class cls =Demsy.bizEngine.getType(bizEngine.getSystem(IBbsTopic.SYS_CODE));
+		int total = orm.count(cls);
+		Date todayDate=CocCalendar.parse(CocCalendar.getNowDate());
+		int today = orm.count(cls, Expr.gt("created", todayDate));
+		int yesterday = orm.count(cls, Expr.gt("created", CocCalendar.getNext(todayDate, -1)).and(Expr.lt("created", todayDate)));
+		context.put("topicCountTotal", total);
+		context.put("topicCountToday", today);
+		context.put("topicCountYesterday", yesterday);
 
 		return record;
 	}

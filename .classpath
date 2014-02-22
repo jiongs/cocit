@@ -45,7 +45,7 @@
 	<classpathentry kind="lib" path="build/tomcatlib/el-api.jar"/>
 	<classpathentry kind="lib" path="build/tomcatlib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="build/tomcatlib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="build/lib/smarty4j-1.0.0-jdk5.jar" sourcepath="3th/smarty4j"/>
+	<classpathentry kind="lib" path="build/lib/smarty4j-1.0.0-jdk5.jar" sourcepath="3th/src/smarty4j"/>
 	<classpathentry kind="lib" path="3th/lib/springframework/spring-mock-3.2.4/spring-core-3.2.4.RELEASE.jar"/>
 	<classpathentry kind="lib" path="3th/lib/springframework/spring-mock-3.2.4/spring-test-3.2.4.RELEASE.jar"/>
 	<classpathentry kind="con" path="org.testng.TESTNG_CONTAINER"/>
