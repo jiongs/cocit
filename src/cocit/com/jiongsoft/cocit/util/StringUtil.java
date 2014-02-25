@@ -50,15 +50,15 @@ public abstract class StringUtil {
 
 		// 护照号码
 		if (len >= 7 && len <= 10) {
-//			char ch = id.trim().toUpperCase().charAt(0);
-//			if (ch >= 'A' && ch <= 'Z') {
-//				if (len <= 8)
-//					return true;
-//			} else {
-//				if (len == 10)
-//					return true;
-//			}
-			
+			// char ch = id.trim().toUpperCase().charAt(0);
+			// if (ch >= 'A' && ch <= 'Z') {
+			// if (len <= 8)
+			// return true;
+			// } else {
+			// if (len == 10)
+			// return true;
+			// }
+
 			return true;
 		}
 
@@ -328,5 +328,14 @@ public abstract class StringUtil {
 		}
 
 		return sb.length() > 0 ? sb.substring(1) : "";
+	}
+
+	public static boolean isNumber(String number) {
+		try {
+			Long.parseLong(number);
+			return true;
+		} catch (Throwable e) {
+			return false;
+		}
 	}
 }

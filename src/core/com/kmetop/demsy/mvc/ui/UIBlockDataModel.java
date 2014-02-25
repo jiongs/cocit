@@ -17,6 +17,7 @@ import com.kmetop.demsy.lang.Str;
 public class UIBlockDataModel implements IDynamic {
 
 	private List<UIBlockDataModel> items;
+
 	// 链接地址
 	private String href;
 
@@ -65,6 +66,10 @@ public class UIBlockDataModel implements IDynamic {
 
 	public void setImg(String image) {
 		this.img = image;
+	}
+
+	public void setHtmlName(String label) {
+		this.name = label;
 	}
 
 	public void setName(String label) {

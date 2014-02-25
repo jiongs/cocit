@@ -23,7 +23,7 @@ import com.kmetop.demsy.comlib.security.IRealm;
 , groups = { @CocGroup(name = "基本信息", code = "basic"//
 , fields = { @CocField(name = "类型名称", property = "name", mode = "c:M e:M")//
 		, @CocField(name = "类型编号", property = "code", mode = "c:M e:M") //
-		, @CocField(property = "userModuleID") //
+		, @CocField(property = "userModule") //
 		, @CocField(name = "类型描述", property = "desc") //
 		, @CocField(name = "创建时间", property = "created", mode = "*:P", pattern = "yyyy-MM-dd HH:mm:ss") //
 		, @CocField(name = "更新时间", property = "updated", mode = "*:P", pattern = "yyyy-MM-dd HH:mm:ss") //

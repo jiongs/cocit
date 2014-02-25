@@ -402,11 +402,6 @@ var DemsyUIManager = function() {
 						self.clearCssDesigner();
 					}, type, blockID);
 				},
-				"关闭" : function() {
-					$(this).dialog("destroy");
-					dialog.html("");
-					self.clearCssDesigner();
-				},
 				"另存为" : function() {
 					self.save(saveUrl, $(this), function(jsonObj) {
 						dataID = jsonObj.data;
@@ -424,6 +419,11 @@ var DemsyUIManager = function() {
 						}
 						self.clearCssDesigner();
 					}, type, blockID);
+				},
+				"关闭" : function() {
+					$(this).dialog("destroy");
+					dialog.html("");
+					self.clearCssDesigner();
 				}
 			},
 			close : function() {

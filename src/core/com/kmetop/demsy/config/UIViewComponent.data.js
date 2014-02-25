@@ -288,7 +288,7 @@
 		code : "_my_bbslist",
 		orderby : 306,
 		titleOptions : true,
-		viewTemplate : "ui.lib.MyBbsList",
+		viewTemplate : "ui.lib.ListText",
 		viewController : "MyBbsList"
 	}, {
 		name : "我的博客文章",

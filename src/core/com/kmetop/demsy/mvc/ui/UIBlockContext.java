@@ -381,8 +381,7 @@ public class UIBlockContext {
 		}
 
 		if (log.isTraceEnabled())
-			log.tracef("板块数据集查询规则: [moduleGuid=%s, rules=%s, rules2=%s, ui:%s] moduleID=%s, catalogModule=%s", moduleGuid, datasource.getRules(), datasource.getRules2(), block.getViewType(), module,
-					catalogModule);
+			log.tracef("板块数据集查询规则: [moduleGuid=%s, rules=%s, rules2=%s, ui:%s] moduleID=%s, catalogModule=%s", moduleGuid, datasource.getRules(), datasource.getRules2(), block.getViewType(), module, catalogModule);
 
 		// 解析动态模块
 		boolean isFullDynaCatalogModule = false;
@@ -578,6 +577,10 @@ public class UIBlockContext {
 	}
 
 	public UIBlockDataModel makeDataModel(Object obj, Long linkID, Long moduleID) {
+		return this.makeDataModel(obj, linkID, moduleID, null);
+	}
+
+	public UIBlockDataModel makeDataModel(Object obj, Long linkID, Long moduleID, Long dataID) {
 		UIBlockDataModel item = new UIBlockDataModel();
 
 		item.setName(obj == null ? "" : obj.toString(), titleLen);
@@ -610,12 +613,12 @@ public class UIBlockContext {
 				if (!Str.isEmpty(info.getInfoLinkPath())) {
 					item.setHref(MvcUtil.contextPath(info.getInfoLinkPath()));
 				} else if (linkID != null && moduleID != null) {
-					item.setHref(MvcUtil.contextPath(URL_UI, linkID, moduleID + ":" + Obj.getId(obj)));
+					item.setHref(MvcUtil.contextPath(URL_UI, linkID, moduleID + ":" + (dataID == null ? Obj.getId(obj) : dataID)));
 				}
 
 				item.setDate(info.getInfoDate());
 			} else if (linkID != null && moduleID != null) {
-				item.setHref(MvcUtil.contextPath(URL_UI, linkID, moduleID + ":" + Obj.getId(obj)));
+				item.setHref(MvcUtil.contextPath(URL_UI, linkID, moduleID + ":" + (dataID == null ? Obj.getId(obj) : dataID)));
 				item.setDate(Dates.formatDate((Date) Obj.getValue(obj, F_CREATED)));
 			}
 			if (!Str.isEmpty(block.getLinkTarget())) {

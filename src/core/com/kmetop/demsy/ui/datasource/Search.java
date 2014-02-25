@@ -61,7 +61,7 @@ public class Search extends UiBaseDataSource {
 					else
 						item = parser.makeDataModel(obj, null, null);
 
-					item.setName(item.getName().replace(keywords, "<span style='font-weight:bold;'>" + keywords + "</span>"));
+					item.setHtmlName(item.getName().replace(keywords, "<span class=\"keywords\" style='font-weight:bold;'>" + keywords + "</span>"));
 					data4.add(item);
 				}
 			}
@@ -82,7 +82,7 @@ public class Search extends UiBaseDataSource {
 					else
 						item = parser.makeDataModel(obj, null, null);
 
-					item.setName(item.getName().replace(keywords, "<span style='font-weight:bold;'>" + keywords + "</span>"));
+					item.setHtmlName(item.getName().replace(keywords, "<span class=\"keywords\" style='font-weight:bold;'>" + keywords + "</span>"));
 					data1.add(item);
 				}
 			}
@@ -103,7 +103,7 @@ public class Search extends UiBaseDataSource {
 					else
 						item = parser.makeDataModel(obj, null, null);
 
-					item.setName(item.getName().replace(keywords, "<span style='font-weight:bold;'>" + keywords + "</span>"));
+					item.setHtmlName(item.getName().replace(keywords, "<span class=\"keywords\" style='font-weight:bold;'>" + keywords + "</span>"));
 					data2.add(item);
 				}
 			}
@@ -124,7 +124,7 @@ public class Search extends UiBaseDataSource {
 					else
 						item = parser.makeDataModel(obj, null, null);
 
-					item.setName(item.getName().replace(keywords, "<span style='font-weight:bold;'>" + keywords + "</span>"));
+					item.setHtmlName(item.getName().replace(keywords, "<span class=\"keywords\" style='font-weight:bold;'>" + keywords + "</span>"));
 					data3.add(item);
 				}
 			}

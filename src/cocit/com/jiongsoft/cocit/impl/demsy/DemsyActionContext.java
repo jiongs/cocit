@@ -98,4 +98,12 @@ public class DemsyActionContext extends BaseActionContext {
 	public boolean isLocalHost() {
 		return demsyContext.isLocal();
 	}
+
+	@Override
+	public Long getSoftID() {
+		if (demsyContext.getSoft() != null)
+			return demsyContext.getSoft().getId();
+
+		return null;
+	}
 }

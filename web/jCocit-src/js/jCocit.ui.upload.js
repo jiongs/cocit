@@ -833,16 +833,16 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 						width       : settings.comboWidth + 'px'
 					});
 					$(".CbT", $combo).css({
-						height      : (settings.comboHeight - 3) + 'px',
+						height      : (settings.comboHeight) + 'px',
 						width       : (settings.comboWidth - 20) + 'px',
 					}).val(settings.text);
 					$(".CbV", $combo).attr("name", this.name).val(settings.value);
 					$(".upload-text", $combo).css({
-						height      : (settings.comboHeight - 3) + 'px',
+						height      : (settings.comboHeight) + 'px',
 						width       : (settings.comboWidth - 20) + 'px',
 						position : 'relative',
-						top : '-20px',
-						left : '1px'
+						top : '-'+settings.comboHeight+'px',
+						left : '0px'
 					});
 					$wrapper.wrap($combo);
 					/*

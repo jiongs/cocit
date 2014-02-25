@@ -217,6 +217,7 @@ public class EntityAction {
 		ret.setData(helper.entity);
 
 		try {
+			ObjectUtil.setValue(helper.entity, "softID", helper.actionContext.getSoftID());
 			helper.entityManager.save(helper.entity, helper.opMode);
 		} catch (Throwable e) {
 			ret.setException(e);

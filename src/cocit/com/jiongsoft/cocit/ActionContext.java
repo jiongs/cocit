@@ -117,4 +117,6 @@ public interface ActionContext {
 	 */
 	boolean isLocalHost();
 
+	Long getSoftID();
+
 }
