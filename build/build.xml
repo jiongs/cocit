@@ -163,9 +163,11 @@
 			<zipfileset dir="${proj.dir}" includes="web/WEB-INF/config-template/**/*.*" />
 
 			<!-- 备份  项目文件  -->
+			<!--
 			<zipfileset dir="${proj.dir}" includes="web/www_yunnanbaiyao_com_cn/css/**/*.*" />
 			<zipfileset dir="${proj.dir}" includes="web/www_yunnanbaiyao_com_cn/js/**/*.*" />
 			<zipfileset dir="${proj.dir}" includes="web/www_yunnanbaiyao_com_cn/visit/**/*.*" />
+			 -->
 		</zip>
 		<delete file="${proj.dir}/git.zip" />
 	</target>

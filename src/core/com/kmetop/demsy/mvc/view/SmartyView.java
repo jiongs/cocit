@@ -1,5 +1,6 @@
 package com.kmetop.demsy.mvc.view;
 
+import java.io.File;
 import java.io.Writer;
 import java.util.Map;
 
@@ -28,12 +29,20 @@ public class SmartyView extends AbstractView {
 		resp.setContentType("text/html; charset=UTF-8");
 
 		Writer out = null;
-		String path = Demsy.appconfig.getTplPackage().replace(".", "/") + "/" + this.path;
+		String tplPath = null;
+		String softCode = Demsy.me().getSoft().getCode();
+		String contextPath = "/" + softCode.replace(".", "_");
+		File tplFile = new File(Demsy.contextDir + contextPath + "/" + this.path);
+		if (tplFile.exists()) {
+			tplPath = contextPath + "/" + this.path;
+		} else {
+			tplPath = Demsy.appconfig.getTplPackage().replace(".", "/") + "/" + this.path;
+		}
 		try {
 			out = resp.getWriter();
-			MvcUtil.tplEngineST.render(path, ctx, out);
+			MvcUtil.tplEngineST.render(tplPath, ctx, out);
 		} catch (Throwable e) {
-			log.error("解析模板出错! [" + path + "]", e);
+			log.error("解析模板出错! [" + tplPath + "]", e);
 		} finally {
 			try {
 				if (out != null)
