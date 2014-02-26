@@ -15,8 +15,8 @@
 		</tr>
 	{else}
 		<tr>
-			<td><input class="button" onclick='window.document.location.href="/ui/22";' value="登录" type="submit" /></td>
-			<td><input class="button" onclick='window.document.location.href="/ui/23";' value="注册" type="submit" /></td>
+			<td><input class="button" onclick='window.document.location.href="/ui/22";' value=" 登 录 " type="submit" /></td>
+			<td><input class="button" onclick='window.document.location.href="/ui/23";' value=" 注 册 " type="submit" /></td>
 		</tr>
 {/if}
 </table>

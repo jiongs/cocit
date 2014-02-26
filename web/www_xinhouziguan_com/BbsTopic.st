@@ -1,13 +1,14 @@
 <script src="{$scriptPath}/demsy.xheditor.js" type="text/javascript"></script>
 <style>
-.topic_table{
+.topic_form table, .topic_table{
     BORDER-COLLAPSE: collapse;
+    border: 1px solid #e0dcdd;
 }
-.topic_table a{
+.topic_table a, .current_position a{
     color: #000000;
     text-decoration:none;
 }
-.topic_table a:hover{
+.topic_table a:hover, .current_position a:hover{
     text-decoration:underline;
 }
 .topic_table_header{
@@ -17,6 +18,12 @@
 .item2 td, .item1 td{
     border: 1px solid #e0dcdd;
     padding: 5px;
+}
+td.user{
+	width: 200px;
+}
+.header_position>td, .header_stat>td {
+    border: 1px solid #ffffff;
 }
 .item2 td{
     border-top: 0 solid #e0dcdd;
@@ -32,7 +39,6 @@
     height: 30px;
 }
 .topic_table_pager{
-    border: 1px solid #e0dcdd;
     background: #e3e3e3;
     height: 35px;
 }
@@ -75,23 +81,20 @@
 <div class="t"></div>
 <div class="d">
 	<a id="top"></a>
-    <table class="topic_table" width='100%' align=center cellpadding=0 cellspacing=0 border=0>
-        <tr>
-            <td colspan=6 class="current_position">
+            <div class="current_position">
                 <table width="100%" cellpadding=0 cellspace=0 border=0><tr>
                     <td style="background: url(/upload/xinhouziguan/images/zclt/left.png) no-repeat left top;height: 47px;width: 14px;"></td>
                     <td style="background: url(/upload/xinhouziguan/images/zclt/bg.png) repeat-x; height: 47px;"><img src="/upload/xinhouziguan/images/zclt/position.png" style="margin-top: -2px;" /> <a href="/ui/11">论坛首页</a> <span style="color: #999999">&gt;</span> <a href="{$forumUrl}">{tostring bean=$forum name="name"}</a> <span style="color: #999999">&gt;</span>  {tohtml bean=$data prop="title"}</td>
                     <td style="background: url(/upload/xinhouziguan/images/zclt/right.png) no-repeat -1px 0;height: 47px;width: 14px;"></td>
                 </tr></table>
-            </td>
-        </tr>
-        <tr style="height: 30px;">
-            <td colspan=6 class="topic_stat" style="height: 16px;">
+            </div>
+            <div colspan=6 class="topic_stat" style="height: 16px;padding: 20px 5px 5px 5px;">
                 <img src="/upload/xinhouziguan/images/zclt/stat.png" style="margin-top: -2px;" /> <span style="color: #999999">今日：</span>{$topicCountToday} <span style="color: #999999">&nbsp;&nbsp;昨日：</span>{$topicCountYesterday} <span style="color: #999999">&nbsp;&nbsp;总帖数：</span>{$topicCountTotal}
-            </td>
-        </tr>
+            </div>
         {if $pager != null}
-        <tr class="topic_table_pager">
+        <div class="">
+           <table width="100%" cellpadding=0 cellspace=0 border=0>
+        	<tr class="topic_table_pager" style="background: #ffffff;">
             <td colspan=2><span class="msg">&nbsp;共 {$pager.totalPage} 页 {$pager.totalRecord} 条回帖，当前显示第 {$pager.pageIndex} 页 </span> {if $pager.totalPage > 0}{if $pager.pageIndex != 1} <a
                 href='javascript: ui.gotoPage("block{$block.id}","page=1");' title="第一页">第一页</a>&nbsp; <a href='javascript: ui.gotoPage("block{$block.id}","page={$pager.prePage}");' title="上一页">上一页</a>&nbsp;
                 {/if} {if $pager.pageIndex != $pager.totalPage} <a href='javascript: ui.gotoPage("block{$block.id}","page={$pager.nextPage}");' title="下一页">下一页</a>&nbsp; <a
@@ -100,8 +103,10 @@
                 <a href="#bottom" style="align: right;"><img src='/upload/xinhouziguan/images/zclt/button4.png' /></a>
                 <a href="{$forumUrl}#bottom" style="align: right;"><img src='/upload/xinhouziguan/images/zclt/button1.png' /></a>
             </td>
-        </tr>
+        	</tr></table>
+        </div>
         {/if}
+    <table class="topic_table" width='100%' align=center cellpadding=0 cellspacing=0 border=0>
         {foreach from=$pager.result item="obj" key="idx"} {if $obj != null} {if $css == "even"}{assign var="css" value="odd"}{else}{assign var="css" value="even"}{/if} {if $idx != 0} 
         {math equation="(pageIndex-1)*pageSize+idx" pageIndex=$pager.pageIndex pageSize=$pager.pageSize idx=$idx assign="idx"} {/if}
         <tr class='item1 {$css} row{tostring bean=$idx pattern="#"}'>
@@ -211,7 +216,7 @@
                     <td align="left"><input type="text" class="input" name="data.viewUsers" style="width: 50%;" />(注：填写逗号分隔的帐号列表)</td>
                 </tr>
             </table>
-            <input type="submit" class="submitButton" value="" />
+            <input type="submit" class="submitButton" style="cursor:pointer;" value="" />
         </form>
     </div>
 </div>

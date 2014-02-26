@@ -29,8 +29,8 @@ var __sto = setTimeout;
 window.setTimeout = function(callback, timeout, param) {
 	var args = Array.prototype.slice.call(arguments, 2);
 	var _cb = function() {
-		if(callback.apply)
-		callback.apply(null, args);
+		if (callback.apply)
+			callback.apply(null, args);
 	}
 	__sto(_cb, timeout);
 }
@@ -49,4 +49,52 @@ function checkHeartbeat_demsy() {
 			alert("访问服务器出错！" + responseError);
 		}
 	});
+}
+
+/**
+ * Cache data specified by name and value into the browser cookie.
+ * <p>
+ * <b>Parameters:</b>
+ * <UL>
+ * <LI>name: cached data key.
+ * <LI>value: cached data value.
+ * <LI>hours: cached period of validity, time unit is hour.
+ * </UL>
+ */
+function setCookie(name, value, hours) {
+	var expires = "";
+	if (typeof hours == "undefined" || hours == null) {
+		hours = 30 * 24;
+	}
+	var d = new Date();
+	d.setTime(d.getTime() + 60 * 60 * 1000 * hours);
+	expires = "; expires=" + d.toGMTString();
+	
+	document.cookie = escape(name) + "=" + escape(value) + ";path=/" + expires;
+}
+
+/**
+ * Get cached data from the browser cookie.
+ * <p>
+ * <b>Parameters:</b>
+ * <UL>
+ * <LI>name: cached data key.
+ * </UL>
+ */
+function getCookie(name) {
+	var m = document.cookie.match(new RegExp("(^|; )(" + escape(name) + ")\\=([^;]*)(;|$)", "i"));
+	return m == null ? null : unescape(m[3]);
+}
+
+/**
+ * Remove cached data from the browser cookie.
+ * <p>
+ * <b>Parameters:</b>
+ * <UL>
+ * <LI>name: cached data key.
+ * </UL>
+ */
+function removeCookie(name) {
+	if (getCookie(name) != null)
+		setCookie(name, "", -1);
 }
