@@ -18,11 +18,13 @@
         {if $obj.desc !=null}{tohtml bean=$obj.desc}{/if}
         </p>
     {/if}
-
+	
+    {if $obj.name!=null}
 		<div style="margin-top: 20px; text-align: right;" class="info2">
         {if $obj.createdBy!=null}<span>编辑：{if $obj.createdBy != "www.kmetop.com"}{$obj.createdBy}{/if}</span>&nbsp;&nbsp;<span>浏览：{$obj.clickNum} 次</span>{/if}
     	</div>
     	<div class="share">{import file="_share.st"}</div>
+    {/if}
     </div>
     {if $obj.name!=null}
 		<div class="cmt">
