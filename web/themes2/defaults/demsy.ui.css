@@ -8,6 +8,9 @@ html,body{
 	padding: 0;
 	border: 0;
 }
+img{
+	border: 0;
+}
 body{
 	font-size: 12px;
 	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
