@@ -31,6 +31,13 @@ html,body {
 	height: 100%;
 	width: 100%;
 }
+a{
+	color: #346699;
+	text-decoration: none;
+}
+a:hover{
+	text-decoration: underline;
+}
 
 .login_box {
     background: url(/upload/xinhouziguan/images/admin/login-bg.png) no-repeat center top;
@@ -90,7 +97,7 @@ html,body {
 .login_desc td{
     padding-top: 20px;
     line-height: 20px;
-    font-size: 11px;
+    font-size: 12px;
 }
 .login_desc .label{
     color: #000000;
@@ -114,6 +121,9 @@ html,body {
 	padding: 10px;
 }
 
+.input {
+	height: 25px;
+}
 .input input {
 	width: 150px;
 	height: 18px;
@@ -128,9 +138,9 @@ html,body {
 	border: 1px solid #346699;
 }
 .input input.checkbox{
-    width: 12px;
-    height: 12px;
-    margin: 10px 5px 10px 0;
+    width: 16px;
+    height: 16px;
+    margin: 10px 0 10px 0;
     border: 0;
     padding: 0;
 }
@@ -147,36 +157,46 @@ html,body {
 				    <div class="login_form">
 					{if $user != null}
     					<table width="100%" border="0" align="center" cellpadding="1" cellspacing="1">
+                            <tr>
+                                    <td colspan=2 class="login_title">登录</td>
+                            </tr>
     						<tr>
-    							<td width="30%" align="right">【{$user.username}】您已经登录! </td>
-    							<td width="70%">&nbsp;&nbsp;<a href="javascript:logout();">重新登录</a>&nbsp;&nbsp;<a target="_parent" href="{$contextPath}/admin">进入系统</a></td>
+    							<td class="label"></td>
+    							<td class="input">{$user.username} 已经登录! </td>
+    						</tr>
+    						<tr>
+    							<td class="label"></td>
+    							<td class="input"><a href="javascript:logout();">重新登录</a>&nbsp;&nbsp;<a target="_parent" href="{$contextPath}/admin">进入系统</a></td>
     						</tr>
     					</table>
 					{else}
     					<form onsubmit="return false;">
     						<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
                                 <tr>
-                                    <td class="login_title">登录</td>
+                                    <td colspan=2 class="login_title">登录</td>
                                 </tr>
     							<tr>
     								<td class="label">类型：</td>
-    								<td class="input"><select name="_loginrealm_">
+    								<td class="input"><select id="_loginrealm_" name="_loginrealm_">
                                             <option value="01">管理员登录</option>
                                             <option value=""></option>
     								</select></td>
     							</tr>
     							<tr>
     								<td class="label">帐号：</td>
-    								<td class="input"><input type='text' name="_loginuser_" /></td>
+    								<td class="input"><input type="text" id="_loginuser_" name="_loginuser_" /></td>
     							</tr>
     							<tr>
     								<td class="label">密码：</td>
-    								<td class="input"><input type='password' name="_loginpwd_" /></td>
+    								<td class="input"><input type="password" id="_loginpwd_" name="_loginpwd_" /></td>
     							</tr>
                                 <tr>
                                     <td class="label"></td>
                                     <td class="input">
-                                        <input type="checkbox" class="checkbox" id="rememberMe" name="rememberMe" /><label for="rememberMe">记住密码</label>
+                                    	<table><tr>
+                                    		<td><input type="checkbox" class="checkbox" id="rememberMe" name="rememberMe" /></td>
+                                    		<td><label for="rememberMe">记住密码</label></td>
+                                    		</tr></table>
                                     </td>
                                 </tr>
     							<tr align="left">
@@ -205,12 +225,37 @@ html,body {
 </html>
 
 <script type="text/javascript">
+	// Read username and password from cookie
+	var form = document.forms[0];
+	$("#rememberMe", form).each(function() {
+		var _loginuser_ = getCookie("_loginuser_");
+		if (_loginuser_) {
+			this.checked = true;
+			$("#_loginrealm_", form).val(getCookie("_loginrealm_"));
+			$("#_loginuser_", form).val(_loginuser_);
+			$("#_loginpwd_", form).val(getCookie("_loginpwd_"));
+		}
+	});
 	$(".login_submit_button").click(function() {
-        var $form=$(this.form);
+		var form = this.form;
+        var $form=$(form);
         $form.block();
         var data=$form.serialize()+"&clientWidth="+document.body.clientWidth+"&clientHeight="+document.body.clientHeight;
         $.post(this.form.action, data, function(json) {
             if(json.success){
+						
+				$("#rememberMe", $form).each(function() {
+					if (this.checked) {
+						setCookie("_loginrealm_", form["_loginrealm_"].value);
+						setCookie("_loginuser_", form["_loginuser_"].value);
+						setCookie("_loginpwd_", form["_loginpwd_"].value);
+					} else {
+						removeCookie("_loginrealm_");
+						removeCookie("_loginuser_");
+						removeCookie("_loginpwd_");
+					}
+				});
+						
 	            if(json.redirect){
 	                window.location.href=json.redirect;
 	            }else{

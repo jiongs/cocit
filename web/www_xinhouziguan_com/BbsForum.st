@@ -1,10 +1,10 @@
 <script src="{$scriptPath}/demsy.xheditor.js" type="text/javascript"></script>
 <style>
-.topic_table a{
+.topic_table a, .current_position a{
     color: #000000;
     text-decoration:none;
 }
-.topic_table a:hover{
+.topic_table a:hover, .current_position a:hover{
     text-decoration:underline;
 }
 .topic_table_header{
@@ -15,10 +15,10 @@
     padding-left: 5px;
 }
 .topic_table_row_odd{
-    background: #efefef;
     height: 30px;
 }
 .topic_table_row_even{
+    background: #efefef;
     height: 30px;
 }
 .topic_table_pager{
@@ -30,6 +30,10 @@
 }
 .topic_form{
     margin-top: 10px;
+}
+.topic_form table{
+    BORDER-COLLAPSE: collapse;
+    border: 1px solid #e3e3e3;
 }
 .topic_form .header{
     background: #434748;
@@ -56,28 +60,29 @@
 }
 .topic_form .input{
     border: 1px solid #c5c5c5;
+    height: 20px;
+    line-height: 20px;
 }
 .current_position{
     font-weight: bold;
 }
+.posticon, .titleicon, .title{
+	padding: 2px 5px 2px 5px;
+}
 </style>
 <div class="d">
-    <table class="topic_table" width='100%' align=center cellpadding=0 cellspacing=0 border=0>
-        <tr>
-            <td colspan=6 class="current_position">
+            <div class="current_position">
                 <table width="100%" cellpadding=0 cellspace=0 border=0><tr>
                     <td style="background: url(/upload/xinhouziguan/images/zclt/left.png) no-repeat left top;height: 47px;width: 14px;"></td>
                     <td style="background: url(/upload/xinhouziguan/images/zclt/bg.png) repeat-x; height: 47px;"><img src="/upload/xinhouziguan/images/zclt/position.png" style="margin-top: -2px;" /> <a href="/ui/11">论坛首页</a> <span style="color: #999999">&gt;</span>  {$data.name}</td>
                     <td style="background: url(/upload/xinhouziguan/images/zclt/right.png) no-repeat -1px 0;height: 47px;width: 14px;"></td>
                 </tr></table>
-            </td>
-        </tr>
-        <tr style="height: 30px;">
-            <td colspan=6 class="topic_stat" style="height: 16px;">
+            </div>
+            <div class="topic_stat" style="height: 16px;padding: 20px 5px 5px 5px;">
                 <img src="/upload/xinhouziguan/images/zclt/stat.png" style="margin-top: -2px;" /> <span style="color: #999999">今日：</span>{$topicCountToday} <span style="color: #999999">&nbsp;&nbsp;昨日：</span>{$topicCountYesterday} <span style="color: #999999">&nbsp;&nbsp;总帖数：</span>{$topicCountTotal}
-            </td>
-        </tr>
-        <tr class="topic_table_pager" style="">
+            </div>
+    <table class="topic_table" width='100%' align=center cellpadding=0 cellspacing=0 border=0>
+        <tr class="topic_table_pager" style="background: #ffffff;">
             <td colspan=5><span class="msg">&nbsp;共 {$pager.totalPage} 页 {$pager.totalRecord} 条记录，当前显示第 {$pager.pageIndex} 页 </span> {if $pager.totalPage > 0}{if $pager.pageIndex != 1} <a
                 href='javascript: ui.gotoPage("block{$block.id}","page=1");' title="第一页">第一页</a>&nbsp; <a href='javascript: ui.gotoPage("block{$block.id}","page={$pager.prePage}");' title="上一页">上一页</a>&nbsp;
                 {/if} {if $pager.pageIndex != $pager.totalPage} <a href='javascript: ui.gotoPage("block{$block.id}","page={$pager.nextPage}");' title="下一页">下一页</a>&nbsp; <a
@@ -164,7 +169,7 @@
                     <td align="left"><input type="text" class="input" name="data.viewUsers" style="width: 50%;" />(注：填写逗号分隔的帐号列表)</td>
                 </tr>
             </table>
-            <input type="submit" class="submitButton" value="" />
+            <input type="submit" class="submitButton" style="cursor:pointer;" value="" />
         </form>
     </div>
 </div>

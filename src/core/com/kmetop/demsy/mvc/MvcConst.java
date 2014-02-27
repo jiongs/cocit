@@ -12,6 +12,7 @@ import org.nutz.json.Json;
 
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.BizConst;
+import com.kmetop.demsy.comlib.entity.IDemsySoft;
 import com.kmetop.demsy.config.IAppConfig;
 import com.kmetop.demsy.lang.DemsyException;
 import com.kmetop.demsy.lang.Str;
@@ -350,20 +351,22 @@ public interface MvcConst {
 		}
 
 		public static String getUploadBasePath() {
-			String folder = appconfig.get(IAppConfig.PATH_UPLOAD);
-			if (Str.isEmpty(folder)) {
-				folder = "/upload";
+			String uploadFolder = appconfig.get(IAppConfig.PATH_UPLOAD);
+			if (Str.isEmpty(uploadFolder)) {
+				uploadFolder = "/upload";
 			}
-			if (Demsy.me().getSoft() == null || Demsy.me().getSoft().getId() == null)
+			if (uploadFolder.charAt(0) != '/') {
+				uploadFolder = "/" + uploadFolder;
+			}
+
+			IDemsySoft soft = Demsy.me().getSoft();
+			if (soft == null || soft.getId() == null)
 				throw new DemsyException("非法软件编号");
 
-			String softCode = Demsy.me().getSoft().getCode();
-			softCode = softCode.replace("www.", "").replace(".com", "").replace(".cn", "").replace(".", "_");
-			// String softCode = "" + Demsy.me().getSoft().getId();
+			String softCode = soft.getCode();
+			String softContextPath = softCode.replace('.', '_');
 
-			folder += "/" + softCode;
-
-			return folder;
+			return "/" + softContextPath + uploadFolder;
 		}
 
 	}
