@@ -95,8 +95,10 @@
 			<fileset dir="${web.dir}">
 				<include name="index.html" />
 				<include name="jCocit/**/*.*" />
-				<include name="scripts2/**/*.*" />
-				<include name="themes2/**/*.*" />
+				<!--
+					<include name="scripts2/**/*.*" />
+					<include name="themes2/**/*.*" />
+				-->
 				
 				<!-- 拷贝项目文件到 WAR 中 -->
 				<!--
