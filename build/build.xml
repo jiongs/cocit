@@ -18,8 +18,8 @@
 	<property name="tomcatlib.dir" value="${env.tomcatlib.dir}" />
 	<property name="lib.dir" value="${env.lib.dir}" />
 	<property name="jars.dir" value="${env.jars.dir}" />
-	<property name="patch.dir" location="${proj.dir}/patch" />
-	<property name="backup.dir" location="${proj.dir}/backup" />
+	<property name="patch.dir" location="${proj.dir}/build/patch" />
+	<property name="backup.dir" location="${proj.dir}/build/backup" />
 	<property name="src.dir" location="${proj.dir}/src" />
 	<property name="web.dir" location="${proj.dir}/web" />
 	<property name="tmp.dir" value="${basedir}/tmp" />
