@@ -67,8 +67,7 @@ public class UiActions extends ModuleActions {
 		UIPageView ui = null;
 		if (!Str.isEmpty(pageID)) {
 			try {
-				ui = (UIPageView) uiEngine.makePageView(Long.parseLong(pageID), Str.isEmpty(blockID) ? null : Long.parseLong(blockID), Str.isEmpty(moduleID) ? null : Long.parseLong(moduleID),
-						Str.isEmpty(dataID) ? null : Long.parseLong(dataID));
+				ui = (UIPageView) uiEngine.makePageView(Long.parseLong(pageID), Str.isEmpty(blockID) ? null : Long.parseLong(blockID), Str.isEmpty(moduleID) ? null : Long.parseLong(moduleID), Str.isEmpty(dataID) ? null : Long.parseLong(dataID));
 				if (ui != null) {
 					ui.set("loadBlockUrl", MvcUtil.contextPath(URL_UI_BLOCK, ""));
 					ui.set("dataParam", Str.isEmpty(dataParam) ? "" : dataParam);
@@ -145,15 +144,15 @@ public class UiActions extends ModuleActions {
 	 * @throws DemsyException
 	 */
 	private boolean canLayout(Long pageID) {
-		try {
-			if (Demsy.appconfig.isProductMode()) {
-				return false;
-			}
-			security.checkLogin(SecurityManager.ROLE_ADMIN_ROOT);
-			return true;
-		} catch (Throwable e) {
+		// try {
+		if (Demsy.appconfig.isProductMode()) {
 			return false;
 		}
+		security.checkLogin(SecurityManager.ROLE_ADMIN_ROOT);
+		return true;
+		// } catch (Throwable e) {
+		// return false;
+		// }
 	}
 
 	/**
@@ -165,6 +164,7 @@ public class UiActions extends ModuleActions {
 	 * @throws DemsyException
 	 */
 	@At(URL_ADMIN_UI)
+	@Fail("redirect:" + URL_SEC_LOGIN_FORM)
 	public IUIView admin(String pageParam, String dataParam) throws DemsyException {
 		String[] params = parseParam(pageParam);
 		String pageID = params[0];
