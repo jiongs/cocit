@@ -437,7 +437,10 @@ public class EntityAction {
 			String excelFilePath = helper.actionContext.getParameterValue("excelFilePath", "");
 			File excelFile = new File(Cocit.getContextDir() + excelFilePath);
 			List dataRows = helper.table.parseEntityDataFrom(excelFile);
-
+			Long softID = helper.actionContext.getSoftID();
+			for (Object row : dataRows) {
+				ObjectUtil.setValue(row, "softID", softID);
+			}
 			helper.entityManager.save(dataRows, helper.opMode);
 
 			Log.debug("EntityAction.importXls: total = %s", dataRows == null ? 0 : dataRows.size());

@@ -1,7 +1,6 @@
 package com.kmetop.demsy.comlib.impl.base.security;
 
 import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_EDIT;
-import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_EDIT_N;
 import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_NEW;
 import static com.kmetop.demsy.comlib.LibConst.BIZCATA_ADMIN;
 import static com.kmetop.demsy.comlib.LibConst.BIZSYS_ADMIN_WEBUSER;
@@ -14,16 +13,17 @@ import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.entity.base.BaseUser;
+import com.kmetop.demsy.plugins.security.SaveUser;
 
 @Entity
 @CocTable(name = "网站会员管理", code = BIZSYS_ADMIN_WEBUSER, catalog = BIZCATA_ADMIN, orderby = ORDER_SYSADMIN_WEBUSER, buildin = false//
 , actions = {
 //
-		@CocOperation(name = "添加帐号", typeCode = TYPE_BZFORM_NEW, mode = "c", pluginName = "com.kmetop.demsy.plugins.security.SaveUser")//
-		, @CocOperation(name = "添加员工帐号", typeCode = TYPE_BZFORM_NEW, mode = "c1", pluginName = "com.kmetop.demsy.plugins.security.SaveStaffUser", info = "注册成功！审核通过后方可登录。", error = "注册失败！请检查错误信息。")//
-		, @CocOperation(name = "编辑帐号", typeCode = TYPE_BZFORM_EDIT, mode = "e1", info = "修改成功！", disabled = true)//
-		, @CocOperation(jsonData = "CommonBizAction.data.js") //
-		, @CocOperation(name = "审核员工", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu1") //
+		@CocOperation(name = "添加", typeCode = TYPE_BZFORM_NEW, mode = "c", plugin = SaveUser.class)//
+		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", plugin = SaveUser.class) //
+		, @CocOperation(name = "查看", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
+// , @CocOperation(name = "添加员工帐号", typeCode = TYPE_BZFORM_NEW, mode = "c1", pluginName = "com.kmetop.demsy.plugins.security.SaveStaffUser", info = "注册成功！审核通过后方可登录。", error = "注册失败！请检查错误信息。")//
+// , @CocOperation(name = "审核员工", typeCode = TYPE_BZFORM_EDIT_N, mode = "bu1") //
 }//
 , groups = {//
 @CocGroup(name = "账户信息", code = "logininfo"//
@@ -32,10 +32,10 @@ import com.kmetop.demsy.comlib.entity.base.BaseUser;
 		@CocField(name = "会员类型", property = "userType", mode = "c:E c1:E e:E e1:E v:S *:N") //
 		, @CocField(name = "用户名称", property = "name", mode = "c:M c1:M e:M e1:M v:S *:N", gridOrder = 1, privacy = true)//
 		, @CocField(name = "登录帐号", property = "code", mode = "c:M c1:M e:R e1:R v:S *:N", gridOrder = 2, privacy = true, desc = "只能有数字、字母、下划线组成") //
-		, @CocField(name = "登录密码", property = "rawPassword", mode = "c:M c1:M e:E e1:E *:N", password = true, gridField = false, desc = "密码至少6个字符") //
+		, @CocField(name = "登录密码", property = "rawPassword", mode = "c:M c1:M e:E e1:E *:N", password = true, gridField = false, desc = "密码至少8个字符") //
 		, @CocField(name = "验证密码", property = "rawPassword2", mode = "c:M c1:M e:E e1:E *:N", password = true, gridField = false, desc = "必须与登录密码相同") //
-		, @CocField(name = "密码问题", property = "pwdQuestion", mode = "c:E c1:E e:E e1:E v:S *:N", gridField = false) //
-		, @CocField(name = "密码答案", property = "pwdAnswer", mode = "c:E c1:E e:E e1:E v:S *:N", gridField = false) //
+		, @CocField(name = "密码问题", property = "pwdQuestion", mode = "c:M c1:M e:M e1:M v:S *:N", gridField = false) //
+		, @CocField(name = "密码答案", property = "pwdAnswer", mode = "c:M c1:M e:M e1:M v:S *:N", gridField = false) //
 		, @CocField(name = "用户头像", property = "image", mode = "c:E c1:E e:E e1:E v:S", gridField = false, uploadType = "*.jpg;*.gif;*.png") //
 		, @CocField(name = "个人签名", property = "desc", mode = "c:E c1:E e:E e1:E v:S *:N", gridOrder = 9) //
 })
@@ -43,8 +43,8 @@ import com.kmetop.demsy.comlib.entity.base.BaseUser;
 		, @CocGroup(name = "联系方式", code = "ContactInfo"//
 		, fields = {
 				//
-				@CocField(property = "tel", gridOrder = 3, mode = "c:E c1:E e:E e1:E v:S *:N") //
-				, @CocField(property = "qq", gridOrder = 4, mode = "c:E c1:E e:E e1:E v:S *:N") //
+				@CocField(property = "tel", gridOrder = 3, mode = "c:M c1:M e:M e1:M v:S *:N") //
+				, @CocField(property = "qq", gridOrder = 4, mode = "c:M c1:M e:M e1:M v:S *:N") //
 				, @CocField(property = "email", gridOrder = 5, mode = "c:E c1:E e:E e1:E v:S *:N") //
 				, @CocField(property = "postCode", gridOrder = 6, mode = "c:E c1:E e:E e1:E v:S *:N") //
 				, @CocField(property = "postAddress", gridOrder = 7, mode = "c:E c1:E e:E e1:E v:S *:N") //

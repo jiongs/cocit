@@ -32,10 +32,8 @@ public class MyInfo extends UiBaseDataSource {
 		if (module != null) {
 
 			if (user != null) {
-				Demsy.security.addPermission("block" + block.getId(), SecurityManager.ROLE_ANONYMOUS, module.getId(),
-						block.getParams());
-				UIBizFormModel ret = BizActions.buildForm(block.getName(), "" + module.getId(), block.getParams() + ":"
-						+ user.getId(), null, MvcConst.URL_BZ_SAVE);
+				Demsy.security.addPermission("block" + block.getId(), SecurityManager.ROLE_ANONYMOUS, module.getId(), block.getParams());
+				UIBizFormModel ret = BizActions.buildForm(block.getName(), "" + module.getId(), block.getParams() + ":" + user.getId(), null, MvcConst.URL_BZ_SAVE);
 				ret.set("importJS", "true");
 
 				user = (IUser) ret.getData();
