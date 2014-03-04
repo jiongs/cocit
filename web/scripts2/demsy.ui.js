@@ -1291,7 +1291,7 @@ function checkHeartbeat_demsy() {
 			__sto(checkHeartbeat_demsy, 180000);//3*60*1000
 		},
 		error : function(jqXHR, statusText, responseError) {
-			alert("访问服务器出错！"+responseError);
+			//alert("访问服务器出错！"+responseError);
 		}
 	});
 }
