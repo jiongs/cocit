@@ -147,7 +147,7 @@ public class FileManagerAction {
 			String[] dirArray = StringUtil.toArray(dirs);
 			for (String dir : dirArray) {
 				dir = StringUtil.decodeHex(dir);
-				FileUtil.delete(new File(dir));
+				FileUtil.deleteAll(new File(dir));
 			}
 			return AlertsModel.makeSuccess("删除磁盘文件成功！");
 		} catch (Throwable e) {

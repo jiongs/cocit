@@ -5,7 +5,7 @@ import java.util.Date;
 
 import javax.servlet.ServletContext;
 
-public abstract class DiskUtil {
+public abstract class CocitFileUtil {
 	public static void renameExecutableFiles(File dir) {
 		File[] files = dir.listFiles();
 		if (files != null) {
@@ -16,7 +16,7 @@ public abstract class DiskUtil {
 				}
 				String fileName = file.getName().toLowerCase();
 				if (fileName.endsWith(".exe")//
-						|| fileName.endsWith(".bat")//
+				                || fileName.endsWith(".bat")//
 				) {
 
 					file.renameTo(new File(dir.getAbsolutePath() + "/" + file.getName() + ".cocit_unknown"));
@@ -63,6 +63,11 @@ public abstract class DiskUtil {
 		System.err.println("renameUnknownFiles: " + dir.getAbsolutePath());
 	}
 
+	/**
+	 * 清理非法程序文件
+	 * 
+	 * @param context
+	 */
 	public static void clear(ServletContext context) {
 		// 清理磁盘空间
 		String rootPath = context.getRealPath("/");
@@ -73,16 +78,16 @@ public abstract class DiskUtil {
 		for (File file : rootFiles) {
 			String name = file.getName();
 			if (name.startsWith("jCocit")//
-					|| name.equals("jdemsy")//
-					|| name.equals("scripts2")//
-					|| name.equals("themes2")//
-					|| name.equals("thumbs")//
-					|| name.equals("upload")//
-					|| name.equals("WEB-INF")//
-					|| name.startsWith("www_")//
-					|| name.startsWith("__unknown__")//
-					|| file.isFile()//
-									//
+			                || name.equals("jdemsy")//
+			                || name.equals("scripts2")//
+			                || name.equals("themes2")//
+			                || name.equals("thumbs")//
+			                || name.equals("upload")//
+			                || name.equals("WEB-INF")//
+			                || name.startsWith("www_")//
+			                || name.startsWith("__unknown__")//
+			                || file.isFile()//
+			                                //
 			) {
 				continue;
 			}
@@ -95,11 +100,11 @@ public abstract class DiskUtil {
 		}
 
 		// patch目录
-		FileUtil.delete(new File(rootPath + "/upload/patch"));
+		FileUtil.deleteAll(new File(rootPath + "/upload/patch"));
 
 		// 清理日志目录
-		FileUtil.delete(new File(rootPath + "/WEB-INF/logs"));
-		FileUtil.delete(new File(rootPath + "/WEB-INF/tmp"));
+		FileUtil.deleteAll(new File(rootPath + "/WEB-INF/logs"));
+		FileUtil.deleteAll(new File(rootPath + "/WEB-INF/tmp"));
 
 		//
 		renameExecutableFiles(rootDir);

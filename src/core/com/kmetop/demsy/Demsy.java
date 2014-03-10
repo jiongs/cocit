@@ -42,7 +42,7 @@ import com.jiongsoft.cocit.action.UtilAction;
 import com.jiongsoft.cocit.action.WebAction;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.jiongsoft.cocit.service.SecurityManager;
-import com.jiongsoft.cocit.util.DiskUtil;
+import com.jiongsoft.cocit.util.CocitFileUtil;
 import com.kmetop.demsy.actions.AppActions;
 import com.kmetop.demsy.actions.BizActions;
 import com.kmetop.demsy.actions.ConfigActions;
@@ -242,7 +242,7 @@ public abstract class Demsy implements Const, MvcConst {
 	 */
 	public static void init(ServletContext context) {
 		try {
-			DiskUtil.clear(context);
+			CocitFileUtil.clear(context);
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}

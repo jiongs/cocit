@@ -265,7 +265,7 @@ public abstract class FileUtil extends org.nutz.lang.Files {
 		return Lang.readAll(new InputStreamReader(reader, encode));
 	}
 
-	public static void delete(File file) {
+	public static void deleteAll(File file) {
 		if (file == null)
 			return;
 
@@ -276,7 +276,7 @@ public abstract class FileUtil extends org.nutz.lang.Files {
 			File[] files = file.listFiles();
 			if (files != null) {
 				for (File f : files) {
-					deleteFile(f);
+					deleteAll(f);
 				}
 			}
 		}
