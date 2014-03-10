@@ -80,66 +80,66 @@
 					<table width="900" align="center">
 						<tr>
 							<%
-							    CocCalendar thisMonth = CocCalendar.now();
-							    thisMonth.setDay(1).setTime(0, 0, 0, 0);
-							    List<VisitActivity> list = orm.query(VisitActivity.class,Expr.gt("planDate", thisMonth.get()).addAsc("planDate").setPager(1, 8));
-							    int len = list.size();
-							    int month = 0;
-							    CocCalendar tmp;
-							    CocCalendar day1 = null;
-							    CocCalendar day2 = null;
-							    VisitActivity activity1 = null;
-							    VisitActivity activity2 = null;
-							    int remain1 = 0;
-							    int remain2 = 0;
-							    long now = new Date().getTime() + 10 * 60000;//允许10分钟时间报名，否则会过期。
-							    for (int i = 0; i < len; i++) {
-								    boolean valid1 = true;
-								    boolean valid2 = true;
-									activity1 = list.get(i);
-									day1 = CocCalendar.make(activity1.getPlanDate());
-									month = day1.getMonth();
-									remain1 = activity1.getPlanPersonNumber() - activity1.getRegisterPersonNumber();
-								    if(activity1.getExpiredTo() !=null && now > activity1.getExpiredTo().getTime() ){
-								    	valid1 = false;
-								    }
-								    if(activity1.getExpiredFrom() !=null && now < activity1.getExpiredFrom().getTime() ){
-								    	valid1 = false;
-								    }
+								DateUtil thisMonth = DateUtil.now();
+												    thisMonth.setDay(1).setTime(0, 0, 0, 0);
+												    List<VisitActivity> list = orm.query(VisitActivity.class,Expr.gt("planDate", thisMonth.get()).addAsc("planDate").setPager(1, 8));
+												    int len = list.size();
+												    int month = 0;
+												    DateUtil tmp;
+												    DateUtil day1 = null;
+												    DateUtil day2 = null;
+												    VisitActivity activity1 = null;
+												    VisitActivity activity2 = null;
+												    int remain1 = 0;
+												    int remain2 = 0;
+												    long now = new Date().getTime() + 10 * 60000;//允许10分钟时间报名，否则会过期。
+												    for (int i = 0; i < len; i++) {
+													    boolean valid1 = true;
+													    boolean valid2 = true;
+														activity1 = list.get(i);
+														day1 = DateUtil.make(activity1.getPlanDate());
+														month = day1.getMonth();
+														remain1 = activity1.getPlanPersonNumber() - activity1.getRegisterPersonNumber();
+													    if(activity1.getExpiredTo() !=null && now > activity1.getExpiredTo().getTime() ){
+													    	valid1 = false;
+													    }
+													    if(activity1.getExpiredFrom() !=null && now < activity1.getExpiredFrom().getTime() ){
+													    	valid1 = false;
+													    }
 
-									i++;
-									if (i < len) {
-									    activity2 = list.get(i);
-									    day2 = CocCalendar.make(activity2.getPlanDate());
-									    remain2 = activity2.getPlanPersonNumber() - activity2.getRegisterPersonNumber();
-									    if(activity2.getExpiredTo() !=null && now > activity2.getExpiredTo().getTime()){
-									    	valid2 = false;
-									    }
-									    if(activity2.getExpiredFrom() !=null && now < activity2.getExpiredFrom().getTime() ){
-									    	valid2 = false;
-									    }
-									    
-									    if (day2.getMonth() != month) {
-											i--;
-											day2 = null;
-									    }
-									}
+														i++;
+														if (i < len) {
+														    activity2 = list.get(i);
+														    day2 = DateUtil.make(activity2.getPlanDate());
+														    remain2 = activity2.getPlanPersonNumber() - activity2.getRegisterPersonNumber();
+														    if(activity2.getExpiredTo() !=null && now > activity2.getExpiredTo().getTime()){
+														    	valid2 = false;
+														    }
+														    if(activity2.getExpiredFrom() !=null && now < activity2.getExpiredFrom().getTime() ){
+														    	valid2 = false;
+														    }
+														    
+														    if (day2.getMonth() != month) {
+																i--;
+																day2 = null;
+														    }
+														}
 							%>
 							<td align="center">
 								<table>
 									<tr>
-										<td colspan=2 class="reg_month"><%=CocCalendar.NLS_MONTHS[month]%></td>
+										<td colspan=2 class="reg_month"><%=DateUtil.NLS_MONTHS[month]%></td>
 									</tr>
 									<tr>
-										<td class="reg_day<%=(valid1?"":" invalid") %>" value="<%=activity1.getEntityGuid()%>" title="报名时间: <%=CocCalendar.format(activity1.getExpiredFrom(), "yyyy-MM-dd HH:mm") %> 至 <%=CocCalendar.format(activity1.getExpiredTo(), "yyyy-MM-dd HH:mm") %>">
-												<div><%=day1.getDay()%><span class="ri">日</span><span class="time"><%=CocCalendar.format(day1.get(), "HH:mm")%></span></div>
+										<td class="reg_day<%=(valid1?"":" invalid")%>" value="<%=activity1.getEntityGuid()%>" title="报名时间: <%=DateUtil.format(activity1.getExpiredFrom(), "yyyy-MM-dd HH:mm")%> 至 <%=DateUtil.format(activity1.getExpiredTo(), "yyyy-MM-dd HH:mm")%>">
+												<div><%=day1.getDay()%><span class="ri">日</span><span class="time"><%=DateUtil.format(day1.get(), "HH:mm")%></span></div>
 												<div style="margin-top: 5px;"><span>剩余<span class="reg_personNum"><%=remain1 >= 0 ? remain1 : 0%></span>名额</span></div>
 										</td>
-										<td class="reg_day<%=(valid2?"":" invalid") %>" value="<%=activity2.getEntityGuid()%>" title="报名时间: <%=CocCalendar.format(activity2.getExpiredFrom(), "yyyy-MM-dd HH:mm") %> 至 <%=CocCalendar.format(activity2.getExpiredTo(), "yyyy-MM-dd HH:mm") %>">
+										<td class="reg_day<%=(valid2?"":" invalid")%>" value="<%=activity2.getEntityGuid()%>" title="报名时间: <%=DateUtil.format(activity2.getExpiredFrom(), "yyyy-MM-dd HH:mm")%> 至 <%=DateUtil.format(activity2.getExpiredTo(), "yyyy-MM-dd HH:mm")%>">
 												<%
-												    if (day2 != null) {
+													if (day2 != null) {
 												%>
-												<div><%=day2.getDay()%><span class="ri">日</span><span class="time"><%=CocCalendar.format(day2.get(), "HH:mm")%></span></div>
+												<div><%=day2.getDay()%><span class="ri">日</span><span class="time"><%=DateUtil.format(day2.get(), "HH:mm")%></span></div>
 												<div style="margin-top: 5px;"><span>剩余<span class="reg_personNum"><%=remain2 >= 0 ? remain2 : 0%></span>名额</span></div>
 												<%
 												     }

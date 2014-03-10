@@ -42,6 +42,9 @@ public class DemsyServiceFactory implements ServiceFactory {
 
 	@Override
 	public SoftService getSoftService(String domain) {
+		if (domain == null)
+			domain = "";
+
 		synchronized (cacheSoft) {
 			SoftService ret = cacheSoft.get(domain);
 			if (ret == null) {

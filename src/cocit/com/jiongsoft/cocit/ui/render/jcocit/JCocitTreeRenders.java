@@ -9,6 +9,7 @@ import com.jiongsoft.cocit.ui.model.widget.TreeWidget;
 import com.jiongsoft.cocit.ui.render.WidgetRender;
 import com.jiongsoft.cocit.util.Json;
 import com.jiongsoft.cocit.util.ObjectUtil;
+import com.jiongsoft.cocit.util.StringUtil;
 import com.jiongsoft.cocit.util.Tree;
 import com.jiongsoft.cocit.util.Tree.Node;
 
@@ -90,6 +91,9 @@ public abstract class JCocitTreeRenders {
 					print(out, ",\"children\" :");
 
 					outNodes(out, children);
+				} else if (!StringUtil.isNil(node.getChildrenURL())) {
+					print(out, ",\"children\" : %s", Json.toJson(node.getChildrenURL()));
+
 				}
 
 				print(out, "}");

@@ -15,7 +15,7 @@ import com.jiongsoft.cocit.entity.sms.MTSmsEntity;
 import com.jiongsoft.cocit.orm.Orm;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.jiongsoft.cocit.service.SoftService;
-import com.jiongsoft.cocit.util.CocCalendar;
+import com.jiongsoft.cocit.util.DateUtil;
 import com.jiongsoft.cocit.util.CocException;
 import com.jiongsoft.cocit.util.ExcelUtil;
 import com.jiongsoft.cocit.util.HttpUtil;
@@ -42,7 +42,7 @@ public class VisitActivityPlugins {
 				throw new CocException("请先设置活动地点！");
 			}
 
-			CocCalendar cal = CocCalendar.now();
+			DateUtil cal = DateUtil.now();
 			cal.setTime(14, 0, 0, 0);
 
 			int year = cal.getYear();
@@ -87,7 +87,7 @@ public class VisitActivityPlugins {
 						entity.setAddress(address);
 
 						// 设置活动“报名结束日期”为周二
-						CocCalendar expiredTo = CocCalendar.make(activityDate);
+						DateUtil expiredTo = DateUtil.make(activityDate);
 						if (week == 5)
 							expiredTo.setDay(expiredTo.getDay() - 3);
 						else
@@ -118,16 +118,16 @@ public class VisitActivityPlugins {
 			VisitActivity entity = event.getEntity();
 
 			Date date = entity.getPlanDate();
-			String dateStr = CocCalendar.format(date, "yyyy年MM月dd日");
+			String dateStr = DateUtil.format(date, "yyyy年MM月dd日");
 
 			Date to = entity.getExpiredTo();
 			if (to.getTime() >= date.getTime()) {
-				throw new CocException("报名结束时间非法：%s", CocCalendar.formatDateTime(to));
+				throw new CocException("报名结束时间非法：%s", DateUtil.formatDateTime(to));
 			}
 
 			Date from = entity.getExpiredFrom();
 			if (from != null && from.getTime() >= to.getTime()) {
-				throw new CocException("报名有效期非法：从 %s 到 %s", CocCalendar.formatDateTime(from), CocCalendar.formatDateTime(to));
+				throw new CocException("报名有效期非法：从 %s 到 %s", DateUtil.formatDateTime(from), DateUtil.formatDateTime(to));
 			}
 
 			int num = entity.getPlanPersonNumber();
@@ -312,7 +312,7 @@ public class VisitActivityPlugins {
 		if (StringUtil.isNil(tpl)) {
 			tpl = soft.getConfig("sms.visit.invitation", "邀请函：尊敬的%s先生/女士：您好，感谢您对云南白药的关注。我们诚邀您参加于%s在云南白药产业园区举办的“走进云南白药”活动，届时欢迎您的到来。验证码：%s");
 		}
-		String content = String.format(tpl, entity.getName(), CocCalendar.format(entity.getActivity().getPlanDate(), "yyyy年MM月dd日HH:mm"), entity.getVerificationCode());
+		String content = String.format(tpl, entity.getName(), DateUtil.format(entity.getActivity().getPlanDate(), "yyyy年MM月dd日HH:mm"), entity.getVerificationCode());
 
 		/**
 		 * 发送短信邀请函
@@ -327,7 +327,7 @@ public class VisitActivityPlugins {
 			if (members != null && members.size() > 0) {
 				tpl = soft.getConfig("sms.visit.invitation3", "尊敬的%s：您好，您报名参加由%s组织的于%s在云南白药产业园区举办的“走进云南白药”活动，已经确认，届时欢迎您的到来。身份验证码：%s");
 				for (VisitActivityRegister member : members) {
-					content = String.format(tpl, member.getName(), entity.getName(), CocCalendar.format(entity.getActivity().getPlanDate(), "yyyy年MM月dd日HH:mm"), entity.getVerificationCode());
+					content = String.format(tpl, member.getName(), entity.getName(), DateUtil.format(entity.getActivity().getPlanDate(), "yyyy年MM月dd日HH:mm"), entity.getVerificationCode());
 
 					sms = MTSmsEntity.make("“走进云南白药”队员邀请函", member.getTel(), content);
 					actionHelper.entityManager.save(sms, "c");
@@ -389,7 +389,7 @@ public class VisitActivityPlugins {
 				Date from = activity.getExpiredFrom();
 				Date to = activity.getExpiredTo();
 
-				throw new CocException("报名有效期从 %s 到 %s！", CocCalendar.formatDateTime(from), CocCalendar.formatDateTime(to));
+				throw new CocException("报名有效期从 %s 到 %s！", DateUtil.formatDateTime(from), DateUtil.formatDateTime(to));
 			}
 
 			/*
@@ -653,7 +653,7 @@ public class VisitActivityPlugins {
 			/*
 			 * 生成邀请函验证码
 			 */
-			Date date = CocCalendar.now().get();
+			Date date = DateUtil.now().get();
 			Integer time = new Long(date.getTime()).intValue();
 			entity.setVerificationCode(Integer.toHexString(time).toUpperCase());
 

@@ -5,12 +5,12 @@
 	<table style="margin: 20px 0 0 40px;" width="100%" >
 		<tr>
 			<td style="background: url(/upload/xinhouziguan/images/jlb/user.jpg) no-repeat left center; padding: 5px 2px 0px 90px;height: 50px;">
-				<input type="text" id="_loginuser_" name="_loginuser_" style="background: transparent; height: 20px; width: 170px;font-size: 16px;border: 0px solid #c9c9c9;" />
+				<input type="text" id="_loginuser_" name="_loginuser_" value="" style="background: transparent; height: 20px; width: 170px;font-size: 16px;border: 0px solid #c9c9c9;" />
 			</td>
 		</tr>
 		<tr>
 			<td style="background: url(/upload/xinhouziguan/images/jlb/pwd.jpg) no-repeat left center; padding: 5px 2px 0px 90px;height: 50px;">
-				<input type="password" id="_loginpwd_" name="_loginpwd_" style="background: transparent; height: 20px; width:170px;font-size: 16px;border: 0px solid #c9c9c9;" />
+				<input type="password" id="_loginpwd_" name="_loginpwd_" value="" style="background: transparent; height: 20px; width:170px;font-size: 16px;border: 0px solid #c9c9c9;" />
 			</td>
 		</tr>
 		<tr>

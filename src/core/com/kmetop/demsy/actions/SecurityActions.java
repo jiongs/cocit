@@ -12,6 +12,7 @@ import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.Param;
 
 import com.jiongsoft.cocit.orm.expr.Expr;
+import com.jiongsoft.cocit.util.StringUtil;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.entity.IDemsySoft;
@@ -124,6 +125,7 @@ public class SecurityActions extends ModuleActions {
 			if (Str.isEmpty(pwd1) || Str.isEmpty(pwd2)) {
 				throw new DemsyException("请输入新密码!");
 			}
+			StringUtil.validatePassword(pwd1);
 
 			IUser user = ctx.loginUser();
 			if (user == null) {

@@ -41,38 +41,31 @@
 	}
 </style>
 <form>
+<input type="hidden" name="entity.id" value="{tostring bean=$data prop="id"}" />
 <div class="register_titlebg" style="background: url(/upload/xinhouziguan/images/jlb/titlebg2.jpg) no-repeat;">
 	账户信息
 </div>
 <table class="register_table">
 	<tr>
 		<td class="label"><span class="required">&nbsp;&nbsp;</span>用户名称</td>
-		<td class="input"><input type="text" name="entity.name" value="" /></td>
+		<td class="input"><input type="text" name="entity.name" value="{tostring bean=$data prop="name"}" /></td>
 	</tr>
 	<tr>
 		<td class="label"><span class="required">&nbsp;&nbsp;</span>登录帐号</td>
-		<td class="input"><input type="text" name="entity.code" value="" /></td>
-	</tr>
-	<tr>
-		<td class="label"><span class="required">&nbsp;&nbsp;</span>登录密码</td>
-		<td class="input"><input type="password" name="entity.rawPassword" value="" /></td>
-	</tr>
-	<tr>
-		<td class="label"><span class="required">&nbsp;&nbsp;</span>确认密码</td>
-		<td class="input"><input type="password" name="entity.rawPassword2" value="" /></td>
+		<td class="input"><input type="text" name="entity.code" value="{tostring bean=$data prop="code"}" readonly="true" /></td>
 	</tr>
 	<tr>
 		<td class="label"><span class="required">&nbsp;&nbsp;</span>密码问题</td>
-		<td class="input"><input type="text" name="entity.pwdQuestion" value="" /></td>
+		<td class="input"><input type="text" name="entity.pwdQuestion" value="{tostring bean=$data prop="pwdQuestion"}" /></td>
 	</tr>
 	<tr>
 		<td class="label"><span class="required">&nbsp;&nbsp;</span>密码答案</td>
-		<td class="input"><input type="text" name="entity.pwdAnswer" value="" /></td>
+		<td class="input"><input type="text" name="entity.pwdAnswer" value="{tostring bean=$data prop="pwdAnswer"}" /></td>
 	</tr>
 	<tr>
 		<td class="label">个人头像</td>
 		<td class="input"><div style="position: relative;width: 300px;">
-			<input type="file" id="entity_image" class="upload" name="entity.image" value="" data-options="
+			<input type="file" id="entity_image" class="upload" name="entity.image" value=" value="{tostring bean=$data prop="image"}" data-options="
 									fileTypeExts : '*.jpg; *.gif; *.png',
 									comboWidth : 300,
 									comboHeight : 22
@@ -85,31 +78,31 @@
 <table class="register_table">
 	<tr>
 		<td class="label"><span class="required">&nbsp;&nbsp;</span>手机号码</td>
-		<td class="input"><input type="text" name="entity.tel" value="" /></td>
+		<td class="input"><input type="text" name="entity.tel" value="{tostring bean=$data prop="tel"}" /></td>
 	</tr>
 	<tr>
 		<td class="label"><span class="required">&nbsp;&nbsp;</span>QQ 号码</td>
-		<td class="input"><input type="text" name="entity.qq" value="" /></td>
+		<td class="input"><input type="text" name="entity.qq" value="{tostring bean=$data prop="qq"}" /></td>
 	</tr>
 	<tr>
 		<td class="label">电子邮件</td>
-		<td class="input"><input type="text" name="entity.email" value="" /></td>
+		<td class="input"><input type="text" name="entity.email" value="{tostring bean=$data prop="email"}" /></td>
 	</tr>
 	<tr>
 		<td class="label">邮政编码</td>
-		<td class="input"><input type="text" name="entity.postCode" value="" /></td>
+		<td class="input"><input type="text" name="entity.postCode" value="{tostring bean=$data prop="postCode"}" /></td>
 	</tr>
 	<tr>
 		<td class="label">通讯地址</td>
-		<td class="input"><input type="text" name="entity.postAddress" value="" /></td>
+		<td class="input"><input type="text" name="entity.postAddress" value="{tostring bean=$data prop="postAddress"}" /></td>
 	</tr>
 	<tr>
 		<td class="label">MSN</td>
-		<td class="input"><input type="text" name="entity.msn" value="" /></td>
+		<td class="input"><input type="text" name="entity.msn" value="{tostring bean=$data prop="msn"}" /></td>
 	</tr>
 	<tr>
 		<td class="label"><span class="required">&nbsp;&nbsp;</span>验证码</td>
-		<td class="input"><input type="text" name="cocit_verify_code" value="" style="width: 50px;" />&nbsp;<img src="/coc/getImgVerifyCode" /></td>
+		<td class="input"><input type="text" name="cocit_verify_code" style="width: 50px;" />&nbsp;<img src="/coc/getImgVerifyCode" /></td>
 	</tr>
 </table>
 <div class="register_titlebg" style="background: url(/upload/xinhouziguan/images/jlb/titlebg2.jpg) no-repeat;">
@@ -117,13 +110,13 @@
 </div>
 <table class="register_table">
 	<tr>
-		<td class="input"><textarea name="entity.desc" style="height: 80px; width: 980px; border: 1px solid #a8a8a8; padding: 2px;"></textarea></td>
+		<td class="input"><textarea name="entity.desc" style="height: 80px; width: 980px; border: 1px solid #a8a8a8; padding: 2px;"> {tostring bean=$data prop="desc"}</textarea></td>
 	</tr>
 	<tr>
 		<td style="text-align: center;padding: 20px;">
 			<input onclick="
 					try{
-						submitRegester(this);
+						submitModify(this);
 					}catch(e){
 					} 
 					return false;

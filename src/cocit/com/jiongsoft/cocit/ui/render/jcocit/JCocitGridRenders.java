@@ -9,6 +9,7 @@ import com.jiongsoft.cocit.ui.model.widget.GridWidgetData;
 import com.jiongsoft.cocit.ui.render.WidgetRender;
 import com.jiongsoft.cocit.util.Json;
 import com.jiongsoft.cocit.util.ObjectUtil;
+import com.jiongsoft.cocit.util.StringUtil;
 
 public abstract class JCocitGridRenders {
 
@@ -19,6 +20,14 @@ public abstract class JCocitGridRenders {
 			String title = "";// model.getName()
 			int height = model.get("height", 353);
 			int colTotalWidth = model.getColumnsTotalWidth();
+			if (colTotalWidth == 0) {
+				for (Column c : model.getColumns()) {
+					colTotalWidth += c.getWidth();
+				}
+				if (colTotalWidth == 0) {
+					colTotalWidth = 800;
+				}
+			}
 			int width = model.get("width", colTotalWidth) - 90;
 			double fixColRate = 1.0;
 			if (width > colTotalWidth) {
@@ -35,7 +44,7 @@ public abstract class JCocitGridRenders {
 			print(out, ",sortField: 'id'");
 			print(out, ",sortOrder: 'desc'");
 			// print(out, ",fitColumns: true");
-			print(out, ",pagination: true");
+			print(out, ",pagination: %s", (boolean) model.get("pagination", true));
 			print(out, ",singleSelect: true");
 			print(out, ",selectOnCheck: false");
 			print(out, ",checkOnSelect: false");
@@ -57,7 +66,7 @@ public abstract class JCocitGridRenders {
 			// print(out, ",toolbar: toolbar_%s", model.get("token", ""));
 
 			print(out, ",pageButtons:[");
-			print(out, "{title: '系统设置', iconCls: 'icon-setting', token:'%s', onClick:jCocit.entity.doSetting}", token);
+			//print(out, "{title: '系统设置', iconCls: 'icon-setting', token:'%s', onClick:jCocit.entity.doSetting}", token);
 			print(out, "]");
 
 			print(out, "\">");
@@ -107,7 +116,11 @@ public abstract class JCocitGridRenders {
 					for (Column col : columns) {
 						String prop = col.getField();
 						Object value = ObjectUtil.getValue(obj, prop);
-						value = col.getEntityField().format(value);
+						if (col.getEntityField() != null)
+							value = col.getEntityField().format(value);
+						else if (!StringUtil.isNil(col.getPattern())) {
+							value = ObjectUtil.format(value, col.getPattern());
+						}
 
 						sb.append(String.format(",\"%s\":%s", prop, Json.toJson(value)));
 					}

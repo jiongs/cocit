@@ -346,7 +346,7 @@
 	function doEdit(opts, dataID) {
 		var data = {};
 		_prepareEntityFormParams(opts.token, data);
-		var loadFormUrl = "/coc/getEntityRowForm/" + opts.funcExpr + "/" + dataID + "?" + $.param(data);
+		var loadFormUrl = (opts.actionPath || ("/coc/getEntityRowForm/" + opts.funcExpr + "/")) + dataID + "?" + $.param(data);
 		jCocit.dialog.open(loadFormUrl, "dialog_" + opts.token + "_" + opts.opCode, {
 			title : opts.text,
 			width : 800,
@@ -501,7 +501,7 @@
 				$.doAjax({
 					type : "POST",
 					dataType : "json",
-					url : "/coc/delEntityRows/" + opts.funcExpr + "/" + rows.join(","),
+					url : (opts.actionPath || ("/coc/delEntityRows/" + opts.funcExpr + "/")) + rows.join(","),
 					success : function() {
 						$("#datagrid_" + opts.token).datagrid("reload");
 					}

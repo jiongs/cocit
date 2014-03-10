@@ -1,6 +1,6 @@
 <style>
 .login_info_table td{
-	padding: 0 5px 0 5px;
+	padding: 0 2px 0 2px;
 }
 .login_info_table .button{
 	cursor: pointer;
@@ -10,8 +10,8 @@
 {if $login !=null}
 		<tr>
 			<td>登录用户：{$login.username}</td>
-			<td><input class="button" onclick='window.document.location.href="/ui/21";' value="个人中心" type="submit" /></td>
-			<td><input class="button" id="relogin_btn" value="重新登录" type="submit" /></td>
+			<td><input class="button" onclick='window.document.location.href="/ui/21";' value="会员中心" type="submit" /></td>
+			<td><input class="button" id="relogin_btn" value=" 退 出 " type="submit" /></td>
 		</tr>
 	{else}
 		<tr>

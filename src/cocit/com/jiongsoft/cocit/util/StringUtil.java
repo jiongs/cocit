@@ -310,7 +310,7 @@ public abstract class StringUtil {
 		if (valueType.equals(Boolean.class))
 			return (T) Boolean.valueOf(text);
 		if (Date.class.isAssignableFrom(valueType))
-			return (T) CocCalendar.parse(text);
+			return (T) DateUtil.parse(text);
 		if (Number.class.isAssignableFrom(valueType))
 			return ClassUtil.newInstance(valueType, text);
 
@@ -337,5 +337,49 @@ public abstract class StringUtil {
 		} catch (Throwable e) {
 			return false;
 		}
+	}
+
+	public static void validatePassword(String pwssword) {
+		int minLength = 8;
+		int maxLength = 16;
+		if (pwssword.length() < minLength || pwssword.length() > maxLength) {
+			throw new CocException("密码长度必须为8-16位！");
+		}
+		// if (newPassword.toLowerCase().equals(newPassword)) {
+		// throw new DemsyException("密码必须包含至少一个大写字母！");
+		// }
+		//
+		// if (newPassword.toUpperCase().equals(newPassword)) {
+		// throw new DemsyException("密码必须包含至少一个小写字母！");
+		// }
+		//
+		// boolean containsNumber = false;
+		// for (int i = newPassword.length() - 1; i >= 0; i--) {
+		// char c = newPassword.charAt(i);
+		// if (c >= '0' && c <= '9') {
+		// containsNumber = true;
+		// break;
+		// }
+		// }
+		// if (!containsNumber) {
+		// throw new DemsyException("密码必须包含至少一个数字！");
+		// }
+
+		// boolean containsSymbols = false;
+		// for (int i = newPassword.length() - 1; i >= 0; i--) {
+		// char c = newPassword.charAt(i);
+		// if (!(c >= '0' && c <= '9')// is not number
+		// && !(c >= 'a' && c <= 'z')// is not lower case
+		// && !(c >= 'A' && c <= 'Z')// is not lower case
+		// && !(c == ' ')// is not space
+		// ) {
+		// containsSymbols = true;
+		// break;
+		// }
+		// }
+		// if (!containsSymbols) {
+		// throw new DemsyException("密码必须包含至少一个特殊字符（出数字、字母以外的字符）！");
+		// }
+
 	}
 }

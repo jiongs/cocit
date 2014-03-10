@@ -76,6 +76,8 @@ public class IndexActions extends ModuleActions implements MvcConst {
 		IUser user = Demsy.me().loginUser();
 		if (user instanceof IAdminUser) {
 			rightUrl = ((IAdminUser) user).getLatestUrl();
+		} else {
+			rightUrl = "/config";
 		}
 		context.put("rightUrl", Str.isEmpty(rightUrl) ? "#" : rightUrl);
 
@@ -101,10 +103,7 @@ public class IndexActions extends ModuleActions implements MvcConst {
 
 		IDemsySoft soft = me().getSoft();
 		Upload logo = soft.getLogo();
-		context.put(
-				"logo",
-				MvcUtil.contextPath((logo == null || Str.isEmpty(logo.toString())) ? "/themes2/images/index_top_logo.jpg"
-						: logo.toString()));
+		context.put("logo", MvcUtil.contextPath((logo == null || Str.isEmpty(logo.toString())) ? "/themes2/images/index_top_logo.jpg" : logo.toString()));
 
 		String rightUrl = "#";
 		IUser user = Demsy.me().loginUser();

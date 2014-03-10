@@ -198,7 +198,7 @@ public abstract class HttpUtil {
 
 			// 写什么数字，在图片 的什么位置画
 			index = random.nextInt(len);
-			g.drawString("" + ch[index], (i * 14) + 2, 16);
+			g.drawString("" + ch[index], (i * 14) + 5, 16);
 
 			sb.append(ch[index]);
 		}

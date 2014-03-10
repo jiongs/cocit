@@ -254,7 +254,7 @@ public class JCocitEntityFormRender extends WidgetRender<EntityForm> {
 
 		int count = 0;
 		for (Column col : columns) {
-			print(sb, "{field:'%s',title:'%s',width:%s,sortable:true,align:'%s'},", col.getField(), col.getTitle(), col.getWidth(), col.getAlign());
+			print(sb, "{field:'%s',title:'%s',width:%s,sortable:true,align:'%s'},", col.getField(), col.getTitle(), col.getWidth(), col.getAlign() == null ? "" : col.getAlign());
 			count++;
 			if (count == 4)
 				break;

@@ -230,6 +230,8 @@ public class Tree {
 		private String name;// 节点名称
 
 		private Integer sequence;// 节点顺序
+		
+		private String childrenURL;
 
 		private Properties extProps;
 
@@ -385,6 +387,14 @@ public class Tree {
 
 		public void setSequence(Integer seq) {
 			this.sequence = seq;
+		}
+
+		public String getChildrenURL() {
+			return childrenURL;
+		}
+
+		public void setChildrenURL(String childrenURL) {
+			this.childrenURL = childrenURL;
 		}
 	}
 

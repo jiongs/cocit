@@ -22,6 +22,7 @@ import com.jiongsoft.cocit.service.TableService;
 import com.jiongsoft.cocit.service.UserService;
 import com.jiongsoft.cocit.util.Json;
 import com.jiongsoft.cocit.util.StringUtil;
+import com.kmetop.demsy.Demsy;
 
 public class SecurityManagerImpl implements SecurityManager {
 	private SoftService softService;
@@ -465,6 +466,11 @@ public class SecurityManagerImpl implements SecurityManager {
 		Permission p = Permission.make(userRole, tableID);
 
 		tempPermissionsMap.put(key, p);
+	}
+
+	@Override
+	public void checkLoginRole(byte roleType) {
+		Demsy.security.checkLogin(roleType);
 	}
 
 }

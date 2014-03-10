@@ -198,11 +198,19 @@ public abstract class UrlAPI {
 	public static final String GET_SMS_VERIFY_CODE2 = URL_NS + "/getSmsVerifyCode2/*";
 
 	public static final String CHK_SMS_VERIFY_CODE = URL_NS + "/chkSmsVerifyCode/*";
-	
+
 	/**
 	 * 心跳监测程序，用来保证浏览器客户端用不过期。
 	 */
 	public static final String CHK_HEARTBEAT = URL_NS + "/chkHeartbeat/*";
+
+	public static final String GET_FILE_MANAGER = URL_NS + "/getFileManager/*";
+
+	public static final String GET_FILE_GRID_DATA = URL_NS + "/getFileGridData/*";
+
+	public static final String GET_FILE_TREE_DATA = URL_NS + "/getFileTreeData/*";
+
+	public static final String DEL_DISK_FILES = URL_NS + "/deleteDiskFiles/*";
 
 	/*
 	 * 以下是报表管理模块相关功能的访问路径
