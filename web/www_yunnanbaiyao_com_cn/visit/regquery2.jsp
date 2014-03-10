@@ -133,10 +133,10 @@
 								<td class="reg_input_label">参观时间</td>
 								<td class="reg_input_box">
 									<select name="entity.activity.id">
-										<% 
-									    CocCalendar thisMonth = CocCalendar.now();
-									    List<VisitActivity> list = orm.query(VisitActivity.class,Expr.gt("planDate", thisMonth.get()).addAsc("planDate").setPager(1, 8));
-									    for(VisitActivity v : list){
+										<%
+											DateUtil thisMonth = DateUtil.now();
+																	    List<VisitActivity> list = orm.query(VisitActivity.class,Expr.gt("planDate", thisMonth.get()).addAsc("planDate").setPager(1, 8));
+																	    for(VisitActivity v : list){
 										%>
 										<option value="<%=v.getId()%>" <%=v.getId()==reg.getActivity().getId()?"selected":"" %>><%=v.getName() %></option>
 										<%

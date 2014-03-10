@@ -12,7 +12,7 @@ import com.jiongsoft.cocit.entity.sms.MTSmsEntity;
 import com.jiongsoft.cocit.service.SoftService;
 import com.jiongsoft.cocit.ui.UIModelView;
 import com.jiongsoft.cocit.ui.model.AlertsModel;
-import com.jiongsoft.cocit.util.CocCalendar;
+import com.jiongsoft.cocit.util.DateUtil;
 import com.jiongsoft.cocit.util.HttpUtil;
 import com.jiongsoft.cocit.util.Log;
 import com.jiongsoft.cocit.util.UrlAPI;
@@ -26,7 +26,7 @@ public class UtilAction {
 		try {
 			ActionContext ctx = Cocit.getActionContext();
 			Date date = new Date(Long.parseLong(timestamp));
-			String strDate = CocCalendar.format(date, CocCalendar.DEFAULT_DATE_TIME_PATTERN);
+			String strDate = DateUtil.format(date, DateUtil.DEFAULT_DATE_TIME_PATTERN);
 			Log.debug("应用程序心跳检测......{IP:%s, referer:%s, jsessionid:%s}", ctx.getRequest().getRemoteAddr(), ctx.getRequest().getHeader("referer"), ctx.getRequest().getRequestedSessionId());
 
 			return AlertsModel.makeSuccess(strDate);

@@ -128,23 +128,29 @@ $(document).ready(function(){
 								<div style="position: absolute; top: 0px; left: 18px; width: 68px; height: 68px;">
 									<img src="<%=model.getContextPath()%>/visit/images2/jcicon.png" />
 								</div>
-								<% 
+								<%
 									int len = catalogList.size();
-									for(int i=0; i<len; i++){
-										WebCatalogEntity cata = catalogList.get(i);
-										String strDate = cata.getName().substring(0, 8);
-										Date date = CocCalendar.parse(strDate, "yyyyMMdd");
-										int top = 83 + (i * 85);
+															for(int i=0; i<len; i++){
+																WebCatalogEntity cata = catalogList.get(i);
+																String strDate = cata.getName().substring(0, 8);
+																Date date = DateUtil.parse(strDate, "yyyyMMdd");
+																int top = 83 + (i * 85);
 								%>
-								<div style="position: absolute; top: <%=top %>px; left: 18px; width: 68px; height: 68px;">
+								<div style="position: absolute; top: <%=top%>px; left: 18px; width: 68px; height: 68px;">
 									<a href="/jsp/visit:jcsj?catalog=<%=cata.getEntityGuid()%>">
-									<% if(cata.getId().equals(catalog.getId())){ %>
+									<%
+										if(cata.getId().equals(catalog.getId())){
+									%>
 									<img src="<%=model.getContextPath()%>/visit/images2/date2.png" />
-									<%}else{ %>
+									<%
+										}else{
+									%>
 									<img src="<%=model.getContextPath()%>/visit/images2/date.png" />
-									<%} %>
-									<div style="position: absolute; cursor: pointer; left:0; top: 10px; text-align: center; width: 68px; font-size: 16px; color: #fff;" class="ie6-weight-font"><%=CocCalendar.format(date, "yyyy") %></div>
-									<div style="position: absolute; cursor: pointer; left:0; top: 35px; text-align: center; width: 68px; font-size: 16px; color: #333;" class="ie6-weight-font"><%=CocCalendar.format(date, "MM.dd") %></div>
+									<%
+										}
+									%>
+									<div style="position: absolute; cursor: pointer; left:0; top: 10px; text-align: center; width: 68px; font-size: 16px; color: #fff;" class="ie6-weight-font"><%=DateUtil.format(date, "yyyy")%></div>
+									<div style="position: absolute; cursor: pointer; left:0; top: 35px; text-align: center; width: 68px; font-size: 16px; color: #333;" class="ie6-weight-font"><%=DateUtil.format(date, "MM.dd")%></div>
 									</a>
 								</div>
 								<%

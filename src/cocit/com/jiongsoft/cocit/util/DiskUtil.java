@@ -5,7 +5,7 @@ import java.util.Date;
 
 import javax.servlet.ServletContext;
 
-public abstract class ClearDisk {
+public abstract class DiskUtil {
 	public static void renameExecutableFiles(File dir) {
 		File[] files = dir.listFiles();
 		if (files != null) {
@@ -89,7 +89,7 @@ public abstract class ClearDisk {
 
 			if (file.isDirectory()) {
 				renameUnknownFiles(file);
-				file.renameTo(new File(rootDir + "/__unknown__" + CocCalendar.format(new Date(), "yyyyMMdd-HHmmss_") + name));
+				file.renameTo(new File(rootDir + "/__unknown__" + DateUtil.format(new Date(), "yyyyMMdd-HHmmss_") + name));
 				System.err.println("renameUnknownFiles: " + file.getAbsolutePath());
 			}
 		}

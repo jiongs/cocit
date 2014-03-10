@@ -17,7 +17,7 @@ import com.jiongsoft.cocit.ActionContext;
 import com.jiongsoft.cocit.service.ConfigManager;
 import com.jiongsoft.cocit.service.SoftService;
 import com.jiongsoft.cocit.sms.impl.EmayHttpSmsClient;
-import com.jiongsoft.cocit.util.CocCalendar;
+import com.jiongsoft.cocit.util.DateUtil;
 
 public class EmayHttpSmsClientTest {
 	@Test
@@ -50,7 +50,7 @@ public class EmayHttpSmsClientTest {
 	public void testSend_1() throws Exception {
 		EmayHttpSmsClient fixture = new EmayHttpSmsClient();
 		String mobiles = "15911731833";
-		String content = "亿美短信测试" + CocCalendar.getNowDateTime();
+		String content = "亿美短信测试" + DateUtil.getNowDateTime();
 		String extCode = "";
 		String time = "";
 		String rrid = "";

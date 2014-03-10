@@ -14,8 +14,6 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import com.kmetop.demsy.lang.Dates;
-
 /**
  * Excel 解析工具
  * 
@@ -103,7 +101,7 @@ public abstract class ExcelUtil {
 					break;
 				case HSSFCell.CELL_TYPE_NUMERIC:
 					if (HSSFDateUtil.isCellDateFormatted(cell)) {
-						rowResult[col] = Dates.formatDate(cell.getDateCellValue());
+						rowResult[col] = DateUtil.format(cell.getDateCellValue());
 					} else {
 						Integer num = new Integer((int) cell.getNumericCellValue());
 						rowResult[col] = String.valueOf(num);

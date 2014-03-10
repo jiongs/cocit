@@ -9,7 +9,7 @@ import java.util.Map;
 
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.jiongsoft.cocit.service.SecurityManager;
-import com.jiongsoft.cocit.util.CocCalendar;
+import com.jiongsoft.cocit.util.DateUtil;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.security.IModule;
 import com.kmetop.demsy.comlib.web.IBbsTopic;
@@ -34,9 +34,9 @@ public class LoadBbsForum extends UiDataset {
 		IOrm orm = Demsy.orm();
 		Class cls =Demsy.bizEngine.getType(Demsy.moduleEngine.getSystem(topicMdl));
 		int total = orm.count(cls);
-		Date todayDate=CocCalendar.parse(CocCalendar.getNowDate());
+		Date todayDate=DateUtil.parse(DateUtil.getNowDate());
 		int today = orm.count(cls, Expr.gt("created", todayDate));
-		int yesterday = orm.count(cls, Expr.gt("created", CocCalendar.getNext(todayDate, -1)).and(Expr.lt("created", todayDate)));
+		int yesterday = orm.count(cls, Expr.gt("created", DateUtil.getNext(todayDate, -1)).and(Expr.lt("created", todayDate)));
 		context.put("topicCountTotal", total);
 		context.put("topicCountToday", today);
 		context.put("topicCountYesterday", yesterday);

@@ -20,19 +20,19 @@ public class CoCalendarTest {
 
 	@Test
 	public void testDateStr() {
-		Date date = CocCalendar.now().get();
+		Date date = DateUtil.now().get();
 		Integer time = new Long(date.getTime()).intValue();
-		System.out.println(CocCalendar.formatDateTime(date));
+		System.out.println(DateUtil.formatDateTime(date));
 		System.out.println(date.getTime() + ":" + time + ":" + Integer.toHexString(time).toUpperCase());
 	}
 
 	@Test
 	public void makeDate() {
-		Date date = CocCalendar.makeDate(2013, 1, 1);
+		Date date = DateUtil.makeDate(2013, 1, 1);
 
-		System.out.println(CocCalendar.formatDateTime(date));
+		System.out.println(DateUtil.formatDateTime(date));
 
-		CocCalendar util = CocCalendar.make(date);
+		DateUtil util = DateUtil.make(date);
 		assertEquals(2013, util.getYear());
 		assertEquals(1, util.getMonth());
 		assertEquals(1, util.getDay());
@@ -42,7 +42,7 @@ public class CoCalendarTest {
 
 		util.setMonth(9);
 		util.setDay(15);
-		System.out.println(CocCalendar.formatDateTime(util.get()));
+		System.out.println(DateUtil.formatDateTime(util.get()));
 		assertEquals(2013, util.getYear());
 		assertEquals(9, util.getMonth());
 		assertEquals(15, util.getDay());
@@ -53,7 +53,7 @@ public class CoCalendarTest {
 
 		util.setMonth(9);
 		util.setDay(16);
-		System.out.println(CocCalendar.formatDateTime(util.get()));
+		System.out.println(DateUtil.formatDateTime(util.get()));
 		assertEquals(2013, util.getYear());
 		assertEquals(9, util.getMonth());
 		assertEquals(16, util.getDay());
@@ -64,7 +64,7 @@ public class CoCalendarTest {
 
 		util.setMonth(12);
 		util.setDay(1);
-		System.out.println(CocCalendar.formatDateTime(util.get()));
+		System.out.println(DateUtil.formatDateTime(util.get()));
 		assertEquals(2013, util.getYear());
 		assertEquals(12, util.getMonth());
 		assertEquals(1, util.getDay());
@@ -74,7 +74,7 @@ public class CoCalendarTest {
 
 		util.setMonth(12);
 		util.setDay(31);
-		System.out.println(CocCalendar.formatDateTime(util.get()));
+		System.out.println(DateUtil.formatDateTime(util.get()));
 		assertEquals(2013, util.getYear());
 		assertEquals(12, util.getMonth());
 		assertEquals(31, util.getDay());
@@ -84,24 +84,24 @@ public class CoCalendarTest {
 
 		util.setMonth(12);
 		util.setDay(32);
-		System.out.println(CocCalendar.formatDateTime(util.get()));
+		System.out.println(DateUtil.formatDateTime(util.get()));
 
 		util.setYear(2013);
 		util.setMonth(12);
 		util.setDay(0);
-		System.out.println(CocCalendar.formatDateTime(util.get()));
+		System.out.println(DateUtil.formatDateTime(util.get()));
 
 		util.setYear(2013);
 		util.setMonth(1);
 		util.setDay(0);
-		System.out.println(CocCalendar.formatDateTime(util.get()));
+		System.out.println(DateUtil.formatDateTime(util.get()));
 	}
 
 	@Test
 	public void test1() {
 
 		//
-		CocCalendar cal = CocCalendar.now();
+		DateUtil cal = DateUtil.now();
 		cal.setTime(0, 0, 0, 0);
 		int year = cal.getYear();
 		int month = cal.getMonth();
@@ -119,7 +119,7 @@ public class CoCalendarTest {
 				cal.setDay(day + j);
 
 				if (cal.getWeek() == 4 || cal.getWeek() == 5) {
-					String str = CocCalendar.format(cal.get(), "yyyy-MM-dd HH:mm:ss E");
+					String str = DateUtil.format(cal.get(), "yyyy-MM-dd HH:mm:ss E");
 					System.out.println("i=" + i + ", day=" + day + ", date=" + str);
 				}
 			}
