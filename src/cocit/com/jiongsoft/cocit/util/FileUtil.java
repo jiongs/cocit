@@ -265,4 +265,22 @@ public abstract class FileUtil extends org.nutz.lang.Files {
 		return Lang.readAll(new InputStreamReader(reader, encode));
 	}
 
+	public static void delete(File file) {
+		if (file == null)
+			return;
+
+		if (!file.exists())
+			return;
+
+		if (file.isDirectory()) {
+			File[] files = file.listFiles();
+			if (files != null) {
+				for (File f : files) {
+					deleteFile(f);
+				}
+			}
+		}
+
+		file.delete();
+	}
 }

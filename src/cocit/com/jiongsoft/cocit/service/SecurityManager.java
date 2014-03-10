@@ -100,4 +100,6 @@ public interface SecurityManager {
 	 * 清除所有权限缓存
 	 */
 	public void clearPermissions();
+	
+	void checkLoginRole(byte roleType);
 }

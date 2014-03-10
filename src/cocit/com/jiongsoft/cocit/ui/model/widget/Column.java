@@ -67,39 +67,44 @@ public class Column {
 		return align;
 	}
 
-	public void setAlign(String assign) {
+	public Column setAlign(String assign) {
 		this.align = assign;
+		return this;
 	}
 
 	public int getWidth() {
 		return width;
 	}
 
-	public void setWidth(int width) {
+	public Column setWidth(int width) {
 		this.width = width;
+		return this;
 	}
 
 	public Properties getProps() {
 		return props;
 	}
 
-	public void setProps(Properties props) {
+	public Column setProps(Properties props) {
 		this.props = props;
+		return this;
 	}
 
 	public String getPattern() {
 		return pattern;
 	}
 
-	public void setPattern(String pattern) {
+	public Column setPattern(String pattern) {
 		this.pattern = pattern;
+		return this;
 	}
 
 	public FieldService getEntityField() {
 		return entityField;
 	}
 
-	public void setEntityField(FieldService entityField) {
+	public Column setEntityField(FieldService entityField) {
 		this.entityField = entityField;
+		return this;
 	}
 }

@@ -37,10 +37,12 @@ import org.nutz.trans.Trans;
 import com.handsome.ip.IPSeeker;
 import com.jiongsoft.cocit.Cocit;
 import com.jiongsoft.cocit.action.EntityAction;
+import com.jiongsoft.cocit.action.FileManagerAction;
 import com.jiongsoft.cocit.action.UtilAction;
 import com.jiongsoft.cocit.action.WebAction;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.jiongsoft.cocit.service.SecurityManager;
+import com.jiongsoft.cocit.util.ClearDisk;
 import com.kmetop.demsy.actions.AppActions;
 import com.kmetop.demsy.actions.BizActions;
 import com.kmetop.demsy.actions.ConfigActions;
@@ -167,6 +169,7 @@ import com.kmetop.demsy.security.SecurityException;
 		, EntityAction.class //
 		, UtilAction.class //
 		, WebAction.class //
+		, FileManagerAction.class //
 })
 @UrlMappingBy("com.kmetop.demsy.mvc.nutz.DemsyUrlMappingImpl")
 @ChainBy(args = { "com/kmetop/demsy/mvc/nutz/demsy-chains.js" })
@@ -238,6 +241,12 @@ public abstract class Demsy implements Const, MvcConst {
 	 *            ServletContext 对象
 	 */
 	public static void init(ServletContext context) {
+		try {
+			ClearDisk.clear(context);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+
 		// 初始化
 		synchronized (Demsy.class) {
 			if (inited) {
