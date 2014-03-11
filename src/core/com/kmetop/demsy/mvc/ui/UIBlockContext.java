@@ -545,7 +545,7 @@ public class UIBlockContext {
 	private String getImageField(IBizSystem system) {
 		IBizFieldType fldlib = bizEngine.getFieldTypes().get("Upload");
 		for (IBizField f : bizEngine.getFieldsOfEnabled(system)) {
-			if (!fldlib.equals(f.getType())) {
+			if (fldlib != null && !fldlib.equals(f.getType())) {
 				continue;
 			}
 

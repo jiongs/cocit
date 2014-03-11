@@ -227,8 +227,9 @@ public class FileManagerAction {
 			File[] files = dir.listFiles();
 			if (files != null) {
 
-				Node node = tree.addNode(null, "folder:" + StringUtil.encodeHex(dir.getAbsolutePath()));
-				node.setName("..");
+				Node node;
+				// node = tree.addNode(null, "folder:" + StringUtil.encodeHex(dir.getAbsolutePath()));
+				// node.setName("..");
 				for (File file : files) {
 					if (!file.isDirectory()) {
 						continue;

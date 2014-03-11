@@ -74,12 +74,14 @@ public class LoadDetailContent extends UiRecord {
 
 			context.put("pager", pager);
 		} else {
-			if (maker.getPageView() != null)
-				maker.getPageView().set("subtitle", info.toString());
-			try {
-				moduleEngine.increase(orm, info, "clickNum");
-			} catch (Throwable e) {
-				log.warn(e);
+			if (info != null) {
+				if (maker.getPageView() != null)
+					maker.getPageView().set("subtitle", info.toString());
+				try {
+					moduleEngine.increase(orm, info, "clickNum");
+				} catch (Throwable e) {
+					log.warn(e);
+				}
 			}
 		}
 

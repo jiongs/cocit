@@ -152,9 +152,13 @@ public class SmartyTemplate extends AbstractTemplate {
 			InputStream is = null;
 			InputStreamReader isr = null;
 			try {
-				is = Files.findFileAsStream(name);
+				String fileName = name;
+				if (name.startsWith("/")) {
+					fileName = Demsy.contextDir + name;
+				}
+				is = Files.findFileAsStream(fileName);
 				if (is == null) {
-					throw new IOException("模板文件不存在! [" + name + "]");
+					throw new IOException("模板文件不存在! [" + fileName + "]");
 				}
 				isr = new InputStreamReader(is, getEncoding());
 				template = new DemsyTemplate(this, isr, name);

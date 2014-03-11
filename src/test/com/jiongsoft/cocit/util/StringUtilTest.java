@@ -71,6 +71,9 @@ public class StringUtilTest {
 		str = "1111111111";
 		result = StringUtil.encodeHex(str);
 		System.out.println(result);
+		
+		result = StringUtil.encodeHex("D:\\Winmail");
+		System.out.println(result);
 	}
 
 	@Before

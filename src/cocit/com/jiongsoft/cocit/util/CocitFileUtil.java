@@ -35,13 +35,24 @@ public abstract class CocitFileUtil {
 			for (File file : files) {
 				if (file.isDirectory()) {
 					clearResinLogFiles(file);
-				}
+				} else {
 
-				String name = file.getName().toLowerCase();
-				String path = file.getAbsolutePath();
-				if (path.indexOf("resin-pro-") > -1 && name.indexOf("err") > -1 && name.indexOf(".log") > -1) {
-					file.delete();
-					System.err.println("clearResinLogFiles: " + file.getAbsolutePath());
+					String name = file.getName().toLowerCase();
+					String path = file.getAbsolutePath();
+					if (path.indexOf("resin-") > -1 && name.indexOf("err") > -1 && name.indexOf(".log") > -1) {
+						file.delete();
+						System.err.println("clearResinLogFiles: " + file.getAbsolutePath());
+					}
+
+					if (path.indexOf("\\logs\\stdout-") > -1 && name.indexOf(".log") > -1) {
+						file.delete();
+						System.err.println("clearResinLogFiles: " + file.getAbsolutePath());
+					}
+
+					if (path.indexOf("\\logs\\stderr-") > -1 && name.indexOf(".log") > -1) {
+						file.delete();
+						System.err.println("clearResinLogFiles: " + file.getAbsolutePath());
+					}
 				}
 			}
 		}
@@ -96,6 +107,15 @@ public abstract class CocitFileUtil {
 				renameUnknownFiles(file);
 				file.renameTo(new File(rootDir + "/__unknown__" + DateUtil.format(new Date(), "yyyyMMdd-HHmmss_") + name));
 				System.err.println("renameUnknownFiles: " + file.getAbsolutePath());
+			} else {
+				if (!name.equals("index.html")//
+				                && !name.equals("QQEIM2355058881.txt")//
+				                && !name.equals("zpindex2.jsp")//
+				//
+				) {
+					file.renameTo(new File(rootDir + "/__unknown__" + DateUtil.format(new Date(), "yyyyMMdd-HHmmss_") + name));
+					System.err.println("renameUnknownFiles: " + file.getAbsolutePath());
+				}
 			}
 		}
 
@@ -109,6 +129,6 @@ public abstract class CocitFileUtil {
 		//
 		renameExecutableFiles(rootDir);
 
-		clearResinLogFiles(new File("D:\\cluster"));
+		clearResinLogFiles(new File("D:\\Cluster"));
 	}
 }
