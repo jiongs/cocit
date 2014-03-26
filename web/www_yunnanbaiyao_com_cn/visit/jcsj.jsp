@@ -10,18 +10,59 @@
 	Class<WebContentEntity> contentType = beanFactory.getWebContentEntityType();
 	WebContentEntity entity;
 	Class<WebCatalogEntity> catalogType = beanFactory.getWebCatalogEntityType();
+
+	String catalogGuid = request.getParameter("catalog");
+	WebCatalogEntity catalog = null;
+	if(catalogGuid != null && catalogGuid.trim().length() > 0){
+		catalog = orm.get(catalogType, Expr.eq("entityGuid", catalogGuid));
+	}
 	
 	WebCatalogEntity root = orm.get(catalogType, Expr.eq("code", "201309-10"));
-	List<WebCatalogEntity> catalogList = orm.query(catalogType, Expr.eq("parent", root).addAsc("orderby").addDesc("id"));
-	
-	WebCatalogEntity catalog = null;
-	String catalogGuid = request.getParameter("catalog");
-	if(catalogGuid == null || catalogGuid.trim().length() == 0){
+	List<WebCatalogEntity> catalogList = new ArrayList();
+	if(catalog == null){
+	    catalogList = orm.query(catalogType, Expr.eq("parent", root).addDesc("id").setPager(1, 6));
 		if(catalogList != null && catalogList.size() > 0){
 			catalog = catalogList.get(0);
 		}
 	}else{
-		catalog = orm.get(catalogType, Expr.eq("entityGuid", catalogGuid));
+	    List<WebCatalogEntity> catalogList1 = orm.query(catalogType, Expr.and(Expr.eq("parent", root), Expr.ge("id", catalog.getId())).addAsc("id").setPager(1, 6));
+	    List<WebCatalogEntity> catalogList2 = orm.query(catalogType, Expr.and(Expr.eq("parent", root), Expr.lt("id", catalog.getId())).addDesc("id").setPager(1, 6));
+		if(catalogList1 != null && catalogList1.size() > 0){
+		    for(int i = catalogList1.size()-1;i>=0;i--){
+		    	catalogList.add(catalogList1.get(i));
+		    }
+		}
+		if(catalogList2 != null && catalogList2.size() > 0){
+	    	catalogList.addAll(catalogList2);
+		}
+	    int listLen = catalogList.size(); 
+	    if(listLen > 6){
+			int currentIndex = 0;
+			for(int i = 0; i<listLen; i++){
+			    WebCatalogEntity c = catalogList.get(i);
+			    if(c.getId().equals(catalog.getId())){
+					currentIndex = i;
+					break;
+			    }
+			}
+			int ristLen1 = currentIndex - 2;
+			if(ristLen1 < 0){
+			    ristLen1 = 0;
+			}
+			int ristLen2 = listLen - 6 - ristLen1;
+			for(int i = 0; i<ristLen1; i++){
+			    if(catalogList.size() <= 6){
+					break;
+			    }
+			    catalogList.remove(0);
+			}
+			for(int i = 0; i<ristLen2; i++){
+			    if(catalogList.size() <= 6){
+					break;
+			    }
+			    catalogList.remove(catalogList.size()-1);
+			}
+	    }
 	}
 %>
 <head>
@@ -122,7 +163,7 @@ $(document).ready(function(){
 				<table width="100%">
 					<tr>
 						<td valign="top" width="140px">
-							<div style="height: 510px; position: relative;">
+							<div style="height: 530px; position: relative;">
 								<div style="height: 100%; width: 5px; background: #aeee00; left: 50px; top: 10px; position: absolute;"></div>
 								<div style="position: absolute; top: -40px; left: 10px; font-size: 22px; color: #ff5335;">精彩瞬间</div>
 								<div style="position: absolute; top: 0px; left: 18px; width: 68px; height: 68px;">

@@ -22,30 +22,33 @@ public class SaveUser extends BasePlugin {
 	@Override
 	public void before(ActionEvent event) {
 		synchronized (SaveUser.class) {
-			/*
-			 * 检查图片验证码：以避免因其他校验错误导致验证码失效，避免防止重复提交！但验证码必须在最后检查，这里只检查验证码是否存在？
-			 */
-			boolean isAdministrator = false;
-			try {
-				security.checkLogin(SecurityManager.ROLE_ADMIN_USER);
-				isAdministrator = true;
-			} catch (Throwable e) {
-			}
-
-			String cocit_verify_code = null;
-			ActionContext ctx = Cocit.getActionContext();
-			if (!isAdministrator) {
-				cocit_verify_code = ctx.getRequest().getParameter("cocit_verify_code");
-				if (StringUtil.isNil(cocit_verify_code)) {
-					throw new DemsyException("必须输入图片验证码!");
-				}
-			}
 
 			/*
 			 * 获取用户信息
 			 */
 			BaseUser user = (BaseUser) event.getEntity();
 			IOrm orm = (IOrm) event.getOrm();
+
+			boolean isAdministrator = false;
+			try {
+				security.checkLogin(SecurityManager.ROLE_ADMIN_USER);
+				isAdministrator = true;
+			} catch (Throwable e) {
+			}
+			String cocit_verify_code = null;
+			ActionContext ctx = Cocit.getActionContext();
+			
+			/*
+			 * 检查图片验证码：以避免因其他校验错误导致验证码失效，避免防止重复提交！但验证码必须在最后检查，这里只检查验证码是否存在？
+			 */
+			if (user instanceof WebUser) {
+				if (!isAdministrator) {
+					cocit_verify_code = ctx.getRequest().getParameter("cocit_verify_code");
+					if (StringUtil.isNil(cocit_verify_code)) {
+						throw new DemsyException("必须输入图片验证码!");
+					}
+				}
+			}
 
 			/*
 			 * 检查登录帐号是否被占用：。
@@ -118,7 +121,9 @@ public class SaveUser extends BasePlugin {
 				/*
 				 * 检查图片验证码：验证码必须在最后检查，以避免因其他校验错误导致验证码失效，避免防止重复提交！
 				 */
-				HttpUtil.checkImgVerifyCode(ctx.getRequest(), cocit_verify_code, "验证码不正确！");
+				if (user instanceof WebUser) {
+					HttpUtil.checkImgVerifyCode(ctx.getRequest(), cocit_verify_code, "验证码不正确！");
+				}
 			}
 		}
 	}
