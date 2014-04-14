@@ -692,6 +692,9 @@ public abstract class BizCompiler {
 		int count = 0;
 		for (String jar : jars) {
 			logPaths.append("\n").append(jar);
+			if(jar.indexOf("\\eclipse\\")>-1){
+				continue;
+			}
 			classpath[count++] = jar;
 		}
 		log.debug(logPaths);
@@ -707,7 +710,7 @@ public abstract class BizCompiler {
 			javafiles[count++] = unit.getSourceFile().getAbsolutePath();
 		}
 
-		INameEnvironment env = new FileSystem(classpath, javafiles, null);// getNameEnvironment(units);
+		INameEnvironment env = new FileSystem(classpath, javafiles, "UTF-8");// getNameEnvironment(units);
 
 		IErrorHandlingPolicy policy = DefaultErrorHandlingPolicies.proceedWithAllProblems();
 
