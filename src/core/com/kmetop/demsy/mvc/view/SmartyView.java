@@ -30,8 +30,13 @@ public class SmartyView extends AbstractView {
 
 		Writer out = null;
 		String tplPath = null;
-		String softCode = Demsy.me().getSoft().getCode();
-		String contextPath = "/" + softCode.replace(".", "_");
+		String contextPath = "";
+		try {
+			String softCode = Demsy.me().getSoft().getCode();
+			contextPath = "/" + softCode.replace(".", "_");
+		} catch (Throwable e) {
+
+		}
 		File tplFile = new File(Demsy.contextDir + contextPath + "/" + this.path);
 		if (tplFile.exists()) {
 			tplPath = contextPath + "/" + this.path;
