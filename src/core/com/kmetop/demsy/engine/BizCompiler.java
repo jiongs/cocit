@@ -38,6 +38,7 @@ import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 import org.eclipse.jdt.internal.compiler.problem.DefaultProblemFactory;
 import org.nutz.lang.Files;
 
+import com.jiongsoft.cocit.util.compiler.DCompile;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.biz.IBizField;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
@@ -474,7 +475,8 @@ public abstract class BizCompiler {
 			log.infof("编译<%s(%s,%s)>业务系统: 计算需要编译的依赖系统: 结束. 共<%s>个系统需编译[\n%s]", system.getName(), system.getCode(), system.getId(), collectedSystems.size(), logBuf);
 		}
 
-		String tempDir = appconfig.getTempDir() + File.separator + "BIZSRC_" + (times++);
+		// String tempDir = appconfig.getTempDir() + File.separator + "BIZSRC_" + (times++);
+		String tempDir = appconfig.getTempDir() + File.separator + "BIZSRC";
 		Files.deleteDir(new File(tempDir));
 
 		List<String> classNames = new LinkedList();
@@ -650,6 +652,12 @@ public abstract class BizCompiler {
 		File pkgDir = javaFile.getParentFile();
 
 		String error = compileUnits(units, classpath, pkgDir);
+		// String error = null;
+		// try {
+		// compile(pkgDir.getAbsolutePath(), tempDir);
+		// } catch (Exception e1) {
+		// error = e1.getMessage();
+		// }
 		if (!Str.isEmpty(error)) {
 			return error;
 		}
@@ -683,6 +691,16 @@ public abstract class BizCompiler {
 		return null;
 	}
 
+	private void compile(String javaFilePath, String classTargetPath) throws Exception {
+		DCompile dc = new DCompile();
+		File dir = new File(javaFilePath);
+		File[] files = dir.listFiles();
+		for (File file : files) {
+			dc.initialize(javaFilePath + "/" + file.getName(), classTargetPath, "UTF-8");
+		}
+		dc.compile();
+	}
+
 	@SuppressWarnings("deprecation")
 	private String compileUnits(SystemCompilationUnit[] units, List<String> jars, File tempDirFile) {
 		StringBuffer problemBuffer = new StringBuffer();
@@ -692,7 +710,7 @@ public abstract class BizCompiler {
 		int count = 0;
 		for (String jar : jars) {
 			logPaths.append("\n").append(jar);
-			if(jar.indexOf("\\eclipse\\")>-1){
+			if (jar.indexOf("\\eclipse\\") > -1) {
 				continue;
 			}
 			classpath[count++] = jar;
@@ -796,9 +814,16 @@ public abstract class BizCompiler {
 		settings.put(CompilerOptions.OPTION_LineNumberAttribute, CompilerOptions.GENERATE);
 		settings.put(CompilerOptions.OPTION_SourceFileAttribute, CompilerOptions.GENERATE);
 		settings.put(CompilerOptions.OPTION_ReportDeprecation, CompilerOptions.IGNORE);
-		settings.put(CompilerOptions.OPTION_Source, CompilerOptions.VERSION_1_5);
-		settings.put(CompilerOptions.OPTION_Compliance, CompilerOptions.VERSION_1_5);
-		settings.put(CompilerOptions.OPTION_TargetPlatform, CompilerOptions.VERSION_1_5);
+		// settings.put(CompilerOptions.OPTION_Source, CompilerOptions.VERSION_1_5);
+		// settings.put(CompilerOptions.OPTION_Compliance, CompilerOptions.VERSION_1_5);
+		// settings.put(CompilerOptions.OPTION_TargetPlatform, CompilerOptions.VERSION_1_5);
+
+		settings.put(CompilerOptions.OPTION_Encoding, "UTF-8");
+		// Source JVM
+		settings.put(CompilerOptions.OPTION_Source, CompilerOptions.VERSION_1_6);
+		// Target JVM
+		settings.put(CompilerOptions.OPTION_TargetPlatform, CompilerOptions.VERSION_1_6);
+		settings.put(CompilerOptions.OPTION_Compliance, CompilerOptions.VERSION_1_6);
 
 		Properties systemProps = System.getProperties();
 		for (Enumeration it = systemProps.propertyNames(); it.hasMoreElements();) {
