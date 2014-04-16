@@ -1,4 +1,4 @@
-package com.jiongsoft.entity.asset;
+package com.jiongsoft.cocit.entity.asset;
 
 import javax.persistence.Entity;
 
@@ -10,13 +10,13 @@ import com.jiongsoft.cocit.entity.impl.NameEntity;
 import com.jiongsoft.cocit.util.UrlAPI;
 
 /**
- * 设备用途设置
+ * 经费来源
  * 
  * @author yongshan.ji
  * 
  */
 @Entity
-@CocTable(name = "设备用途设置", code = "asset_purpose", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
+@CocTable(name = "经费来源设置", code = "asset_funds_origin", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
 /*
  * 操作按钮
  */
@@ -49,5 +49,6 @@ import com.jiongsoft.cocit.util.UrlAPI;
 }) // end: CocGroup
 }// end: groups
 )
-public class AssetPurpose extends NameEntity {
+public class AssetFundsOrigin extends NameEntity {
+
 }

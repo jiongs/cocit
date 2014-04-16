@@ -1,4 +1,6 @@
-package com.jiongsoft.entity.hr;
+package com.jiongsoft.cocit.entity.hr;
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +14,7 @@ import com.jiongsoft.cocit.entity.impl.NameEntity;
 import com.jiongsoft.cocit.util.UrlAPI;
 
 @Entity
-@CocTable(name = "员工管理", code = "common_employee", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
+@CocTable(name = "单位员工管理", code = "hr_employee", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
 /*
  * 操作按钮
  */
@@ -32,12 +34,15 @@ import com.jiongsoft.cocit.util.UrlAPI;
 @CocGroup(name = "基本信息", code = "basic_info"//
 , fields = {
 //
-		@CocField(name = "所属部门", mode = "*:N v:S c:M e:M", property = "org", gridOrder = 1)//
+		@CocField(name = "所属部门", mode = "*:N v:S c:M e:M", property = "department", gridOrder = 1)//
 		, @CocField(name = "员工姓名", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 2)//
 		, @CocField(name = "员工工号", mode = "*:N v:S c:E e:E", property = "code", gridOrder = 3)//
 		, @CocField(name = "联系电话", mode = "*:N v:S c:E e:E", property = "tel", gridOrder = 4)//
 		, @CocField(name = "QQ号码", mode = "*:N v:S c:E e:E", property = "qq", gridOrder = 5)//
 		, @CocField(name = "Email地址", mode = "*:N v:S c:E e:E", property = "email", gridOrder = 6)//
+		, @CocField(name = "入职时间", mode = "*:N v:S c:E e:E", property = "entryDate", pattern = "yyyy年MM月")//
+		, @CocField(name = "办公地点", mode = "*:N v:S c:E e:E", property = "officeAddress", gridOrder = 7)//
+		, @CocField(name = "状态", mode = "*:N v:S c:M e:M", property = "status", options = "0:在职, 1:离职")//
 		, @CocField(name = "员工简介", mode = "*:N v:S c:E e:E", property = "desc") //
 }), @CocGroup(name = "基本信息", code = "operation_log"//
 , fields = {
@@ -49,14 +54,14 @@ import com.jiongsoft.cocit.util.UrlAPI;
 }) // end: CocGroup
 }// end: groups
 )
-public class EmployeeEntity extends NameEntity {
+public class Employee extends NameEntity {
 
 	// 办公地点
 	@ManyToOne
-	AddressEntity officeAddress;
+	Address officeAddress;
 
 	@ManyToOne
-	DepartmentEntity department;
+	Department department;
 
 	@Column(length = 128)
 	String email;
@@ -67,11 +72,15 @@ public class EmployeeEntity extends NameEntity {
 	@Column(length = 32)
 	String tel;
 
-	public DepartmentEntity getDepartment() {
+	Date entryDate;
+
+	int status;
+
+	public Department getDepartment() {
 		return department;
 	}
 
-	public void setDepartment(DepartmentEntity parent) {
+	public void setDepartment(Department parent) {
 		this.department = parent;
 	}
 
@@ -97,5 +106,29 @@ public class EmployeeEntity extends NameEntity {
 
 	public void setTel(String tel) {
 		this.tel = tel;
+	}
+
+	public Address getOfficeAddress() {
+		return officeAddress;
+	}
+
+	public void setOfficeAddress(Address officeAddress) {
+		this.officeAddress = officeAddress;
+	}
+
+	public Date getEntryDate() {
+		return entryDate;
+	}
+
+	public void setEntryDate(Date entryDate) {
+		this.entryDate = entryDate;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 }

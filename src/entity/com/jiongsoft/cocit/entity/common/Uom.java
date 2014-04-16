@@ -1,7 +1,6 @@
-package com.jiongsoft.entity.hr;
+package com.jiongsoft.cocit.entity.common;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
@@ -10,8 +9,14 @@ import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.jiongsoft.cocit.entity.impl.NameEntity;
 import com.jiongsoft.cocit.util.UrlAPI;
 
+/**
+ * 国别
+ * 
+ * @author yongshan.ji
+ * 
+ */
 @Entity
-@CocTable(name = "办公地点管理", code = "common_office_address", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
+@CocTable(name = "计量单位设置", code = "common_uom", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
 /*
  * 操作按钮
  */
@@ -31,8 +36,7 @@ import com.jiongsoft.cocit.util.UrlAPI;
 @CocGroup(name = "基本信息", code = "basic_info"//
 , fields = {
 //
-		@CocField(name = "上级地址", mode = "*:N v:S c:E e:E", property = "parent", gridOrder = 1)//
-		, @CocField(name = "名称", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 2)//
+		@CocField(name = "名称", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 2)//
 		, @CocField(name = "编号", mode = "*:N v:S c:E e:E", property = "code", gridOrder = 3)//
 		, @CocField(name = "描述", mode = "*:N v:S c:E e:E", property = "desc") //
 }), @CocGroup(name = "基本信息", code = "operation_log"//
@@ -45,21 +49,6 @@ import com.jiongsoft.cocit.util.UrlAPI;
 }) // end: CocGroup
 }// end: groups
 )
-public class AddressEntity extends NameEntity {
+public class Uom extends NameEntity {
 
-	//
-	@ManyToOne
-	AddressEntity parent;
-
-	//所属部门
-	@ManyToOne
-	DepartmentEntity department;
-
-	public AddressEntity getParent() {
-		return parent;
-	}
-
-	public void setParent(AddressEntity parent) {
-		this.parent = parent;
-	}
 }

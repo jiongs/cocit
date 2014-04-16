@@ -55,7 +55,7 @@
 			<src path="${src.dir}/core" />
 			<src path="${src.dir}/basecomlib" />
 			<src path="${src.dir}/sftcomlib" />
-			<src path="${src.dir}/ynby" />
+			<src path="${src.dir}/entity" />
 			<src path="${src.dir}/cocit" />
 		</javac>
 
@@ -120,7 +120,7 @@
 				<include name="config/ckfinder-config.xml" />
 				<include name="config/log4j.properties" />
 				<include name="config/logback.xml" />
-				<include name="config/ioc.js" />
+				<!-- include name="config/ioc.js" / -->
 				<include name="jsp/**/*.*" />
 			</fileset>
 		</copy>

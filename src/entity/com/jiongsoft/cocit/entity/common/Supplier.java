@@ -1,5 +1,6 @@
-package com.jiongsoft.entity.asset;
+package com.jiongsoft.cocit.entity.common;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import com.jiongsoft.cocit.entity.annotation.CocField;
@@ -9,14 +10,8 @@ import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.jiongsoft.cocit.entity.impl.NameEntity;
 import com.jiongsoft.cocit.util.UrlAPI;
 
-/**
- * 经费来源
- * 
- * @author yongshan.ji
- * 
- */
 @Entity
-@CocTable(name = "经费来源设置", code = "asset_funds_origin", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
+@CocTable(name = "供货商资料管理", code = "common_supplier", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
 /*
  * 操作按钮
  */
@@ -38,6 +33,11 @@ import com.jiongsoft.cocit.util.UrlAPI;
 //
 		@CocField(name = "名称", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 2)//
 		, @CocField(name = "编号", mode = "*:N v:S c:E e:E", property = "code", gridOrder = 3)//
+		, @CocField(name = "单位地址", mode = "*:N v:S c:M e:M", property = "address", gridOrder = 4)//
+		, @CocField(name = "联系人姓名", mode = "*:N v:S c:M e:M", property = "contactPerson", gridOrder = 5)//
+		, @CocField(name = "联系人电话", mode = "*:N v:S c:M e:M", property = "tel", gridOrder = 6)//
+		, @CocField(name = "联系人邮箱", mode = "*:N v:S c:E e:E", property = "email", gridOrder = 7)//
+		, @CocField(name = "联系人QQ", mode = "*:N v:S c:E e:E", property = "qq", gridOrder = 8)//
 		, @CocField(name = "描述", mode = "*:N v:S c:E e:E", property = "desc") //
 }), @CocGroup(name = "基本信息", code = "operation_log"//
 , fields = {
@@ -49,6 +49,60 @@ import com.jiongsoft.cocit.util.UrlAPI;
 }) // end: CocGroup
 }// end: groups
 )
-public class AssetFundsOrigin extends NameEntity {
+public class Supplier extends NameEntity {
 
+	@Column(length = 256)
+	String address;
+
+	@Column(length = 64)
+	String contactPerson;
+
+	@Column(length = 128)
+	String email;
+
+	@Column(length = 32)
+	String qq;
+
+	@Column(length = 32)
+	String tel;
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getContactPerson() {
+		return contactPerson;
+	}
+
+	public void setContactPerson(String contactPerson) {
+		this.contactPerson = contactPerson;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getQq() {
+		return qq;
+	}
+
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
 }

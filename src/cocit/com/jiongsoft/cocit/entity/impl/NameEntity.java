@@ -81,4 +81,9 @@ public abstract class NameEntity extends BaseEntity {
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
+
+	@Override
+	public String toString() {
+		return this.name;
+	}
 }

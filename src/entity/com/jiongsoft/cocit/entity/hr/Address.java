@@ -1,7 +1,7 @@
-package com.jiongsoft.entity.hr;
+package com.jiongsoft.cocit.entity.hr;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
@@ -11,7 +11,7 @@ import com.jiongsoft.cocit.entity.impl.NameEntity;
 import com.jiongsoft.cocit.util.UrlAPI;
 
 @Entity
-@CocTable(name = "供货商管理", code = "common_supplier", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
+@CocTable(name = "办公地点管理", code = "hr_address", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
 /*
  * 操作按钮
  */
@@ -31,8 +31,10 @@ import com.jiongsoft.cocit.util.UrlAPI;
 @CocGroup(name = "基本信息", code = "basic_info"//
 , fields = {
 //
-		@CocField(name = "名称", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 2)//
+		@CocField(name = "上级地点", mode = "*:N v:S c:E e:E", property = "parent", gridOrder = 1)//
+		, @CocField(name = "名称", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 2)//
 		, @CocField(name = "编号", mode = "*:N v:S c:E e:E", property = "code", gridOrder = 3)//
+		, @CocField(name = "所属部门", mode = "*:N v:S c:E e:E", property = "department", gridOrder = 2)//
 		, @CocField(name = "描述", mode = "*:N v:S c:E e:E", property = "desc") //
 }), @CocGroup(name = "基本信息", code = "operation_log"//
 , fields = {
@@ -44,60 +46,29 @@ import com.jiongsoft.cocit.util.UrlAPI;
 }) // end: CocGroup
 }// end: groups
 )
-public class SupplierEntity extends NameEntity {
+public class Address extends NameEntity {
 
-	@Column(length = 256)
-	String address;
+	// 上级地点
+	@ManyToOne
+	Address parent;
 
-	@Column(length = 64)
-	String contactPerson;
+	// 所属部门
+	@ManyToOne
+	Department department;
 
-	@Column(length = 128)
-	String email;
-
-	@Column(length = 32)
-	String qq;
-
-	@Column(length = 32)
-	String tel;
-
-	public String getAddress() {
-		return address;
+	public Address getParent() {
+		return parent;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setParent(Address parent) {
+		this.parent = parent;
 	}
 
-	public String getContactPerson() {
-		return contactPerson;
+	public Department getDepartment() {
+		return department;
 	}
 
-	public void setContactPerson(String contactPerson) {
-		this.contactPerson = contactPerson;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getQq() {
-		return qq;
-	}
-
-	public void setQq(String qq) {
-		this.qq = qq;
-	}
-
-	public String getTel() {
-		return tel;
-	}
-
-	public void setTel(String tel) {
-		this.tel = tel;
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 }

@@ -1,4 +1,4 @@
-package com.jiongsoft.entity.asset;
+package com.jiongsoft.cocit.entity.asset;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -37,7 +37,8 @@ import com.jiongsoft.cocit.util.UrlAPI;
 @CocGroup(name = "基本信息", code = "basic_info"//
 , fields = {
 //
-		@CocField(name = "名称", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 2)//
+		@CocField(name = "资产分类", mode = "*:N v:S c:M e:M", property = "category", gridOrder = 1)//
+		, @CocField(name = "名称", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 2)//
 		, @CocField(name = "编号", mode = "*:N v:S c:E e:E", property = "code", gridOrder = 3)//
 		, @CocField(name = "描述", mode = "*:N v:S c:E e:E", property = "desc") //
 }), @CocGroup(name = "基本信息", code = "operation_log"//
@@ -55,4 +56,12 @@ public class AssetModel extends NameEntity {
 	// 设备分类
 	@ManyToOne
 	AssetCategory category;
+
+	public AssetCategory getCategory() {
+		return category;
+	}
+
+	public void setCategory(AssetCategory category) {
+		this.category = category;
+	}
 }

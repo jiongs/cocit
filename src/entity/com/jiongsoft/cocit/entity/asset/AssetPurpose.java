@@ -1,4 +1,4 @@
-package com.jiongsoft.entity.common;
+package com.jiongsoft.cocit.entity.asset;
 
 import javax.persistence.Entity;
 
@@ -10,13 +10,13 @@ import com.jiongsoft.cocit.entity.impl.NameEntity;
 import com.jiongsoft.cocit.util.UrlAPI;
 
 /**
- * 国别
+ * 设备用途设置
  * 
  * @author yongshan.ji
  * 
  */
 @Entity
-@CocTable(name = "计量单位管理", code = "asset_uom", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
+@CocTable(name = "设备用途设置", code = "asset_purpose", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
 /*
  * 操作按钮
  */
@@ -49,6 +49,5 @@ import com.jiongsoft.cocit.util.UrlAPI;
 }) // end: CocGroup
 }// end: groups
 )
-public class UomEntity extends NameEntity {
-
+public class AssetPurpose extends NameEntity {
 }

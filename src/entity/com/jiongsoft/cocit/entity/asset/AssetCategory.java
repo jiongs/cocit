@@ -1,4 +1,4 @@
-package com.jiongsoft.entity.asset;
+package com.jiongsoft.cocit.entity.asset;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;

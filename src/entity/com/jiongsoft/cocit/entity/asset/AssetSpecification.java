@@ -1,4 +1,4 @@
-package com.jiongsoft.entity.hr;
+package com.jiongsoft.cocit.entity.asset;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -10,8 +10,14 @@ import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.jiongsoft.cocit.entity.impl.NameEntity;
 import com.jiongsoft.cocit.util.UrlAPI;
 
+/**
+ * 设备规格设置
+ * 
+ * @author yongshan.ji
+ * 
+ */
 @Entity
-@CocTable(name = "组织机构管理", code = "common_org", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
+@CocTable(name = "设备规格设置", code = "asset_specification", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
 /*
  * 操作按钮
  */
@@ -31,7 +37,7 @@ import com.jiongsoft.cocit.util.UrlAPI;
 @CocGroup(name = "基本信息", code = "basic_info"//
 , fields = {
 //
-		@CocField(name = "上级机构", mode = "*:N v:S c:E e:E", property = "parent", gridOrder = 1)//
+		@CocField(name = "资产分类", mode = "*:N v:S c:M e:M", property = "category", gridOrder = 1)//
 		, @CocField(name = "名称", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 2)//
 		, @CocField(name = "编号", mode = "*:N v:S c:E e:E", property = "code", gridOrder = 3)//
 		, @CocField(name = "描述", mode = "*:N v:S c:E e:E", property = "desc") //
@@ -45,16 +51,17 @@ import com.jiongsoft.cocit.util.UrlAPI;
 }) // end: CocGroup
 }// end: groups
 )
-public class DepartmentEntity extends NameEntity {
+public class AssetSpecification extends NameEntity {
 
+	// 设备分类
 	@ManyToOne
-	DepartmentEntity parent;
+	AssetCategory category;
 
-	public DepartmentEntity getParent() {
-		return parent;
+	public AssetCategory getCategory() {
+		return category;
 	}
 
-	public void setParent(DepartmentEntity parent) {
-		this.parent = parent;
+	public void setCategory(AssetCategory category) {
+		this.category = category;
 	}
 }

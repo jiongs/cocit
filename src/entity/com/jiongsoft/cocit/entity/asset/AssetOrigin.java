@@ -1,4 +1,4 @@
-package com.jiongsoft.entity.asset;
+package com.jiongsoft.cocit.entity.asset;
 
 import javax.persistence.Entity;
 
@@ -16,7 +16,7 @@ import com.jiongsoft.cocit.util.UrlAPI;
  * 
  */
 @Entity
-@CocTable(name = "设备来源管理", code = "asset_origin", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
+@CocTable(name = "设备来源设置", code = "asset_origin", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
 /*
  * 操作按钮
  */

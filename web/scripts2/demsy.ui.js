@@ -525,7 +525,7 @@ var pngfix = function() {
 
 	}
 	$.fn.marquee = function(options) {
-		var speed = 500;
+		var speed = 1000;
 
 		this.each(function() {
 			var $this = $(this);
@@ -553,12 +553,12 @@ var pngfix = function() {
 					}
 				}
 			}
-			var scroll = setInterval(marquee, speed);
+			var scroll = __sti(marquee, speed);
 			$this.mouseover(function() {
 				clearInterval(scroll);
 			});
 			$this.mouseout(function() {
-				scroll = setInterval(marquee, speed);
+				scroll = __sti(marquee, speed);
 			});
 		});
 
