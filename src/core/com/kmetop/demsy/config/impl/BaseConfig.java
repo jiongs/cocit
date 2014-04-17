@@ -187,7 +187,21 @@ public abstract class BaseConfig implements IConfig, IDynamic {
 		} else {
 			fileName = configFile;
 		}
-		return new File(appconfig.getConfigDir() + "/" + fileName);
+		File file = null;
+		String softCode = appconfig.getDefaultSoftCode();
+		String softContext = softCode.replace(".", "_");
+		file = new File(appconfig.getContextDir() + "/" + softContext + "/config/" + fileName);
+		if (!file.exists()) {
+			File tplFile = new File(appconfig.getConfigDir() + "/" + fileName);
+			file.getParentFile().mkdirs();
+			try {
+				file.createNewFile();
+				Files.copy(tplFile, file);
+			} catch (Throwable e) {
+			}
+		}
+
+		return file;
 	}
 
 	public void save() throws IOException {

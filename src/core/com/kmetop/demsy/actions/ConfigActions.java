@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.nutz.lang.Files;
@@ -36,13 +35,12 @@ import com.kmetop.demsy.config.IConfig;
 import com.kmetop.demsy.config.IDataSource;
 import com.kmetop.demsy.config.SoftConfigManager;
 import com.kmetop.demsy.config.impl.BaseConfig;
-import com.kmetop.demsy.config.impl.PropConfig;
 import com.kmetop.demsy.lang.Dates;
 import com.kmetop.demsy.lang.DemsyException;
+import com.kmetop.demsy.lang.Ex;
 import com.kmetop.demsy.lang.Http;
 import com.kmetop.demsy.lang.Status;
 import com.kmetop.demsy.lang.Str;
-import com.kmetop.demsy.lang.Ex;
 import com.kmetop.demsy.lang.Zips;
 import com.kmetop.demsy.log.Log;
 import com.kmetop.demsy.log.Logs;
@@ -78,32 +76,30 @@ public class ConfigActions implements MvcConst {
 			}
 		}
 
-		ret.put("title", (soft == null ? appconfig.getDefaultSoftName() : soft.getName()) + "——"
-				+ (module == null ? "平台初始化设置" : module.getName()));// 页面标题
-
-		PropConfig devcfg = new PropConfig("dev-config");
+		ret.put("title", (soft == null ? appconfig.getDefaultSoftName() : soft.getName()) + "——" + (module == null ? "平台初始化设置" : module.getName()));// 页面标题
 
 		ret.put("db", dataSource);
 		ret.put("app", appconfig);
 		ret.put("uploadUrl", MvcUtil.contextPath(URL_UPLOAD, ""));
 		ret.put("softNodes", moduleEngine.makeNodesByCurrentSoft());
 
-		ret.put("projects", Str.toList((String) devcfg.get("projects"), ","));
-		List list = Str.toList((String) devcfg.get("databases"), ",");
-		if (list != null && list.size() > 0)
-			ret.put("databases", list);
-		list = Str.toList((String) devcfg.get("default_customer_names"), ",");
-		if (list != null && list.size() > 0)
-			ret.put("default_customer_names", list);
-		list = Str.toList((String) devcfg.get("default_customer_codes"), ",");
-		if (list != null && list.size() > 0)
-			ret.put("default_customer_codes", list);
-		list = Str.toList((String) devcfg.get("default_software_names"), ",");
-		if (list != null && list.size() > 0)
-			ret.put("default_software_names", list);
-		list = Str.toList((String) devcfg.get("default_software_codes"), ",");
-		if (list != null && list.size() > 0)
-			ret.put("default_software_codes", list);
+		// PropConfig devcfg = new PropConfig("dev-config");
+		// ret.put("projects", Str.toList((String) devcfg.get("projects"), ","));
+		// List list = Str.toList((String) devcfg.get("databases"), ",");
+		// if (list != null && list.size() > 0)
+		// ret.put("databases", list);
+		// list = Str.toList((String) devcfg.get("default_customer_names"), ",");
+		// if (list != null && list.size() > 0)
+		// ret.put("default_customer_names", list);
+		// list = Str.toList((String) devcfg.get("default_customer_codes"), ",");
+		// if (list != null && list.size() > 0)
+		// ret.put("default_customer_codes", list);
+		// list = Str.toList((String) devcfg.get("default_software_names"), ",");
+		// if (list != null && list.size() > 0)
+		// ret.put("default_software_names", list);
+		// list = Str.toList((String) devcfg.get("default_software_codes"), ",");
+		// if (list != null && list.size() > 0)
+		// ret.put("default_software_codes", list);
 
 		log.debugf("访问系统配置主界面结束.");
 
@@ -336,8 +332,7 @@ public class ConfigActions implements MvcConst {
 
 	@At("/config/exportToJson")
 	@Ok("void")
-	public synchronized void exportToJson(@Param("soft") String softID, @Param("date") String dateStr,
-			@Param("includeUpload") Boolean includeUpload) {
+	public synchronized void exportToJson(@Param("soft") String softID, @Param("date") String dateStr, @Param("includeUpload") Boolean includeUpload) {
 		log.debugf("导出业务数据... [softID: %s, date: %s]", softID, dateStr);
 		String folder = null;
 		try {
@@ -351,8 +346,7 @@ public class ConfigActions implements MvcConst {
 				date = Dates.getToday();
 			}
 
-			folder = appconfig.getLogsDir() + File.separator + "data" + File.separator + "data"
-					+ Dates.formatDate(new Date(), "yyMMddHHmm") + "(" + Dates.formatDate(date, "yyMMdd") + ")";
+			folder = appconfig.getLogsDir() + File.separator + "data" + File.separator + "data" + Dates.formatDate(new Date(), "yyMMddHHmm") + "(" + Dates.formatDate(date, "yyMMdd") + ")";
 			String zip = folder + ".zip";
 			File zipfile = new File(zip);
 			Files.deleteDir(new File(folder));
@@ -364,8 +358,7 @@ public class ConfigActions implements MvcConst {
 			if (includeUpload) {
 				String destUploadFolder = folder + File.separator + "upload";
 				File uploadDir = new File(Demsy.contextDir + File.separator + "upload");
-				BackupUtils.backup(uploadDir, Dates.formatDate(date, BackupUtils.dateFormat),
-						uploadDir.getAbsolutePath(), new File(destUploadFolder).getAbsolutePath());
+				BackupUtils.backup(uploadDir, Dates.formatDate(date, BackupUtils.dateFormat), uploadDir.getAbsolutePath(), new File(destUploadFolder).getAbsolutePath());
 			}
 
 			Zips.zip(folder, zip);
@@ -390,8 +383,7 @@ public class ConfigActions implements MvcConst {
 	}
 
 	@At("/config/importFromJson")
-	public synchronized Status importFromJson(@Param("importDataToSoft") String softID,
-			@Param("importDataFromZip") String importDataFromZip) {
+	public synchronized Status importFromJson(@Param("importDataToSoft") String softID, @Param("importDataFromZip") String importDataFromZip) {
 
 		log.debugf("导入业务数据... [softID: %s, importDataFromZip: %s]", softID, importDataFromZip);
 		try {

@@ -1,8 +1,14 @@
 package com.kmetop.demsy.config.impl;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+import org.nutz.lang.stream.StringInputStream;
 
 import com.kmetop.demsy.config.IAppConfig;
+import com.kmetop.demsy.lang.Files;
 import com.kmetop.demsy.lang.Str;
 
 public class AppConfig extends BaseConfig implements IAppConfig {
@@ -91,7 +97,51 @@ public class AppConfig extends BaseConfig implements IAppConfig {
 		} else {
 			fileName = configFile;
 		}
-		return new File(getConfigDir() + "/" + fileName);
+		File file = new File(getConfigDir() + "/" + fileName);
+
+		/*
+		 * 加载 /WEB-INF/config/app.properties
+		 */
+		InputStream is = null;
+		Properties customProps = null;
+		try {
+			if (file.exists()) {
+				String str = Files.read(file);
+				is = new StringInputStream(Str.toUnicode(str));
+
+				customProps = new Properties();
+				customProps.load(is);
+			}
+		} catch (IOException e) {
+		} finally {
+			if (is != null) {
+				try {
+					is.close();
+				} catch (IOException iglore) {
+				}
+			}
+		}
+
+		/*
+		 * 检查 /{project-context-path}/config/app.properties
+		 */
+		if (customProps != null) {
+			String softCode = AppConfig.getDefaultSoftCode(customProps);
+			String softContext = softCode.replace(".", "_");
+			File file2 = new File(getContextDir() + "/" + softContext + "/config/" + fileName);
+			if (!file2.exists()) {
+				file2.getParentFile().mkdirs();
+				try {
+					file2.createNewFile();
+					Files.copy(file, file2);
+				} catch (IOException e) {
+				}
+			}
+
+			return file2;
+		}
+
+		return file;
 	}
 
 	@Override
@@ -122,6 +172,10 @@ public class AppConfig extends BaseConfig implements IAppConfig {
 	@Override
 	public String getDefaultSoftCode() {
 		return this.get("demsy.softcode");
+	}
+
+	public static String getDefaultSoftCode(Properties props) {
+		return props.getProperty("demsy.softcode");
 	}
 
 	@Override

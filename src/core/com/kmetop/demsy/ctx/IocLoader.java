@@ -30,7 +30,13 @@ public abstract class IocLoader {
 
 		String[] paths = null;
 		try {
-			File file = new File(appconfig.getConfigDir() + "/" + fileName);
+			File file = null;
+			String softCode = appconfig.getDefaultSoftCode();
+			String softContext = softCode.replace(".", "_");
+			file = new File(appconfig.getContextDir() + "/" + softContext + "/config/" + fileName);
+			if (!file.exists())
+				file = new File(appconfig.getConfigDir() + "/" + fileName);
+
 			if (!file.exists()) {
 				log.tracef("加载IOC: 扩展的IOC配置文件不存在 [path=%s]", file.getAbsolutePath());
 				paths = new String[1];

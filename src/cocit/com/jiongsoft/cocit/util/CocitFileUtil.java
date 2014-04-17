@@ -16,7 +16,7 @@ public abstract class CocitFileUtil {
 				}
 				String fileName = file.getName().toLowerCase();
 				if (fileName.endsWith(".exe")//
-				                || fileName.endsWith(".bat")//
+						|| fileName.endsWith(".bat")//
 				) {
 
 					file.renameTo(new File(dir.getAbsolutePath() + "/" + file.getName() + ".cocit_unknown"));
@@ -89,16 +89,20 @@ public abstract class CocitFileUtil {
 		for (File file : rootFiles) {
 			String name = file.getName();
 			if (name.startsWith("jCocit")//
-			                || name.equals("jdemsy")//
-			                || name.equals("scripts2")//
-			                || name.equals("themes2")//
-			                || name.equals("thumbs")//
-			                || name.equals("upload")//
-			                || name.equals("WEB-INF")//
-			                || name.startsWith("www_")//
-			                || name.startsWith("__unknown__")//
-			                || file.isFile()//
-			                                //
+					|| name.equals("jdemsy")//
+					|| name.equals("scripts2")//
+					|| name.equals("themes2")//
+					|| name.equals("thumbs")//
+					|| name.equals("upload")//
+					|| name.equals("WEB-INF")//
+					|| name.startsWith("www_")//
+					|| name.endsWith("_demsy_cn")//
+					|| name.endsWith("_kmetop_com")//
+					|| name.endsWith("_cocit_cn")//
+					|| name.endsWith("_jiongsoft_com")//
+					|| name.startsWith("__unknown__")//
+					|| file.isFile()//
+									//
 			) {
 				continue;
 			}
@@ -109,8 +113,8 @@ public abstract class CocitFileUtil {
 				System.err.println("renameUnknownFiles: " + file.getAbsolutePath());
 			} else {
 				if (!name.equals("index.html")//
-				                && !name.equals("QQEIM2355058881.txt")//
-				                && !name.equals("zpindex2.jsp")//
+						&& !name.equals("QQEIM2355058881.txt")//
+						&& !name.equals("zpindex2.jsp")//
 				//
 				) {
 					file.renameTo(new File(rootDir + "/__unknown__" + DateUtil.format(new Date(), "yyyyMMdd-HHmmss_") + name));

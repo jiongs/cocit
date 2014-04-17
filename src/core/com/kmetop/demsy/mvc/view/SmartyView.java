@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kmetop.demsy.Demsy;
+import com.kmetop.demsy.comlib.entity.IDemsySoft;
 
 public class SmartyView extends AbstractView {
 
@@ -32,7 +33,11 @@ public class SmartyView extends AbstractView {
 		String tplPath = null;
 		String contextPath = "";
 		try {
-			String softCode = Demsy.me().getSoft().getCode();
+			IDemsySoft soft = Demsy.me().getSoft();
+			String softCode = Demsy.appconfig.getDefaultSoftCode();
+			if (soft != null) {
+				softCode = soft.getCode();
+			}
 			contextPath = "/" + softCode.replace(".", "_");
 		} catch (Throwable e) {
 

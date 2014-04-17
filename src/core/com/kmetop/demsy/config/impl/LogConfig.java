@@ -78,14 +78,23 @@ public class LogConfig implements ILogConfig {
 	private static class Log4jLoader {
 		static void reload() {
 			log.infof("加载日志配置: 加载LOG4J配置...");
-			String xmlfile = appconfig.getConfigDir() + "/log4j-test.properties";
+			String xmlfile = null;
+
+			String softCode = appconfig.getDefaultSoftCode();
+			String softContext = softCode.replace(".", "_");
+			xmlfile = appconfig.getContextDir() + "/" + softContext + "/config/log4j-test.properties";
+			if (!new File(xmlfile).exists())
+				xmlfile = appconfig.getConfigDir() + "/log4j-test.properties";
 
 			try {
 				if (!Demsy.appconfig.isProductMode() && new File(xmlfile).exists()) {
 					log.infof("加载日志配置: LOG4J配置文件 [%s]", xmlfile);
 					PropertyConfigurator.configure(xmlfile);
 				} else {
-					xmlfile = appconfig.getConfigDir() + "/log4j.properties";
+					xmlfile = appconfig.getContextDir() + "/" + softContext + "/config/log4j.properties";
+					if (!new File(xmlfile).exists())
+						xmlfile = appconfig.getConfigDir() + "/log4j.properties";
+
 					if (new File(xmlfile).exists()) {
 						log.infof("加载日志配置: LOG4J配置文件 [%s]", xmlfile);
 						PropertyConfigurator.configure(xmlfile);
@@ -106,7 +115,13 @@ public class LogConfig implements ILogConfig {
 	private static class LogbackLoader {
 		static void reload() {
 			log.infof("加载日志配置: 加载LOGBACK配置...");
-			String xmlfile = appconfig.getConfigDir() + "/logback-test.xml";
+			String xmlfile = null;
+			String softCode = appconfig.getDefaultSoftCode();
+			String softContext = softCode.replace(".", "_");
+			xmlfile = appconfig.getContextDir() + "/" + softContext + "/config/logback-test.xml";
+			if (!new File(xmlfile).exists())
+				xmlfile = appconfig.getConfigDir() + "/logback-test.xml";
+
 			try {
 				if (!Demsy.appconfig.isProductMode() && new File(xmlfile).exists()) {
 					log.infof("加载日志配置: LOGBACK配置文件 [%s]", xmlfile);
@@ -117,7 +132,9 @@ public class LogConfig implements ILogConfig {
 					configurator.setContext(loggerContext);
 					configurator.doConfigure(new File(xmlfile));
 				} else {
-					xmlfile = appconfig.getConfigDir() + "/logback.xml";
+					xmlfile = appconfig.getContextDir() + "/" + softContext + "/config/logback.xml";
+					if (!new File(xmlfile).exists())
+						xmlfile = appconfig.getConfigDir() + "/logback.xml";
 					if (new File(xmlfile).exists()) {
 						log.infof("加载日志配置: LOGBACK配置文件 [%s]", xmlfile);
 						ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
