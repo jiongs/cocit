@@ -11,7 +11,7 @@ import com.jiongsoft.cocit.entity.impl.NameEntity;
 import com.jiongsoft.cocit.util.UrlAPI;
 
 @Entity
-@CocTable(name = "供货商资料管理", code = "common_supplier", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
+@CocTable(name = "供货商信息维护", code = "common_supplier", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
 /*
  * 操作按钮
  */

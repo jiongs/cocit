@@ -52,22 +52,23 @@ import com.jiongsoft.cocit.util.UrlAPI;
 @CocGroup(name = "基本信息", code = "basic_info"//
 , fields = {
 //
-		@CocField(name = "设备名称", mode = "*:N v:S c:E e:E", property = "assets")//
-		, @CocField(name = "资产分类", mode = "*:N v:S c:E e:E", property = "category", gridOrder = 1)//
-		// , @CocField(name = "设备名称", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 2)//
-		, @CocField(name = "设备编号", mode = "*:N v:S c:M e:M", property = "code", gridOrder = 3)//
+		@CocField(name = "设备名称", mode = "*:N v:S c:E e:E", property = "assets", gridOrder = 3)//
+		, @CocField(name = "设备名称", mode = "*:N v:S c:H e:H", property = "name", gridOrder = 1)//
+		, @CocField(name = "设备编号", mode = "*:N v:S c:M e:M", property = "code", gridOrder = 2)//
+		, @CocField(name = "资产类型", mode = "*:N v:S c:E e:E", property = "type", gridOrder = 4)//
+		, @CocField(name = "资产分类", mode = "*:N v:S c:E e:E", property = "category", gridOrder = 5)//
 		, @CocField(name = "设备来源", mode = "*:N v:S c:M e:M", property = "origin")//
 		, @CocField(name = "设备规格", mode = "*:N v:S c:M e:M", property = "specification")//
 		, @CocField(name = "设备型号", mode = "*:N v:S c:M e:M", property = "model")//
 		, @CocField(name = "设备用途", mode = "*:N v:S c:M e:M", property = "purpose")//
 		, @CocField(name = "供货商", mode = "*:N v:S c:M e:M", property = "supplier")//
-		, @CocField(name = "计量单位", mode = "*:N v:S c:M e:M", property = "uom")//
-		, @CocField(name = "购置日期", mode = "*:N v:S c:M e:M", property = "buyDate")//
+		, @CocField(name = "计量单位", mode = "*:N v:S c:E e:E", property = "uom")//
+		, @CocField(name = "购置日期", mode = "*:N v:S c:E e:E", property = "buyDate")//
 		, @CocField(name = "使用部门", mode = "*:N v:S c:M e:M", property = "usedByDepartment")//
 		, @CocField(name = "存放地点", mode = "*:N v:S c:M e:M", property = "depositAddress")//
 		, @CocField(name = "领用人", mode = "*:N v:S c:M e:M", property = "usedByPerson")//
-		, @CocField(name = "使用状态", mode = "*:N v:S c:M e:M", property = "usingStatus", options = "0:领用,9:闲置")//
-		, @CocField(name = "运行状态", mode = "*:N v:S c:M e:M", property = "runningStatus", options = "0:正常,1:待维修,9:停用,99:报废")//
+		, @CocField(name = "使用状况", mode = "*:N v:S c:M e:M", property = "usingStatus", options = "1:在用,2:季节性停用,3:经营性出租,4:大修理停用,5:未使用,6:不需用,9:闲置")//
+		//, @CocField(name = "运行状态", mode = "*:N v:S c:M e:M", property = "runningStatus", options = "0:正常,1:待维修,9:停用,99:报废")//
 		, @CocField(name = "设备单价", mode = "*:N v:S c:E e:E", property = "unitPrice")//
 		, @CocField(name = "设备数量", mode = "*:N v:S c:M e:M", property = "number")//
 		, @CocField(name = "总金额", mode = "*:N v:S c:M e:M", property = "totalPrice")//
@@ -100,6 +101,9 @@ public class Asset extends NameEntity {
 	@ManyToOne
 	AssetCategory category;
 
+	@ManyToOne
+	AssetType type;
+
 	// 设备来源
 	@ManyToOne
 	AssetOrigin origin;
@@ -128,10 +132,10 @@ public class Asset extends NameEntity {
 	Date buyDate;
 
 	// 设备单价
-	double unitPrice;
+	Double unitPrice;
 
 	// 附件单价
-	double attachmentUnitPrice;
+	Double attachmentUnitPrice;
 
 	/*
 	 * 以上为“关联资产实体”冗余字段
@@ -154,31 +158,31 @@ public class Asset extends NameEntity {
 	Employee usedByPerson;
 
 	// 使用状态
-	int usingStatus;
+	Integer usingStatus;
 
 	// 运行状态
-	int runningStatus;
+	Integer runningStatus;
 
 	// 领用数量
-	int number;
+	Integer number;
 
 	// 总金额 = 设备单价 * 设备数量
-	double totalPrice;
+	Double totalPrice;
 
 	// 领用附件数量
-	int attachmentNumber;
+	Integer attachmentNumber;
 
 	// 附件总额 = 附件单价 * 附件数量
-	double attachmentTotalPrice;
+	Double attachmentTotalPrice;
 
 	// 损坏数量
-	int badNumber;
+	Integer badNumber;
 
 	// 损坏程度（%）
-	int badLevel;
+	Integer badLevel;
 
 	// 折旧金额
-	double depreciationPrice;
+	Double depreciationPrice;
 
 	// 条码
 	@Column(length = 128)
@@ -280,59 +284,59 @@ public class Asset extends NameEntity {
 		this.buyDate = buyDate;
 	}
 
-	public double getUnitPrice() {
+	public Double getUnitPrice() {
 		return unitPrice;
 	}
 
-	public void setUnitPrice(double unitPrice) {
+	public void setUnitPrice(Double unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 
-	public int getNumber() {
+	public Integer getNumber() {
 		return number;
 	}
 
-	public void setNumber(int number) {
+	public void setNumber(Integer number) {
 		this.number = number;
 	}
 
-	public double getTotalPrice() {
+	public Double getTotalPrice() {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(double totalPrice) {
+	public void setTotalPrice(Double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 
-	public double getDepreciationPrice() {
+	public Double getDepreciationPrice() {
 		return depreciationPrice;
 	}
 
-	public void setDepreciationPrice(double depreciationPrice) {
+	public void setDepreciationPrice(Double depreciationPrice) {
 		this.depreciationPrice = depreciationPrice;
 	}
 
-	public double getAttachmentUnitPrice() {
+	public Double getAttachmentUnitPrice() {
 		return attachmentUnitPrice;
 	}
 
-	public void setAttachmentUnitPrice(double attachmentUnitPrice) {
+	public void setAttachmentUnitPrice(Double attachmentUnitPrice) {
 		this.attachmentUnitPrice = attachmentUnitPrice;
 	}
 
-	public int getAttachmentNumber() {
+	public Integer getAttachmentNumber() {
 		return attachmentNumber;
 	}
 
-	public void setAttachmentNumber(int attachmentNumber) {
+	public void setAttachmentNumber(Integer attachmentNumber) {
 		this.attachmentNumber = attachmentNumber;
 	}
 
-	public double getAttachmentTotalPrice() {
+	public Double getAttachmentTotalPrice() {
 		return attachmentTotalPrice;
 	}
 
-	public void setAttachmentTotalPrice(double attachmentTotalPrice) {
+	public void setAttachmentTotalPrice(Double attachmentTotalPrice) {
 		this.attachmentTotalPrice = attachmentTotalPrice;
 	}
 
@@ -352,20 +356,44 @@ public class Asset extends NameEntity {
 		this.assets = assets;
 	}
 
-	public int getUsingStatus() {
+	public Integer getUsingStatus() {
 		return usingStatus;
 	}
 
-	public void setUsingStatus(int usingStatus) {
+	public void setUsingStatus(Integer usingStatus) {
 		this.usingStatus = usingStatus;
 	}
 
-	public int getRunningStatus() {
+	public Integer getRunningStatus() {
 		return runningStatus;
 	}
 
-	public void setRunningStatus(int runningStatus) {
+	public void setRunningStatus(Integer runningStatus) {
 		this.runningStatus = runningStatus;
+	}
+
+	public AssetType getType() {
+		return type;
+	}
+
+	public void setType(AssetType type) {
+		this.type = type;
+	}
+
+	public Integer getBadNumber() {
+		return badNumber;
+	}
+
+	public void setBadNumber(Integer badNumber) {
+		this.badNumber = badNumber;
+	}
+
+	public Integer getBadLevel() {
+		return badLevel;
+	}
+
+	public void setBadLevel(Integer badLevel) {
+		this.badLevel = badLevel;
 	}
 
 }

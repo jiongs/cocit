@@ -14,6 +14,8 @@ public abstract class NameEntity extends BaseEntity {
 	@Column(name = "_desc", length = 2000)
 	protected String desc;
 
+	protected Integer orderby;
+
 	@Column(name = "_created", updatable = false)
 	protected Date created;
 
@@ -80,6 +82,14 @@ public abstract class NameEntity extends BaseEntity {
 
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
+	}
+
+	public Integer getOrderby() {
+		return orderby;
+	}
+
+	public void setOrderby(Integer orderby) {
+		this.orderby = orderby;
 	}
 
 	@Override

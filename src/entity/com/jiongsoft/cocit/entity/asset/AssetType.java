@@ -1,4 +1,4 @@
-package com.jiongsoft.cocit.entity.common;
+package com.jiongsoft.cocit.entity.asset;
 
 import javax.persistence.Entity;
 
@@ -10,13 +10,13 @@ import com.jiongsoft.cocit.entity.impl.NameEntity;
 import com.jiongsoft.cocit.util.UrlAPI;
 
 /**
- * 国别
+ * 资产类型：固定资产、国有资产、流动资产
  * 
  * @author yongshan.ji
  * 
  */
 @Entity
-@CocTable(name = "计量单位信息维护", code = "common_uom", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
+@CocTable(name = "资产类型信息维护", code = "asset_type", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
 /*
  * 操作按钮
  */
@@ -36,8 +36,8 @@ import com.jiongsoft.cocit.util.UrlAPI;
 @CocGroup(name = "基本信息", code = "basic_info"//
 , fields = {
 //
-		@CocField(name = "名称", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 2)//
-		, @CocField(name = "编号", mode = "*:N v:S c:E e:E", property = "code", gridOrder = 3)//
+		@CocField(name = "名称", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 1)//
+		, @CocField(name = "编号", mode = "*:N v:S c:E e:E", property = "code", gridOrder = 2)//
 		, @CocField(name = "描述", mode = "*:N v:S c:E e:E", property = "desc") //
 }), @CocGroup(name = "基本信息", code = "operation_log"//
 , fields = {
@@ -49,6 +49,5 @@ import com.jiongsoft.cocit.util.UrlAPI;
 }) // end: CocGroup
 }// end: groups
 )
-public class Uom extends NameEntity {
-
+public class AssetType extends NameEntity {
 }

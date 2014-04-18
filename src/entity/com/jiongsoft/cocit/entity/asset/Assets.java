@@ -45,23 +45,23 @@ import com.jiongsoft.cocit.util.UrlAPI;
 @CocGroup(name = "基本信息", code = "basic_info"//
 , fields = {
 //
-		@CocField(name = "资产分类", mode = "*:N v:S c:E e:E", property = "category", gridOrder = 1)//
-		, @CocField(name = "设备名称", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 2)//
-		, @CocField(name = "设备编号", mode = "*:N v:S c:M e:M", property = "code", gridOrder = 3)//
+		@CocField(name = "资产分类", mode = "*:N v:S c:E e:E", property = "category", gridOrder = 3)//
+		, @CocField(name = "设备名称", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 1)//
+		, @CocField(name = "设备编号", mode = "*:N v:S c:M e:M", property = "code", gridOrder = 2)//
 		, @CocField(name = "设备来源", mode = "*:N v:S c:M e:M", property = "origin")//
-		, @CocField(name = "设备规格", mode = "*:N v:S c:M e:M", property = "specification")//
-		, @CocField(name = "设备型号", mode = "*:N v:S c:M e:M", property = "model")//
+		, @CocField(name = "设备规格", mode = "*:N v:S c:E e:E", property = "specification")//
+		, @CocField(name = "设备型号", mode = "*:N v:S c:E e:E", property = "model")//
 		, @CocField(name = "设备用途", mode = "*:N v:S c:M e:M", property = "purpose")//
 		, @CocField(name = "经费来源", mode = "*:N v:S c:M e:M", property = "fundsOrigin")//
 		, @CocField(name = "供货商", mode = "*:N v:S c:M e:M", property = "supplier")//
-		, @CocField(name = "计量单位", mode = "*:N v:S c:M e:M", property = "uom")//
+		, @CocField(name = "计量单位", mode = "*:N v:S c:E e:E", property = "uom")//
 		, @CocField(name = "存放地点", mode = "*:N v:S c:M e:M", property = "depositAddress")//
 		, @CocField(name = "经办人", mode = "*:N v:S c:M e:M", property = "dealPerson")//
 		, @CocField(name = "设备状态", mode = "*:N v:S c:M e:M", property = "status", options = "0:新购置,1:闲置,10:停用,99:已报废")//
-		, @CocField(name = "购置日期", mode = "*:N v:S c:M e:M", property = "buyDate")//
+		, @CocField(name = "购置日期", mode = "*:N v:S c:E e:E", property = "buyDate")//
 		, @CocField(name = "设备单价", mode = "*:N v:S c:E e:E", property = "unitPrice")//
-		, @CocField(name = "设备数量", mode = "*:N v:S c:M e:M", property = "number")//
-		, @CocField(name = "总金额", mode = "*:N v:S c:M e:M", property = "totalPrice")//
+		, @CocField(name = "设备数量", mode = "*:N v:S c:E e:E", property = "number")//
+		, @CocField(name = "总金额", mode = "*:N v:S c:E e:E", property = "totalPrice")//
 		, @CocField(name = "附件单价", mode = "*:N v:S c:E e:E", property = "attachmentUnitPrice")//
 		, @CocField(name = "附件数量", mode = "*:N v:S c:E e:E", property = "attachmentNumber")//
 		, @CocField(name = "附件总额", mode = "*:N v:S c:E e:E", property = "attachmentTotalPrice")//
@@ -129,22 +129,22 @@ public class Assets extends NameEntity {
 	Date buyDate;
 
 	// 设备单价
-	double unitPrice;
+	Double unitPrice;
 
 	// 设备数量
-	int number;
+	Integer number;
 
 	// 总金额 = 设备单价 * 设备数量
-	double totalPrice;
+	Double totalPrice;
 
 	// 附件单价
-	double attachmentUnitPrice;
+	Double attachmentUnitPrice;
 
 	// 附件数量
-	int attachmentNumber;
+	Integer attachmentNumber;
 
 	// 附件总额 = 附件单价 * 附件数量
-	double attachmentTotalPrice;
+	Double attachmentTotalPrice;
 
 	// 条码
 	@Column(length = 128)
@@ -166,14 +166,14 @@ public class Assets extends NameEntity {
 	Date recordedDate;
 
 	// 新购置：已领用数量
-	int usedNumber;
+	Integer usedNumber;
 
 	// 新购置：未领用数量
-	int unusedNumber;
+	Integer unusedNumber;
 
 	// 退还：闲置数量
-	int returnNumber;
+	Integer returnNumber;
 
 	// 损坏：待维修数量
-	int badNumber;
+	Integer badNumber;
 }

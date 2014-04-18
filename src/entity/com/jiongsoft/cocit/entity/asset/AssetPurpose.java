@@ -16,7 +16,7 @@ import com.jiongsoft.cocit.util.UrlAPI;
  * 
  */
 @Entity
-@CocTable(name = "设备用途设置", code = "asset_purpose", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
+@CocTable(name = "使用方向信息维护", code = "asset_purpose", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
 /*
  * 操作按钮
  */
@@ -36,8 +36,8 @@ import com.jiongsoft.cocit.util.UrlAPI;
 @CocGroup(name = "基本信息", code = "basic_info"//
 , fields = {
 //
-		@CocField(name = "名称", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 2)//
-		, @CocField(name = "编号", mode = "*:N v:S c:E e:E", property = "code", gridOrder = 3)//
+		@CocField(name = "名称", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 1)//
+		, @CocField(name = "编号", mode = "*:N v:S c:E e:E", property = "code", gridOrder = 2)//
 		, @CocField(name = "描述", mode = "*:N v:S c:E e:E", property = "desc") //
 }), @CocGroup(name = "基本信息", code = "operation_log"//
 , fields = {

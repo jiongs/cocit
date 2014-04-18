@@ -361,8 +361,12 @@
 					var $btn = $(data.target);
 					$btn.attr("disabled", true);
 					doSave(opts, dataID, $form.serialize(), function() {
-						$dialog.dialog('close');
 						$("#datagrid_" + opts.token).datagrid("reload");
+						if (dataID && dataID != "") {
+							$dialog.dialog('close');
+						} else {
+							Jsuccess("操作成功");
+						}
 					}, function() {
 						$btn.attr("disabled", false);
 					});

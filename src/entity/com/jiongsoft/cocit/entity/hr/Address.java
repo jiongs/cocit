@@ -11,7 +11,7 @@ import com.jiongsoft.cocit.entity.impl.NameEntity;
 import com.jiongsoft.cocit.util.UrlAPI;
 
 @Entity
-@CocTable(name = "办公地点管理", code = "hr_address", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
+@CocTable(name = "地点信息维护", code = "hr_address", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
 /*
  * 操作按钮
  */
@@ -31,10 +31,10 @@ import com.jiongsoft.cocit.util.UrlAPI;
 @CocGroup(name = "基本信息", code = "basic_info"//
 , fields = {
 //
-		@CocField(name = "上级地点", mode = "*:N v:S c:E e:E", property = "parent", gridOrder = 1)//
-		, @CocField(name = "名称", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 2)//
-		, @CocField(name = "编号", mode = "*:N v:S c:E e:E", property = "code", gridOrder = 3)//
-		, @CocField(name = "所属部门", mode = "*:N v:S c:E e:E", property = "department", gridOrder = 2)//
+		@CocField(name = "上级地点", mode = "*:N v:S c:E e:E", property = "parent", gridOrder = 5)//
+		, @CocField(name = "名称", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 1)//
+		, @CocField(name = "编号", mode = "*:N v:S c:E e:E", property = "code", gridOrder = 2)//
+		, @CocField(name = "所属部门", mode = "*:N v:S c:E e:E", property = "department", gridOrder = 4)//
 		, @CocField(name = "描述", mode = "*:N v:S c:E e:E", property = "desc") //
 }), @CocGroup(name = "基本信息", code = "operation_log"//
 , fields = {
@@ -71,4 +71,5 @@ public class Address extends NameEntity {
 	public void setDepartment(Department department) {
 		this.department = department;
 	}
+
 }

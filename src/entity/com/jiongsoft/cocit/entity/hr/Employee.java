@@ -14,7 +14,7 @@ import com.jiongsoft.cocit.entity.impl.NameEntity;
 import com.jiongsoft.cocit.util.UrlAPI;
 
 @Entity
-@CocTable(name = "单位员工管理", code = "hr_employee", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
+@CocTable(name = "员工信息维护", code = "hr_employee", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
 /*
  * 操作按钮
  */
@@ -34,9 +34,9 @@ import com.jiongsoft.cocit.util.UrlAPI;
 @CocGroup(name = "基本信息", code = "basic_info"//
 , fields = {
 //
-		@CocField(name = "所属部门", mode = "*:N v:S c:M e:M", property = "department", gridOrder = 1)//
-		, @CocField(name = "员工姓名", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 2)//
-		, @CocField(name = "员工工号", mode = "*:N v:S c:E e:E", property = "code", gridOrder = 3)//
+		@CocField(name = "所属部门", mode = "*:N v:S c:M e:M", property = "department", gridOrder = 3)//
+		, @CocField(name = "员工姓名", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 1)//
+		, @CocField(name = "员工工号", mode = "*:N v:S c:E e:E", property = "code", gridOrder = 2)//
 		, @CocField(name = "联系电话", mode = "*:N v:S c:E e:E", property = "tel", gridOrder = 4)//
 		, @CocField(name = "QQ号码", mode = "*:N v:S c:E e:E", property = "qq", gridOrder = 5)//
 		, @CocField(name = "Email地址", mode = "*:N v:S c:E e:E", property = "email", gridOrder = 6)//
