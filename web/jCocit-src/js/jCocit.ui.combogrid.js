@@ -157,7 +157,7 @@
 		if (opts.mode == "remote") {
 			$grid.datagrid("clearSelections");
 			$grid.datagrid("load", $.extend({}, opts.queryParams, {
-				q : keyword
+				"query.keywords" : keyword
 			}));
 		} else {
 			if (!keyword) {
@@ -238,8 +238,8 @@
 	};
 	$.fn.combogrid.defaults = $.extend({}, $.fn.combo.defaults, $.fn.datagrid.defaults, {
 		loadMsg : null,
-		idField : null,
-		textField : null,
+		idField : 'id',
+		textField : 'name',
 		mode : "local",
 		keyHandler : {
 			doKey : function(key) {

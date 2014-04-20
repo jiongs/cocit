@@ -31,7 +31,7 @@ public class JCocitSearchBoxRender extends WidgetRender<SearchBoxWidget> {
 		if (!ObjectUtil.isNil(list)) {
 			print(out, "<div id=\"searchbox_menu_%s\" data-options=\"minWidth:150\">", model.get("token", model.getId()));
 
-			print(out, "<div data-options=\"name: ''\">--按字段检索--</div>");
+			print(out, "<div data-options=\"name: ''\">关键字</div>");
 			int count = 0;
 			String value;
 			String key;

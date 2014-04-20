@@ -6,7 +6,7 @@
 		$(targetInput).hide();
 		var $searchbox = $('<span class="searchbox"></span>').insertAfter(targetInput);
 		var $searchText = $('<input type="text" class="searchbox-text">').appendTo($searchbox);
-		$('<span class="searchbox-button"><span class="searchbox-button-icon"></span></span>').appendTo($searchbox);
+		$('<span class="searchbox-button"><div class="searchbox-button-icon"></div></span>').appendTo($searchbox);
 		var name = $(targetInput).attr("name");
 		if (name) {
 			$searchText.attr("name", name);

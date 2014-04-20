@@ -87,6 +87,18 @@ public class EntityAction {
 		return tableModel;
 	}
 
+	@At(UrlAPI.GET_ENTITY_SELECTION_TABLE_UI)
+	public EntityTableUI getEntitySelectionTableUI(String funcExpr) {
+		ActionHelper helper = ActionHelper.make(funcExpr, null, null);
+
+		EntityTableUI tableModel = helper.widgetFactory.getEntitySelectionTableUI(helper.module, helper.table);
+
+		Log.debug("EntityAction.getEntityTableUI: tableModel = %s", tableModel);
+
+		// 返回
+		return tableModel;
+	}
+
 	/**
 	 * 获取“数据表GRID”数据模型，用于输出数据表GRID所需要的JSON数据。
 	 * 
@@ -168,6 +180,15 @@ public class EntityAction {
 		return treeModel;
 	}
 
+	@At(UrlAPI.GET_ENTITY_TREE_DATA)
+	public TreeWidgetData getEntityTreeData(String funcExpr) {
+		ActionHelper helper = ActionHelper.make(funcExpr, null, null);
+
+		TreeWidgetData treeModel = helper.widgetFactory.getEntityTreeData(helper.module, helper.table);
+
+		return treeModel;
+	}
+
 	/**
 	 * 
 	 * 获取业务数据表单模型
@@ -192,6 +213,11 @@ public class EntityAction {
 		 * 返回
 		 */
 		return formModel;
+	}
+
+	@At(UrlAPI.GET_ENTITY_ROWS_FORM)
+	public EntityForm getEntityRowsForm(String funcExpr, String rowID, @Param("::entity.") EntityParamNode rowNode) {
+		return this.getEntityRowForm(funcExpr, rowID, rowNode);
 	}
 
 	/**
@@ -219,6 +245,26 @@ public class EntityAction {
 		try {
 			ObjectUtil.setValue(helper.entity, "softID", helper.actionContext.getSoftID());
 			helper.entityManager.save(helper.entity, helper.opMode);
+		} catch (Throwable e) {
+			ret.setException(e);
+		}
+
+		return ret;
+	}
+
+	@At(UrlAPI.SAVE_ENTITY_ROWS)
+	public EntityFormData saveEntityRows(String funcExpr, String rowID, @Param("::entity.") EntityParamNode rowNode) {
+		ActionHelper helper = ActionHelper.make(funcExpr, rowID, rowNode);
+
+		EntityForm formModel = helper.widgetFactory.getEntityFormUI(helper.module, helper.table, helper.op, helper.entity);
+
+		EntityFormData ret = new EntityFormData();
+		ret.setModel(formModel);
+		ret.setData(helper.entity);
+
+		try {
+			ObjectUtil.setValue(helper.entity, "softID", helper.actionContext.getSoftID());
+			helper.entityManager.execTask(helper, helper.opMode);
 		} catch (Throwable e) {
 			ret.setException(e);
 		}

@@ -45,9 +45,9 @@ public abstract class JCocitGridRenders {
 			print(out, ",sortOrder: 'desc'");
 			// print(out, ",fitColumns: true");
 			print(out, ",pagination: %s", (boolean) model.get("pagination", true));
-			print(out, ",singleSelect: true");
-			print(out, ",selectOnCheck: false");
-			print(out, ",checkOnSelect: false");
+			print(out, ",singleSelect: %s", (boolean) model.get("singleSelect", true));
+			print(out, ",selectOnCheck:  %s", (boolean) model.get("selectOnCheck", true));
+			print(out, ",checkOnSelect:  %s", (boolean) model.get("checkOnSelect", true));
 			print(out, ",onSelect: jCocit.entity.doGridSelect");
 			print(out, ",onCheck: jCocit.entity.doGridSelect");
 			print(out, ",onUncheck: jCocit.entity.doGridSelect");
@@ -66,7 +66,7 @@ public abstract class JCocitGridRenders {
 			// print(out, ",toolbar: toolbar_%s", model.get("token", ""));
 
 			print(out, ",pageButtons:[");
-			//print(out, "{title: '系统设置', iconCls: 'icon-setting', token:'%s', onClick:jCocit.entity.doSetting}", token);
+			// print(out, "{title: '系统设置', iconCls: 'icon-setting', token:'%s', onClick:jCocit.entity.doSetting}", token);
 			print(out, "]");
 
 			print(out, "\">");

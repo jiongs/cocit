@@ -24,7 +24,7 @@ import com.jiongsoft.cocit.util.UrlAPI;
  * 
  */
 @Entity
-@CocTable(name = "资产管理", code = "assets", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
+@CocTable(name = "采购管理", code = "assets", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
 /*
  * 操作按钮
  */
@@ -49,14 +49,14 @@ import com.jiongsoft.cocit.util.UrlAPI;
 		, @CocField(name = "设备名称", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 1)//
 		, @CocField(name = "设备编号", mode = "*:N v:S c:M e:M", property = "code", gridOrder = 2)//
 		, @CocField(name = "设备来源", mode = "*:N v:S c:M e:M", property = "origin")//
-		, @CocField(name = "设备规格", mode = "*:N v:S c:E e:E", property = "specification")//
-		, @CocField(name = "设备型号", mode = "*:N v:S c:E e:E", property = "model")//
-		, @CocField(name = "设备用途", mode = "*:N v:S c:M e:M", property = "purpose")//
+		, @CocField(name = "设备规格", mode = "*:N v:S c:E e:E", property = "specification", disabledNavi = true)//
+		, @CocField(name = "设备型号", mode = "*:N v:S c:E e:E", property = "model", disabledNavi = true)//
+		, @CocField(name = "设备用途", mode = "*:N v:S c:M e:M", property = "purpose", disabledNavi = true)//
 		, @CocField(name = "经费来源", mode = "*:N v:S c:M e:M", property = "fundsOrigin")//
 		, @CocField(name = "供货商", mode = "*:N v:S c:M e:M", property = "supplier")//
-		, @CocField(name = "计量单位", mode = "*:N v:S c:E e:E", property = "uom")//
+		, @CocField(name = "计量单位", mode = "*:N v:S c:E e:E", property = "uom", disabledNavi = true)//
 		, @CocField(name = "存放地点", mode = "*:N v:S c:M e:M", property = "depositAddress")//
-		, @CocField(name = "经办人", mode = "*:N v:S c:M e:M", property = "dealPerson")//
+		, @CocField(name = "经办人", mode = "*:N v:S c:M e:M", property = "dealPerson", disabledNavi = true)//
 		, @CocField(name = "设备状态", mode = "*:N v:S c:M e:M", property = "status", options = "0:新购置,1:闲置,10:停用,99:已报废")//
 		, @CocField(name = "购置日期", mode = "*:N v:S c:E e:E", property = "buyDate")//
 		, @CocField(name = "设备单价", mode = "*:N v:S c:E e:E", property = "unitPrice")//

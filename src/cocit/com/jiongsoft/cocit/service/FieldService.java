@@ -238,6 +238,8 @@ public interface FieldService extends EntityService<FieldEntity> {
 	 * @return
 	 */
 	String[] getUploadType();
+	
+	String getUiTemplate();
 
 	/**
 	 * 格式化字段值的显示文本。

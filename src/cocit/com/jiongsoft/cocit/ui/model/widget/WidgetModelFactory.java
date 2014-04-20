@@ -29,6 +29,8 @@ public interface WidgetModelFactory {
 	 */
 	EntityTableUI getEntityTableUI(ModuleService module, TableService table);
 
+	EntityTableUI getEntitySelectionTableUI(ModuleService module, TableService table);
+
 	EntityForm getEntityFormUI(ModuleService module, TableService table, OperationService op, Object entity);
 
 	/**
@@ -77,6 +79,15 @@ public interface WidgetModelFactory {
 	TreeWidget getEntityNaviUI(ModuleService module, TableService table);
 
 	/**
+	 * 获取数据表自身树
+	 * 
+	 * @param module
+	 * @param table
+	 * @return
+	 */
+	TreeWidget getEntityTreeUI(ModuleService module, TableService table);
+
+	/**
 	 * 获取数据表Navi数据
 	 * 
 	 * @param module
@@ -84,5 +95,14 @@ public interface WidgetModelFactory {
 	 * @return
 	 */
 	TreeWidgetData getEntityNaviData(ModuleService module, TableService table);
+
+	/**
+	 * 数据实体自身树
+	 * 
+	 * @param module
+	 * @param table
+	 * @return
+	 */
+	TreeWidgetData getEntityTreeData(ModuleService module, TableService table);
 
 }

@@ -20,6 +20,7 @@ import com.jiongsoft.cocit.ui.model.widget.Column;
 import com.jiongsoft.cocit.ui.model.widget.EntityForm;
 import com.jiongsoft.cocit.ui.model.widget.EntityForm.FormField;
 import com.jiongsoft.cocit.ui.model.widget.GridWidget;
+import com.jiongsoft.cocit.ui.model.widget.TreeWidget;
 import com.jiongsoft.cocit.ui.render.WidgetRender;
 import com.jiongsoft.cocit.util.KeyValue;
 import com.jiongsoft.cocit.util.ObjectUtil;
@@ -82,23 +83,45 @@ public class JCocitEntityFormRender extends WidgetRender<EntityForm> {
 
 			// fields table
 			print(sb, "<table valign=\"top\" width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
+			print(sb, "<tr>");
 
+			int count = 0;
+			boolean isNewRow = false;
+			int colspan = 1;
 			for (FormField field : visibleFields) {
+				if (count % 2 == 0) {
+					isNewRow = true;
+				}
 
 				entityField = field.getEntityField();
+
+				byte type = entityField.getType();
+				if (type == TYPE_TEXT || type == TYPE_RICH_TEXT) {
+					if (!isNewRow)
+						isNewRow = true;
+					colspan = 3;
+				}
+				if (isNewRow && count != 0) {
+					print(sb, "</tr>");
+					print(sb, "<tr>");
+				}
+
 				propName = entityField.getPropName();
 				objFldValue = ObjectUtil.getValue(formData, propName);
 				String strFldValue = ObjectUtil.idOrtoString(objFldValue);
 
 				String mode = field.getMode();
 
-				print(sb, "<tr>");
 				print(sb, "<th class=\"entity-field-header\">");
 
 				printFieldLabel(sb, model, entityField);
 
-				print(sb, "</td>");
-				print(sb, "<td class=\"entity-field-box\">");
+				print(sb, "</th>");
+				print(sb, "<td class=\"entity-field-box\"");
+				if (colspan > 1) {
+					print(sb, " colspan=\"" + colspan + "\"");
+				}
+				print(sb, ">");
 
 				// I：检查字段值，字段值被隐藏且可以提交。
 				if (mode.equals("I")) {
@@ -124,14 +147,17 @@ public class JCocitEntityFormRender extends WidgetRender<EntityForm> {
 
 					// M：字段必填
 					if (mode.equals("M")) {
-						print(sb, "<span class=\"icon-mode-%s\">&nbsp;&nbsp;</span>", mode);
+						print(sb, "<span class=\"icon-mode-%s\">&nbsp;&nbsp;&nbsp;</span>", mode);
 					}
 				}
 
 				print(sb, "</td>");
-				print(sb, "</tr>");
-			}
 
+				count++;
+				isNewRow = false;
+				colspan = 1;
+			}
+			print(sb, "</tr>");
 			print(sb, "</table></div>");// end entity-group
 		}
 
@@ -234,6 +260,28 @@ public class JCocitEntityFormRender extends WidgetRender<EntityForm> {
 	}
 
 	private void printFK(StringBuffer sb, FieldService fieldService, Object fieldValue) {
+		String ui = fieldService.getUiTemplate();
+		if ("combotree".equals(ui)) {
+			printFKTree(sb, fieldService, fieldValue);
+		} else {
+			printFKGrid(sb, fieldService, fieldValue);
+		}
+	}
+
+	private void printFKTree(StringBuffer sb, FieldService fieldService, Object fieldValue) {
+
+		TableService entityTable = fieldService.getFkEntityTable();
+		TreeWidget treeModel = Cocit.getWidgetModelFactory().getEntityTreeUI(null, entityTable);
+
+		String id = ObjectUtil.idOrtoString(fieldValue);
+		String text = fieldValue == null ? "" : fieldValue.toString();
+
+		print(sb, "<input name=\"entity.%s.id\" class=\"jCocit-ui jCocit-combotree\" style=\"width:202px;\" data-options=\"value:'%s',text:'%s',", fieldService.getPropName(), id, text);
+		print(sb, "url: '%s'", treeModel.getDataLoadUrl());
+		print(sb, "\"/>");
+	}
+
+	private void printFKGrid(StringBuffer sb, FieldService fieldService, Object fieldValue) {
 		TableService entityTable = fieldService.getFkEntityTable();
 		GridWidget gridModel = Cocit.getWidgetModelFactory().getGridUI(null, entityTable);
 		List<Column> columns = gridModel.getColumns();
@@ -243,20 +291,22 @@ public class JCocitEntityFormRender extends WidgetRender<EntityForm> {
 		print(sb, "<input name=\"entity.%s.id\" class=\"jCocit-ui jCocit-combogrid\" data-options=\"value:'%s',text:'%s',width:202,", fieldService.getPropName(), id, text);
 		print(sb, "panelWidth: 600,");
 		print(sb, "panelHeight: 300,");
+		print(sb, "singleSelect: false,");
 		print(sb, "idField: 'id',");
 		print(sb, "textField: '%s',", columns.get(0).getField());
 		print(sb, "url: '%s',", gridModel.getDataLoadUrl());
 		print(sb, "rownumbers: true,");
 		print(sb, "pagination: true,");
+		print(sb, "mode: 'remote',");
 		print(sb, "pageSize: %s,", 20);
 		print(sb, "columns: [[");
-		print(sb, "{field:'id',title:'ID',width:80,align:'right'},");
+		print(sb, "{field:'id',title:'ID',width:80,align:'right',checkbox:true},");
 
 		int count = 0;
 		for (Column col : columns) {
 			print(sb, "{field:'%s',title:'%s',width:%s,sortable:true,align:'%s'},", col.getField(), col.getTitle(), col.getWidth(), col.getAlign() == null ? "" : col.getAlign());
 			count++;
-			if (count == 4)
+			if (count == 3)
 				break;
 		}
 

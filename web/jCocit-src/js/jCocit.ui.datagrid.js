@@ -405,10 +405,8 @@
 		}
 
 		var $panelContent = $(
-				'<div class="datagrid-wrap">' + '<div class="datagrid-view">' + '<div class="datagrid-view1">' + '<div class="datagrid-header"><div class="datagrid-header-inner"></div></div>'
-						+ '<div class="datagrid-body"><div class="datagrid-body-inner"></div></div>' + '<div class="datagrid-footer"><div class="datagrid-footer-inner"></div></div>' + '</div>'
-						+ '<div class="datagrid-view2">' + '<div class="datagrid-header"><div class="datagrid-header-inner"></div></div>' + '<div class="datagrid-body"></div>'
-						+ '<div class="datagrid-footer"><div class="datagrid-footer-inner"></div></div>' + '</div>' + '</div>' + '</div>').insertAfter(gridTable);
+						'<div class="datagrid-wrap">' + '<div class="datagrid-view">' + '<div class="datagrid-view1">' + '<div class="datagrid-header"><div class="datagrid-header-inner"></div></div>' + '<div class="datagrid-body"><div class="datagrid-body-inner"></div></div>' + '<div class="datagrid-footer"><div class="datagrid-footer-inner"></div></div>' + '</div>' + '<div class="datagrid-view2">' + '<div class="datagrid-header"><div class="datagrid-header-inner"></div></div>'
+										+ '<div class="datagrid-body"></div>' + '<div class="datagrid-footer"><div class="datagrid-footer-inner"></div></div>' + '</div>' + '</div>' + '</div>').insertAfter(gridTable);
 
 		// init grid panel
 		$panelContent.panel({
@@ -1767,20 +1765,20 @@
 			return rows.length > 0 ? rows[0] : null;
 		},
 		getSelections : $x(getSelectedRows),
-		// clearSelections : function(jq) {
-		// return jq.each(function() {
-		// var selectedRows = $d(this, "datagrid").selectedRows;
-		// selectedRows.splice(0, selectedRows.length);
-		// clearSelectedRows(this);
-		// });
-		// },
-		// clearChecked : function(jq) {
-		// return jq.each(function() {
-		// var checkedRows = $d(this, "datagrid").checkedRows;
-		// checkedRows.splice(0, checkedRows.length);
-		// clearCheckedRows(this);
-		// });
-		// },
+		clearSelections : function(jq) {
+			return jq.each(function() {
+				var selectedRows = $d(this, "datagrid").selectedRows;
+				selectedRows.splice(0, selectedRows.length);
+				clearSelectedRows(this);
+			});
+		},
+		clearChecked : function(jq) {
+			return jq.each(function() {
+				var checkedRows = $d(this, "datagrid").checkedRows;
+				checkedRows.splice(0, checkedRows.length);
+				clearCheckedRows(this);
+			});
+		},
 		clearChanged : $X(clearChangedRows),
 		selectAll : $X(selectAllRows),
 		unselectAll : $X(clearSelectedRows),

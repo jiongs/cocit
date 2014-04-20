@@ -108,7 +108,7 @@
 		$combo.ow(opts.width).oh(opts.height);
 		$comboBox.ow(opts.width).oh(opts.height - 1);
 		$comboText.ow($w($combo) - arrowWidth - 1).oh($h($comboBox) - 1);
-		//$comboArrow.oh($h($combo));
+		// $comboArrow.oh($h($combo));
 
 		if (state.panel) {
 			var $comboContent = state.panel;
@@ -170,15 +170,7 @@
 		$comboArrow.unbind(".combo");
 
 		if (!opts.disabled) {
-			$comboText.bind("mousedown.combo", function(e) {
-
-				// mouse down the current combo text, close other panels
-				if (state.panel)
-					$("div.CbPnBC").not(state.panel).panel("close");
-
-				e.stopPropagation();
-
-			}).bind("keydown.combo", function(e) {
+			var keyHandler = function(e) {
 				var keyCode = jCocit.keyCode;
 				switch (e.keyCode) {
 				case keyCode.UP:// UP key
@@ -216,7 +208,17 @@
 						}, opts.delay);
 					}
 				}
-			});
+			}
+			$comboText.bind("mousedown.combo", function(e) {
+
+				// mouse down the current combo text, close other panels
+				if (state.panel)
+					$("div.CbPnBC").not(state.panel).panel("close");
+
+				e.stopPropagation();
+
+			})//.bind("keydown.combo", keyHandler)//
+			.bind("keyup.combo", keyHandler);
 
 			// click down arrow toggle combo panel
 			$comboArrow.bind("click.combo", function() {
@@ -244,12 +246,12 @@
 		var opts = state.options;
 		var $combo = state.combo;
 
-		if(opts.onBeforeShowPanel.call(selfHTML) == false)
+		if (opts.onBeforeShowPanel.call(selfHTML) == false)
 			return;
-		
-		if (!state.panel) 
+
+		if (!state.panel)
 			_initPanel(selfHTML);
-		
+
 		var $comboContent = state.panel;
 
 		if ($.fn.window)
@@ -625,7 +627,7 @@
 		height : 22,
 		panelWidth : null,
 		panelHeight : null,// this is drop-down panel fixed height
-		panelMaxHeight : 500,// this is drop-down panel max height
+		panelMaxHeight : 400,// this is drop-down panel max height
 		panelMinHeight : 200,// this is drop-down panel min height
 		panelUrl : null,
 		/**
@@ -650,7 +652,7 @@
 		},
 		onInitPanel : $n,
 		onShowPanel : $n,
-		onBeforeShowPanel: $n,
+		onBeforeShowPanel : $n,
 		onHidePanel : $n,
 		/**
 		 * args: (newValue, oldValue)

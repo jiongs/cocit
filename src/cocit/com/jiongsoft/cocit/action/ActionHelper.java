@@ -184,29 +184,32 @@ public class ActionHelper {
 
 	private CndExpr makeRuleExprFromJson(String jsonExpr, StringBuffer logExpr) {
 
-		if (StringUtil.isNil(jsonExpr) || jsonExpr.charAt(0) != '{') {
-			return null;
-		}
-
 		CndExpr retExpr = null;
+		if (StringUtil.isNil(jsonExpr)) {
+			return null;
+		} else if (jsonExpr.charAt(0) != '{') {
+			retExpr = Expr.contains("name", jsonExpr);
+			retExpr = retExpr.or(Expr.contains("code", jsonExpr));
+			retExpr = retExpr.or(Expr.contains("desc", jsonExpr));
+		} else {
+			Map map = Json.fromJson(Map.class, jsonExpr);
+			Iterator<String> exprs = map.keySet().iterator();
+			while (exprs.hasNext()) {
+				String prop = exprs.next();
 
-		Map map = Json.fromJson(Map.class, jsonExpr);
-		Iterator<String> exprs = map.keySet().iterator();
-		while (exprs.hasNext()) {
-			String prop = exprs.next();
+				if (!StringUtil.isNil(prop)) {
+					String value = map.get(prop).toString();
 
-			if (!StringUtil.isNil(prop)) {
-				String value = map.get(prop).toString();
+					if (!StringUtil.isNil(value)) {
+						if (retExpr == null) {
+							retExpr = Expr.contains(prop, value);
 
-				if (!StringUtil.isNil(value)) {
-					if (retExpr == null) {
-						retExpr = Expr.contains(prop, value);
+							logExpr.append("(" + prop + " contains " + value + ")");
+						} else {
+							retExpr = retExpr.and(Expr.contains(prop, value));
 
-						logExpr.append("(" + prop + " contains " + value + ")");
-					} else {
-						retExpr = retExpr.and(Expr.contains(prop, value));
-
-						logExpr.append(" and (" + prop + " contains " + value + ")");
+							logExpr.append(" and (" + prop + " contains " + value + ")");
+						}
 					}
 				}
 			}

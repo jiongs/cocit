@@ -33,7 +33,7 @@ public class JCocitEntityModuleRender extends WidgetRender<EntityModuleUI> {
 		 */
 		if (Cocit.getActionContext().isLocalHost()) {
 			print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.icon.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
-			// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.searchbox.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
+			print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.searchbox.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 			// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.panel.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 			// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.tree.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
 			// print(out, "<link href=\"%s/jCocit-src/css/jCocit.ui.window.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />", contextPath);
@@ -51,9 +51,9 @@ public class JCocitEntityModuleRender extends WidgetRender<EntityModuleUI> {
 		 * 调试 JS
 		 */
 		if (Cocit.getActionContext().isLocalHost()) {
-			// print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.combo.js\" type=\"text/javascript\"></script>", contextPath);
-			// print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.combodialog.js\" type=\"text/javascript\"></script>", contextPath);
-			// print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.searchbox.js\" type=\"text/javascript\"></script>", contextPath);
+			print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.combo.js\" type=\"text/javascript\"></script>", contextPath);
+			print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.combodialog.js\" type=\"text/javascript\"></script>", contextPath);
+			print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.searchbox.js\" type=\"text/javascript\"></script>", contextPath);
 			// print(out, "<script src=\"%s/jCocit-src/js/jCocit.utils.js\" type=\"text/javascript\"></script>", contextPath);
 			// print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.dialog.js\" type=\"text/javascript\"></script>", contextPath);
 			// print(out, "<script src=\"%s/jCocit-src/js/jCocit.ui.tree.js\" type=\"text/javascript\"></script>", contextPath);

@@ -87,6 +87,8 @@ public abstract class UrlAPI {
 	 */
 	public static final String GET_ENTITY_TABLE_UI = URL_NS + "/getEntityTableUI/*";
 
+	public static final String GET_ENTITY_SELECTION_TABLE_UI = URL_NS + "/getEntitySelectionTableUI/*";
+
 	/**
 	 * 获取实体表Grid数据：数据格式通常为JSON或XML格式。
 	 * <p>
@@ -100,6 +102,8 @@ public abstract class UrlAPI {
 	 * 参数：moduleID:tableID
 	 */
 	public static final String GET_ENTITY_LIST_DATA = URL_NS + "/getEntityListData/*";
+
+	public static final String GET_ENTITY_TREE_DATA = URL_NS + "/getEntityTreeData/*";
 
 	/**
 	 * 获取实体导航数据：用于生成实体管理模块中的左边导航树。
@@ -117,10 +121,14 @@ public abstract class UrlAPI {
 	 */
 	public static final String GET_ENTITY_ROW_FORM = URL_NS + "/getEntityRowForm/*";
 
+	public static final String GET_ENTITY_ROWS_FORM = URL_NS + "/getEntityRowsForm/*";
+
 	/**
 	 * 保存实体数据行：将实体数据行保存到数据库中，保存的可能是表单数据。
 	 */
 	public static final String SAVE_ENTITY_ROW = URL_NS + "/saveEntityRow/*";
+
+	public static final String SAVE_ENTITY_ROWS = URL_NS + "/saveEntityRows/*";
 
 	/**
 	 * 删除“数据行集”：即批量删除“数据行集”指定的实体数据。操作码：299

@@ -19,7 +19,7 @@ public class JCocitEntityTableRender extends WidgetRender<EntityTableUI> {
 		int width = model.get("width", ctx.getClientUIWidth());
 		int height = model.get("height", ctx.getClientUIHeight());
 
-		int treeWidth = 240;
+		int treeWidth = new Double(Math.min(240, width * 0.3)).intValue();
 		int gridWidth = width - treeWidth - 30;
 		int treeHeight = height - 56;
 		int gridHeight = height - 51;
@@ -50,9 +50,10 @@ public class JCocitEntityTableRender extends WidgetRender<EntityTableUI> {
 		if (tree != null) {
 
 			tree.set("height", "" + treeHeight);
+			tree.set("width", "" + treeWidth);
 			tree.set("token", token);
 
-			print(out, "<td valign=\"top\" width=\"%s\" style=\"padding:5px;\">", treeWidth);
+			print(out, "<td valign=\"top\" width=\"%s\" style=\"padding: 5px;\">", treeWidth);
 
 			SearchBoxWidget searchModel = model.getSearchBoxModel();
 			if (searchModel != null) {

@@ -8,6 +8,9 @@
 			case 101:// insert record
 				doEdit(opts, "");
 				break;
+			case 9101:// insert records
+				doEditRows(opts, "");
+				break;
 			case 102:// edit record
 				var gridID = "#datagrid_" + opts.token;
 				var row = $(gridID).datagrid("getSelected");
@@ -268,7 +271,7 @@
 				searchBoxExpr[searchBoxField] = searchBoxValue;
 				queryParams["query.keywords"] = $.toJsonString(searchBoxExpr);
 			} else {
-				queryParams["query.keywords"] = "";
+				queryParams["query.keywords"] = searchBoxValue;
 			}
 		}
 
@@ -328,6 +331,16 @@
 			complete : funcComplete
 		});
 	}
+	function doSaveRows(opts, dataID, data, funcSuccess, funcComplete) {
+		$.doAjax({
+			type : "POST",
+			dataType : "json",
+			url : "/coc/saveEntityRows/" + opts.funcExpr + "/" + dataID,
+			data : data,
+			success : funcSuccess,
+			complete : funcComplete
+		});
+	}
 	function doView(opts, dataID) {
 		var loadFormUrl = "/coc/getEntityRowForm/" + opts.funcExpr + "/" + dataID;
 		jCocit.dialog.open(loadFormUrl, "dialog_" + opts.token + "_" + opts.opCode, {
@@ -367,6 +380,39 @@
 						} else {
 							Jsuccess("操作成功");
 						}
+					}, function() {
+						$btn.attr("disabled", false);
+					});
+				}
+			}, {
+				text : jCocit.entity.defaults.cancel,
+				onClick : function(data) {
+					$(this).dialog('close');
+				}
+			} ],
+		});
+	}
+	function doEditRows(opts, dataID) {
+		var data = {};
+		_prepareEntityFormParams(opts.token, data);
+		var loadFormUrl = (opts.actionPath || ("/coc/getEntityRowsForm/" + opts.funcExpr + "/")) + dataID + "?" + $.param(data);
+		jCocit.dialog.open(loadFormUrl, "dialog_" + opts.token + "_" + opts.opCode, {
+			title : opts.text,
+			width : 800,
+			height : 600,
+			logoCls : opts.iconCls || 'icon-logo',
+			buttons : [ {
+				text : jCocit.entity.defaults.confirm,
+				onClick : function(data) {
+					var $form = $("form", this);
+					var $dialog = $(this);
+
+					var $btn = $(data.target);
+					$btn.attr("disabled", true);
+					doSaveRows(opts, dataID, $form.serialize(), function() {
+						Jsuccess("操作成功");
+						$("#datagrid_" + opts.token).datagrid("reload");
+						$dialog.dialog('close');
 					}, function() {
 						$btn.attr("disabled", false);
 					});

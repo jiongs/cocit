@@ -36,57 +36,58 @@ public class JCocitMenuRender extends WidgetRender<MenuWidget> {
 		/*
 		 * 1.左边为工具栏菜单
 		 */
-		List<Node> nodes = tree.getChildren();
-		if (!ObjectUtil.isNil(nodes)) {
+		if (tree != null) {
+			List<Node> nodes = tree.getChildren();
+			if (!ObjectUtil.isNil(nodes)) {
 
-			// toolbar
-			print(out, "<div style=\"margin: 1px 0 1px 0; white-space: nowrap;\">");
+				// toolbar
+				print(out, "<div style=\"margin: 1px 0 1px 0; white-space: nowrap;\">");
 
-			for (Node node : nodes) {
-				print(out, "<a href=\"javascript:void(0)\" class=\"jCocit-ui jCocit-toolbar\" data-options=\"");
-				print(out, "name:'%s'", node.getName());
+				for (Node node : nodes) {
+					print(out, "<a href=\"javascript:void(0)\" class=\"jCocit-ui jCocit-toolbar\" data-options=\"");
+					print(out, "name:'%s'", node.getName());
 
-				// token: 用来关联到导航树（tree_????）和DataGrid（datagrid_???）。???表示token。
-				String str = model.get("token", "");
-				if (!StringUtil.isNil(str))
-					print(out, ", token: '%s'", str);// 菜单通过该令牌获取DataGrid对象
+					// token: 用来关联到导航树（tree_????）和DataGrid（datagrid_???）。???表示token。
+					String str = model.get("token", "");
+					if (!StringUtil.isNil(str))
+						print(out, ", token: '%s'", str);// 菜单通过该令牌获取DataGrid对象
 
-				// funcExpr = moduleID:tableID:operationID
-				str = node.get("funcExpr", "");
-				if (!StringUtil.isNil(str))
-					print(out, ", funcExpr: '%s'", str);
+					// funcExpr = moduleID:tableID:operationID
+					str = node.get("funcExpr", "");
+					if (!StringUtil.isNil(str))
+						print(out, ", funcExpr: '%s'", str);
 
-				String opMode = node.get("opMode", "");
-				if (!StringUtil.isNil(opMode))
-					print(out, ", opMode: '%s'", opMode);
-				
-				String actionPath = node.get("actionPath", "");
-				if (!StringUtil.isNil(actionPath))
-					print(out, ", actionPath: '%s'", actionPath);
+					String opMode = node.get("opMode", "");
+					if (!StringUtil.isNil(opMode))
+						print(out, ", opMode: '%s'", opMode);
 
-				str = node.get("opCode", "");
-				if (!StringUtil.isNil(str)) {
-					print(out, ", opCode: %s", str);
-					print(out, ", iconCls: 'icon-%s icon-%s-%s'", str, str, opMode);// iconCls 由菜单操作码决定
+					String actionPath = node.get("actionPath", "");
+					if (!StringUtil.isNil(actionPath))
+						print(out, ", actionPath: '%s'", actionPath);
+
+					str = node.get("opCode", "");
+					if (!StringUtil.isNil(str)) {
+						print(out, ", opCode: %s", str);
+						print(out, ", iconCls: 'icon-%s icon-%s-%s'", str, str, opMode);// iconCls 由菜单操作码决定
+					}
+
+					// 子菜单
+					if (node.size() > 0) {
+						print(out, ", menu: '#submenu_%s_%s'", model.get("token", ""), node.getId());
+					} else {
+						print(out, ", onClick: jCocit.entity.doAction");
+					}
+
+					print(out, "\">%s</a>", node.getName());
 				}
+				print(out, "</div>");
 
-				// 子菜单
-				if (node.size() > 0) {
-					print(out, ", menu: '#submenu_%s_%s'", model.get("token", ""), node.getId());
-				} else {
-					print(out, ", onClick: jCocit.entity.doAction");
+				// sub menu
+				for (Node node : nodes) {
+					if (node.size() > 0)
+						printHtmlSubMenu(out, model, node);
 				}
-
-				print(out, "\">%s</a>", node.getName());
 			}
-			print(out, "</div>");
-
-			// sub menu
-			for (Node node : nodes) {
-				if (node.size() > 0)
-					printHtmlSubMenu(out, model, node);
-			}
-
 		}
 
 		/*

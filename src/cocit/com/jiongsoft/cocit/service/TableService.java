@@ -70,6 +70,8 @@ public interface TableService extends EntityService<TableEntity> {
 	List<FieldService> getEntityFieldsForGrid();
 
 	Tree getEntityNaviData();
+	
+	Tree getEntityTreeData();
 
 	/**
 	 * 验证指定的数据是否合法

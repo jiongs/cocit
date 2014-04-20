@@ -10,6 +10,7 @@ import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
+import com.jiongsoft.cocit.entity.asset.plugins.AssetPlugins;
 import com.jiongsoft.cocit.entity.common.Supplier;
 import com.jiongsoft.cocit.entity.common.Uom;
 import com.jiongsoft.cocit.entity.hr.Address;
@@ -25,13 +26,15 @@ import com.jiongsoft.cocit.util.UrlAPI;
  * 
  */
 @Entity
-@CocTable(name = "资产明细", code = "asset_detail", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
+@CocTable(name = "资产管理", code = "asset_detail", catalog = "_soft_base", pathPrefix = UrlAPI.URL_NS//
 /*
  * 操作按钮
  */
 , actions = {
 //
-		@CocOperation(name = "变更", typeCode = 102, mode = "e") //
+		@CocOperation(name = "批量录入", typeCode = 9101, mode = "bc", template = "/asset/entryAssets.jsp", plugin = AssetPlugins.EntryAssets.class) //
+		, @CocOperation(name = "录入", typeCode = 101, mode = "c") //
+		, @CocOperation(name = "变更", typeCode = 102, mode = "e") //
 		, @CocOperation(name = "拆分", typeCode = 102, mode = "e1") //
 		, @CocOperation(name = "折旧", typeCode = 102, mode = "e2") //
 		// , @CocOperation(name = "维修", typeCode = 102, mode = "e3") //
@@ -52,32 +55,32 @@ import com.jiongsoft.cocit.util.UrlAPI;
 @CocGroup(name = "基本信息", code = "basic_info"//
 , fields = {
 //
-		@CocField(name = "设备名称", mode = "*:N v:S c:E e:E", property = "assets", gridOrder = 3)//
-		, @CocField(name = "设备名称", mode = "*:N v:S c:H e:H", property = "name", gridOrder = 1)//
-		, @CocField(name = "设备编号", mode = "*:N v:S c:M e:M", property = "code", gridOrder = 2)//
-		, @CocField(name = "资产类型", mode = "*:N v:S c:E e:E", property = "type", gridOrder = 4)//
-		, @CocField(name = "资产分类", mode = "*:N v:S c:E e:E", property = "category", gridOrder = 5)//
-		, @CocField(name = "设备来源", mode = "*:N v:S c:M e:M", property = "origin")//
-		, @CocField(name = "设备规格", mode = "*:N v:S c:M e:M", property = "specification")//
-		, @CocField(name = "设备型号", mode = "*:N v:S c:M e:M", property = "model")//
-		, @CocField(name = "设备用途", mode = "*:N v:S c:M e:M", property = "purpose")//
-		, @CocField(name = "供货商", mode = "*:N v:S c:M e:M", property = "supplier")//
-		, @CocField(name = "计量单位", mode = "*:N v:S c:E e:E", property = "uom")//
-		, @CocField(name = "购置日期", mode = "*:N v:S c:E e:E", property = "buyDate")//
-		, @CocField(name = "使用部门", mode = "*:N v:S c:M e:M", property = "usedByDepartment")//
-		, @CocField(name = "存放地点", mode = "*:N v:S c:M e:M", property = "depositAddress")//
-		, @CocField(name = "领用人", mode = "*:N v:S c:M e:M", property = "usedByPerson")//
-		, @CocField(name = "使用状况", mode = "*:N v:S c:M e:M", property = "usingStatus", options = "1:在用,2:季节性停用,3:经营性出租,4:大修理停用,5:未使用,6:不需用,9:闲置")//
-		//, @CocField(name = "运行状态", mode = "*:N v:S c:M e:M", property = "runningStatus", options = "0:正常,1:待维修,9:停用,99:报废")//
-		, @CocField(name = "设备单价", mode = "*:N v:S c:E e:E", property = "unitPrice")//
-		, @CocField(name = "设备数量", mode = "*:N v:S c:M e:M", property = "number")//
-		, @CocField(name = "总金额", mode = "*:N v:S c:M e:M", property = "totalPrice")//
-		, @CocField(name = "折旧金额", mode = "*:N v:S c:E e:E", property = "depreciationPrice")//
-		, @CocField(name = "附件单价", mode = "*:N v:S c:E e:E", property = "attachmentUnitPrice")//
-		, @CocField(name = "附件数量", mode = "*:N v:S c:E e:E", property = "attachmentNumber")//
-		, @CocField(name = "附件总额", mode = "*:N v:S c:E e:E", property = "attachmentTotalPrice")//
-		, @CocField(name = "条码", mode = "*:N v:S c:E e:E", property = "barCode")//
-		, @CocField(name = "设备描述", mode = "*:N v:S c:E e:E", property = "desc") //
+		// @CocField(name = "设备名称", mode = "*:N v:S c:E e:E", property = "assets", gridOrder = 3),//
+		@CocField(name = "设备名称", mode = "*:N v:S c:M e:M bc:M", property = "name", gridOrder = 1)//
+		, @CocField(name = "设备编号", mode = "*:N v:S c:M e:M bc:M", property = "code", gridOrder = 2)//
+		, @CocField(name = "资产类型", mode = "*:N v:S c:E e:E bc:E", property = "type", gridOrder = 4)//
+		, @CocField(name = "资产分类", mode = "*:N v:S c:E e:E bc:E", property = "category", gridOrder = 5, uiTemplate = "combotree")//
+		, @CocField(name = "设备来源", mode = "*:N v:S c:M e:M bc:M", property = "origin")//
+		, @CocField(name = "设备规格", mode = "*:N v:S c:E e:E bc:E", property = "specification", disabledNavi = true)//
+		, @CocField(name = "设备型号", mode = "*:N v:S c:E e:E bc:E", property = "model", disabledNavi = true)//
+		, @CocField(name = "设备用途", mode = "*:N v:S c:M e:M bc:M", property = "purpose", disabledNavi = true)//
+		, @CocField(name = "供货商", mode = "*:N v:S c:M e:M bc:M", property = "supplier")//
+		, @CocField(name = "计量单位", mode = "*:N v:S c:E e:E bc:E", property = "uom", disabledNavi = true)//
+		, @CocField(name = "购置日期", mode = "*:N v:S c:E e:E bc:E", property = "buyDate")//
+		, @CocField(name = "使用部门", mode = "*:N v:S c:E e:E bc:E", property = "usedByDepartment", uiTemplate = "combotree")//
+		, @CocField(name = "存放地点", mode = "*:N v:S c:M e:M bc:M", property = "depositAddress", uiTemplate = "combotree")//
+		, @CocField(name = "领用人", mode = "*:N v:S c:E e:E bc:E", property = "usedByPerson", disabledNavi = true)//
+		, @CocField(name = "使用状况", mode = "*:N v:S c:E e:E bc:E", property = "usingStatus", options = "1:在用,2:季节性停用,3:经营性出租,4:大修理停用,5:未使用,6:不需用,9:闲置")//
+		// , @CocField(name = "运行状态", mode = "*:N v:S c:E e:E", property = "runningStatus", options = "0:正常,1:待维修,9:停用,99:报废")//
+		, @CocField(name = "设备单价", mode = "*:N v:S c:E e:E bc:E", property = "unitPrice", disabledNavi = true)//
+		, @CocField(name = "设备数量", mode = "*:N v:S c:E e:E bc:E", property = "number")//
+		, @CocField(name = "总金额", mode = "*:N v:S c:E e:E bc:E", property = "totalPrice")//
+		, @CocField(name = "折旧金额", mode = "*:N v:S c:E e:E bc:E", property = "depreciationPrice")//
+		, @CocField(name = "附件单价", mode = "*:N v:S c:E e:E bc:E", property = "attachmentUnitPrice")//
+		, @CocField(name = "附件数量", mode = "*:N v:S c:E e:E bc:E", property = "attachmentNumber")//
+		, @CocField(name = "附件总额", mode = "*:N v:S c:E e:E bc:E", property = "attachmentTotalPrice")//
+		, @CocField(name = "条码", mode = "*:N v:S c:E e:E bc:E", property = "barCode")//
+		, @CocField(name = "设备描述", mode = "*:N v:S c:E e:E bc:E", property = "desc") //
 }), @CocGroup(name = "基本信息", code = "operation_log"//
 , fields = {
 //
@@ -90,9 +93,9 @@ import com.jiongsoft.cocit.util.UrlAPI;
 )
 public class Asset extends NameEntity {
 
-	// 关联资产实体
-	@ManyToOne
-	Assets assets;
+	// // 关联资产实体
+	// @ManyToOne
+	// Assets assets;
 
 	/*
 	 * 以下为“关联资产实体”冗余字段
@@ -188,13 +191,13 @@ public class Asset extends NameEntity {
 	@Column(length = 128)
 	String barCode;
 
-	public Assets getAssets() {
-		return assets;
-	}
-
-	public void setAssets(Assets assets) {
-		this.assets = assets;
-	}
+	// public Assets getAssets() {
+	// return assets;
+	// }
+	//
+	// public void setAssets(Assets assets) {
+	// this.assets = assets;
+	// }
 
 	public AssetCategory getCategory() {
 		return category;
@@ -348,13 +351,13 @@ public class Asset extends NameEntity {
 		this.barCode = barCode;
 	}
 
-	public Assets getAsset() {
-		return assets;
-	}
-
-	public void setAsset(Assets assets) {
-		this.assets = assets;
-	}
+	// public Assets getAsset() {
+	// return assets;
+	// }
+	//
+	// public void setAsset(Assets assets) {
+	// this.assets = assets;
+	// }
 
 	public Integer getUsingStatus() {
 		return usingStatus;
@@ -394,6 +397,40 @@ public class Asset extends NameEntity {
 
 	public void setBadLevel(Integer badLevel) {
 		this.badLevel = badLevel;
+	}
+
+	public Asset clone() {
+		Asset ret = new Asset();
+		ret.attachmentNumber = this.attachmentNumber;
+		ret.attachmentTotalPrice = this.attachmentTotalPrice;
+		ret.attachmentUnitPrice = this.attachmentUnitPrice;
+		ret.badLevel = this.badLevel;
+		ret.badNumber = this.badLevel;
+		ret.barCode = this.barCode;
+		ret.buyDate = this.buyDate;
+		ret.category = this.category;
+		ret.code = this.code;
+		ret.depositAddress = this.depositAddress;
+		ret.depreciationPrice = this.depreciationPrice;
+		ret.desc = this.desc;
+		ret.model = this.model;
+		ret.name = this.name;
+		ret.number = this.number;
+		ret.origin = this.origin;
+		ret.purpose = this.purpose;
+		ret.runningStatus = this.runningStatus;
+		ret.softID = this.softID;
+		ret.specification = this.specification;
+		ret.supplier = this.supplier;
+		ret.totalPrice = this.totalPrice;
+		ret.type = this.type;
+		ret.unitPrice = this.unitPrice;
+		ret.uom = this.uom;
+		ret.usedByDepartment = this.usedByDepartment;
+		ret.usedByPerson = this.usedByPerson;
+		ret.usingStatus = this.usingStatus;
+
+		return ret;
 	}
 
 }

@@ -46,7 +46,6 @@
 				if (jCocit.dialog && opts.url) {
 					if (!opts.dialogID)
 						opts.dialogID = "combodialog_" + new Date().getTime();
-
 					jCocit.dialog.open(opts.url, opts.dialogID, {
 						title : opts.dialogTitle,
 						width : opts.panelWidth,
@@ -54,13 +53,31 @@
 						modal : true,
 						logoCls : opts.iconCls || 'icon-logo',
 						buttons : [ {
-							text : $.fn.combodialog.defaults.ok,
+							text : opts.ok,
 							onClick : function(data) {
 								opts.onSelect.call(this, selfHTML, data);
+
+								var $grid = $(".jCocit-datagrid", $("#" + opts.dialogID));
+								if ($grid.length) {
+									var selectedRows = $grid.datagrid("getSelections");
+									var vv = [], ss = [];
+									for ( var i = 0; i < selectedRows.length; i++) {
+										vv.push(selectedRows[i][opts.gridIdField]);
+										ss.push(selectedRows[i][opts.gridTextField]);
+									}
+									if (!opts.multiple) {
+										$combo.combo("setValues", (vv.length ? vv : [ "" ]));
+										$combo.combo("setText", ss.join(opts.gridSeparator));
+									} else {
+										$combo.combo("setValues", vv);
+										$combo.combo("setText", ss);
+									}
+								}
+
 								$(this).dialog('close');
 							}
 						}, {
-							text : $.fn.combodialog.defaults.cancel,
+							text : opts.cancel,
 							onClick : function(data) {
 								$(this).dialog('close');
 							}
@@ -125,13 +142,15 @@
 
 	$.fn.combodialog.defaults = $.extend({}, $.fn.combo.defaults, {
 		panelWidth : 800,
-		panelHeight :600,
+		panelHeight : 600,
 		dialogTitle : "",
+		gridIdField : 'id',
+		gridTextField : 'name',
+		gridSeparator : ",",
 		ok : "Ok",
 		cancel : "Cancel",
 		/**
-		 * This method will be invoked when click 'OK' button.
-		 * args: comboHTML, buttonData
+		 * This method will be invoked when click 'OK' button. args: comboHTML, buttonData
 		 */
 		onSelect : $n,
 		keyHandler : {

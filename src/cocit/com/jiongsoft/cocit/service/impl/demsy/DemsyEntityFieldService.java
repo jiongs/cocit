@@ -427,4 +427,9 @@ public class DemsyEntityFieldService implements FieldService {
 		// 检查模式显示
 		return "S";
 	}
+
+	@Override
+	public String getUiTemplate() {
+		return entity.getUiTemplate();
+	}
 }

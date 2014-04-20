@@ -26,7 +26,7 @@ public abstract class JCocitTreeRenders {
 			}
 
 			// Tree容器：DIV
-			print(out, "<div style=\"height:%spx;\" class=\"tree_container\">", model.get("height", 300));
+			print(out, "<div style=\"height:%spx;width:%spx;overflow: auto;\" class=\"tree_container\">", model.get("height", 300), model.get("width", 200));
 
 			// Tree：id = "tree_" + token
 			String token = model.get("token", "");

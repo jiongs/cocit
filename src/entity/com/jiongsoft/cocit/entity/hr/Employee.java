@@ -34,14 +34,14 @@ import com.jiongsoft.cocit.util.UrlAPI;
 @CocGroup(name = "基本信息", code = "basic_info"//
 , fields = {
 //
-		@CocField(name = "所属部门", mode = "*:N v:S c:M e:M", property = "department", gridOrder = 3)//
+		@CocField(name = "所属部门", mode = "*:N v:S c:M e:M", property = "department", gridOrder = 3, uiTemplate = "combotree")//
 		, @CocField(name = "员工姓名", mode = "*:N v:S c:M e:M", property = "name", gridOrder = 1)//
 		, @CocField(name = "员工工号", mode = "*:N v:S c:E e:E", property = "code", gridOrder = 2)//
 		, @CocField(name = "联系电话", mode = "*:N v:S c:E e:E", property = "tel", gridOrder = 4)//
 		, @CocField(name = "QQ号码", mode = "*:N v:S c:E e:E", property = "qq", gridOrder = 5)//
 		, @CocField(name = "Email地址", mode = "*:N v:S c:E e:E", property = "email", gridOrder = 6)//
 		, @CocField(name = "入职时间", mode = "*:N v:S c:E e:E", property = "entryDate", pattern = "yyyy年MM月")//
-		, @CocField(name = "办公地点", mode = "*:N v:S c:E e:E", property = "officeAddress", gridOrder = 7)//
+		, @CocField(name = "办公地点", mode = "*:N v:S c:E e:E", property = "officeAddress", gridOrder = 7, uiTemplate = "combotree")//
 		, @CocField(name = "状态", mode = "*:N v:S c:M e:M", property = "status", options = "0:在职, 1:离职")//
 		, @CocField(name = "员工简介", mode = "*:N v:S c:E e:E", property = "desc") //
 }), @CocGroup(name = "基本信息", code = "operation_log"//

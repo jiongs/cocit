@@ -69,6 +69,29 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 	}
 
 	@Override
+	public EntityTableUI getEntitySelectionTableUI(ModuleService entityModule, TableService entityTable) {
+		EntityTableUI model = new EntityTableUI();
+
+		model.setId("" + entityTable.getID());
+		model.setName(entityTable.getName());
+
+		model.setNaviTreeModel(this.getEntityNaviUI(entityModule, entityTable));
+		MenuWidget op = this.getOperationMenuUI(entityModule, entityTable);
+		op.setData(null);
+		model.setOperationMenuModel(op);
+		GridWidget gridModel = this.getGridUI(entityModule, entityTable);
+		gridModel.set("singleSelect", "true");
+		gridModel.set("selectOnCheck", "true");
+		gridModel.set("checkOnSelect", "true");
+		model.setGridModel(gridModel);
+
+		// 将搜索框放在左边导航树顶部
+		// model.setSearchBoxModel(this.getSearchBoxModel(moduleID, tableID));
+
+		return model;
+	}
+
+	@Override
 	public SearchBoxWidget getSearchBoxUI(ModuleService entityModule, TableService entityTable) {
 
 		SearchBoxWidget ret = new SearchBoxWidget();
@@ -213,14 +236,44 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 		if (ObjectUtil.isNil(entityTable.getEntityFieldsForNaviTree()))
 			return null;
 
+		Long moduleID = 0L;
+		if (entityModule != null)
+			moduleID = entityModule.getID();
+
 		// 创建树模型
 		TreeWidget model = new TreeWidget();
 		model.setId("" + entityTable.getID());
-		model.set("onlyLeafCheck", "true");
+		model.set("onlyLeafCheck", "false");
 		// model.set("onlyLeafValue", "true");
 
 		// 设置异步加载数据的 URL 地址
-		model.setDataLoadUrl(UrlAPI.GET_ENTITY_NAVI_DATA.replace("*", UrlAPI.encodeArgs(entityModule.getID(), entityTable.getID())));
+		model.setDataLoadUrl(UrlAPI.GET_ENTITY_NAVI_DATA.replace("*", UrlAPI.encodeArgs(moduleID, entityTable.getID())));
+
+		// 获取树数据
+		// Tree entity = tableID.getNaviTree();
+		// model.setData(entity);
+
+		// 返回
+		return model;
+	}
+
+	@Override
+	public TreeWidget getEntityTreeUI(ModuleService entityModule, TableService entityTable) {
+		if (ObjectUtil.isNil(entityTable.getEntityFieldsForNaviTree()))
+			return null;
+
+		Long moduleID = 0L;
+		if (entityModule != null)
+			moduleID = entityModule.getID();
+
+		// 创建树模型
+		TreeWidget model = new TreeWidget();
+		model.setId("" + entityTable.getID());
+		model.set("onlyLeafCheck", "false");
+		// model.set("onlyLeafValue", "true");
+
+		// 设置异步加载数据的 URL 地址
+		model.setDataLoadUrl(UrlAPI.GET_ENTITY_TREE_DATA.replace("*", UrlAPI.encodeArgs(moduleID, entityTable.getID())));
 
 		// 获取树数据
 		// Tree entity = tableID.getNaviTree();
@@ -242,6 +295,27 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 
 		// 查询数据
 		Tree data = entityTable.getEntityNaviData();
+
+		// 设置模型属性
+		ret.setModel(model);
+		ret.setData(data);
+
+		// 返回
+		return ret;
+	}
+
+	@Override
+	public TreeWidgetData getEntityTreeData(ModuleService entityModule, TableService entityTable) {
+		if (ObjectUtil.isNil(entityTable.getEntityFieldsForNaviTree()))
+			return null;
+
+		// 创建模型
+		TreeWidgetData ret = new TreeWidgetData();
+		TreeWidget model = new TreeWidget();
+		model.setId("" + entityTable.getID());
+
+		// 查询数据
+		Tree data = entityTable.getEntityTreeData();
 
 		// 设置模型属性
 		ret.setModel(model);

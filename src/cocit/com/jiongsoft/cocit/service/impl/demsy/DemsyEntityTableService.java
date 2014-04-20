@@ -174,6 +174,27 @@ public class DemsyEntityTableService implements TableService {
 		return ret;
 	}
 
+	public List<FieldService> getEntityFieldsForSelfTree() {
+		List<FieldService> ret = new ArrayList();
+
+		for (FieldService f : this.bizFields) {
+			DemsyEntityFieldService field = (DemsyEntityFieldService) f;
+			AbstractSystemData data = field.getEntity();
+
+			if (data.isDisabledNavi() || data.isDisabled()) {
+				continue;
+			}
+
+			if (field.isFK() && data.getRefrenceSystem().equals(this.entity)) {
+				ret.add(field);
+				break;
+			}
+
+		}
+
+		return ret;
+	}
+
 	@Override
 	public List<FieldService> getEntityFieldsForGrid() {
 		List ret = new ArrayList();
@@ -262,6 +283,30 @@ public class DemsyEntityTableService implements TableService {
 		return tree;
 	}
 
+	@Override
+	public Tree getEntityTreeData() {
+
+		Tree tree = Tree.make();
+
+		for (FieldService fld : this.getEntityFieldsForSelfTree()) {
+			DemsyEntityFieldService demsyFld = (DemsyEntityFieldService) fld;
+			Node node = tree.addNode(null, fld.getPropName()).setName(fld.getName());
+			node.set("open", "true");
+
+			boolean success = this.makeDataNodes(tree, node, demsyFld.getEntity());
+			if (!success) {
+				tree.removeNode(node);
+			}
+		}
+
+		// 如果导航树节点总数没有超过边框则全部展开
+		tree.optimizeStatus();
+
+		tree.sort();
+
+		return tree;
+	}
+
 	private CndExpr makeSortExpr(TableEntity table, String type) {
 		CndExpr ret = null;
 
@@ -290,6 +335,77 @@ public class DemsyEntityTableService implements TableService {
 		}
 
 		return ret;
+	}
+
+	private boolean makeDataNodes(Tree tree, Node node, AbstractSystemData field) {
+		BizEngine bizEngine = (BizEngine) Demsy.bizEngine;
+
+		DemsyEntityFieldService cocField = new DemsyEntityFieldService(field);
+
+		String parentNodeID = node == null ? "" : node.getId();
+
+		if (bizEngine.isSystemFK(field)) {
+
+			// 获取该字段引用的外键系统
+			IBizSystem fkSystem = field.getRefrenceSystem();
+
+			// 查询外键数据
+			IOrm orm = Demsy.orm();
+			Class fkSystemType = bizEngine.getType(fkSystem);
+			// if (orm.count(fkSystemType) > 50) {
+			// return false;
+			// }
+			List fkSystemRecords = orm.query(fkSystemType, makeSortExpr((TableEntity) fkSystem, "tree"));
+
+			// 数据自身树
+			String selfTreeProp = null;
+			IBizField selfTreeFld = bizEngine.getFieldOfSelfTree(fkSystem);
+			if (selfTreeFld != null) {
+				selfTreeProp = bizEngine.getPropName(selfTreeFld);
+			}
+
+			String parentID = "";
+			for (Object record : fkSystemRecords) {
+				// 计算上级节点ID
+				if (!StringUtil.isNil(selfTreeProp)) {
+					Object parentObj = ObjectUtil.getValue(record, selfTreeProp);
+					if (parentObj != null)
+						parentID = "" + ObjectUtil.getValue(parentObj, "id");
+				}
+
+				// 计算节点ID
+				String nodeID = null;
+				if (ClassUtil.hasField(fkSystemType, "id")) {
+					nodeID = "" + ObjectUtil.getValue(record, "id");
+				} else {
+					nodeID = "" + record.hashCode();
+				}
+
+				// 计算节点名称
+				String nodeName = record.toString();
+
+				// 添加节点
+				Node childNode = tree.addNode(StringUtil.isNil(parentID) ? parentNodeID : parentID, nodeID).setName(nodeName);
+
+				// 计算节点顺序
+				if (ClassUtil.hasField(fkSystemType, "orderby")) {
+					Integer seq = ObjectUtil.getValue(record, "orderby");
+					if (seq != null)
+						childNode.setSequence(seq);
+				}
+			}
+		} else {
+			KeyValue[] options = cocField.getDicOptions();
+			if (options == null || options.length == 0 || options.length > 200) {
+				return false;
+			}
+
+			for (KeyValue option : options) {
+				tree.addNode(parentNodeID, option.getValue()).setName(option.getKey());
+			}
+		}
+
+		return true;
 	}
 
 	private boolean makeNodes(Tree tree, Node node, AbstractSystemData field) {
