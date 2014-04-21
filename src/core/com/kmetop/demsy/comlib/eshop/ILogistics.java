@@ -36,6 +36,8 @@ public interface ILogistics {
 
 	public void setOrderDate(Date payTime);
 
+	public void setLogisticsCost(Double logisticsCost);
+	
 	public void setTotalCost(Double totalCast);
 
 	public void setDesc(String string);

@@ -160,6 +160,14 @@
 		    	<td style="padding:2px;height: 25px;border-bottom: 1px solid #000000;" colspan=6></td>
 	    	</tr>
 	        <tr>
+				<th style="padding: 2px 5px 2px 5px; height:25px;">邮费：</th>
+                <td style="padding: 2px 5px 2px 5px; font-size: 14px; text-align: left; width: 100px;">&nbsp;</td>
+                <td style="padding: 2px 5px 2px 5px; font-size: 14px;">&nbsp;</td>
+                <td style="padding: 2px 5px 2px 5px; font-size: 14px; text-align: right; width: 60px;" align="right">&nbsp;</td>
+				<td style="padding: 2px 5px 2px 5px; font-size: 14px; text-align: right; width: 60px;" align="right">&nbsp;</td>
+				<td style="padding: 2px 5px 2px 5px; font-size: 14px; text-align: right; width: 60px;" align="right">{tostring bean=$order prop="logisticsCost" pattern="#,##0.00"}</td>
+			</tr>
+	        <tr>
 				<th style="padding: 2px 5px 2px 5px; height:25px;">合计：</th>
                 <td style="padding: 2px 5px 2px 5px; font-size: 14px; text-align: left; width: 100px;">&nbsp;</td>
                 <td style="padding: 2px 5px 2px 5px; font-size: 14px;">&nbsp;</td>

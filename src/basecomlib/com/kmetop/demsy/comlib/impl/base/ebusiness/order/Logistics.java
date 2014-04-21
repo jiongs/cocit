@@ -28,8 +28,7 @@ import com.kmetop.demsy.lang.Str;
 
 @Entity
 @CocTable(name = "订单发货管理", code = ILogistics.SYS_CODE, orderby = 3,//
-actions = {
-		@CocOperation(name = "发货说明", typeCode = TYPE_BZFORM_EDIT, mode = "e2")//
+actions = { @CocOperation(name = "发货说明", typeCode = TYPE_BZFORM_EDIT, mode = "e2")//
 		, @CocOperation(name = "发货打印", typeCode = TYPE_BZFORM_PRINT, mode = "p", template = "ui.print.LogisticsBill", params = "printNum eq 0", info = "订单发货成功", error = "订单发货失败", pluginName = "com.kmetop.demsy.plugins.eshop.PrintLogisticsBill") //
 		, @CocOperation(name = "订单详情", typeCode = TYPE_BZFORM_EDIT, mode = "v") //
 		, @CocOperation(name = "转发", typeCode = TYPE_BZFORM_EDIT, mode = "e1")//
@@ -45,6 +44,7 @@ fields = { @CocField(property = "orderID", gridOrder = 1)//
 		, @CocField(property = "subject", name = "邮寄地址", precision = 512, isTransient = true, mode = "*:N v:S", gridOrder = 2, privacy = true)//
 		, @CocField(property = "itemsCatalog")//
 		, @CocField(property = "itemsAmount")//
+		, @CocField(property = "logisticsCost", gridOrder = 4)//
 		, @CocField(property = "totalCost", gridOrder = 4)//
 		, @CocField(property = "sendGoodsInfo", name = "快递信息", isTransient = true, mode = "*:N v:S", gridOrder = 5)//
 		, @CocField(property = "code", name = "快递单号", mode = "*:N v:S p:M")//
@@ -93,6 +93,9 @@ public class Logistics extends BizComponent implements ILogistics {
 	@CocField(name = "联系电话", mode = "*:N v:S", privacy = true)
 	protected String telcode;
 
+	@CocField(name = "物流费用(元)", mode = "*:N v:S", pattern = "#,##0.00")
+	protected Double logisticsCost;
+
 	@CocField(name = "清单条目", mode = "*:N v:S")
 	protected int itemsCatalog;
 
@@ -113,7 +116,7 @@ public class Logistics extends BizComponent implements ILogistics {
 
 	@CocField(name = "订单留言", mode = "*:N e2:S v:S")
 	protected String note;
-	
+
 	@CocField(name = "发货说明", mode = "*:N e2:E v:S")
 	protected RichText note2;
 
@@ -277,5 +280,16 @@ public class Logistics extends BizComponent implements ILogistics {
 
 	public void setNote2(RichText sendGoodsNote) {
 		this.note2 = sendGoodsNote;
+	}
+
+	public Double getLogisticsCost() {
+		if (logisticsCost == null) {
+			return 0.0;
+		}
+		return logisticsCost;
+	}
+
+	public void setLogisticsCost(Double logisticsCost) {
+		this.logisticsCost = logisticsCost;
 	}
 }

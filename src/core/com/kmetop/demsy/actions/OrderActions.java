@@ -442,7 +442,6 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 
 				int logisticsNum = mapByDeliver.size();
 				int logisticsCount = 0;
-
 				// 同一【发货地址】有多个【运营机构】，因此会有多个物流单
 				Iterator<Long> deliverIDs = mapByDeliver.keySet().iterator();
 				while (deliverIDs.hasNext()) {
@@ -458,6 +457,15 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 						List<IOrderItem> itemsByOperator = mapByOperator.get(operatorID);
 
 						ILogistics logistics = (ILogistics) Mirror.me(logisticsClass).born();
+
+						Double logisticsCost = order.getLogisticsCost();
+						if (logisticsCost == null) {
+							logisticsCost = 0.0;
+						}
+						if (logisticsCount > 0) {
+							logisticsCost = 0.0;
+						}
+
 						logisticsCount++;
 						logistics.setOrderID(order.getOrderID() + (logisticsNum > 1 ? "_" + logisticsCount : ""));
 						logistics.setAddress(order.getAddress());
@@ -496,10 +504,12 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 
 							orm.save(logisticsItem);
 						}
+						totalCast += logisticsCost;
 
 						logistics.setItemsAmount(amount);
 						logistics.setDeliver(deliversMap.get(deliverID));
 						logistics.setOperator(operatorsMap.get(operatorID));
+						logistics.setLogisticsCost(logisticsCost);
 						logistics.setTotalCost(totalCast);
 						logistics.setDesc(desc.toString());
 
