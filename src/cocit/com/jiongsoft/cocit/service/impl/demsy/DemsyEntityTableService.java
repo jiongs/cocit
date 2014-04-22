@@ -371,6 +371,8 @@ public class DemsyEntityTableService implements TableService {
 					Object parentObj = ObjectUtil.getValue(record, selfTreeProp);
 					if (parentObj != null)
 						parentID = "" + ObjectUtil.getValue(parentObj, "id");
+					else
+						parentID = "";
 				}
 
 				// 计算节点ID
@@ -443,6 +445,8 @@ public class DemsyEntityTableService implements TableService {
 					Object parentObj = ObjectUtil.getValue(record, selfTreeProp);
 					if (parentObj != null)
 						parentID = propName + ".id:" + ObjectUtil.getValue(parentObj, "id");
+					else
+						parentID = "";
 				}
 
 				// 计算节点ID

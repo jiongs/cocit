@@ -7,6 +7,7 @@ import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.lang.Cls;
 import com.kmetop.demsy.orm.IOrm;
 
+@Deprecated
 public class CreateBizSystem extends BasePlugin {
 
 	@Override
@@ -34,7 +35,6 @@ public class CreateBizSystem extends BasePlugin {
 
 	@Override
 	public void loaded(ActionEvent event) {
-		// TODO Auto-generated method stub
 
 	}
 

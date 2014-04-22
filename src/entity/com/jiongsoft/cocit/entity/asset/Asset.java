@@ -32,7 +32,7 @@ import com.jiongsoft.cocit.util.UrlAPI;
  */
 , actions = {
 //
-		@CocOperation(name = "批量录入", typeCode = 9101, mode = "bc", template = "/asset/entryAssets.jsp", plugin = AssetPlugins.EntryAssets.class) //
+		@CocOperation(name = "批量录入", typeCode = 9101, mode = "bc", template = "/asset/AddAssets.jsp", plugin = AssetPlugins.AddAssets.class) //
 		, @CocOperation(name = "录入", typeCode = 101, mode = "c") //
 		, @CocOperation(name = "变更", typeCode = 102, mode = "e") //
 		, @CocOperation(name = "拆分", typeCode = 102, mode = "e1") //

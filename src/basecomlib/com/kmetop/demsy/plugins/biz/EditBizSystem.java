@@ -6,6 +6,7 @@ import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.lang.Cls;
 
+@Deprecated
 public class EditBizSystem extends BasePlugin {
 
 	@Override

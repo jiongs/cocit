@@ -1,7 +1,6 @@
 package com.kmetop.demsy.comlib.impl.sft.system;
 
 import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_EDIT;
-import static com.kmetop.demsy.biz.BizConst.TYPE_BZFORM_NEW;
 import static com.kmetop.demsy.comlib.LibConst.BIZCATA_UDF_CONSOLE;
 import static com.kmetop.demsy.comlib.LibConst.BIZSYS_BZUDF_CATALOG;
 import static com.kmetop.demsy.comlib.LibConst.BIZSYS_BZUDF_SYSTEM;
@@ -21,21 +20,29 @@ import com.jiongsoft.cocit.entity.annotation.CocTable;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
 import com.kmetop.demsy.comlib.impl.base.biz.BizCatalog;
 import com.kmetop.demsy.comlib.impl.sft.SFTBizComponent;
+import com.kmetop.demsy.comlib.impl.sft.system.plugins.SystemPlugins;
 
 @Entity
-@CocTable(name = "系统自定义", code = BIZSYS_BZUDF_SYSTEM, catalog = BIZCATA_UDF_CONSOLE, orderby = ORDER_BZUDF_SYSTEM, buildin = true//
-, actions = { @CocOperation(name = "新增系统", typeCode = TYPE_BZFORM_NEW, mode = "c", pluginName = "com.kmetop.demsy.plugins.biz.CreateBizSystem")//
+@CocTable(name = "系统自定义", pathPrefix = "/coc", code = BIZSYS_BZUDF_SYSTEM, catalog = BIZCATA_UDF_CONSOLE, orderby = ORDER_BZUDF_SYSTEM, buildin = true//
+, actions = {
+//
+		@CocOperation(name = "定制系统", typeCode = 9101, mode = "bc", template = "/system/AddSystem.jsp", plugin = SystemPlugins.AddSystems.class)//
+		, @CocOperation(name = "添加", typeCode = 101, mode = "b", plugin = SystemPlugins.AddSystem.class)//
+		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", plugin = SystemPlugins.EditSystem.class) //
 		, @CocOperation(jsonData = "CommonBizAction.data.js") //
-		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", pluginName = "com.kmetop.demsy.plugins.biz.EditBizSystem") //
 }//
 , groups = { @CocGroup(name = "基本信息", code = "basic"//
-, fields = { @CocField(name = "系统名称", property = "name", mode = "c:M e:M")//
+, fields = {
+//
+		@CocField(name = "系统名称", property = "name", mode = "c:M e:M")//
 		, @CocField(name = "系统编号", property = "code") //
 		, @CocField(name = "路径前缀", property = "pathPrefix", gridField = true) //
 		, @CocField(name = "显示顺序", property = "orderby") //
 		, @CocField(name = "系统分类", property = "catalog", groupBy = true, fkTable = BIZSYS_BZUDF_CATALOG) //
 }), @CocGroup(name = "扩展信息", code = "ext"//
-, fields = { @CocField(name = "窗体模版", property = "template", gridField = false) //
+, fields = {
+//
+		@CocField(name = "窗体模版", property = "template", gridField = false) //
 		, @CocField(name = "映射实体类", property = "mappingClass", gridField = false, mode = "*:P") //
 		, @CocField(name = "实体类扩展", property = "extendClass", gridField = false) //
 		, @CocField(name = "映射数据表", property = "mappingTable", gridField = false, mode = "*:P") //

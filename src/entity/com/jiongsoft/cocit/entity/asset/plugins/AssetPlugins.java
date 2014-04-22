@@ -17,7 +17,7 @@ import com.jiongsoft.cocit.util.CocException;
 
 public class AssetPlugins {
 
-	public static class EntryAssets extends BasePlugin<ActionHelper> {
+	public static class AddAssets extends BasePlugin<ActionHelper> {
 
 		@Override
 		public void before(ActionEvent<ActionHelper> event) {
