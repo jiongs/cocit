@@ -88,8 +88,10 @@ public interface OperationService extends EntityService<OperationEntity> {
 	 */
 	Long getParentID();
 
+	String getActionWindow();
+
 	/**
 	 * 获取界面模版，通常为一个JSP页面。当执行该操作时将自动加载该模版作为操作界面。
 	 */
-	public String getJsp();
+	String getActionPage();
 }

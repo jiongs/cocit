@@ -396,34 +396,38 @@
 		var data = {};
 		_prepareEntityFormParams(opts.token, data);
 		var loadFormUrl = (opts.actionPath || ("/coc/getEntityRowsForm/" + opts.funcExpr + "/")) + dataID + "?" + $.param(data);
-		jCocit.dialog.open(loadFormUrl, "dialog_" + opts.token + "_" + opts.opCode, {
-			title : opts.text,
-			width : 800,
-			height : 600,
-			logoCls : opts.iconCls || 'icon-logo',
-			buttons : [ {
-				text : jCocit.entity.defaults.confirm,
-				onClick : function(data) {
-					var $form = $("form", this);
-					var $dialog = $(this);
+		if (opts.actionWindow == '_blank') {
+			window.open(loadFormUrl, "").focus();
+		} else {
+			jCocit.dialog.open(loadFormUrl, "dialog_" + opts.token + "_" + opts.opCode, {
+				title : opts.text,
+				width : 800,
+				height : 600,
+				logoCls : opts.iconCls || 'icon-logo',
+				buttons : [ {
+					text : jCocit.entity.defaults.confirm,
+					onClick : function(data) {
+						var $form = $("form", this);
+						var $dialog = $(this);
 
-					var $btn = $(data.target);
-					$btn.attr("disabled", true);
-					doSaveRows(opts, dataID, $form.serialize(), function() {
-						Jsuccess("操作成功");
-						$("#datagrid_" + opts.token).datagrid("reload");
-						$dialog.dialog('close');
-					}, function() {
-						$btn.attr("disabled", false);
-					});
-				}
-			}, {
-				text : jCocit.entity.defaults.cancel,
-				onClick : function(data) {
-					$(this).dialog('close');
-				}
-			} ],
-		});
+						var $btn = $(data.target);
+						$btn.attr("disabled", true);
+						doSaveRows(opts, dataID, $form.serialize(), function() {
+							Jsuccess("操作成功");
+							$("#datagrid_" + opts.token).datagrid("reload");
+							$dialog.dialog('close');
+						}, function() {
+							$btn.attr("disabled", false);
+						});
+					}
+				}, {
+					text : jCocit.entity.defaults.cancel,
+					onClick : function(data) {
+						$(this).dialog('close');
+					}
+				} ],
+			});
+		}
 	}
 	function doExportXls(opts) {
 		var $grid = $("#datagrid_" + opts.token);

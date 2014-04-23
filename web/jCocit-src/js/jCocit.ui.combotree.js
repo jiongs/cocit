@@ -118,6 +118,7 @@
 					_doSelectTreeNode(comboHTML);
 
 				$combo.focus();
+				$combo.combo("hidePanel");
 
 				opts.onSelect.call(this, node);
 			},

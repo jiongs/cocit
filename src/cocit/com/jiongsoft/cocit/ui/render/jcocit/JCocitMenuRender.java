@@ -64,6 +64,10 @@ public class JCocitMenuRender extends WidgetRender<MenuWidget> {
 					String actionPath = node.get("actionPath", "");
 					if (!StringUtil.isNil(actionPath))
 						print(out, ", actionPath: '%s'", actionPath);
+					
+					String actionWindow = node.get("actionWindow", "");
+					if (!StringUtil.isNil(actionWindow))
+						print(out, ", actionWindow: '%s'", actionWindow);
 
 					str = node.get("opCode", "");
 					if (!StringUtil.isNil(str)) {

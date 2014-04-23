@@ -143,8 +143,12 @@ public class DemsyEntityOperationService implements OperationService {
 	}
 
 	@Override
-	public String getJsp() {
+	public String getActionPage() {
 		return entity.getTemplate();
 	}
 
+	@Override
+	public String getActionWindow() {
+		return entity.getTargetWindow();
+	}
 }

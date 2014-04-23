@@ -26,7 +26,7 @@ import com.kmetop.demsy.comlib.impl.sft.system.plugins.SystemPlugins;
 @CocTable(name = "系统自定义", pathPrefix = "/coc", code = BIZSYS_BZUDF_SYSTEM, catalog = BIZCATA_UDF_CONSOLE, orderby = ORDER_BZUDF_SYSTEM, buildin = true//
 , actions = {
 //
-		@CocOperation(name = "定制系统", typeCode = 9101, mode = "bc", template = "/system/AddSystem.jsp", plugin = SystemPlugins.AddSystems.class)//
+		@CocOperation(name = "定制系统", typeCode = 9101, mode = "bc", targetWindow = "_blank", template = "/system/AddSystem.jsp", plugin = SystemPlugins.AddSystems.class)//
 		, @CocOperation(name = "添加", typeCode = 101, mode = "b", plugin = SystemPlugins.AddSystem.class)//
 		, @CocOperation(name = "编辑", typeCode = TYPE_BZFORM_EDIT, mode = "e", plugin = SystemPlugins.EditSystem.class) //
 		, @CocOperation(jsonData = "CommonBizAction.data.js") //

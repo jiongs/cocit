@@ -30,7 +30,7 @@ form.entity-form {
 	margin-bottom: 1px;
 }
 /*业务字段名称TD*/
-.entity-field-header {
+.entity-field-header,.entity-field-grid-header {
 	width: 80px;
 	height: 24px;
 	white-space: nowrap;
@@ -40,9 +40,13 @@ form.entity-form {
 	text-align: right;
 	padding: 2px 5px 2px 2px;
 	font-weight: normal;
+	font-size: 12px;
+}
+.entity-field-grid-header{
+	text-align: center;
 }
 /*业务字段输入框TD*/
-.entity-field-box {
+.entity-field-box,.entity-field-grid-box {
 	background-color: #fcfdfd;
 	border: 1px solid #dee1e4;
 	padding: 2px 2px 2px 3px;
@@ -53,7 +57,7 @@ form.entity-form {
 	font-size: 12px;
 }
 
-.entity-field-box .CbB {
+.entity-field-box .CbB, .entity-field-grid-box .CbB {
 	height: 20px;
 }
 /*INPUT/SELECT/TEXTAREA等输入框*/

@@ -218,6 +218,8 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 				child.set("funcExpr", funcExpr);
 				child.set("opCode", op.getCode());
 				child.set("opMode", op.getMode());
+				if (op.getActionWindow() != null)
+					child.set("actionWindow", op.getActionWindow());
 				child.setSequence(op.getSequence());
 
 			}
@@ -329,8 +331,8 @@ public class WidgetModelFactoryImpl implements WidgetModelFactory {
 	public EntityForm getEntityFormUI(ModuleService entityModule, TableService entityTable, OperationService op, Object entityEntity) {
 		EntityForm ret = new EntityForm();
 
-		if (!StringUtil.isNil(op.getJsp()))
-			ret.setJsp(UrlAPI.JSP_DIR + "/" + op.getJsp());
+		if (!StringUtil.isNil(op.getActionPage()))
+			ret.setJsp(UrlAPI.JSP_DIR + "/" + op.getActionPage());
 
 		String opMode = op.getMode();
 
