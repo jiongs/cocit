@@ -17,10 +17,13 @@ public abstract class CocitFileUtil {
 				String fileName = file.getName().toLowerCase();
 				if (fileName.endsWith(".exe")//
 						|| fileName.endsWith(".bat")//
+						|| fileName.endsWith(".php")//
+						|| fileName.endsWith(".asp")//
+						|| fileName.endsWith(".aspx")//
 				) {
 
 					file.renameTo(new File(dir.getAbsolutePath() + "/" + file.getName() + ".cocit_unknown"));
-					System.err.println("renameExecutableFiles: " + file.getAbsolutePath());
+					System.err.println("RenameExecutableFiles: " + file.getAbsolutePath());
 				}
 			}
 		}
@@ -131,7 +134,7 @@ public abstract class CocitFileUtil {
 		FileUtil.deleteAll(new File(rootPath + "/WEB-INF/tmp"));
 
 		//
-		renameExecutableFiles(rootDir);
+		renameExecutableFiles(rootDir.getParentFile());
 
 		clearResinLogFiles(new File("D:\\Cluster"));
 	}

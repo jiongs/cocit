@@ -36,6 +36,7 @@ public abstract class JCocitTreeRenders {
 			print(out, ",checkbox: %s", (boolean) model.get("checkbox", true));
 			print(out, ",onlyLeafCheck: %s", (boolean) model.get("onlyLeafCheck", false));
 			print(out, ",onlyLeafValue: %s", (boolean) model.get("onlyLeafValue", false));
+			print(out, ",cascadeCheck: %s", (boolean) model.get("cascadeCheck", true));
 
 			if (model.getData() == null) {
 				print(out, ",url: '%s'", model.getDataLoadUrl());

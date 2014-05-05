@@ -40,7 +40,7 @@ public class FileManagerAction {
 		Cocit.getServiceFactory().getSoftService(null).getSecurityManager().checkLoginRole(com.jiongsoft.cocit.service.SecurityManager.ROLE_DP_SUPPORT);
 
 		if (StringUtil.isNil(dir)) {
-			dir = Cocit.getContextDir();
+			dir = new File(Cocit.getContextDir()).getParentFile().getAbsolutePath();
 		} else {
 			try {
 				String d = StringUtil.decodeHex(dir);
@@ -58,7 +58,8 @@ public class FileManagerAction {
 
 		TreeWidget tree = new TreeWidget();
 		tree.setDataLoadUrl(UrlAPI.GET_FILE_TREE_DATA.replace("*", StringUtil.encodeHex(dir)));
-		tree.set("checkbox", "false");
+		tree.set("checkbox", "true");
+		tree.set("cascadeCheck", "false");
 		tableUI.setNaviTreeModel(tree);
 
 		MenuWidget menu = new MenuWidget();
@@ -84,7 +85,7 @@ public class FileManagerAction {
 	}
 
 	@At(UrlAPI.GET_FILE_GRID_DATA)
-	public GridWidgetData getFileGridData(String dir) {
+	public GridWidgetData getFileGridData(String dir, String fileType) {
 		Cocit.getServiceFactory().getSoftService(null).getSecurityManager().checkLoginRole(com.jiongsoft.cocit.service.SecurityManager.ROLE_DP_SUPPORT);
 
 		if (StringUtil.isNil(dir)) {
@@ -97,9 +98,17 @@ public class FileManagerAction {
 		String pathExpr = actionContext.getParameterValue("query.filterExpr", "");
 		Map map = Json.fromJson(Map.class, pathExpr);
 		List<String> folders = (List) map.get("folder");
-		if (folders != null && folders.size() > 0) {
-			dir = StringUtil.decodeHex(folders.get(0));
+		if (folders == null || folders.size() == 0) {
+			folders = new ArrayList();
+			folders.add(dir);
+		} else {
+			List<String> folders1 = folders;
+			folders = new ArrayList();
+			for (String folder : folders1) {
+				folders.add(StringUtil.decodeHex(folder));
+			}
 		}
+		List<String> fileTypes = (List) map.get("fileType");
 
 		GridWidgetData ret = new GridWidgetData();
 		ret.setModel(this.getGridWidget(dir));
@@ -109,10 +118,7 @@ public class FileManagerAction {
 		String sortOrder = actionContext.getParameterValue("sortOrder", "");
 		String sortField = actionContext.getParameterValue("sortField", "");
 
-		List<FileEntity> list = getFileList(dir, pageSize, pageIndex, sortOrder, sortField);
-		ret.setData(list);
-
-		ret.setTotal(new File(dir).listFiles().length);
+		makeFileGridData(ret, folders, pageSize, pageIndex, sortOrder, sortField, fileTypes);
 
 		// 返回
 		return ret;
@@ -129,6 +135,7 @@ public class FileManagerAction {
 		}
 
 		TreeWidgetData ret = new TreeWidgetData();
+
 		TreeWidget tree = new TreeWidget();
 		ret.setModel(tree);
 
@@ -170,10 +177,7 @@ public class FileManagerAction {
 		return grid;
 	}
 
-	private List<FileEntity> getFileList(String dirPath, int pageSize, int pageIndex, String sortOrder, String sortField) {
-		List<FileEntity> list = new ArrayList();
-
-		File dir = new File(dirPath);
+	private void makeFileList(List<FileEntity> list, File dir, List<String> fileTypes) {
 		if (dir.isDirectory()) {
 			File[] files = dir.listFiles();
 			if (files != null) {
@@ -193,10 +197,33 @@ public class FileManagerAction {
 					model.setLastModified(new Date(file.lastModified()));
 					model.setLength(file.length());
 
-					list.add(model);
+					if (fileTypes != null && fileTypes.size() > 0) {
+						if (file.isDirectory()) {
+							makeFileList(list, file, fileTypes);
+						} else {
+							for (String fileType : fileTypes) {
+								if (file.getName().toLowerCase().endsWith(fileType.toLowerCase().trim())) {
+									list.add(model);
+								}
+							}
+						}
+					} else {
+						list.add(model);
+					}
 				}
 			}
 		}
+	}
+
+	private void makeFileGridData(GridWidgetData grid, List<String> dirPaths, int pageSize, int pageIndex, String sortOrder, String sortField, List<String> fileTypes) {
+		List<FileEntity> list = new ArrayList();
+
+		for (String dirPath : dirPaths) {
+			File dir = new File(dirPath);
+			makeFileList(list, dir, fileTypes);
+		}
+
+		int size = list.size();
 
 		if (!StringUtil.isNil(sortField) && !sortField.equals("id"))
 			SortUtil.sort(list, sortField, true);
@@ -217,11 +244,23 @@ public class FileManagerAction {
 			ret.add(list.get(idx));
 		}
 
-		return ret;
+		grid.setData(ret);
+
+		grid.setTotal(size);
 	}
 
 	private Tree getFileTree(String dirPath) {
 		Tree tree = Tree.make();
+
+		String folderID = null;
+		String rootDir = new File(Cocit.getContextDir()).getParentFile().getAbsolutePath();
+		if (rootDir.equals(dirPath)) {
+			folderID = "folder:" + StringUtil.encodeHex(dirPath);
+			Node folderNode = tree.addNode(null, folderID);
+			folderNode.set("open", "true");
+			folderNode.setName("文件夹(" + new File(dirPath).getName() + ")");
+		}
+
 		File dir = new File(dirPath);
 		if (dir.isDirectory()) {
 			File[] files = dir.listFiles();
@@ -234,11 +273,30 @@ public class FileManagerAction {
 					if (!file.isDirectory()) {
 						continue;
 					}
-					node = tree.addNode(null, "folder:" + StringUtil.encodeHex(file.getAbsolutePath()));
+					node = tree.addNode(folderID, "folder:" + StringUtil.encodeHex(file.getAbsolutePath()));
 					node.setChildrenURL(UrlAPI.GET_FILE_TREE_DATA.replace("*", StringUtil.encodeHex(file.getAbsolutePath())));
 					node.setName(file.getName());
 				}
 			}
+		}
+
+		if (rootDir.equals(dirPath)) {
+			String fileTypeID = "fileType: all";
+			Node fileTypeNode = tree.addNode(null, fileTypeID);
+			fileTypeNode.set("open", "true");
+			fileTypeNode.setName("按文件类型过滤");
+			Node node = tree.addNode(fileTypeID, "fileType: .php");
+			node.setName("PHP");
+			node = tree.addNode(fileTypeID, "fileType: .jsp");
+			node.setName("JSP");
+			node = tree.addNode(fileTypeID, "fileType: .asp");
+			node.setName("ASP");
+			node = tree.addNode(fileTypeID, "fileType: .aspx");
+			node.setName("ASPX");
+			node = tree.addNode(fileTypeID, "fileType: .html");
+			node.setName("HTML");
+			node = tree.addNode(fileTypeID, "fileType: .htm");
+			node.setName("HTM");
 		}
 
 		return tree;

@@ -43,9 +43,13 @@ public class DemsyFilterProxy implements Filter, Const, MvcConst {
 
 	private String encoding = "UTF-8";
 
-	private static String REXP_IGNORE_RESOURCE = "^.+\\.(ico|java|jsp|jspx|js|css|jsf|" + appconfig.get(IAppConfig.UPLOAD_FILTER) + ")$";
+	private static String REXP_EXEC_RESOURCE = "^.+\\.(jsp|jspx|jsf|php|asp|aspx)$";
+
+	private static String REXP_IGNORE_RESOURCE = "^.+\\.(ico|java|jsp|jspx|js|css|jsf|php|asp|aspx|" + appconfig.get(IAppConfig.UPLOAD_FILTER) + ")$";
 
 	private static String REXP_STATIC_RESOURCE = "^/(scripts2|themes2)/*";
+
+	private Pattern patternExecResource;
 
 	private Pattern patternIgnoreResource;
 
@@ -84,6 +88,9 @@ public class DemsyFilterProxy implements Filter, Const, MvcConst {
 	}
 
 	protected boolean doStaticFilters(HttpServletRequest req, HttpServletResponse resp, FilterChain chain, String uri, String url) throws IOException, ServletException {
+		if (patternExecResource.matcher(uri).find()) {
+			throw new ServletException("你无权访问指定的资源：" + uri);
+		}
 		if (patternUploadResource.matcher(uri).find()) {
 			chain.doFilter(req, resp);
 			return true;
@@ -122,6 +129,7 @@ public class DemsyFilterProxy implements Filter, Const, MvcConst {
 	}
 
 	protected void initDemsy(FilterConfig filterConfig) throws ServletException {
+		patternExecResource = Pattern.compile(REXP_EXEC_RESOURCE, Pattern.CASE_INSENSITIVE);
 		patternIgnoreResource = Pattern.compile(REXP_IGNORE_RESOURCE, Pattern.CASE_INSENSITIVE);
 		patternStaticResource = Pattern.compile(REXP_STATIC_RESOURCE, Pattern.CASE_INSENSITIVE);
 		patternUploadResource = Pattern.compile("^" + appconfig.getUploadPath() + "/*", Pattern.CASE_INSENSITIVE);
