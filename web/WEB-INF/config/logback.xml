@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="System.out" class="ch.qos.logback.core.ConsoleAppender">
+		<Target>System.out</Target>
+		<encoder>
+			<pattern>[%d{MM-dd HH:mm:ss}][%5p]%m------%caller{1}</pattern>
+		</encoder>
+	</appender>
+	<appender name="DB" class="com.kmetop.demsy.log.db.LogbackAppender">
+	</appender>
+	<!-- TEST -->
+	<appender name="test.log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${path.logs}/test.log</File>
+		<append>false</append>
+		<encoder>
+			<pattern>[%d{MM-dd HH:mm:ss}]%m------[%logger{1}.%M:%L]%n%</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<maxIndex>20</maxIndex>
+			<FileNamePattern>${path.logs}/test.%i.log</FileNamePattern>
+		</rollingPolicy>
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>10MB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+	<!-- 日志级别设置 -->
+	<!-- INFO -->
+	<logger name="com.kmetop.demsy" level="INFO"></logger>
+	<logger name="com.kmetop.demsy.actions" level="INFO"></logger>
+	<logger name="com.kmetop.demsy.plugins" level="INFO"></logger>
+	<!-- TEST -->
+	<logger name="com.kmetop.demsy.orm" level="INFO"></logger>
+	<logger name="com.kmetop.demsy.mvc" level="INFO"></logger>
+	<logger name="com.kmetop.demsy.engine" level="INFO"></logger>
+	<logger name="com.kmetop.demsy.ui.datasource" level="INFO"></logger>
+	<!-- Class -->
+	<!-- MVC -->
+	<logger name="com.kmetop.demsy.mvc.DemsyFilterProxy" level="DEBUG"></logger>
+	<!-- ORM -->
+	<logger name="com.kmetop.demsy.orm.nutz.EnMappingMaker" level="ERROR"></logger>
+	<logger name="com.kmetop.demsy.orm.nutz.impl.MetaDaoImpl" level="ERROR"></logger>
+	<logger name="com.kmetop.demsy.orm.nutz.impl.OrmImpl" level="ERROR"></logger>
+	<!-- DAO -->
+	<logger name="com.kmetop.demsy.orm.nutz.impl.ExtDaoImpl" level="ERROR"></logger>
+	<!-- <logger name="org.nutz.dao.impl.DemsyDaoRunner" level="DEBUG"></logger> <logger name="org.nutz.dao.impl.DemsyDaoExecutor" level="DEBUG"></logger> <logger name="com.kmetop.demsy.orm.nutz.impl.DemsyTransaction" level="DEBUG"></logger> -->
+	<!-- Cocit -->
+	<logger name="com.jiongsoft" level="INFO"></logger>
+	<root level="ERROR">
+		<appender-ref ref="DB"/>
+		<appender-ref ref="test.log"/>
+	</root>
+</configuration>
