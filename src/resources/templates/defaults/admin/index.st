@@ -1,7 +1,7 @@
 <html>
 <head>
-<link rel="icon" href="" type="image/x-icon" />
-<link rel="shortcut icon" href="" type="image/x-icon" />
+<link rel="shortcut icon" href="/favicon.ico"/>
+<link rel="bookmark" href="/favicon.ico"/>
 <title>{$title}</title>
 </head>
 <base target="_parent">

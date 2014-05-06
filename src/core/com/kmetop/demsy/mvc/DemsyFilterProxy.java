@@ -7,6 +7,7 @@ import static com.kmetop.demsy.Demsy.initSw;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -43,7 +44,7 @@ public class DemsyFilterProxy implements Filter, Const, MvcConst {
 
 	private String encoding = "UTF-8";
 
-	private static String REXP_EXEC_RESOURCE = "^.+\\.(jsp|jspx|jsf|php|asp|aspx)$";
+	private static String REXP_EXEC_RESOURCE = "^.+\\.(php|asp|aspx)$";
 
 	private static String REXP_IGNORE_RESOURCE = "^.+\\.(ico|java|jsp|jspx|js|css|jsf|php|asp|aspx|" + appconfig.get(IAppConfig.UPLOAD_FILTER) + ")$";
 
@@ -89,7 +90,31 @@ public class DemsyFilterProxy implements Filter, Const, MvcConst {
 
 	protected boolean doStaticFilters(HttpServletRequest req, HttpServletResponse resp, FilterChain chain, String uri, String url) throws IOException, ServletException {
 		if (patternExecResource.matcher(uri).find()) {
-			throw new ServletException("你无权访问指定的资源：" + uri);
+			// resp.sendError(500);
+			Writer out = resp.getWriter();
+			/*
+			 * 试图锁死攻击者浏览器......
+			 */
+			try {
+				resp.setContentType("text/html; charset=utf-8");
+				out.write("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">");
+				out.write("<html xmlns=\"http://www.w3.org/1999/xhtml\">");
+				out.write("<head>");
+				out.write("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />");
+				out.write("</head>");
+				out.write("<body>");
+				out.write("<script type=\"text/javascript\">while(true){document.write('小样儿！！！');}</script>");
+				out.write("</body>");
+				out.write("</html>");
+			} catch (Throwable e) {
+
+			} finally {
+				out.close();
+			}
+
+			return true;
+
+			// throw new ServletException("小样儿!!!");
 		}
 		if (patternUploadResource.matcher(uri).find()) {
 			chain.doFilter(req, resp);

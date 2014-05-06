@@ -4,9 +4,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="{$keywords}" />
 <meta name="description" content="{$description}"/>
+
 <title>{$title}{if $subtitle != null}——{$subtitle}{/if}</title>
 
+<link rel="shortcut icon" href="/favicon.ico"/>
+<link rel="bookmark" href="/favicon.ico"/>
 <link href="{$stylePath}/demsy.ui.css" rel="stylesheet" type="text/css" media="screen" />
+
 <script src="{$scriptPath}/jquery.js" type="text/javascript"></script>
 <script src="{$scriptPath}/demsy.utils.js" type="text/javascript"></script>
 <script src="{$scriptPath}/demsy.ui.js" type="text/javascript"></script>

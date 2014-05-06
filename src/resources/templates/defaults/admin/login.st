@@ -3,6 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>{$title}</title>
+<link rel="shortcut icon" href="/favicon.ico"/>
+<link rel="bookmark" href="/favicon.ico"/>
 <script src="{$scriptPath}/jquery.js" type="text/javascript"></script>
 <script src="{$scriptPath}/demsy.utils.js" type="text/javascript"></script>
 <script src="{$scriptPath}/demsy.ui.js" type="text/javascript"></script>
