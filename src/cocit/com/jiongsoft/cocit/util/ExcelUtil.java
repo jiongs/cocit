@@ -91,16 +91,24 @@ public abstract class ExcelUtil {
 	private static String[] parseRow(HSSFRow row) {
 		int size = row.getLastCellNum();
 		String[] rowResult = new String[size];
-		for (short col = 0; col < size; col++) {
+		for (int col = 0; col < size; col++) {
 			HSSFCell cell = row.getCell(col);
 			if (cell != null) {
+				try {
+					cell.setCellType(HSSFCell.CELL_TYPE_STRING);
+				} catch (Throwable e) {
+					//e.printStackTrace();
+				}
+				// String str = cell.getStringCellValue();
 				int type = cell.getCellType();
 				switch (type) {
 				case HSSFCell.CELL_TYPE_FORMULA:
+					// FormulaEvaluator formula=new FormulaEvaluator();
+					// return formula.evaluate(cell).getNumberValue();
 					rowResult[col] = cell.getCellFormula();
 					break;
 				case HSSFCell.CELL_TYPE_NUMERIC:
-					if (HSSFDateUtil.isCellDateFormatted(cell)) {
+					if (HSSFDateUtil.isCellDateFormatted(cell) || HSSFDateUtil.isCellInternalDateFormatted(cell)) {
 						rowResult[col] = DateUtil.format(cell.getDateCellValue());
 					} else {
 						Integer num = new Integer((int) cell.getNumericCellValue());

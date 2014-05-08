@@ -174,6 +174,9 @@ public class SystemExcel {
 			IBizEntity data = (IBizEntity) systemClass.newInstance();
 			for (int i = 0; i < row.length; i++) {
 				excelColIndex = i + 1;
+				if (i >= excelHeads.length) {
+					break;
+				}
 				try {
 					IBizField fld = fields.get(excelHeads[i]);
 					String propName = bizEngine.getPropName(fld);
@@ -229,7 +232,8 @@ public class SystemExcel {
 						}
 
 						//
-						Obj.setValue(data, propName, propValue);
+						if (propValue != null && propValue.trim().length() > 0)
+							Obj.setValue(data, propName, propValue);
 					}
 				} catch (Throwable e) {
 					throw new DemsyException("导入Excel中的第 " + excelRowIndex + " 行第 " + excelColIndex + " 列时出错！" + e.getMessage());

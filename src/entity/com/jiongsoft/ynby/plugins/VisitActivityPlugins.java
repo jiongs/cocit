@@ -258,6 +258,19 @@ public class VisitActivityPlugins {
 				VisitActivityRegister reg = list.get(i);
 
 				VisitActivity activity = reg.getActivity();
+				boolean isInvalid = false;
+				if (activity == null) {
+					isInvalid = true;
+				}
+				if (StringUtil.isNil(reg.getName())) {
+					isInvalid = true;
+				}
+
+				if (isInvalid) {
+					list.remove(i);
+					continue;
+				}
+
 				String activityName = activity.getName();
 
 				VisitActivity existActivity = activityMap.get(activityName);
@@ -282,7 +295,7 @@ public class VisitActivityPlugins {
 				reg.setActivity(existActivity);
 
 				// 检查数据是否已经存在
-				VisitActivityRegister old = orm.get(VisitActivityRegister.class, Expr.eq("activity", activity).and(Expr.eq("tel", reg.getTel())));
+				VisitActivityRegister old = orm.get(VisitActivityRegister.class, Expr.eq("activity", activity).and(Expr.eq("name", reg.getName())).and(Expr.eq("tel", reg.getTel())));
 				if (old != null) {
 					reg.setId(old.getId());
 				}
@@ -621,10 +634,10 @@ public class VisitActivityPlugins {
 				if (index != 0)
 					json.append(",");
 				json.append(String.format("{\"orderby\":%s,\"id\":%s,\"name\":%s,\"code\":%s,\"sex\":%s,\"tel\":%s,\"qq\":%s,\"email\":%s,\"unit\":%s,\"carCode\":%s,\"status\":%s}"//
-				                , index, member.getId(), Json.toJson(member.getName()), Json.toJson(StringUtil.trim(member.getCode())),//
-				                member.getSex(), Json.toJson(StringUtil.trim(member.getTel())), Json.toJson(StringUtil.trim(member.getQq())), //
-				                Json.toJson(StringUtil.trim(member.getEmail())), Json.toJson(StringUtil.trim(member.getUnit())),//
-				                Json.toJson(StringUtil.trim(member.getCarCode())), member.getStatus()));
+						, index, member.getId(), Json.toJson(member.getName()), Json.toJson(StringUtil.trim(member.getCode())),//
+						member.getSex(), Json.toJson(StringUtil.trim(member.getTel())), Json.toJson(StringUtil.trim(member.getQq())), //
+						Json.toJson(StringUtil.trim(member.getEmail())), Json.toJson(StringUtil.trim(member.getUnit())),//
+						Json.toJson(StringUtil.trim(member.getCarCode())), member.getStatus()));
 
 				index++;
 			}
