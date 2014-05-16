@@ -23,19 +23,8 @@
     <div style="padding: 5px;">
             物流公司：<select class="logisticsName">
             <option value="">--物流公司--</option>
+            <option selected="true" value="快捷快递">快捷快递</option>
             <option value="EMS">EMS</option>
-            <option value="顺丰快递">顺丰快递</option>
-            <option value="申通E物流">申通E物流</option>
-            <option value="圆通速递">圆通速递</option>
-            <option value="中通速递">中通速递</option>
-            <option value="宅急送">宅急送</option>
-            <option value="韵达快运">韵达快运</option>
-            <option value="天天快递">天天快递</option>
-            <option value="联邦快递">联邦快递</option>
-            <option value="汇通快运">汇通快运</option>
-            <option value="天天快递">天天快递</option>
-            <option value="华强物流">华强物流</option>
-            <option value="快捷快递">快捷快递</option>
             <option value="其他">其它</option>
             </select>
             起始快递单号：<input class="startExpressNo" type="input" style="font-size: 18px;" value="">

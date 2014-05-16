@@ -55,7 +55,7 @@
 		<div id="notice">
 			<ul>
 				<%
-				    List<WebContentEntity> list = orm.query(contentType, Expr.eq("catalogCode", "201309-02").addAsc("orderby").addDesc("id"));
+				    List<WebContentEntity> list = orm.query(contentType, Expr.eq("catalogCode", "201309-02").addAsc("orderby").addDesc("id").setPager(1, 2));
 				    for (WebContentEntity entity : list) {
 						String name = entity.getName();
 						int nameLen = name.length();

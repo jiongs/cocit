@@ -53,10 +53,6 @@
 	<classpathentry kind="lib" path="3th/lib/jtester/jtester-0.8.2.jar"/>
 	<classpathentry kind="lib" path="3th/lib/jmockit/jmockit-1.4/jmockit.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="build/lib/poi-3.10-FINAL-20140208.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="file:/E:/cocit/build/lib/poi-3.10-FINAL-20140208-apidocs/"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="build/lib/poi-3.10-FINAL-20140208.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
