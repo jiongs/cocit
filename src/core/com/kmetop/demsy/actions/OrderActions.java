@@ -358,18 +358,6 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 
 		// 已付款（等待卖家发货）
 		if (orderNewStatus == STATUS_WAIT_SELLER_SEND_GOODS) {
-			/*
-			 * 短信通知买家，下单成功！
-			 */
-			try {
-				String tpl = softService.getConfig("eshop.order1", "尊敬的%s：欢迎您光临云南白药门户网站，您购买的产品已确认下单成功，订单号%s，我们将会在24小时内发货。");
-				String content = String.format(tpl, order.getPersonName(), order.getOrderID());
-				MTSmsEntity sms = MTSmsEntity.make("“电子商务”通知买家下单成功", order.getTelcode(), content);
-				ActionHelper actionHelper = ActionHelper.make("0:MTSmsEntity:c");
-				actionHelper.entityManager.save(sms, "c");
-			} catch (Throwable e) {
-				log.errorf("付款成功，发送短信失败！", e);
-			}
 
 			/*
 			 * 生成物流单
@@ -522,9 +510,24 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 				order.setPayTime(new Date());
 
 				order.setStatus(orderNewStatus);
+
+				log.infof("处理订单状态：处理订单成功！订单号(%s),交易号(%s),订单状态(%s),新状态(%s),物流单数量(%s)", order.getOrderID(), trade_no, STATUS_TITLES[order.getStatus()], STATUS_TITLES[orderNewStatus], logisticsNum);
 			} else {
 				log.infof("处理订单状态：忽略！订单号(%s),交易号(%s),订单状态(%s),新状态(%s)", order.getOrderID(), trade_no, STATUS_TITLES[order.getStatus()], STATUS_TITLES[orderNewStatus]);
 			}
+
+			/*
+			 * 短信通知买家，下单成功！
+			 */
+			// try {
+			// String tpl = softService.getConfig("eshop.order1", "尊敬的%s：欢迎您光临云南白药门户网站，您购买的产品已确认下单成功，订单号%s，我们将会在24小时内发货。");
+			// String content = String.format(tpl, order.getPersonName(), order.getOrderID());
+			// MTSmsEntity sms = MTSmsEntity.make("“电子商务”通知买家下单成功", order.getTelcode(), content);
+			// ActionHelper actionHelper = ActionHelper.make("0:MTSmsEntity:c");
+			// actionHelper.entityManager.save(sms, "c");
+			// } catch (Throwable e) {
+			// log.errorf("付款成功，发送短信失败！", e);
+			// }
 		} else
 
 		// 已发货（等待买家确认收货）
@@ -589,6 +592,7 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 					order.setStatus(orderNewStatus);
 				}
 			}
+
 			/*
 			 * 短信通知买家：你买的产品已发货，请注意查收！
 			 */

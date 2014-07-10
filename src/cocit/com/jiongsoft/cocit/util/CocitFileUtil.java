@@ -130,12 +130,12 @@ public abstract class CocitFileUtil {
 		FileUtil.deleteAll(new File(rootPath + "/upload/patch"));
 
 		// 清理日志目录
-		FileUtil.deleteAll(new File(rootPath + "/WEB-INF/logs"));
+		//FileUtil.deleteAll(new File(rootPath + "/WEB-INF/logs"));
 		FileUtil.deleteAll(new File(rootPath + "/WEB-INF/tmp"));
 
 		//
 		renameExecutableFiles(rootDir.getParentFile());
 
-		clearResinLogFiles(new File("D:\\Cluster"));
+		//clearResinLogFiles(new File("D:\\Cluster"));
 	}
 }
