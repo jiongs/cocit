@@ -34,10 +34,12 @@ import com.jiongsoft.cocit.entity.sms.MTSmsEntity;
 import com.jiongsoft.cocit.orm.expr.CndExpr;
 import com.jiongsoft.cocit.orm.expr.Expr;
 import com.jiongsoft.cocit.service.SoftService;
+import com.jiongsoft.ynby.entity.Voucher;
 import com.kmetop.demsy.Demsy;
 import com.kmetop.demsy.biz.BizConst;
 import com.kmetop.demsy.comlib.LibConst;
 import com.kmetop.demsy.comlib.biz.IBizSystem;
+import com.kmetop.demsy.comlib.biz.field.Upload;
 import com.kmetop.demsy.comlib.common.IContact;
 import com.kmetop.demsy.comlib.entity.IDemsySoft;
 import com.kmetop.demsy.comlib.eshop.ILogistics;
@@ -358,18 +360,6 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 
 		// 已付款（等待卖家发货）
 		if (orderNewStatus == STATUS_WAIT_SELLER_SEND_GOODS) {
-			/*
-			 * 短信通知买家，下单成功！
-			 */
-			try {
-				String tpl = softService.getConfig("eshop.order1", "尊敬的%s：欢迎您光临云南白药门户网站，您购买的产品已确认下单成功，订单号%s，我们将会在24小时内发货。");
-				String content = String.format(tpl, order.getPersonName(), order.getOrderID());
-				MTSmsEntity sms = MTSmsEntity.make("“电子商务”通知买家下单成功", order.getTelcode(), content);
-				ActionHelper actionHelper = ActionHelper.make("0:MTSmsEntity:c");
-				actionHelper.entityManager.save(sms, "c");
-			} catch (Throwable e) {
-				log.errorf("付款成功，发送短信失败！", e);
-			}
 
 			/*
 			 * 生成物流单
@@ -522,9 +512,24 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 				order.setPayTime(new Date());
 
 				order.setStatus(orderNewStatus);
+
+				log.infof("处理订单状态：处理订单成功！订单号(%s),交易号(%s),订单状态(%s),新状态(%s),物流单数量(%s)", order.getOrderID(), trade_no, STATUS_TITLES[order.getStatus()], STATUS_TITLES[orderNewStatus], logisticsNum);
 			} else {
 				log.infof("处理订单状态：忽略！订单号(%s),交易号(%s),订单状态(%s),新状态(%s)", order.getOrderID(), trade_no, STATUS_TITLES[order.getStatus()], STATUS_TITLES[orderNewStatus]);
 			}
+
+			/*
+			 * 短信通知买家，下单成功！
+			 */
+			// try {
+			// String tpl = softService.getConfig("eshop.order1", "尊敬的%s：欢迎您光临云南白药门户网站，您购买的产品已确认下单成功，订单号%s，我们将会在24小时内发货。");
+			// String content = String.format(tpl, order.getPersonName(), order.getOrderID());
+			// MTSmsEntity sms = MTSmsEntity.make("“电子商务”通知买家下单成功", order.getTelcode(), content);
+			// ActionHelper actionHelper = ActionHelper.make("0:MTSmsEntity:c");
+			// actionHelper.entityManager.save(sms, "c");
+			// } catch (Throwable e) {
+			// log.errorf("付款成功，发送短信失败！", e);
+			// }
 		} else
 
 		// 已发货（等待买家确认收货）
@@ -589,6 +594,7 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 					order.setStatus(orderNewStatus);
 				}
 			}
+
 			/*
 			 * 短信通知买家：你买的产品已发货，请注意查收！
 			 */
@@ -624,6 +630,9 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 
 		String payment = request.getParameter("payment");
 		String note = request.getParameter("note");
+		String recipelImage = request.getParameter("recipelImage");
+		String voucherCode = request.getParameter("voucherCode");
+		Double voucherPrice = 0.0;
 
 		Map<String, String> sParaTemp = new HashMap<String, String>();
 		String show_url = null;
@@ -642,6 +651,20 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 			IOrm orm = Demsy.orm();
 			IDemsySoft soft = Demsy.me().getSoft();
 			IOrder order = (IOrder) orm.load(ordClass, Expr.eq(LibConst.F_TIME_ID, orderID).and(Expr.eq(LibConst.F_SOFT_ID, soft.getId())));
+
+			Voucher voucher = null;
+			if (voucherCode != null && voucherCode.trim().length() > 0) {
+				voucher = orm.get(Voucher.class, Expr.eq("code", voucherCode));
+				if (voucher == null || voucher.isExpired() || voucher.getStatusCode() == 1) {
+					throw new Exception("抵用卷编码无效！");
+				}
+				voucherPrice = voucher.getPrice();
+				if (voucherPrice == null) {
+					voucherPrice = 0.0;
+				}
+				voucher.setStatusCode(1);
+				orm.save(voucher);
+			}
 
 			if (order == null) {
 				log.infof("支付宝收银台：订单不存在！订单号(%s)", orderID);
@@ -667,7 +690,11 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 				}
 
 				// 订单总金额，显示在支付宝收银台里的“应付总额”里
-				String price = Demsy.me().isLocal() ? "0.01" : order.getTotalCost().toString();
+				Double totalCost = order.getTotalCost();
+				if (voucherPrice > 0) {
+					totalCost = totalCost - voucherPrice;
+				}
+				String price = Demsy.me().isLocal() ? "0.01" : totalCost.toString();
 
 				// 物流费用，即运费。
 				String logistics_fee = "0.00";
@@ -725,8 +752,15 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 				if (!Str.isEmpty(payment))
 					order.setPaytype(payment);// 支付方式：支付宝
 				order.setNote(note);
+				if (recipelImage != null && recipelImage.trim().length() > 0) {
+					order.setRecipelImage(new Upload(recipelImage));
+				}
+				if (voucherCode != null && voucherCode.trim().length() > 0) {
+					order.setVoucherCode(voucherCode);
+					order.setVoucherPrice(voucherPrice);
+				}
 
-				orm.save(order, Expr.fieldRexpr("paytype$|note$", false));
+				orm.save(order, Expr.fieldRexpr("paytype$|note$|voucherCode$|voucherPrice$|recipelImage$", false));
 
 				sHtmlText = AlipayService.getAlipayPayGateway(sParaTemp, service);
 

@@ -1,3 +1,9 @@
+
+<link href="/jCocit/css/min/jCocit.ui.combo.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="/jCocit/css/min/jCocit.ui.upload.css" rel="stylesheet" type="text/css" media="screen" />
+
+<script src="/jCocit/js/min/jCocit.utils.js" type="text/javascript"></script>
+<script src="/jCocit/js/min/jCocit.ui.upload.js" type="text/javascript"></script>
 <div class="t">
     <table width=100%>
         <tr>
@@ -24,10 +30,21 @@
     <a href="{$contextPath}/ui/{$block.titleLink.id}/{$orderID}" target="_blank">订单详情</a></div>
     {if $orderError != null}<div style="color: red;font-weight: bold;">{$orderError}</div>
     {else}
+    <div class="title">使用抵用卷：<span style="font-size: 12px;font-weight: normal;">如果您拥有卖家发放的微信抵用码、纸质代金卷等，可以在此输入抵用卷编码，付款时，系统将自动为您扣除可以抵用的金额。</span></div>
+    <div style="margin-left: 60px;">
+        抵用卷编码：<input class="text" name="voucherCode" style="font-size: 12px;"/>
+    </div>
+    <div class="title">上传处方单：<span style="font-size: 12px;font-weight: normal;">如果您的订单中含有处方药，请上传处方单，以便管理员审核！</span></div>
+    <div style="margin-left: 60px;">
+        <input type="file" id="recipelImage" name="recipelImage" value="" data-options="
+                                    fileTypeExts : '*.jpg; *.jpeg; *.gif; *.png',
+                                    fileTypeDesc : '处方单图片'
+                                " />
+    </div>
     <div class="title">订单留言：</div>
     <div style="margin-left: 60px;">
-    	<textarea class="input" name="note" style="width: 800px; height: 50px; font-size: 12px;">{$order.note}</textarea>
-	</div>
+        <textarea class="input" name="note" style="width: 800px; height: 50px; font-size: 12px;">{$order.note}</textarea>
+    </div>
     <div class="title">请选择您的付款方式：<span style="font-size: 12px;font-weight: normal;">如果你想要方便快捷可以选择网上银行；如果你需要更多付款方式可以选择支付宝(如：信用卡等)。</span></div>
 	<table style="margin-left: 50px;" width="94%">
 		<tr>
@@ -101,4 +118,14 @@ $(".btnNextStep", $bankform).click(function() {
         return false;
     }
 });
+
+(function($) {
+    $(document).ready(function() {
+
+        try {
+            $("#recipelImage").upload();
+        } catch (e) {
+        }
+    });
+})(jQuery);
 </script>

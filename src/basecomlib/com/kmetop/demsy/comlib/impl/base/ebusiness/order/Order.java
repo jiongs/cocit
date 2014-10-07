@@ -15,6 +15,7 @@ import com.jiongsoft.cocit.entity.annotation.CocField;
 import com.jiongsoft.cocit.entity.annotation.CocGroup;
 import com.jiongsoft.cocit.entity.annotation.CocOperation;
 import com.jiongsoft.cocit.entity.annotation.CocTable;
+import com.kmetop.demsy.comlib.biz.field.Upload;
 import com.kmetop.demsy.comlib.eshop.IOrder;
 import com.kmetop.demsy.comlib.impl.BizComponent;
 import com.kmetop.demsy.lang.Dates;
@@ -47,6 +48,9 @@ fields = { @CocField(property = "timeID")//
 		// , @CocField(property = "discount") //
 		, @CocField(property = "logisticsCost") //
 		, @CocField(property = "totalCost", gridOrder = 4) //
+		, @CocField(property = "recipelImage") //
+		, @CocField(property = "voucherCode") //
+		, @CocField(property = "voucherPrice") //
 		, @CocField(property = "createdBy", name = "登录帐号", mode = "*:N v:S") //
 		, @CocField(property = "createdIP", privacy = true) //
 		, @CocField(property = "orderInfo", name = "订单信息", isTransient = true, mode = "*:N v:S e1:S e2:S", gridOrder = 1)//
@@ -203,6 +207,18 @@ public class Order extends BizComponent implements IOrder {
 
 	@CocField(name = "订单留言", mode = "*:N v:S e1:S e2:S e3:S")
 	protected String note;
+
+	/**
+	 * 如果订单中含有处方药，则必须提交处方单。
+	 */
+	@CocField(name = "处方单", mode = "*:N v:S e1:S e2:S e3:S")
+	protected Upload recipelImage;
+
+	@CocField(name = "抵用卷编码", mode = "*:N v:S e1:S e2:S e3:S")
+	protected String voucherCode;
+
+	@CocField(name = "抵用卷金额", mode = "*:N v:S e1:S e2:S e3:S", pattern = "#,##0.00")
+	protected Double voucherPrice;
 
 	public String getNote() {
 		return note;
@@ -474,4 +490,29 @@ public class Order extends BizComponent implements IOrder {
 	public void setActivityComment(String activityComment) {
 		this.activityComment = activityComment;
 	}
+
+	public Upload getRecipelImage() {
+		return recipelImage;
+	}
+
+	public void setRecipelImage(Upload recipelImage) {
+		this.recipelImage = recipelImage;
+	}
+
+	public String getVoucherCode() {
+		return voucherCode;
+	}
+
+	public void setVoucherCode(String voucherCode) {
+		this.voucherCode = voucherCode;
+	}
+
+	public Double getVoucherPrice() {
+		return voucherPrice;
+	}
+
+	public void setVoucherPrice(Double voucherPrice) {
+		this.voucherPrice = voucherPrice;
+	}
+
 }

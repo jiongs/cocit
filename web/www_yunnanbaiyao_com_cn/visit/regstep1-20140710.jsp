@@ -81,21 +81,21 @@
 						<tr>
 							<%
 								DateUtil thisMonth = DateUtil.now();
-												    //thisMonth.setDay(1).setTime(0, 0, 0, 0);
-												    List<VisitActivity> list = orm.query(VisitActivity.class,Expr.gt("planDate", thisMonth.get()).addAsc("planDate").setPager(1, 4));
+												    thisMonth.setDay(1).setTime(0, 0, 0, 0);
+												    List<VisitActivity> list = orm.query(VisitActivity.class,Expr.gt("planDate", thisMonth.get()).addAsc("planDate").setPager(1, 8));
 												    int len = list.size();
 												    int month = 0;
 												    DateUtil tmp;
 												    DateUtil day1 = null;
-												    //DateUtil day2 = null;
+												    DateUtil day2 = null;
 												    VisitActivity activity1 = null;
 												    VisitActivity activity2 = null;
 												    int remain1 = 0;
-												    //int remain2 = 0;
+												    int remain2 = 0;
 												    long now = new Date().getTime() + 10 * 60000;//允许10分钟时间报名，否则会过期。
 												    for (int i = 0; i < len; i++) {
 													    boolean valid1 = true;
-													    //boolean valid2 = true;
+													    boolean valid2 = true;
 														activity1 = list.get(i);
 														day1 = DateUtil.make(activity1.getPlanDate());
 														month = day1.getMonth();
@@ -107,7 +107,6 @@
 													    	valid1 = false;
 													    }
 
-													    /*
 														i++;
 														if (i < len) {
 														    activity2 = list.get(i);
@@ -125,7 +124,6 @@
 																day2 = null;
 														    }
 														}
-														*/
 							%>
 							<td align="center">
 								<table>
@@ -137,12 +135,22 @@
 												<div><%=day1.getDay()%><span class="ri">日</span><span class="time"><%=DateUtil.format(day1.get(), "HH:mm")%></span></div>
 												<div style="margin-top: 5px;"><span>剩余<span class="reg_personNum"><%=remain1 >= 0 ? remain1 : 0%></span>名额</span></div>
 										</td>
+										<td class="reg_day<%=(valid2?"":" invalid")%>" value="<%=activity2.getEntityGuid()%>" title="报名时间: <%=DateUtil.format(activity2.getExpiredFrom(), "yyyy-MM-dd HH:mm")%> 至 <%=DateUtil.format(activity2.getExpiredTo(), "yyyy-MM-dd HH:mm")%>">
+												<%
+													if (day2 != null) {
+												%>
+												<div><%=day2.getDay()%><span class="ri">日</span><span class="time"><%=DateUtil.format(day2.get(), "HH:mm")%></span></div>
+												<div style="margin-top: 5px;"><span>剩余<span class="reg_personNum"><%=remain2 >= 0 ? remain2 : 0%></span>名额</span></div>
+												<%
+												     }
+												%>
+										</td>
 									</tr>
 								</table>
 							</td>
 							<%
 							    	day1 = null;
-									//day2 = null;
+									day2 = null;
 							    }// end: for
 							%>
 						</tr>

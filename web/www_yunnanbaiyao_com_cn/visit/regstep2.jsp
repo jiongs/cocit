@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ page import="java.util.*,com.jiongsoft.cocit.*,com.jiongsoft.cocit.util.*,com.jiongsoft.ynby.entity.*,com.jiongsoft.cocit.orm.*,com.jiongsoft.cocit.orm.expr.*,com.jiongsoft.cocit.entity.*,com.jiongsoft.cocit.ui.model.*,com.jiongsoft.cocit.action.*"%>
+<%@ page import="java.util.*,com.jiongsoft.cocit.cocit3.*,com.jiongsoft.cocit.util.*,com.jiongsoft.ynby.entity.*,com.jiongsoft.cocit.orm.*,com.jiongsoft.cocit.expr.*,com.jiongsoft.cocit.entity.*,com.jiongsoft.cocit.model.*,com.jiongsoft.cocit.action.*"%>
 <%
 	JSPModel model = (JSPModel) request.getAttribute("obj");
 	ActionHelper actionHelper = model.get("actionHelper");
@@ -267,7 +267,7 @@
 									<div id="hdsm" style="display:none; position: absolute; left: 50%; margin-left:-300px; bottom: 30px;width: 600px;height: 600px;background: #ffffff;border: 1px solid #000000;">
 										<div onclick="$('#hdsm').hide();" style="cursor: pointer;text-align: right;padding: 2px 5px;font-size: 14px">X</div>
 										<%
-											entity = orm.get(contentType, Expr.eq("entityGuid", "B17F355B-0906-4E6B-A1A2-BCF85F7661D7"));
+											entity = orm.get(contentType, Expr.eq("catalogCode", "201312-01"));
 										%>
 										<div style="margin-top: 5px; font-size: 16px; color: #333; line-height: 35px; padding: 10px;height:520px;overflow:auto;"><%=entity == null ? "" : entity.getContentText()%></div>
 										<div style="text-align: center;bottom:5px;"><input id="checkbox_agree" style="width: 16px; height: 16px; border: 0;" onclick="$('#hdsm').hide();" type="checkbox" name="agree" value="1" style="cursor:pointer;" /><label style="cursor:pointer;" for="checkbox_agree">同意活动申明</label></div>

@@ -2,6 +2,7 @@ package com.kmetop.demsy.comlib.eshop;
 
 import java.util.Date;
 
+import com.kmetop.demsy.comlib.biz.field.Upload;
 import com.kmetop.demsy.comlib.entity.ITimeID;
 
 public interface IOrder extends ITimeID {
@@ -145,4 +146,10 @@ public interface IOrder extends ITimeID {
 	public String getNote();
 
 	public void setNote(String note);
+
+	void setRecipelImage(Upload recipelImage);
+
+	void setVoucherCode(String voucherCode);
+
+	void setVoucherPrice(Double voucherPrice);
 }

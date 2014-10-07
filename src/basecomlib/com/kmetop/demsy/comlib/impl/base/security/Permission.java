@@ -101,7 +101,7 @@ public class Permission extends BizComponent implements IPermission, PermissionE
 	/**
 	 * @see PermissionEntity#getDataRule()
 	 */
-	@Column(length = 512)
+	@Column(length = 2000)
 	protected String dataRule;
 
 	/*

@@ -39,7 +39,7 @@ public abstract class SmsPlugins {
 			// entity.setPreBalance(smsClient.getBalance());
 			String sign = softService.getConfig("sms.signature", "");
 
-			String returnValue = smsClient.send(entity.getMobiles(), entity.getContent() + sign, "", "", "");
+			String returnValue = smsClient.send(entity.getMobiles(), sign+entity.getContent(), "", "", "");
 			entity.setResult(returnValue);
 
 			// entity.setBalance(smsClient.getBalance());
