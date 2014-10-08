@@ -773,7 +773,7 @@ public class OrderActions extends ModuleActions implements BizConst, MvcConst {
 
 			out.write(sHtmlText);
 		} catch (Throwable e) {
-			out.println("<script language=\"javascript\">alert('跳转到支付宝收银台结账出错!" + e.getMessage().replace("'", "\'") + "');</script>");
+			out.println("<script language=\"javascript\">alert('跳转到支付宝收银台结账出错!" + e.getMessage().replace("'", "\'") + "');history.go(-1);</script>");
 			if (show_url != null)
 				out.println(AlipaySubmit.buildForm(sParaTemp, show_url + "?", "POST", "Submit"));
 
