@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ page import="java.util.*,com.jiongsoft.cocit.cocit3.*,com.jiongsoft.cocit.orm.*,com.jiongsoft.cocit.expr.*,com.jiongsoft.cocit.entity.*,com.jiongsoft.cocit.model.*,com.jiongsoft.cocit.action.*"%>
+<%@ page import="java.util.*,com.jiongsoft.cocit.*,com.jiongsoft.cocit.orm.*,com.jiongsoft.cocit.orm.expr.*,com.jiongsoft.cocit.entity.*,com.jiongsoft.cocit.ui.model.*,com.jiongsoft.cocit.action.*"%>
 <%
     JSPModel model = (JSPModel) request.getAttribute("obj");
     ActionHelper actionHelper = model.get("actionHelper");
@@ -55,7 +55,7 @@
 		<div id="notice">
 			<ul>
 				<%
-				    List<WebContentEntity> list = orm.query(contentType, Expr.eq("catalogCode", "201309-02").addAsc("orderby").addDesc("id").setPager(1, 2));
+				    List<WebContentEntity> list = orm.query(contentType, Expr.eq("catalogCode", "201309-02").addAsc("orderby").addDesc("id"));
 				    for (WebContentEntity entity : list) {
 						String name = entity.getName();
 						int nameLen = name.length();
