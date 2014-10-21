@@ -10,6 +10,7 @@ public class StringUtilTest {
 
 	@Test
 	public void testNID() {
+		assertTrue(StringUtil.isNID("532128195812246314"));
 		assertTrue(StringUtil.isNID("53212819791206631X"));
 		assertTrue(StringUtil.isNID("53212819791206631x"));
 		assertTrue(StringUtil.isNID("532128197912042924"));
