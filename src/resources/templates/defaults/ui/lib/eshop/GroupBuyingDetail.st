@@ -14,7 +14,7 @@
             <td valign="top">
                     <table class="topR">
                         <tr>
-                            <td class="topLbl" nowrap>原&nbsp;&nbsp;&nbsp;&nbsp;价:</td>
+                            <td class="topLbl" nowrap>参考价:</td>
                             <td class="topPrice">{if $obj.price != null}{tostring bean=$obj prop="oldPrice" pattern="#,##0.00"}{/if}</td>
                             <td class="topLbl">规&nbsp;&nbsp;&nbsp;&nbsp;格:</td>
                             <td>{tostring bean=$obj prop="spec"}</td>

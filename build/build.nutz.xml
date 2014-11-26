@@ -5,7 +5,7 @@
 
 	<!-- 开发环境无关的属性 -->
 	<property name="env.JAVA_HOME" value="${java.home}" />
-	<property name="env.DEPS" value="${basedir}/deps" />
+	<property name="env.DEPS" value="${basedir}/lib" />
 	<property name="env.TOMCAT_LIB" value="${basedir}/tomcatlib" />
 	<property name="env.OUTPUT" value="${basedir}/jars" />
 
@@ -15,10 +15,10 @@
 	<property name="JARS" value="${env.OUTPUT}" />
 	<property name="NUTZ_PROJECT_HOME" value="${env.NUTZ_PROJECT_HOME}" />
 
-	<property name="SRC" location="${NUTZ_PROJECT_HOME}/src/java/nutz" />
+	<property name="SRC" location="${NUTZ_PROJECT_HOME}/3th/src/nutz" />
 	<property name="TMP" value="${basedir}/temp" />
 
-	<property name="JDK_VERSION" value="1.6" />
+	<property name="JDK_VERSION" value="1.5" />
 
 	<property name="v" value="-1" />
 	<property name="zlang" value="org/nutz/lang/**,org/nutz/castor/**,org/nutz/*.*" />

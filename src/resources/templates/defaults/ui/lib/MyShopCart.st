@@ -24,8 +24,8 @@
             <tr>
                 <th width="50px" align="center">全选<input type="checkbox" class="checkall" checked="true" /></th>
                 <th>商品名称</th>
-                <th>原价(元)</th>
-                <th>现价(元)</th>
+                <th>参考价 (元)</th>
+                <th>交易价(元)</th>
                 <th>数量</th>
                 <th width="80px" align="right">小计(元)</th>
                 <th width="120px" align="center">&nbsp;</th>

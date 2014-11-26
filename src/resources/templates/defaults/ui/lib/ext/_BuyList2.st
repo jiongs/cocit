@@ -98,9 +98,9 @@
                 <td colspan=6 class="subtitle">商品费用：</td>
             </tr>
             <tr>
-                <td>原价：</td>
+                <td>参考价 ：</td>
                 <td><span class="oldPrice"></span></td>
-            	<td>现价：</td>
+            	<td>交易价：</td>
                 <td><span class="newPrice"></span></td>
                 <td>节省：</td>
                 <td><span class="balance"></span></td>

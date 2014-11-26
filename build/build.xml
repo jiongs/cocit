@@ -87,7 +87,6 @@
 	<target name="patch" depends="jar">
 		<echo message="清空${tmp.dir}和${patch.dir}目录 ..." />
 		<delete dir="${tmp.dir}" />
-		<delete dir="${patch.dir}" />
 		<mkdir dir="${tmp.dir}/WEB-INF/lib" />
 
 		<echo message="拷贝${web.dir}目录下的scripts2|themes2|index.html到${tmp.dir}目录 ..." />

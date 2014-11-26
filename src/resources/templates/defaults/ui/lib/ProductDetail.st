@@ -15,7 +15,7 @@
             <td valign="top">
                     <table class="topR">
                         <tr>
-                            <td class="topLbl" nowrap>原&nbsp;&nbsp;&nbsp;&nbsp;价：</td>
+                            <td class="topLbl" nowrap>参考价：</td>
                             <td class="topPrice">
                             {if $obj.oldPrice != null}
                                 {tostring bean=$obj prop="oldPrice" pattern="#,##0.00"}
@@ -25,7 +25,7 @@
                         </tr>
                         {if $barginPrice == null}
                         <tr>
-                            <td class="topLbl" nowrap>现&nbsp;&nbsp;&nbsp;&nbsp;价：</td>
+                            <td class="topLbl" nowrap>交易价 ：</td>
                             <td class="topPrice"><input id="p_buy_unitprice" type="hidden" value="{$obj.nowPrice}" />
                             {if $obj.nowPrice != null}{tostring bean=$obj prop="nowPrice" pattern="#,##0.00"}{else}<!-- 未上架 -->{/if}</td>
                             <td class="topLbl">编&nbsp;&nbsp;&nbsp;&nbsp;号：</td>
